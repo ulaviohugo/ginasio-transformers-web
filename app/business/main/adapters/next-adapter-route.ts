@@ -1,22 +1,15 @@
 import { Controller } from '../../presentation/protocols'
 
 export const adaptRoute = async (controller: Controller, req?: Request) => {
-  let body
+  let data = {}
   try {
-    body = await req?.json()
-  } catch (error) {
-    body = {}
-  }
-  const httpResponse = await controller.handle(body)
-  const success =
-    httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299
-
-  const responseData = JSON.stringify(
-    success ? httpResponse.body : { error: httpResponse.body.message }
-  )
-
+    data = await req?.json()
+  } catch (error) {}
+  const { body, statusCode } = await controller.handle(data)
+  const success = statusCode >= 200 && statusCode <= 299
+  const responseData = JSON.stringify(success ? body : { error: body.message })
   return new Response(responseData, {
-    status: httpResponse.statusCode,
+    status: statusCode,
     headers: { 'Content-Type': 'application/json' },
   })
 }
