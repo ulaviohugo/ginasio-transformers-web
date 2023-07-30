@@ -18,8 +18,8 @@ model Employee {
   hireDate           DateTime
   maritalStatus      String
   educationDegree    String
-  phone1             String    @unique
-  phone2             String?   @unique
+  phone1             String
+  phone2             String?
   email              String    @unique
   residentialAddress String
   documentType       String
