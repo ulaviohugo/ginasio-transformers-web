@@ -22,10 +22,10 @@ export class DbAddEmployee implements AddEmployees {
 
     const employee: Employee = {
       ...param,
-      hireDate: new Date(param.dateOfBirth),
       dateOfBirth: new Date(param.dateOfBirth),
-      contractEndDate: param.dateOfBirth
-        ? new Date(param.dateOfBirth)
+      hireDate: new Date(param.hireDate),
+      contractEndDate: param.contractEndDate
+        ? new Date(param.contractEndDate)
         : param.dateOfBirth,
     }
 
