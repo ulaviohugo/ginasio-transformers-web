@@ -11,7 +11,6 @@ export class EmployeePrismaRepository implements LoadEmployeeRepository {
   }
 
   async loadAll(): Promise<LoadEmployeeRepositoryResult> {
-    return ((await this.prisma.employee.findMany()) ??
-      []) as LoadEmployeeRepositoryResult
+    return (await this.prisma.employee.findMany()) as LoadEmployeeRepositoryResult
   }
 }
