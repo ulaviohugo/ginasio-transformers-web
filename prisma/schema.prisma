@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  gender             String
+  dateOfBirth        DateTime
+  hireDate           DateTime
+  maritalStatus      String
+  educationDegree    String
+  phone1             String    @unique
+  phone2             String?   @unique
+  email              String    @unique
+  residentialAddress String
+  documentType       String
+  documentNumber     String
+  nif                String
+  dependents         Int       @default(0)
+  socialSecurity     String?
+  position           String
+  baseSalary         Float?
+  contractEndDate    DateTime?
+  workTime           String?
+  iban               String?
+  accountNumber      String?
+  createdAt          DateTime  @default(now())
+  createdBy          Int?
+
+  @@map("tb_employees")
+}
