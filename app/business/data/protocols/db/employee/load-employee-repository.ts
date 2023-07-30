@@ -1,7 +1,7 @@
 import { Employee } from "@/app/business/domain/models"
 
 export interface LoadEmployeeRepository {
-  loadAll(): Promise<GetEmployeeRepositoryResult>
+  loadAll(): Promise<LoadEmployeeRepositoryResult>
 }
 
-export type GetEmployeeRepositoryResult = Employee[]
+export type LoadEmployeeRepositoryResult = Employee[]
