@@ -1,15 +1,12 @@
 import { InvalidParamError } from '../../presentation/errors'
 import { Validation } from '../../presentation/protocols'
-import { EmailValidator } from '../protocols'
 
 export class EmailValidation implements Validation {
-  constructor(
-    private readonly fieldName: string,
-    private readonly emailValidator: EmailValidator
-  ) {}
+  constructor(private readonly fieldName: string) {}
 
   validate(input: any): Error | any {
-    const isValid = this.emailValidator.isValid(input[this.fieldName])
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const isValid = emailRegex.test(input[this.fieldName])
     if (!isValid) {
       return new InvalidParamError(this.fieldName)
     }
