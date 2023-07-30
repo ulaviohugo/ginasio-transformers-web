@@ -2,21 +2,13 @@ import {
   AddEmployees,
   AddEmployeesResult,
 } from '@/app/business/domain/usecases'
-import {
-  AddEmployeeRepository,
-  FindEmployeeByEmailRepository,
-} from '../protocols'
+import { EmployeeRepository } from '../protocols'
 import { Employee } from '../../domain/models'
 
 export class DbAddEmployee implements AddEmployees {
-  constructor(
-    private readonly AddEmployeeRepository: AddEmployeeRepository,
-    private findEmployeeByEmailRepository: FindEmployeeByEmailRepository
-  ) {}
+  constructor(private readonly employeeRepository: EmployeeRepository) {}
   async add(param: Employee): Promise<AddEmployeesResult> {
-    const exists = await this.findEmployeeByEmailRepository.findByEmail(
-      param.email
-    )
+    const exists = await this.employeeRepository.findByEmail(param.email)
 
     if (exists) return null as any
 
@@ -28,7 +20,6 @@ export class DbAddEmployee implements AddEmployees {
         ? new Date(param.contractEndDate)
         : param.dateOfBirth,
     }
-
-    return this.AddEmployeeRepository.add(employee)
+    return this.employeeRepository.add(employee)
   }
 }
