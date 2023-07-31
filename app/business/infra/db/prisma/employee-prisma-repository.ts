@@ -9,7 +9,6 @@ export class EmployeePrismaRepository implements EmployeeRepository {
   }
 
   async add(param: Employee): Promise<Employee> {
-    console.log('request', param)
     return (await this.prisma.employee.create({ data: param })) as Employee
   }
 
@@ -21,5 +20,12 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     return (await this.prisma.employee.findUnique({
       where: { email },
     })) as Employee
+  }
+
+  async delete(employeeId: number): Promise<boolean> {
+    const deletedEmployee = await this.prisma.employee.delete({
+      where: { id: employeeId },
+    })
+    return !!deletedEmployee
   }
 }
