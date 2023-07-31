@@ -28,6 +28,13 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     })) as Employee
   }
 
+  async update(param: Employee): Promise<Employee> {
+    return (await this.prisma.employee.update({
+      data: param,
+      where: { id: param.id },
+    })) as Employee
+  }
+
   async delete(employeeId: number): Promise<boolean> {
     const deletedEmployee = await this.prisma.employee.delete({
       where: { id: employeeId },
