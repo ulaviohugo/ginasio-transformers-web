@@ -23,14 +23,10 @@ CREATE TABLE "tb_employees" (
     "iban" TEXT,
     "accountNumber" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "createdBy" INTEGER
+    "createdBy" INTEGER,
+    "updatedAt" DATETIME,
+    "updatedBy" INTEGER
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "tb_employees_phone1_key" ON "tb_employees"("phone1");
-
--- CreateIndex
-CREATE UNIQUE INDEX "tb_employees_phone2_key" ON "tb_employees"("phone2");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "tb_employees_email_key" ON "tb_employees"("email");
