@@ -16,6 +16,12 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     return (await this.prisma.employee.findMany()) as Employee[]
   }
 
+  async findById(id: number): Promise<Employee | null> {
+    return (await this.prisma.employee.findUnique({
+      where: { id },
+    })) as Employee
+  }
+
   async findByEmail(email: string): Promise<Employee | null> {
     return (await this.prisma.employee.findUnique({
       where: { email },
