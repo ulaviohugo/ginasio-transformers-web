@@ -1,5 +1,6 @@
 import { Employee } from '../../domain/models'
 import { AddEmployee } from '../../domain/usecases'
+import { EmailInUseError } from '../errors'
 import { badRequest, forbidden, ok, serverError } from '../helper'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
@@ -15,7 +16,7 @@ export class AddEmployeeController implements Controller {
         return badRequest(error)
       }
       const createdEmployee = await this.addEmployee.add(request)
-      if (!createdEmployee) return forbidden(new Error('O e-mail já existe'))
+      if (!createdEmployee) return forbidden(new EmailInUseError())
 
       return ok(createdEmployee)
     } catch (error) {
