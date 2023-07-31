@@ -1,11 +1,8 @@
-import {
-  AddEmployees,
-  AddEmployeesResult,
-} from '@/app/business/domain/usecases'
+import { AddEmployee, AddEmployeesResult } from '@/app/business/domain/usecases'
 import { EmployeeRepository } from '../protocols'
 import { Employee } from '../../domain/models'
 
-export class DbAddEmployee implements AddEmployees {
+export class DbAddEmployee implements AddEmployee {
   constructor(private readonly employeeRepository: EmployeeRepository) {}
   async add(param: Employee): Promise<AddEmployeesResult> {
     const exists = await this.employeeRepository.findByEmail(param.email)

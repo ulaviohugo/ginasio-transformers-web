@@ -1,6 +1,6 @@
 import { Employee } from '../models'
 
-export interface AddEmployees {
+export interface AddEmployee {
   add(param: Employee): Promise<AddEmployeesResult>
 }
 

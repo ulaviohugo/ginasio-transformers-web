@@ -1,11 +1,11 @@
 import { Employee } from '../../domain/models'
-import { AddEmployees } from '../../domain/usecases'
+import { AddEmployee } from '../../domain/usecases'
 import { badRequest, forbidden, ok, serverError } from '../helper'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
 export class AddEmployeeController implements Controller {
   constructor(
-    private readonly addEmployee: AddEmployees,
+    private readonly addEmployee: AddEmployee,
     private readonly validation: Validation
   ) {}
   async handle(request: AddEmployeeControllerRequest): Promise<HttpResponse> {
