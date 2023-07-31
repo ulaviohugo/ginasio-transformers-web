@@ -5,5 +5,6 @@ export interface EmployeeRepository {
   findByEmail(email: string): Promise<Employee | null>
   findById(employeeId: number): Promise<Employee | null>
   loadAll(): Promise<Employee[]>
+  update(param: Employee): Promise<Employee>
   delete(employeeId: number): Promise<boolean>
 }
