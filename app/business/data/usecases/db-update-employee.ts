@@ -20,6 +20,7 @@ export class DbUpdateEmployee implements UpdateEmployee {
       contractEndDate: param.contractEndDate
         ? new Date(param.contractEndDate)
         : param.dateOfBirth,
+      updatedAt: new Date(),
     }
     return this.employeeRepository.update(employee)
   }

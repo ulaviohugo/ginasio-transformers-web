@@ -21,4 +21,8 @@ export interface Employee {
   workTime?: string
   iban?: string
   accountNumber?: string
+  createdAt: Date
+  createdBy?: number
+  updatedAt?: Date
+  updatedBy?: number
 }
