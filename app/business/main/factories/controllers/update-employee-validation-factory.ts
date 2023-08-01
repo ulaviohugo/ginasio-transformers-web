@@ -3,6 +3,7 @@ import { Validation } from '@/app/business/presentation/protocols'
 import {
   EmailValidation,
   GreaterThanValidation,
+  NumberValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '@/app/business/validation/validators'
@@ -37,7 +38,8 @@ export const makeUpdateEmployeeValidation = () => {
   }
   validations.push(
     new EmailValidation('email'),
-    new GreaterThanValidation('id', 0)
+    new GreaterThanValidation('id', 0),
+    new NumberValidation('dependents')
   )
   return new ValidationComposite(validations)
 }

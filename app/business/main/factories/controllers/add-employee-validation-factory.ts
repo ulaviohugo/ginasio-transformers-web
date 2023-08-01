@@ -2,6 +2,7 @@ import { Employee } from '@/app/business/domain/models'
 import { Validation } from '@/app/business/presentation/protocols'
 import {
   EmailValidation,
+  NumberValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '@/app/business/validation/validators'
@@ -34,6 +35,9 @@ export const makeAddEmployeeValidation = () => {
   for (const field of fields) {
     validations.push(new RequiredFieldValidation(field))
   }
-  validations.push(new EmailValidation('email'))
+  validations.push(
+    new EmailValidation('email'),
+    new NumberValidation('dependents')
+  )
   return new ValidationComposite(validations)
 }
