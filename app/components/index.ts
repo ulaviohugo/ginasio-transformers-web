@@ -1,3 +1,7 @@
+export * from './employee'
 export * from './footer'
 export * from './header'
+export * from './icons'
 export * from './layout'
+export * from './modal'
+export * from './spinner'

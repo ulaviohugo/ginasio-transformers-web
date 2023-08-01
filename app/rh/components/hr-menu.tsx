@@ -28,9 +28,8 @@ const MenuItem = ({ active, link, text }: ItemProps) => {
     <li>
       <Link
         href={link}
-        className={`flex px-2 py-1 hover:bg-gray-200 ${
-          active && 'bg-gray-200'
-        }`}
+        className={`flex px-2 py-1 hover:bg-gray-200 
+				${active && 'bg-gray-200'}`}
       >
         {text}
       </Link>
