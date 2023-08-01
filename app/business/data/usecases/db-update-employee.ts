@@ -7,7 +7,6 @@ export class DbUpdateEmployee implements UpdateEmployee {
 
   async update(param: Employee): Promise<Employee | 'notFound' | 'emailInUse'> {
     const foundById = await this.employeeRepository.findById(param.id)
-
     if (!foundById) return 'notFound'
 
     const exists = await this.employeeRepository.findByEmail(param.email)
