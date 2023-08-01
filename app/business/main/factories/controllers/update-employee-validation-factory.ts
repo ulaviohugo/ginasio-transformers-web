@@ -37,8 +37,8 @@ export const makeUpdateEmployeeValidation = () => {
     validations.push(new RequiredFieldValidation(field))
   }
   validations.push(
-    new EmailValidation('email'),
     new GreaterThanValidation('id', 0),
+    new EmailValidation('email'),
     new NumberValidation('dependents')
   )
   return new ValidationComposite(validations)
