@@ -13,18 +13,23 @@ export const makeAddEmployeeValidation = () => {
   const fields: FieldTypes[] = [
     'name',
     'gender',
-    'email',
     'dateOfBirth',
     'hireDate',
     'maritalStatus',
     'educationDegree',
     'phone1',
+    'phone2',
     'email',
     'residentialAddress',
     'documentType',
     'documentNumber',
     'nif',
     'dependents',
+    'socialSecurity',
+    'position',
+    'baseSalary',
+    'iban',
+    'accountNumber',
   ]
   for (const field of fields) {
     validations.push(new RequiredFieldValidation(field))
