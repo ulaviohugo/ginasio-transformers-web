@@ -2,11 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
+
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -14,29 +16,29 @@ model Employee {
   id                 Int       @id @default(autoincrement())
   name               String
   gender             String
-  dateOfBirth        DateTime
-  hireDate           DateTime
-  maritalStatus      String
-  educationDegree    String
+  dateOfBirth        DateTime  @map("date_of_birth")
+  hireDate           DateTime  @map("hire_date")
+  maritalStatus      String    @map("marital_status")
+  educationDegree    String    @map("education_degree")
   phone1             String
   phone2             String?
   email              String    @unique
-  residentialAddress String
-  documentType       String
-  documentNumber     String
+  residentialAddress String    @map("residential_address")
+  documentType       String    @map("document_type")
+  documentNumber     String    @map("document_number")
   nif                String
   dependents         Int       @default(0)
-  socialSecurity     String?
+  socialSecurity     String?   @map("social_security")
   position           String
-  baseSalary         Float?
-  contractEndDate    DateTime?
-  workTime           String?
+  baseSalary         Float?    @map("base_salary")
+  contractEndDate    DateTime? @map("contract_end_date")
+  workTime           String?   @map("work_time")
   iban               String?
-  accountNumber      String?
-  createdAt          DateTime  @default(now())
-  createdBy          Int?
-  updatedAt          DateTime?
-  updatedBy          Int?
+  accountNumber      String?   @map("account_number")
+  createdBy          Int?      @map("created_by")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedBy          Int?      @map("updated_by")
+  updatedAt          DateTime? @map("updated_at")
 
   @@map("tb_employees")
 }
