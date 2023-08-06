@@ -1,8 +1,8 @@
-import { adaptRoute } from '@/app/business/main/adapters'
+import { adaptRoute } from '@/app/main/adapters'
 import {
   makeAddEmployeeController,
   makeLoadEmployeeController,
-} from '@/app/business/main/factories'
+} from '@/app/main/factories'
 
 export async function GET() {
   return adaptRoute(makeLoadEmployeeController())

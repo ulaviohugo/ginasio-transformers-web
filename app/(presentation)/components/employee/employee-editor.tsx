@@ -1,4 +1,4 @@
-import { Employee } from '@/app/business/domain/models'
+import { Employee } from '@/app/domain/models'
 import { Modal, ModalBody, ModalTitle } from '..'
 
 type EmployeeEditorProps = {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { HRMenu } from './components'
-import { Employee } from '@/app/business/domain/models'
+import { Employee } from '@/app/domain/models'
 import {
   EmployeeEditor,
   IconPlus,
@@ -10,7 +10,7 @@ import {
   LayoutBody,
   Spinner,
 } from '@/app/(presentation)/components'
-import { NumberUtils } from '@/app/business/utils'
+import { NumberUtils } from '@/app/utils'
 9
 export default function Employees() {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>(
