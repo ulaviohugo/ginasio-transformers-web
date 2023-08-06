@@ -1,13 +1,13 @@
 import { adaptRoute } from '@/app/main/adapters'
 import {
-  makeAddEmployeeController,
-  makeLoadEmployeeController,
+	makeAddEmployeeController,
+	makeLoadEmployeeController
 } from '@/app/main/factories'
 
 export async function GET() {
-  return adaptRoute(makeLoadEmployeeController())
+	return adaptRoute(makeLoadEmployeeController())
 }
 
 export async function POST(request: Request) {
-  return adaptRoute(makeAddEmployeeController(), request)
+	return adaptRoute(makeAddEmployeeController(), request)
 }

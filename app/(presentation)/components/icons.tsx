@@ -1,14 +1,14 @@
 import React from 'react'
 import { IconBaseProps } from 'react-icons'
 import {
-  HiBriefcase,
-  HiCheckCircle,
-  HiHome,
-  HiInformationCircle,
-  HiMail,
-  HiPhone,
-  HiPlus,
-  HiUser,
+	HiBriefcase,
+	HiCheckCircle,
+	HiHome,
+	HiInformationCircle,
+	HiMail,
+	HiPhone,
+	HiPlus,
+	HiUser
 } from 'react-icons/hi'
 import { BsCodeSlash, BsFillRocketTakeoffFill } from 'react-icons/bs'
 import { RiExternalLinkLine } from 'react-icons/ri'
@@ -18,47 +18,45 @@ import { ImSpinner2 } from 'react-icons/im'
 import { IoIosMenu, IoMdClose } from 'react-icons/io'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
-  <HiBriefcase {...props} />
+	<HiBriefcase {...props} />
 )
 export const IconClock = (props: IconBaseProps): React.ReactElement => (
-  <AiOutlineClockCircle {...props} />
+	<AiOutlineClockCircle {...props} />
 )
 export const IconCheckCircle = (props: IconBaseProps): React.ReactElement => (
-  <HiCheckCircle {...props} />
+	<HiCheckCircle {...props} />
 )
 export const IconContact = (props: IconBaseProps): React.ReactElement => (
-  <HiPhone {...props} />
+	<HiPhone {...props} />
 )
 export const IconEmail = (props: IconBaseProps): React.ReactElement => (
-  <HiMail {...props} />
+	<HiMail {...props} />
 )
 export const IconHome = (props: IconBaseProps): React.ReactElement => (
-  <HiHome {...props} />
+	<HiHome {...props} />
 )
 export const IconInfo = (props: IconBaseProps): React.ReactElement => (
-  <HiInformationCircle {...props} />
+	<HiInformationCircle {...props} />
 )
 export const IconLink = (props: IconBaseProps): React.ReactElement => (
-  <RiExternalLinkLine {...props} />
+	<RiExternalLinkLine {...props} />
 )
 export const IconLocation = (props: IconBaseProps): React.ReactElement => (
-  <MdLocationOn {...props} />
+	<MdLocationOn {...props} />
 )
 export const IconPhone = (props: IconBaseProps): React.ReactElement => (
-  <HiPhone {...props} />
+	<HiPhone {...props} />
 )
 export const IconPlus = (props: IconBaseProps): React.ReactElement => (
-  <HiPlus {...props} />
+	<HiPlus {...props} />
 )
 export const IconSpinner = (props: IconBaseProps): React.ReactElement => (
-  <ImSpinner2 {...props} />
+	<ImSpinner2 {...props} />
 )
 export const IconUser = (props: IconBaseProps): React.ReactElement => (
-  <HiUser {...props} />
+	<HiUser {...props} />
 )
 
 export const IconMenu = (props: IconBaseProps) => <IoIosMenu {...props} />
 export const IconClose = (props: IconBaseProps) => <IoMdClose {...props} />
-export const IconBuilding = (props: IconBaseProps) => (
-  <AiOutlineBuild {...props} />
-)
+export const IconBuilding = (props: IconBaseProps) => <AiOutlineBuild {...props} />

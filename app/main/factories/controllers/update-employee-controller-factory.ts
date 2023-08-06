@@ -4,8 +4,8 @@ import { makeUpdateEmployeeValidation } from '.'
 import { makeUpdateEmployee } from '..'
 
 export const makeUpdateEmployeeController = (): Controller => {
-  return new UpdateEmployeeController(
-    makeUpdateEmployee(),
-    makeUpdateEmployeeValidation()
-  )
+	return new UpdateEmployeeController(
+		makeUpdateEmployee(),
+		makeUpdateEmployeeValidation()
+	)
 }

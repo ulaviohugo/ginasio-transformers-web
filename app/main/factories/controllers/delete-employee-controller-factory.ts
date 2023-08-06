@@ -4,8 +4,8 @@ import { makeDeleteEmployee } from '..'
 import { GreaterThanValidation } from '@/app/validation/validators'
 
 export const makeDeleteEmployeeController = (): Controller => {
-  return new DeleteEmployeeController(
-    makeDeleteEmployee(),
-    new GreaterThanValidation('id', 0)
-  )
+	return new DeleteEmployeeController(
+		makeDeleteEmployee(),
+		new GreaterThanValidation('id', 0)
+	)
 }

@@ -1,7 +1,7 @@
 import { Employee } from '../models'
 
 export interface LoadEmployees {
-  load(): Promise<LoadEmployeesResult>
+	load(): Promise<LoadEmployeesResult>
 }
 
 export type LoadEmployeesResult = Employee[]

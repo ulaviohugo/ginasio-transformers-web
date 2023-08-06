@@ -4,8 +4,5 @@ import { makeAddEmployee } from '..'
 import { AddEmployeeController } from '@/app/infra/http/controllers'
 
 export const makeAddEmployeeController = (): Controller => {
-  return new AddEmployeeController(
-    makeAddEmployee(),
-    makeAddEmployeeValidation()
-  )
+	return new AddEmployeeController(makeAddEmployee(), makeAddEmployeeValidation())
 }
