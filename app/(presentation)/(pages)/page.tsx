@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Layout, LayoutBody } from './components'
+import { Layout, LayoutBody } from '../components'
 
 export const metadata: Metadata = {
   title: 'Sistema de Facuturação WO',
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <Layout>
-      <LayoutBody>Ola</LayoutBody>
+      <LayoutBody>Página home</LayoutBody>
     </Layout>
   )
 }

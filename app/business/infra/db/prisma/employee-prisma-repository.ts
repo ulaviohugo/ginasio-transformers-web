@@ -1,11 +1,12 @@
 import { EmployeeRepository } from '@/app/business/data/protocols'
-import { PrismaService } from '.'
+import { prismaService } from '.'
 import { Employee } from '@/app/business/domain/models'
+import { PrismaClient } from '@prisma/client'
 
 export class EmployeePrismaRepository implements EmployeeRepository {
-  private prisma: PrismaService
+  private prisma: PrismaClient
   constructor() {
-    this.prisma = new PrismaService()
+    this.prisma = prismaService
   }
 
   async add(param: Employee): Promise<Employee> {
