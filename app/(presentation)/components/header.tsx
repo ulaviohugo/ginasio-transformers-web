@@ -1,8 +1,12 @@
 'use client'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export function Header() {
+	const handleSignout = async () => {
+		await signOut({ callbackUrl: '/login' })
+	}
 	const path = usePathname()
 	return (
 		<header className="bg-gray-600 text-gray-200 h-screen">
@@ -18,7 +22,10 @@ export function Header() {
 					<Item active={path == '/admin'} link={'/admin'} text="Administrativo" />
 				</ul>
 				<div className="flex flex-col mt-auto p-2">
-					<button className="flex justify-center border px-2 py-1 text-sm font-semibold rounded-md">
+					<button
+						className="flex justify-center border px-2 py-1 text-sm font-semibold rounded-md"
+						onClick={handleSignout}
+					>
 						Sair
 					</button>
 				</div>

@@ -5,6 +5,7 @@ import {
 	HiCheckCircle,
 	HiHome,
 	HiInformationCircle,
+	HiKey,
 	HiMail,
 	HiPhone,
 	HiPlus,
@@ -29,6 +30,7 @@ export const IconCheckCircle = (props: IconBaseProps): React.ReactElement => (
 export const IconContact = (props: IconBaseProps): React.ReactElement => (
 	<HiPhone {...props} />
 )
+export const IconKey = (props: IconBaseProps): React.ReactElement => <HiKey {...props} />
 export const IconEmail = (props: IconBaseProps): React.ReactElement => (
 	<HiMail {...props} />
 )

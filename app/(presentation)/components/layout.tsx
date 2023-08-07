@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { Footer, Header } from '.'
 
 type LayoutProps = {
@@ -7,8 +7,6 @@ type LayoutProps = {
 }
 
 export function Layout({ children }: LayoutProps) {
-	// const user = await getCurrentUser()
-	// return <>{JSON.stringify(user)}</>
 	return (
 		<div className="flex">
 			<Header />

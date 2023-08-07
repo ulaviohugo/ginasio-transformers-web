@@ -1,5 +1,7 @@
+'use client'
 import { Employee } from '@/app/domain/models'
-import { Modal, ModalBody, ModalTitle } from '..'
+import { Input, Modal, ModalBody, ModalTitle, Select, Spinner, TextArea } from '..'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -8,277 +10,289 @@ type EmployeeEditorProps = {
 }
 
 export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps) {
+	const [formDate, setFormData] = useState<Employee>({} as Employee)
+	const [isLoading, setIsLoading] = useState(false)
+
+	const handleInputChange = async (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+	) => {
+		const { name, value } = e.target
+		setFormData((prev) => ({ ...prev, [name]: value }))
+	}
+
+	const handleSubmit = async (e: FormEvent) => {
+		e.preventDefault()
+
+		setIsLoading(true)
+
+		fetch('http://localhost:3000/api/employees', {
+			method: 'Post',
+			body: JSON.stringify(formDate)
+		})
+			.then((response) => response.json())
+			.catch((error) => {
+				console.log('Erro', error.message)
+			})
+			.finally(() => {
+				setIsLoading(false)
+			})
+	}
 	return (
 		<Modal show={show} onClose={onClose}>
 			<ModalTitle>
-				<h2 className="text-xl font-semibold mb-4">Formulário Extraordinário</h2>
+				<h2 className="text-xl font-semibold mb-4">
+					{employee?.id ? 'Editar' : 'Cadastrar'} funcionário
+				</h2>
 			</ModalTitle>
 			<ModalBody>
 				<div className="mx-auto bg-white p-1 rounded shadow-md">
-					<form className="">
+					<form className="" onSubmit={handleSubmit}>
 						<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
-							<div>
-								<label htmlFor="name" className="block font-medium text-gray-700">
-									Nome:
-								</label>
-								<input
+							<div className="md:col-span-2">
+								<Input
 									type="text"
 									id="name"
 									name="name"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.name || ''}
+									label="Nome"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="gender" className="block font-medium text-gray-700">
-									Gênero:
-								</label>
-								<input
-									type="text"
+								<Select
 									id="gender"
 									name="gender"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.gender || ''}
+									label="Género"
+									data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
+									defaultText="Selecione"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="dateOfBirth" className="block font-medium text-gray-700">
-									Data de Nascimento:
-								</label>
-								<input
+								<Input
 									type="date"
 									id="dateOfBirth"
 									name="dateOfBirth"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.dateOfBirth || ''}
+									label="Data de Nascimento"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="hireDate" className="block font-medium text-gray-700">
-									Data de Contratação:
-								</label>
-								<input
+								<Input
 									type="date"
 									id="hireDate"
 									name="hireDate"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.hireDate || ''}
+									label="Data de Contratação"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label
-									htmlFor="maritalStatus"
-									className="block font-medium text-gray-700"
-								>
-									Estado Civil:
-								</label>
-								<select
+								<Select
 									id="maritalStatus"
 									name="maritalStatus"
-									className="mt-1 p-2 w-full border rounded"
-								>
-									<option value="single">Solteiro(a)</option>
-									<option value="married">Casado(a)</option>
-									<option value="divorced">Divorciado(a)</option>
-									<option value="widowed">Viúvo(a)</option>
-								</select>
+									value={formDate?.maritalStatus || ''}
+									label="Estado Civil"
+									data={[
+										{ value: 'single', text: 'Solteiro(a)' },
+										{ value: 'married', text: 'Casado(a)' },
+										{ value: 'divorced', text: 'Divorciado(a)' },
+										{ value: 'widowed', text: 'Viúvo(a)' }
+									]}
+									defaultText="Selecione"
+									className="w-full"
+									onChange={handleInputChange}
+								/>
 							</div>
 							<div>
-								<label
-									htmlFor="educationDegree"
-									className="block font-medium text-gray-700"
-								>
-									Grau de Educação:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="educationDegree"
 									name="educationDegree"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.educationDegree || ''}
+									label="Grau de Educação"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="phone1" className="block font-medium text-gray-700">
-									Telefone 1:
-								</label>
-								<input
+								<Input
 									type="tel"
 									id="phone1"
 									name="phone1"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.phone1 || ''}
+									label="Telefone 1"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="phone2" className="block font-medium text-gray-700">
-									Telefone 2:
-								</label>
-								<input
+								<Input
 									type="tel"
 									id="phone2"
 									name="phone2"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.phone2 || ''}
+									label="Telefone 2"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="email" className="block font-medium text-gray-700">
-									Email:
-								</label>
-								<input
+								<Input
 									type="email"
 									id="email"
 									name="email"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.email || ''}
+									label="Email"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
-							<div className="md:col-span-2">
-								<label
-									htmlFor="residentialAddress"
-									className="block font-medium text-gray-700"
-								>
-									Endereço Residencial:
-								</label>
-								<textarea
+							<div className="xl:col-span-4 lg:col-span-3 md:col-span-2">
+								<TextArea
 									id="residentialAddress"
 									name="residentialAddress"
+									value={formDate?.residentialAddress || ''}
+									label="Endereço Residencial"
 									rows={2}
-									className="mt-1 p-2 w-full border rounded"
-								></textarea>
+									className="w-full"
+									onChange={handleInputChange}
+								></TextArea>
 							</div>
 							<div>
-								<label htmlFor="documentType" className="block font-medium text-gray-700">
-									Tipo de Documento:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="documentType"
 									name="documentType"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.documentType || ''}
+									label="Tipo de Documento"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label
-									htmlFor="documentNumber"
-									className="block font-medium text-gray-700"
-								>
-									Número do Documento:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="documentNumber"
 									name="documentNumber"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.documentNumber || ''}
+									label="Número do Documento"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="nif" className="block font-medium text-gray-700">
-									NIF:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="nif"
 									name="nif"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.nif || ''}
+									label="NIF"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="dependents" className="block font-medium text-gray-700">
-									Número de Dependentes:
-								</label>
-								<input
+								<Input
 									type="number"
 									id="dependents"
 									name="dependents"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.dependents || ''}
+									label="Número de Dependentes"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label
-									htmlFor="socialSecurity"
-									className="block font-medium text-gray-700"
-								>
-									Segurança Social:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="socialSecurity"
 									name="socialSecurity"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.socialSecurity || ''}
+									label="Segurança Social"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="position" className="block font-medium text-gray-700">
-									Cargo:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="position"
 									name="position"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.position || ''}
+									label="Cargo"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="baseSalary" className="block font-medium text-gray-700">
-									Salário Base:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="baseSalary"
 									name="baseSalary"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.baseSalary || ''}
+									label="Salário Base"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label
-									htmlFor="contractEndDate"
-									className="block font-medium text-gray-700"
-								>
-									Data de Fim de Contrato:
-								</label>
-								<input
+								<Input
 									type="date"
 									id="contractEndDate"
 									name="contractEndDate"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.contractEndDate || ''}
+									label="Data de Fim de Contrato"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="workTime" className="block font-medium text-gray-700">
-									Horário de Trabalho:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="workTime"
 									name="workTime"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.workTime || ''}
+									label="Horário de Trabalho"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label htmlFor="iban" className="block font-medium text-gray-700">
-									IBAN:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="iban"
 									name="iban"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.iban || ''}
+									label="IBAN"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div>
-								<label
-									htmlFor="accountNumber"
-									className="block font-medium text-gray-700"
-								>
-									Número de Conta:
-								</label>
-								<input
+								<Input
 									type="text"
 									id="accountNumber"
 									name="accountNumber"
-									className="mt-1 p-2 w-full border rounded"
+									value={formDate?.accountNumber || ''}
+									label="Número de conta bancária"
+									className="w-full"
+									onChange={handleInputChange}
 								/>
 							</div>
 						</div>
 						<button
 							type="submit"
+							disabled={isLoading}
 							className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
 						>
-							Enviar
+							Enviar {isLoading && <Spinner />}
 						</button>
 					</form>
 				</div>

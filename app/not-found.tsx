@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { Layout, LayoutBody } from '../components'
+import { Layout, LayoutBody } from './(presentation)/components'
 
 export const metadata: Metadata = {
 	title: 'Página não encontrada'

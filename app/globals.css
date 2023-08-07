@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+	@apply text-gray-600
+}
+
+:disabled{
+	@apply cursor-not-allowed opacity-80
+}
 
 /* width */
 ::-webkit-scrollbar {
