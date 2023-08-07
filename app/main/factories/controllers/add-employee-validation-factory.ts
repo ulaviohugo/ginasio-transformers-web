@@ -23,6 +23,7 @@ export const makeAddEmployeeValidation = () => {
 		'residentialAddress',
 		'documentType',
 		'documentNumber',
+		'nif',
 		'dependents',
 		'position',
 		'baseSalary'

@@ -24,6 +24,7 @@ export const makeUpdateEmployeeValidation = () => {
 		'residentialAddress',
 		'documentType',
 		'documentNumber',
+		'nif',
 		'dependents',
 		'position',
 		'baseSalary'
