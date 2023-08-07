@@ -12,7 +12,7 @@ import {
 	ModalDelete,
 	Spinner
 } from '@/app/(presentation)/components'
-import { NumberUtils } from '@/app/utils'
+import { DateUtils, NumberUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteADeleteEmployee,
@@ -124,7 +124,18 @@ export default function Employees() {
 								employees.map((employee) => (
 									<li key={employee.id} className="p-4 shadow">
 										<div className="font-semibold">{employee.name}</div>
-										<div className="text-sm">{NumberUtils.format(employee.phone1)}</div>
+										<div className="text-sm">
+											Início de contrato: {DateUtils.getDatePt(employee.hireDate, '/')}
+										</div>
+										{employee.contractEndDate && (
+											<div className="text-sm">
+												Fim de contrato:{' '}
+												{DateUtils.getDatePt(employee.contractEndDate, '/')}
+											</div>
+										)}
+										<div className="text-sm">
+											Telefone: {NumberUtils.format(employee.phone1)}
+										</div>
 										<div className="flex">
 											<button onClick={() => handleOpenDetalhe(employee)}>Detalhe</button>
 											<button onClick={() => handleOpenFormDelete(employee)}>
