@@ -9,6 +9,7 @@ export class RemoteAddEmployee implements AddEmployee {
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
+
 	async add(param: Employee): Promise<Employee> {
 		const body = ObjectUtils.removeProps<Employee>(param, [
 			'createdAt',

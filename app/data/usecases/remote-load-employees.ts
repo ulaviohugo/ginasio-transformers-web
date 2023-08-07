@@ -7,6 +7,7 @@ export class RemoteLoadEmployees implements LoadEmployees {
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
+
 	async load(): Promise<LoadEmployeesResult> {
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
