@@ -1,6 +1,6 @@
 'use client'
 import { ReactNode, useState } from 'react'
-import { IconClose } from '.'
+import { IconClose } from '..'
 
 type ModalProps = {
 	children: ReactNode
@@ -34,7 +34,9 @@ type ModalTitleProps = {
 }
 
 export function ModalTitle({ children }: ModalTitleProps) {
-	return <div className="flex gap-1 items-center">{children}</div>
+	return (
+		<div className="flex gap-1 items-center text-xl font-semibold mb-4">{children}</div>
+	)
 }
 
 type ModalBodyProps = {
