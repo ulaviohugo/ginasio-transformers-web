@@ -2,11 +2,13 @@
 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { toast, ToastType } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
 import { Input, Modal, ModalBody, ModalTitle, Select, Spinner, TextArea } from '..'
 import { makeRemoteAddEmployee } from '@/app/main/factories/usecases/remote'
 import { DateUtils } from '@/app/utils'
+import { addEmployee } from '../../redux'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -15,6 +17,7 @@ type EmployeeEditorProps = {
 }
 
 export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps) {
+	const dispatch = useDispatch()
 	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +34,9 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 		setIsLoading(true)
 		try {
 			const httpResponse = await makeRemoteAddEmployee().add(formDate)
+			dispatch(addEmployee(httpResponse))
 			toast.success('Funcionário cadastrado com sucesso')
+			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
