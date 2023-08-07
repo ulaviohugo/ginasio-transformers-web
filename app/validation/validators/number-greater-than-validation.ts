@@ -1,5 +1,6 @@
 import { Validation } from '@/app/infra/http/protocols'
 import { NumberValidation } from '.'
+import { LabelUtils } from '@/app/utils'
 
 export class NumberGreaterThanValidation implements Validation {
 	constructor(
@@ -14,7 +15,8 @@ export class NumberGreaterThanValidation implements Validation {
 		const numberValue = Number(input[this.fieldName])
 		if (numberValue <= this.valueToCompare) {
 			return new Error(
-				`O parâmetro ${this.fieldName} tem de ser maior que ${this.valueToCompare}`
+				`O parâmetro ${LabelUtils.translateField(this.fieldName)} tem de ser maior que 
+				${this.valueToCompare}`
 			)
 		}
 	}

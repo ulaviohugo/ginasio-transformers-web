@@ -1,4 +1,5 @@
 import { Validation } from '@/app/infra/http/protocols'
+import { LabelUtils } from '@/app/utils'
 
 export class NumberValidation implements Validation {
 	constructor(private readonly fieldName: string) {}
@@ -7,7 +8,10 @@ export class NumberValidation implements Validation {
 		const numberRegex = /^[0-9]{1,50}$/
 		const isValid = numberRegex.test(input[this.fieldName])
 		if (!isValid) {
-			return new Error(`O parâmetro ${this.fieldName} tem de ter formato numérico`)
+			return new Error(
+				`O parâmetro 
+				${LabelUtils.translateField(this.fieldName)} tem de ter formato numérico`
+			)
 		}
 	}
 }

@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { Employee } from '@/app/domain/models'
 import { Input, Modal, ModalBody, ModalTitle, Select, Spinner, TextArea } from '..'
 
-import { DateUtils } from '@/app/utils'
+import { DateUtils, LabelUtils } from '@/app/utils'
 import { addEmployeeStore, updateEmployeeStore } from '../../redux'
 import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
 
@@ -76,9 +76,10 @@ export function EmployeeEditor({
 									id="name"
 									name="name"
 									value={formDate?.name || ''}
-									label="Nome"
+									label={LabelUtils.translateField<Employee>('name')}
 									className="w-full"
 									onChange={handleInputChange}
+									autoFocus
 								/>
 							</div>
 							<div>
@@ -86,7 +87,7 @@ export function EmployeeEditor({
 									id="gender"
 									name="gender"
 									value={formDate?.gender || ''}
-									label="Género"
+									label={LabelUtils.translateField<Employee>('gender')}
 									data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
 									defaultText="Selecione"
 									className="w-full"
@@ -102,7 +103,7 @@ export function EmployeeEditor({
 										(formDate?.dateOfBirth && DateUtils.getDate(formDate?.dateOfBirth)) ||
 										''
 									}
-									label="Data de Nascimento"
+									label={LabelUtils.translateField<Employee>('dateOfBirth')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -112,7 +113,7 @@ export function EmployeeEditor({
 									id="maritalStatus"
 									name="maritalStatus"
 									value={formDate?.maritalStatus || ''}
-									label="Estado Civil"
+									label={LabelUtils.translateField<Employee>('maritalStatus')}
 									data={[
 										{ value: 'single', text: 'Solteiro(a)' },
 										{ value: 'married', text: 'Casado(a)' },
@@ -130,7 +131,7 @@ export function EmployeeEditor({
 									id="educationDegree"
 									name="educationDegree"
 									value={formDate?.educationDegree || ''}
-									label="Grau de Educação"
+									label={LabelUtils.translateField<Employee>('educationDegree')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -141,7 +142,7 @@ export function EmployeeEditor({
 									id="phone1"
 									name="phone1"
 									value={formDate?.phone1 || ''}
-									label="Telefone 1"
+									label={LabelUtils.translateField<Employee>('phone1')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -152,7 +153,7 @@ export function EmployeeEditor({
 									id="phone2"
 									name="phone2"
 									value={formDate?.phone2 || ''}
-									label="Telefone 2"
+									label={LabelUtils.translateField<Employee>('phone2')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -163,7 +164,7 @@ export function EmployeeEditor({
 									id="email"
 									name="email"
 									value={formDate?.email || ''}
-									label="Email"
+									label={LabelUtils.translateField<Employee>('email')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -173,7 +174,7 @@ export function EmployeeEditor({
 									id="residentialAddress"
 									name="residentialAddress"
 									value={formDate?.residentialAddress || ''}
-									label="Endereço Residencial"
+									label={LabelUtils.translateField<Employee>('residentialAddress')}
 									rows={2}
 									className="w-full"
 									onChange={handleInputChange}
@@ -184,7 +185,7 @@ export function EmployeeEditor({
 									id="documentType"
 									name="documentType"
 									value={formDate?.documentType || ''}
-									label="Tipo de Documento"
+									label={LabelUtils.translateField<Employee>('documentType')}
 									data={[
 										{ text: 'Bilhete de identidade' },
 										{ text: 'Passaporte' },
@@ -201,7 +202,7 @@ export function EmployeeEditor({
 									id="documentNumber"
 									name="documentNumber"
 									value={formDate?.documentNumber || ''}
-									label="Número do Documento"
+									label={LabelUtils.translateField<Employee>('documentNumber')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -212,7 +213,7 @@ export function EmployeeEditor({
 									id="nif"
 									name="nif"
 									value={formDate?.nif || ''}
-									label="NIF"
+									label={LabelUtils.translateField<Employee>('nif')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -223,7 +224,7 @@ export function EmployeeEditor({
 									id="dependents"
 									name="dependents"
 									value={formDate?.dependents || ''}
-									label="Número de Dependentes"
+									label={LabelUtils.translateField<Employee>('dependents')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -234,7 +235,7 @@ export function EmployeeEditor({
 									id="socialSecurity"
 									name="socialSecurity"
 									value={formDate?.socialSecurity || ''}
-									label="Segurança Social"
+									label={LabelUtils.translateField<Employee>('socialSecurity')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -245,7 +246,7 @@ export function EmployeeEditor({
 									id="position"
 									name="position"
 									value={formDate?.position || ''}
-									label="Cargo"
+									label={LabelUtils.translateField<Employee>('position')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -256,7 +257,7 @@ export function EmployeeEditor({
 									id="baseSalary"
 									name="baseSalary"
 									value={formDate?.baseSalary || ''}
-									label="Salário Base"
+									label={LabelUtils.translateField<Employee>('baseSalary')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -269,7 +270,7 @@ export function EmployeeEditor({
 									value={
 										(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
 									}
-									label="Data de Contratação"
+									label={LabelUtils.translateField<Employee>('hireDate')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -284,7 +285,7 @@ export function EmployeeEditor({
 											DateUtils.getDate(formDate.contractEndDate)) ||
 										''
 									}
-									label="Data de Fim de Contrato"
+									label={LabelUtils.translateField<Employee>('contractEndDate')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -295,7 +296,7 @@ export function EmployeeEditor({
 									id="workTime"
 									name="workTime"
 									value={formDate?.workTime || ''}
-									label="Tempo de trabalho"
+									label={LabelUtils.translateField<Employee>('workTime')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -306,7 +307,7 @@ export function EmployeeEditor({
 									id="iban"
 									name="iban"
 									value={formDate?.iban || ''}
-									label="IBAN"
+									label={LabelUtils.translateField<Employee>('iban')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
@@ -317,7 +318,7 @@ export function EmployeeEditor({
 									id="accountNumber"
 									name="accountNumber"
 									value={formDate?.accountNumber || ''}
-									label="Número de conta bancária"
+									label={LabelUtils.translateField<Employee>('accountNumber')}
 									className="w-full"
 									onChange={handleInputChange}
 								/>
