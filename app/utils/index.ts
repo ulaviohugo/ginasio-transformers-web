@@ -1,4 +1,5 @@
 export * from './date-utils'
-export * from './object-utils'
+export * from './label-utils'
 export * from './number-utils'
+export * from './object-utils'
 export * from './string-utils'
