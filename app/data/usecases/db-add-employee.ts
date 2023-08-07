@@ -20,7 +20,7 @@ export class DbAddEmployee implements AddEmployee {
 			hireDate: new Date(param.hireDate),
 			contractEndDate: param.contractEndDate
 				? new Date(param.contractEndDate)
-				: param.dateOfBirth
+				: (null as any)
 		}
 		return this.employeeRepository.add(employee)
 	}

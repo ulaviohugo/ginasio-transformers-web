@@ -26,7 +26,7 @@ export class DbUpdateEmployee implements UpdateEmployee {
 			hireDate: new Date(param.hireDate),
 			contractEndDate: param.contractEndDate
 				? new Date(param.contractEndDate)
-				: param.dateOfBirth,
+				: (null as any),
 			updatedAt: new Date()
 		}
 		return this.employeeRepository.update(employee)

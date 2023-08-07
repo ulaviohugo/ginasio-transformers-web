@@ -1,5 +1,6 @@
 export class DateUtils {
 	static getDate(dateParam: Date | string, separator = '-') {
+		if (!dateParam) return null
 		const date = this.convertToDate(dateParam)
 		const year = date.getUTCFullYear(),
 			month = (date.getUTCMonth() + 1).toString().padStart(2, '0'),
