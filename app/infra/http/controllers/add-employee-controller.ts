@@ -1,5 +1,5 @@
 import { AddEmployee } from '@/app/domain/usecases'
-import { EmailInUseError } from '../errors'
+import { DocumentInUseError, EmailInUseError } from '../errors'
 import { badRequest, forbidden, ok, serverError } from '../helper'
 import { Controller, HttpResponse, Validation } from '../protocols'
 import { Employee } from '@/app/domain/models'
@@ -20,8 +20,13 @@ export class AddEmployeeController implements Controller {
 				dependents: Number(request.dependents),
 				baseSalary: Number(request.baseSalary)
 			})
-			if (!createdEmployee) return forbidden(new EmailInUseError())
 
+			if (createdEmployee == 'emailInUse') {
+				return forbidden(new EmailInUseError())
+			}
+			if (createdEmployee == 'documentInUse') {
+				return forbidden(new DocumentInUseError())
+			}
 			return ok(createdEmployee)
 		} catch (error) {
 			return serverError(error)

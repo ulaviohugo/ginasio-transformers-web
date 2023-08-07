@@ -29,6 +29,15 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 		})) as Employee
 	}
 
+	async findByDocument(
+		documentType: string,
+		documentNumber: string
+	): Promise<Employee | null> {
+		return (await this.prisma.employee.findFirst({
+			where: { documentType, documentNumber }
+		})) as Employee
+	}
+
 	async update(param: Employee): Promise<Employee> {
 		return (await this.prisma.employee.update({
 			data: param,

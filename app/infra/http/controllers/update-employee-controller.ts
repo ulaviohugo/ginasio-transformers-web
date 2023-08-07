@@ -1,5 +1,5 @@
 import { UpdateEmployee } from '@/app/domain/usecases'
-import { EmailInUseError } from '../errors'
+import { DocumentInUseError, EmailInUseError } from '../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../helper'
 import { Controller, HttpResponse, Validation } from '../protocols'
 import { Employee } from '@/app/domain/models'
@@ -27,7 +27,9 @@ export class UpdateEmployeeController implements Controller {
 			if (updatedEmployee == 'emailInUse') {
 				return forbidden(new EmailInUseError())
 			}
-
+			if (updatedEmployee == 'documentInUse') {
+				return forbidden(new DocumentInUseError())
+			}
 			return ok(updatedEmployee)
 		} catch (error) {
 			return serverError(error)

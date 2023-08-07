@@ -4,4 +4,4 @@ export interface AddEmployee {
 	add(param: Employee): Promise<AddEmployeesResult>
 }
 
-export type AddEmployeesResult = Employee
+export type AddEmployeesResult = Employee | 'emailInUse' | 'documentInUse'
