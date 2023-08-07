@@ -20,7 +20,6 @@ export const makeUpdateEmployeeValidation = () => {
 		'maritalStatus',
 		'educationDegree',
 		'phone1',
-		'phone2',
 		'email',
 		'residentialAddress',
 		'documentType',

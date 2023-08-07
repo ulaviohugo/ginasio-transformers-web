@@ -17,7 +17,9 @@ export class UpdateEmployeeController implements Controller {
 			}
 			const updatedEmployee = await this.UpdateEmployee.update({
 				...request,
-				id: Number(request.id)
+				id: Number(request.id),
+				dependents: Number(request.dependents),
+				baseSalary: Number(request.baseSalary)
 			})
 			if (updatedEmployee == 'notFound') {
 				return notFound()

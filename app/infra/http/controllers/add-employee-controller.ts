@@ -15,7 +15,11 @@ export class AddEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			const createdEmployee = await this.addEmployee.add(request)
+			const createdEmployee = await this.addEmployee.add({
+				...request,
+				dependents: Number(request.dependents),
+				baseSalary: Number(request.baseSalary)
+			})
 			if (!createdEmployee) return forbidden(new EmailInUseError())
 
 			return ok(createdEmployee)

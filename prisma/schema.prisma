@@ -13,74 +13,31 @@ datasource db {
 
 model Employee {
   id                 Int       @id @default(autoincrement())
-  name               String
-  gender             String
-  dateOfBirth        DateTime  @map("date_of_birth")
-  hireDate           DateTime  @map("hire_date")
-  maritalStatus      String    @map("marital_status")
-  educationDegree    String    @map("education_degree")
-  phone1             String
-  phone2             String?
-  email              String    @unique
-  residentialAddress String    @map("residential_address")
-  documentType       String    @map("document_type")
-  documentNumber     String    @map("document_number")
-  nif                String
+  name               String    @db.VarChar(50)
+  gender             String    @db.VarChar(10)
+  dateOfBirth        DateTime  @map("date_of_birth") @db.Date
+  hireDate           DateTime  @map("hire_date") @db.Date
+  maritalStatus      String    @map("marital_status") @db.VarChar(15)
+  educationDegree    String    @map("education_degree") @db.VarChar(50)
+  phone1             String    @db.VarChar(15)
+  phone2             String?   @db.VarChar(15)
+  email              String    @unique @db.VarChar(50)
+  residentialAddress String    @map("residential_address") @db.VarChar(150)
+  documentType       String    @map("document_type") @db.VarChar(20)
+  documentNumber     String    @map("document_number") @db.VarChar(20)
+  nif                String    @db.VarChar(20)
   dependents         Int       @default(0)
-  socialSecurity     String?   @map("social_security")
-  position           String
+  socialSecurity     String?   @map("social_security") @db.VarChar(20)
+  position           String    @db.VarChar(50)
   baseSalary         Float?    @map("base_salary")
-  contractEndDate    DateTime? @map("contract_end_date")
-  workTime           String?   @map("work_time")
-  iban               String?
-  accountNumber      String?   @map("account_number")
+  contractEndDate    DateTime? @map("contract_end_date") @db.Date
+  workTime           String?   @map("work_time") @db.VarChar(50)
+  iban               String?   @db.VarChar(30)
+  accountNumber      String?   @map("account_number") @db.VarChar(30)
   createdBy          Int?      @map("created_by")
   createdAt          DateTime  @default(now()) @map("created_at")
   updatedBy          Int?      @map("updated_by")
   updatedAt          DateTime? @map("updated_at")
 
   @@map("tb_employees")
-}
-
-model Account {
-  id                Int     @id @default(autoincrement())
-  userId            Int
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("tb_accounts")
-}
-
-model Session {
-  id           Int      @id @default(autoincrement())
-  sessionToken String   @unique
-  userId       Int
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("tb_sessions")
-}
-
-model User {
-  id            Int       @id @default(autoincrement())
-  name          String?
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-
-  @@map("tb_users")
 }

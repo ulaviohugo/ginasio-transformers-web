@@ -1,7 +1,12 @@
 'use client'
+
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast, ToastType } from 'react-hot-toast'
+
 import { Employee } from '@/app/domain/models'
 import { Input, Modal, ModalBody, ModalTitle, Select, Spinner, TextArea } from '..'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { makeRemoteAddEmployee } from '@/app/main/factories/usecases/remote'
+import { DateUtils } from '@/app/utils'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -10,9 +15,9 @@ type EmployeeEditorProps = {
 }
 
 export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps) {
-	const [formDate, setFormData] = useState<Employee>({} as Employee)
-	const [isLoading, setIsLoading] = useState(false)
+	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
 
+	const [isLoading, setIsLoading] = useState(false)
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
@@ -24,18 +29,14 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 		e.preventDefault()
 
 		setIsLoading(true)
-
-		fetch('http://localhost:3000/api/employees', {
-			method: 'Post',
-			body: JSON.stringify(formDate)
-		})
-			.then((response) => response.json())
-			.catch((error) => {
-				console.log('Erro', error.message)
-			})
-			.finally(() => {
-				setIsLoading(false)
-			})
+		try {
+			const httpResponse = await makeRemoteAddEmployee().add(formDate)
+			toast.success('Funcionário cadastrado com sucesso')
+		} catch (error: any) {
+			toast.error(error.message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
@@ -76,7 +77,10 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 									type="date"
 									id="dateOfBirth"
 									name="dateOfBirth"
-									value={formDate?.dateOfBirth || ''}
+									value={
+										(formDate?.dateOfBirth && DateUtils.getDate(formDate?.dateOfBirth)) ||
+										''
+									}
 									label="Data de Nascimento"
 									className="w-full"
 									onChange={handleInputChange}
@@ -87,7 +91,9 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 									type="date"
 									id="hireDate"
 									name="hireDate"
-									value={formDate?.hireDate || ''}
+									value={
+										(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
+									}
 									label="Data de Contratação"
 									className="w-full"
 									onChange={handleInputChange}
@@ -247,7 +253,11 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 									type="date"
 									id="contractEndDate"
 									name="contractEndDate"
-									value={formDate?.contractEndDate || ''}
+									value={
+										(formDate?.contractEndDate &&
+											DateUtils.getDate(formDate.contractEndDate)) ||
+										''
+									}
 									label="Data de Fim de Contrato"
 									className="w-full"
 									onChange={handleInputChange}
@@ -290,7 +300,7 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+							className="flex items-center gap-2 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
 						>
 							Enviar {isLoading && <Spinner />}
 						</button>

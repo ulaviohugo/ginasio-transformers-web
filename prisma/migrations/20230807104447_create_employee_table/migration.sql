@@ -1,0 +1,32 @@
+-- CreateTable
+CREATE TABLE `tb_employees` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `gender` VARCHAR(10) NOT NULL,
+    `date_of_birth` DATE NOT NULL,
+    `hire_date` DATE NOT NULL,
+    `marital_status` VARCHAR(15) NOT NULL,
+    `education_degree` VARCHAR(50) NOT NULL,
+    `phone1` VARCHAR(15) NOT NULL,
+    `phone2` VARCHAR(15) NULL,
+    `email` VARCHAR(50) NOT NULL,
+    `residential_address` VARCHAR(150) NOT NULL,
+    `document_type` VARCHAR(20) NOT NULL,
+    `document_number` VARCHAR(20) NOT NULL,
+    `nif` VARCHAR(20) NOT NULL,
+    `dependents` INTEGER NOT NULL DEFAULT 0,
+    `social_security` VARCHAR(20) NULL,
+    `position` VARCHAR(50) NOT NULL,
+    `base_salary` DOUBLE NULL,
+    `contract_end_date` DATE NULL,
+    `work_time` VARCHAR(50) NULL,
+    `iban` VARCHAR(30) NULL,
+    `account_number` VARCHAR(30) NULL,
+    `created_by` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_by` INTEGER NULL,
+    `updated_at` DATETIME(3) NULL,
+
+    UNIQUE INDEX `tb_employees_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
