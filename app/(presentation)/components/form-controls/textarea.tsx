@@ -1,5 +1,7 @@
+'use client'
+
 import { StringUtils } from '@/app/utils'
-import { ElementType, TextareaHTMLAttributes } from 'react'
+import { ElementType, TextareaHTMLAttributes, useState } from 'react'
 import { FormControlWrapper } from '.'
 
 type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
@@ -8,12 +10,16 @@ type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
 }
 
 export function TextArea({ label, icon: Icon, className, ...props }: InputProps) {
+	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
+
 	return (
-		<FormControlWrapper label={label} icon={Icon} id={id}>
+		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
 			<textarea
 				className={`focus:outline-none text-sm ${className || ''}`}
 				id={id}
+				onFocus={() => setFocused(true)}
+				onBlur={() => setFocused(false)}
 				{...props}
 			/>
 		</FormControlWrapper>

@@ -1,5 +1,7 @@
+'use client'
+
 import { StringUtils } from '@/app/utils'
-import { ElementType, SelectHTMLAttributes } from 'react'
+import { ElementType, SelectHTMLAttributes, useState } from 'react'
 import { FormControlWrapper } from '.'
 
 type InputProps = SelectHTMLAttributes<HTMLSelectElement> & {
@@ -17,12 +19,16 @@ export function Select({
 	className,
 	...props
 }: InputProps) {
+	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
+
 	return (
-		<FormControlWrapper label={label} icon={Icon} id={id}>
+		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
 			<select
 				className={`focus:outline-none text-sm ${className || ''}`}
 				id={id}
+				onFocus={() => setFocused(true)}
+				onBlur={() => setFocused(false)}
 				{...props}
 			>
 				{defaultText && (
