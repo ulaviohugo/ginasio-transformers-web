@@ -25,7 +25,7 @@ model Employee {
   residentialAddress String    @map("residential_address") @db.VarChar(150)
   documentType       String    @map("document_type") @db.VarChar(30)
   documentNumber     String    @map("document_number") @db.VarChar(30)
-  nif                String?   @db.VarChar(20)
+  nif                String?   @unique @db.VarChar(20)
   dependents         Int       @default(0)
   socialSecurity     String?   @unique @map("social_security") @db.VarChar(20)
   position           String    @db.VarChar(50)
