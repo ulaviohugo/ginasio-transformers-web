@@ -174,7 +174,7 @@ export function EmployeeEditor({
 									onChange={handleInputChange}
 								/>
 							</div>
-							<div>
+							<div className="md:col-span-2">
 								<Input
 									type="email"
 									id="email"
@@ -299,7 +299,7 @@ export function EmployeeEditor({
 									id="workTime"
 									name="workTime"
 									value={formDate?.workTime || ''}
-									label="Horário de Trabalho"
+									label="Tempo de trabalho"
 									className="w-full"
 									onChange={handleInputChange}
 								/>
