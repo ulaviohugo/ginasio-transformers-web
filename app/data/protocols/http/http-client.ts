@@ -4,7 +4,7 @@ export interface HttpClient<T = any, R = any> {
 
 export type HttpRequestParams<T = any> = {
 	url: string
-	method: 'post' | 'get'
+	method: 'post' | 'get' | 'put' | 'delete'
 	body?: T
 	headers?: object
 	params?: object
