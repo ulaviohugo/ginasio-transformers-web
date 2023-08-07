@@ -37,7 +37,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 # Define as permissões adequadas para o diretório do aplicativo
-RUN chown -R nextjs:nodejs /app
+# RUN chown -R nextjs:nodejs /app
 
 COPY  --chown=node:node --from=builder /app/.next ./.next
 COPY  --chown=node:node --from=builder /app/package.json ./package.json
