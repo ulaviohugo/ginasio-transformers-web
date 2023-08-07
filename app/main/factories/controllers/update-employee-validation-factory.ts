@@ -1,8 +1,9 @@
 import { Employee } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
+	DateGreaterThanValidation,
 	EmailValidation,
-	GreaterThanValidation,
+	NumberGreaterThanValidation,
 	NumberValidation,
 	RequiredFieldValidation,
 	ValidationComposite
@@ -16,7 +17,6 @@ export const makeUpdateEmployeeValidation = () => {
 		'name',
 		'gender',
 		'dateOfBirth',
-		'hireDate',
 		'maritalStatus',
 		'educationDegree',
 		'phone1',
@@ -27,15 +27,17 @@ export const makeUpdateEmployeeValidation = () => {
 		'nif',
 		'dependents',
 		'position',
-		'baseSalary'
+		'baseSalary',
+		'hireDate'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
 	}
 	validations.push(
-		new GreaterThanValidation('id', 0),
+		new NumberGreaterThanValidation('id', 0),
 		new EmailValidation('email'),
-		new NumberValidation('dependents')
+		new NumberValidation('dependents'),
+		new DateGreaterThanValidation('contractEndDate', 'hireDate')
 	)
 	return new ValidationComposite(validations)
 }
