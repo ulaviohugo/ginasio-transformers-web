@@ -11,28 +11,34 @@ import {
 	Spinner
 } from '@/app/(presentation)/components'
 import { NumberUtils } from '@/app/utils'
+import { toast } from 'react-hot-toast'
+import { makeRemoteLoadEmployees } from '@/app/main/factories/usecases/remote'
+import { RootState, loadEmployee } from '../../redux'
+import { useDispatch, useSelector } from 'react-redux'
 9
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
-	const [employees, setEmployees] = useState<Employee[]>([])
+	const employees = useSelector((state: RootState) => state.employees.employees)
+	const dispatch = useDispatch()
+
+	const fetchData = async () => {
+		console.log('Class')
+
+		try {
+			const httpResponse = await makeRemoteLoadEmployees().load()
+			dispatch(loadEmployee(httpResponse))
+		} catch (error: any) {
+			toast.error(error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
 
 	useEffect(() => {
 		fetchData()
 	}, [])
-
-	const fetchData = () => {
-		fetch('http://localhost:3000/api/employees')
-			.then((response) => response.json())
-			.then(setEmployees)
-			.catch((error) => {
-				console.log('Erro', error.message)
-			})
-			.finally(() => {
-				setIsLoading(false)
-			})
-	}
 
 	const handleCloseDetail = () => {
 		setSelectedEmployee({} as Employee)
