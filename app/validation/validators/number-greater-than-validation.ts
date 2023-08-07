@@ -1,7 +1,7 @@
 import { Validation } from '@/app/infra/http/protocols'
 import { NumberValidation } from '.'
 
-export class GreaterThanValidation implements Validation {
+export class NumberGreaterThanValidation implements Validation {
 	constructor(
 		private readonly fieldName: string,
 		private readonly valueToCompare: number
