@@ -25,9 +25,18 @@ export function Select({
 				id={id}
 				{...props}
 			>
-				{defaultText && <option disabled>{defaultText}</option>}
+				{defaultText && (
+					<option disabled value="">
+						{defaultText}
+					</option>
+				)}
 				{data.map((option) => {
-					return <option key={option.value || option.text}>{option.text}</option>
+					const value = option.value || option.text
+					return (
+						<option key={value} value={value}>
+							{option.text}
+						</option>
+					)
 				})}
 			</select>
 		</FormControlWrapper>

@@ -13,18 +13,18 @@ export const employeeSlice = createSlice({
 	name: 'employees',
 	initialState,
 	reducers: {
-		addEmployee: (state, action: PayloadAction<Employee>) => {
+		addEmployeeStore: (state, action: PayloadAction<Employee>) => {
 			state.employees.push(action.payload)
 		},
-		loadEmployee: (state, action: PayloadAction<Employee[]>) => {
+		loadEmployeeStore: (state, action: PayloadAction<Employee[]>) => {
 			state.employees = action.payload
 		},
-		removeEmployee: (state, action: PayloadAction<number>) => {
+		removeEmployeeStore: (state, action: PayloadAction<number>) => {
 			state.employees = state.employees.filter(
 				(employee) => employee.id !== action.payload
 			)
 		},
-		updateEmployee: (state, action: PayloadAction<Employee>) => {
+		updateEmployeeStore: (state, action: PayloadAction<Employee>) => {
 			state.employees = state.employees.map((employee) => {
 				if (employee.id == action.payload.id) {
 					return action.payload
@@ -35,6 +35,10 @@ export const employeeSlice = createSlice({
 	}
 })
 
-export const { addEmployee, loadEmployee, removeEmployee, updateEmployee } =
-	employeeSlice.actions
+export const {
+	addEmployeeStore,
+	loadEmployeeStore,
+	removeEmployeeStore,
+	updateEmployeeStore
+} = employeeSlice.actions
 export const employeeReducer = employeeSlice.reducer

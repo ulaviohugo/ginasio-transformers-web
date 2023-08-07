@@ -11,9 +11,9 @@ CREATE TABLE `tb_employees` (
     `phone2` VARCHAR(15) NULL,
     `email` VARCHAR(50) NOT NULL,
     `residential_address` VARCHAR(150) NOT NULL,
-    `document_type` VARCHAR(20) NOT NULL,
-    `document_number` VARCHAR(20) NOT NULL,
-    `nif` VARCHAR(20) NOT NULL,
+    `document_type` VARCHAR(30) NOT NULL,
+    `document_number` VARCHAR(30) NOT NULL,
+    `nif` VARCHAR(20) NULL,
     `dependents` INTEGER NOT NULL DEFAULT 0,
     `social_security` VARCHAR(20) NULL,
     `position` VARCHAR(50) NOT NULL,
@@ -28,5 +28,9 @@ CREATE TABLE `tb_employees` (
     `updated_at` DATETIME(3) NULL,
 
     UNIQUE INDEX `tb_employees_email_key`(`email`),
+    UNIQUE INDEX `tb_employees_social_security_key`(`social_security`),
+    UNIQUE INDEX `tb_employees_iban_key`(`iban`),
+    UNIQUE INDEX `tb_employees_account_number_key`(`account_number`),
+    UNIQUE INDEX `tb_employees_document_type_document_number_key`(`document_type`, `document_number`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

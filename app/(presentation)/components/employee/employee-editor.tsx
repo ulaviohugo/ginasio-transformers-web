@@ -1,25 +1,31 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { toast, ToastType } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
 import { Input, Modal, ModalBody, ModalTitle, Select, Spinner, TextArea } from '..'
-import {
-	makeRemoteAUpdateEmployee,
-	makeRemoteAddEmployee
-} from '@/app/main/factories/usecases/remote'
+
 import { DateUtils } from '@/app/utils'
-import { addEmployee, updateEmployee } from '../../redux'
+import { addEmployeeStore, updateEmployeeStore } from '../../redux'
+import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
 
 type EmployeeEditorProps = {
 	employee?: Employee
 	show: boolean
 	onClose: () => void
+	addEmployee: AddEmployee
+	updateEmployee: UpdateEmployee
 }
 
-export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps) {
+export function EmployeeEditor({
+	employee,
+	show,
+	onClose,
+	addEmployee,
+	updateEmployee
+}: EmployeeEditorProps) {
 	const dispatch = useDispatch()
 	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
 
@@ -36,14 +42,16 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 
 		setIsLoading(true)
 		try {
-			const httpResponse = formDate.id
-				? await makeRemoteAUpdateEmployee().update(formDate)
-				: await makeRemoteAddEmployee().add(formDate)
+			const httpResponse = (
+				formDate.id
+					? await updateEmployee.update(formDate)
+					: await addEmployee.add(formDate)
+			) as Employee
 
 			if (formDate.id) {
-				dispatch(updateEmployee(httpResponse))
+				dispatch(updateEmployeeStore(httpResponse))
 			} else {
-				dispatch(addEmployee(httpResponse))
+				dispatch(addEmployeeStore(httpResponse))
 			}
 			toast.success(
 				`Funcionário ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
@@ -189,12 +197,17 @@ export function EmployeeEditor({ employee, show, onClose }: EmployeeEditorProps)
 								></TextArea>
 							</div>
 							<div>
-								<Input
-									type="text"
+								<Select
 									id="documentType"
 									name="documentType"
 									value={formDate?.documentType || ''}
 									label="Tipo de Documento"
+									data={[
+										{ text: 'Bilhete de identidade' },
+										{ text: 'Passaporte' },
+										{ text: 'Cartão de residência' }
+									]}
+									defaultText="Selecione"
 									className="w-full"
 									onChange={handleInputChange}
 								/>

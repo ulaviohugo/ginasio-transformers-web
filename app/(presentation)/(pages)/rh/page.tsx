@@ -12,10 +12,14 @@ import {
 } from '@/app/(presentation)/components'
 import { NumberUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
-import { makeRemoteLoadEmployees } from '@/app/main/factories/usecases/remote'
-import { RootState, loadEmployee } from '../../redux'
+import {
+	makeRemoteAUpdateEmployee,
+	makeRemoteAddEmployee,
+	makeRemoteLoadEmployees
+} from '@/app/main/factories/usecases/remote'
+import { RootState, loadEmployeeStore } from '../../redux'
 import { useDispatch, useSelector } from 'react-redux'
-9
+
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
 	const [isLoading, setIsLoading] = useState(true)
@@ -28,7 +32,7 @@ export default function Employees() {
 
 		try {
 			const httpResponse = await makeRemoteLoadEmployees().load()
-			dispatch(loadEmployee(httpResponse))
+			dispatch(loadEmployeeStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -57,6 +61,8 @@ export default function Employees() {
 					employee={selectedEmployee}
 					show={showEditor}
 					onClose={handleCloseDetail}
+					addEmployee={makeRemoteAddEmployee()}
+					updateEmployee={makeRemoteAUpdateEmployee()}
 				/>
 			)}
 			<LayoutBody>
@@ -81,7 +87,7 @@ export default function Employees() {
 							) : (
 								employees.map((employee) => (
 									<li key={employee.id} className="p-4 shadow">
-										<div>{employee.name}</div>
+										<div className="font-semibold">{employee.name}</div>
 										<div className="text-sm">{NumberUtils.format(employee.phone1)}</div>
 										<button onClick={() => handleOpenDetalhe(employee)}>Detalhe</button>
 									</li>
