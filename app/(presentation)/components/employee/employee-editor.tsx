@@ -65,11 +65,7 @@ export function EmployeeEditor({
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
-			<ModalTitle>
-				<h2 className="text-xl font-semibold mb-4">
-					{employee?.id ? 'Editar' : 'Cadastrar'} funcionário
-				</h2>
-			</ModalTitle>
+			<ModalTitle>{employee?.id ? 'Editar' : 'Cadastrar'} funcionário</ModalTitle>
 			<ModalBody>
 				<div className="mx-auto bg-white p-1 rounded shadow-md">
 					<form className="" onSubmit={handleSubmit}>
@@ -330,9 +326,9 @@ export function EmployeeEditor({
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="flex items-center gap-2 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+							className="flex items-center gap-2 mt-4 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
 						>
-							Enviar {isLoading && <Spinner />}
+							Salvar {isLoading && <Spinner />}
 						</button>
 					</form>
 				</div>

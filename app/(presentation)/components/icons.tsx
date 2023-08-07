@@ -9,11 +9,11 @@ import {
 	HiMail,
 	HiPhone,
 	HiPlus,
-	HiUser
+	HiUser,
+	HiTrash
 } from 'react-icons/hi'
-import { BsCodeSlash, BsFillRocketTakeoffFill } from 'react-icons/bs'
 import { RiExternalLinkLine } from 'react-icons/ri'
-import { MdDownload, MdLocationOn, MdOutlineMessage } from 'react-icons/md'
+import { MdLocationOn } from 'react-icons/md'
 import { AiOutlineBuild, AiOutlineClockCircle } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
 import { IoIosMenu, IoMdClose } from 'react-icons/io'
@@ -59,6 +59,7 @@ export const IconUser = (props: IconBaseProps): React.ReactElement => (
 	<HiUser {...props} />
 )
 
+export const IconTrash = (props: IconBaseProps) => <HiTrash {...props} />
 export const IconMenu = (props: IconBaseProps) => <IoIosMenu {...props} />
 export const IconClose = (props: IconBaseProps) => <IoMdClose {...props} />
 export const IconBuilding = (props: IconBaseProps) => <AiOutlineBuild {...props} />

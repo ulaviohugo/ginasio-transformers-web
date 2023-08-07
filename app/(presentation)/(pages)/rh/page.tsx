@@ -6,30 +6,32 @@ import { Employee } from '@/app/domain/models'
 import {
 	EmployeeEditor,
 	IconPlus,
+	IconTrash,
 	Layout,
 	LayoutBody,
+	ModalDelete,
 	Spinner
 } from '@/app/(presentation)/components'
 import { NumberUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
 import {
+	makeRemoteADeleteEmployee,
 	makeRemoteAUpdateEmployee,
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
 } from '@/app/main/factories/usecases/remote'
-import { RootState, loadEmployeeStore } from '../../redux'
+import { RootState, loadEmployeeStore, removeEmployeeStore } from '../../redux'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
+	const [showFormDelete, setShowFormDelete] = useState(false)
 	const employees = useSelector((state: RootState) => state.employees.employees)
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
-		console.log('Class')
-
 		try {
 			const httpResponse = await makeRemoteLoadEmployees().load()
 			dispatch(loadEmployeeStore(httpResponse))
@@ -44,14 +46,39 @@ export default function Employees() {
 		fetchData()
 	}, [])
 
-	const handleCloseDetail = () => {
+	const clearSelectedEmployee = () => {
 		setSelectedEmployee({} as Employee)
+	}
+
+	const handleCloseDetail = () => {
+		clearSelectedEmployee()
 		setShowEditor(false)
 	}
 
 	const handleOpenDetalhe = (employee?: Employee) => {
 		if (employee) setSelectedEmployee(employee)
 		setShowEditor(true)
+	}
+
+	const handleOpenFormDelete = (employee: Employee) => {
+		setSelectedEmployee(employee)
+		setShowFormDelete(true)
+	}
+
+	const handleCloseFormDelete = () => {
+		clearSelectedEmployee()
+		setShowFormDelete(false)
+	}
+
+	const handleDelete = async () => {
+		try {
+			await makeRemoteADeleteEmployee().delete(selectedEmployee.id)
+			dispatch(removeEmployeeStore(selectedEmployee.id))
+			toast.success(`Funcionário(a) ${selectedEmployee.name} foi excluído`)
+			handleCloseFormDelete()
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 	}
 
 	return (
@@ -63,6 +90,15 @@ export default function Employees() {
 					onClose={handleCloseDetail}
 					addEmployee={makeRemoteAddEmployee()}
 					updateEmployee={makeRemoteAUpdateEmployee()}
+				/>
+			)}
+			{showFormDelete && (
+				<ModalDelete
+					entity="funcionário"
+					description={`Deseja realmente excluir ${selectedEmployee.name}?`}
+					show={showFormDelete}
+					onClose={handleCloseFormDelete}
+					onSubmit={handleDelete}
 				/>
 			)}
 			<LayoutBody>
@@ -89,7 +125,12 @@ export default function Employees() {
 									<li key={employee.id} className="p-4 shadow">
 										<div className="font-semibold">{employee.name}</div>
 										<div className="text-sm">{NumberUtils.format(employee.phone1)}</div>
-										<button onClick={() => handleOpenDetalhe(employee)}>Detalhe</button>
+										<div className="flex">
+											<button onClick={() => handleOpenDetalhe(employee)}>Detalhe</button>
+											<button onClick={() => handleOpenFormDelete(employee)}>
+												<IconTrash />
+											</button>
+										</div>
 									</li>
 								))
 							)}
