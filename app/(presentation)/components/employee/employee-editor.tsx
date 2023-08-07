@@ -108,19 +108,6 @@ export function EmployeeEditor({
 								/>
 							</div>
 							<div>
-								<Input
-									type="date"
-									id="hireDate"
-									name="hireDate"
-									value={
-										(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
-									}
-									label="Data de Contratação"
-									className="w-full"
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div>
 								<Select
 									id="maritalStatus"
 									name="maritalStatus"
@@ -270,6 +257,19 @@ export function EmployeeEditor({
 									name="baseSalary"
 									value={formDate?.baseSalary || ''}
 									label="Salário Base"
+									className="w-full"
+									onChange={handleInputChange}
+								/>
+							</div>
+							<div>
+								<Input
+									type="date"
+									id="hireDate"
+									name="hireDate"
+									value={
+										(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
+									}
+									label="Data de Contratação"
 									className="w-full"
 									onChange={handleInputChange}
 								/>
