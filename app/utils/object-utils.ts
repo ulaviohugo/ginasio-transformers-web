@@ -12,8 +12,8 @@ export class ObjectUtils {
 		return body
 	}
 
-	static trimValues(obj: object) {
-		if (!obj) return {}
+	static trimValues<T extends object = any>(obj: T): T {
+		if (!obj) return {} as T
 		const body: any = { ...obj }
 		const newObject: any = {}
 		for (const key in body) {
