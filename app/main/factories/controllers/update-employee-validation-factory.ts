@@ -24,13 +24,9 @@ export const makeUpdateEmployeeValidation = () => {
 		'residentialAddress',
 		'documentType',
 		'documentNumber',
-		'nif',
 		'dependents',
-		'socialSecurity',
 		'position',
-		'baseSalary',
-		'iban',
-		'accountNumber'
+		'baseSalary'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))

@@ -12,7 +12,7 @@ export interface Employee {
 	residentialAddress: string
 	documentType: string
 	documentNumber: string
-	nif: string
+	nif?: string
 	dependents: number
 	socialSecurity?: string
 	position: string
