@@ -3,7 +3,6 @@ export interface Employee {
 	name: string
 	gender: string
 	dateOfBirth: Date
-	hireDate: Date
 	maritalStatus: string
 	educationDegree: string
 	phone1: string
@@ -17,6 +16,7 @@ export interface Employee {
 	socialSecurity?: string
 	position: string
 	baseSalary?: number
+	hireDate: Date
 	contractEndDate?: Date
 	workTime?: string
 	iban?: string
