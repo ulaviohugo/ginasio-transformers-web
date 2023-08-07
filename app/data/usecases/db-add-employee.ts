@@ -1,10 +1,13 @@
 import { AddEmployee, AddEmployeesResult } from '@/app/domain/usecases'
 import { EmployeeRepository } from '../protocols'
 import { Employee } from '../../domain/models'
+import { ObjectUtils } from '@/app/utils'
 
 export class DbAddEmployee implements AddEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
-	async add(param: Employee): Promise<AddEmployeesResult> {
+	async add(data: Employee): Promise<AddEmployeesResult> {
+		const param = ObjectUtils.trimValues(data)
+
 		const exists = await this.employeeRepository.findByEmail(param.email)
 		if (exists && exists.id !== param.id) return 'emailInUse'
 

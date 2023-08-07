@@ -1,13 +1,16 @@
 import { UpdateEmployee } from '@/app/domain/usecases'
 import { EmployeeRepository } from '../protocols'
 import { Employee } from '../../domain/models'
+import { ObjectUtils } from '@/app/utils'
 
 export class DbUpdateEmployee implements UpdateEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
 
 	async update(
-		param: Employee
+		data: Employee
 	): Promise<Employee | 'notFound' | 'emailInUse' | 'documentInUse'> {
+		const param = ObjectUtils.trimValues(data)
+
 		const foundById = await this.employeeRepository.findById(param.id)
 		if (!foundById) return 'notFound'
 
