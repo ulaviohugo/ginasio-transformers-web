@@ -11,4 +11,17 @@ export class ObjectUtils {
 		}
 		return body
 	}
+
+	static trimValues(obj: object) {
+		if (!obj) return {}
+		const body: any = { ...obj }
+		const newObject: any = {}
+		for (const key in body) {
+			if (key in body) {
+				const item = body[key]
+				newObject[key] = typeof item == 'string' ? item.toString().trim() : item
+			}
+		}
+		return newObject
+	}
 }
