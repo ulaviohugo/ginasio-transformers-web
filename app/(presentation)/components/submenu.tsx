@@ -10,11 +10,18 @@ export type SubmenuProps = {
 }
 
 export function SubMenu({ submenus }: { submenus: SubmenuProps[] }) {
+	const path = usePathname()
 	return (
 		<nav>
-			<ul className="flex text-sm bg-gray-200 border-x-4 border-t-4 border-x-gray-200 border-t-gray-200">
+			<ul className="flex text-sm bg-gray-200 bg-opacity-90 px-1 pt-1">
 				{submenus.map(({ link, text, icon }) => (
-					<MenuItem key={link} link={link} text={text} icon={icon} />
+					<MenuItem
+						key={link}
+						link={link}
+						text={text}
+						icon={icon}
+						active={path == link}
+					/>
 				))}
 			</ul>
 		</nav>
@@ -25,15 +32,15 @@ type ItemProps = {
 	text: string
 	link: string
 	icon?: ElementType
+	active: boolean
 }
-const MenuItem = ({ link, text, icon: Icon }: ItemProps) => {
-	const path = usePathname()
+const MenuItem = ({ link, text, icon: Icon, active }: ItemProps) => {
 	return (
 		<li>
 			<Link
 				href={link}
 				className={`flex items-center gap-1 px-2 py-1 hover:font-semibold 
-				${path == link && 'bg-white font-semibold'}`}
+				${active ? 'bg-white font-semibold rounded-t-lg' : 'text-primary'}`}
 			>
 				{Icon && <Icon />} {text}
 			</Link>
