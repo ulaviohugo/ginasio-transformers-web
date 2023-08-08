@@ -38,15 +38,12 @@ export function ModalDelete({
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="flex items-center gap-2 mt-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+							className="btn bg-primary text-white"
 							onClick={handleSubmit}
 						>
 							Excluir {isLoading ? <Spinner /> : <IconTrash />}
 						</button>
-						<span
-							className="flex items-center gap-2 mt-4 bg-gray-500 hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded cursor-pointer"
-							onClick={onClose}
-						>
+						<span className="btn bg-gray-200  text-primary" onClick={onClose}>
 							Cancelar
 						</span>
 					</div>

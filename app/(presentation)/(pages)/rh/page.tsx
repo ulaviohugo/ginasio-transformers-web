@@ -1,18 +1,23 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { HRMenu } from './components'
 import { Employee } from '@/app/domain/models'
 import {
 	EmployeeEditor,
+	IconClock,
+	IconEdit,
+	IconPhone,
 	IconPlus,
 	IconTrash,
+	IconUser,
 	Layout,
 	LayoutBody,
 	ModalDelete,
-	Spinner
+	Spinner,
+	SubMenu,
+	Title
 } from '@/app/(presentation)/components'
-import { DateUtils, NumberUtils } from '@/app/utils'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteADeleteEmployee,
@@ -103,17 +108,18 @@ export default function Employees() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<HRMenu />
+					<SubMenu submenus={SubmenuUtils.hr} />
+					<Title title={`Funcionários ${!isLoading && `(${employees?.length})`}`} />
 					<div>
 						<button
-							className="bg-gray-600 px-2 py-1 rounded-md text-gray-200"
+							className="bg-primary px-2 py-1 rounded-md text-gray-200"
 							title="Novo funcionário"
 							onClick={() => handleOpenDetalhe()}
 						>
 							<IconPlus />
 						</button>
 					</div>
-					Funcionários {!isLoading && `(${employees?.length})`}
+
 					{isLoading ? (
 						<Spinner data="Carregando funcionários..." />
 					) : (
@@ -123,22 +129,36 @@ export default function Employees() {
 							) : (
 								employees.map((employee) => (
 									<li key={employee.id} className="p-4 shadow">
-										<div className="font-semibold">{employee.name}</div>
-										<div className="text-sm">
-											Início de contrato: {DateUtils.getDatePt(employee.hireDate, '/')}
+										<div className="flex items-center gap-1 font-semibold">
+											<IconUser />
+											{employee.name}
+										</div>
+										<div className="flex items-center gap-1 text-sm">
+											<IconClock /> Início de contrato:{' '}
+											{DateUtils.getDatePt(employee.hireDate, '/')}
 										</div>
 										{employee.contractEndDate && (
-											<div className="text-sm">
-												Fim de contrato:{' '}
+											<div className="flex items-center gap-1 text-sm">
+												<IconClock /> Fim de contrato:{' '}
 												{DateUtils.getDatePt(employee.contractEndDate, '/')}
 											</div>
 										)}
-										<div className="text-sm">
-											Telefone: {NumberUtils.format(employee.phone1)}
+										<div className="flex items-center gap-1 text-sm">
+											<IconPhone /> Telefone: {NumberUtils.format(employee.phone1)}
 										</div>
-										<div className="flex">
-											<button onClick={() => handleOpenDetalhe(employee)}>Detalhe</button>
-											<button onClick={() => handleOpenFormDelete(employee)}>
+										<div className="flex items-center gap-1 text-xl border-t mt-1 pt-1">
+											<button
+												onClick={() => handleOpenDetalhe(employee)}
+												className="hover:scale-110"
+												title="Editar funcionário"
+											>
+												<IconEdit />
+											</button>
+											<button
+												onClick={() => handleOpenFormDelete(employee)}
+												className="hover:scale-110"
+												title="Excluir funcionário"
+											>
 												<IconTrash />
 											</button>
 										</div>

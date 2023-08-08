@@ -58,7 +58,7 @@ export function FormLogin(props: FormLoginProps) {
 				/>
 			</div>
 			<button
-				className="flex items-center gap-1 justify-center bg-gray-600 text-white px-2 py-1 text-sm rounded-md"
+				className="flex items-center gap-1 justify-center bg-primary text-white px-2 py-1 text-sm rounded-md"
 				disabled={isLoading}
 			>
 				Iniciar sessão {isLoading && <Spinner />}

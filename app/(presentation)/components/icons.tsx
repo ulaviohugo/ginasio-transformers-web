@@ -10,7 +10,9 @@ import {
 	HiPhone,
 	HiPlus,
 	HiUser,
-	HiTrash
+	HiTrash,
+	HiPencil,
+	HiPencilAlt
 } from 'react-icons/hi'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import { MdLocationOn } from 'react-icons/md'
@@ -59,6 +61,7 @@ export const IconUser = (props: IconBaseProps): React.ReactElement => (
 	<HiUser {...props} />
 )
 
+export const IconEdit = (props: IconBaseProps) => <HiPencilAlt {...props} />
 export const IconTrash = (props: IconBaseProps) => <HiTrash {...props} />
 export const IconMenu = (props: IconBaseProps) => <IoIosMenu {...props} />
 export const IconClose = (props: IconBaseProps) => <IoMdClose {...props} />

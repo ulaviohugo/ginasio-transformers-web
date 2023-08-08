@@ -1,5 +1,6 @@
 'use client'
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -9,8 +10,9 @@ export function Header() {
 	}
 	const path = usePathname()
 	return (
-		<header className="bg-gray-600 text-gray-200 h-screen">
-			<nav className="flex flex-col h-full">
+		<header className="bg-primary text-gray-200 h-screen">
+			<nav className="flex flex-col gap-4 py-4 items-center h-full">
+				<Image src={'/images/logo-tipo.png'} width={100} height={100} alt="Logo" />
 				<ul className="flex flex-col">
 					<Item active={path == '/'} link={'/'} text="Dashboard" />
 					<Item
@@ -21,9 +23,9 @@ export function Header() {
 					<Item active={path.indexOf('/rh') >= 0} link={'/rh'} text="RH" />
 					<Item active={path == '/admin'} link={'/admin'} text="Administrativo" />
 				</ul>
-				<div className="flex flex-col mt-auto p-2">
+				<div className="flex mt-auto px-2">
 					<button
-						className="flex justify-center border px-2 py-1 text-sm font-semibold rounded-md"
+						className="btn hover:bg-white hover:text-primary border"
 						onClick={handleSignout}
 					>
 						Sair
@@ -44,7 +46,9 @@ const Item = ({ active, link, text }: ItemProps) => {
 		<li>
 			<Link
 				href={link}
-				className={`flex px-2 py-1 ${active && 'bg-gray-50 text-gray-500 rounded-l-xl'}`}
+				className={`flex px-2 py-1 rounded-l-xl
+				${active ? 'bg-gray-50 text-gray-500' : 'hover:bg-gray-700'}
+				  transition-all duration-200 ease-in-out`}
 			>
 				{text}
 			</Link>

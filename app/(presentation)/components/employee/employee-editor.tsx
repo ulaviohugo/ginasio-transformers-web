@@ -327,7 +327,7 @@ export function EmployeeEditor({
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="flex items-center gap-2 mt-4 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
+							className="btn bg-gray-500 hover:bg-primary text-white mt-5"
 						>
 							Salvar {isLoading && <Spinner />}
 						</button>
