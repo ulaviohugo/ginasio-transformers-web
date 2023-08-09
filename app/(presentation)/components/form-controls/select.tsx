@@ -7,7 +7,7 @@ import { FormControlWrapper } from '.'
 type InputProps = SelectHTMLAttributes<HTMLSelectElement> & {
 	label?: string
 	icon?: ElementType
-	data: Array<{ text: string; value?: string }>
+	data: Array<{ text: string; value?: string | number }>
 	defaultText?: string
 }
 
@@ -25,10 +25,11 @@ export function Select({
 	return (
 		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
 			<select
-				className={`focus:outline-none text-sm ${className || ''}`}
+				className={`focus:outline-none text-sm ${className || ''} w-full`}
 				id={id}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
+				defaultValue={''}
 				{...props}
 			>
 				{defaultText && (
@@ -36,8 +37,8 @@ export function Select({
 						{defaultText}
 					</option>
 				)}
-				{data.map((option) => {
-					const value = option.value || option.text
+				{data?.map((option) => {
+					const value = option?.value || option.text
 					return (
 						<option key={value} value={value}>
 							{option.text}

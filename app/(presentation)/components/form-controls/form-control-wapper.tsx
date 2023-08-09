@@ -17,7 +17,7 @@ export function FormControlWrapper({
 }: InputProps) {
 	const id = props.id || StringUtils.generate({ length: 3 })
 	return (
-		<div className="flex flex-col gap-[2px]">
+		<div className="flex-1 flex flex-col gap-[2px]">
 			{label && (
 				<label htmlFor={id} className="font-semibold text-sm cursor-pointer mr-auto">
 					{label}
@@ -25,7 +25,7 @@ export function FormControlWrapper({
 			)}
 			<label
 				htmlFor={id}
-				className={`flex items-center gap-1 bg-white rounded-md py-1 px-2 border transition-all duration-200 ease-in
+				className={`flex flex-1 items-center gap-1 mx-[2px] bg-white rounded-md py-1 px-2 border transition-all duration-200 ease-in
 				${focused && 'ring-2 ring-gray-400'}`}
 			>
 				{Icon && <Icon className="cursor-pointer" size={20} />}
