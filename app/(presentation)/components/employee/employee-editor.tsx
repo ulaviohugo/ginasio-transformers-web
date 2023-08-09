@@ -120,64 +120,14 @@ export function EmployeeEditor({
 								value={formDate?.maritalStatus || ''}
 								label={LabelUtils.translateField<Employee>('maritalStatus')}
 								data={[
-									{ value: 'single', text: 'Solteiro(a)' },
-									{ value: 'married', text: 'Casado(a)' },
-									{ value: 'divorced', text: 'Divorciado(a)' },
-									{ value: 'widowed', text: 'Viúvo(a)' }
+									{ text: 'Solteiro(a)' },
+									{ text: 'Casado(a)' },
+									{ text: 'Divorciado(a)' },
+									{ text: 'Viúvo(a)' }
 								]}
 								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
-						</div>
-						<div>
-							<Input
-								type="text"
-								id="educationDegree"
-								name="educationDegree"
-								value={formDate?.educationDegree || ''}
-								label={LabelUtils.translateField<Employee>('educationDegree')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<Input
-								type="tel"
-								id="phone1"
-								name="phone1"
-								value={formDate?.phone1 || ''}
-								label={LabelUtils.translateField<Employee>('phone1')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<Input
-								type="tel"
-								id="phone2"
-								name="phone2"
-								value={formDate?.phone2 || ''}
-								label={LabelUtils.translateField<Employee>('phone2')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className="md:col-span-2">
-							<Input
-								type="email"
-								id="email"
-								name="email"
-								value={formDate?.email || ''}
-								label={LabelUtils.translateField<Employee>('email')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className="xl:col-span-4 lg:col-span-3 md:col-span-2">
-							<TextArea
-								id="residentialAddress"
-								name="residentialAddress"
-								value={formDate?.residentialAddress || ''}
-								label={LabelUtils.translateField<Employee>('residentialAddress')}
-								rows={2}
-								onChange={handleInputChange}
-							></TextArea>
 						</div>
 						<div>
 							<Select
@@ -216,16 +166,6 @@ export function EmployeeEditor({
 						</div>
 						<div>
 							<Input
-								type="number"
-								id="dependents"
-								name="dependents"
-								value={formDate?.dependents || ''}
-								label={LabelUtils.translateField<Employee>('dependents')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<Input
 								type="text"
 								id="socialSecurity"
 								name="socialSecurity"
@@ -236,11 +176,102 @@ export function EmployeeEditor({
 						</div>
 						<div>
 							<Input
-								type="text"
+								type="number"
+								id="dependents"
+								name="dependents"
+								value={formDate?.dependents || ''}
+								label={LabelUtils.translateField<Employee>('dependents')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Select
+								id="educationDegree"
+								name="educationDegree"
+								value={formDate?.educationDegree || ''}
+								label={LabelUtils.translateField<Employee>('educationDegree')}
+								data={[
+									{ text: 'Ensino primário' },
+									{ text: 'Ensino secundário' },
+									{ text: 'Ensino médio' },
+									{ text: 'Ensino superior' }
+								]}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<Divisor label="Contactos" />
+						<div>
+							<Input
+								type="number"
+								id="phone1"
+								name="phone1"
+								value={formDate?.phone1 || ''}
+								label={LabelUtils.translateField<Employee>('phone1')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="number"
+								id="phone2"
+								name="phone2"
+								value={formDate?.phone2 || ''}
+								label={LabelUtils.translateField<Employee>('phone2')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div className="md:col-span-2">
+							<Input
+								type="email"
+								id="email"
+								name="email"
+								value={formDate?.email || ''}
+								label={LabelUtils.translateField<Employee>('email')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<Divisor />
+						<div>
+							<Select
 								id="position"
 								name="position"
 								value={formDate?.position || ''}
 								label={LabelUtils.translateField<Employee>('position')}
+								data={[
+									{ text: 'Assistente administrativo' },
+									{ text: 'Costureiro' },
+									{ text: 'Coordenador de operações' },
+									{ text: 'Mestre de costura' }
+								]}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="text"
+								id="residentialAddress"
+								name="residentialAddress"
+								value={formDate?.residentialAddress || ''}
+								label={LabelUtils.translateField<Employee>('residentialAddress')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<Divisor label="Empresa" />
+						<div>
+							<Select
+								id="position"
+								name="position"
+								value={formDate?.position || ''}
+								label={LabelUtils.translateField<Employee>('position')}
+								data={[
+									{ text: 'Assistente administrativo' },
+									{ text: 'Costureiro' },
+									{ text: 'Coordenador de operações' },
+									{ text: 'Mestre de costura' }
+								]}
+								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -281,12 +312,23 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div>
-							<Input
-								type="text"
-								id="workTime"
-								name="workTime"
-								value={formDate?.workTime || ''}
-								label={LabelUtils.translateField<Employee>('workTime')}
+							<Select
+								id="bankName"
+								name="bankName"
+								value={formDate?.bankName || ''}
+								label={LabelUtils.translateField<Employee>('bankName')}
+								data={[
+									{ text: 'BAI' },
+									{ text: 'BCI' },
+									{ text: 'BIC' },
+									{ text: 'BFA' },
+									{ text: 'BNI' },
+									{ text: 'BPC' },
+									{ text: 'Millenium' },
+									{ text: 'SOL' },
+									{ text: 'Standard Bank' }
+								]}
+								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -321,3 +363,7 @@ export function EmployeeEditor({
 		</Modal>
 	)
 }
+
+const Divisor = ({ label }: { label?: string }) => (
+	<div className="xl:col-span-4 lg:col-span-3 md:col-span-2 uppercase">{label || ''}</div>
+)

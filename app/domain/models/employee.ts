@@ -4,21 +4,24 @@ export interface Employee {
 	gender: string
 	dateOfBirth: Date
 	maritalStatus: string
+	documentType: string
+	documentNumber: string
+	nif?: string
+	socialSecurity?: string
+	dependents: number
 	educationDegree: string
 	phone1: string
 	phone2?: string
 	email: string
+	municipalityId: number
+	provinceId?: number
+	countyId?: number
 	residentialAddress: string
-	documentType: string
-	documentNumber: string
-	nif?: string
-	dependents: number
-	socialSecurity?: string
 	position: string
 	baseSalary?: number
 	hireDate: Date
 	contractEndDate?: Date
-	workTime?: string
+	bankName?: string
 	iban?: string
 	accountNumber?: string
 	createdAt: Date

@@ -8,8 +8,10 @@ import {
 	IconEdit,
 	IconPhone,
 	IconPlus,
+	IconSearch,
 	IconTrash,
 	IconUser,
+	Input,
 	Layout,
 	LayoutBody,
 	ModalDelete,
@@ -109,8 +111,8 @@ export default function Employees() {
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.hr} />
-					<Title title={`Funcionários ${!isLoading && `(${employees?.length})`}`} />
-					<div>
+					<Title title={`Funcionários ${isLoading ? '' : `(${employees?.length})`}`} />
+					<div className="flex items-center gap-2">
 						<button
 							className="bg-primary px-2 py-1 rounded-md text-gray-200"
 							title="Novo funcionário"
@@ -118,6 +120,9 @@ export default function Employees() {
 						>
 							<IconPlus />
 						</button>
+						<div className="w-full max-w-xs">
+							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
+						</div>
 					</div>
 
 					{isLoading ? (
