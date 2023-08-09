@@ -1,33 +1,33 @@
 import { Metadata } from 'next'
-import { Layout, LayoutBody } from '../components'
-import { NumberUtils, StringUtils } from '@/app/utils'
+import { IconUser, Layout, LayoutBody } from '../components'
+import { StringUtils } from '@/app/utils'
+import { ElementType } from 'react'
 
 export const metadata: Metadata = {
 	title: 'Sistema de Facuturação WO'
 }
 
+type DashboardProps = {
+	text: string
+	number: number
+	icon?: ElementType
+}
+const data: DashboardProps[] = [
+	{ text: 'Funcionários', number: 4, icon: IconUser },
+	{ text: 'Entrada', number: 23 }
+]
+
 export default function Home() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 p-2 h-full">
-					{Array.from(Array(6)).map((_, i) => (
-						<div
-							key={i}
-							className={`shadow-md p-4 ${
-								[
-									'bg-blue-50',
-									'bg-rose-50',
-									'bg-gray-50',
-									'bg-blue-50',
-									'bg-red-50',
-									'bg-gray-50'
-								][i]
-							}`}
-						>
-							<h2 className="text-2xl">Card {i + 1}</h2>
-							<div>
-								{StringUtils.generate({ separator: ' ', decimal: 5, length: 100 })}
+				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
+					{data.map(({ text, number, icon: Icon }, i) => (
+						<div key={i} className="flex gap-2 shadow-md p-4 rounded-lg">
+							{Icon && <Icon className="text-7xl" />}
+							<div className={`flex-1`}>
+								<h2 className="">{text}</h2>
+								<div className="text-5xl font-bold">{number}</div>
 							</div>
 						</div>
 					))}

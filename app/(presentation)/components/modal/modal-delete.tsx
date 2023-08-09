@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode, useState } from 'react'
-import { Modal, ModalBody, ModalTitle } from '.'
+import { Modal, ModalBody, ModalFooter, ModalTitle } from '.'
 import { IconTrash, Spinner } from '..'
 
 type ModalDeleteProps = {
@@ -34,21 +34,21 @@ export function ModalDelete({
 			<ModalBody>
 				<div className="flex flex-col gap-2 max-w-xs">
 					{description ?? `Deseja realmente excluir o(a) ${entity}?`}
-					<div className="flex gap-1 text-sm">
-						<button
-							type="submit"
-							disabled={isLoading}
-							className="btn bg-primary text-white"
-							onClick={handleSubmit}
-						>
-							Excluir {isLoading ? <Spinner /> : <IconTrash />}
-						</button>
-						<span className="btn bg-gray-200  text-primary" onClick={onClose}>
-							Cancelar
-						</span>
-					</div>
 				</div>
 			</ModalBody>
+			<ModalFooter>
+				<button
+					type="submit"
+					disabled={isLoading}
+					className="btn-primary"
+					onClick={handleSubmit}
+				>
+					Excluir {isLoading ? <Spinner /> : <IconTrash />}
+				</button>
+				<span className="btn-default" onClick={onClose}>
+					Cancelar
+				</span>
+			</ModalFooter>
 		</Modal>
 	)
 }

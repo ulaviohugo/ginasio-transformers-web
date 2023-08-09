@@ -47,5 +47,9 @@ type ModalBodyProps = {
 }
 
 export function ModalBody({ children }: ModalBodyProps) {
-	return <div className="overflow-auto max-h-[95%]">{children}</div>
+	return <div className="overflow-auto p-1 max-h-[95%]">{children}</div>
+}
+
+export function ModalFooter({ children }: ModalTitleProps) {
+	return <div className="flex gap-1 items-center mt-2 pt-2 border-t">{children}</div>
 }

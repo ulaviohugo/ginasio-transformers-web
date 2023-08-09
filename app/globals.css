@@ -26,10 +26,18 @@ body {
 }
 
 .btn {
-	@apply flex items-center gap-2 font-semibold text-sm py-2 px-4 rounded;
+	@apply flex items-center gap-2 font-semibold text-sm py-1 px-3 rounded cursor-pointer;
 }
 
 button,
 .btn {
-	@apply hover:bg-opacity-80 transition-all duration-200 cursor-pointer;
+	@apply hover:bg-opacity-90 transition-all duration-200 cursor-pointer;
+}
+
+.btn-primary {
+	@apply btn bg-primary text-white;
+}
+
+.btn-default {
+	@apply btn bg-gray-200 text-primary border border-gray-200;
 }
