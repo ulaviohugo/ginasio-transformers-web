@@ -1,8 +1,22 @@
 export class NumberUtils {
-	static format(number: string | number, separator = ' '): string {
+	static format(number: number | string): string {
 		if (!number) return '0'
-		const numStr = typeof number === 'number' ? number.toString() : number
-		return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
+		const numStr = this.convertToNumber(number)
+		return numStr.toLocaleString('pt-AO')
+	}
+
+	static formatCurrency(number: number | string): string {
+		if (!number) return '0'
+		const numStr = this.convertToNumber(number)
+
+		return numStr.toLocaleString('pt-AO', {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		})
+	}
+
+	static convertToNumber(number: number | string): number {
+		return typeof number === 'number' ? number : Number(number)
 	}
 
 	static random(min: number, max: number): number {
