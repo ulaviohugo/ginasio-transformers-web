@@ -11,7 +11,6 @@ import {
 	HiPlus,
 	HiUser,
 	HiTrash,
-	HiPencil,
 	HiPencilAlt
 } from 'react-icons/hi'
 import { RiExternalLinkLine } from 'react-icons/ri'
@@ -19,6 +18,7 @@ import { MdLocationOn } from 'react-icons/md'
 import { AiOutlineBuild, AiOutlineClockCircle } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
 import { IoIosMenu, IoMdClose } from 'react-icons/io'
+import { BiSearch } from 'react-icons/bi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
@@ -59,6 +59,9 @@ export const IconSpinner = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconUser = (props: IconBaseProps): React.ReactElement => (
 	<HiUser {...props} />
+)
+export const IconSearch = (props: IconBaseProps): React.ReactElement => (
+	<BiSearch {...props} />
 )
 
 export const IconEdit = (props: IconBaseProps) => <HiPencilAlt {...props} />
