@@ -85,7 +85,6 @@ export function EmployeeEditor({
 								name="name"
 								value={formDate?.name || ''}
 								label={LabelUtils.translateField<Employee>('name')}
-								className="w-full"
 								onChange={handleInputChange}
 								autoFocus
 							/>
@@ -98,7 +97,6 @@ export function EmployeeEditor({
 								label={LabelUtils.translateField<Employee>('gender')}
 								data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
 								defaultText="Selecione"
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -112,7 +110,6 @@ export function EmployeeEditor({
 									''
 								}
 								label={LabelUtils.translateField<Employee>('dateOfBirth')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -129,7 +126,6 @@ export function EmployeeEditor({
 									{ value: 'widowed', text: 'Viúvo(a)' }
 								]}
 								defaultText="Selecione"
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -140,7 +136,6 @@ export function EmployeeEditor({
 								name="educationDegree"
 								value={formDate?.educationDegree || ''}
 								label={LabelUtils.translateField<Employee>('educationDegree')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -151,7 +146,6 @@ export function EmployeeEditor({
 								name="phone1"
 								value={formDate?.phone1 || ''}
 								label={LabelUtils.translateField<Employee>('phone1')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -162,7 +156,6 @@ export function EmployeeEditor({
 								name="phone2"
 								value={formDate?.phone2 || ''}
 								label={LabelUtils.translateField<Employee>('phone2')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -173,7 +166,6 @@ export function EmployeeEditor({
 								name="email"
 								value={formDate?.email || ''}
 								label={LabelUtils.translateField<Employee>('email')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -184,7 +176,6 @@ export function EmployeeEditor({
 								value={formDate?.residentialAddress || ''}
 								label={LabelUtils.translateField<Employee>('residentialAddress')}
 								rows={2}
-								className="w-full"
 								onChange={handleInputChange}
 							></TextArea>
 						</div>
@@ -200,7 +191,6 @@ export function EmployeeEditor({
 									{ text: 'Cartão de residência' }
 								]}
 								defaultText="Selecione"
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -211,7 +201,6 @@ export function EmployeeEditor({
 								name="documentNumber"
 								value={formDate?.documentNumber || ''}
 								label={LabelUtils.translateField<Employee>('documentNumber')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -222,7 +211,6 @@ export function EmployeeEditor({
 								name="nif"
 								value={formDate?.nif || ''}
 								label={LabelUtils.translateField<Employee>('nif')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -233,7 +221,6 @@ export function EmployeeEditor({
 								name="dependents"
 								value={formDate?.dependents || ''}
 								label={LabelUtils.translateField<Employee>('dependents')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -244,7 +231,6 @@ export function EmployeeEditor({
 								name="socialSecurity"
 								value={formDate?.socialSecurity || ''}
 								label={LabelUtils.translateField<Employee>('socialSecurity')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -255,7 +241,6 @@ export function EmployeeEditor({
 								name="position"
 								value={formDate?.position || ''}
 								label={LabelUtils.translateField<Employee>('position')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -266,7 +251,6 @@ export function EmployeeEditor({
 								name="baseSalary"
 								value={formDate?.baseSalary || ''}
 								label={LabelUtils.translateField<Employee>('baseSalary')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -279,7 +263,6 @@ export function EmployeeEditor({
 									(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
 								}
 								label={LabelUtils.translateField<Employee>('hireDate')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -294,7 +277,6 @@ export function EmployeeEditor({
 									''
 								}
 								label={LabelUtils.translateField<Employee>('contractEndDate')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -305,7 +287,6 @@ export function EmployeeEditor({
 								name="workTime"
 								value={formDate?.workTime || ''}
 								label={LabelUtils.translateField<Employee>('workTime')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -316,7 +297,6 @@ export function EmployeeEditor({
 								name="iban"
 								value={formDate?.iban || ''}
 								label={LabelUtils.translateField<Employee>('iban')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -327,7 +307,6 @@ export function EmployeeEditor({
 								name="accountNumber"
 								value={formDate?.accountNumber || ''}
 								label={LabelUtils.translateField<Employee>('accountNumber')}
-								className="w-full"
 								onChange={handleInputChange}
 							/>
 						</div>
