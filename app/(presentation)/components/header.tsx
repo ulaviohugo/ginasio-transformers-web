@@ -21,7 +21,6 @@ export function Header() {
 						text="Comercial"
 					/>
 					<Item active={path.indexOf('/rh') >= 0} link={'/rh'} text="RH" />
-					<Item active={path == '/admin'} link={'/admin'} text="Administrativo" />
 				</ul>
 				<div className="flex mt-auto px-2">
 					<button
@@ -43,7 +42,7 @@ type ItemProps = {
 }
 const Item = ({ active, link, text }: ItemProps) => {
 	return (
-		<li>
+		<li className="w-32">
 			<Link
 				href={link}
 				className={`flex px-2 py-1 rounded-l-xl
