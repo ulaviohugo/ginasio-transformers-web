@@ -1,5 +1,6 @@
 export * from './date-utils'
 export * from './label-utils'
+export * from './location-utils'
 export * from './number-utils'
 export * from './object-utils'
 export * from './salary-utils'
