@@ -41,6 +41,7 @@
 		"eslint-plugin-prettier": "^5.0.0",
 		"prettier": "^3.0.1",
 		"prisma": "^5.1.1",
-		"ts-node": "^10.9.1"
+		"ts-node": "^10.9.1",
+		"tsx": "^3.12.7"
 	}
 }
