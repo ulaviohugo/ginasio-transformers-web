@@ -1,3 +1,4 @@
+import { HttpResponse, HttpStatusCode } from '@/app/data/protocols/http'
 import { Controller } from '@/app/infra/http/protocols'
 
 export const adaptRoute = async (controller: Controller, req?: Request) => {
@@ -9,10 +10,16 @@ export const adaptRoute = async (controller: Controller, req?: Request) => {
 
 	const { body, statusCode } = await controller.handle(data)
 	const success = statusCode >= 200 && statusCode <= 299
-	const responseData = JSON.stringify(success ? body : { error: body.message })
+	const response = success ? body : { error: body.message }
 
-	return new Response(responseData, {
+	return adaptResponse({ body: response, statusCode })
+}
+
+export const adaptResponse = ({ body, statusCode, headers }: HttpResponse) => {
+	const httpResponse = typeof body == 'string' ? body : JSON.stringify(body)
+
+	return new Response(httpResponse, {
 		status: statusCode,
-		headers: { 'Content-Type': 'application/json' }
+		headers: { ...headers, 'Content-Type': 'application/json' }
 	})
 }
