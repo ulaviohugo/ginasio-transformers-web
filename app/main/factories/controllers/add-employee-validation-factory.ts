@@ -17,17 +17,19 @@ export const makeAddEmployeeValidation = () => {
 		'gender',
 		'dateOfBirth',
 		'maritalStatus',
-		'educationDegree',
-		'phone1',
-		'email',
-		'residentialAddress',
 		'documentType',
 		'documentNumber',
 		'nif',
 		'dependents',
+		'educationDegree',
+		'phone1',
+		'email',
+		'countryId',
+		'residentialAddress',
 		'position',
 		'baseSalary',
-		'hireDate'
+		'hireDate',
+		'contractEndDate'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
