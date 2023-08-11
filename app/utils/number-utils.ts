@@ -15,7 +15,8 @@ export class NumberUtils {
 		})
 	}
 
-	static convertToNumber(number: number | string): number {
+	static convertToNumber(number: number | string | undefined, nullable = false): number {
+		if (!number) return (nullable ? null : 0) as any
 		return typeof number === 'number' ? number : Number(number)
 	}
 

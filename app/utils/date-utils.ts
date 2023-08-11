@@ -19,7 +19,8 @@ export class DateUtils {
 		return `${day}${separator}${month}${separator}${year}`
 	}
 
-	static convertToDate(date: Date | string): Date {
+	static convertToDate(date: Date | string | undefined): Date {
+		if (!date) return null as any
 		return date instanceof Date ? date : new Date(date)
 	}
 }
