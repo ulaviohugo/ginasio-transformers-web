@@ -7,29 +7,24 @@ export class DbUpdateEmployee implements UpdateEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
 
 	async update(
-		data: Employee
+		param: Employee
 	): Promise<Employee | 'notFound' | 'emailInUse' | 'documentInUse'> {
-		const param = ObjectUtils.trimValues(data)
+		const data = ObjectUtils.trimValues(param)
 
-		const foundById = await this.employeeRepository.findById(param.id)
+		const foundById = await this.employeeRepository.findById(data.id)
 		if (!foundById) return 'notFound'
 
-		const exists = await this.employeeRepository.findByEmail(param.email)
-		if (exists && exists.id !== param.id) return 'emailInUse'
+		const exists = await this.employeeRepository.findByEmail(data.email)
+		if (exists && exists.id !== data.id) return 'emailInUse'
 
 		const foundByDoc = await this.employeeRepository.findByDocument(
-			param.documentType,
-			param.documentNumber
+			data.documentType,
+			data.documentNumber
 		)
-		if (foundByDoc && foundByDoc.id !== param.id) return 'documentInUse'
+		if (foundByDoc && foundByDoc.id !== data.id) return 'documentInUse'
 
 		const employee: Employee = {
-			...param,
-			dateOfBirth: new Date(param.dateOfBirth),
-			hireDate: new Date(param.hireDate),
-			contractEndDate: param.contractEndDate
-				? new Date(param.contractEndDate)
-				: (null as any),
+			...data,
 			updatedAt: new Date()
 		}
 		return this.employeeRepository.update(employee)
