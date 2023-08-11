@@ -1,23 +1,14 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
-import {
-	Input,
-	Modal,
-	ModalBody,
-	ModalFooter,
-	ModalTitle,
-	Select,
-	Spinner,
-	TextArea
-} from '..'
+import { Input, Modal, ModalBody, ModalFooter, ModalTitle, Select, Spinner } from '..'
 
-import { DateUtils, LabelUtils } from '@/app/utils'
-import { addEmployeeStore, updateEmployeeStore } from '../../redux'
+import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
+import { RootState, addEmployeeStore, updateEmployeeStore } from '../../redux'
 import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
 
 type EmployeeEditorProps = {
@@ -36,14 +27,47 @@ export function EmployeeEditor({
 	updateEmployee
 }: EmployeeEditorProps) {
 	const dispatch = useDispatch()
-	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
+	const { countries, provinces, municipalities } = useSelector(
+		(state: RootState) => state.locations
+	)
 
+	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
+	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
+
+	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
 	const [isLoading, setIsLoading] = useState(false)
+
+	useEffect(() => {
+		if (employee) {
+			setProvinceList(
+				provinces.filter((province) => province.countryId == employee.countryId)
+			)
+			setMunicipalityList(
+				municipalities.filter(
+					(municipality) => municipality.provinceId == employee.provinceId
+				)
+			)
+		}
+	}, [])
+
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		setFormData((prev) => ({ ...prev, [name]: value }))
+
+		let data: Employee = { ...formDate, [name]: value }
+
+		if (name == 'countryId') {
+			data = { ...data, provinceId: undefined, municipalityId: undefined }
+			setProvinceList(provinces.filter((province) => province.countryId == Number(value)))
+		}
+		if (name == 'provinceId') {
+			data = { ...data, municipalityId: undefined }
+			setMunicipalityList(
+				municipalities.filter((municipality) => municipality.provinceId == Number(value))
+			)
+		}
+		setFormData(data)
 	}
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -234,16 +258,42 @@ export function EmployeeEditor({
 						<Divisor />
 						<div>
 							<Select
-								id="position"
-								name="position"
-								value={formDate?.position || ''}
-								label={LabelUtils.translateField<Employee>('position')}
-								data={[
-									{ text: 'Assistente administrativo' },
-									{ text: 'Costureiro' },
-									{ text: 'Coordenador de operações' },
-									{ text: 'Mestre de costura' }
-								]}
+								id="countryId"
+								name="countryId"
+								value={formDate?.countryId || ''}
+								label={LabelUtils.translateField<Employee>('countryId')}
+								data={countries.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Select
+								id="provinceId"
+								name="provinceId"
+								value={formDate?.provinceId || ''}
+								label={LabelUtils.translateField<Employee>('provinceId')}
+								data={provinceList.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Select
+								id="municipalityId"
+								name="municipalityId"
+								value={formDate?.municipalityId || ''}
+								label={LabelUtils.translateField<Employee>('municipalityId')}
+								data={municipalityList.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
 								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
