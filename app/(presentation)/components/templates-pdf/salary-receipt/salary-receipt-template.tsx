@@ -3,18 +3,37 @@ import { Employee } from '@/app/domain/models'
 import { NumberUtils, SalaryUtils } from '@/app/utils'
 import { Document, Page, View, Text, PDFViewer } from '@react-pdf/renderer'
 
-type SalaryReceiptProps = { employee: Employee }
+export type ReceiptDataProps = {
+	year: number
+	month: string
+	workedDays: number
+}
 
-type CardProps = { title: string; employee: Employee }
+type SalaryReceiptProps = {
+	employee: Employee
+	receiptData: ReceiptDataProps
+}
+
+type HeaderProps = {
+	title: string
+	employee: Employee
+	receiptData: ReceiptDataProps
+}
 
 type ItemProps = {
-	title: string
+	title: 'Código' | 'Descrição' | 'Referência' | 'Vencimentos' | 'Descontos'
 	contents: string[] | number[]
 }
 
 const border = 0.5
+const fontSize_sm = 8
+const fontSize_md = 9
+const fontSize_title = 12
 
-const getSalaryItems = (employee: Employee): ItemProps[] => {
+export const getSalaryItems = (
+	employee: Employee,
+	receiptDate: ReceiptDataProps
+): ItemProps[] => {
 	const { baseSalary = 0 } = employee
 	const percent = SalaryUtils.getIRtPercent(baseSalary)
 	const irtPercent = percent ? `${percent}%` : 'Isento'
@@ -41,10 +60,10 @@ const getSalaryItems = (employee: Employee): ItemProps[] => {
 		{
 			title: 'Referência',
 			contents: [
-				'22 Dias',
-				'22 Dias',
-				'22 Dias',
-				'22 Dias',
+				`${receiptDate.workedDays} Dias`,
+				`${receiptDate.workedDays} Dias`,
+				`${receiptDate.workedDays} Dias`,
+				`${receiptDate.workedDays} Dias`,
 				'Mensal',
 				'3%',
 				irtPercent,
@@ -75,7 +94,7 @@ const getSalaryItems = (employee: Employee): ItemProps[] => {
 	]
 }
 
-export function SalaryReceiptTemplate({ employee }: SalaryReceiptProps) {
+export function SalaryReceiptTemplate({ employee, receiptData }: SalaryReceiptProps) {
 	return (
 		<PDFViewer width={'100%'} style={{ height: 'calc(100vh - 30px)' }}>
 			<Document title={employee.name}>
@@ -84,31 +103,30 @@ export function SalaryReceiptTemplate({ employee }: SalaryReceiptProps) {
 					style={{ flexDirection: 'row', justifyContent: 'space-between' }}
 					orientation="landscape"
 				>
-					<Container title="Original" employee={employee} />
+					<Container title="Original" employee={employee} receiptData={receiptData} />
 					<View style={{ border: border }}></View>
-					<Container title="Cópia" employee={employee} />
+					<Container title="Cópia" employee={employee} receiptData={receiptData} />
 				</Page>
 			</Document>
 		</PDFViewer>
 	)
 }
 
-function Container({ title, employee }: CardProps) {
-	const items = getSalaryItems(employee)
+function Container({ title, employee, receiptData }: HeaderProps) {
+	const items = getSalaryItems(employee, receiptData)
 	return (
-		<View style={{ flexDirection: 'column', width: '100%' }}>
-			<Header title={title} employee={employee} />
+		<View style={{ flexDirection: 'column', width: '100%', fontSize: fontSize_md }}>
+			<Header title={title} employee={employee} receiptData={receiptData} />
 			<Body items={items} />
+			<ResumeContent employee={employee} receiptData={receiptData} />
 		</View>
 	)
 }
 
-function Header({ title, employee }: CardProps) {
+function Header({ title, employee, receiptData }: HeaderProps) {
 	return (
 		<View
 			style={{
-				// flex: 1,
-				flexDirection: 'column',
 				padding: 8,
 				gap: 8
 			}}
@@ -117,13 +135,17 @@ function Header({ title, employee }: CardProps) {
 				style={{
 					flexDirection: 'row',
 					justifyContent: 'space-between',
+					alignItems: 'center',
 					border: border,
 					padding: 8,
-					fontSize: 12
+					fontSize: fontSize_title
 				}}
 			>
 				<Text>Recibo de pagamento de salário</Text>
-				<Text style={{ fontSize: 9 }}>{title}</Text>
+				<Text
+					style={{ fontSize: fontSize_sm }}
+				>{`${receiptData.month} ${receiptData.year}`}</Text>
+				<Text>{title}</Text>
 			</View>
 			<View
 				style={{
@@ -131,8 +153,7 @@ function Header({ title, employee }: CardProps) {
 					justifyContent: 'space-between',
 					gap: 8,
 					border: border,
-					padding: 9,
-					fontSize: 9
+					padding: 9
 				}}
 			>
 				<View>
@@ -165,10 +186,8 @@ function Body({ items }: { items: ItemProps[] }) {
 		<View
 			style={{
 				flexDirection: 'row',
-				padding: 8,
-				margin: 8,
-				marginHorizontal: 'auto',
-				fontSize: 8,
+				paddingHorizontal: 8,
+				fontSize: fontSize_sm,
 				width: '100%'
 			}}
 		>
@@ -210,6 +229,64 @@ function Body({ items }: { items: ItemProps[] }) {
 	)
 }
 
-function ResumeContent({ employee }: { employee: Employee }) {
-	return <View></View>
+function ResumeContent({ employee, receiptData }: SalaryReceiptProps) {
+	const salaryHeaders = getSalaryItems(employee, receiptData)
+	const totalSalary = salaryHeaders
+		.filter((salary) => salary.title == 'Vencimentos')
+		.map((salary) => salary.contents)
+		.reduce((acc, current) => Number(acc) + Number(current), 0)
+
+	const totalDiscount = salaryHeaders
+		.filter((salary) => salary.title == 'Descontos')
+		.map((salary) => salary.contents)
+		.reduce((acc, current) => Number(acc) + Number(current), 0)
+
+	return (
+		<View
+			style={{
+				flexDirection: 'row',
+				marginHorizontal: 8,
+				marginTop: 8,
+				border: border
+			}}
+		>
+			<View
+				style={{
+					padding: 8,
+					gap: 8,
+					alignItems: 'center',
+					borderRight: border
+				}}
+			>
+				<Text>ENTREGUEI</Text>
+				<Text style={{ borderTop: border, width: 150, marginTop: 8 }}></Text>
+				<Text>{employee.name}</Text>
+			</View>
+
+			<View style={{ flex: 1 }}>
+				<View
+					style={{
+						flexDirection: 'row',
+						justifyContent: 'space-between'
+					}}
+				>
+					<View
+						style={{ borderBottom: border, padding: 8, flex: 1, borderRight: border }}
+					>
+						<Text>Total de Vencimentos</Text>
+						<Text>{totalSalary}</Text>
+					</View>
+
+					<View style={{ borderBottom: border, padding: 8, flex: 1 }}>
+						<Text>Total de Descontos</Text>
+						<Text>{totalDiscount}</Text>
+					</View>
+				</View>
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+					<Text style={{ padding: 8 }}>Valor líquido</Text>
+					<Text style={{ padding: 8 }}>15000</Text>
+				</View>
+			</View>
+		</View>
+	)
 }
