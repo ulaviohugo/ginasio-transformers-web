@@ -1,15 +1,17 @@
-type CountryProps = {
+export type CountryProps = {
 	id: number
 	name: string
+	provinces?: ProvinceProps[]
 }
 
-type StateProps = {
+export type ProvinceProps = {
 	id: number
 	name: string
 	countryId: number
+	municipalities?: MunicipalityProps[]
 }
 
-type MunicipalityProps = {
+export type MunicipalityProps = {
 	id: number
 	name: string
 	provinceId: number
@@ -18,63 +20,138 @@ type MunicipalityProps = {
 export class LocationUtils {
 	static countries(): CountryProps[] {
 		return [
-			{ id: 1, name: 'Angola' },
-			{ id: 2, name: 'Brasil' },
+			{ id: 1, name: 'Angola', provinces: this.provinces(1) },
+			{ id: 2, name: 'Brasil', provinces: this.provinces(2) },
 			{ id: 3, name: 'China' },
 			{ id: 4, name: 'Turquia' }
 		]
 	}
 
-	static states(countryId?: number): StateProps[] {
+	static provinces(countryId?: number): ProvinceProps[] {
 		const states = [
 			//Angola
-			{ id: 1, name: 'Bengo', countryId: 1, cities: this.municipalities(1) },
-			{ id: 2, name: 'Benguela', countryId: 1 },
-			{ id: 3, name: 'Bié', countryId: 1 },
-			{ id: 4, name: 'Cabinda', countryId: 1 },
-			{ id: 5, name: 'Cuando-Cubango', countryId: 1 },
-			{ id: 6, name: 'Cuanza Norte', countryId: 1 },
-			{ id: 7, name: 'Cuanza Sul', countryId: 1 },
-			{ id: 8, name: 'Cunene', countryId: 1 },
-			{ id: 9, name: 'Huambo', countryId: 1 },
-			{ id: 10, name: 'Huíla', countryId: 1 },
-			{ id: 11, name: 'Luanda', countryId: 1 },
-			{ id: 12, name: 'Lunda Norte', countryId: 1 },
-			{ id: 13, name: 'Lunda Sul', countryId: 1 },
-			{ id: 14, name: 'Malanje', countryId: 1 },
-			{ id: 15, name: 'Moxico', countryId: 1 },
-			{ id: 16, name: 'Namibe', countryId: 1 },
-			{ id: 17, name: 'Uíge', countryId: 1 },
-			{ id: 18, name: 'Zaire', countryId: 1 },
+			{ id: 1, name: 'Bengo', countryId: 1, municipalities: this.municipalities(1) },
+			{ id: 2, name: 'Benguela', countryId: 1, municipalities: this.municipalities(2) },
+			{ id: 3, name: 'Bié', countryId: 1, municipalities: this.municipalities(3) },
+			{ id: 4, name: 'Cabinda', countryId: 1, municipalities: this.municipalities(4) },
+			{
+				id: 5,
+				name: 'Cuando-Cubango',
+				countryId: 1,
+				municipalities: this.municipalities(5)
+			},
+			{
+				id: 6,
+				name: 'Cuanza Norte',
+				countryId: 1,
+				municipalities: this.municipalities(6)
+			},
+			{ id: 7, name: 'Cuanza Sul', countryId: 1, municipalities: this.municipalities(7) },
+			{ id: 8, name: 'Cunene', countryId: 1, municipalities: this.municipalities(8) },
+			{ id: 9, name: 'Huambo', countryId: 1, municipalities: this.municipalities(9) },
+			{ id: 10, name: 'Huíla', countryId: 1, municipalities: this.municipalities(10) },
+			{ id: 11, name: 'Luanda', countryId: 1, municipalities: this.municipalities(11) },
+			{
+				id: 12,
+				name: 'Lunda Norte',
+				countryId: 1,
+				municipalities: this.municipalities(12)
+			},
+			{
+				id: 13,
+				name: 'Lunda Sul',
+				countryId: 1,
+				municipalities: this.municipalities(13)
+			},
+			{ id: 14, name: 'Malanje', countryId: 1, municipalities: this.municipalities(14) },
+			{ id: 15, name: 'Moxico', countryId: 1, municipalities: this.municipalities(15) },
+			{ id: 16, name: 'Namibe', countryId: 1, municipalities: this.municipalities(16) },
+			{ id: 17, name: 'Uíge', countryId: 1, municipalities: this.municipalities(17) },
+			{ id: 18, name: 'Zaire', countryId: 1, municipalities: this.municipalities(18) },
 			//Brasil
-			{ id: 19, name: 'Acre', countryId: 2 },
-			{ id: 20, name: 'Alagoas', countryId: 2 },
-			{ id: 21, name: 'Amapá', countryId: 2 },
-			{ id: 22, name: 'Amazonas', countryId: 2 },
-			{ id: 23, name: 'Bahia', countryId: 2 },
-			{ id: 24, name: 'Ceará', countryId: 2 },
-			{ id: 25, name: 'Distrito Federal', countryId: 2 },
-			{ id: 26, name: 'Espírito Santo', countryId: 2 },
-			{ id: 27, name: 'Goiás', countryId: 2 },
-			{ id: 28, name: 'Maranhão', countryId: 2 },
-			{ id: 29, name: 'Mato Grosso', countryId: 2 },
-			{ id: 30, name: 'Mato Grosso do Sul', countryId: 2 },
-			{ id: 31, name: 'Minas Gerais', countryId: 2 },
-			{ id: 32, name: 'Pará', countryId: 2 },
-			{ id: 33, name: 'Paraíba', countryId: 2 },
-			{ id: 34, name: 'Paraná', countryId: 2 },
-			{ id: 35, name: 'Pernambuco', countryId: 2 },
-			{ id: 36, name: 'Piauí', countryId: 2 },
-			{ id: 37, name: 'Rio de Janeiro', countryId: 2 },
-			{ id: 38, name: 'Rio Grande do Norte', countryId: 2 },
-			{ id: 39, name: 'Rio Grande do Sul', countryId: 2 },
-			{ id: 40, name: 'Rondônia', countryId: 2 },
-			{ id: 41, name: 'Roraima', countryId: 2 },
-			{ id: 42, name: 'Santa Catarina', countryId: 2 },
-			{ id: 43, name: 'São Paulo', countryId: 2 },
-			{ id: 44, name: 'Sergipe', countryId: 2 },
-			{ id: 45, name: 'Tocantins', countryId: 2 }
-		] as StateProps[]
+			{ id: 19, name: 'Acre', countryId: 2, municipalities: this.municipalities(19) },
+			{ id: 20, name: 'Alagoas', countryId: 2, municipalities: this.municipalities(20) },
+			{ id: 21, name: 'Amapá', countryId: 2, municipalities: this.municipalities(21) },
+			{ id: 22, name: 'Amazonas', countryId: 2, municipalities: this.municipalities(22) },
+			{ id: 23, name: 'Bahia', countryId: 2, municipalities: this.municipalities(23) },
+			{ id: 24, name: 'Ceará', countryId: 2, municipalities: this.municipalities(24) },
+			{
+				id: 25,
+				name: 'Distrito Federal',
+				countryId: 2,
+				municipalities: this.municipalities(25)
+			},
+			{
+				id: 26,
+				name: 'Espírito Santo',
+				countryId: 2,
+				municipalities: this.municipalities(26)
+			},
+			{ id: 27, name: 'Goiás', countryId: 2, municipalities: this.municipalities(27) },
+			{ id: 28, name: 'Maranhão', countryId: 2, municipalities: this.municipalities(28) },
+			{
+				id: 29,
+				name: 'Mato Grosso',
+				countryId: 2,
+				municipalities: this.municipalities(29)
+			},
+			{
+				id: 30,
+				name: 'Mato Grosso do Sul',
+				countryId: 2,
+				municipalities: this.municipalities(30)
+			},
+			{
+				id: 31,
+				name: 'Minas Gerais',
+				countryId: 2,
+				municipalities: this.municipalities(31)
+			},
+			{ id: 32, name: 'Pará', countryId: 2, municipalities: this.municipalities(32) },
+			{ id: 33, name: 'Paraíba', countryId: 2, municipalities: this.municipalities(33) },
+			{ id: 34, name: 'Paraná', countryId: 2, municipalities: this.municipalities(34) },
+			{
+				id: 35,
+				name: 'Pernambuco',
+				countryId: 2,
+				municipalities: this.municipalities(35)
+			},
+			{ id: 36, name: 'Piauí', countryId: 2, municipalities: this.municipalities(36) },
+			{
+				id: 37,
+				name: 'Rio de Janeiro',
+				countryId: 2,
+				municipalities: this.municipalities(37)
+			},
+			{
+				id: 38,
+				name: 'Rio Grande do Norte',
+				countryId: 2,
+				municipalities: this.municipalities(38)
+			},
+			{
+				id: 39,
+				name: 'Rio Grande do Sul',
+				countryId: 2,
+				municipalities: this.municipalities(39)
+			},
+			{ id: 40, name: 'Rondônia', countryId: 2, municipalities: this.municipalities(40) },
+			{ id: 41, name: 'Roraima', countryId: 2, municipalities: this.municipalities(41) },
+			{
+				id: 42,
+				name: 'Santa Catarina',
+				countryId: 2,
+				municipalities: this.municipalities(42)
+			},
+			{
+				id: 43,
+				name: 'São Paulo',
+				countryId: 2,
+				municipalities: this.municipalities(43)
+			},
+			{ id: 44, name: 'Sergipe', countryId: 2, municipalities: this.municipalities(44) },
+			{ id: 45, name: 'Tocantins', countryId: 2, municipalities: this.municipalities(45) }
+		] as ProvinceProps[]
 
 		return countryId
 			? states.filter((province) => province.countryId == countryId)
@@ -390,15 +467,15 @@ export class LocationUtils {
 			{ id: 286, name: 'Salvador', provinceId: 23 },
 			{ id: 287, name: 'Curitiba', provinceId: 34 },
 
-			{ id: 287, name: 'São Paulo', provinceId: 43 },
-			{ id: 288, name: 'Diadema', provinceId: 43 },
-			{ id: 289, name: 'Campinas', provinceId: 43 },
-			{ id: 290, name: 'Pinheiros', provinceId: 43 },
-			{ id: 291, name: 'Cambuci', provinceId: 43 },
-			{ id: 292, name: 'São José dos Campos', provinceId: 43 },
-			{ id: 293, name: 'São Gonçalo', provinceId: 43 },
-			{ id: 294, name: 'São Bernado', provinceId: 43 },
-			{ id: 295, name: 'São Caetano', provinceId: 43 }
+			{ id: 288, name: 'São Paulo', provinceId: 43 },
+			{ id: 289, name: 'Diadema', provinceId: 43 },
+			{ id: 290, name: 'Campinas', provinceId: 43 },
+			{ id: 291, name: 'Pinheiros', provinceId: 43 },
+			{ id: 292, name: 'Cambuci', provinceId: 43 },
+			{ id: 293, name: 'São José dos Campos', provinceId: 43 },
+			{ id: 294, name: 'São Gonçalo', provinceId: 43 },
+			{ id: 295, name: 'São Bernado', provinceId: 43 },
+			{ id: 296, name: 'São Caetano', provinceId: 43 }
 		] as MunicipalityProps[]
 
 		return provinceId
