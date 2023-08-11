@@ -13,9 +13,9 @@ export interface Employee {
 	phone1: string
 	phone2?: string
 	email: string
-	municipalityId: number
+	countryId?: number
 	provinceId?: number
-	countyId?: number
+	municipalityId: number
 	residentialAddress: string
 	position: string
 	baseSalary?: number
