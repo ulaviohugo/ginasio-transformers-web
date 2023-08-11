@@ -14,9 +14,9 @@ CREATE TABLE `tb_employees` (
     `phone1` VARCHAR(15) NOT NULL,
     `phone2` VARCHAR(15) NULL,
     `email` VARCHAR(50) NOT NULL,
-    `countryId` INTEGER NOT NULL,
-    `provinceId` INTEGER NULL,
-    `municipalityId` INTEGER NULL,
+    `country_id` INTEGER NOT NULL,
+    `province_id` INTEGER NULL,
+    `municipality_id` INTEGER NULL,
     `residential_address` VARCHAR(150) NOT NULL,
     `position` VARCHAR(50) NOT NULL,
     `base_salary` DOUBLE NULL,
@@ -55,7 +55,6 @@ CREATE TABLE `tb_provinces` (
     `name` VARCHAR(50) NOT NULL,
     `country_id` INTEGER NOT NULL,
 
-    UNIQUE INDEX `tb_provinces_name_key`(`name`),
     UNIQUE INDEX `tb_provinces_name_country_id_key`(`name`, `country_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -66,19 +65,18 @@ CREATE TABLE `tb_municipalities` (
     `name` VARCHAR(50) NOT NULL,
     `province_id` INTEGER NOT NULL,
 
-    UNIQUE INDEX `tb_municipalities_name_key`(`name`),
     UNIQUE INDEX `tb_municipalities_name_province_id_key`(`name`, `province_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_countryId_fkey` FOREIGN KEY (`countryId`) REFERENCES `tb_countries`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `tb_countries`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_provinceId_fkey` FOREIGN KEY (`provinceId`) REFERENCES `tb_provinces`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_province_id_fkey` FOREIGN KEY (`province_id`) REFERENCES `tb_provinces`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_municipalityId_fkey` FOREIGN KEY (`municipalityId`) REFERENCES `tb_municipalities`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `tb_employees` ADD CONSTRAINT `tb_employees_municipality_id_fkey` FOREIGN KEY (`municipality_id`) REFERENCES `tb_municipalities`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `tb_provinces` ADD CONSTRAINT `tb_provinces_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `tb_countries`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
