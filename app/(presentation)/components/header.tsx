@@ -46,7 +46,7 @@ const Item = ({ active, link, text }: ItemProps) => {
 			<Link
 				href={link}
 				className={`flex px-2 py-1 rounded-l-xl
-				${active ? 'bg-gray-200 text-primary' : 'hover:bg-gray-700'}
+				${active ? 'bg-gray-200 text-primary' : 'hover:bg-black hover:bg-opacity-20'}
 				  transition-all duration-200 ease-in-out`}
 			>
 				{text}
