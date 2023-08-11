@@ -15,7 +15,7 @@ export class LabelUtils {
 		email: 'E-mail',
 		countryId: 'País',
 		provinceId: 'Província',
-		countyId: 'Município',
+		municipalityId: 'Município',
 		residentialAddress: 'Endereço residencial',
 		documentType: 'Tipo de documento',
 		documentNumber: 'Número do documento',
