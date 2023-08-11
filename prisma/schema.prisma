@@ -34,7 +34,7 @@ model Employee {
   baseSalary         Float?    @map("base_salary")
   hireDate           DateTime  @map("hire_date") @db.Date
   contractEndDate    DateTime? @map("contract_end_date") @db.Date
-  bankName           String?   @unique @map("bank_name") @db.VarChar(30)
+  bankName           String?   @map("bank_name") @db.VarChar(30)
   iban               String?   @unique @db.VarChar(30)
   accountNumber      String?   @unique @map("account_number") @db.VarChar(30)
   createdBy          Int?      @map("created_by")
