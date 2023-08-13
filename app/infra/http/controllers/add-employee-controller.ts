@@ -21,7 +21,7 @@ export class AddEmployeeController implements Controller {
 			}
 			let uploader: Uploader = null as any
 			if (request.image && typeof request.image != 'string') {
-				uploader = new UploadService(request.image)
+				uploader = new UploadService(request.image, '/employees')
 			}
 			const createdEmployee = await this.addEmployee.add(
 				{

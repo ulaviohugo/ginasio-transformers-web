@@ -54,9 +54,9 @@ export class UploadService implements Uploader {
 
 			await fs.writeFile(filePath, buffer)
 
-			const relativePath = `${FileUtils.UPLOAD_RELATIVE_PATH}/${
-				this.path ? this.path + '/' : ''
-			}${filename}`
+			const relativePath = `${FileUtils.UPLOAD_RELATIVE_PATH}${
+				this.path || ''
+			}/${filename}`
 			return relativePath
 		} catch (error: any) {
 			console.error('Erro ao carregar arquivo:', error)
