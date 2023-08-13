@@ -1,5 +1,6 @@
 import { HttpResponse } from '@/app/data/protocols/http'
 import { Controller } from '@/app/infra/http/protocols'
+import { ObjectUtils } from '@/app/utils'
 
 export const adaptRoute = async (controller: Controller, req?: Request) => {
 	let data = {}
@@ -10,9 +11,14 @@ export const adaptRoute = async (controller: Controller, req?: Request) => {
 				Object.assign(data, { [key]: value })
 			})
 		}
-	} catch (error: any) {
-		data = await req?.json()
+	} catch (error: any) {}
+
+	if (ObjectUtils.isEmpty(data)) {
+		try {
+			data = await req?.json()
+		} catch (error) {}
 	}
+
 	data = { ...data, id: (req as any)?.id }
 
 	const { body, statusCode } = await controller.handle(data)
