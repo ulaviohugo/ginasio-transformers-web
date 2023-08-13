@@ -1,5 +1,6 @@
 export * from './array-utils'
 export * from './date-utils'
+export * from './file-utils'
 export * from './label-utils'
 export * from './location-utils'
 export * from './number-utils'
