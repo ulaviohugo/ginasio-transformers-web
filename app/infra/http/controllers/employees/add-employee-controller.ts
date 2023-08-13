@@ -1,19 +1,19 @@
-import { UpdateEmployee } from '@/app/domain/usecases'
-import { DocumentInUseError, EmailInUseError } from '../errors'
-import { badRequest, forbidden, notFound, ok, serverError } from '../helper'
-import { Controller, Validation } from '../protocols'
+import { AddEmployee } from '@/app/domain/usecases'
+import { DocumentInUseError, EmailInUseError } from '../../errors'
+import { badRequest, forbidden, ok, serverError } from '../../helper'
+import { Controller, Validation } from '../../protocols'
 import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
+import { HttpResponse } from '@/app/data/protocols/http'
 import { Uploader } from '@/app/data/protocols/services'
 
-export class UpdateEmployeeController implements Controller {
+export class AddEmployeeController implements Controller {
 	constructor(
-		private readonly UpdateEmployee: UpdateEmployee,
+		private readonly addEmployee: AddEmployee,
 		private readonly validation: Validation
 	) {}
-	async handle(request: UpdateEmployeeControllerRequest): Promise<HttpResponse> {
+	async handle(request: AddEmployeeControllerRequest): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -23,10 +23,9 @@ export class UpdateEmployeeController implements Controller {
 			if (request.image && typeof request.image != 'string') {
 				uploader = new UploadService(request.image, '/employees')
 			}
-			const updatedEmployee = await this.UpdateEmployee.update(
+			const createdEmployee = await this.addEmployee.add(
 				{
 					...request,
-					id: NumberUtils.convertToNumber(request.id),
 					dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
 					countryId: NumberUtils.convertToNumber(request.countryId),
 					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
@@ -38,20 +37,18 @@ export class UpdateEmployeeController implements Controller {
 				},
 				uploader
 			)
-			if (updatedEmployee == 'notFound') {
-				return notFound()
-			}
-			if (updatedEmployee == 'emailInUse') {
+
+			if (createdEmployee == 'emailInUse') {
 				return forbidden(new EmailInUseError())
 			}
-			if (updatedEmployee == 'documentInUse') {
+			if (createdEmployee == 'documentInUse') {
 				return forbidden(new DocumentInUseError())
 			}
-			return ok(updatedEmployee)
+			return ok(createdEmployee)
 		} catch (error) {
 			return serverError(error)
 		}
 	}
 }
 
-export type UpdateEmployeeControllerRequest = Employee
+export type AddEmployeeControllerRequest = Employee

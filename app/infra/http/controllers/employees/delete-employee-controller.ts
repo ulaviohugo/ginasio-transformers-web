@@ -1,6 +1,6 @@
 import { DeleteEmployee } from '@/app/domain/usecases'
-import { badRequest, notFound, ok, serverError } from '../helper'
-import { Controller, Validation } from '../protocols'
+import { badRequest, notFound, ok, serverError } from '../../helper'
+import { Controller, Validation } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 
