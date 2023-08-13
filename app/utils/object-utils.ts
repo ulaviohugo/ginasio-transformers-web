@@ -3,7 +3,7 @@ export class ObjectUtils {
 		return !param || JSON.stringify(param) == '{}'
 	}
 
-	static removeProps<T extends object = any>(param: T, props: (keyof T)[]) {
+	static removeProps<T extends object = any>(param: T, props: (keyof T)[]): T {
 		if (typeof param !== 'object' || param === null) {
 			throw new Error('O parâmetro "param" deve ser um objeto.')
 		}
@@ -13,7 +13,7 @@ export class ObjectUtils {
 				delete body[prop]
 			}
 		}
-		return body
+		return body as T
 	}
 
 	static trimValues<T extends object = any>(obj: T): T {
