@@ -2,11 +2,13 @@ export interface HttpClient<T = any, R = any> {
 	request: (params: HttpRequestParams<T>) => Promise<HttpResponse<R>>
 }
 
+export type HeaderParams = HeadersInit & { 'Content-Type': 'application/json' }
+
 export type HttpRequestParams<T = any> = {
 	url: string
 	method: 'post' | 'get' | 'put' | 'delete'
 	body?: T
-	headers?: object
+	headers?: HeaderParams
 	params?: object
 }
 
