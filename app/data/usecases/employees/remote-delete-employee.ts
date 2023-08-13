@@ -1,5 +1,5 @@
 import { DeleteEmployee } from '@/app/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../protocols/http'
+import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
 
 export class RemoteDeleteEmployee implements DeleteEmployee {

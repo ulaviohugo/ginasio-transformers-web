@@ -1,7 +1,7 @@
 import { DeleteEmployee } from '@/app/domain/usecases'
-import { EmployeeRepository } from '../protocols'
-import { Uploader } from '../protocols/services'
 import { FileUtils } from '@/app/utils'
+import { EmployeeRepository } from '../../protocols'
+import { Uploader } from '../../protocols/services'
 
 export class DbDeleteEmployee implements DeleteEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}

@@ -1,5 +1,5 @@
 import { LoadEmployees, LoadEmployeesResult } from '@/app/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../protocols/http'
+import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
 
 export class RemoteLoadEmployees implements LoadEmployees {

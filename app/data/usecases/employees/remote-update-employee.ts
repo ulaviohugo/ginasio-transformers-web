@@ -1,6 +1,6 @@
 import { Employee } from '@/app/domain/models'
 import { UpdateEmployee } from '@/app/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../protocols/http'
+import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
 import { ObjectUtils } from '@/app/utils'
 

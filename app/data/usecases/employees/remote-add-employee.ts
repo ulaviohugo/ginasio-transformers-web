@@ -1,6 +1,6 @@
 import { Employee } from '@/app/domain/models'
 import { AddEmployee } from '@/app/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../protocols/http'
+import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
 
 export class RemoteAddEmployee implements AddEmployee {

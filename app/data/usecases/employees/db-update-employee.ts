@@ -1,8 +1,8 @@
 import { UpdateEmployee } from '@/app/domain/usecases'
-import { EmployeeRepository } from '../protocols'
-import { Employee } from '../../domain/models'
+import { EmployeeRepository } from '../../protocols'
+import { Employee } from '../../../domain/models'
 import { FileUtils, ObjectUtils } from '@/app/utils'
-import { Uploader } from '../protocols/services'
+import { Uploader } from '../../protocols/services'
 
 export class DbUpdateEmployee implements UpdateEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}

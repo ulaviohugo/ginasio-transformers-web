@@ -1,5 +1,5 @@
 import { LoadEmployees, LoadEmployeesResult } from '@/app/domain/usecases'
-import { EmployeeRepository } from '../protocols'
+import { EmployeeRepository } from '../../protocols'
 
 export class DbLoadEmployees implements LoadEmployees {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
