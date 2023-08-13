@@ -16,7 +16,7 @@ export function Input({ label, icon: Icon, className, ...props }: InputProps) {
 	return (
 		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
 			<input
-				className={`focus:outline-none text-sm ${className || ''} w-full`}
+				className={`focus:outline-none text-sm w-full ${className || ''}`}
 				id={id}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
