@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Employee } from '@/app/domain/models'
 import {
 	IconClose,
-	IconTrash,
 	Input,
 	Modal,
 	ModalBody,
@@ -21,7 +20,6 @@ import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/u
 import { RootState, addEmployeeStore, updateEmployeeStore } from '../../redux'
 import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
 import Image from 'next/image'
-import { makeApiUrl } from '@/app/main/factories/http'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -110,20 +108,12 @@ export function EmployeeEditor({
 
 		setIsLoading(true)
 		try {
-			const data = new FormData()
-			const values = Object.values(formDate)
-			const keys = Object.keys(formDate)
-			for (let i = 0; i < values.length; i++) {
-				const key = keys[i]
-				const value = values[i]
-				data.append(key, value)
-			}
 			const httpResponse = (
 				formDate.id
 					? await updateEmployee.update(formDate)
-					: await addEmployee.add(data as any)
+					: await addEmployee.add(formDate)
 			) as Employee
-			// : await fetch(makeApiUrl('/employees'), { method: 'post', body: data })
+
 			if (formDate.id) {
 				dispatch(updateEmployeeStore(httpResponse))
 			} else {
