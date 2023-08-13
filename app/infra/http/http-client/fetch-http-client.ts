@@ -1,4 +1,5 @@
 import {
+	HeaderParams,
 	HttpClient,
 	HttpRequestParams,
 	HttpResponse,
@@ -9,14 +10,21 @@ export class FetchHttpClient implements HttpClient {
 	async request(data: HttpRequestParams): Promise<HttpResponse> {
 		let fetchResponse
 		try {
+			const headers = data.headers || ({} as HeaderParams)
+
+			const body =
+				headers['Content-Type'] == 'application/json'
+					? JSON.stringify(data.body)
+					: data.body
+
 			const httpResponse = await fetch(data.url, {
 				method: data.method,
-				body: JSON.stringify(data.body),
-				headers: { ...data.headers, 'Content-Type': 'application/json' }
+				body,
+				headers
 			})
-			const body = await httpResponse.json()
+			const jsonBody = await httpResponse.json()
 			fetchResponse = {
-				data: httpResponse.status == HttpStatusCode.ok ? body : body?.error,
+				data: httpResponse.status == HttpStatusCode.ok ? jsonBody : jsonBody?.error,
 				status: httpResponse.status
 			}
 		} catch (error: any) {
