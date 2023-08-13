@@ -11,17 +11,26 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 	) {}
 
 	async update(param: Employee): Promise<Employee> {
-		const body = ObjectUtils.removeProps<Employee>(param, [
+		const handledParam = ObjectUtils.removeProps<Employee>(param, [
 			'createdAt',
 			'createdBy',
 			'updatedAt',
 			'updatedBy'
 		])
+
+		const values = Object.values(handledParam)
+		const keys = Object.keys(handledParam)
+
+		const body = new FormData()
+		for (let i = 0; i < values.length; i++) {
+			const key = keys[i]
+			const value = values[i]
+			body.append(key, value)
+		}
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,
-			body,
-			headers: { 'Content-Type': 'application/json' }
+			body
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

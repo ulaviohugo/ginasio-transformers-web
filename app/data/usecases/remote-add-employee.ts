@@ -10,10 +10,19 @@ export class RemoteAddEmployee implements AddEmployee {
 	) {}
 
 	async add(param: Employee): Promise<Employee> {
+		const values = Object.values(param)
+		const keys = Object.keys(param)
+
+		const body = new FormData()
+		for (let i = 0; i < values.length; i++) {
+			const key = keys[i]
+			const value = values[i]
+			body.append(key, value)
+		}
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
-			body: param
+			body
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:
