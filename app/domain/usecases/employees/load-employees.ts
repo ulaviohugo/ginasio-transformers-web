@@ -1,4 +1,4 @@
-import { Employee } from '../models'
+import { Employee } from '../../models'
 
 export interface LoadEmployees {
 	load(): Promise<LoadEmployeesResult>
