@@ -1,11 +1,18 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { FileUtils, StringUtils } from '../utils'
+import { Uploader } from '../data/protocols/services'
 
-export class UploadService {
-	async upload(file: File) {
+export class UploadService implements Uploader {
+	constructor(
+		private readonly file: File,
+		private readonly path?: string
+	) {}
+
+	async upload() {
+		const file = this.file
 		if (!file) {
-			throw new Error('No file provided.')
+			throw new Error('Nenhum arquivo selecionado')
 		}
 		const allowedExtensions = FileUtils.IMG_EXTENSIONS
 
@@ -22,7 +29,7 @@ export class UploadService {
 		const bytes = await file.arrayBuffer()
 		const buffer = Buffer.from(bytes)
 
-		const subfolderPath = path.join(process.cwd(), 'public', 'uploads')
+		const subfolderPath = `${FileUtils.UPLOAD_ABSOLUTE_PATH}${this.path || ''}`
 		const filename = sanitizedFileName + '.' + fileExtension
 		let filePath = path.join(subfolderPath, filename)
 
@@ -47,15 +54,23 @@ export class UploadService {
 
 			await fs.writeFile(filePath, buffer)
 
-			const relativePath = `/uploads/${filename}`
+			const relativePath = `${FileUtils.UPLOAD_RELATIVE_PATH}/${
+				this.path ? this.path + '/' : ''
+			}${filename}`
 			return relativePath
 		} catch (error: any) {
 			console.error('Erro ao carregar arquivo:', error)
-			throw new Error(`Ocorreu um erro ao carregar arquivo: ${error.message}`)
+			throw new Error(`Ocorreu um erro ao carregar arquivo`)
 		}
 	}
 
-	async fileExists(filePath: string): Promise<boolean> {
+	async delete(path: string) {
+		const fileExists = await this.fileExists(path)
+		if (!fileExists) return
+		await fs.unlink(path)
+	}
+
+	private async fileExists(filePath: string): Promise<boolean> {
 		try {
 			await fs.access(filePath)
 			return true
