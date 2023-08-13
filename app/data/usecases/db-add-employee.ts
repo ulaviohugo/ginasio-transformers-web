@@ -2,10 +2,11 @@ import { AddEmployee, AddEmployeesResult } from '@/app/domain/usecases'
 import { EmployeeRepository } from '../protocols'
 import { Employee } from '../../domain/models'
 import { ObjectUtils } from '@/app/utils'
+import { Uploader } from '../protocols/services'
 
 export class DbAddEmployee implements AddEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
-	async add(param: Employee): Promise<AddEmployeesResult> {
+	async add(param: Employee, uploader?: Uploader): Promise<AddEmployeesResult> {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.employeeRepository.findByEmail(data.email)
@@ -17,6 +18,10 @@ export class DbAddEmployee implements AddEmployee {
 		)
 		if (foundByDoc && foundByDoc.id !== data.id) return 'documentInUse'
 
-		return this.employeeRepository.add(data)
+		let image
+		if (uploader) {
+			image = await uploader.upload()
+		}
+		return this.employeeRepository.add({ ...data, image })
 	}
 }
