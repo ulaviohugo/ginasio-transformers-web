@@ -1,5 +1,6 @@
 export interface Employee {
 	id: number
+	image?: string
 	name: string
 	gender: string
 	dateOfBirth: Date

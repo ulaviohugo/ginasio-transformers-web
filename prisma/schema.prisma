@@ -14,6 +14,7 @@ datasource db {
 model Employee {
   id                 Int       @id @default(autoincrement())
   name               String    @db.VarChar(50)
+  image              String?   @db.VarChar(100)
   gender             String    @db.VarChar(10)
   dateOfBirth        DateTime  @map("date_of_birth") @db.Date
   maritalStatus      String    @map("marital_status") @db.VarChar(15)
