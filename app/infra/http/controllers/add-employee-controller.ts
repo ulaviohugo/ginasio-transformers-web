@@ -6,6 +6,7 @@ import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { Uploader } from '@/app/data/protocols/services'
 
 export class AddEmployeeController implements Controller {
 	constructor(
@@ -18,22 +19,24 @@ export class AddEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			let image
-			if (request.image) {
-				image = await new UploadService().upload(request.image as any)
+			let uploader: Uploader = null as any
+			if (request.image && typeof request.image != 'string') {
+				uploader = new UploadService(request.image)
 			}
-			const createdEmployee = await this.addEmployee.add({
-				...request,
-				image,
-				dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
-				countryId: NumberUtils.convertToNumber(request.countryId),
-				provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-				municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
-				dependents: NumberUtils.convertToNumber(request.dependents),
-				baseSalary: NumberUtils.convertToNumber(request.baseSalary),
-				hireDate: DateUtils.convertToDate(request.hireDate),
-				contractEndDate: DateUtils.convertToDate(request.contractEndDate)
-			})
+			const createdEmployee = await this.addEmployee.add(
+				{
+					...request,
+					dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
+					countryId: NumberUtils.convertToNumber(request.countryId),
+					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
+					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+					dependents: NumberUtils.convertToNumber(request.dependents),
+					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
+					hireDate: DateUtils.convertToDate(request.hireDate),
+					contractEndDate: DateUtils.convertToDate(request.contractEndDate)
+				},
+				uploader
+			)
 
 			if (createdEmployee == 'emailInUse') {
 				return forbidden(new EmailInUseError())
