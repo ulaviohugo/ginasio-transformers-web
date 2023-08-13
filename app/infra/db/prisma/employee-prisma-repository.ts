@@ -38,6 +38,10 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 		})) as Employee
 	}
 
+	async count(): Promise<number> {
+		return this.prisma.employee.count()
+	}
+
 	async update(param: Employee): Promise<Employee> {
 		return (await this.prisma.employee.update({
 			data: param,

@@ -8,4 +8,5 @@ export interface EmployeeRepository {
 	loadAll(): Promise<Employee[]>
 	update(param: Employee): Promise<Employee>
 	delete(employeeId: number): Promise<boolean>
+	count(): Promise<number>
 }
