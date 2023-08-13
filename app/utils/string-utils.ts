@@ -28,4 +28,41 @@ export class StringUtils {
 
 		return textArray.join('')
 	}
+
+	static slug(input: string): string {
+		const specialCharactersMap: Record<string, string> = {
+			á: 'a',
+			à: 'a',
+			ã: 'a',
+			â: 'a',
+			ä: 'a',
+			å: 'a',
+			é: 'e',
+			è: 'e',
+			ê: 'e',
+			ë: 'e',
+			í: 'i',
+			ì: 'i',
+			î: 'i',
+			ï: 'i',
+			ó: 'o',
+			ò: 'o',
+			õ: 'o',
+			ô: 'o',
+			ö: 'o',
+			ú: 'u',
+			ù: 'u',
+			û: 'u',
+			ü: 'u',
+			ç: 'c',
+			ñ: 'n'
+		}
+
+		return input
+			.trim()
+			.toLowerCase()
+			.replace(/[\s_]+/g, '-') // Substitui espaços e underscores por hífens
+			.replace(/[^a-z0-9-]/g, (char) => specialCharactersMap[char] || '-')
+			.replace(/--+/g, '-') // Remove hífens duplicados
+	}
 }
