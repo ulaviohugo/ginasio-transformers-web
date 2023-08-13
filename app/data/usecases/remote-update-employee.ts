@@ -20,7 +20,8 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,
-			body
+			body,
+			headers: { 'Content-Type': 'application/json' }
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:
