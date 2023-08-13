@@ -1,4 +1,8 @@
 export class ObjectUtils {
+	static isEmpty(param: any) {
+		return !param || JSON.stringify(param) == '{}'
+	}
+
 	static removeProps<T extends object = any>(param: T, props: (keyof T)[]) {
 		if (typeof param !== 'object' || param === null) {
 			throw new Error('O parâmetro "param" deve ser um objeto.')
