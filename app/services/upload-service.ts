@@ -5,7 +5,7 @@ import { Uploader } from '../data/protocols/services'
 
 export class UploadService implements Uploader {
 	constructor(
-		private readonly file: File,
+		private readonly file?: File,
 		private readonly path?: string
 	) {}
 
