@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { IconUser, Layout, LayoutBody } from '../components'
-import { StringUtils } from '@/app/utils'
 import { ElementType } from 'react'
 
 export const metadata: Metadata = {

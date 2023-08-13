@@ -29,6 +29,7 @@ import {
 } from '@/app/main/factories/usecases/remote'
 import { RootState, loadEmployeeStore, removeEmployeeStore } from '../../redux'
 import { useDispatch, useSelector } from 'react-redux'
+import Image from 'next/image'
 
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
@@ -134,9 +135,24 @@ export default function Employees() {
 							) : (
 								employees.map((employee) => (
 									<li key={employee.id} className="p-4 shadow">
-										<div className="flex items-center gap-1 font-semibold">
-											<IconUser />
-											{employee.name}
+										<div className="flex items-center gap-1 mb-3">
+											{employee.image ? (
+												<Image
+													src={employee.image}
+													alt={`Foto de perfil`}
+													width={50}
+													height={50}
+													className="rounded-full"
+												/>
+											) : (
+												<IconUser size={50} />
+											)}
+											<div>
+												<div className="font-semibold">{employee.name}</div>
+												<div className="flex items-center gap-1 text-sm font-normal">
+													<IconPhone /> {NumberUtils.format(employee.phone1)}
+												</div>
+											</div>
 										</div>
 										<div className="flex items-center gap-1 text-sm">
 											<IconClock /> Início de contrato:{' '}

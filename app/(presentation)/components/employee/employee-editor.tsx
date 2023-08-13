@@ -5,11 +5,23 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
-import { Input, Modal, ModalBody, ModalFooter, ModalTitle, Select, Spinner } from '..'
+import {
+	IconClose,
+	IconTrash,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalTitle,
+	Select,
+	Spinner
+} from '..'
 
 import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
 import { RootState, addEmployeeStore, updateEmployeeStore } from '../../redux'
 import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
+import Image from 'next/image'
+import { makeApiUrl } from '@/app/main/factories/http'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -36,6 +48,7 @@ export function EmployeeEditor({
 
 	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
 	const [isLoading, setIsLoading] = useState(false)
+	const [imagePreview, setImagePreview] = useState('')
 
 	useEffect(() => {
 		if (employee) {
@@ -67,7 +80,29 @@ export function EmployeeEditor({
 				municipalities.filter((municipality) => municipality.provinceId == Number(value))
 			)
 		}
+		if (name == 'image') {
+			const file = (e.target as any)?.files[0]
+			data = { ...formDate, [name]: file }
+			handleInputFile(file)
+		}
 		setFormData(data)
+	}
+
+	const handleInputFile = (file: File) => {
+		if (file) {
+			const reader = new FileReader()
+
+			reader.onload = function (e) {
+				setImagePreview(String(e.target?.result))
+			}
+
+			reader.readAsDataURL(file)
+		}
+	}
+
+	const clearInputFile = () => {
+		setFormData((prev) => ({ ...prev, image: '' }))
+		setImagePreview('')
 	}
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -75,12 +110,20 @@ export function EmployeeEditor({
 
 		setIsLoading(true)
 		try {
+			const data = new FormData()
+			const values = Object.values(formDate)
+			const keys = Object.keys(formDate)
+			for (let i = 0; i < values.length; i++) {
+				const key = keys[i]
+				const value = values[i]
+				data.append(key, value)
+			}
 			const httpResponse = (
 				formDate.id
 					? await updateEmployee.update(formDate)
-					: await addEmployee.add(formDate)
+					: await addEmployee.add(data as any)
 			) as Employee
-
+			// : await fetch(makeApiUrl('/employees'), { method: 'post', body: data })
 			if (formDate.id) {
 				dispatch(updateEmployeeStore(httpResponse))
 			} else {
@@ -102,6 +145,36 @@ export function EmployeeEditor({
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+						<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
+							<div className="flex">
+								<div className="mr-auto">
+									<Input
+										type="file"
+										id="image"
+										name="image"
+										// value={formDate?.image || ''}
+										label={'Imagem'}
+										onChange={handleInputChange}
+										accept="image/*"
+									/>
+								</div>
+								{imagePreview && (
+									<div className="relative border rounded-md p-3">
+										<Image
+											src={imagePreview}
+											width={120}
+											height={100}
+											alt="Pre-visualização"
+											// className=" bg-red-400"
+										/>
+										<IconClose
+											className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
+											onClick={clearInputFile}
+										/>
+									</div>
+								)}
+							</div>
+						</div>
 						<div className="md:col-span-2">
 							<Input
 								type="text"
