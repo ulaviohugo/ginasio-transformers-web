@@ -2,6 +2,7 @@ import { DeleteEmployee } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../helper'
 import { Controller, Validation } from '../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { UploadService } from '@/app/services'
 
 export class DeleteEmployeeController implements Controller {
 	constructor(
@@ -15,7 +16,7 @@ export class DeleteEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			const result = await this.deleteEmployee.delete(Number(id))
+			const result = await this.deleteEmployee.delete(Number(id), new UploadService())
 			if (result === null) {
 				return notFound()
 			}
