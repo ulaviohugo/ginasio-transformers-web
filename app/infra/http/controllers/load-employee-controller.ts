@@ -1,6 +1,7 @@
 import { LoadEmployees } from '@/app/domain/usecases'
 import { ok, serverError } from '../helper'
-import { Controller, HttpResponse } from '../protocols'
+import { Controller } from '../protocols'
+import { HttpResponse } from '@/app/data/protocols/http'
 
 export class LoadEmployeeController implements Controller {
 	constructor(private readonly loadEmployee: LoadEmployees) {}

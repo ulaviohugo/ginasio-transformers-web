@@ -1,10 +1,11 @@
 import { AddEmployee } from '@/app/domain/usecases'
 import { DocumentInUseError, EmailInUseError } from '../errors'
 import { badRequest, forbidden, ok, serverError } from '../helper'
-import { Controller, HttpResponse, Validation } from '../protocols'
+import { Controller, Validation } from '../protocols'
 import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
+import { HttpResponse } from '@/app/data/protocols/http'
 
 export class AddEmployeeController implements Controller {
 	constructor(

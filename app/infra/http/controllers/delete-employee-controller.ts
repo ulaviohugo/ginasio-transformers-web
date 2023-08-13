@@ -1,6 +1,7 @@
 import { DeleteEmployee } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../helper'
-import { Controller, HttpResponse, Validation } from '../protocols'
+import { Controller, Validation } from '../protocols'
+import { HttpResponse } from '@/app/data/protocols/http'
 
 export class DeleteEmployeeController implements Controller {
 	constructor(

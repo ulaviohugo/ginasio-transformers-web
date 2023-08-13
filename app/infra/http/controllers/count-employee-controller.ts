@@ -1,6 +1,7 @@
 import { CountEmployee } from '@/app/domain/usecases'
-import { Controller, HttpResponse } from '../protocols'
+import { Controller } from '../protocols'
 import { ok, serverError } from '../helper'
+import { HttpResponse } from '@/app/data/protocols/http'
 
 export class CountEmployeeController implements Controller {
 	constructor(private readonly countEmployee: CountEmployee) {}
