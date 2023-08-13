@@ -4,6 +4,7 @@ import { badRequest, forbidden, ok, serverError } from '../helper'
 import { Controller, HttpResponse, Validation } from '../protocols'
 import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
+import { UploadService } from '@/app/services'
 
 export class AddEmployeeController implements Controller {
 	constructor(
@@ -16,8 +17,13 @@ export class AddEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+			let image
+			if (request.image) {
+				image = await new UploadService().upload(request.image as any)
+			}
 			const createdEmployee = await this.addEmployee.add({
 				...request,
+				image,
 				dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
 				countryId: NumberUtils.convertToNumber(request.countryId),
 				provinceId: NumberUtils.convertToNumber(request.provinceId, true),
