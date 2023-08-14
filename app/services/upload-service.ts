@@ -30,7 +30,7 @@ export class UploadService implements Uploader {
 		const buffer = Buffer.from(bytes)
 
 		const subfolderPath = `${FileUtils.UPLOAD_ABSOLUTE_PATH}${this.path || ''}`
-		const filename = sanitizedFileName + '.' + fileExtension
+		let filename = sanitizedFileName + '.' + fileExtension
 		let filePath = path.join(subfolderPath, filename)
 
 		try {
@@ -42,10 +42,8 @@ export class UploadService implements Uploader {
 			)
 			if (fileExists) {
 				while (fileExists) {
-					const newPath = path.join(
-						subfolderPath,
-						sanitizedFileName + `-${i}` + '.' + fileExtension
-					)
+					filename = sanitizedFileName + `-${i}` + '.' + fileExtension
+					const newPath = path.join(subfolderPath, filename)
 					fileExists = await this.fileExists(newPath)
 					filePath = newPath
 					i++
