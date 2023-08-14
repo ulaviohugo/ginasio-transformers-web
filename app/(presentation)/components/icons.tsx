@@ -11,7 +11,7 @@ import {
 	HiTrash,
 	HiPencilAlt
 } from 'react-icons/hi'
-import { AiOutlineClockCircle } from 'react-icons/ai'
+import { AiOutlineClockCircle, AiOutlineShoppingCart } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
 import { IoMdClose } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt } from 'react-icons/bi'
@@ -39,6 +39,9 @@ export const IconPhone = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconPlus = (props: IconBaseProps): React.ReactElement => (
 	<HiPlus {...props} />
+)
+export const IconProduct = (props: IconBaseProps): React.ReactElement => (
+	<AiOutlineShoppingCart {...props} />
 )
 export const IconSpinner = (props: IconBaseProps): React.ReactElement => (
 	<ImSpinner2 {...props} />
