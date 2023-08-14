@@ -1,11 +1,19 @@
 'use client'
 
-import { IconCategory, IconUser, Layout, LayoutBody, Spinner } from '../components'
+import {
+	IconCategory,
+	IconProduct,
+	IconUser,
+	Layout,
+	LayoutBody,
+	Spinner
+} from '../components'
 import { ElementType, useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
 	makeRemoteCountCategories,
-	makeRemoteCountEmployees
+	makeRemoteCountEmployees,
+	makeRemoteCountProduct
 } from '@/app/main/factories/usecases/remote'
 
 type ItemProps = {
@@ -22,6 +30,9 @@ export default function Home() {
 
 	const [categories, setCategories] = useState(0)
 	const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+
+	const [products, setProducts] = useState(0)
+	const [isLoadingProducts, setIsLoadingProducts] = useState(true)
 
 	const fetchData = (
 		remoteResource: { count: () => Promise<number> },
@@ -40,6 +51,10 @@ export default function Home() {
 		fetchData(makeRemoteCountCategories(), (response) => {
 			setCategories(response)
 			setIsLoadingCategories(false)
+		})
+		fetchData(makeRemoteCountProduct(), (response) => {
+			setProducts(response)
+			setIsLoadingProducts(false)
 		})
 	}, [])
 
@@ -60,6 +75,13 @@ export default function Home() {
 						icon={IconCategory}
 						isLoading={isLoadingCategories}
 						href="/comercial/categorias"
+					/>
+					<Item
+						number={products}
+						title={'Produtos'}
+						icon={IconProduct}
+						isLoading={isLoadingProducts}
+						href="/comercial/produtos"
 					/>
 				</div>
 			</LayoutBody>
