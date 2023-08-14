@@ -15,12 +15,10 @@ export class LocationSeeder {
 
 	static async seedCountry(countriesData: CountryProps[]) {
 		if (!countriesData?.length) return
-
 		const countries = ArrayUtils.order<CountryProps>({
 			data: countriesData,
 			field: 'name'
 		})
-
 		Promise.all(
 			countries.map(async ({ name, provinces }) => {
 				console.log(`Seeding country: ${name}`)
@@ -37,12 +35,10 @@ export class LocationSeeder {
 
 	static async seedProvince(provincesData: ProvinceProps[], countryId: number) {
 		if (!provincesData?.length) return
-
 		const provinces = ArrayUtils.order<ProvinceProps>({
 			data: provincesData,
 			field: 'name'
 		})
-
 		Promise.all(
 			provinces.map(async ({ name, municipalities }) => {
 				this.log('province', name)
@@ -61,7 +57,6 @@ export class LocationSeeder {
 		provinceId: number
 	) {
 		if (!municipalitiesData?.length) return
-
 		const municipalities = ArrayUtils.order<MunicipalityProps>({
 			data: municipalitiesData,
 			field: 'name'
