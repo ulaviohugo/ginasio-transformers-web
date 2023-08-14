@@ -1,1 +1,2 @@
-export * from './add-employee-factory'
+export * from './add-category-factory'
+export * from './load-categories-factory'
