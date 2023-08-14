@@ -1,7 +1,7 @@
 import { DeleteEmployeeController } from '@/app/infra/http/controllers'
 import { Controller } from '@/app/infra/http/protocols'
-import { makeDeleteEmployee } from '..'
 import { NumberGreaterThanValidation } from '@/app/validation/validators'
+import { makeDeleteEmployee } from '../..'
 
 export const makeDeleteEmployeeController = (): Controller => {
 	return new DeleteEmployeeController(
