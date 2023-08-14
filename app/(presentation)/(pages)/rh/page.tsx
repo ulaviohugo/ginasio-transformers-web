@@ -112,7 +112,10 @@ export default function Employees() {
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.hr} />
-					<Title title={`Funcionários ${isLoading ? '' : `(${employees?.length})`}`} />
+					<Title
+						title={`Funcionários ${isLoading ? '' : `(${employees?.length})`}`}
+						icon={IconUser}
+					/>
 					<div className="flex items-center gap-2">
 						<button
 							className="bg-primary px-2 py-1 rounded-md text-gray-200"
