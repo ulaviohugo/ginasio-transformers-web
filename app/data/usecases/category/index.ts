@@ -1,4 +1,5 @@
 export * from './db-add-category'
+export * from './db-count-category'
 export * from './db-delete-category'
 export * from './db-load-categories'
 export * from './db-update-category'
