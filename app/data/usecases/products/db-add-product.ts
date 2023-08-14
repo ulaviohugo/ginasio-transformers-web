@@ -1,7 +1,7 @@
 import { AddProduct } from '@/app/domain/usecases'
 import { ProductRepository } from '../../protocols'
 import { Product } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { NumberUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddProduct implements AddProduct {
@@ -19,6 +19,10 @@ export class DbAddProduct implements AddProduct {
 		if (uploader) {
 			image = await uploader.upload()
 		}
-		return this.productRepository.add({ ...data, image })
+		return this.productRepository.add({
+			...data,
+			price: NumberUtils.convertToNumber(param.price),
+			image
+		})
 	}
 }
