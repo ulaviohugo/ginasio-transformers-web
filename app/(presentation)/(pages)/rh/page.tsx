@@ -142,7 +142,7 @@ export default function Employees() {
 													alt={`Foto de perfil`}
 													width={50}
 													height={50}
-													className="rounded-full"
+													className="rounded-full object-cover aspect-square"
 												/>
 											) : (
 												<IconUser size={50} />

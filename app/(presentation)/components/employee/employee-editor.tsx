@@ -155,7 +155,7 @@ export function EmployeeEditor({
 											width={120}
 											height={100}
 											alt="Pre-visualização"
-											// className=" bg-red-400"
+											className="object-cover aspect-square"
 										/>
 										<IconClose
 											className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
