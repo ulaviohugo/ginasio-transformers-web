@@ -85,3 +85,14 @@ model Municipality {
   @@unique([name, provinceId])
   @@map("tb_municipalities")
 }
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdBy Int?      @map("created_by")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedBy Int?      @map("updated_by")
+  updatedAt DateTime? @map("updated_at")
+
+  @@map("tb_categories")
+}

@@ -1,2 +1,2 @@
-export * from './dashboard-repositories'
+export * from './category-repositories'
 export * from './employee-repositories'
