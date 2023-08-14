@@ -10,6 +10,7 @@ export class SubmenuUtils {
 		{ link: '/comercial', text: 'Entrada' },
 		{ link: '/comercial/saida', text: 'Saída' },
 		{ link: '/comercial/caixa', text: 'Caixa' },
-		{ link: '/comercial/estoque', text: 'Estoque' }
+		{ link: '/comercial/estoque', text: 'Estoque' },
+		{ link: '/comercial/categorias', text: 'Categorias' }
 	]
 }

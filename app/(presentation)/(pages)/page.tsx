@@ -1,28 +1,48 @@
 'use client'
 
-import { IconUser, Layout, LayoutBody, Spinner } from '../components'
+import { IconCategory, IconUser, Layout, LayoutBody, Spinner } from '../components'
 import { ElementType, useEffect, useState } from 'react'
-import { makeApiUrl, makeFetchHttpClient } from '@/app/main/factories/http'
+import Link from 'next/link'
+import {
+	makeRemoteCountCategories,
+	makeRemoteCountEmployees
+} from '@/app/main/factories/usecases/remote'
 
 type ItemProps = {
 	number: number
 	title: string
 	icon?: ElementType
 	isLoading?: boolean
+	href: string
 }
 
 export default function Home() {
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
 
+	const [categories, setCategories] = useState(0)
+	const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+
+	const fetchData = (
+		remoteResource: { count: () => Promise<number> },
+		callback: (response: any) => void
+	) => {
+		remoteResource.count().then((response) => {
+			callback(response)
+		})
+	}
+
 	useEffect(() => {
-		makeFetchHttpClient()
-			.request({ url: makeApiUrl('/employees/count'), method: 'get' })
-			.then((response) => {
-				setEmployees(response.body)
-				setIsLoadingEmployees(false)
-			})
+		fetchData(makeRemoteCountEmployees(), (response) => {
+			setEmployees(response)
+			setIsLoadingEmployees(false)
+		})
+		fetchData(makeRemoteCountCategories(), (response) => {
+			setCategories(response)
+			setIsLoadingCategories(false)
+		})
 	}, [])
+
 	return (
 		<Layout>
 			<LayoutBody>
@@ -32,12 +52,14 @@ export default function Home() {
 						title={'Funcionários'}
 						icon={IconUser}
 						isLoading={isLoadingEmployees}
+						href="/rh"
 					/>
 					<Item
-						number={employees}
-						title={'Funcionários'}
-						icon={IconUser}
-						isLoading={isLoadingEmployees}
+						number={categories}
+						title={'Categorias'}
+						icon={IconCategory}
+						isLoading={isLoadingCategories}
+						href="/comercial/categorias"
 					/>
 				</div>
 			</LayoutBody>
@@ -45,9 +67,9 @@ export default function Home() {
 	)
 }
 
-const Item = ({ icon: Icon, number, title, isLoading }: ItemProps) => {
+const Item = ({ icon: Icon, number, title, isLoading, href }: ItemProps) => {
 	return (
-		<div className="flex gap-2 shadow-md p-4 rounded-lg">
+		<Link href={href} className="flex gap-2 shadow-md p-4 rounded-lg">
 			{Icon && <Icon className="text-7xl" />}
 			<div className={`flex-1`}>
 				<h2 className="">{title}</h2>
@@ -55,6 +77,6 @@ const Item = ({ icon: Icon, number, title, isLoading }: ItemProps) => {
 					{isLoading ? <Spinner className="text-base" /> : number}
 				</div>
 			</div>
-		</div>
+		</Link>
 	)
 }

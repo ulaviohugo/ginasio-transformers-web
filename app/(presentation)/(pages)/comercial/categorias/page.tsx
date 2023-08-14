@@ -3,7 +3,7 @@
 import { Layout, LayoutBody, SubMenu, Title } from '@/app/(presentation)/components'
 import { SubmenuUtils } from '@/app/utils'
 
-export default function Comercial() {
+export default function Categorias() {
 	return (
 		<Layout>
 			<LayoutBody>
