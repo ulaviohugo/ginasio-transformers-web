@@ -94,5 +94,24 @@ model Category {
   updatedBy Int?      @map("updated_by")
   updatedAt DateTime? @map("updated_at")
 
+  products Product[]
+
   @@map("tb_categories")
+}
+
+model Product {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(70)
+  image      String?   @db.VarChar(70)
+  categoryId Int       @map("category_id")
+  price      Float
+  createdBy  Int?      @map("created_by")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedBy  Int?      @map("updated_by")
+  updatedAt  DateTime? @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([name, categoryId])
+  @@map("tb_products")
 }
