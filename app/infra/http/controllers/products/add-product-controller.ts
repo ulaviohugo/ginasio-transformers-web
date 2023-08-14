@@ -21,7 +21,7 @@ export class AddProductController implements Controller {
 			}
 			let uploader: Uploader = null as any
 			if (request.image && typeof request.image != 'string') {
-				uploader = new UploadService(request.image, '/employees')
+				uploader = new UploadService(request.image, '/products')
 			}
 			const createdProduct = await this.addProduct.add(
 				{
