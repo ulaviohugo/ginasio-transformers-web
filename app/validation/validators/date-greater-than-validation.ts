@@ -15,10 +15,8 @@ export class DateGreaterThanValidation implements Validation {
 
 		if (date1 <= date2) {
 			return new Error(
-				`O parâmetro 
-				${LabelUtils.translateField(this.fieldName1)} 
-				tem de ser maior que 
-				${LabelUtils.translateField(this.fieldName2)} `
+				`O parâmetro ${LabelUtils.translateField(this.fieldName1)} 
+				tem de ser maior que ${LabelUtils.translateField(this.fieldName2)} `
 			)
 		}
 	}
