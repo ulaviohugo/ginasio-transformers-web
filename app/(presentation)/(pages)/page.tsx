@@ -1,37 +1,60 @@
-import { Metadata } from 'next'
-import { IconUser, Layout, LayoutBody } from '../components'
-import { ElementType } from 'react'
+'use client'
 
-export const metadata: Metadata = {
-	title: 'Sistema de Facuturação WO'
-}
+import { IconUser, Layout, LayoutBody, Spinner } from '../components'
+import { ElementType, useEffect, useState } from 'react'
+import { makeApiUrl, makeFetchHttpClient } from '@/app/main/factories/http'
 
-type DashboardProps = {
-	text: string
+type ItemProps = {
 	number: number
+	title: string
 	icon?: ElementType
+	isLoading?: boolean
 }
-const data: DashboardProps[] = [
-	{ text: 'Funcionários', number: 4, icon: IconUser },
-	{ text: 'Entrada', number: 23 }
-]
 
 export default function Home() {
+	const [employees, setEmployees] = useState(0)
+	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
+
+	useEffect(() => {
+		makeFetchHttpClient()
+			.request({ url: makeApiUrl('/employees/count'), method: 'get' })
+			.then((response) => {
+				setEmployees(response.body)
+				setIsLoadingEmployees(false)
+			})
+	}, [])
 	return (
 		<Layout>
 			<LayoutBody>
 				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
-					{data.map(({ text, number, icon: Icon }, i) => (
-						<div key={i} className="flex gap-2 shadow-md p-4 rounded-lg">
-							{Icon && <Icon className="text-7xl" />}
-							<div className={`flex-1`}>
-								<h2 className="">{text}</h2>
-								<div className="text-5xl font-bold">{number}</div>
-							</div>
-						</div>
-					))}
+					<Item
+						number={employees}
+						title={'Funcionários'}
+						icon={IconUser}
+						isLoading={isLoadingEmployees}
+					/>
+					<Item
+						number={employees}
+						title={'Funcionários'}
+						icon={IconUser}
+						isLoading={isLoadingEmployees}
+					/>
 				</div>
 			</LayoutBody>
 		</Layout>
+	)
+}
+
+const Item = ({ icon: Icon, number, title, isLoading }: ItemProps) => {
+	return (
+		<div className="flex gap-2 shadow-md p-4 rounded-lg">
+			{Icon && <Icon className="text-7xl" />}
+			<div className={`flex-1`}>
+				<h2 className="">{title}</h2>
+				<div className="text-5xl font-bold">
+					{isLoading ? <Spinner className="text-base" /> : number}
+				</div>
+			</div>
+		</div>
 	)
 }
