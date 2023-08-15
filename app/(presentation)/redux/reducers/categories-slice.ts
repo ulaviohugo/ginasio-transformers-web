@@ -1,4 +1,4 @@
-import { Category } from '@prisma/client'
+import { Category } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface CategoryState {
