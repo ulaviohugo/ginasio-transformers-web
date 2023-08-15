@@ -1,6 +1,7 @@
 'use client'
 
 import {
+	IconCategory,
 	IconProduct,
 	Layout,
 	LayoutBody,
@@ -45,8 +46,11 @@ export default function Categorias() {
 				) : (
 					<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
 						{products.map((product) => (
-							<li key={product.id} className="p-4 shadow">
+							<li key={product.id} className="p-4 shadow relative">
 								<div className="font-semibold">{product.name}</div>
+								<div className="inline-flex items-center gap-1 bg-primary bg-opacity-50 text-xs text-white font-semibold px-2 py-[2px] rounded-md">
+									<IconCategory /> {product.category?.name}
+								</div>
 							</li>
 						))}
 					</ul>

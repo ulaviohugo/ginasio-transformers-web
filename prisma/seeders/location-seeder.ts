@@ -19,18 +19,17 @@ export class LocationSeeder {
 			data: countriesData,
 			field: 'name'
 		})
+		console.log(`Country seeding started`)
 		Promise.all(
 			countries.map(async ({ name, provinces }) => {
-				console.log(`Seeding country: ${name}`)
-				this.log('country', name)
 				const country = await prisma.country.create({ data: { name } })
-				this.log('country', name, 'finished')
 
 				if (provinces && provinces.length > 0) {
 					await this.seedProvince(provinces, country.id)
 				}
 			})
 		)
+		console.log(`Country seeding finished`)
 	}
 
 	static async seedProvince(provincesData: ProvinceProps[], countryId: number) {
@@ -39,17 +38,18 @@ export class LocationSeeder {
 			data: provincesData,
 			field: 'name'
 		})
+
+		console.log(`Province seeding started`)
 		Promise.all(
 			provinces.map(async ({ name, municipalities }) => {
-				this.log('province', name)
 				const province = await prisma.province.create({ data: { name, countryId } })
-				this.log('province', name, 'finished')
 
 				if (municipalities && municipalities.length > 0) {
 					this.seedMunicipalities(municipalities, province.id)
 				}
 			})
 		)
+		console.log(`Province seeding finished`)
 	}
 
 	static async seedMunicipalities(
@@ -61,20 +61,12 @@ export class LocationSeeder {
 			data: municipalitiesData,
 			field: 'name'
 		})
+		console.log(`Municipality seeding started`)
 		Promise.all(
 			municipalities.map(async ({ name }) => {
-				this.log('municipality', name)
 				await prisma.municipality.create({ data: { name, provinceId } })
-				this.log('municipality', name, 'finished')
 			})
 		)
-	}
-
-	private static log(
-		resourceType: 'country' | 'province' | 'municipality',
-		resourceName: string,
-		type: 'started' | 'finished' = 'started'
-	) {
-		console.log(`${type} seeding ${resourceType}: ${resourceName}`)
+		console.log(`Municipality seeding finished`)
 	}
 }
