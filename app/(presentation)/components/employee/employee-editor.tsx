@@ -1,8 +1,9 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import Image from 'next/image'
 import { toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
 import {
@@ -17,9 +18,9 @@ import {
 } from '..'
 
 import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
-import { RootState, addEmployeeStore, updateEmployeeStore } from '../../redux'
+import { addEmployeeStore, updateEmployeeStore } from '../../redux'
 import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
-import Image from 'next/image'
+import { useLocations } from '../../hooks'
 
 type EmployeeEditorProps = {
 	employee?: Employee
@@ -37,9 +38,7 @@ export function EmployeeEditor({
 	updateEmployee
 }: EmployeeEditorProps) {
 	const dispatch = useDispatch()
-	const { countries, provinces, municipalities } = useSelector(
-		(state: RootState) => state.locations
-	)
+	const { countries, provinces, municipalities } = useLocations()
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
@@ -171,7 +170,7 @@ export function EmployeeEditor({
 								id="name"
 								name="name"
 								value={formDate?.name || ''}
-								label={LabelUtils.translateField<Employee>('name')}
+								label={LabelUtils.translateField('name')}
 								onChange={handleInputChange}
 								autoFocus
 							/>
@@ -181,7 +180,7 @@ export function EmployeeEditor({
 								id="gender"
 								name="gender"
 								value={formDate?.gender || ''}
-								label={LabelUtils.translateField<Employee>('gender')}
+								label={LabelUtils.translateField('gender')}
 								data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
 								defaultText="Selecione"
 								onChange={handleInputChange}
@@ -196,7 +195,7 @@ export function EmployeeEditor({
 									(formDate?.dateOfBirth && DateUtils.getDate(formDate?.dateOfBirth)) ||
 									''
 								}
-								label={LabelUtils.translateField<Employee>('dateOfBirth')}
+								label={LabelUtils.translateField('dateOfBirth')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -205,7 +204,7 @@ export function EmployeeEditor({
 								id="maritalStatus"
 								name="maritalStatus"
 								value={formDate?.maritalStatus || ''}
-								label={LabelUtils.translateField<Employee>('maritalStatus')}
+								label={LabelUtils.translateField('maritalStatus')}
 								data={[
 									{ text: 'Solteiro(a)' },
 									{ text: 'Casado(a)' },
@@ -221,7 +220,7 @@ export function EmployeeEditor({
 								id="documentType"
 								name="documentType"
 								value={formDate?.documentType || ''}
-								label={LabelUtils.translateField<Employee>('documentType')}
+								label={LabelUtils.translateField('documentType')}
 								data={[
 									{ text: 'Bilhete de identidade' },
 									{ text: 'Passaporte' },
@@ -237,7 +236,7 @@ export function EmployeeEditor({
 								id="documentNumber"
 								name="documentNumber"
 								value={formDate?.documentNumber || ''}
-								label={LabelUtils.translateField<Employee>('documentNumber')}
+								label={LabelUtils.translateField('documentNumber')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -247,7 +246,7 @@ export function EmployeeEditor({
 								id="nif"
 								name="nif"
 								value={formDate?.nif || ''}
-								label={LabelUtils.translateField<Employee>('nif')}
+								label={LabelUtils.translateField('nif')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -257,7 +256,7 @@ export function EmployeeEditor({
 								id="socialSecurity"
 								name="socialSecurity"
 								value={formDate?.socialSecurity || ''}
-								label={LabelUtils.translateField<Employee>('socialSecurity')}
+								label={LabelUtils.translateField('socialSecurity')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -267,7 +266,7 @@ export function EmployeeEditor({
 								id="dependents"
 								name="dependents"
 								value={formDate?.dependents || ''}
-								label={LabelUtils.translateField<Employee>('dependents')}
+								label={LabelUtils.translateField('dependents')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -276,7 +275,7 @@ export function EmployeeEditor({
 								id="educationDegree"
 								name="educationDegree"
 								value={formDate?.educationDegree || ''}
-								label={LabelUtils.translateField<Employee>('educationDegree')}
+								label={LabelUtils.translateField('educationDegree')}
 								data={[
 									{ text: 'Ensino primário' },
 									{ text: 'Ensino secundário' },
@@ -294,7 +293,7 @@ export function EmployeeEditor({
 								id="phone1"
 								name="phone1"
 								value={formDate?.phone1 || ''}
-								label={LabelUtils.translateField<Employee>('phone1')}
+								label={LabelUtils.translateField('phone1')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -304,7 +303,7 @@ export function EmployeeEditor({
 								id="phone2"
 								name="phone2"
 								value={formDate?.phone2 || ''}
-								label={LabelUtils.translateField<Employee>('phone2')}
+								label={LabelUtils.translateField('phone2')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -314,7 +313,7 @@ export function EmployeeEditor({
 								id="email"
 								name="email"
 								value={formDate?.email || ''}
-								label={LabelUtils.translateField<Employee>('email')}
+								label={LabelUtils.translateField('email')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -324,7 +323,7 @@ export function EmployeeEditor({
 								id="countryId"
 								name="countryId"
 								value={formDate?.countryId || ''}
-								label={LabelUtils.translateField<Employee>('countryId')}
+								label={LabelUtils.translateField('countryId')}
 								data={countries.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -338,7 +337,7 @@ export function EmployeeEditor({
 								id="provinceId"
 								name="provinceId"
 								value={formDate?.provinceId || ''}
-								label={LabelUtils.translateField<Employee>('provinceId')}
+								label={LabelUtils.translateField('provinceId')}
 								data={provinceList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -352,7 +351,7 @@ export function EmployeeEditor({
 								id="municipalityId"
 								name="municipalityId"
 								value={formDate?.municipalityId || ''}
-								label={LabelUtils.translateField<Employee>('municipalityId')}
+								label={LabelUtils.translateField('municipalityId')}
 								data={municipalityList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -367,7 +366,7 @@ export function EmployeeEditor({
 								id="residentialAddress"
 								name="residentialAddress"
 								value={formDate?.residentialAddress || ''}
-								label={LabelUtils.translateField<Employee>('residentialAddress')}
+								label={LabelUtils.translateField('residentialAddress')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -377,7 +376,7 @@ export function EmployeeEditor({
 								id="position"
 								name="position"
 								value={formDate?.position || ''}
-								label={LabelUtils.translateField<Employee>('position')}
+								label={LabelUtils.translateField('position')}
 								data={[
 									{ text: 'Assistente administrativo' },
 									{ text: 'Costureiro' },
@@ -394,7 +393,7 @@ export function EmployeeEditor({
 								id="baseSalary"
 								name="baseSalary"
 								value={formDate?.baseSalary || ''}
-								label={LabelUtils.translateField<Employee>('baseSalary')}
+								label={LabelUtils.translateField('baseSalary')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -406,7 +405,7 @@ export function EmployeeEditor({
 								value={
 									(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
 								}
-								label={LabelUtils.translateField<Employee>('hireDate')}
+								label={LabelUtils.translateField('hireDate')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -420,7 +419,7 @@ export function EmployeeEditor({
 										DateUtils.getDate(formDate.contractEndDate)) ||
 									''
 								}
-								label={LabelUtils.translateField<Employee>('contractEndDate')}
+								label={LabelUtils.translateField('contractEndDate')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -429,7 +428,7 @@ export function EmployeeEditor({
 								id="bankName"
 								name="bankName"
 								value={formDate?.bankName || ''}
-								label={LabelUtils.translateField<Employee>('bankName')}
+								label={LabelUtils.translateField('bankName')}
 								data={[
 									{ text: 'BAI' },
 									{ text: 'BCI' },
@@ -451,7 +450,7 @@ export function EmployeeEditor({
 								id="iban"
 								name="iban"
 								value={formDate?.iban || ''}
-								label={LabelUtils.translateField<Employee>('iban')}
+								label={LabelUtils.translateField('iban')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -461,7 +460,7 @@ export function EmployeeEditor({
 								id="accountNumber"
 								name="accountNumber"
 								value={formDate?.accountNumber || ''}
-								label={LabelUtils.translateField<Employee>('accountNumber')}
+								label={LabelUtils.translateField('accountNumber')}
 								onChange={handleInputChange}
 							/>
 						</div>

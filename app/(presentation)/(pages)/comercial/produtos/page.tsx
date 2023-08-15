@@ -2,22 +2,34 @@
 
 import {
 	IconCategory,
+	IconEdit,
+	IconPlus,
 	IconProduct,
+	IconSearch,
+	IconTrash,
+	Input,
 	Layout,
 	LayoutBody,
+	ProductEditor,
 	Spinner,
 	SubMenu,
 	Title
 } from '@/app/(presentation)/components'
 import { Product } from '@/app/domain/models'
-import { makeRemoteLoadProduct } from '@/app/main/factories/usecases/remote'
+import {
+	makeRemoteAddProduct,
+	makeRemoteLoadProduct,
+	makeRemoteUpdateProduct
+} from '@/app/main/factories/usecases/remote'
 import { SubmenuUtils } from '@/app/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 export default function Categorias() {
+	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
 	const [products, setProducts] = useState<Product[]>([])
 	const [isLoading, setIsLoading] = useState(true)
+	const [showEditor, setShowEditor] = useState(false)
 
 	const fetchData = async () => {
 		try {
@@ -34,22 +46,73 @@ export default function Categorias() {
 		fetchData()
 	}, [])
 
+	const clearSelectedEmployee = () => {
+		setSelectedProduct({} as Product)
+	}
+
+	const handleOpenDetalhe = (product?: Product) => {
+		if (product) setSelectedProduct(product)
+		setShowEditor(true)
+	}
+
+	const handleCloseDetail = () => {
+		clearSelectedEmployee()
+		setShowEditor(false)
+	}
+
 	return (
 		<Layout>
+			{showEditor && (
+				<ProductEditor
+					data={selectedProduct}
+					show={showEditor}
+					onClose={handleCloseDetail}
+					addProduct={makeRemoteAddProduct()}
+					updateProduct={makeRemoteUpdateProduct()}
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
 					<Title title={`Produtos`} icon={IconProduct} />
+					<div className="flex items-center gap-2">
+						<button
+							className="bg-primary px-2 py-1 rounded-md text-gray-200"
+							title="Novo funcionário"
+							onClick={() => handleOpenDetalhe()}
+						>
+							<IconPlus />
+						</button>
+						<div className="w-full max-w-xs">
+							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
+						</div>
+					</div>
 				</div>
 				{isLoading ? (
 					<Spinner />
 				) : (
 					<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
 						{products.map((product) => (
-							<li key={product.id} className="p-4 shadow relative">
+							<li key={product.id} className="p-4 shadow">
 								<div className="font-semibold">{product.name}</div>
 								<div className="inline-flex items-center gap-1 bg-primary bg-opacity-50 text-xs text-white font-semibold px-2 py-[2px] rounded-md">
 									<IconCategory /> {product.category?.name}
+								</div>
+								<div className="flex items-center gap-1 text-xl border-t mt-1 pt-1">
+									<button
+										onClick={() => handleOpenDetalhe(product)}
+										className="hover:scale-110"
+										title="Editar funcionário"
+									>
+										<IconEdit />
+									</button>
+									<button
+										// onClick={() => handleOpenFormDelete(product)}
+										className="hover:scale-110"
+										title="Excluir funcionário"
+									>
+										<IconTrash />
+									</button>
 								</div>
 							</li>
 						))}

@@ -12,18 +12,19 @@ import {
 	ReceiptDataProps,
 	SalaryReceiptTemplate
 } from '@/app/(presentation)/components/templates-pdf'
-import { RootState, loadEmployeeStore } from '@/app/(presentation)/redux'
+import { useEmployees } from '@/app/(presentation)/hooks'
+import { loadEmployeeStore } from '@/app/(presentation)/redux'
 import { Employee } from '@/app/domain/models'
 import { makeRemoteLoadEmployees } from '@/app/main/factories/usecases/remote'
 import { DateUtils, SubmenuUtils } from '@/app/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 export default function FolhaSalarial() {
 	const dispatch = useDispatch()
 
-	const employees = useSelector((state: RootState) => state.employees.employees)
+	const employees = useEmployees()
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
 
 	const fetchData = async () => {
