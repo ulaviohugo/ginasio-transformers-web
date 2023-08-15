@@ -1,12 +1,11 @@
 'use client'
 
 import {
+	CardActions,
 	IconCategory,
-	IconEdit,
 	IconPlus,
 	IconProduct,
 	IconSearch,
-	IconTrash,
 	Input,
 	Layout,
 	LayoutBody,
@@ -98,22 +97,7 @@ export default function Categorias() {
 								<div className="inline-flex items-center gap-1 bg-primary bg-opacity-50 text-xs text-white font-semibold px-2 py-[2px] rounded-md">
 									<IconCategory /> {product.category?.name}
 								</div>
-								<div className="flex items-center gap-1 text-xl border-t mt-1 pt-1">
-									<button
-										onClick={() => handleOpenDetalhe(product)}
-										className="hover:scale-110"
-										title="Editar funcionário"
-									>
-										<IconEdit />
-									</button>
-									<button
-										// onClick={() => handleOpenFormDelete(product)}
-										className="hover:scale-110"
-										title="Excluir funcionário"
-									>
-										<IconTrash />
-									</button>
-								</div>
+								<CardActions onClickEdit={() => handleOpenDetalhe(product)} />
 							</li>
 						))}
 					</ul>

@@ -1,6 +1,7 @@
 'use client'
 
 import {
+	CardActions,
 	IconCategory,
 	Layout,
 	LayoutBody,
@@ -50,6 +51,7 @@ export default function Categorias() {
 						{categories.map((category) => (
 							<li key={category.id} className="p-4 shadow">
 								<div className="font-semibold">{category.name}</div>
+								<CardActions />
 							</li>
 						))}
 					</ul>

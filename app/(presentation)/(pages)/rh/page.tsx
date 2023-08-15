@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react'
 import { Employee } from '@/app/domain/models'
 import {
+	CardActions,
 	EmployeeEditor,
 	IconClock,
-	IconEdit,
 	IconPhone,
 	IconPlus,
 	IconSearch,
-	IconTrash,
 	IconUser,
 	Input,
 	Layout,
@@ -171,22 +170,10 @@ export default function Employees() {
 										<div className="flex items-center gap-1 text-sm">
 											<IconPhone /> Telefone: {NumberUtils.format(employee.phone1)}
 										</div>
-										<div className="flex items-center gap-1 text-xl border-t mt-1 pt-1">
-											<button
-												onClick={() => handleOpenDetalhe(employee)}
-												className="hover:scale-110"
-												title="Editar funcionário"
-											>
-												<IconEdit />
-											</button>
-											<button
-												onClick={() => handleOpenFormDelete(employee)}
-												className="hover:scale-110"
-												title="Excluir funcionário"
-											>
-												<IconTrash />
-											</button>
-										</div>
+										<CardActions
+											onClickDelete={() => handleOpenFormDelete(employee)}
+											onClickEdit={() => handleOpenDetalhe(employee)}
+										/>
 									</li>
 								))
 							)}
