@@ -8,20 +8,23 @@ import {
 	SubMenu,
 	Title
 } from '@/app/(presentation)/components'
-import { Category } from '@/app/domain/models'
+import { useCategories, useRedux } from '@/app/(presentation)/hooks'
+import { loadCategoryStore } from '@/app/(presentation)/redux'
 import { makeRemoteLoadCategories } from '@/app/main/factories/usecases/remote'
 import { SubmenuUtils } from '@/app/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 
 export default function Categorias() {
-	const [categories, setCategories] = useState<Category[]>([])
+	const dispatch = useDispatch()
+	const categories = useCategories()
 	const [isLoading, setIsLoading] = useState(true)
 
 	const fetchData = async () => {
 		try {
 			const httpResponse = await makeRemoteLoadCategories().load()
-			setCategories(httpResponse)
+			dispatch(loadCategoryStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {

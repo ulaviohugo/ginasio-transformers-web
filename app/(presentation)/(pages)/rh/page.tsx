@@ -27,16 +27,17 @@ import {
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
 } from '@/app/main/factories/usecases/remote'
-import { RootState, loadEmployeeStore, removeEmployeeStore } from '../../redux'
-import { useDispatch, useSelector } from 'react-redux'
+import { loadEmployeeStore, removeEmployeeStore } from '../../redux'
+import { useDispatch } from 'react-redux'
 import Image from 'next/image'
+import { useEmployees } from '../../hooks'
 
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
-	const employees = useSelector((state: RootState) => state.employees.employees)
+	const employees = useEmployees()
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
