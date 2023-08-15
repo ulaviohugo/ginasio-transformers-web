@@ -1,47 +1,47 @@
-import { Employee } from '../domain/models'
+import { Category, Employee, Product } from '../domain/models'
 
-type EmployeeType = Record<keyof Employee, string>
+type FieldTypes = Partial<Record<keyof Category, string>> &
+	Partial<Record<keyof Employee, string>> &
+	Partial<Record<keyof Product, string>>
 
 export class LabelUtils {
-	private static employeeFields: EmployeeType = {
-		id: 'Identificação',
-		name: 'Nome',
-		gender: 'Género',
-		dateOfBirth: 'Data de nascimento',
-		maritalStatus: 'Estado civil',
-		educationDegree: 'Nível académico',
-		phone1: 'Telefone 1',
-		phone2: 'Telefone 2',
-		email: 'E-mail',
-		countryId: 'País',
-		provinceId: 'Província',
-		municipalityId: 'Município',
-		residentialAddress: 'Endereço residencial',
-		documentType: 'Tipo de documento',
-		documentNumber: 'Número do documento',
-		nif: 'NIF',
-		dependents: 'Número de dependentes',
-		socialSecurity: 'Segurança social',
-		position: 'Cargo',
-		baseSalary: 'Salário base',
-		hireDate: 'Data da contratação',
-		contractEndDate: 'Data de fim de contrato',
-		bankName: 'Banco',
-		iban: 'IBAN',
+	private static labelFields: FieldTypes = {
 		accountNumber: 'Nº de conta bancária',
+		baseSalary: 'Salário base',
+		bankName: 'Banco',
+		categoryId: 'Categoria',
+		contractEndDate: 'Data de fim de contrato',
+		countryId: 'País',
 		createdAt: 'Data de criação',
 		createdBy: 'Criado por',
+		dateOfBirth: 'Data de nascimento',
+		dependents: 'Número de dependentes',
+		documentNumber: 'Número do documento',
+		documentType: 'Tipo de documento',
+		educationDegree: 'Nível académico',
+		email: 'E-mail',
+		gender: 'Género',
+		hireDate: 'Data da contratação',
+		iban: 'IBAN',
+		id: 'Identificação',
+		maritalStatus: 'Estado civil',
+		municipalityId: 'Município',
+		name: 'Nome',
+		nif: 'NIF',
+		phone1: 'Telefone 1',
+		phone2: 'Telefone 2',
+		position: 'Cargo',
+		price: 'Preços',
+		provinceId: 'Província',
+		residentialAddress: 'Endereço residencial',
+		socialSecurity: 'Segurança social',
 		updatedAt: 'Data de atualização',
 		updatedBy: 'Atualizado por'
 	}
 
-	private static translateEmployeeField(field: keyof Employee) {
-		return this.employeeFields[field] || null
-	}
-
-	static translateField<T extends object = any>(field: keyof T) {
-		const employee = this.translateEmployeeField(field as any)
-		if (employee) return employee
+	static translateField(field: keyof FieldTypes) {
+		const label = this.labelFields[field] || null
+		if (label) return label
 		return field
 	}
 }
