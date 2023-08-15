@@ -2,7 +2,16 @@
 
 import { Product } from '@/app/domain/models'
 import { AddProduct, UpdateProduct } from '@/app/domain/usecases'
-import { IconClose, Input, Modal, ModalBody, ModalTitle, Select } from '..'
+import {
+	IconClose,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalTitle,
+	Select,
+	Spinner
+} from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { LabelUtils } from '@/app/utils'
@@ -131,6 +140,14 @@ export function ProductEditor({
 						onChange={handleInputChange}
 						autoFocus
 					/>
+					<Input
+						type="number"
+						id="price"
+						name="price"
+						value={formDate?.price || ''}
+						label={LabelUtils.translateField('price')}
+						onChange={handleInputChange}
+					/>
 					<Select
 						id="categoryId"
 						name="categoryId"
@@ -143,6 +160,11 @@ export function ProductEditor({
 						defaultText="Selecione"
 						onChange={handleInputChange}
 					/>
+					<ModalFooter>
+						<button type="submit" disabled={isLoading} className="btn-primary">
+							Salvar {isLoading && <Spinner />}
+						</button>
+					</ModalFooter>
 				</form>
 			</ModalBody>
 		</Modal>
