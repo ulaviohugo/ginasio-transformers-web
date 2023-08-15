@@ -31,7 +31,7 @@ export class LabelUtils {
 		phone1: 'Telefone 1',
 		phone2: 'Telefone 2',
 		position: 'Cargo',
-		price: 'Preços',
+		price: 'Preço',
 		provinceId: 'Província',
 		residentialAddress: 'Endereço residencial',
 		socialSecurity: 'Segurança social',
