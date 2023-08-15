@@ -1,10 +1,14 @@
 import { ProductRepository } from '@/app/data/protocols'
 import { prismaService as prisma } from '.'
 import { Product } from '@/app/domain/models'
+import { PrismaProductMapper } from './mappers'
 
 export class ProductPrismaRepository implements ProductRepository {
 	async add(param: Product): Promise<Product> {
-		return (await prisma.product.create({ data: param as any })) as Product
+		return (await prisma.product.create({
+			data: PrismaProductMapper.toPrisma(param),
+			include: { category: { select: { name: true } } }
+		})) as Product
 	}
 
 	async loadAll(): Promise<Product[]> {
@@ -40,8 +44,9 @@ export class ProductPrismaRepository implements ProductRepository {
 
 	async update(param: Product): Promise<Product> {
 		return (await prisma.product.update({
-			data: param as any,
-			where: { id: param.id }
+			data: PrismaProductMapper.toPrisma(param),
+			where: { id: param.id },
+			include: { category: { select: { name: true } } }
 		})) as Product
 	}
 

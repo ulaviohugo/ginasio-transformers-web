@@ -14,6 +14,8 @@ import {
 	SubMenu,
 	Title
 } from '@/app/(presentation)/components'
+import { useProducts } from '@/app/(presentation)/hooks'
+import { loadProductStore } from '@/app/(presentation)/redux'
 import { Product } from '@/app/domain/models'
 import {
 	makeRemoteAddProduct,
@@ -23,17 +25,19 @@ import {
 import { SubmenuUtils } from '@/app/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 
 export default function Categorias() {
+	const dispatch = useDispatch()
 	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
-	const [products, setProducts] = useState<Product[]>([])
+	const products = useProducts()
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 
 	const fetchData = async () => {
 		try {
 			const httpResponse = await makeRemoteLoadProduct().load()
-			setProducts(httpResponse)
+			dispatch(loadProductStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {

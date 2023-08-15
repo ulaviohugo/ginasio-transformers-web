@@ -2,6 +2,7 @@ import { EmployeeRepository } from '@/app/data/protocols'
 import { prismaService } from '.'
 import { Employee } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
+import { PrismaEmployeeMapper } from './mappers'
 
 export class EmployeePrismaRepository implements EmployeeRepository {
 	private prisma: PrismaClient
@@ -10,7 +11,9 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 	}
 
 	async add(param: Employee): Promise<Employee> {
-		return (await this.prisma.employee.create({ data: param })) as Employee
+		return (await this.prisma.employee.create({
+			data: PrismaEmployeeMapper.toPrisma(param)
+		})) as Employee
 	}
 
 	async loadAll(): Promise<Employee[]> {
@@ -44,7 +47,7 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 
 	async update(param: Employee): Promise<Employee> {
 		return (await this.prisma.employee.update({
-			data: param,
+			data: PrismaEmployeeMapper.toPrisma(param),
 			where: { id: param.id }
 		})) as Employee
 	}

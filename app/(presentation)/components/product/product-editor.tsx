@@ -3,10 +3,14 @@
 import { Product } from '@/app/domain/models'
 import { AddProduct, UpdateProduct } from '@/app/domain/usecases'
 import { IconClose, Input, Modal, ModalBody, ModalTitle, Select } from '..'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { LabelUtils } from '@/app/utils'
 import { useCategories } from '../../hooks'
+import { useDispatch } from 'react-redux'
+import { makeRemoteLoadCategories } from '@/app/main/factories/usecases/remote'
+import { addProductStore, loadCategoryStore, updateProductStore } from '../../redux'
+import { toast } from 'react-hot-toast'
 
 type ProductEditorProps = {
 	data?: Product
@@ -23,10 +27,26 @@ export function ProductEditor({
 	updateProduct,
 	data
 }: ProductEditorProps) {
+	const dispatch = useDispatch()
 	const categories = useCategories()
 	const [formDate, setFormData] = useState<Product>(data || ({} as Product))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
+
+	const fetchCategories = async () => {
+		try {
+			const httpResponse = await makeRemoteLoadCategories().load()
+			dispatch(loadCategoryStore(httpResponse))
+		} catch (error: any) {
+			toast.error(error.message)
+		}
+	}
+
+	useEffect(() => {
+		if (categories.length < 1) {
+			fetchCategories()
+		}
+	}, [])
 
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -43,7 +63,30 @@ export function ProductEditor({
 		setFormData(data)
 	}
 
-	const handleSubmit = async (e: FormEvent) => {}
+	const handleSubmit = async (e: FormEvent) => {
+		e.preventDefault()
+
+		setIsLoading(true)
+		try {
+			const httpResponse = (
+				formDate.id
+					? await updateProduct.update(formDate)
+					: await addProduct.add(formDate)
+			) as Product
+
+			if (formDate.id) {
+				dispatch(updateProductStore(httpResponse))
+			} else {
+				dispatch(addProductStore(httpResponse))
+			}
+			toast.success(`Produto ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`)
+			onClose()
+		} catch (error: any) {
+			toast.error(error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
 	return (
 		<Modal show={show} onClose={onClose}>
 			<ModalTitle>{data?.id ? 'Editar' : 'Cadastrar'} produto</ModalTitle>
@@ -98,6 +141,7 @@ export function ProductEditor({
 							value: category.id
 						}))}
 						defaultText="Selecione"
+						onChange={handleInputChange}
 					/>
 				</form>
 			</ModalBody>
