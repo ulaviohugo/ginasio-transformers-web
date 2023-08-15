@@ -2,7 +2,7 @@ import { Employee } from '@/app/domain/models'
 import { UpdateEmployee } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { ObjectUtils } from '@/app/utils'
+import { FormDataUtils, ObjectUtils } from '@/app/utils'
 
 export class RemoteUpdateEmployee implements UpdateEmployee {
 	constructor(
@@ -17,16 +17,8 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 			'updatedAt',
 			'updatedBy'
 		])
+		const body = FormDataUtils.createFormData(handledParam)
 
-		const values = Object.values(handledParam)
-		const keys = Object.keys(handledParam)
-
-		const body = new FormData()
-		for (let i = 0; i < values.length; i++) {
-			const key = keys[i]
-			const value = values[i]
-			body.append(key, value)
-		}
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,

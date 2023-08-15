@@ -2,6 +2,7 @@ import { Employee } from '@/app/domain/models'
 import { AddEmployee } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
+import { FormDataUtils } from '@/app/utils'
 
 export class RemoteAddEmployee implements AddEmployee {
 	constructor(
@@ -10,15 +11,7 @@ export class RemoteAddEmployee implements AddEmployee {
 	) {}
 
 	async add(param: Employee): Promise<Employee> {
-		const values = Object.values(param)
-		const keys = Object.keys(param)
-
-		const body = new FormData()
-		for (let i = 0; i < values.length; i++) {
-			const key = keys[i]
-			const value = values[i]
-			body.append(key, value)
-		}
+		const body = FormDataUtils.createFormData(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
