@@ -2,6 +2,7 @@ import { CategoryRepository } from '@/app/data/protocols'
 import { prismaService } from '.'
 import { Category } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
+import { PrismaCategoryMapper } from './mappers'
 
 export class CategoryPrismaRepository implements CategoryRepository {
 	private prisma: PrismaClient
@@ -9,7 +10,9 @@ export class CategoryPrismaRepository implements CategoryRepository {
 		this.prisma = prismaService
 	}
 	async add(param: Category): Promise<Category> {
-		return (await this.prisma.category.create({ data: param })) as Category
+		return (await this.prisma.category.create({
+			data: PrismaCategoryMapper.toPrisma(param)
+		})) as Category
 	}
 
 	async loadAll(): Promise<Category[]> {
@@ -34,7 +37,7 @@ export class CategoryPrismaRepository implements CategoryRepository {
 
 	async update(param: Category): Promise<Category> {
 		return (await this.prisma.category.update({
-			data: param,
+			data: PrismaCategoryMapper.toPrisma(param),
 			where: { id: param.id }
 		})) as Category
 	}
