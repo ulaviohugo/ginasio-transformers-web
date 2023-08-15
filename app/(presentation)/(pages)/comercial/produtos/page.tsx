@@ -94,7 +94,7 @@ export default function Categorias() {
 						{products.map((product) => (
 							<li key={product.id} className="p-4 shadow">
 								<div className="font-semibold">{product.name}</div>
-								<div className="inline-flex items-center gap-1 bg-primary bg-opacity-50 text-xs text-white font-semibold px-2 py-[2px] rounded-md">
+								<div className="inline-flex items-center gap-1 bg-gray-100 text-xs px-2 py-[2px] rounded-md">
 									<IconCategory /> {product.category?.name}
 								</div>
 								<CardActions onClickEdit={() => handleOpenDetalhe(product)} />
