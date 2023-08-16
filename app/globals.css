@@ -26,7 +26,7 @@ body {
 }
 
 .btn {
-	@apply flex items-center gap-2 font-semibold text-sm py-1 px-3 rounded cursor-pointer;
+	@apply inline-flex items-center gap-2 font-semibold text-sm py-1 px-3 rounded cursor-pointer;
 }
 
 button,
