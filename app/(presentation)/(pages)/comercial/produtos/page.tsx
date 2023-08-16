@@ -30,8 +30,8 @@ import { useDispatch } from 'react-redux'
 
 export default function Categorias() {
 	const dispatch = useDispatch()
-	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
 	const products = useProducts()
+	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 

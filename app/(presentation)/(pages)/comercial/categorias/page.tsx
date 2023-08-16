@@ -2,6 +2,7 @@
 
 import {
 	CardActions,
+	CategoryEditor,
 	IconCategory,
 	Layout,
 	LayoutBody,
@@ -12,7 +13,12 @@ import {
 } from '@/app/(presentation)/components'
 import { useCategories, useRedux } from '@/app/(presentation)/hooks'
 import { loadCategoryStore } from '@/app/(presentation)/redux'
-import { makeRemoteLoadCategories } from '@/app/main/factories/usecases/remote'
+import { Category } from '@/app/domain/models'
+import {
+	makeRemoteAddCategory,
+	makeRemoteLoadCategories,
+	makeRemoteUpdateCategory
+} from '@/app/main/factories/usecases/remote'
 import { SubmenuUtils } from '@/app/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -22,6 +28,8 @@ export default function Categorias() {
 	const dispatch = useDispatch()
 	const categories = useCategories()
 	const [isLoading, setIsLoading] = useState(true)
+	const [selectedCategory, setSelectedCategory] = useState<Category>({} as Category)
+	const [showEditor, setShowEditor] = useState(false)
 
 	const fetchData = async () => {
 		try {
@@ -38,8 +46,31 @@ export default function Categorias() {
 		fetchData()
 	}, [])
 
+	const clearSelectedEmployee = () => {
+		setSelectedCategory({} as Category)
+	}
+
+	const handleOpenDetalhe = (product?: Category) => {
+		if (product) setSelectedCategory(product)
+		setShowEditor(true)
+	}
+
+	const handleCloseDetail = () => {
+		clearSelectedEmployee()
+		setShowEditor(false)
+	}
+
 	return (
 		<Layout>
+			{showEditor && (
+				<CategoryEditor
+					data={selectedCategory}
+					show={showEditor}
+					onClose={handleCloseDetail}
+					addCategory={makeRemoteAddCategory()}
+					updateCategory={makeRemoteUpdateCategory()}
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
