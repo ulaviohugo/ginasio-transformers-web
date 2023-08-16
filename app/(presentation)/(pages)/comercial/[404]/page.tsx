@@ -11,7 +11,7 @@ export default function NotFound() {
 		<Layout>
 			<LayoutBody>
 				<SubMenu submenus={SubmenuUtils.commercial} />
-				<div className="flex justify-center items-center h-full text-lg md:text-3xl">
+				<div className="flex-1 flex justify-center items-center text-lg md:text-3xl">
 					Página não encontrada!
 				</div>
 			</LayoutBody>

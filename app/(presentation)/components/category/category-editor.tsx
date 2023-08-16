@@ -71,7 +71,7 @@ export function CategoryEditor({
 			} else {
 				dispatch(addCategoryStore(httpResponse))
 			}
-			toast.success(`Category ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`)
+			toast.success(`Categoria ${formDate.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)

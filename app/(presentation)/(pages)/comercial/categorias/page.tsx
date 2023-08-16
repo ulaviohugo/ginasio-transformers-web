@@ -4,18 +4,21 @@ import {
 	CardActions,
 	CategoryEditor,
 	IconCategory,
+	IconPlus,
 	Layout,
 	LayoutBody,
+	ModalDelete,
 	NoData,
 	Spinner,
 	SubMenu,
 	Title
 } from '@/app/(presentation)/components'
-import { useCategories, useRedux } from '@/app/(presentation)/hooks'
-import { loadCategoryStore } from '@/app/(presentation)/redux'
+import { useCategories } from '@/app/(presentation)/hooks'
+import { loadCategoryStore, removeCategoryStore } from '@/app/(presentation)/redux'
 import { Category } from '@/app/domain/models'
 import {
 	makeRemoteAddCategory,
+	makeRemoteDeleteCategory,
 	makeRemoteLoadCategories,
 	makeRemoteUpdateCategory
 } from '@/app/main/factories/usecases/remote'
@@ -30,6 +33,7 @@ export default function Categorias() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedCategory, setSelectedCategory] = useState<Category>({} as Category)
 	const [showEditor, setShowEditor] = useState(false)
+	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const fetchData = async () => {
 		try {
@@ -46,7 +50,7 @@ export default function Categorias() {
 		fetchData()
 	}, [])
 
-	const clearSelectedEmployee = () => {
+	const clearSelectedCategory = () => {
 		setSelectedCategory({} as Category)
 	}
 
@@ -56,8 +60,29 @@ export default function Categorias() {
 	}
 
 	const handleCloseDetail = () => {
-		clearSelectedEmployee()
+		clearSelectedCategory()
 		setShowEditor(false)
+	}
+
+	const handleOpenFormDelete = (category: Category) => {
+		setSelectedCategory(category)
+		setShowFormDelete(true)
+	}
+
+	const handleCloseFormDelete = () => {
+		clearSelectedCategory()
+		setShowFormDelete(false)
+	}
+
+	const handleDelete = async () => {
+		try {
+			await makeRemoteDeleteCategory().delete(selectedCategory.id)
+			dispatch(removeCategoryStore(selectedCategory.id))
+			toast.success(`A categoria ${selectedCategory.name} foi excluída`)
+			handleCloseFormDelete()
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 	}
 
 	return (
@@ -71,10 +96,32 @@ export default function Categorias() {
 					updateCategory={makeRemoteUpdateCategory()}
 				/>
 			)}
+			{showFormDelete && (
+				<ModalDelete
+					entity="categoria"
+					description={`Deseja realmente excluir ${selectedCategory.name}?`}
+					show={showFormDelete}
+					onClose={handleCloseFormDelete}
+					onSubmit={handleDelete}
+				/>
+			)}
+
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
-					<Title title={`Categorias`} icon={IconCategory} />
+					<Title
+						title={`Categorias ${isLoading ? '' : `(${categories?.length})`}`}
+						icon={IconCategory}
+					/>
+					<div>
+						<button
+							className="bg-primary px-2 py-1 rounded-md text-gray-200"
+							title="Novo funcionário"
+							onClick={() => handleOpenDetalhe()}
+						>
+							<IconPlus />
+						</button>
+					</div>
 				</div>
 				{isLoading ? (
 					<Spinner />
@@ -85,7 +132,10 @@ export default function Categorias() {
 						{categories.map((category) => (
 							<li key={category.id} className="p-4 shadow">
 								<div className="font-semibold">{category.name}</div>
-								<CardActions />
+								<CardActions
+									onClickDelete={() => handleOpenFormDelete(category)}
+									onClickEdit={() => handleOpenDetalhe(category)}
+								/>
 							</li>
 						))}
 					</ul>

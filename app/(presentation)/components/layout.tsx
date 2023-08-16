@@ -21,7 +21,10 @@ export function Layout({ children }: LayoutProps) {
 export function LayoutBody({ children }: LayoutProps) {
 	return (
 		<div className="flex-1 bg-white shadow-lg rounded-xl p-4">
-			<div className="overflow-auto h-full" style={{ maxHeight: 'calc(100vh - 96px)' }}>
+			<div
+				className="flex flex-col overflow-auto h-full"
+				style={{ maxHeight: 'calc(100vh - 96px)' }}
+			>
 				{children}
 			</div>
 		</div>

@@ -11,7 +11,13 @@ export class RemoteUpdateCategory implements UpdateCategory {
 	) {}
 
 	async update(param: Category): Promise<Category> {
-		const body = FormDataUtils.createFormData(param)
+		const handledParam = ObjectUtils.removeProps<Category>(param, [
+			'createdAt',
+			'createdBy',
+			'updatedAt',
+			'updatedBy'
+		])
+		const body = FormDataUtils.createFormData(handledParam)
 
 		const httpResponse = await this.httpClient.request({
 			method: 'put',

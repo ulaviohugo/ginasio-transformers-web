@@ -21,8 +21,8 @@ import {
 import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
 import {
-	makeRemoteADeleteEmployee,
-	makeRemoteAUpdateEmployee,
+	makeRemoteDeleteEmployee,
+	makeRemoteUpdateEmployee,
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
 } from '@/app/main/factories/usecases/remote'
@@ -80,7 +80,7 @@ export default function Employees() {
 
 	const handleDelete = async () => {
 		try {
-			await makeRemoteADeleteEmployee().delete(selectedEmployee.id)
+			await makeRemoteDeleteEmployee().delete(selectedEmployee.id)
 			dispatch(removeEmployeeStore(selectedEmployee.id))
 			toast.success(`Funcionário(a) ${selectedEmployee.name} foi excluído`)
 			handleCloseFormDelete()
@@ -97,7 +97,7 @@ export default function Employees() {
 					show={showEditor}
 					onClose={handleCloseDetail}
 					addEmployee={makeRemoteAddEmployee()}
-					updateEmployee={makeRemoteAUpdateEmployee()}
+					updateEmployee={makeRemoteUpdateEmployee()}
 				/>
 			)}
 			{showFormDelete && (

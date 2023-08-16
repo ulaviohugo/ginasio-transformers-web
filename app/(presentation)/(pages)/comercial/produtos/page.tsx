@@ -2,13 +2,13 @@
 
 import {
 	CardActions,
-	IconCategory,
-	IconPlus,
 	IconProduct,
+	IconPlus,
 	IconSearch,
 	Input,
 	Layout,
 	LayoutBody,
+	ModalDelete,
 	NoData,
 	ProductEditor,
 	Spinner,
@@ -16,10 +16,11 @@ import {
 	Title
 } from '@/app/(presentation)/components'
 import { useProducts } from '@/app/(presentation)/hooks'
-import { loadProductStore } from '@/app/(presentation)/redux'
+import { loadProductStore, removeProductStore } from '@/app/(presentation)/redux'
 import { Product } from '@/app/domain/models'
 import {
 	makeRemoteAddProduct,
+	makeRemoteDeleteProduct,
 	makeRemoteLoadProduct,
 	makeRemoteUpdateProduct
 } from '@/app/main/factories/usecases/remote'
@@ -34,6 +35,7 @@ export default function Categorias() {
 	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
+	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const fetchData = async () => {
 		try {
@@ -50,7 +52,7 @@ export default function Categorias() {
 		fetchData()
 	}, [])
 
-	const clearSelectedEmployee = () => {
+	const clearSelectedProduct = () => {
 		setSelectedProduct({} as Product)
 	}
 
@@ -60,8 +62,29 @@ export default function Categorias() {
 	}
 
 	const handleCloseDetail = () => {
-		clearSelectedEmployee()
+		clearSelectedProduct()
 		setShowEditor(false)
+	}
+
+	const handleOpenFormDelete = (category: Product) => {
+		setSelectedProduct(category)
+		setShowFormDelete(true)
+	}
+
+	const handleCloseFormDelete = () => {
+		clearSelectedProduct()
+		setShowFormDelete(false)
+	}
+
+	const handleDelete = async () => {
+		try {
+			await makeRemoteDeleteProduct().delete(selectedProduct.id)
+			dispatch(removeProductStore(selectedProduct.id))
+			toast.success(`O produto ${selectedProduct.name} foi excluído`)
+			handleCloseFormDelete()
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 	}
 
 	return (
@@ -75,10 +98,22 @@ export default function Categorias() {
 					updateProduct={makeRemoteUpdateProduct()}
 				/>
 			)}
+			{showFormDelete && (
+				<ModalDelete
+					entity="produto"
+					description={`Deseja realmente excluir ${selectedProduct.name}?`}
+					show={showFormDelete}
+					onClose={handleCloseFormDelete}
+					onSubmit={handleDelete}
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
-					<Title title={`Produtos`} icon={IconProduct} />
+					<Title
+						title={`Produtos ${isLoading ? '' : `(${products?.length})`}`}
+						icon={IconProduct}
+					/>
 					<div className="flex items-center gap-2">
 						<button
 							className="bg-primary px-2 py-1 rounded-md text-gray-200"
@@ -105,9 +140,12 @@ export default function Categorias() {
 									Preço: {NumberUtils.formatCurrency(product.price)}
 								</div>
 								<div className="inline-flex items-center gap-1 bg-gray-100 text-xs px-2 py-[2px] rounded-md">
-									<IconCategory /> {product.category?.name}
+									<IconProduct /> {product.category?.name}
 								</div>
-								<CardActions onClickEdit={() => handleOpenDetalhe(product)} />
+								<CardActions
+									onClickDelete={() => handleOpenFormDelete(product)}
+									onClickEdit={() => handleOpenDetalhe(product)}
+								/>
 							</li>
 						))}
 					</ul>

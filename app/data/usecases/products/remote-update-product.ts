@@ -15,7 +15,8 @@ export class RemoteUpdateProduct implements UpdateProduct {
 			'createdAt',
 			'createdBy',
 			'updatedAt',
-			'updatedBy'
+			'updatedBy',
+			'category'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

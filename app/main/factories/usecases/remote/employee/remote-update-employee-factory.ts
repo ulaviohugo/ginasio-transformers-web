@@ -1,6 +1,6 @@
 import { makeApiUrl, makeFetchHttpClient } from '../../../http'
 import { RemoteUpdateEmployee } from '@/app/data/usecases'
 
-export const makeRemoteAUpdateEmployee = () => {
+export const makeRemoteUpdateEmployee = () => {
 	return new RemoteUpdateEmployee(makeApiUrl('/employees'), makeFetchHttpClient())
 }
