@@ -9,6 +9,7 @@ import {
 	Input,
 	Layout,
 	LayoutBody,
+	NoData,
 	ProductEditor,
 	Spinner,
 	SubMenu,
@@ -93,6 +94,8 @@ export default function Categorias() {
 				</div>
 				{isLoading ? (
 					<Spinner />
+				) : products.length < 1 ? (
+					<NoData />
 				) : (
 					<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
 						{products.map((product) => (

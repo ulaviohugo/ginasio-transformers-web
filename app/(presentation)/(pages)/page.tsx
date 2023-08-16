@@ -15,6 +15,7 @@ import {
 	makeRemoteCountEmployees,
 	makeRemoteCountProduct
 } from '@/app/main/factories/usecases/remote'
+import { toast } from 'react-hot-toast'
 
 type ItemProps = {
 	number: number
@@ -38,9 +39,14 @@ export default function Home() {
 		remoteResource: { count: () => Promise<number> },
 		callback: (response: any) => void
 	) => {
-		remoteResource.count().then((response) => {
-			callback(response)
-		})
+		remoteResource
+			.count()
+			.then((response) => {
+				callback(response)
+			})
+			.catch((error) => {
+				toast.error('Error ao consultar dados')
+			})
 	}
 
 	useEffect(() => {

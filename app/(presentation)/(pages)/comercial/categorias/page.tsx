@@ -5,6 +5,7 @@ import {
 	IconCategory,
 	Layout,
 	LayoutBody,
+	NoData,
 	Spinner,
 	SubMenu,
 	Title
@@ -46,6 +47,8 @@ export default function Categorias() {
 				</div>
 				{isLoading ? (
 					<Spinner />
+				) : categories.length < 1 ? (
+					<NoData />
 				) : (
 					<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
 						{categories.map((category) => (

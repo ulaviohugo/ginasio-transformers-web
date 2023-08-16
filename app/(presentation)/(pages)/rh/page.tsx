@@ -128,55 +128,52 @@ export default function Employees() {
 							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
 						</div>
 					</div>
-
 					{isLoading ? (
 						<Spinner data="Carregando funcionários..." />
+					) : employees?.length < 1 ? (
+						<div>Nenhum funcionário de momento.</div>
 					) : (
 						<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-							{employees?.length < 1 ? (
-								<div>Nenhum funcionário de momento.</div>
-							) : (
-								employees.map((employee) => (
-									<li key={employee.id} className="p-4 shadow">
-										<div className="flex items-center gap-1 mb-3">
-											{employee.image ? (
-												<Image
-													src={employee.image}
-													alt={`Foto de perfil`}
-													width={50}
-													height={50}
-													className="rounded-full object-cover aspect-square"
-												/>
-											) : (
-												<IconUser size={50} />
-											)}
-											<div>
-												<div className="font-semibold">{employee.name}</div>
-												<div className="flex items-center gap-1 text-sm font-normal">
-													<IconPhone /> {NumberUtils.format(employee.phone1)}
-												</div>
-											</div>
-										</div>
-										<div className="flex items-center gap-1 text-sm">
-											<IconClock /> Início de contrato:{' '}
-											{DateUtils.getDatePt(employee.hireDate, '/')}
-										</div>
-										{employee.contractEndDate && (
-											<div className="flex items-center gap-1 text-sm">
-												<IconClock /> Fim de contrato:{' '}
-												{DateUtils.getDatePt(employee.contractEndDate, '/')}
-											</div>
+							{employees.map((employee) => (
+								<li key={employee.id} className="p-4 shadow">
+									<div className="flex items-center gap-1 mb-3">
+										{employee.image ? (
+											<Image
+												src={employee.image}
+												alt={`Foto de perfil`}
+												width={50}
+												height={50}
+												className="rounded-full object-cover aspect-square"
+											/>
+										) : (
+											<IconUser size={50} />
 										)}
-										<div className="flex items-center gap-1 text-sm">
-											<IconPhone /> Telefone: {NumberUtils.format(employee.phone1)}
+										<div>
+											<div className="font-semibold">{employee.name}</div>
+											<div className="flex items-center gap-1 text-sm font-normal">
+												<IconPhone /> {NumberUtils.format(employee.phone1)}
+											</div>
 										</div>
-										<CardActions
-											onClickDelete={() => handleOpenFormDelete(employee)}
-											onClickEdit={() => handleOpenDetalhe(employee)}
-										/>
-									</li>
-								))
-							)}
+									</div>
+									<div className="flex items-center gap-1 text-sm">
+										<IconClock /> Início de contrato:{' '}
+										{DateUtils.getDatePt(employee.hireDate, '/')}
+									</div>
+									{employee.contractEndDate && (
+										<div className="flex items-center gap-1 text-sm">
+											<IconClock /> Fim de contrato:{' '}
+											{DateUtils.getDatePt(employee.contractEndDate, '/')}
+										</div>
+									)}
+									<div className="flex items-center gap-1 text-sm">
+										<IconPhone /> Telefone: {NumberUtils.format(employee.phone1)}
+									</div>
+									<CardActions
+										onClickDelete={() => handleOpenFormDelete(employee)}
+										onClickEdit={() => handleOpenDetalhe(employee)}
+									/>
+								</li>
+							))}
 						</ul>
 					)}
 				</div>
