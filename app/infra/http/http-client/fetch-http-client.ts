@@ -22,10 +22,17 @@ export class FetchHttpClient implements HttpClient {
 				body,
 				headers
 			})
-			const jsonBody = await httpResponse.json()
-			fetchResponse = {
-				data: httpResponse.status == HttpStatusCode.ok ? jsonBody : jsonBody?.error,
-				status: httpResponse.status
+			if (httpResponse.status == HttpStatusCode.ok) {
+				const jsonBody = await httpResponse.json()
+				fetchResponse = {
+					data: jsonBody,
+					status: httpResponse.status
+				}
+			} else {
+				fetchResponse = {
+					data: httpResponse.statusText,
+					status: httpResponse.status
+				}
 			}
 		} catch (error: any) {
 			fetchResponse = error.response
