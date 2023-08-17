@@ -19,6 +19,7 @@ import {
 import { ImSpinner2 } from 'react-icons/im'
 import { IoMdClose } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt } from 'react-icons/bi'
+import { FaHouseUser } from 'react-icons/fa'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
@@ -31,6 +32,9 @@ export const IconCheck = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconClock = (props: IconBaseProps): React.ReactElement => (
 	<AiOutlineClockCircle {...props} />
+)
+export const IconSupplier = (props: IconBaseProps): React.ReactElement => (
+	<FaHouseUser {...props} />
 )
 
 export const IconKey = (props: IconBaseProps): React.ReactElement => <HiKey {...props} />
