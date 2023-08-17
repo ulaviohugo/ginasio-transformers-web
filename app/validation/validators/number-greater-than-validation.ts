@@ -15,9 +15,9 @@ export class NumberGreaterThanValidation implements Validation {
 		const numberValue = Number(input[this.fieldName])
 		if (numberValue <= this.valueToCompare) {
 			return new Error(
-				`O parâmetro ${LabelUtils.translateField(this.fieldName)} tem de ser maior que ${
-					this.valueToCompare
-				}`
+				`O parâmetro ${LabelUtils.translateField(
+					this.fieldName as any
+				)} tem de ser maior que ${this.valueToCompare}`
 			)
 		}
 	}

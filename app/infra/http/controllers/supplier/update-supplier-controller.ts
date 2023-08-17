@@ -1,0 +1,49 @@
+import { UpdateSupplier } from '@/app/domain/usecases'
+import { EmailInUseError } from '../../errors'
+import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
+import { Controller, Validation } from '../../protocols'
+import { Supplier } from '@/app/domain/models'
+import { NumberUtils } from '@/app/utils'
+import { HttpResponse } from '@/app/data/protocols/http'
+import { UploadService } from '@/app/services'
+import { Uploader } from '@/app/data/protocols/services'
+
+export class UpdateSupplierController implements Controller {
+	constructor(
+		private readonly UpdateSupplier: UpdateSupplier,
+		private readonly validation: Validation
+	) {}
+	async handle(request: UpdateSupplierControllerRequest): Promise<HttpResponse> {
+		try {
+			const error = this.validation.validate(request)
+			if (error) {
+				return badRequest(error)
+			}
+			let uploader: Uploader = null as any
+			if (request.photo && typeof request.photo != 'string') {
+				uploader = new UploadService(request.photo, '/suppliers')
+			}
+			const updatedSupplier = await this.UpdateSupplier.update(
+				{
+					...request,
+					id: NumberUtils.convertToNumber(request.id),
+					countryId: NumberUtils.convertToNumber(request.countryId),
+					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
+					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true)
+				},
+				uploader
+			)
+			if (updatedSupplier == 'notFound') {
+				return notFound()
+			}
+			if (updatedSupplier == 'emailInUse') {
+				return forbidden(new EmailInUseError())
+			}
+			return ok(updatedSupplier)
+		} catch (error) {
+			return serverError(error)
+		}
+	}
+}
+
+export type UpdateSupplierControllerRequest = Supplier

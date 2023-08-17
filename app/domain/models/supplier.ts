@@ -9,8 +9,8 @@ export interface Supplier {
 	provinceId?: number
 	municipalityId?: number
 	businessAddress: string
-	categoryId: string
-	productId: string
+	categoryId: number
+	productId: number
 	unitPrice: number
 	createdAt: Date
 	createdBy?: number
