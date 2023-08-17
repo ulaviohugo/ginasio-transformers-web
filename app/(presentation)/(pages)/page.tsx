@@ -3,6 +3,7 @@
 import {
 	IconCategory,
 	IconProduct,
+	IconSupplier,
 	IconUser,
 	Layout,
 	LayoutBody,
@@ -13,7 +14,8 @@ import Link from 'next/link'
 import {
 	makeRemoteCountCategories,
 	makeRemoteCountEmployees,
-	makeRemoteCountProduct
+	makeRemoteCountProduct,
+	makeRemoteCountSuppliers
 } from '@/app/main/factories/usecases/remote'
 import { toast } from 'react-hot-toast'
 
@@ -34,6 +36,9 @@ export default function Home() {
 
 	const [products, setProducts] = useState(0)
 	const [isLoadingProducts, setIsLoadingProducts] = useState(true)
+
+	const [suppliers, setSupplier] = useState(0)
+	const [isLoadingSupplier, setIsLoadingSupplier] = useState(true)
 
 	const fetchData = (
 		remoteResource: { count: () => Promise<number> },
@@ -62,6 +67,10 @@ export default function Home() {
 			setProducts(response)
 			setIsLoadingProducts(false)
 		})
+		fetchData(makeRemoteCountSuppliers(), (response) => {
+			setSupplier(response)
+			setIsLoadingSupplier(false)
+		})
 	}, [])
 
 	return (
@@ -88,6 +97,13 @@ export default function Home() {
 						icon={IconProduct}
 						isLoading={isLoadingProducts}
 						href="/comercial/produtos"
+					/>
+					<Item
+						number={suppliers}
+						title={'Fornecedores'}
+						icon={IconSupplier}
+						isLoading={isLoadingSupplier}
+						href="/comercial/fornecedores"
 					/>
 				</div>
 			</LayoutBody>
