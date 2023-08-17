@@ -82,7 +82,7 @@ export default function Home() {
 						title={'Funcionários'}
 						icon={IconUser}
 						isLoading={isLoadingEmployees}
-						href="/rh"
+						href="/rh/funcionarios"
 					/>
 					<Item
 						number={categories}

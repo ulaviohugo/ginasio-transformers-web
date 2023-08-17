@@ -26,10 +26,10 @@ import {
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
 } from '@/app/main/factories/usecases/remote'
-import { loadEmployeeStore, removeEmployeeStore } from '../../redux'
+import { loadEmployeeStore, removeEmployeeStore } from '../../../redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
-import { useEmployees } from '../../hooks'
+import { useEmployees } from '../../../hooks'
 
 export default function Employees() {
 	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
