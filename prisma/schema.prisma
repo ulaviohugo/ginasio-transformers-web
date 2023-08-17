@@ -57,7 +57,7 @@ model Country {
 
   provinces Province[]
   employees Employee[]
-  suppliers  Supplier[]
+  suppliers Supplier[]
 
   @@map("tb_countries")
 }
@@ -70,7 +70,7 @@ model Province {
   country        Country        @relation(fields: [countryId], references: [id])
   municipalities Municipality[]
   employees      Employee[]
-  suppliers       Supplier[]
+  suppliers      Supplier[]
 
   @@unique([name, countryId])
   @@map("tb_provinces")
@@ -96,7 +96,7 @@ model Category {
   updatedBy Int?      @map("updated_by")
   updatedAt DateTime? @map("updated_at")
 
-  products Product[]
+  products  Product[]
   suppliers Supplier[]
 
   @@map("tb_categories")
@@ -113,7 +113,7 @@ model Product {
   updatedBy  Int?      @map("updated_by")
   updatedAt  DateTime? @map("updated_at")
 
-  category Category   @relation(fields: [categoryId], references: [id])
+  category  Category   @relation(fields: [categoryId], references: [id])
   suppliers Supplier[]
 
   @@unique([name, categoryId])
@@ -124,9 +124,9 @@ model Supplier {
   id              Int       @id @default(autoincrement())
   name            String    @db.VarChar(50)
   representative  String    @db.VarChar(50)
-  email           String    @db.VarChar(50)
-  phone           String    @db.VarChar(15)
-  photo           String?    @db.VarChar(50)
+  email           String    @unique @db.VarChar(50)
+  phone           String    @unique @db.VarChar(15)
+  photo           String?   @db.VarChar(50)
   countryId       Int       @map("country_id")
   provinceId      Int?      @map("province_id")
   municipalityId  Int?      @map("municipality_id")
