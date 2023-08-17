@@ -1,7 +1,7 @@
 import { ProductRepository } from '@/app/data/protocols'
-import { prismaService as prisma } from '.'
+import { prismaService as prisma } from '..'
 import { Product } from '@/app/domain/models'
-import { PrismaProductMapper } from './mappers'
+import { PrismaProductMapper } from '../mappers'
 
 export class ProductPrismaRepository implements ProductRepository {
 	async add(param: Product): Promise<Product> {

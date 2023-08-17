@@ -1,8 +1,8 @@
 import { EmployeeRepository } from '@/app/data/protocols'
-import { prismaService } from '.'
+import { prismaService } from '..'
 import { Employee } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaEmployeeMapper } from './mappers'
+import { PrismaEmployeeMapper } from '../mappers'
 
 export class EmployeePrismaRepository implements EmployeeRepository {
 	private prisma: PrismaClient
