@@ -107,7 +107,7 @@ export default function Categorias() {
 			)}
 
 			<LayoutBody>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 mb-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
 					<Title
 						title={`Categorias ${isLoading ? '' : `(${categories?.length})`}`}

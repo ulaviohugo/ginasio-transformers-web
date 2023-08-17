@@ -108,7 +108,7 @@ export default function Categorias() {
 				/>
 			)}
 			<LayoutBody>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 mb-2">
 					<SubMenu submenus={SubmenuUtils.commercial} />
 					<Title
 						title={`Produtos ${isLoading ? '' : `(${products?.length})`}`}
@@ -123,7 +123,7 @@ export default function Categorias() {
 							<IconPlus />
 						</button>
 						<div className="w-full max-w-xs">
-							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
+							<Input placeholder="Pesquisar por nome" icon={IconSearch} />
 						</div>
 					</div>
 				</div>
