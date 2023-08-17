@@ -126,7 +126,7 @@ model Supplier {
   representative  String    @db.VarChar(50)
   email           String    @db.VarChar(50)
   phone           String    @db.VarChar(15)
-  photo           String    @db.VarChar(50)
+  photo           String?    @db.VarChar(50)
   countryId       Int       @map("country_id")
   provinceId      Int?      @map("province_id")
   municipalityId  Int?      @map("municipality_id")
