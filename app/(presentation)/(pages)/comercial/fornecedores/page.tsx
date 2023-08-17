@@ -19,7 +19,8 @@ import {
 	Title,
 	IconEmail,
 	IconCategory,
-	IconProduct
+	IconProduct,
+	IconSupplier
 } from '@/app/(presentation)/components'
 import { NumberUtils, SubmenuUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
@@ -117,7 +118,7 @@ export default function Suppliers() {
 					<SubMenu submenus={SubmenuUtils.commercial} />
 					<Title
 						title={`Fornecedores ${isLoading ? '' : `(${suppliers?.length})`}`}
-						icon={IconUser}
+						icon={IconSupplier}
 					/>
 					<div className="flex items-center gap-2">
 						<button
