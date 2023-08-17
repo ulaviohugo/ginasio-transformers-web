@@ -7,3 +7,4 @@ export const useCategories = () => useRedux().categories.categories
 export const useEmployees = () => useRedux().employees.employees
 export const useLocations = () => useRedux().locations
 export const useProducts = () => useRedux().products.products
+export const useSuppliers = () => useRedux().suppliers.suppliers

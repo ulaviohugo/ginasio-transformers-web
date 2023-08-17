@@ -12,6 +12,7 @@ export class SubmenuUtils {
 		{ link: '/comercial/caixa', text: 'Caixa' },
 		{ link: '/comercial/estoque', text: 'Estoque' },
 		{ link: '/comercial/categorias', text: 'Categorias' },
-		{ link: '/comercial/produtos', text: 'Produtos' }
+		{ link: '/comercial/produtos', text: 'Produtos' },
+		{ link: '/comercial/fornecedores', text: 'Fornecedores' }
 	]
 }

@@ -13,7 +13,8 @@ import {
 	ProductEditor,
 	Spinner,
 	SubMenu,
-	Title
+	Title,
+	IconCategory
 } from '@/app/(presentation)/components'
 import { useProducts } from '@/app/(presentation)/hooks'
 import { loadProductStore, removeProductStore } from '@/app/(presentation)/redux'
@@ -140,7 +141,7 @@ export default function Categorias() {
 									Preço: {NumberUtils.formatCurrency(product.price)}
 								</div>
 								<div className="inline-flex items-center gap-1 bg-gray-100 text-xs px-2 py-[2px] rounded-md">
-									<IconProduct /> {product.category?.name}
+									<IconCategory /> {product.category?.name}
 								</div>
 								<CardActions
 									onClickDelete={() => handleOpenFormDelete(product)}

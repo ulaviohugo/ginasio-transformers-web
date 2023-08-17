@@ -1,3 +1,5 @@
+import { Category, Product } from '.'
+
 export interface Supplier {
 	id: number
 	name: string
@@ -12,6 +14,8 @@ export interface Supplier {
 	categoryId: number
 	productId: number
 	unitPrice: number
+	category?: Category
+	product?: Product
 	createdAt: Date
 	createdBy?: number
 	updatedAt?: Date

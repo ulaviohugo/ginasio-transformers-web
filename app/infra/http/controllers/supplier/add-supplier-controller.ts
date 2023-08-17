@@ -28,7 +28,10 @@ export class AddSupplierController implements Controller {
 					...request,
 					countryId: NumberUtils.convertToNumber(request.countryId),
 					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true)
+					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+					categoryId: NumberUtils.convertToNumber(request.categoryId, true),
+					productId: NumberUtils.convertToNumber(request.productId, true),
+					unitPrice: NumberUtils.convertToNumber(request.unitPrice, true)
 				},
 				uploader
 			)
