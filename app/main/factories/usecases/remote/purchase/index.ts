@@ -1,0 +1,5 @@
+export * from './remote-add-purchase-factory'
+export * from './remote-count-purchase-factory'
+export * from './remote-delete-purchase-factory'
+export * from './remote-load-purchases-factory'
+export * from './remote-update-purchase-factory'
