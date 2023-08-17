@@ -136,7 +136,7 @@ export default function Suppliers() {
 					) : suppliers?.length < 1 ? (
 						<div>Nenhum fornecedor de momento.</div>
 					) : (
-						<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
+						<ul className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
 							{suppliers.map((supplier) => (
 								<li key={supplier.id} className="p-4 shadow">
 									<div className="flex items-center gap-1 mb-3">
