@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from 'react'
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '.'
-import { IconTrash, Spinner } from '..'
+import { ButtonCancel, ButtonSubmit, IconTrash } from '..'
 
 type ModalDeleteProps = {
 	entity: ReactNode
@@ -37,17 +37,13 @@ export function ModalDelete({
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<button
-					type="submit"
+				<ButtonSubmit
+					text="Excluir"
+					icon={IconTrash}
 					disabled={isLoading}
-					className="btn-primary"
 					onClick={handleSubmit}
-				>
-					Excluir {isLoading ? <Spinner /> : <IconTrash />}
-				</button>
-				<span className="btn-default" onClick={onClose}>
-					Cancelar
-				</span>
+				/>
+				<ButtonCancel onClick={onClose} />
 			</ModalFooter>
 		</Modal>
 	)

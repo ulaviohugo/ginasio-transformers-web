@@ -2,7 +2,15 @@
 
 import { Category } from '@/app/domain/models'
 import { AddCategory, UpdateCategory } from '@/app/domain/usecases'
-import { Input, Modal, ModalBody, ModalFooter, ModalTitle, Spinner } from '..'
+import {
+	ButtonCancel,
+	ButtonSubmit,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalTitle
+} from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { LabelUtils } from '@/app/utils'
 import { useCategories } from '../../hooks'
@@ -94,9 +102,8 @@ export function CategoryEditor({
 						autoFocus
 					/>
 					<ModalFooter>
-						<button type="submit" disabled={isLoading} className="btn-primary">
-							Salvar {isLoading && <Spinner />}
-						</button>
+						<ButtonSubmit isLoading={isLoading} />
+						<ButtonCancel onClick={onClose} />
 					</ModalFooter>
 				</form>
 			</ModalBody>

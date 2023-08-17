@@ -7,14 +7,15 @@ import { useDispatch } from 'react-redux'
 
 import { Employee } from '@/app/domain/models'
 import {
+	ButtonCancel,
+	ButtonSubmit,
 	IconClose,
 	Input,
 	Modal,
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
-	Select,
-	Spinner
+	Select
 } from '..'
 
 import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
@@ -466,9 +467,8 @@ export function EmployeeEditor({
 						</div>
 					</div>
 					<ModalFooter>
-						<button type="submit" disabled={isLoading} className="btn-primary">
-							Salvar {isLoading && <Spinner />}
-						</button>
+						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
+						<ButtonCancel onClick={onClose} />
 					</ModalFooter>
 				</form>
 			</ModalBody>

@@ -3,14 +3,15 @@
 import { Product } from '@/app/domain/models'
 import { AddProduct, UpdateProduct } from '@/app/domain/usecases'
 import {
+	ButtonCancel,
+	ButtonSubmit,
 	IconClose,
 	Input,
 	Modal,
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
-	Select,
-	Spinner
+	Select
 } from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -161,9 +162,8 @@ export function ProductEditor({
 						onChange={handleInputChange}
 					/>
 					<ModalFooter>
-						<button type="submit" disabled={isLoading} className="btn-primary">
-							Salvar {isLoading && <Spinner />}
-						</button>
+						<ButtonSubmit isLoading={isLoading} />
+						<ButtonCancel onClick={onClose} />
 					</ModalFooter>
 				</form>
 			</ModalBody>
