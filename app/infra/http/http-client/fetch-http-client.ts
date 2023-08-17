@@ -9,6 +9,7 @@ import {
 export class FetchHttpClient implements HttpClient {
 	async request(data: HttpRequestParams): Promise<HttpResponse> {
 		let fetchResponse
+		let errorStatus: { code: number; text: string } = {} as any
 		try {
 			const headers = data.headers || ({} as HeaderParams)
 
@@ -22,20 +23,17 @@ export class FetchHttpClient implements HttpClient {
 				body,
 				headers
 			})
-			if (httpResponse.status == HttpStatusCode.ok) {
-				const jsonBody = await httpResponse.json()
-				fetchResponse = {
-					data: jsonBody,
-					status: httpResponse.status
-				}
-			} else {
-				fetchResponse = {
-					data: httpResponse.statusText,
-					status: httpResponse.status
-				}
+			errorStatus = { code: httpResponse.status, text: httpResponse.statusText }
+			const jsonBody = await httpResponse.json()
+			fetchResponse = {
+				data: httpResponse.status == HttpStatusCode.ok ? jsonBody : jsonBody?.error,
+				status: httpResponse.status
 			}
 		} catch (error: any) {
-			fetchResponse = error.response
+			fetchResponse = error.response ?? {
+				data: errorStatus.text,
+				status: errorStatus.code
+			}
 		}
 		return {
 			statusCode: fetchResponse.status,
