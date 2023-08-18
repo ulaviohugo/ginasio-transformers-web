@@ -1,9 +1,10 @@
-import { Category, Employee, Product, Supplier } from '../domain/models'
+import { Category, Employee, Product, Purchase, Supplier } from '../domain/models'
 
 type FieldTypes = Partial<Record<keyof Category, string>> &
 	Partial<Record<keyof Employee, string>> &
 	Partial<Record<keyof Product, string>> &
-	Partial<Record<keyof Supplier, string>>
+	Partial<Record<keyof Supplier, string>> &
+	Partial<Record<keyof Purchase, string>>
 
 export class LabelUtils {
 	private static labelFields: FieldTypes = {
@@ -40,6 +41,7 @@ export class LabelUtils {
 		residentialAddress: 'Endereço residencial',
 		representative: 'Representante',
 		socialSecurity: 'Segurança social',
+		supplierId: 'Fornecedor',
 		unitPrice: 'Preço unitário',
 		updatedAt: 'Data de atualização',
 		updatedBy: 'Atualizado por'

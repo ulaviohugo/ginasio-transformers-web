@@ -22,9 +22,7 @@ export const makeUpdatePurchaseValidation = () => {
 		'quantity',
 		'totalValue',
 		'paymentMethod',
-		'paid',
-		'purchaseDate',
-		'dueDate'
+		'purchaseDate'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))

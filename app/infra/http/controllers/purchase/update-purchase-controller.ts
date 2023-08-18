@@ -2,7 +2,7 @@ import { UpdatePurchase } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, Validation } from '../../protocols'
 import { Purchase } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
+import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { Uploader } from '@/app/data/protocols/services'
@@ -27,11 +27,16 @@ export class UpdatePurchaseController implements Controller {
 				{
 					...request,
 					id: NumberUtils.convertToNumber(request.id),
+					supplierId: NumberUtils.convertToNumber(request.supplierId),
 					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					employeeId: NumberUtils.convertToNumber(request.employeeId),
+					employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
 					productId: NumberUtils.convertToNumber(request.productId),
 					unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-					totalValue: NumberUtils.convertToNumber(request.totalValue)
+					totalValue: NumberUtils.convertToNumber(request.totalValue),
+					quantity: NumberUtils.convertToNumber(request.quantity),
+					paid: !!request.paid,
+					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
+					dueDate: DateUtils.convertToDate(request.dueDate)
 				},
 				uploader
 			)

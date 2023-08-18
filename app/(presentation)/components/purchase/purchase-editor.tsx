@@ -18,10 +18,21 @@ import {
 	Select
 } from '..'
 
-import { LabelUtils } from '@/app/utils'
-import { addPurchaseStore, updatePurchaseStore } from '../../redux'
+import { ColorUtils, DateUtils, LabelUtils } from '@/app/utils'
+import {
+	addPurchaseStore,
+	loadCategoryStore,
+	loadProductStore,
+	loadSupplierStore,
+	updatePurchaseStore
+} from '../../redux'
 import { AddPurchase, UpdatePurchase } from '@/app/domain/usecases'
-import { useCategories, useLocations, useProducts } from '../../hooks'
+import { useCategories, useProducts, useSuppliers } from '../../hooks'
+import {
+	makeRemoteLoadCategories,
+	makeRemoteLoadProduct,
+	makeRemoteLoadSuppliers
+} from '@/app/main/factories/usecases/remote'
 
 type PurchaseEditorProps = {
 	data?: Purchase
@@ -39,9 +50,9 @@ export function PurchaseEditor({
 	updatePurchase
 }: PurchaseEditorProps) {
 	const dispatch = useDispatch()
-	const { countries, municipalities } = useLocations()
 	const categories = useCategories()
 	const products = useProducts()
+	const suppliers = useSuppliers()
 
 	const [productList, setProductList] = useState<Product[]>([])
 
@@ -49,11 +60,43 @@ export function PurchaseEditor({
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
 
+	const fetchData = (
+		remoteResource: { load: () => Promise<any> },
+		callback: (response: any) => void
+	) => {
+		remoteResource
+			.load()
+			.then((response) => {
+				callback(response)
+			})
+			.catch((error) => {
+				toast.error('Error ao consultar dados')
+			})
+	}
+
 	useEffect(() => {
 		if (data) {
 			setProductList(
 				products.filter((category) => category.categoryId == data.categoryId)
 			)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (categories.length < 1) {
+			fetchData(makeRemoteLoadCategories(), (response) => {
+				dispatch(loadCategoryStore(response))
+			})
+		}
+		if (products.length < 1) {
+			fetchData(makeRemoteLoadProduct(), (response) => {
+				dispatch(loadProductStore(response))
+			})
+		}
+		if (suppliers.length < 1) {
+			fetchData(makeRemoteLoadSuppliers(), (response) => {
+				dispatch(loadSupplierStore(response))
+			})
 		}
 	}, [])
 
@@ -72,6 +115,26 @@ export function PurchaseEditor({
 			const file = (e.target as any)?.files[0]
 			data = { ...formDate, [name]: file }
 			handleInputFile(file)
+		}
+		if (name == 'paid') {
+			const checked = (e.target as any).checked
+			data = { ...formDate, [name]: checked }
+		}
+		if (name == 'totalValue') {
+			const totalValue = Number(value)
+			data = {
+				...formDate,
+				[name]: totalValue,
+				unitPrice: formDate.quantity > 0 ? totalValue / formDate.quantity : 0
+			}
+		}
+		if (name == 'quantity') {
+			const quantity = Number(value)
+			data = {
+				...formDate,
+				[name]: quantity,
+				unitPrice: quantity > 0 ? formDate.totalValue / quantity : 0
+			}
 		}
 		setFormData(data)
 	}
@@ -157,6 +220,20 @@ export function PurchaseEditor({
 						</div>
 						<div>
 							<Select
+								id="supplierId"
+								name="supplierId"
+								value={formDate?.supplierId || ''}
+								label={LabelUtils.translateField('supplierId')}
+								data={suppliers.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Select
 								id="categoryId"
 								name="categoryId"
 								value={formDate?.categoryId || ''}
@@ -182,6 +259,107 @@ export function PurchaseEditor({
 								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
+						</div>
+						<div>
+							<Select
+								id="color"
+								name="color"
+								value={formDate?.color || ''}
+								label={LabelUtils.translateField('color')}
+								data={ColorUtils.colors.map((color) => ({
+									text: color
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								id="size"
+								name="size"
+								value={formDate?.size || ''}
+								label={LabelUtils.translateField('size')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="date"
+								id="purchaseDate"
+								name="purchaseDate"
+								value={
+									(formDate?.purchaseDate && DateUtils.getDate(formDate.purchaseDate)) ||
+									''
+								}
+								label={LabelUtils.translateField('purchaseDate')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="date"
+								id="dueDate"
+								name="dueDate"
+								value={(formDate?.dueDate && DateUtils.getDate(formDate.dueDate)) || ''}
+								label={LabelUtils.translateField('dueDate')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="number"
+								id="totalValue"
+								name="totalValue"
+								value={formDate?.totalValue || ''}
+								label={LabelUtils.translateField('totalValue')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="number"
+								id="quantity"
+								name="quantity"
+								value={formDate?.quantity || ''}
+								label={LabelUtils.translateField('quantity')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								type="number"
+								id="unitPrice"
+								name="unitPrice"
+								value={formDate?.unitPrice || ''}
+								label={LabelUtils.translateField('unitPrice')}
+								onChange={handleInputChange}
+								disabled
+							/>
+						</div>
+						<div>
+							<Select
+								id="paymentMethod"
+								name="paymentMethod"
+								value={formDate?.paymentMethod || ''}
+								label={LabelUtils.translateField('paymentMethod')}
+								data={['Dinheiro', 'TPA', 'Transferência'].map((paymentType) => ({
+									text: paymentType
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<div className="inline-flex">
+								<Input
+									type="checkbox"
+									id="paid"
+									name="paid"
+									checked={formDate?.paid}
+									label={LabelUtils.translateField('paid')}
+									onChange={handleInputChange}
+								/>
+							</div>
 						</div>
 					</div>
 					<ModalFooter>

@@ -164,8 +164,8 @@ model Purchase {
   totalValue    Float     @map("total_value")
   paymentMethod String    @map("payment_method")
   paid          Boolean
-  purchaseDate  DateTime  @map("purchase_date")
-  dueDate       DateTime  @map("due_date")
+  purchaseDate  DateTime  @map("purchase_date") @db.Date()
+  dueDate       DateTime?  @map("due_date") @db.Date()
   employeeId    Int       @map("employee_id")
   createdBy     Int?      @map("created_by")
   createdAt     DateTime  @default(now()) @map("created_at")

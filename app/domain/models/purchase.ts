@@ -15,7 +15,7 @@ export interface Purchase {
 	paymentMethod: string
 	paid: boolean
 	purchaseDate: Date
-	dueDate: Date
+	dueDate?: Date
 	employeeId: number
 	createdAt: Date
 	createdBy?: number
