@@ -25,7 +25,7 @@ export function Header() {
 					/>
 					<Item
 						active={path.indexOf('/rh') >= 0}
-						link={'/rh/funcionarios'}
+						link={'/rh'}
 						text="RH"
 						icon={IconUser}
 					/>

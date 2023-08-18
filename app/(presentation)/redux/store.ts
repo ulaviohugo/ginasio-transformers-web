@@ -4,6 +4,7 @@ import {
 	employeeReducer,
 	locationReducer,
 	productReducer,
+	purchaseReducer,
 	supplierReducer
 } from './reducers'
 
@@ -13,6 +14,7 @@ export const store = configureStore({
 		locations: locationReducer,
 		categories: categoryReducer,
 		products: productReducer,
+		purchases: purchaseReducer,
 		suppliers: supplierReducer
 	}
 })

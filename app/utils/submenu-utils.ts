@@ -7,7 +7,7 @@ export class SubmenuUtils {
 	]
 
 	static readonly commercial: SubmenuProps[] = [
-		{ link: '/comercial', text: 'Entrada' },
+		{ link: '/comercial/entradas', text: 'Entrada' },
 		{ link: '/comercial/saida', text: 'Saída' },
 		{ link: '/comercial/caixa', text: 'Caixa' },
 		{ link: '/comercial/estoque', text: 'Estoque' },

@@ -1,12 +1,11 @@
 'use client'
 
 import {
-	IconProduct,
+	IconUser,
 	IndexPage,
 	Layout,
 	LayoutBody,
-	SubMenu,
-	Title
+	SubMenu
 } from '@/app/(presentation)/components'
 import { SubmenuUtils } from '@/app/utils'
 
@@ -14,9 +13,9 @@ export default function Comercial() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial} />
+				<SubMenu submenus={SubmenuUtils.hr} />
 				<IndexPage>
-					<IconProduct /> Área comercial
+					<IconUser /> Área de recursos humanos
 				</IndexPage>
 			</LayoutBody>
 		</Layout>
