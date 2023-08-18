@@ -25,5 +25,5 @@ export const notFound = (message?: string): HttpResponse => ({
 
 export const serverError = (error: Error | any): HttpResponse => ({
 	statusCode: 500,
-	body: new ServerError(error.stack)
+	body: new ServerError(error.message)
 })
