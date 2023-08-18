@@ -2,6 +2,7 @@ import { LoadEmployees } from '@/app/domain/usecases'
 import { ok, serverError } from '../../helper'
 import { Controller } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class LoadEmployeeController implements Controller {
 	constructor(private readonly loadEmployee: LoadEmployees) {}
@@ -9,8 +10,8 @@ export class LoadEmployeeController implements Controller {
 		try {
 			const data = await this.loadEmployee.load()
 			return ok(data)
-		} catch (error) {
-			return serverError(error)
+		} catch (error: any) {
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

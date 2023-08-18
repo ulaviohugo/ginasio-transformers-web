@@ -2,6 +2,7 @@ import { DeleteCategory } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, Validation } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class DeleteCategoryController implements Controller {
 	constructor(
@@ -21,7 +22,7 @@ export class DeleteCategoryController implements Controller {
 			}
 			return ok({ message: 'Registo excluído com sucesso.' })
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

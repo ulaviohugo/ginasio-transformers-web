@@ -3,6 +3,7 @@ import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, Validation } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class DeleteProductController implements Controller {
 	constructor(
@@ -22,7 +23,7 @@ export class DeleteProductController implements Controller {
 			}
 			return ok({ message: 'Registo excluído com sucesso.' })
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

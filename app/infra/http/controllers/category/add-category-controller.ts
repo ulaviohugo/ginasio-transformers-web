@@ -4,6 +4,7 @@ import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, Validation } from '../../protocols'
 import { Category } from '@/app/domain/models'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class AddCategoryController implements Controller {
 	constructor(
@@ -23,7 +24,7 @@ export class AddCategoryController implements Controller {
 			}
 			return ok(createdCategory)
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

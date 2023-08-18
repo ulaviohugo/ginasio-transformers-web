@@ -7,6 +7,7 @@ import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { Uploader } from '@/app/data/protocols/services'
 import { NumberUtils } from '@/app/utils'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class AddProductController implements Controller {
 	constructor(
@@ -36,7 +37,7 @@ export class AddProductController implements Controller {
 			}
 			return ok(createdProduct)
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

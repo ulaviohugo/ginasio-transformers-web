@@ -6,6 +6,7 @@ import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { Uploader } from '@/app/data/protocols/services'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class UpdateProductController implements Controller {
 	constructor(
@@ -34,7 +35,7 @@ export class UpdateProductController implements Controller {
 			if (updatedProduct == null) return notFound()
 			return ok(updatedProduct)
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

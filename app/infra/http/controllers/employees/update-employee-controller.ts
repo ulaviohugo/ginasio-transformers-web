@@ -7,6 +7,7 @@ import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { Uploader } from '@/app/data/protocols/services'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class UpdateEmployeeController implements Controller {
 	constructor(
@@ -49,7 +50,7 @@ export class UpdateEmployeeController implements Controller {
 			}
 			return ok(updatedEmployee)
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }

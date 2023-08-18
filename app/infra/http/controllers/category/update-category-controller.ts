@@ -5,6 +5,7 @@ import { Controller, Validation } from '../../protocols'
 import { Category } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
+import { dbErrorHandler } from '@/app/infra/db'
 
 export class UpdateCategoryController implements Controller {
 	constructor(
@@ -30,7 +31,7 @@ export class UpdateCategoryController implements Controller {
 			}
 			return ok(updatedCategory)
 		} catch (error) {
-			return serverError(error)
+			return serverError(dbErrorHandler(error))
 		}
 	}
 }
