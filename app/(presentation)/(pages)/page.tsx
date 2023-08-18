@@ -40,7 +40,7 @@ export default function Home() {
 	const [suppliers, setSupplier] = useState(0)
 	const [isLoadingSupplier, setIsLoadingSupplier] = useState(true)
 
-	const fetchData = (
+	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
 		callback: (response: any) => void
 	) => {
@@ -50,24 +50,25 @@ export default function Home() {
 				callback(response)
 			})
 			.catch((error) => {
+				callback(0)
 				toast.error('Error ao consultar dados')
 			})
 	}
 
 	useEffect(() => {
-		fetchData(makeRemoteCountEmployees(), (response) => {
+		fetchCount(makeRemoteCountEmployees(), (response) => {
 			setEmployees(response)
 			setIsLoadingEmployees(false)
 		})
-		fetchData(makeRemoteCountCategories(), (response) => {
+		fetchCount(makeRemoteCountCategories(), (response) => {
 			setCategories(response)
 			setIsLoadingCategories(false)
 		})
-		fetchData(makeRemoteCountProduct(), (response) => {
+		fetchCount(makeRemoteCountProduct(), (response) => {
 			setProducts(response)
 			setIsLoadingProducts(false)
 		})
-		fetchData(makeRemoteCountSuppliers(), (response) => {
+		fetchCount(makeRemoteCountSuppliers(), (response) => {
 			setSupplier(response)
 			setIsLoadingSupplier(false)
 		})
