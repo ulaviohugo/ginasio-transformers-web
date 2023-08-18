@@ -10,7 +10,7 @@ export class NumberValidation implements Validation {
 		if (!isValid) {
 			return new Error(
 				`O parâmetro ${LabelUtils.translateField(
-					this.fieldName
+					this.fieldName as any
 				)} tem de ter formato numérico`
 			)
 		}
