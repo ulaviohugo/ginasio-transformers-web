@@ -65,7 +65,7 @@ export function ProductEditor({
 
 		let data: Product = { ...formDate, [name]: value }
 
-		if (name == 'image') {
+		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
 			data = { ...formDate, [name]: file }
 			// handleInputFile(file)
@@ -107,9 +107,9 @@ export function ProductEditor({
 							<div className="mr-auto">
 								<Input
 									type="file"
-									id="image"
-									name="image"
-									// value={formDate?.image || ''}
+									id="photo"
+									name="photo"
+									// value={formDate?.photo || ''}
 									label={'Imagem'}
 									onChange={handleInputChange}
 									accept="image/*"

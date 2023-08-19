@@ -82,7 +82,7 @@ export function EmployeeEditor({
 				municipalities.filter((municipality) => municipality.provinceId == Number(value))
 			)
 		}
-		if (name == 'image') {
+		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
 			data = { ...data, [name]: file }
 			handleInputFile(file)
@@ -147,9 +147,9 @@ export function EmployeeEditor({
 								<div className="mr-auto">
 									<Input
 										type="file"
-										id="image"
-										name="image"
-										// value={formDate?.image || ''}
+										id="photo"
+										name="photo"
+										// value={formDate?.photo || ''}
 										label={'Imagem'}
 										onChange={handleInputChange}
 										accept="image/*"
