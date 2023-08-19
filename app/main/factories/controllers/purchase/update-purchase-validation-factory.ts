@@ -21,6 +21,7 @@ export const makeUpdatePurchaseValidation = () => {
 		'unitPrice',
 		'quantity',
 		'totalValue',
+		'sellingPriceUnit',
 		'paymentMethod',
 		'purchaseDate'
 	]
@@ -34,7 +35,8 @@ export const makeUpdatePurchaseValidation = () => {
 		new NumberGreaterThanValidation('productId', 0),
 		new NumberGreaterThanValidation('unitPrice', 0),
 		new NumberGreaterThanValidation('quantity', 0),
-		new NumberGreaterThanValidation('totalValue', 0)
+		new NumberGreaterThanValidation('totalValue', 0),
+		new NumberGreaterThanValidation('sellingPriceUnit', 0)
 	)
 	return new ValidationComposite(validations)
 }
