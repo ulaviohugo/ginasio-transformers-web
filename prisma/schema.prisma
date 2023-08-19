@@ -177,6 +177,27 @@ model Purchase {
   product  Product  @relation(fields: [productId], references: [id])
   supplier Supplier @relation(fields: [supplierId], references: [id])
   employee Employee @relation(fields: [employeeId], references: [id])
+  sales    Sale[]
 
   @@map("tb_purchases")
+}
+
+model Sale {
+  id            Int       @id @default(autoincrement())
+  photo         String?   @db.VarChar(100)
+  purchaseId    Int       @map("purchase_id")
+  quantity      Int
+  totalValue    Float     @map("total_value")
+  unitPrice     Float     @map("unit_price")
+  discount      Float     @map("discount")
+  paymentMethod String    @map("payment_method")
+  employeeId    Int       @map("employee_id")
+  createdBy     Int?      @map("created_by")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedBy     Int?      @map("updated_by")
+  updatedAt     DateTime? @map("updated_at")
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+
+  @@map("tb_sales")
 }
