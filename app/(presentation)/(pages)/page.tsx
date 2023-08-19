@@ -2,6 +2,7 @@
 
 import {
 	IconCategory,
+	IconCurrency,
 	IconProduct,
 	IconSupplier,
 	IconUser,
@@ -15,6 +16,8 @@ import {
 	makeRemoteCountCategories,
 	makeRemoteCountEmployees,
 	makeRemoteCountProduct,
+	makeRemoteCountPurchases,
+	makeRemoteCountSales,
 	makeRemoteCountSuppliers
 } from '@/app/main/factories/usecases/remote'
 import { toast } from 'react-hot-toast'
@@ -37,8 +40,14 @@ export default function Home() {
 	const [products, setProducts] = useState(0)
 	const [isLoadingProducts, setIsLoadingProducts] = useState(true)
 
-	const [suppliers, setSupplier] = useState(0)
-	const [isLoadingSupplier, setIsLoadingSupplier] = useState(true)
+	const [suppliers, setSuppliers] = useState(0)
+	const [isLoadingSuppliers, setIsLoadingSuppliers] = useState(true)
+
+	const [purchases, setPurchases] = useState(0)
+	const [isLoadingPurchases, setIsLoadingPurchases] = useState(true)
+
+	const [sales, setSales] = useState(0)
+	const [isLoadingSales, setIsLoadingSales] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -69,8 +78,16 @@ export default function Home() {
 			setIsLoadingProducts(false)
 		})
 		fetchCount(makeRemoteCountSuppliers(), (response) => {
-			setSupplier(response)
-			setIsLoadingSupplier(false)
+			setSuppliers(response)
+			setIsLoadingSuppliers(false)
+		})
+		fetchCount(makeRemoteCountSales(), (response) => {
+			setSales(response)
+			setIsLoadingSales(false)
+		})
+		fetchCount(makeRemoteCountPurchases(), (response) => {
+			setPurchases(response)
+			setIsLoadingPurchases(false)
 		})
 	}, [])
 
@@ -103,8 +120,22 @@ export default function Home() {
 						number={suppliers}
 						title={'Fornecedores'}
 						icon={IconSupplier}
-						isLoading={isLoadingSupplier}
+						isLoading={isLoadingSuppliers}
 						href="/comercial/fornecedores"
+					/>
+					<Item
+						number={purchases}
+						title={'Entradas'}
+						icon={IconProduct}
+						isLoading={isLoadingPurchases}
+						href="/comercial/entradas"
+					/>
+					<Item
+						number={sales}
+						title={'Vendas'}
+						icon={IconCurrency}
+						isLoading={isLoadingSales}
+						href="/comercial/vendas"
 					/>
 				</div>
 			</LayoutBody>
