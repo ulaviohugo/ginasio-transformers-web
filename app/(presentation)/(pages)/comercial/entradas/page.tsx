@@ -13,7 +13,6 @@ import {
 	Spinner,
 	SubMenu,
 	Title,
-	IconCategory,
 	IconProduct
 } from '@/app/(presentation)/components'
 import { usePurchases } from '@/app/(presentation)/hooks'
@@ -25,7 +24,7 @@ import {
 	makeRemoteLoadPurchases,
 	makeRemoteUpdatePurchase
 } from '@/app/main/factories/usecases/remote'
-import { NumberUtils, SubmenuUtils } from '@/app/utils'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -143,6 +142,8 @@ export default function Categorias() {
 							<th className="p-1">Preço/unid</th>
 							<th className="p-1">Cor</th>
 							<th className="p-1">Tamanho</th>
+							<th className="p-1">Quantidade</th>
+							<th className="p-1">Data</th>
 							<th className="p-1">Acção</th>
 						</tr>
 						{purchases.map((purchase, i) => (
@@ -173,6 +174,8 @@ export default function Categorias() {
 								</td>
 								<td className="p-1">{purchase.color}</td>
 								<td className="p-1">{purchase.size}</td>
+								<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
+								<td className="p-1">{DateUtils.getDatePt(purchase.purchaseDate)}</td>
 								<td className="p-1">
 									<CardActions
 										onClickDelete={() => handleOpenFormDelete(purchase)}
