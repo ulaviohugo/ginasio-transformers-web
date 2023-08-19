@@ -84,8 +84,11 @@ export function EmployeeEditor({
 		}
 		if (name == 'image') {
 			const file = (e.target as any)?.files[0]
-			data = { ...formDate, [name]: file }
+			data = { ...data, [name]: file }
 			handleInputFile(file)
+		}
+		if (name == 'phone1' && !value) {
+			data = { ...data, phone2: '' }
 		}
 		setFormData(data)
 	}
@@ -243,6 +246,7 @@ export function EmployeeEditor({
 								value={formDate?.documentNumber || ''}
 								label={LabelUtils.translateField('documentNumber')}
 								onChange={handleInputChange}
+								disabled={!formDate?.documentType}
 							/>
 						</div>
 						<div>
@@ -305,9 +309,10 @@ export function EmployeeEditor({
 							<InputPhone
 								id="phone2"
 								name="phone2"
-								value={formDate?.phone2 || ''}
+								value={!formDate?.phone1 ? '' : formDate?.phone2 || ''}
 								label={LabelUtils.translateField('phone2')}
 								onChange={handleInputChange}
+								disabled={!formDate?.phone1}
 							/>
 						</div>
 						<div className="md:col-span-2">
@@ -396,6 +401,7 @@ export function EmployeeEditor({
 								value={formDate?.baseSalary || ''}
 								label={LabelUtils.translateField('baseSalary')}
 								onChange={handleInputChange}
+								disabled={!formDate?.position}
 							/>
 						</div>
 						<div>
@@ -408,6 +414,7 @@ export function EmployeeEditor({
 								}
 								label={LabelUtils.translateField('hireDate')}
 								onChange={handleInputChange}
+								disabled={!formDate?.position}
 							/>
 						</div>
 						<div>
@@ -422,6 +429,7 @@ export function EmployeeEditor({
 								}
 								label={LabelUtils.translateField('contractEndDate')}
 								onChange={handleInputChange}
+								disabled={!formDate?.position}
 							/>
 						</div>
 						<div>
@@ -452,6 +460,7 @@ export function EmployeeEditor({
 								value={formDate?.iban || ''}
 								label={LabelUtils.translateField('iban')}
 								onChange={handleInputChange}
+								disabled={!formDate?.bankName}
 							/>
 						</div>
 						<div>
@@ -462,6 +471,7 @@ export function EmployeeEditor({
 								value={formDate?.accountNumber || ''}
 								label={LabelUtils.translateField('accountNumber')}
 								onChange={handleInputChange}
+								disabled={!formDate?.bankName}
 							/>
 						</div>
 					</div>
