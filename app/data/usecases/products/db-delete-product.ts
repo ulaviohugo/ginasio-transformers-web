@@ -11,8 +11,8 @@ export class DbDeleteProduct implements DeleteProduct {
 
 		if (!foundProduct) return null as any
 
-		if (uploader && foundProduct.image) {
-			const path = FileUtils.getUploadAbsolutePath(foundProduct.image)
+		if (uploader && foundProduct.photo) {
+			const path = FileUtils.getUploadAbsolutePath(foundProduct.photo)
 			await uploader.delete(path)
 		}
 		return this.employeeRepository.delete(employeeId)

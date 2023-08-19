@@ -15,8 +15,8 @@ export class DbUpdateProduct implements UpdateProduct {
 
 		let image
 		if (uploader) {
-			if (foundById.image) {
-				const path = FileUtils.getUploadAbsolutePath(foundById.image)
+			if (foundById.photo) {
+				const path = FileUtils.getUploadAbsolutePath(foundById.photo)
 				await uploader.delete(path)
 			}
 			image = await uploader.upload()
@@ -24,7 +24,7 @@ export class DbUpdateProduct implements UpdateProduct {
 
 		const product: Product = {
 			...data,
-			image,
+			photo: image,
 			price: NumberUtils.convertToNumber(param.price),
 			updatedAt: new Date()
 		}

@@ -11,8 +11,8 @@ export class DbDeleteEmployee implements DeleteEmployee {
 
 		if (!foundEmployee) return null as any
 
-		if (uploader && foundEmployee.image) {
-			const path = FileUtils.getUploadAbsolutePath(foundEmployee.image)
+		if (uploader && foundEmployee.photo) {
+			const path = FileUtils.getUploadAbsolutePath(foundEmployee.photo)
 			await uploader.delete(path)
 		}
 		return this.employeeRepository.delete(employeeId)

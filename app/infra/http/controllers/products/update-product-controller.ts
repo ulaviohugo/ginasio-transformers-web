@@ -20,8 +20,8 @@ export class UpdateProductController implements Controller {
 				return badRequest(error)
 			}
 			let uploader: Uploader = null as any
-			if (request.image && typeof request.image != 'string') {
-				uploader = new UploadService(request.image, '/products')
+			if (request.photo && typeof request.photo != 'string') {
+				uploader = new UploadService(request.photo, '/products')
 			}
 			const updatedProduct = await this.UpdateProduct.update(
 				{

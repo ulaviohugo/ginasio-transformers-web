@@ -22,6 +22,6 @@ export class DbAddEmployee implements AddEmployee {
 		if (uploader) {
 			image = await uploader.upload()
 		}
-		return this.employeeRepository.add({ ...data, image })
+		return this.employeeRepository.add({ ...data, photo: image })
 	}
 }

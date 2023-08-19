@@ -27,8 +27,8 @@ export class DbUpdateEmployee implements UpdateEmployee {
 
 		let image
 		if (uploader) {
-			if (foundById.image) {
-				const path = FileUtils.getUploadAbsolutePath(foundById.image)
+			if (foundById.photo) {
+				const path = FileUtils.getUploadAbsolutePath(foundById.photo)
 				await uploader.delete(path)
 			}
 			image = await uploader.upload()
@@ -36,7 +36,7 @@ export class DbUpdateEmployee implements UpdateEmployee {
 
 		const employee: Employee = {
 			...data,
-			image,
+			photo: image,
 			updatedAt: new Date()
 		}
 		return this.employeeRepository.update(employee)

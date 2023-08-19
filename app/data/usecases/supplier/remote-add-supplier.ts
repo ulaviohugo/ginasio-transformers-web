@@ -2,7 +2,7 @@ import { Supplier } from '@/app/domain/models'
 import { AddSupplier } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
+import { FormDataUtils, NumberUtils } from '@/app/utils'
 
 export class RemoteAddSupplier implements AddSupplier {
 	constructor(
@@ -11,7 +11,8 @@ export class RemoteAddSupplier implements AddSupplier {
 	) {}
 
 	async add(param: Supplier): Promise<Supplier> {
-		const body = FormDataUtils.createFormData(param)
+		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
+		const body = FormDataUtils.createFormData({ ...param, unitPrice })
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

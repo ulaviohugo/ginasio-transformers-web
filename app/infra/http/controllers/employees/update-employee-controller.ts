@@ -21,8 +21,8 @@ export class UpdateEmployeeController implements Controller {
 				return badRequest(error)
 			}
 			let uploader: Uploader = null as any
-			if (request.image && typeof request.image != 'string') {
-				uploader = new UploadService(request.image, '/employees')
+			if (request.photo && typeof request.photo != 'string') {
+				uploader = new UploadService(request.photo, '/employees')
 			}
 			const updatedEmployee = await this.UpdateEmployee.update(
 				{

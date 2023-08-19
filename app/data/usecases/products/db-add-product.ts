@@ -22,7 +22,7 @@ export class DbAddProduct implements AddProduct {
 		return this.productRepository.add({
 			...data,
 			price: NumberUtils.convertToNumber(param.price),
-			image
+			photo: image
 		})
 	}
 }

@@ -137,9 +137,9 @@ export default function Employees() {
 							{employees.map((employee) => (
 								<li key={employee.id} className="p-4 shadow">
 									<div className="flex items-center gap-1 mb-3">
-										{employee.image ? (
+										{employee.photo ? (
 											<Image
-												src={employee.image}
+												src={employee.photo}
 												alt={`Foto de perfil`}
 												width={50}
 												height={50}

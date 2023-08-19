@@ -12,6 +12,7 @@ export interface Purchase {
 	unitPrice: number
 	quantity: number
 	totalValue: number
+	sellingPriceUnit: number
 	paymentMethod: string
 	paid: boolean
 	purchaseDate: Date

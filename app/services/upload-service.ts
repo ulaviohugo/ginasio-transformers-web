@@ -23,7 +23,7 @@ export class UploadService implements Uploader {
 		if (!allowedExtensions.includes(fileExtension)) {
 			throw new Error('Extensão de arquivo não permitido.')
 		}
-		const fileNameWithNoExt = FileUtils.getNameWithNoExt(file.name)
+		const fileNameWithNoExt = FileUtils.getNameWithNoExt(file.name).slice(1, 20)
 		const sanitizedFileName = StringUtils.slug(fileNameWithNoExt)
 
 		const bytes = await file.arrayBuffer()

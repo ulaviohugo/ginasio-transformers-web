@@ -11,6 +11,7 @@ import {
 	ButtonSubmit,
 	IconClose,
 	Input,
+	InputPrice,
 	Modal,
 	ModalBody,
 	ModalFooter,
@@ -18,7 +19,7 @@ import {
 	Select
 } from '..'
 
-import { ColorUtils, DateUtils, LabelUtils } from '@/app/utils'
+import { ColorUtils, DateUtils, LabelUtils, NumberUtils } from '@/app/utils'
 import {
 	addPurchaseStore,
 	loadCategoryStore,
@@ -56,7 +57,10 @@ export function PurchaseEditor({
 
 	const [productList, setProductList] = useState<Product[]>([])
 
-	const [formDate, setFormData] = useState<Purchase>(data || ({} as Purchase))
+	const [formData, setFormData] = useState<Purchase>(
+		(data?.id && data) ||
+			({ paid: true, purchaseDate: DateUtils.getDate(new Date()) as any } as Purchase)
+	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
 
@@ -75,7 +79,7 @@ export function PurchaseEditor({
 	}
 
 	useEffect(() => {
-		if (data) {
+		if (data?.id) {
 			setProductList(
 				products.filter((category) => category.categoryId == data.categoryId)
 			)
@@ -105,7 +109,7 @@ export function PurchaseEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Purchase = { ...formDate, [name]: value }
+		let data: Purchase = { ...formData, [name]: value }
 
 		if (name == 'categoryId') {
 			data = { ...data, productId: undefined as any }
@@ -113,27 +117,26 @@ export function PurchaseEditor({
 		}
 		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
-			data = { ...formDate, [name]: file }
+			data = { ...data, [name]: file }
 			handleInputFile(file)
 		}
 		if (name == 'paid') {
 			const checked = (e.target as any).checked
-			data = { ...formDate, [name]: checked }
+			data = { ...data, [name]: checked }
 		}
 		if (name == 'totalValue') {
-			const totalValue = Number(value)
+			const totalValue = NumberUtils.convertToNumber(value)
 			data = {
-				...formDate,
-				[name]: totalValue,
-				unitPrice: formDate.quantity > 0 ? totalValue / formDate.quantity : 0
+				...data,
+				unitPrice: formData.quantity > 0 ? totalValue / formData.quantity : 0
 			}
 		}
 		if (name == 'quantity') {
 			const quantity = Number(value)
 			data = {
-				...formDate,
-				[name]: quantity,
-				unitPrice: quantity > 0 ? formDate.totalValue / quantity : 0
+				...data,
+				unitPrice:
+					quantity > 0 ? NumberUtils.convertToNumber(formData.totalValue) / quantity : 0
 			}
 		}
 		setFormData(data)
@@ -162,18 +165,18 @@ export function PurchaseEditor({
 		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formDate.id
-					? await updatePurchase.update(formDate)
-					: await addPurchase.add(formDate)
+				formData.id
+					? await updatePurchase.update(formData)
+					: await addPurchase.add(formData)
 			) as Purchase
 
-			if (formDate.id) {
+			if (formData.id) {
 				dispatch(updatePurchaseStore(httpResponse))
 			} else {
 				dispatch(addPurchaseStore(httpResponse))
 			}
 			toast.success(
-				`Funcionário ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
+				`Funcionário ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`
 			)
 			onClose()
 		} catch (error: any) {
@@ -222,7 +225,7 @@ export function PurchaseEditor({
 							<Select
 								id="supplierId"
 								name="supplierId"
-								value={formDate?.supplierId || ''}
+								value={formData?.supplierId || ''}
 								label={LabelUtils.translateField('supplierId')}
 								data={suppliers.map(({ name, id }) => ({
 									text: name,
@@ -236,7 +239,7 @@ export function PurchaseEditor({
 							<Select
 								id="categoryId"
 								name="categoryId"
-								value={formDate?.categoryId || ''}
+								value={formData?.categoryId || ''}
 								label={LabelUtils.translateField('categoryId')}
 								data={categories.map(({ name, id }) => ({
 									text: name,
@@ -250,7 +253,7 @@ export function PurchaseEditor({
 							<Select
 								id="productId"
 								name="productId"
-								value={formDate?.productId || ''}
+								value={formData?.productId || ''}
 								label={LabelUtils.translateField('productId')}
 								data={productList.map(({ name, id }) => ({
 									text: name,
@@ -264,7 +267,7 @@ export function PurchaseEditor({
 							<Select
 								id="color"
 								name="color"
-								value={formDate?.color || ''}
+								value={formData?.color || ''}
 								label={LabelUtils.translateField('color')}
 								data={ColorUtils.colors.map((color) => ({
 									text: color
@@ -277,7 +280,7 @@ export function PurchaseEditor({
 							<Input
 								id="size"
 								name="size"
-								value={formDate?.size || ''}
+								value={formData?.size || ''}
 								label={LabelUtils.translateField('size')}
 								onChange={handleInputChange}
 							/>
@@ -288,7 +291,7 @@ export function PurchaseEditor({
 								id="purchaseDate"
 								name="purchaseDate"
 								value={
-									(formDate?.purchaseDate && DateUtils.getDate(formDate.purchaseDate)) ||
+									(formData?.purchaseDate && DateUtils.getDate(formData.purchaseDate)) ||
 									''
 								}
 								label={LabelUtils.translateField('purchaseDate')}
@@ -300,17 +303,16 @@ export function PurchaseEditor({
 								type="date"
 								id="dueDate"
 								name="dueDate"
-								value={(formDate?.dueDate && DateUtils.getDate(formDate.dueDate)) || ''}
+								value={(formData?.dueDate && DateUtils.getDate(formData.dueDate)) || ''}
 								label={LabelUtils.translateField('dueDate')}
 								onChange={handleInputChange}
 							/>
 						</div>
 						<div>
-							<Input
-								type="number"
+							<InputPrice
 								id="totalValue"
 								name="totalValue"
-								value={formDate?.totalValue || ''}
+								value={formData?.totalValue || ''}
 								label={LabelUtils.translateField('totalValue')}
 								onChange={handleInputChange}
 							/>
@@ -320,17 +322,16 @@ export function PurchaseEditor({
 								type="number"
 								id="quantity"
 								name="quantity"
-								value={formDate?.quantity || ''}
+								value={formData?.quantity || ''}
 								label={LabelUtils.translateField('quantity')}
 								onChange={handleInputChange}
 							/>
 						</div>
 						<div>
-							<Input
-								type="number"
+							<InputPrice
 								id="unitPrice"
 								name="unitPrice"
-								value={formDate?.unitPrice || ''}
+								value={formData?.unitPrice || ''}
 								label={LabelUtils.translateField('unitPrice')}
 								onChange={handleInputChange}
 								disabled
@@ -340,7 +341,7 @@ export function PurchaseEditor({
 							<Select
 								id="paymentMethod"
 								name="paymentMethod"
-								value={formDate?.paymentMethod || ''}
+								value={formData?.paymentMethod || ''}
 								label={LabelUtils.translateField('paymentMethod')}
 								data={['Dinheiro', 'TPA', 'Transferência'].map((paymentType) => ({
 									text: paymentType
@@ -355,11 +356,20 @@ export function PurchaseEditor({
 									type="checkbox"
 									id="paid"
 									name="paid"
-									checked={formDate?.paid}
+									checked={formData?.paid}
 									label={LabelUtils.translateField('paid')}
 									onChange={handleInputChange}
 								/>
 							</div>
+						</div>
+						<div>
+							<InputPrice
+								id="sellingPriceUnit"
+								name="sellingPriceUnit"
+								value={formData?.sellingPriceUnit || ''}
+								label={LabelUtils.translateField('sellingPriceUnit')}
+								onChange={handleInputChange}
+							/>
 						</div>
 					</div>
 					<ModalFooter>

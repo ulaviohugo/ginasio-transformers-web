@@ -3,7 +3,7 @@ import { Category } from '.'
 export interface Product {
 	id: number
 	name: string
-	image?: string
+	photo?: string
 	categoryId: number
 	category?: Category
 	price: number

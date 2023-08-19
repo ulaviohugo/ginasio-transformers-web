@@ -16,6 +16,7 @@ export class PrismaPurchaseMapper {
 			unitPrice: purchase.unitPrice,
 			quantity: purchase.quantity,
 			totalValue: purchase.totalValue,
+			sellingPriceUnit: purchase.sellingPriceUnit,
 			paymentMethod: purchase.paymentMethod,
 			paid: purchase.paid,
 			purchaseDate: purchase.purchaseDate,

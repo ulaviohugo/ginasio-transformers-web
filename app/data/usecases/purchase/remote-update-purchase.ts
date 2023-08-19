@@ -2,7 +2,7 @@ import { Purchase } from '@/app/domain/models'
 import { UpdatePurchase } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/app/utils'
+import { FormDataUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 
 export class RemoteUpdatePurchase implements UpdatePurchase {
 	constructor(
@@ -11,12 +11,13 @@ export class RemoteUpdatePurchase implements UpdatePurchase {
 	) {}
 
 	async update(param: Purchase): Promise<Purchase> {
-		const handledParam = ObjectUtils.removeProps<Purchase>(param, [
-			'createdAt',
-			'createdBy',
-			'updatedAt',
-			'updatedBy'
-		])
+		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
+		const totalValue = NumberUtils.convertToNumber(param.totalValue)
+		const sellingPriceUnit = NumberUtils.convertToNumber(param.sellingPriceUnit)
+		const handledParam = ObjectUtils.removeProps<Purchase>(
+			{ ...param, unitPrice, totalValue, sellingPriceUnit },
+			['createdAt', 'createdBy', 'updatedAt', 'updatedBy']
+		)
 		const body = FormDataUtils.createFormData(handledParam)
 
 		const httpResponse = await this.httpClient.request({

@@ -34,6 +34,7 @@ export class UpdatePurchaseController implements Controller {
 					unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 					totalValue: NumberUtils.convertToNumber(request.totalValue),
 					quantity: NumberUtils.convertToNumber(request.quantity),
+					sellingPriceUnit: NumberUtils.convertToNumber(request.sellingPriceUnit),
 					paid: !!request.paid,
 					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
 					dueDate: DateUtils.convertToDate(request.dueDate)

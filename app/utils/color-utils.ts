@@ -1,19 +1,19 @@
 export class ColorUtils {
 	static colors: string[] = [
-		'Amarelo',
+		'Amarela',
 		'Azul',
-		'Branco',
-		'Castanho',
+		'Branca',
+		'Castanha',
 		'Cinza',
-		'Dourado',
+		'Dourada',
 		'Laranja',
 		'Lilás',
-		'Prateado',
-		'Preto',
+		'Prateada',
+		'Preta',
 		'Rosa',
-		'Roxo',
+		'Roxa',
 		'Verde',
-		'Vermelho',
+		'Vermelha',
 		'Vinho'
 	]
 }

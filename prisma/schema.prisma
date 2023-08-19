@@ -14,7 +14,7 @@ datasource db {
 model Employee {
   id                 Int       @id @default(autoincrement())
   name               String    @db.VarChar(50)
-  image              String?   @db.VarChar(100)
+  photo              String?   @db.VarChar(100)
   gender             String    @db.VarChar(10)
   dateOfBirth        DateTime  @map("date_of_birth") @db.Date
   maritalStatus      String    @map("marital_status") @db.VarChar(15)
@@ -107,7 +107,7 @@ model Category {
 model Product {
   id         Int       @id @default(autoincrement())
   name       String    @db.VarChar(70)
-  image      String?   @db.VarChar(70)
+  photo      String?   @db.VarChar(100)
   categoryId Int       @map("category_id")
   price      Float
   createdBy  Int?      @map("created_by")
@@ -129,7 +129,7 @@ model Supplier {
   representative  String    @db.VarChar(50)
   email           String    @unique @db.VarChar(50)
   phone           String    @unique @db.VarChar(15)
-  photo           String?   @db.VarChar(50)
+  photo           String?   @db.VarChar(100)
   countryId       Int       @map("country_id")
   provinceId      Int?      @map("province_id")
   municipalityId  Int?      @map("municipality_id")
@@ -152,25 +152,26 @@ model Supplier {
 }
 
 model Purchase {
-  id            Int       @id @default(autoincrement())
-  photo         String?   @db.VarChar(50)
-  supplierId    Int       @map("supplier_id")
-  categoryId    Int       @map("category_id")
-  productId     Int       @map("product_id")
-  color         String    @db.VarChar(20)
-  size          String    @db.VarChar(20)
-  unitPrice     Float     @map("unit_price")
-  quantity      Int
-  totalValue    Float     @map("total_value")
-  paymentMethod String    @map("payment_method")
-  paid          Boolean
-  purchaseDate  DateTime  @map("purchase_date") @db.Date()
-  dueDate       DateTime?  @map("due_date") @db.Date()
-  employeeId    Int       @map("employee_id")
-  createdBy     Int?      @map("created_by")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedBy     Int?      @map("updated_by")
-  updatedAt     DateTime? @map("updated_at")
+  id               Int       @id @default(autoincrement())
+  photo            String?   @db.VarChar(100)
+  supplierId       Int       @map("supplier_id")
+  categoryId       Int       @map("category_id")
+  productId        Int       @map("product_id")
+  color            String    @db.VarChar(20)
+  size             String    @db.VarChar(20)
+  unitPrice        Float     @map("unit_price")
+  quantity         Int
+  totalValue       Float     @map("total_value")
+  paymentMethod    String    @map("payment_method")
+  sellingPriceUnit Float     @default(0) @map("selling_price_unit")
+  paid             Boolean
+  purchaseDate     DateTime  @map("purchase_date") @db.Date()
+  dueDate          DateTime? @map("due_date") @db.Date()
+  employeeId       Int       @map("employee_id")
+  createdBy        Int?      @map("created_by")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedBy        Int?      @map("updated_by")
+  updatedAt        DateTime? @map("updated_at")
 
   category Category @relation(fields: [categoryId], references: [id])
   product  Product  @relation(fields: [productId], references: [id])

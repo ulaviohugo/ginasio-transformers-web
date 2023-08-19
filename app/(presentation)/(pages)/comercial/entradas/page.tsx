@@ -26,6 +26,7 @@ import {
 	makeRemoteUpdatePurchase
 } from '@/app/main/factories/usecases/remote'
 import { NumberUtils, SubmenuUtils } from '@/app/utils'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -133,23 +134,54 @@ export default function Categorias() {
 				) : purchases.length < 1 ? (
 					<NoData />
 				) : (
-					<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
-						{purchases.map((purchase) => (
-							<li key={purchase.id} className="p-4 shadow">
-								<div className="font-semibold">{purchase.product?.name}</div>
-								<div className="text-xs font-semibold">
-									Preço: {NumberUtils.formatCurrency(purchase.unitPrice)}
-								</div>
-								<div className="inline-flex items-center gap-1 bg-gray-100 text-xs px-2 py-[2px] rounded-md">
-									<IconCategory /> {purchase.category?.name}
-								</div>
-								<CardActions
-									onClickDelete={() => handleOpenFormDelete(purchase)}
-									onClickEdit={() => handleOpenDetalhe(purchase)}
-								/>
-							</li>
+					<table className="table text-left text-sm border border-gray-100">
+						<tr>
+							<th className="p-1">Id</th>
+							<th className="p-1">Imagem</th>
+							<th className="p-1">Categoria</th>
+							<th className="p-1">Produto</th>
+							<th className="p-1">Preço/unid</th>
+							<th className="p-1">Cor</th>
+							<th className="p-1">Tamanho</th>
+							<th className="p-1">Acção</th>
+						</tr>
+						{purchases.map((purchase, i) => (
+							<tr
+								key={purchase.id}
+								className={` ${
+									i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
+								} `}
+							>
+								<td className="p-1">{purchase.id}</td>
+								<td className="p-1">
+									{purchase.photo ? (
+										<Image
+											src={purchase.photo}
+											alt="Imagem"
+											width={30}
+											height={30}
+											className="aspect-square object-cover"
+										/>
+									) : (
+										<IconProduct size={25} />
+									)}
+								</td>
+								<td className="p-1">{purchase.category?.name}</td>
+								<td className="p-1">{purchase.product?.name}</td>
+								<td className="p-1">
+									{NumberUtils.formatCurrency(purchase.sellingPriceUnit)}
+								</td>
+								<td className="p-1">{purchase.color}</td>
+								<td className="p-1">{purchase.size}</td>
+								<td className="p-1">
+									<CardActions
+										onClickDelete={() => handleOpenFormDelete(purchase)}
+										onClickEdit={() => handleOpenDetalhe(purchase)}
+									/>
+								</td>
+							</tr>
 						))}
-					</ul>
+					</table>
 				)}
 			</LayoutBody>
 		</Layout>

@@ -8,7 +8,7 @@ export class PrismaProductMapper {
 		return {
 			id: product.id,
 			name: product.name,
-			image: product.image,
+			image: product.photo,
 			categoryId: product.categoryId,
 			price: product.price,
 			createdBy: product.createdBy,

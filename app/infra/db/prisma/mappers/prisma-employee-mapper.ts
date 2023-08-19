@@ -8,7 +8,7 @@ export class PrismaEmployeeMapper {
 		return {
 			id: employee.id,
 			name: employee.name,
-			image: employee.image,
+			image: employee.photo,
 			gender: employee.gender,
 			dateOfBirth: employee.dateOfBirth,
 			maritalStatus: employee.maritalStatus,

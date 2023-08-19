@@ -106,7 +106,7 @@ export function EmployeeEditor({
 	}
 
 	const clearInputFile = () => {
-		setFormData((prev) => ({ ...prev, image: '' }))
+		setFormData((prev) => ({ ...prev, photo: '' }))
 		setImagePreview('')
 	}
 
@@ -402,6 +402,9 @@ export function EmployeeEditor({
 								label={LabelUtils.translateField('baseSalary')}
 								onChange={handleInputChange}
 								disabled={!formDate?.position}
+								title={`Selecione o ${LabelUtils.translateField(
+									'position'
+								)} para habilitar este campo`}
 							/>
 						</div>
 						<div>
@@ -415,6 +418,9 @@ export function EmployeeEditor({
 								label={LabelUtils.translateField('hireDate')}
 								onChange={handleInputChange}
 								disabled={!formDate?.position}
+								title={`Selecione o ${LabelUtils.translateField(
+									'position'
+								)} para habilitar este campo`}
 							/>
 						</div>
 						<div>
@@ -430,6 +436,9 @@ export function EmployeeEditor({
 								label={LabelUtils.translateField('contractEndDate')}
 								onChange={handleInputChange}
 								disabled={!formDate?.position}
+								title={`Selecione o ${LabelUtils.translateField(
+									'position'
+								)} para habilitar este campo`}
 							/>
 						</div>
 						<div>
