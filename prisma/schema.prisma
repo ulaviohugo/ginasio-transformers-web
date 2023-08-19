@@ -184,7 +184,6 @@ model Purchase {
 
 model Sale {
   id            Int       @id @default(autoincrement())
-  photo         String?   @db.VarChar(100)
   purchaseId    Int       @map("purchase_id")
   quantity      Int
   totalValue    Float     @map("total_value")
