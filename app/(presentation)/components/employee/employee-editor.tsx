@@ -11,6 +11,10 @@ import {
 	ButtonSubmit,
 	IconClose,
 	Input,
+	InputEmail,
+	InputIBAN,
+	InputPhone,
+	InputPrice,
 	Modal,
 	ModalBody,
 	ModalFooter,
@@ -289,8 +293,7 @@ export function EmployeeEditor({
 						</div>
 						<Divisor label="Contactos" />
 						<div>
-							<Input
-								type="number"
+							<InputPhone
 								id="phone1"
 								name="phone1"
 								value={formDate?.phone1 || ''}
@@ -299,8 +302,7 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div>
-							<Input
-								type="number"
+							<InputPhone
 								id="phone2"
 								name="phone2"
 								value={formDate?.phone2 || ''}
@@ -309,8 +311,7 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div className="md:col-span-2">
-							<Input
-								type="email"
+							<InputEmail
 								id="email"
 								name="email"
 								value={formDate?.email || ''}
@@ -389,8 +390,7 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div>
-							<Input
-								type="number"
+							<InputPrice
 								id="baseSalary"
 								name="baseSalary"
 								value={formDate?.baseSalary || ''}
@@ -446,8 +446,7 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div>
-							<Input
-								type="text"
+							<InputIBAN
 								id="iban"
 								name="iban"
 								value={formDate?.iban || ''}

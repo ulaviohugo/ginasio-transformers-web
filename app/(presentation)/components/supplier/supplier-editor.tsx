@@ -11,6 +11,7 @@ import {
 	ButtonSubmit,
 	IconClose,
 	Input,
+	InputPrice,
 	Modal,
 	ModalBody,
 	ModalFooter,
@@ -332,8 +333,8 @@ export function SupplierEditor({
 							onChange={handleInputChange}
 						/>
 						<div>
-							<Input
-								type="number"
+							<InputPrice
+								// type="number"
 								id="unitPrice"
 								name="unitPrice"
 								value={formDate?.unitPrice || ''}

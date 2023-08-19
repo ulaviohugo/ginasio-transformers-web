@@ -9,7 +9,7 @@ export class FormDataUtils {
 		const formData = new FormData()
 		for (let i = 0; i < values.length; i++) {
 			const key = keys[i]
-			const value = values[i]
+			const value = values[i] ?? ''
 			formData.append(key, value)
 		}
 		return formData

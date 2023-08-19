@@ -2,7 +2,7 @@ import { Supplier } from '@/app/domain/models'
 import { UpdateSupplier } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/app/utils'
+import { FormDataUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 
 export class RemoteUpdateSupplier implements UpdateSupplier {
 	constructor(
@@ -11,7 +11,8 @@ export class RemoteUpdateSupplier implements UpdateSupplier {
 	) {}
 
 	async update(param: Supplier): Promise<Supplier> {
-		const handledParam = ObjectUtils.removeProps<Supplier>(param, [
+		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
+		const handledParam = ObjectUtils.removeProps<Supplier>({ ...param, unitPrice }, [
 			'createdAt',
 			'createdBy',
 			'updatedAt',

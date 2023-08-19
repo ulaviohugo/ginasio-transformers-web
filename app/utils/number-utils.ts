@@ -1,4 +1,7 @@
 export class NumberUtils {
+	static regExpNumber = /^[0-9]{1,50}$/
+	static regExpFloat = /^[+-]?\d+(\.\d+)?$/
+
 	static format(number: number | string): string {
 		if (!number) return '0'
 		const numStr = this.convertToNumber(number)
@@ -15,9 +18,15 @@ export class NumberUtils {
 		})
 	}
 
-	static convertToNumber(number: number | string | undefined, nullable = false): number {
+	static convertToNumber(
+		number: number | string | Date | undefined,
+		nullable = false
+	): number {
 		if (!number) return (nullable ? null : 0) as any
-		return typeof number === 'number' ? number : Number(number)
+		if (typeof number === 'number') return number
+		if (number instanceof Date) return number.getTime()
+
+		return Number(number.replaceAll(' ', ''))
 	}
 
 	static random(min: number, max: number): number {
@@ -25,5 +34,17 @@ export class NumberUtils {
 			throw new Error('min deve ser menor ou igual a max')
 		}
 		return Math.floor(Math.random() * (max - min + 1)) + min
+	}
+
+	static isNumber(value: any) {
+		return this.regExpNumber.test(value)
+	}
+
+	static isFloatNumber(value: any) {
+		try {
+			return this.regExpFloat.test(value)
+		} catch (error) {
+			return false
+		}
 	}
 }

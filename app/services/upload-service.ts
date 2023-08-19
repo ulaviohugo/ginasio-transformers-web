@@ -16,7 +16,7 @@ export class UploadService implements Uploader {
 		}
 		const allowedExtensions = FileUtils.IMG_EXTENSIONS
 
-		if (file.size > FileUtils.SIZE_1MB) {
+		if (file.size > FileUtils.SIZE_10MB) {
 			throw new Error('O tamanho do arquivo excedeu o permitido.')
 		}
 		const fileExtension = FileUtils.getExt(file.name)

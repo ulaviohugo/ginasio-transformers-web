@@ -69,7 +69,7 @@ export function PurchaseEditor({
 			.then((response) => {
 				callback(response)
 			})
-			.catch((error) => {
+			.catch((_error) => {
 				toast.error('Error ao consultar dados')
 			})
 	}
@@ -80,7 +80,7 @@ export function PurchaseEditor({
 				products.filter((category) => category.categoryId == data.categoryId)
 			)
 		}
-	}, [])
+	}, [data, products])
 
 	useEffect(() => {
 		if (categories.length < 1) {

@@ -137,10 +137,10 @@ export default function Suppliers() {
 					) : suppliers?.length < 1 ? (
 						<div>Nenhum fornecedor de momento.</div>
 					) : (
-						<ul className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+						<ul className="grid xl:grid-cols-3 lg:grid-cols-2 gap-4">
 							{suppliers.map((supplier) => (
-								<li key={supplier.id} className="p-4 shadow">
-									<div className="flex items-center gap-1 mb-3">
+								<li key={supplier.id} className="flex flex-col gap-2 text-sm p-4 shadow">
+									<div className="flex items-center gap-1">
 										{supplier.photo ? (
 											<Image
 												src={supplier.photo}
@@ -150,14 +150,14 @@ export default function Suppliers() {
 												className="rounded-full object-cover aspect-square"
 											/>
 										) : (
-											<IconUser size={50} />
+											<IconSupplier size={50} />
 										)}
 										<div>
-											<div className="font-semibold">{supplier.name}</div>
-											<div className="flex items-center gap-1 text-sm font-normal">
+											<div className="font-semibold text-base">{supplier.name}</div>
+											<div className="flex items-center gap-1 font-normal">
 												<IconPhone /> {NumberUtils.format(supplier.phone)}
 											</div>
-											<div className="flex items-center gap-1 text-sm font-normal">
+											<div className="flex items-center gap-1 font-normal">
 												<IconEmail />{' '}
 												<a href={`mailto:${supplier.email}`} className="link">
 													{supplier.email}
@@ -165,7 +165,8 @@ export default function Suppliers() {
 											</div>
 										</div>
 									</div>
-									<div className="flex items-center gap-1 text-sm">
+									<div>Representante: {supplier.representative}</div>
+									<div className="flex items-center gap-1">
 										<div
 											className="flex items-center gap-1 px-2 bg-gray-100 rounded-md"
 											title="Categoria"
@@ -182,7 +183,13 @@ export default function Suppliers() {
 											{supplier.product?.name}
 										</div>
 									</div>
-
+									<div>
+										Preço unitário:{' '}
+										<span className="font-semibold">
+											{NumberUtils.formatCurrency(supplier.unitPrice)}
+										</span>{' '}
+										kz
+									</div>
 									<CardActions
 										onClickDelete={() => handleOpenFormDelete(supplier)}
 										onClickEdit={() => handleOpenDetalhe(supplier)}
