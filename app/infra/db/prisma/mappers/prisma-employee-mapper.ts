@@ -42,7 +42,7 @@ export class PrismaEmployeeMapper {
 		} as any
 	}
 
-	static toDomain(employeeRaw: EmployeeRaw): Employee {
+	static toDomain(employeeRaw: any): Employee {
 		if (!employeeRaw) return null as any
 		return {
 			id: employeeRaw.id,
@@ -62,7 +62,6 @@ export class PrismaEmployeeMapper {
 			email: employeeRaw.email,
 			canLogin: employeeRaw.canLogin,
 			userName: employeeRaw.userName,
-			password: employeeRaw.password,
 			countryId: employeeRaw.countryId,
 			provinceId: employeeRaw.provinceId,
 			municipalityId: employeeRaw.municipalityId,

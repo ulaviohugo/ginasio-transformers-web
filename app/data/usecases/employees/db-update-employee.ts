@@ -3,9 +3,14 @@ import { EmployeeRepository } from '../../protocols'
 import { Employee } from '../../../domain/models'
 import { FileUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
+import { Hasher } from '../../protocols/cryptography'
+import { PrismaEmployeeMapper } from '@/app/infra/db/prisma/mappers'
 
 export class DbUpdateEmployee implements UpdateEmployee {
-	constructor(private readonly employeeRepository: EmployeeRepository) {}
+	constructor(
+		private readonly employeeRepository: EmployeeRepository,
+		private readonly hasher: Hasher
+	) {}
 
 	async update(
 		param: Employee,
@@ -34,11 +39,17 @@ export class DbUpdateEmployee implements UpdateEmployee {
 			image = await uploader.upload()
 		}
 
-		const employee: Employee = {
+		let hashedPassword: any
+		if (data.password) {
+			hashedPassword = await this.hasher.hash(data.password)
+		}
+		const updatedEmployee = await this.employeeRepository.update({
 			...data,
 			photo: image,
+			password: hashedPassword,
 			updatedAt: new Date()
-		}
-		return this.employeeRepository.update(employee)
+		})
+
+		return PrismaEmployeeMapper.toDomain(updatedEmployee)
 	}
 }
