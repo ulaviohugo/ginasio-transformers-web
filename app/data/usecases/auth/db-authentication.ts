@@ -17,7 +17,7 @@ export class DbAuthentication implements Authentication {
 		const data = ObjectUtils.trimValues(param)
 
 		const employee = await this.employeeRepository.findByEmail(data.email)
-		if (!employee) return null
+		if (!employee) return null as any
 		if (!employee.canLogin) return 'canNotLogin'
 
 		const isValid = await this.hasher.compare(param.password, employee.password as any)

@@ -9,9 +9,4 @@ export type AuthenticationParams = {
 	password: string
 }
 
-export type AuthenticationResult =
-	| Account
-	| 'canNotLogin'
-	| 'notFound'
-	| 'invalidCredential'
-	| null
+export type AuthenticationResult = Account | 'canNotLogin' | 'invalidCredential'
