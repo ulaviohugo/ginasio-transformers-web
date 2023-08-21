@@ -16,7 +16,7 @@ export interface Employee {
 	email: string
 	userName?: string
 	password?: string
-	canLogin?: string
+	canLogin: boolean
 	countryId: number
 	provinceId?: number
 	municipalityId?: number
