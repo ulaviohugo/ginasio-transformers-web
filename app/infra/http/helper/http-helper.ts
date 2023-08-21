@@ -8,9 +8,9 @@ export const badRequest = (error: Error): HttpResponse => ({
 	body: error
 })
 
-export const unauthorized = (): HttpResponse => ({
+export const unauthorized = (message?: string): HttpResponse => ({
 	statusCode: 401,
-	body: new UnauthorizedError()
+	body: new UnauthorizedError(message)
 })
 
 export const forbidden = (error: Error): HttpResponse => ({
