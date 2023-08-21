@@ -37,7 +37,7 @@ model Employee {
   contractEndDate    DateTime? @map("contract_end_date") @db.Date
   bankName           String?   @map("bank_name") @db.VarChar(30)
   iban               String?   @unique @db.VarChar(30)
-  accountNumber      String?   @unique @map("account_number") @db.VarChar(30)
+  accountNumber      String?   @map("account_number") @db.VarChar(30)
   createdBy          Int?      @map("created_by")
   createdAt          DateTime  @default(now()) @map("created_at")
   updatedBy          Int?      @map("updated_by")
@@ -49,6 +49,7 @@ model Employee {
   purchases    Purchase[]
 
   @@unique([documentType, documentNumber])
+  @@unique([bankName, accountNumber])
   @@map("tb_employees")
 }
 

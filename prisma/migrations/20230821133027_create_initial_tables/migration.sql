@@ -2,7 +2,7 @@
 CREATE TABLE `tb_employees` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `image` VARCHAR(100) NULL,
+    `photo` VARCHAR(100) NULL,
     `gender` VARCHAR(10) NOT NULL,
     `date_of_birth` DATE NOT NULL,
     `marital_status` VARCHAR(15) NOT NULL,
@@ -35,8 +35,8 @@ CREATE TABLE `tb_employees` (
     UNIQUE INDEX `tb_employees_social_security_key`(`social_security`),
     UNIQUE INDEX `tb_employees_email_key`(`email`),
     UNIQUE INDEX `tb_employees_iban_key`(`iban`),
-    UNIQUE INDEX `tb_employees_account_number_key`(`account_number`),
     UNIQUE INDEX `tb_employees_document_type_document_number_key`(`document_type`, `document_number`),
+    UNIQUE INDEX `tb_employees_bank_name_account_number_key`(`bank_name`, `account_number`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -86,7 +86,7 @@ CREATE TABLE `tb_categories` (
 CREATE TABLE `tb_products` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(70) NOT NULL,
-    `image` VARCHAR(70) NULL,
+    `photo` VARCHAR(100) NULL,
     `category_id` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
     `created_by` INTEGER NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `tb_suppliers` (
     `representative` VARCHAR(50) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `phone` VARCHAR(15) NOT NULL,
-    `photo` VARCHAR(50) NULL,
+    `photo` VARCHAR(100) NULL,
     `country_id` INTEGER NOT NULL,
     `province_id` INTEGER NULL,
     `municipality_id` INTEGER NULL,
@@ -126,7 +126,7 @@ CREATE TABLE `tb_suppliers` (
 -- CreateTable
 CREATE TABLE `tb_purchases` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `photo` VARCHAR(50) NULL,
+    `photo` VARCHAR(100) NULL,
     `supplier_id` INTEGER NOT NULL,
     `category_id` INTEGER NOT NULL,
     `product_id` INTEGER NOT NULL,
@@ -136,9 +136,28 @@ CREATE TABLE `tb_purchases` (
     `quantity` INTEGER NOT NULL,
     `total_value` DOUBLE NOT NULL,
     `payment_method` VARCHAR(191) NOT NULL,
+    `selling_price_unit` DOUBLE NOT NULL DEFAULT 0,
     `paid` BOOLEAN NOT NULL,
     `purchase_date` DATE NOT NULL,
     `due_date` DATE NULL,
+    `employee_id` INTEGER NOT NULL,
+    `created_by` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_by` INTEGER NULL,
+    `updated_at` DATETIME(3) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `tb_sales` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `purchase_id` INTEGER NOT NULL,
+    `quantity` INTEGER NOT NULL,
+    `total_value` DOUBLE NOT NULL,
+    `unit_price` DOUBLE NOT NULL,
+    `discount` DOUBLE NOT NULL,
+    `payment_method` VARCHAR(191) NOT NULL,
     `employee_id` INTEGER NOT NULL,
     `created_by` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -189,3 +208,6 @@ ALTER TABLE `tb_purchases` ADD CONSTRAINT `tb_purchases_supplier_id_fkey` FOREIG
 
 -- AddForeignKey
 ALTER TABLE `tb_purchases` ADD CONSTRAINT `tb_purchases_employee_id_fkey` FOREIGN KEY (`employee_id`) REFERENCES `tb_employees`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `tb_sales` ADD CONSTRAINT `tb_sales_purchase_id_fkey` FOREIGN KEY (`purchase_id`) REFERENCES `tb_purchases`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
