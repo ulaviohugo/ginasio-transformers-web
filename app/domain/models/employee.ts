@@ -14,6 +14,9 @@ export interface Employee {
 	phone1: string
 	phone2?: string
 	email: string
+	userName?: string
+	password?: string
+	canLogin?: string
 	countryId: number
 	provinceId?: number
 	municipalityId?: number
