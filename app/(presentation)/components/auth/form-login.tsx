@@ -1,19 +1,24 @@
 'use client'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { signIn } from 'next-auth/react'
+import React, { ChangeEvent, FormEvent, FormHTMLAttributes, useState } from 'react'
 
 import { IconEmail, IconKey, Input, Spinner } from '..'
+import { makeRemoteAuthentication } from '@/app/main/factories/usecases/remote/auth'
+import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { addAuthStore } from '../../redux'
+import { setCurrentAccountAdapter } from '@/app/main/adapters'
 
 type FormProps = {
 	email: string
 	password: string
 }
 
-type FormLoginProps = {}
+type FormLoginProps = FormHTMLAttributes<HTMLFormElement>
 
-export function FormLogin(props: FormLoginProps) {
+export function FormLogin({ className, ...props }: FormLoginProps) {
 	const [formData, setFormData] = useState<FormProps>({ email: '', password: '' })
 	const [isLoading, setIsLoading] = useState(false)
+	const dispatch = useDispatch()
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -24,8 +29,14 @@ export function FormLogin(props: FormLoginProps) {
 		e.preventDefault()
 		setIsLoading(true)
 
-		const respone = await signIn('credentials', { ...formData, callbackUrl: '/' })
-		console.log('respone', respone)
+		try {
+			const httpResponse = await makeRemoteAuthentication().auth(formData)
+			setCurrentAccountAdapter(httpResponse)
+			toast.success('Login efectuado com sucesso')
+			dispatch(addAuthStore(httpResponse.user as any))
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 
 		setIsLoading(false)
 	}
@@ -33,7 +44,10 @@ export function FormLogin(props: FormLoginProps) {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex flex-col gap-4 shadow-lg p-4 bg-white rounded-lg max-w-xs"
+			className={`flex flex-col gap-4 shadow-lg p-4 bg-white rounded-lg max-w-xs ${
+				className ?? ''
+			}`}
+			{...props}
 		>
 			<div className="flex flex-col gap-2">
 				<Input

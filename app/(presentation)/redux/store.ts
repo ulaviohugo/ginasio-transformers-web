@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {
+	authReducer,
 	categoryReducer,
 	employeeReducer,
 	locationReducer,
@@ -10,6 +11,7 @@ import {
 
 export const store = configureStore({
 	reducer: {
+		auth: authReducer,
 		employees: employeeReducer,
 		locations: locationReducer,
 		categories: categoryReducer,
