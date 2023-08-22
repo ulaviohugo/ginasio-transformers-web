@@ -1,6 +1,10 @@
 import { RemoteLoadCategories } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteLoadCategories = () => {
-	return new RemoteLoadCategories(makeApiUrl('/categories'), makeFetchHttpClient())
+	return new RemoteLoadCategories(
+		makeApiUrl('/categories'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

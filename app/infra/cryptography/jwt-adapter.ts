@@ -8,7 +8,7 @@ export class JwtAdapter implements Crypto {
 		return jwt.sign({ id: plaintext }, this.secret)
 	}
 
-	async decrypt(ciphertext: string): Promise<string> {
+	async decrypt<T = any>(ciphertext: string): Promise<T> {
 		return jwt.verify(ciphertext, this.secret) as any
 	}
 }

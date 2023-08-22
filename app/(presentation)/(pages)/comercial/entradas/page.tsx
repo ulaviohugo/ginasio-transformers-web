@@ -30,7 +30,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-export default function Categorias() {
+export default function Entradas() {
 	const dispatch = useDispatch()
 	const purchases = usePurchases()
 	const [selectedPurchase, setSelectedPurchase] = useState<Purchase>({} as Purchase)

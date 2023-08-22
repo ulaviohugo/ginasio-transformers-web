@@ -18,8 +18,13 @@ export const adaptRoute = async (controller: Controller, req?: Request) => {
 			data = await req?.json()
 		} catch (error) {}
 	}
+	const handledRequest: any = req
 
-	data = { ...data, id: (req as any)?.id }
+	data = {
+		...data,
+		id: handledRequest?.id,
+		accountId: handledRequest?.accountId
+	}
 
 	const { body, statusCode } = await controller.handle(data)
 	const success = statusCode >= 200 && statusCode <= 299
