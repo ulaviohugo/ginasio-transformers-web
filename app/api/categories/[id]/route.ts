@@ -1,4 +1,4 @@
-import { adaptMiddleware, adaptRoute } from '@/app/main/adapters'
+import { adaptMiddleware } from '@/app/main/adapters'
 import {
 	makeCountCategoryController,
 	makeDeleteCategoryController,
@@ -12,29 +12,17 @@ type Params = {
 	}
 }
 
-export async function PUT(req: Request, { params }: Params) {
-	Object.assign(req, params)
-	return adaptMiddleware(
-		makeAuthMiddleware(),
-		(request) => adaptRoute(makeUpdateCategoryController(), request),
-		req
-	)
+export async function PUT(request: Request, { params }: Params) {
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeUpdateCategoryController())
 }
 
-export async function DELETE(req: Request, { params }: Params) {
-	Object.assign(req, params)
-	return adaptMiddleware(
-		makeAuthMiddleware(),
-		(request) => adaptRoute(makeDeleteCategoryController(), request),
-		req
-	)
+export async function DELETE(request: Request, { params }: Params) {
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeDeleteCategoryController())
 }
 
-export function GET(req: Request, { params }: Params) {
+export function GET(request: Request, { params }: Params) {
 	if (params.id == 'count')
-		return adaptMiddleware(
-			makeAuthMiddleware(),
-			(req) => adaptRoute(makeCountCategoryController(), req),
-			req
-		)
+		return adaptMiddleware(makeAuthMiddleware(), request, makeCountCategoryController())
 }

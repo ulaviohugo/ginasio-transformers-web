@@ -11,9 +11,9 @@ export class PrismaProductMapper {
 			image: product.photo,
 			categoryId: product.categoryId,
 			price: product.price,
-			createdBy: product.createdBy,
+			createdById: product.createdById,
 			createdAt: product.createdAt,
-			updatedBy: product.updatedBy,
+			updatedById: product.updatedById,
 			updatedAt: product.updatedAt
 		} as any
 	}
@@ -27,9 +27,9 @@ export class PrismaProductMapper {
 			categoryId: productRaw.categoryId,
 			category: (productRaw as any)?.category,
 			price: productRaw.price,
-			createdBy: productRaw.createdBy,
+			createdById: productRaw.createdById,
 			createdAt: productRaw.createdAt,
-			updatedBy: productRaw.updatedBy,
+			updatedById: productRaw.updatedById,
 			updatedAt: productRaw.updatedAt
 		} as any
 	}

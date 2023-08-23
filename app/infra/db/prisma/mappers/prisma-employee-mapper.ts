@@ -6,9 +6,8 @@ export class PrismaEmployeeMapper {
 	static toPrisma(employee: Employee): EmployeeRaw {
 		if (!employee) return null as any
 		return {
-			id: employee.id,
 			name: employee.name,
-			image: employee.photo,
+			photo: employee.photo,
 			gender: employee.gender,
 			dateOfBirth: employee.dateOfBirth,
 			maritalStatus: employee.maritalStatus,
@@ -35,9 +34,9 @@ export class PrismaEmployeeMapper {
 			bankName: employee.bankName,
 			iban: employee.iban,
 			accountNumber: employee.accountNumber,
-			createdBy: employee.createdBy,
+			createdById: employee.createdById,
 			createdAt: employee.createdAt,
-			updatedBy: employee.updatedBy,
+			updatedById: employee.updatedById,
 			updatedAt: employee.updatedAt
 		} as any
 	}
@@ -47,7 +46,7 @@ export class PrismaEmployeeMapper {
 		return {
 			id: employeeRaw.id,
 			name: employeeRaw.name,
-			image: employeeRaw.photo,
+			photo: employeeRaw.photo,
 			gender: employeeRaw.gender,
 			dateOfBirth: employeeRaw.dateOfBirth,
 			maritalStatus: employeeRaw.maritalStatus,
@@ -73,9 +72,9 @@ export class PrismaEmployeeMapper {
 			bankName: employeeRaw.bankName,
 			iban: employeeRaw.iban,
 			accountNumber: employeeRaw.accountNumber,
-			createdBy: employeeRaw.createdBy,
+			createdById: employeeRaw.createdById,
 			createdAt: employeeRaw.createdAt,
-			updatedBy: employeeRaw.updatedBy,
+			updatedById: employeeRaw.updatedById,
 			updatedAt: employeeRaw.updatedAt
 		} as any
 	}

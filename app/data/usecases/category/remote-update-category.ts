@@ -13,9 +13,9 @@ export class RemoteUpdateCategory implements UpdateCategory {
 	async update(param: Category): Promise<Category> {
 		const handledParam = ObjectUtils.removeProps<Category>(param, [
 			'createdAt',
-			'createdBy',
+			'createdById',
 			'updatedAt',
-			'updatedBy'
+			'updatedById'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

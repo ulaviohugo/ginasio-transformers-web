@@ -20,9 +20,9 @@ export class PrismaSupplierMapper {
 			productId: supplier.productId,
 			unitPrice: supplier.unitPrice,
 			createdAt: supplier.createdAt,
-			createdBy: supplier.createdBy,
+			createdById: supplier.createdById,
 			updatedAt: supplier.updatedAt,
-			updatedBy: supplier.updatedBy
+			updatedById: supplier.updatedById
 		} as any
 	}
 }

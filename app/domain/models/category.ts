@@ -4,8 +4,8 @@ export interface Category {
 	id: number
 	name: string
 	createdAt: Date
-	createdBy?: number
+	createdById?: number
 	updatedAt?: Date
-	updatedBy?: number
+	updatedById?: number
 	products?: Product[]
 }

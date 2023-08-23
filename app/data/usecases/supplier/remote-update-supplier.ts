@@ -14,9 +14,9 @@ export class RemoteUpdateSupplier implements UpdateSupplier {
 		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
 		const handledParam = ObjectUtils.removeProps<Supplier>({ ...param, unitPrice }, [
 			'createdAt',
-			'createdBy',
+			'createdById',
 			'updatedAt',
-			'updatedBy'
+			'updatedById'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

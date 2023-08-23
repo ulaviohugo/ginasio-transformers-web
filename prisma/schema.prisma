@@ -41,9 +41,9 @@ model Employee {
   bankName           String?   @map("bank_name") @db.VarChar(30)
   iban               String?   @unique @db.VarChar(30)
   accountNumber      String?   @map("account_number") @db.VarChar(30)
-  createdBy          Int?      @map("created_by")
+  createdById          Int?      @map("created_by_id")
   createdAt          DateTime  @default(now()) @map("created_at")
-  updatedBy          Int?      @map("updated_by")
+  updatedById          Int?      @map("updated_by_id")
   updatedAt          DateTime? @map("updated_at")
 
   country      Country       @relation(fields: [countryId], references: [id])
@@ -96,9 +96,9 @@ model Municipality {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique @db.VarChar(50)
-  createdBy Int?      @map("created_by")
+  createdById Int?      @map("created_by_id")
   createdAt DateTime  @default(now()) @map("created_at")
-  updatedBy Int?      @map("updated_by")
+  updatedById Int?      @map("updated_by_id")
   updatedAt DateTime? @map("updated_at")
 
   products  Product[]
@@ -114,9 +114,9 @@ model Product {
   photo      String?   @db.VarChar(100)
   categoryId Int       @map("category_id")
   price      Float
-  createdBy  Int?      @map("created_by")
+  createdById  Int?      @map("created_by_id")
   createdAt  DateTime  @default(now()) @map("created_at")
-  updatedBy  Int?      @map("updated_by")
+  updatedById  Int?      @map("updated_by_id")
   updatedAt  DateTime? @map("updated_at")
 
   category  Category   @relation(fields: [categoryId], references: [id])
@@ -141,9 +141,9 @@ model Supplier {
   categoryId      Int       @map("category_id")
   productId       Int       @map("product_id")
   unitPrice       Float     @map("unit_price")
-  createdBy       Int?      @map("created_by")
+  createdById       Int?      @map("created_by_id")
   createdAt       DateTime  @default(now()) @map("created_at")
-  updatedBy       Int?      @map("updated_by")
+  updatedById       Int?      @map("updated_by_id")
   updatedAt       DateTime? @map("updated_at")
 
   country   Country    @relation(fields: [countryId], references: [id])
@@ -172,9 +172,9 @@ model Purchase {
   purchaseDate     DateTime  @map("purchase_date") @db.Date()
   dueDate          DateTime? @map("due_date") @db.Date()
   employeeId       Int       @map("employee_id")
-  createdBy        Int?      @map("created_by")
+  createdById        Int?      @map("created_by_id")
   createdAt        DateTime  @default(now()) @map("created_at")
-  updatedBy        Int?      @map("updated_by")
+  updatedById        Int?      @map("updated_by_id")
   updatedAt        DateTime? @map("updated_at")
 
   category Category @relation(fields: [categoryId], references: [id])
@@ -195,9 +195,9 @@ model Sale {
   discount      Float     @map("discount")
   paymentMethod String    @map("payment_method")
   employeeId    Int       @map("employee_id")
-  createdBy     Int?      @map("created_by")
+  createdById     Int?      @map("created_by_id")
   createdAt     DateTime  @default(now()) @map("created_at")
-  updatedBy     Int?      @map("updated_by")
+  updatedById     Int?      @map("updated_by_id")
   updatedAt     DateTime? @map("updated_at")
 
   purchase Purchase @relation(fields: [purchaseId], references: [id])

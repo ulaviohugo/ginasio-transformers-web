@@ -13,9 +13,9 @@ export class RemoteUpdateProduct implements UpdateProduct {
 	async update(param: Product): Promise<Product> {
 		const handledParam = ObjectUtils.removeProps<Product>(param, [
 			'createdAt',
-			'createdBy',
+			'createdById',
 			'updatedAt',
-			'updatedBy',
+			'updatedById',
 			'category'
 		])
 		const body = FormDataUtils.createFormData(handledParam)

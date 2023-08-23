@@ -8,7 +8,7 @@ export interface Product {
 	category?: Category
 	price: number
 	createdAt: Date
-	createdBy?: number
+	createdById?: number
 	updatedAt?: Date
-	updatedBy?: number
+	updatedById?: number
 }

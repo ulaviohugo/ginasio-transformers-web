@@ -1,14 +1,17 @@
 'use client'
-import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ElementType } from 'react'
 import { IconHome, IconProduct, IconUser } from '.'
+import { setCurrentAccountAdapter } from '@/app/main/adapters'
+import { useAuth } from '../hooks'
+import { StringUtils } from '@/app/utils'
 
 export function Header() {
+	const user = useAuth()
 	const handleSignout = async () => {
-		await signOut({ callbackUrl: '/login' })
+		setCurrentAccountAdapter(null)
 	}
 	const path = usePathname()
 	return (
@@ -30,7 +33,17 @@ export function Header() {
 						icon={IconUser}
 					/>
 				</ul>
-				<div className="flex mt-auto px-2">
+				<div className="flex flex-col gap-2 mt-auto px-2">
+					<div className="flex items-center gap-1">
+						<div className="border rounded-full p-1">
+							{user.photo ? (
+								<Image src={user.photo} width={25} height={25} alt="Foto" />
+							) : (
+								<IconUser size={25} />
+							)}
+						</div>
+						<span>{StringUtils.getFirstWord(user.name)}</span>
+					</div>
 					<button
 						className="btn hover:bg-white hover:text-primary border"
 						onClick={handleSignout}

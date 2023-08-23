@@ -1,7 +1,7 @@
 import { UpdateCategory } from '@/app/domain/usecases'
 import { UnexpectedError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParam, Validation } from '../../protocols'
 import { Category } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -12,7 +12,9 @@ export class UpdateCategoryController implements Controller {
 		private readonly UpdateCategory: UpdateCategory,
 		private readonly validation: Validation
 	) {}
-	async handle(request: Category): Promise<HttpResponse> {
+	async handle(request: ControllerParam<Category>): Promise<HttpResponse> {
+		console.log({ request })
+
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -21,7 +23,8 @@ export class UpdateCategoryController implements Controller {
 
 			const updatedCategory = await this.UpdateCategory.update({
 				...request,
-				id: NumberUtils.convertToNumber(request.id)
+				id: NumberUtils.convertToNumber(request.id),
+				updatedById: NumberUtils.convertToNumber(request.accountId)
 			})
 			if (updatedCategory == 'notFound') {
 				return notFound()

@@ -17,7 +17,7 @@ export class LabelUtils {
 		contractEndDate: 'Data de fim de contrato',
 		countryId: 'País',
 		createdAt: 'Data de criação',
-		createdBy: 'Criado por',
+		createdById: 'Criado por',
 		dateOfBirth: 'Data de nascimento',
 		dependents: 'Número de dependentes',
 		documentNumber: 'Número do documento',
@@ -53,7 +53,7 @@ export class LabelUtils {
 		totalValue: 'Valor total',
 		unitPrice: 'Preço unitário',
 		updatedAt: 'Data de atualização',
-		updatedBy: 'Atualizado por'
+		updatedById: 'Atualizado por'
 	}
 
 	static translateField(field: keyof FieldTypes) {

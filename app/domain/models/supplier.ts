@@ -17,7 +17,7 @@ export interface Supplier {
 	category?: Category
 	product?: Product
 	createdAt: Date
-	createdBy?: number
+	createdById?: number
 	updatedAt?: Date
-	updatedBy?: number
+	updatedById?: number
 }

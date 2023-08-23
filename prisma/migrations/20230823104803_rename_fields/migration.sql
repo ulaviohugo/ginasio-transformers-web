@@ -15,6 +15,9 @@ CREATE TABLE `tb_employees` (
     `phone1` VARCHAR(15) NOT NULL,
     `phone2` VARCHAR(15) NULL,
     `email` VARCHAR(50) NOT NULL,
+    `user_name` VARCHAR(64) NULL,
+    `password` VARCHAR(64) NULL,
+    `can_login` BOOLEAN NOT NULL DEFAULT false,
     `country_id` INTEGER NOT NULL,
     `province_id` INTEGER NULL,
     `municipality_id` INTEGER NULL,
@@ -26,9 +29,9 @@ CREATE TABLE `tb_employees` (
     `bank_name` VARCHAR(30) NULL,
     `iban` VARCHAR(30) NULL,
     `account_number` VARCHAR(30) NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     UNIQUE INDEX `tb_employees_nif_key`(`nif`),
@@ -73,9 +76,9 @@ CREATE TABLE `tb_municipalities` (
 CREATE TABLE `tb_categories` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     UNIQUE INDEX `tb_categories_name_key`(`name`),
@@ -89,9 +92,9 @@ CREATE TABLE `tb_products` (
     `photo` VARCHAR(100) NULL,
     `category_id` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     UNIQUE INDEX `tb_products_name_category_id_key`(`name`, `category_id`),
@@ -113,9 +116,9 @@ CREATE TABLE `tb_suppliers` (
     `category_id` INTEGER NOT NULL,
     `product_id` INTEGER NOT NULL,
     `unit_price` DOUBLE NOT NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     UNIQUE INDEX `tb_suppliers_email_key`(`email`),
@@ -141,9 +144,9 @@ CREATE TABLE `tb_purchases` (
     `purchase_date` DATE NOT NULL,
     `due_date` DATE NULL,
     `employee_id` INTEGER NOT NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
@@ -159,9 +162,9 @@ CREATE TABLE `tb_sales` (
     `discount` DOUBLE NOT NULL,
     `payment_method` VARCHAR(191) NOT NULL,
     `employee_id` INTEGER NOT NULL,
-    `created_by` INTEGER NULL,
+    `created_by_id` INTEGER NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_by` INTEGER NULL,
+    `updated_by_id` INTEGER NULL,
     `updated_at` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)

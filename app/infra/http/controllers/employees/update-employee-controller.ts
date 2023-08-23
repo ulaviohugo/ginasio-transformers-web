@@ -34,6 +34,7 @@ export class UpdateEmployeeController implements Controller {
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
 					dependents: NumberUtils.convertToNumber(request.dependents),
 					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
+					canLogin: !!request.canLogin,
 					hireDate: DateUtils.convertToDate(request.hireDate),
 					contractEndDate: DateUtils.convertToDate(request.contractEndDate)
 				},

@@ -29,7 +29,7 @@ export interface Employee {
 	iban?: string
 	accountNumber?: string
 	createdAt: Date
-	createdBy?: number
+	createdById?: number
 	updatedAt?: Date
-	updatedBy?: number
+	updatedById?: number
 }

@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 			} else if (account?.user && path.indexOf('/login') >= 0) {
 				location.replace('/')
 			} else {
-				if (!auth?.id) dispatch(addAuthStore(account.user as any))
+				if (!auth?.id) dispatch(addAuthStore(account?.user as any))
 			}
 		}, 1000)
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		}
 	}, [auth?.id, dispatch, path])
 
-	if (!auth.id && path.indexOf('/login') < 0) return <></>
+	if (!auth?.id && path.indexOf('/login') < 0) return <></>
 
 	return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
 }

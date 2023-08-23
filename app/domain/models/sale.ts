@@ -10,9 +10,9 @@ export interface Sale {
 	paymentMethod: string
 	employeeId: number
 	createdAt: Date
-	createdBy?: number
+	createdById?: number
 	updatedAt?: Date
-	updatedBy?: number
+	updatedById?: number
 
 	purchase?: Purchase
 }

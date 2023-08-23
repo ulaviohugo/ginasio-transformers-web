@@ -23,9 +23,9 @@ export class PrismaPurchaseMapper {
 			dueDate: purchase.dueDate,
 			employeeId: purchase.employeeId,
 			createdAt: purchase.createdAt,
-			createdBy: purchase.createdBy,
+			createdById: purchase.createdById,
 			updatedAt: purchase.updatedAt,
-			updatedBy: purchase.updatedBy
+			updatedById: purchase.updatedById
 		} as any
 	}
 }

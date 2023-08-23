@@ -15,7 +15,17 @@ export class AuthMiddleware implements Middleware {
 			}
 			return unauthorized('Informe o token')
 		} catch (error: any) {
-			return unauthorized(error.message)
+			let message
+			switch (error.name) {
+				case 'JsonWebTokenError':
+					message = 'Token inválido'
+					break
+				default:
+					message = error.message
+					break
+			}
+
+			return unauthorized(message)
 		}
 	}
 }

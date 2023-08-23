@@ -15,9 +15,9 @@ export class PrismaSaleMapper {
 			paymentMethod: sale.paymentMethod,
 			employeeId: sale.employeeId,
 			createdAt: sale.createdAt,
-			createdBy: sale.createdBy,
+			createdById: sale.createdById,
 			updatedAt: sale.updatedAt,
-			updatedBy: sale.updatedBy
+			updatedById: sale.updatedById
 		} as any
 	}
 }

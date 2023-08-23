@@ -1,25 +1,25 @@
-import { Middleware } from '@/app/infra/http/protocols'
-import { adaptResponse } from '.'
+import { Controller, Middleware } from '@/app/infra/http/protocols'
+import { adaptResponse, adaptRoute } from '.'
 
 export const adaptMiddleware = async (
 	middleware: Middleware,
-	next: (request: Request) => any,
-	req: Request
+	req: Request,
+	controller: Controller
 ) => {
 	const request = {
 		accessToken: req.headers?.get('x-access-token'),
 		...(req.headers || {})
 	}
 
-	const httpResponse = await middleware.handle(request)
+	const middlewareResponse = await middleware.handle(request)
 
-	if (httpResponse.statusCode === 200) {
-		Object.assign(req, httpResponse.body)
-		return next(req)
+	if (middlewareResponse.statusCode >= 200 && middlewareResponse.statusCode < 299) {
+		Object.assign(req, middlewareResponse.body)
+		return adaptRoute(controller, req)
 	} else {
 		return adaptResponse({
-			statusCode: httpResponse.statusCode,
-			body: { error: httpResponse.body.message }
+			statusCode: middlewareResponse.statusCode,
+			body: { error: middlewareResponse.body.message }
 		})
 	}
 }

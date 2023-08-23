@@ -29,6 +29,22 @@ export class StringUtils {
 		return textArray.join('')
 	}
 
+	static getFirstWord(text: string) {
+		if (text.length < 0) return
+		return text.split(' ')[0]
+	}
+
+	static getLastWord(text: string) {
+		if (text.length < 0) return
+		const words = text.split(' ')
+		return words[words.length - 1]
+	}
+
+	static getFirstAndLastWord(text: string) {
+		if (text.indexOf(' ') < 0) return text
+		return `${this.getFirstWord(text)} ${this.getLastWord(text)}`
+	}
+
 	static slug(input: string): string {
 		const specialCharactersMap: Record<string, string> = {
 			á: 'a',

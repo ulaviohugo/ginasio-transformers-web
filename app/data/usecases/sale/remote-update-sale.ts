@@ -16,7 +16,7 @@ export class RemoteUpdateSale implements UpdateSale {
 		const purchaseId = NumberUtils.convertToNumber(param.purchaseId)
 		const handledParam = ObjectUtils.removeProps<Sale>(
 			{ ...param, unitPrice, totalValue, purchaseId },
-			['createdAt', 'createdBy', 'updatedAt', 'updatedBy']
+			['createdAt', 'createdById', 'updatedAt', 'updatedById']
 		)
 		const body = FormDataUtils.createFormData(handledParam)
 
