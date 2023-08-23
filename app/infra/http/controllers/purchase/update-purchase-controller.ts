@@ -1,6 +1,6 @@
 import { UpdatePurchase } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Purchase } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -13,7 +13,7 @@ export class UpdatePurchaseController implements Controller {
 		private readonly UpdatePurchase: UpdatePurchase,
 		private readonly validation: Validation
 	) {}
-	async handle(request: UpdatePurchaseControllerRequest): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Purchase>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -37,7 +37,8 @@ export class UpdatePurchaseController implements Controller {
 					sellingPriceUnit: NumberUtils.convertToNumber(request.sellingPriceUnit),
 					paid: !!request.paid,
 					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
-					dueDate: DateUtils.convertToDate(request.dueDate)
+					dueDate: DateUtils.convertToDate(request.dueDate),
+					updatedById: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)
@@ -50,5 +51,3 @@ export class UpdatePurchaseController implements Controller {
 		}
 	}
 }
-
-export type UpdatePurchaseControllerRequest = Purchase

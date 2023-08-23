@@ -1,7 +1,7 @@
 import { UpdateEmployee } from '@/app/domain/usecases'
 import { DocumentInUseError, EmailInUseError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -14,7 +14,7 @@ export class UpdateEmployeeController implements Controller {
 		private readonly UpdateEmployee: UpdateEmployee,
 		private readonly validation: Validation
 	) {}
-	async handle(request: UpdateEmployeeControllerRequest): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Employee>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -36,7 +36,8 @@ export class UpdateEmployeeController implements Controller {
 					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
 					canLogin: !!request.canLogin,
 					hireDate: DateUtils.convertToDate(request.hireDate),
-					contractEndDate: DateUtils.convertToDate(request.contractEndDate)
+					contractEndDate: DateUtils.convertToDate(request.contractEndDate),
+					updatedById: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)
@@ -55,5 +56,3 @@ export class UpdateEmployeeController implements Controller {
 		}
 	}
 }
-
-export type UpdateEmployeeControllerRequest = Employee

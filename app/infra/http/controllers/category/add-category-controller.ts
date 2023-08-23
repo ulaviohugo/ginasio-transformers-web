@@ -1,7 +1,7 @@
 import { AddCategory } from '@/app/domain/usecases'
 import { UnexpectedError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
-import { Controller, ControllerParam, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Category } from '@/app/domain/models'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { dbErrorHandler } from '@/app/infra/db'
@@ -12,7 +12,7 @@ export class AddCategoryController implements Controller {
 		private readonly addCategory: AddCategory,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParam<Category>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Category>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

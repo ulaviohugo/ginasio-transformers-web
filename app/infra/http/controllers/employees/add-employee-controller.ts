@@ -1,7 +1,7 @@
 import { AddEmployee } from '@/app/domain/usecases'
 import { DocumentInUseError, EmailInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Employee } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
@@ -14,7 +14,7 @@ export class AddEmployeeController implements Controller {
 		private readonly addEmployee: AddEmployee,
 		private readonly validation: Validation
 	) {}
-	async handle(request: AddEmployeeControllerRequest): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Employee>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -35,7 +35,8 @@ export class AddEmployeeController implements Controller {
 					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
 					canLogin: !!request.canLogin,
 					hireDate: DateUtils.convertToDate(request.hireDate),
-					contractEndDate: DateUtils.convertToDate(request.contractEndDate)
+					contractEndDate: DateUtils.convertToDate(request.contractEndDate),
+					createdById: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)
@@ -52,5 +53,3 @@ export class AddEmployeeController implements Controller {
 		}
 	}
 }
-
-export type AddEmployeeControllerRequest = Employee

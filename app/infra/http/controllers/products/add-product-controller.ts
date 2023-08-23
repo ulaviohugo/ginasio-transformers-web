@@ -1,7 +1,7 @@
 import { AddProduct } from '@/app/domain/usecases'
 import { NameInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Product } from '@/app/domain/models'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -14,7 +14,7 @@ export class AddProductController implements Controller {
 		private readonly addProduct: AddProduct,
 		private readonly validation: Validation
 	) {}
-	async handle(request: Product): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Product>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -27,7 +27,8 @@ export class AddProductController implements Controller {
 			const createdProduct = await this.addProduct.add(
 				{
 					...request,
-					categoryId: NumberUtils.convertToNumber(request.categoryId)
+					categoryId: NumberUtils.convertToNumber(request.categoryId),
+					createdById: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

@@ -1,7 +1,7 @@
 import { UpdateSupplier } from '@/app/domain/usecases'
 import { EmailInUseError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Supplier } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -14,7 +14,7 @@ export class UpdateSupplierController implements Controller {
 		private readonly UpdateSupplier: UpdateSupplier,
 		private readonly validation: Validation
 	) {}
-	async handle(request: UpdateSupplierControllerRequest): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Supplier>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -33,7 +33,8 @@ export class UpdateSupplierController implements Controller {
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
 					categoryId: NumberUtils.convertToNumber(request.categoryId, true),
 					productId: NumberUtils.convertToNumber(request.productId, true),
-					unitPrice: NumberUtils.convertToNumber(request.unitPrice, true)
+					unitPrice: NumberUtils.convertToNumber(request.unitPrice, true),
+					updatedById: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)
@@ -49,5 +50,3 @@ export class UpdateSupplierController implements Controller {
 		}
 	}
 }
-
-export type UpdateSupplierControllerRequest = Supplier

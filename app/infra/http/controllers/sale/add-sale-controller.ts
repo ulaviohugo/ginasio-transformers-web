@@ -1,6 +1,6 @@
 import { AddSale } from '@/app/domain/usecases'
 import { badRequest, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Sale } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -11,7 +11,7 @@ export class AddSaleController implements Controller {
 		private readonly addSale: AddSale,
 		private readonly validation: Validation
 	) {}
-	async handle(request: Sale): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Sale>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -25,7 +25,8 @@ export class AddSaleController implements Controller {
 				employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-				discount: NumberUtils.convertToNumber(request.discount)
+				discount: NumberUtils.convertToNumber(request.discount),
+				createdById: NumberUtils.convertToNumber(request.accountId)
 			})
 			return ok(createdSale)
 		} catch (error) {

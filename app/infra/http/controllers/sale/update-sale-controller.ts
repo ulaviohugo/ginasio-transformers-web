@@ -1,6 +1,6 @@
 import { UpdateSale } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Sale } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -11,7 +11,7 @@ export class UpdateSaleController implements Controller {
 		private readonly UpdateSale: UpdateSale,
 		private readonly validation: Validation
 	) {}
-	async handle(request: UpdateSaleControllerRequest): Promise<HttpResponse> {
+	async handle(request: ControllerParams<Sale>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -24,7 +24,8 @@ export class UpdateSaleController implements Controller {
 				employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-				discount: NumberUtils.convertToNumber(request.discount)
+				discount: NumberUtils.convertToNumber(request.discount),
+				updatedById: NumberUtils.convertToNumber(request.accountId)
 			})
 			if (updatedSale == 'notFound') {
 				return notFound()
@@ -35,5 +36,3 @@ export class UpdateSaleController implements Controller {
 		}
 	}
 }
-
-export type UpdateSaleControllerRequest = Sale
