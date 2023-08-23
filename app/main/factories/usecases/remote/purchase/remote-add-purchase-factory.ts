@@ -1,6 +1,10 @@
 import { RemoteAddPurchase } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteAddPurchase = () => {
-	return new RemoteAddPurchase(makeApiUrl('/purchases'), makeFetchHttpClient())
+	return new RemoteAddPurchase(
+		makeApiUrl('/purchases'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

@@ -1,6 +1,10 @@
 import { RemoteLoadProduct } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteLoadProduct = () => {
-	return new RemoteLoadProduct(makeApiUrl('/products'), makeFetchHttpClient())
+	return new RemoteLoadProduct(
+		makeApiUrl('/products'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

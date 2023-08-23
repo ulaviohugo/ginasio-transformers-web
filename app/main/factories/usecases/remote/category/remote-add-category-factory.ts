@@ -1,6 +1,10 @@
 import { RemoteAddCategory } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteAddCategory = () => {
-	return new RemoteAddCategory(makeApiUrl('/categories'), makeFetchHttpClient())
+	return new RemoteAddCategory(
+		makeApiUrl('/categories'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

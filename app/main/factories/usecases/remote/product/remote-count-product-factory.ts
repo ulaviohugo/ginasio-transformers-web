@@ -1,6 +1,10 @@
 import { RemoteCountProduct } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteCountProduct = () => {
-	return new RemoteCountProduct(makeApiUrl('/products/count'), makeFetchHttpClient())
+	return new RemoteCountProduct(
+		makeApiUrl('/products/count'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

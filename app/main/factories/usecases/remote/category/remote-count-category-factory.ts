@@ -1,6 +1,10 @@
 import { RemoteCountCategory } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteCountCategories = () => {
-	return new RemoteCountCategory(makeApiUrl('/categories/count'), makeFetchHttpClient())
+	return new RemoteCountCategory(
+		makeApiUrl('/categories/count'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

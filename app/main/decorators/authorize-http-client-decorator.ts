@@ -12,7 +12,7 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
 		const account = accountStorage ? JSON.parse(accountStorage) : null
 		if (account?.accessToken) {
 			Object.assign(data, {
-				headers: Object.assign(data.headers || {}, {
+				headers: Object.assign(data?.headers || {}, {
 					'x-access-token': account.accessToken
 				})
 			})

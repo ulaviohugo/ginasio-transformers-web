@@ -1,6 +1,10 @@
 import { RemoteCountEmployee } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteCountEmployees = () => {
-	return new RemoteCountEmployee(makeApiUrl('/employees/count'), makeFetchHttpClient())
+	return new RemoteCountEmployee(
+		makeApiUrl('/employees/count'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

@@ -1,6 +1,7 @@
 import { RemoteLoadSale } from '@/app/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '../../../http'
+import { makeApiUrl } from '../../../http'
+import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 
 export const makeRemoteLoadSales = () => {
-	return new RemoteLoadSale(makeApiUrl('/sales'), makeFetchHttpClient())
+	return new RemoteLoadSale(makeApiUrl('/sales'), makeAuthorizeHttpClientDecorator())
 }
