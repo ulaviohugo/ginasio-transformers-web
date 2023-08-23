@@ -28,4 +28,11 @@ export class ObjectUtils {
 		}
 		return newObject
 	}
+
+	static convertToObject<T extends object = any>(data: T[]): T {
+		if (!data) return {} as T
+		return data.reduce((prev: any, current, index) => {
+			return { ...prev, [index]: current }
+		}, {})
+	}
 }
