@@ -1,10 +1,11 @@
-import { adaptRoute } from '@/app/main/adapters'
+import { adaptMiddleware } from '@/app/main/adapters'
 import { makeAddProductController, makeLoadProductController } from '@/app/main/factories'
+import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
 
 export async function POST(request: Request) {
-	return adaptRoute(makeAddProductController(), request)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeAddProductController())
 }
 
-export async function GET() {
-	return adaptRoute(makeLoadProductController())
+export async function GET(request: Request) {
+	return adaptMiddleware(makeAuthMiddleware(), request, makeLoadProductController())
 }

@@ -14,14 +14,6 @@ export async function GET() {
 			statusCode: HttpStatusCode.ok,
 			body: { countries, provinces, municipalities }
 		}
-
-		/* const locations = await prismaService.country.findMany({
-			include: { provinces: { include: { municipalities: true } } }
-		})
-		response = {
-			statusCode: HttpStatusCode.ok,
-			body: { locations }
-		} */
 	} catch (error: any) {
 		response = { statusCode: HttpStatusCode.serverError, body: error.message }
 	}

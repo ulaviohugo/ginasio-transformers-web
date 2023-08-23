@@ -1,9 +1,10 @@
-import { adaptRoute } from '@/app/main/adapters'
+import { adaptMiddleware } from '@/app/main/adapters'
 import {
 	makeCountPurchaseController,
 	makeDeletePurchaseController,
 	makeUpdatePurchaseController
 } from '@/app/main/factories'
+import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
 
 type Params = {
 	params: {
@@ -12,15 +13,16 @@ type Params = {
 }
 
 export async function PUT(request: Request, { params }: Params) {
-	;(request as any).id = params.id
-	return adaptRoute(makeUpdatePurchaseController(), request)
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeUpdatePurchaseController())
 }
 
 export async function DELETE(request: Request, { params }: Params) {
-	const newReq = { ...request, id: params.id }
-	return adaptRoute(makeDeletePurchaseController(), newReq)
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeDeletePurchaseController())
 }
 
-export function GET(_request: Request, { params }: Params) {
-	if (params.id == 'count') return adaptRoute(makeCountPurchaseController())
+export function GET(request: Request, { params }: Params) {
+	if (params.id == 'count')
+		return adaptMiddleware(makeAuthMiddleware(), request, makeCountPurchaseController())
 }

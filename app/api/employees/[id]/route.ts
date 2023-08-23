@@ -1,9 +1,10 @@
-import { adaptRoute } from '@/app/main/adapters'
+import { adaptMiddleware } from '@/app/main/adapters'
 import {
 	makeCountEmployeeController,
 	makeDeleteEmployeeController,
 	makeUpdateEmployeeController
 } from '@/app/main/factories'
+import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
 
 type Params = {
 	params: {
@@ -12,15 +13,16 @@ type Params = {
 }
 
 export async function PUT(request: Request, { params }: Params) {
-	;(request as any).id = params.id
-	return adaptRoute(makeUpdateEmployeeController(), request)
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeUpdateEmployeeController())
 }
 
 export async function DELETE(request: Request, { params }: Params) {
-	const newReq = { ...request, id: params.id }
-	return adaptRoute(makeDeleteEmployeeController(), newReq)
+	Object.assign(request, params)
+	return adaptMiddleware(makeAuthMiddleware(), request, makeDeleteEmployeeController())
 }
 
-export function GET(_request: Request, { params }: Params) {
-	if (params.id == 'count') return adaptRoute(makeCountEmployeeController())
+export function GET(request: Request, { params }: Params) {
+	if (params.id == 'count')
+		return adaptMiddleware(makeAuthMiddleware(), request, makeCountEmployeeController())
 }
