@@ -1,4 +1,4 @@
-import { Category, Product } from '.'
+import { Category, Product, SupplierProduct } from '.'
 
 export interface Supplier {
 	id: number
@@ -11,13 +11,10 @@ export interface Supplier {
 	provinceId?: number
 	municipalityId?: number
 	businessAddress: string
-	categoryId: number
-	productId: number
-	unitPrice: number
-	category?: Category
-	product?: Product
 	createdAt: Date
 	createdById?: number
 	updatedAt?: Date
 	updatedById?: number
+
+	supplierProducts?: SupplierProduct[]
 }

@@ -22,7 +22,7 @@ import {
 	IconProduct,
 	IconSupplier
 } from '@/app/(presentation)/components'
-import { NumberUtils, SubmenuUtils } from '@/app/utils'
+import { ArrayUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteSupplier,
@@ -172,7 +172,13 @@ export default function Suppliers() {
 											title="Categoria"
 										>
 											<IconCategory />
-											{supplier.category?.name}
+											{
+												ArrayUtils.removeDuplicated(
+													supplier?.supplierProducts?.map((cat) =>
+														cat.categoryId.toString()
+													) as any
+												).length
+											}
 										</div>
 										»
 										<div
@@ -180,16 +186,22 @@ export default function Suppliers() {
 											title="Produto"
 										>
 											<IconProduct />
-											{supplier.product?.name}
+											{
+												ArrayUtils.removeDuplicated(
+													supplier?.supplierProducts?.map((cat) =>
+														cat.productId.toString()
+													) as any
+												).length
+											}
 										</div>
 									</div>
-									<div>
+									{/* <div>
 										Preço unitário:{' '}
 										<span className="font-semibold">
 											{NumberUtils.formatCurrency(supplier.unitPrice)}
 										</span>{' '}
 										kz
-									</div>
+									</div> */}
 									<CardActions
 										onClickDelete={() => handleOpenFormDelete(supplier)}
 										onClickEdit={() => handleOpenDetalhe(supplier)}

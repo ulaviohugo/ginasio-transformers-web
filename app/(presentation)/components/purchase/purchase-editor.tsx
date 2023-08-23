@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Product, Purchase } from '@/app/domain/models'
+import { Category, Product, Purchase } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -56,6 +56,7 @@ export function PurchaseEditor({
 	const suppliers = useSuppliers()
 
 	const [productList, setProductList] = useState<Product[]>([])
+	const [categoryList, setCategoryList] = useState<Category[]>([])
 
 	const [formData, setFormData] = useState<Purchase>(
 		(data?.id && data) ||
@@ -80,11 +81,10 @@ export function PurchaseEditor({
 
 	useEffect(() => {
 		if (data?.id) {
-			setProductList(
-				products.filter((category) => category.categoryId == data.categoryId)
-			)
+			setCategoryList(categories.filter((category) => category.id == data.supplierId))
+			setProductList(products.filter((product) => product.categoryId == data.categoryId))
 		}
-	}, [data, products])
+	}, [categories, data, products])
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -111,9 +111,13 @@ export function PurchaseEditor({
 
 		let data: Purchase = { ...formData, [name]: value }
 
+		if (name == 'supplierId') {
+			data = { ...data, categoryId: undefined as any, productId: undefined as any }
+			setCategoryList(categories.filter((category) => category.id == Number(value)))
+		}
 		if (name == 'categoryId') {
 			data = { ...data, productId: undefined as any }
-			setProductList(products.filter((category) => category.categoryId == Number(value)))
+			setProductList(products.filter((product) => product.categoryId == Number(value)))
 		}
 		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
@@ -241,7 +245,7 @@ export function PurchaseEditor({
 								name="categoryId"
 								value={formData?.categoryId || ''}
 								label={LabelUtils.translateField('categoryId')}
-								data={categories.map(({ name, id }) => ({
+								data={categoryList.map(({ name, id }) => ({
 									text: name,
 									value: id
 								}))}

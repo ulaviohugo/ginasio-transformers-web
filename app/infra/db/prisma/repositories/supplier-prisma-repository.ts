@@ -14,8 +14,9 @@ export class SupplierPrismaRepository implements SupplierRepository {
 		return (await this.prisma.supplier.create({
 			data: PrismaSupplierMapper.toPrisma(param),
 			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } }
+				supplierProducts: {
+					select: { categoryId: true, productId: true, unitPrice: true }
+				}
 			}
 		})) as Supplier
 	}
@@ -23,8 +24,9 @@ export class SupplierPrismaRepository implements SupplierRepository {
 	async loadAll(): Promise<Supplier[]> {
 		return (await this.prisma.supplier.findMany({
 			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } }
+				supplierProducts: {
+					select: { categoryId: true, productId: true, unitPrice: true }
+				}
 			}
 		})) as Supplier[]
 	}
@@ -50,8 +52,9 @@ export class SupplierPrismaRepository implements SupplierRepository {
 			data: PrismaSupplierMapper.toPrisma(param),
 			where: { id: param.id },
 			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } }
+				supplierProducts: {
+					select: { categoryId: true, productId: true, unitPrice: true }
+				}
 			}
 		})) as Supplier
 	}

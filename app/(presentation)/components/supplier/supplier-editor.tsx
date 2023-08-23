@@ -1,15 +1,16 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Product, Supplier } from '@/app/domain/models'
+import { Product, Supplier, SupplierProduct } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconClose,
+	IconPlus,
 	Input,
 	InputPrice,
 	Modal,
@@ -41,6 +42,7 @@ type SupplierEditorProps = {
 	updateSupplier: UpdateSupplier
 }
 
+const classFullWidth = 'flex flex-row gap-1 xl:col-span-12 lg:col-span-6 md:col-span-12'
 export function SupplierEditor({
 	supplier,
 	show,
@@ -48,14 +50,17 @@ export function SupplierEditor({
 	addSupplier,
 	updateSupplier
 }: SupplierEditorProps) {
+	const class2Cols = 'xl:col-span-6 lg:col-span-3 md:col-span-6'
+	const class3Cols = 'flex flex-row gap-1 xl:col-span-4 lg:col-span-6 md:col-span-6'
 	const dispatch = useDispatch()
 	const { countries, provinces, municipalities } = useLocations()
 	const categories = useCategories()
 	const products = useProducts()
 
+	const [productItems, setProductItems] = useState<any>({})
+
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
-	const [productList, setProductList] = useState<Product[]>([])
 
 	const [formDate, setFormData] = useState<Supplier>(supplier || ({} as Supplier))
 	const [isLoading, setIsLoading] = useState(false)
@@ -85,9 +90,10 @@ export function SupplierEditor({
 					(municipality) => municipality.provinceId == supplier.provinceId
 				)
 			)
-			setProductList(
-				products.filter((product) => product.categoryId == supplier.categoryId)
-			)
+		}
+		const supplierProducts = (formDate as any).supplierProducts || []
+		if (supplierProducts.length < 1) {
+			setFormData({ ...formDate, supplierProducts: [{} as any] })
 		}
 	}, [])
 
@@ -108,6 +114,7 @@ export function SupplierEditor({
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
+		console.log({ name, value })
 
 		let data: Supplier = { ...formDate, [name]: value }
 
@@ -121,16 +128,16 @@ export function SupplierEditor({
 				municipalities.filter((municipality) => municipality.provinceId == Number(value))
 			)
 		}
-		if (name == 'categoryId') {
-			data = { ...data, productId: undefined as any }
-			setProductList(products.filter((product) => product.categoryId == Number(value)))
-		}
 		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
 			data = { ...formDate, [name]: file }
 			handleInputFile(file)
 		}
 		setFormData(data)
+	}
+
+	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
+		setProductItems({ ...productItems, [index]: { [name]: value } })
 	}
 
 	const handleInputFile = (file: File) => {
@@ -176,13 +183,20 @@ export function SupplierEditor({
 			setIsLoading(false)
 		}
 	}
+
+	const handleAddProductItem = () => {
+		const supplierProducts = formDate?.supplierProducts || []
+		supplierProducts.push({} as any)
+		setFormData({ ...formDate, supplierProducts })
+	}
 	return (
 		<Modal show={show} onClose={onClose}>
 			<ModalTitle>{supplier?.id ? 'Editar' : 'Cadastrar'} fornecedor</ModalTitle>
+			<div>{JSON.stringify(productItems)}</div>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
-					<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
-						<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
+					<div className="grid xl:grid-cols-12 lg:grid-cols-6 md:grid-cols-3 gap-4">
+						<div className={classFullWidth}>
 							<div className="flex">
 								<div className="mr-auto">
 									<Input
@@ -212,7 +226,7 @@ export function SupplierEditor({
 								)}
 							</div>
 						</div>
-						<div className="xl:col-span-2 lg:col-span-3 md:col-span-2">
+						<div className={class2Cols}>
 							<Input
 								type="text"
 								id="name"
@@ -223,7 +237,7 @@ export function SupplierEditor({
 								autoFocus
 							/>
 						</div>
-						<div className="xl:col-span-2 lg:col-span-3 md:col-span-2">
+						<div className={class2Cols}>
 							<Input
 								type="text"
 								id="representative"
@@ -234,7 +248,7 @@ export function SupplierEditor({
 							/>
 						</div>
 						<Divisor label="Contactos" />
-						<div className="xl:col-span-2 lg:col-span-3 md:col-span-2">
+						<div className={class2Cols}>
 							<Input
 								type="number"
 								id="phone"
@@ -244,7 +258,7 @@ export function SupplierEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<div className="xl:col-span-2 lg:col-span-3 md:col-span-2">
+						<div className={class2Cols}>
 							<Input
 								type="email"
 								id="email"
@@ -255,7 +269,7 @@ export function SupplierEditor({
 							/>
 						</div>
 						<Divisor label="Endereço" />
-						<div>
+						<div className={class3Cols}>
 							<Select
 								id="countryId"
 								name="countryId"
@@ -269,7 +283,7 @@ export function SupplierEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<div>
+						<div className={class3Cols}>
 							<Select
 								id="provinceId"
 								name="provinceId"
@@ -283,7 +297,7 @@ export function SupplierEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<div>
+						<div className={class3Cols}>
 							<Select
 								id="municipalityId"
 								name="municipalityId"
@@ -297,7 +311,7 @@ export function SupplierEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<div className="lg:col-span-3 md:col-span-2">
+						<div className={class3Cols}>
 							<Input
 								type="text"
 								id="businessAddress"
@@ -307,41 +321,22 @@ export function SupplierEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<Divisor label="Produto" />
-						<Select
-							id="categoryId"
-							name="categoryId"
-							value={formDate.categoryId}
-							label={LabelUtils.translateField('categoryId')}
-							data={categories.map((category) => ({
-								text: category.name,
-								value: category.id
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<Select
-							id="productId"
-							name="productId"
-							value={formDate.productId || ''}
-							label={LabelUtils.translateField('productId')}
-							data={productList.map((product) => ({
-								text: product.name,
-								value: product.id
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<div>
-							<InputPrice
-								// type="number"
-								id="unitPrice"
-								name="unitPrice"
-								value={formDate?.unitPrice || ''}
-								label={LabelUtils.translateField('unitPrice')}
-								onChange={handleInputChange}
-							/>
-						</div>
+						<Divisor label="Produtos">
+							<div>
+								<span className="btn-primary" onClick={handleAddProductItem}>
+									<IconPlus />
+								</span>
+							</div>
+						</Divisor>
+						{formDate?.supplierProducts?.map((supplierProduct, i) => (
+							<div key={i} className={classFullWidth}>
+								<ProductCard
+									index={i}
+									supplierProduct={supplierProduct}
+									onChange={handleChangeProduct}
+								/>
+							</div>
+						))}
 					</div>
 					<ModalFooter>
 						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
@@ -352,7 +347,76 @@ export function SupplierEditor({
 		</Modal>
 	)
 }
+type ProductCardChangeProps = {
+	index: number
+	name: string
+	value: string
+}
+type ProductCardProps = {
+	supplierProduct: SupplierProduct
+	index: number
+	onChange: (data: ProductCardChangeProps) => void
+}
+const ProductCard = ({ supplierProduct, index, onChange }: ProductCardProps) => {
+	const categories = useCategories()
+	const products = useProducts()
+	const [productList, setProductList] = useState<Product[]>([])
 
-const Divisor = ({ label }: { label?: string }) => (
-	<div className="xl:col-span-4 lg:col-span-3 md:col-span-2 uppercase">{label || ''}</div>
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+		const { name, value } = e.target
+		let data: any = { index, name, value }
+		if (name == 'categoryId') {
+			data = { ...data, productId: undefined }
+			setProductList(products.filter((product) => product.categoryId == Number(value)))
+		}
+		onChange(data)
+	}
+	return (
+		<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+			<div className="lg:col-span-3 md:col-span-2 -mb-3">Produto {index + 1}</div>
+			<div>
+				<Select
+					id={`categoryId${index}`}
+					name="categoryId"
+					value={supplierProduct.categoryId}
+					label={LabelUtils.translateField('categoryId')}
+					data={categories.map((category) => ({
+						text: category.name,
+						value: category.id
+					}))}
+					defaultText="Selecione"
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div>
+				<Select
+					id={`productId${index}`}
+					name="productId"
+					value={supplierProduct.productId}
+					label={LabelUtils.translateField('productId')}
+					data={productList.map((product) => ({
+						text: product.name,
+						value: product.id
+					}))}
+					defaultText="Selecione"
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div>
+				<InputPrice
+					id={`unitPrice${index}`}
+					name="unitPrice"
+					value={supplierProduct.unitPrice}
+					label={LabelUtils.translateField('unitPrice')}
+					onChange={handleInputChange}
+				/>
+			</div>
+		</div>
+	)
+}
+
+const Divisor = ({ label, children }: { label?: string; children?: ReactNode }) => (
+	<div className={classFullWidth}>
+		{label || ''} {children}
+	</div>
 )

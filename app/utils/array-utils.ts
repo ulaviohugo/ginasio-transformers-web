@@ -19,4 +19,18 @@ export class ArrayUtils {
 			return [...data].sort(compareFn)
 		}
 	}
+
+	static removeDuplicated<T = string>(data: string[]): T[] {
+		if (!data) return [] as T[]
+		const uniqueElements: any = {}
+
+		return data.reduce((filteredData: any, item) => {
+			const lowerCaseWord = String(item)?.toLocaleLowerCase()
+			if (!uniqueElements[lowerCaseWord]) {
+				uniqueElements[lowerCaseWord] = true
+				filteredData.push(item)
+			}
+			return filteredData
+		}, [])
+	}
 }

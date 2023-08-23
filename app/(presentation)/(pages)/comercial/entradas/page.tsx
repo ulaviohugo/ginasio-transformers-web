@@ -137,6 +137,7 @@ export default function Entradas() {
 						<tr>
 							<th className="p-1">Id</th>
 							<th className="p-1">Imagem</th>
+							<th className="p-1">Fornecedor</th>
 							<th className="p-1">Categoria</th>
 							<th className="p-1">Produto</th>
 							<th className="p-1">Preço/unid</th>
@@ -167,6 +168,7 @@ export default function Entradas() {
 										<IconProduct size={25} />
 									)}
 								</td>
+								<td className="p-1">{purchase.supplier?.name}</td>
 								<td className="p-1">{purchase.category?.name}</td>
 								<td className="p-1">{purchase.product?.name}</td>
 								<td className="p-1">

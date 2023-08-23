@@ -15,7 +15,8 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 			data: PrismaPurchaseMapper.toPrisma(param),
 			include: {
 				category: { select: { name: true } },
-				product: { select: { name: true } }
+				product: { select: { name: true } },
+				supplier: { select: { name: true } }
 			}
 		})) as Purchase
 	}
@@ -24,7 +25,8 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		return (await this.prisma.purchase.findMany({
 			include: {
 				category: { select: { name: true } },
-				product: { select: { name: true } }
+				product: { select: { name: true } },
+				supplier: { select: { name: true } }
 			}
 		})) as Purchase[]
 	}
@@ -45,7 +47,8 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 			where: { id: param.id },
 			include: {
 				category: { select: { name: true } },
-				product: { select: { name: true } }
+				product: { select: { name: true } },
+				supplier: { select: { name: true } }
 			}
 		})) as Purchase
 	}
