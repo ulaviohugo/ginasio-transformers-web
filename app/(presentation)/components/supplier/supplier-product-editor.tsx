@@ -1,8 +1,8 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useCategories, useProducts } from '../../hooks'
-import { Product } from '@prisma/client'
+import { Product, SupplierProduct } from '@prisma/client'
 import { IconClose, InputPrice, Select } from '..'
 import { LabelUtils } from '@/app/utils'
 
@@ -13,7 +13,7 @@ export type ProductCardChangeProps = {
 }
 
 export type SupplierProductEditorProps = {
-	supplierProduct: any
+	supplierProduct: SupplierProduct
 	itemIndex: number
 	index: number
 	onChange: (data: ProductCardChangeProps) => void
@@ -40,9 +40,18 @@ export function SupplierProductEditor({
 				products.filter((product) => product.categoryId == Number(value)) as Product[]
 			)
 		}
-
 		onChange(data)
 	}
+
+	useEffect(() => {
+		if (supplierProduct?.categoryId) {
+			setProductList(
+				products.filter(
+					(product) => product.categoryId == supplierProduct.categoryId
+				) as Product[]
+			)
+		}
+	}, [supplierProduct?.categoryId])
 	return (
 		<div className="flex-1 grid lg:grid-cols-3 md:grid-cols-2 gap-4 relative bg-slate-100 p-3">
 			<div className="lg:col-span-3 md:col-span-2 -mb-3">Produto {index + 1}</div>
@@ -64,7 +73,7 @@ export function SupplierProductEditor({
 				<Select
 					id={`productId${itemIndex}`}
 					name="productId"
-					value={supplierProduct.productId}
+					value={supplierProduct.productId || ''}
 					label={LabelUtils.translateField('productId')}
 					data={productList.map((product) => ({
 						text: product.name,

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Supplier, SupplierProduct } from '@/app/domain/models'
+import { Supplier } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -98,12 +98,11 @@ export function SupplierEditor({
 					(municipality) => municipality.provinceId == supplier.provinceId
 				)
 			)
+			if (supplier.supplierProducts?.length) {
+				setProductItems(ObjectUtils.convertToObject(supplier.supplierProducts))
+			}
 		}
-		const supplierProducts = (formDate as any).supplierProducts || []
-		if (supplierProducts.length < 1) {
-			setFormData({ ...formDate, supplierProducts: [{} as any] })
-		}
-	}, [])
+	}, [supplier])
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -146,9 +145,13 @@ export function SupplierEditor({
 
 	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
 		let data = productItems[index] || { [index]: { [name]: value } }[index]
-		Object.assign(data, { [name]: value })
+		// Object.assign(data, { [name]: value })
 		if (name == 'categoryId') {
-			Object.assign(data, { productId: undefined })
+			data = { ...data, [name]: value, productId: undefined }
+			// Object.assign(data, { productId: undefined })
+			// data = { ...data, productId: undefined }
+		} else {
+			data = { ...data, [name]: value }
 		}
 
 		setProductItems({ ...productItems, [index]: data })
@@ -223,7 +226,6 @@ export function SupplierEditor({
 	return (
 		<Modal show={show} onClose={onClose}>
 			<ModalTitle>{supplier?.id ? 'Editar' : 'Cadastrar'} fornecedor</ModalTitle>
-			<div>{JSON.stringify(productItems)}</div>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="grid xl:grid-cols-12 lg:grid-cols-6 md:grid-cols-3 gap-4">
