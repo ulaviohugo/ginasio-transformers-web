@@ -166,6 +166,7 @@ model SupplierProduct {
   category Category @relation(fields: [categoryId], references: [id])
   product  Product  @relation(fields: [productId], references: [id])
 
+  @@unique([supplierId, categoryId, productId])
   @@map("tb_supplier_products")
 }
 
