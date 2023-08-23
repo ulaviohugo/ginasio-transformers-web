@@ -11,8 +11,7 @@ export class RemoteAddSupplier implements AddSupplier {
 	) {}
 
 	async add(param: Supplier): Promise<Supplier> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const body = FormDataUtils.createFormData({ ...param, unitPrice })
+		const body = FormDataUtils.createFormData({ ...param })
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

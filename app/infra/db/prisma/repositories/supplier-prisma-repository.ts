@@ -11,21 +11,42 @@ export class SupplierPrismaRepository implements SupplierRepository {
 	}
 
 	async add(param: Supplier): Promise<Supplier> {
-		return (await this.prisma.supplier.create({
-			data: PrismaSupplierMapper.toPrisma(param),
+		const createdSupplier = (await this.prisma.supplier.create({
+			data: {
+				...PrismaSupplierMapper.toPrisma(param),
+				supplierProducts: { createMany: { data: param.supplierProducts } }
+			},
 			include: {
 				supplierProducts: {
-					select: { categoryId: true, productId: true, unitPrice: true }
+					select: {
+						categoryId: true,
+						productId: true,
+						unitPrice: true,
+						createdById: true,
+						createdAt: true,
+						category: { select: { name: true } },
+						product: { select: { name: true } }
+					}
 				}
 			}
 		})) as Supplier
+
+		return createdSupplier
 	}
 
 	async loadAll(): Promise<Supplier[]> {
 		return (await this.prisma.supplier.findMany({
 			include: {
 				supplierProducts: {
-					select: { categoryId: true, productId: true, unitPrice: true }
+					select: {
+						categoryId: true,
+						productId: true,
+						unitPrice: true,
+						createdById: true,
+						createdAt: true,
+						category: { select: { name: true } },
+						product: { select: { name: true } }
+					}
 				}
 			}
 		})) as Supplier[]
@@ -53,7 +74,15 @@ export class SupplierPrismaRepository implements SupplierRepository {
 			where: { id: param.id },
 			include: {
 				supplierProducts: {
-					select: { categoryId: true, productId: true, unitPrice: true }
+					select: {
+						categoryId: true,
+						productId: true,
+						unitPrice: true,
+						createdById: true,
+						createdAt: true,
+						category: { select: { name: true } },
+						product: { select: { name: true } }
+					}
 				}
 			}
 		})) as Supplier

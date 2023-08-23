@@ -5,22 +5,30 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Product, Supplier, SupplierProduct } from '@/app/domain/models'
+import { Supplier, SupplierProduct } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconClose,
 	IconPlus,
 	Input,
-	InputPrice,
 	Modal,
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
-	Select
+	ProductCardChangeProps,
+	Select,
+	SupplierProductEditor
 } from '..'
 
-import { LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
+import {
+	ArrayUtils,
+	LabelUtils,
+	MunicipalityProps,
+	NumberUtils,
+	ObjectUtils,
+	ProvinceProps
+} from '@/app/utils'
 import {
 	addSupplierStore,
 	loadCategoryStore,
@@ -57,7 +65,7 @@ export function SupplierEditor({
 	const categories = useCategories()
 	const products = useProducts()
 
-	const [productItems, setProductItems] = useState<any>({})
+	const [productItems, setProductItems] = useState<any>({ 0: {} })
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
@@ -137,7 +145,13 @@ export function SupplierEditor({
 	}
 
 	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
-		setProductItems({ ...productItems, [index]: { [name]: value } })
+		let data = productItems[index] || { [index]: { [name]: value } }[index]
+		Object.assign(data, { [name]: value })
+		if (name == 'categoryId') {
+			Object.assign(data, { productId: undefined })
+		}
+
+		setProductItems({ ...productItems, [index]: data })
 	}
 
 	const handleInputFile = (file: File) => {
@@ -161,11 +175,15 @@ export function SupplierEditor({
 		e.preventDefault()
 
 		setIsLoading(true)
+
+		const supplierProducts = ArrayUtils.convertToArray(productItems)
+
+		const data: Supplier = { ...formDate, supplierProducts }
 		try {
+			console.log(data)
+
 			const httpResponse = (
-				formDate.id
-					? await updateSupplier.update(formDate)
-					: await addSupplier.add(formDate)
+				formDate.id ? await updateSupplier.update(data) : await addSupplier.add(data)
 			) as Supplier
 
 			if (formDate.id) {
@@ -185,9 +203,22 @@ export function SupplierEditor({
 	}
 
 	const handleAddProductItem = () => {
-		const supplierProducts = formDate?.supplierProducts || []
-		supplierProducts.push({} as any)
-		setFormData({ ...formDate, supplierProducts })
+		let data = { ...productItems }
+		const keys = Object.keys(data)
+
+		const key =
+			ArrayUtils.getGreaterValue(
+				keys.map((keyItem) => NumberUtils.convertToNumber(keyItem))
+			) + 1
+		Object.assign(data, { [key]: {} })
+		setProductItems(data)
+	}
+
+	const handleRemoveProductItem = (index: number) => {
+		let data = { ...productItems }
+		data = ObjectUtils.removeProps(data, [`${index}`])
+
+		setProductItems(data)
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
@@ -323,17 +354,23 @@ export function SupplierEditor({
 						</div>
 						<Divisor label="Produtos">
 							<div>
-								<span className="btn-primary" onClick={handleAddProductItem}>
+								<span
+									className="btn-primary"
+									onClick={handleAddProductItem}
+									title="Adicionar producto"
+								>
 									<IconPlus />
 								</span>
 							</div>
 						</Divisor>
-						{formDate?.supplierProducts?.map((supplierProduct, i) => (
-							<div key={i} className={classFullWidth}>
-								<ProductCard
+						{Object.keys(productItems)?.map((key, i) => (
+							<div key={key} className={classFullWidth}>
+								<SupplierProductEditor
+									itemIndex={Number(key)}
 									index={i}
-									supplierProduct={supplierProduct}
+									supplierProduct={productItems[key]}
 									onChange={handleChangeProduct}
+									onRemoveItem={handleRemoveProductItem}
 								/>
 							</div>
 						))}
@@ -345,73 +382,6 @@ export function SupplierEditor({
 				</form>
 			</ModalBody>
 		</Modal>
-	)
-}
-type ProductCardChangeProps = {
-	index: number
-	name: string
-	value: string
-}
-type ProductCardProps = {
-	supplierProduct: SupplierProduct
-	index: number
-	onChange: (data: ProductCardChangeProps) => void
-}
-const ProductCard = ({ supplierProduct, index, onChange }: ProductCardProps) => {
-	const categories = useCategories()
-	const products = useProducts()
-	const [productList, setProductList] = useState<Product[]>([])
-
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		const { name, value } = e.target
-		let data: any = { index, name, value }
-		if (name == 'categoryId') {
-			data = { ...data, productId: undefined }
-			setProductList(products.filter((product) => product.categoryId == Number(value)))
-		}
-		onChange(data)
-	}
-	return (
-		<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-			<div className="lg:col-span-3 md:col-span-2 -mb-3">Produto {index + 1}</div>
-			<div>
-				<Select
-					id={`categoryId${index}`}
-					name="categoryId"
-					value={supplierProduct.categoryId}
-					label={LabelUtils.translateField('categoryId')}
-					data={categories.map((category) => ({
-						text: category.name,
-						value: category.id
-					}))}
-					defaultText="Selecione"
-					onChange={handleInputChange}
-				/>
-			</div>
-			<div>
-				<Select
-					id={`productId${index}`}
-					name="productId"
-					value={supplierProduct.productId}
-					label={LabelUtils.translateField('productId')}
-					data={productList.map((product) => ({
-						text: product.name,
-						value: product.id
-					}))}
-					defaultText="Selecione"
-					onChange={handleInputChange}
-				/>
-			</div>
-			<div>
-				<InputPrice
-					id={`unitPrice${index}`}
-					name="unitPrice"
-					value={supplierProduct.unitPrice}
-					label={LabelUtils.translateField('unitPrice')}
-					onChange={handleInputChange}
-				/>
-			</div>
-		</div>
 	)
 }
 

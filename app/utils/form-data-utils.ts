@@ -10,7 +10,8 @@ export class FormDataUtils {
 		for (let i = 0; i < values.length; i++) {
 			const key = keys[i]
 			const value = values[i] ?? ''
-			formData.append(key, value)
+			const data = typeof value == 'object' ? JSON.stringify(value) : value
+			formData.append(key, data)
 		}
 		return formData
 	}

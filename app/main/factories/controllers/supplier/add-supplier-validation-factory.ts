@@ -18,10 +18,7 @@ export const makeAddSupplierValidation = () => {
 		'phone',
 		'email',
 		'countryId',
-		'businessAddress',
-		'categoryId',
-		'productId',
-		'unitPrice'
+		'businessAddress'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
@@ -29,9 +26,6 @@ export const makeAddSupplierValidation = () => {
 	validations.push(
 		new EmailValidation('email'),
 		new NumberGreaterThanValidation('countryId', 0),
-		new NumberGreaterThanValidation('categoryId', 0),
-		new NumberGreaterThanValidation('productId', 0),
-		new NumberGreaterThanValidation('unitPrice', 0),
 		new NumberValidation('phone')
 	)
 	return new ValidationComposite(validations)

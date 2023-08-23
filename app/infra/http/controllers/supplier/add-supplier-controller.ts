@@ -2,7 +2,7 @@ import { AddSupplier } from '@/app/domain/usecases'
 import { EmailInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Supplier } from '@/app/domain/models'
+import { Supplier, SupplierProduct } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -20,20 +20,33 @@ export class AddSupplierController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+
 			let uploader: Uploader = null as any
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/suppliers')
 			}
+			const createdById = NumberUtils.convertToNumber(request.accountId)
+
+			let supplierProducts: SupplierProduct[] =
+				typeof request.supplierProducts == 'string'
+					? JSON.parse(request.supplierProducts)
+					: request.supplierProducts
+
+			supplierProducts = supplierProducts.map((sp) => ({
+				categoryId: NumberUtils.convertToNumber(sp.categoryId),
+				productId: NumberUtils.convertToNumber(sp.productId),
+				unitPrice: NumberUtils.convertToNumber(sp.unitPrice),
+				createdById
+			})) as any
+
 			const createdSupplier = await this.addSupplier.add(
 				{
 					...request,
+					supplierProducts,
 					countryId: NumberUtils.convertToNumber(request.countryId),
 					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
-					categoryId: NumberUtils.convertToNumber(request.categoryId, true),
-					productId: NumberUtils.convertToNumber(request.productId, true),
-					unitPrice: NumberUtils.convertToNumber(request.unitPrice, true),
-					createdById: NumberUtils.convertToNumber(request.accountId)
+					createdById
 				},
 				uploader
 			)

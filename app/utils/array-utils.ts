@@ -33,4 +33,18 @@ export class ArrayUtils {
 			return filteredData
 		}, [])
 	}
+
+	static getGreaterValue(values: number[]) {
+		return values.reduce((greater, valorAtual) => {
+			if (valorAtual > greater) {
+				return valorAtual
+			} else {
+				return greater
+			}
+		}, 0)
+	}
+
+	static convertToArray(data: object) {
+		return Object.values(data)
+	}
 }
