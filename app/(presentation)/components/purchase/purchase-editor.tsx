@@ -81,8 +81,25 @@ export function PurchaseEditor({
 
 	useEffect(() => {
 		if (data?.id) {
-			setCategoryList(categories.filter((category) => category.id == data.supplierId))
-			setProductList(products.filter((product) => product.categoryId == data.categoryId))
+			setCategoryList(
+				categories.filter(
+					(category) =>
+						suppliers
+							.find((sup) => sup.id == Number(data.supplierId))
+							?.supplierProducts?.map((sup) => sup.categoryId)
+							.includes(category.id)
+				)
+			)
+			setProductList(
+				products.filter(
+					(product) =>
+						product.categoryId == Number(data.categoryId) &&
+						suppliers
+							.find((sup) => sup.id == data.supplierId)
+							?.supplierProducts?.map((sup) => sup.productId)
+							.includes(product.id)
+				)
+			)
 		}
 	}, [categories, data, products])
 
@@ -113,11 +130,28 @@ export function PurchaseEditor({
 
 		if (name == 'supplierId') {
 			data = { ...data, categoryId: undefined as any, productId: undefined as any }
-			setCategoryList(categories.filter((category) => category.id == Number(value)))
+			setCategoryList(
+				categories.filter(
+					(category) =>
+						suppliers
+							.find((sup) => sup.id == Number(value))
+							?.supplierProducts?.map((sup) => sup.categoryId)
+							.includes(category.id)
+				)
+			)
 		}
 		if (name == 'categoryId') {
 			data = { ...data, productId: undefined as any }
-			setProductList(products.filter((product) => product.categoryId == Number(value)))
+			setProductList(
+				products.filter(
+					(product) =>
+						product.categoryId == Number(value) &&
+						suppliers
+							.find((sup) => sup.id == formData.supplierId)
+							?.supplierProducts?.map((sup) => sup.productId)
+							.includes(product.id)
+				)
+			)
 		}
 		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
