@@ -22,8 +22,6 @@ export class SupplierPrismaRepository implements SupplierRepository {
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
-						createdById: true,
-						createdAt: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
@@ -42,8 +40,6 @@ export class SupplierPrismaRepository implements SupplierRepository {
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
-						createdById: true,
-						createdAt: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
@@ -78,8 +74,6 @@ export class SupplierPrismaRepository implements SupplierRepository {
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
-						createdById: true,
-						createdAt: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
