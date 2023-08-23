@@ -94,7 +94,7 @@ export default function Home() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
+				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
 					<Item
 						number={employees}
 						title={'Funcionários'}
