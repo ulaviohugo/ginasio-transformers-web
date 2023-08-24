@@ -20,7 +20,7 @@ import {
 import { ImSpinner2 } from 'react-icons/im'
 import { IoMdClose } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt } from 'react-icons/bi'
-import { FaHouseUser } from 'react-icons/fa'
+import { FaHouseUser, FaSignOutAlt } from 'react-icons/fa'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
@@ -60,6 +60,9 @@ export const IconProduct = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconSpinner = (props: IconBaseProps): React.ReactElement => (
 	<ImSpinner2 {...props} />
+)
+export const IconSignout = (props: IconBaseProps): React.ReactElement => (
+	<FaSignOutAlt {...props} />
 )
 export const IconUser = (props: IconBaseProps): React.ReactElement => (
 	<HiUser {...props} />
