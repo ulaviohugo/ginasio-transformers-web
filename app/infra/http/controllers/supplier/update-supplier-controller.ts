@@ -2,8 +2,8 @@ import { UpdateSupplier } from '@/app/domain/usecases'
 import { EmailInUseError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Supplier } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
+import { Supplier, SupplierProduct } from '@/app/domain/models'
+import { ArrayUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { Uploader } from '@/app/data/protocols/services'
@@ -24,17 +24,30 @@ export class UpdateSupplierController implements Controller {
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/suppliers')
 			}
+			const updatedById = NumberUtils.convertToNumber(request.accountId)
+
+			let supplierProducts: SupplierProduct[] = ArrayUtils.convertToArray(
+				request.supplierProducts
+			)
+
+			supplierProducts = supplierProducts?.map((sp) => ({
+				supplierId: NumberUtils.convertToNumber(request.id),
+				categoryId: NumberUtils.convertToNumber(sp.categoryId),
+				productId: NumberUtils.convertToNumber(sp.productId),
+				unitPrice: NumberUtils.convertToNumber(sp.unitPrice),
+				updatedById,
+				createdById: updatedById
+			})) as any
+
 			const updatedSupplier = await this.UpdateSupplier.update(
 				{
 					...request,
 					id: NumberUtils.convertToNumber(request.id),
+					supplierProducts,
 					countryId: NumberUtils.convertToNumber(request.countryId),
 					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
-					categoryId: NumberUtils.convertToNumber(request.categoryId, true),
-					productId: NumberUtils.convertToNumber(request.productId, true),
-					unitPrice: NumberUtils.convertToNumber(request.unitPrice, true),
-					updatedById: NumberUtils.convertToNumber(request.accountId)
+					updatedById
 				},
 				uploader
 			)

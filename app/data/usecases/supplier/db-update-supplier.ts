@@ -1,11 +1,14 @@
 import { UpdateSupplier } from '@/app/domain/usecases'
-import { SupplierRepository } from '../../protocols'
-import { Supplier } from '../../../domain/models'
-import { FileUtils, ObjectUtils } from '@/app/utils'
+import { SupplierProductRepository, SupplierRepository } from '../../protocols'
+import { Supplier, SupplierProduct } from '../../../domain/models'
+import { ArrayUtils, FileUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdateSupplier implements UpdateSupplier {
-	constructor(private readonly supplierRepository: SupplierRepository) {}
+	constructor(
+		private readonly supplierRepository: SupplierRepository,
+		private readonly supplierProductRepository: SupplierProductRepository
+	) {}
 
 	async update(
 		param: Supplier,
@@ -33,6 +36,21 @@ export class DbUpdateSupplier implements UpdateSupplier {
 			photo,
 			updatedAt: new Date()
 		}
-		return this.supplierRepository.update(supplier)
+		const updatedSupplier = await this.supplierRepository.update(supplier)
+		let supplierProducts: SupplierProduct[] = []
+		if (updatedSupplier && param.supplierProducts?.length) {
+			for (let i = 0; i < param.supplierProducts.length; i++) {
+				const element = param.supplierProducts[i]
+				const item = await this.supplierProductRepository.addOrUpdate(element)
+				supplierProducts.push(item)
+			}
+		}
+
+		supplierProducts = ArrayUtils.removeDuplicated<SupplierProduct>(
+			[...supplierProducts, ...(updatedSupplier.supplierProducts || [])],
+			'id'
+		)
+
+		return { ...updatedSupplier, supplierProducts }
 	}
 }

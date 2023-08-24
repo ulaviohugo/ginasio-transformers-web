@@ -31,8 +31,15 @@ export class ObjectUtils {
 
 	static convertToObject<T extends object = any>(data: T[]): T {
 		if (!data) return {} as T
-		return data.reduce((prev: any, current, index) => {
-			return { ...prev, [index]: current }
-		}, {})
+		let obj = data
+		if (typeof data == 'string') {
+			obj = JSON.parse(data)
+		}
+		if (Array.isArray(obj)) {
+			return obj.reduce((prev: any, current, index) => {
+				return { ...prev, [index]: current }
+			}, {})
+		}
+		return obj as T
 	}
 }

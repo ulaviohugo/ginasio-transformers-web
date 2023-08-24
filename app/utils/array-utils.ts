@@ -20,15 +20,20 @@ export class ArrayUtils {
 		}
 	}
 
-	static removeDuplicated<T = string>(data: string[]): T[] {
+	static removeDuplicated<T = string>(data: T[], field?: keyof T): T[] {
 		if (!data) return [] as T[]
 		const uniqueElements: any = {}
 
-		return data.reduce((filteredData: any, item) => {
-			const lowerCaseWord = String(item)?.toLocaleLowerCase()
-			if (!uniqueElements[lowerCaseWord]) {
-				uniqueElements[lowerCaseWord] = true
-				filteredData.push(item)
+		return data.reduce((filteredData: any, current) => {
+			let index
+			if (typeof current == 'string') {
+				index = String(current)?.toLocaleLowerCase()
+			} else if (field && current && current?.hasOwnProperty(field)) {
+				index = String(current[field])?.toLocaleLowerCase()
+			}
+			if (index && !uniqueElements[index]) {
+				uniqueElements[index] = true
+				filteredData.push(current)
 			}
 			return filteredData
 		}, [])
@@ -44,7 +49,17 @@ export class ArrayUtils {
 		}, 0)
 	}
 
-	static convertToArray(data: object) {
-		return Object.values(data)
+	static convertToArray(data: any): [] {
+		let obj = data
+		if (typeof data == 'string') {
+			obj = JSON.parse(data)
+		}
+		if (Array.isArray(obj)) {
+			return obj as any
+		}
+		if (typeof obj == 'object') {
+			return Object.values(obj as any) as any
+		}
+		return obj as any
 	}
 }

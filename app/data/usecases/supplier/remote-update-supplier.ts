@@ -11,8 +11,7 @@ export class RemoteUpdateSupplier implements UpdateSupplier {
 	) {}
 
 	async update(param: Supplier): Promise<Supplier> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const handledParam = ObjectUtils.removeProps<Supplier>({ ...param, unitPrice }, [
+		const handledParam = ObjectUtils.removeProps<Supplier>(param, [
 			'createdAt',
 			'createdById',
 			'updatedAt',

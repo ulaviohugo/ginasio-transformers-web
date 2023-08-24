@@ -14,11 +14,13 @@ export class SupplierPrismaRepository implements SupplierRepository {
 		const createdSupplier = (await this.prisma.supplier.create({
 			data: {
 				...PrismaSupplierMapper.toPrisma(param),
-				supplierProducts: { createMany: { data: param.supplierProducts } }
+				supplierProducts: { createMany: { data: param.supplierProducts as any } }
 			},
 			include: {
 				supplierProducts: {
 					select: {
+						id: true,
+						supplierId: true,
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
@@ -37,6 +39,8 @@ export class SupplierPrismaRepository implements SupplierRepository {
 			include: {
 				supplierProducts: {
 					select: {
+						id: true,
+						supplierId: true,
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
@@ -65,12 +69,14 @@ export class SupplierPrismaRepository implements SupplierRepository {
 	}
 
 	async update(param: Supplier): Promise<Supplier> {
-		return (await this.prisma.supplier.update({
+		const updatedSupplier = (await this.prisma.supplier.update({
 			data: PrismaSupplierMapper.toPrisma(param),
 			where: { id: param.id },
 			include: {
 				supplierProducts: {
 					select: {
+						id: true,
+						supplierId: true,
 						categoryId: true,
 						productId: true,
 						unitPrice: true,
@@ -80,6 +86,8 @@ export class SupplierPrismaRepository implements SupplierRepository {
 				}
 			}
 		})) as Supplier
+
+		return updatedSupplier
 	}
 
 	async delete(supplierId: number): Promise<boolean> {

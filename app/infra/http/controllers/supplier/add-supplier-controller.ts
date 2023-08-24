@@ -3,7 +3,7 @@ import { EmailInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Supplier, SupplierProduct } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
+import { ArrayUtils, NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { Uploader } from '@/app/data/protocols/services'
@@ -27,12 +27,11 @@ export class AddSupplierController implements Controller {
 			}
 			const createdById = NumberUtils.convertToNumber(request.accountId)
 
-			let supplierProducts: SupplierProduct[] =
-				typeof request.supplierProducts == 'string'
-					? JSON.parse(request.supplierProducts)
-					: request.supplierProducts
+			let supplierProducts: SupplierProduct[] = ArrayUtils.convertToArray(
+				request.supplierProducts
+			)
 
-			supplierProducts = supplierProducts.map((sp) => ({
+			supplierProducts = supplierProducts?.map((sp) => ({
 				categoryId: NumberUtils.convertToNumber(sp.categoryId),
 				productId: NumberUtils.convertToNumber(sp.productId),
 				unitPrice: NumberUtils.convertToNumber(sp.unitPrice),

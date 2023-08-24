@@ -145,13 +145,11 @@ export function SupplierEditor({
 
 	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
 		let data = productItems[index] || { [index]: { [name]: value } }[index]
-		// Object.assign(data, { [name]: value })
+		const supplierId = supplier?.id
 		if (name == 'categoryId') {
-			data = { ...data, [name]: value, productId: undefined }
-			// Object.assign(data, { productId: undefined })
-			// data = { ...data, productId: undefined }
+			data = { ...data, [name]: value, productId: undefined, supplierId }
 		} else {
-			data = { ...data, [name]: value }
+			data = { ...data, [name]: value, supplierId }
 		}
 
 		setProductItems({ ...productItems, [index]: data })
