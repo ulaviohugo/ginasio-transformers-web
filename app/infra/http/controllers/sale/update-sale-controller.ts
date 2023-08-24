@@ -20,8 +20,10 @@ export class UpdateSaleController implements Controller {
 
 			const updatedSale = await this.UpdateSale.update({
 				...request,
+				id: NumberUtils.convertToNumber(request.id),
 				purchaseId: NumberUtils.convertToNumber(request.purchaseId),
 				quantity: NumberUtils.convertToNumber(request.quantity),
+				employeeId: undefined as any,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 				discount: NumberUtils.convertToNumber(request.discount),

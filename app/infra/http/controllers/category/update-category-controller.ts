@@ -13,8 +13,6 @@ export class UpdateCategoryController implements Controller {
 		private readonly validation: Validation
 	) {}
 	async handle(request: ControllerParams<Category>): Promise<HttpResponse> {
-		console.log({ request })
-
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

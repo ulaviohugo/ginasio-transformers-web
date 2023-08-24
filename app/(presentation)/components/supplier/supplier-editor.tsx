@@ -121,8 +121,6 @@ export function SupplierEditor({
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		console.log({ name, value })
-
 		let data: Supplier = { ...formDate, [name]: value }
 
 		if (name == 'countryId') {
