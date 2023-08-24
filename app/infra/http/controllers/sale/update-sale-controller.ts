@@ -17,15 +17,16 @@ export class UpdateSaleController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+
 			const updatedSale = await this.UpdateSale.update({
 				...request,
 				purchaseId: NumberUtils.convertToNumber(request.purchaseId),
 				quantity: NumberUtils.convertToNumber(request.quantity),
-				employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 				discount: NumberUtils.convertToNumber(request.discount),
-				updatedById: NumberUtils.convertToNumber(request.accountId)
+				updatedById: NumberUtils.convertToNumber(request.accountId),
+				updatedAt: new Date()
 			})
 			if (updatedSale == 'notFound') {
 				return notFound()

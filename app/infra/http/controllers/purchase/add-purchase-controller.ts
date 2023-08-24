@@ -23,12 +23,14 @@ export class AddPurchaseController implements Controller {
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/purchases')
 			}
+			const createdById = NumberUtils.convertToNumber(request.accountId)
 			const createdPurchase = await this.addPurchase.add(
 				{
 					...request,
 					supplierId: NumberUtils.convertToNumber(request.supplierId),
 					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
+					employeeId:
+						NumberUtils.convertToNumber(request.employeeId, true) || createdById,
 					productId: NumberUtils.convertToNumber(request.productId),
 					unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 					totalValue: NumberUtils.convertToNumber(request.totalValue),
@@ -37,7 +39,7 @@ export class AddPurchaseController implements Controller {
 					paid: !!request.paid,
 					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
 					dueDate: DateUtils.convertToDate(request.dueDate),
-					createdById: NumberUtils.convertToNumber(request.accountId)
+					createdById
 				},
 				uploader
 			)

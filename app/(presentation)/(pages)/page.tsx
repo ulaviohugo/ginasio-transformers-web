@@ -125,10 +125,10 @@ export default function Home() {
 					/>
 					<Item
 						number={purchases}
-						title={'Entradas'}
+						title={'Estoque'}
 						icon={IconProduct}
 						isLoading={isLoadingPurchases}
-						href="/comercial/entradas"
+						href="/comercial/estoque"
 					/>
 					<Item
 						number={sales}

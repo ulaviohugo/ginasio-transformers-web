@@ -29,7 +29,6 @@ export class UpdatePurchaseController implements Controller {
 					id: NumberUtils.convertToNumber(request.id),
 					supplierId: NumberUtils.convertToNumber(request.supplierId),
 					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
 					productId: NumberUtils.convertToNumber(request.productId),
 					unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 					totalValue: NumberUtils.convertToNumber(request.totalValue),

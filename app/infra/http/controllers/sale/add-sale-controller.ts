@@ -18,15 +18,17 @@ export class AddSaleController implements Controller {
 				return badRequest(error)
 			}
 
+			const createdById = NumberUtils.convertToNumber(request.accountId)
+
 			const createdSale = await this.addSale.add({
 				...request,
 				purchaseId: NumberUtils.convertToNumber(request.purchaseId),
 				quantity: NumberUtils.convertToNumber(request.quantity),
-				employeeId: NumberUtils.convertToNumber(request.employeeId, true) || 1,
+				employeeId: NumberUtils.convertToNumber(request.employeeId) || createdById,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 				discount: NumberUtils.convertToNumber(request.discount),
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				createdById
 			})
 			return ok(createdSale)
 		} catch (error) {

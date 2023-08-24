@@ -30,6 +30,7 @@ export class StringUtils {
 	}
 
 	static getFirstWord(text: string) {
+		if (!text) return
 		if (text.length < 0) return
 		return text.split(' ')[0]
 	}

@@ -11,17 +11,20 @@ export class SalePrismaRepository implements SaleRepository {
 	}
 
 	async add(param: Sale): Promise<Sale> {
-		return (await this.prisma.sale.create({
+		const createdSale = (await this.prisma.sale.create({
 			data: PrismaSaleMapper.toPrisma(param),
 			include: {
 				purchase: {
 					include: {
 						category: true,
-						product: true
+						product: true,
+						employee: { select: { id: true, name: true } }
 					}
 				}
 			}
 		})) as Sale
+
+		return createdSale
 	}
 
 	async loadAll(): Promise<Sale[]> {
@@ -30,7 +33,8 @@ export class SalePrismaRepository implements SaleRepository {
 				purchase: {
 					include: {
 						category: true,
-						product: true
+						product: true,
+						employee: { select: { id: true, name: true } }
 					}
 				}
 			}
@@ -55,7 +59,8 @@ export class SalePrismaRepository implements SaleRepository {
 				purchase: {
 					include: {
 						category: true,
-						product: true
+						product: true,
+						employee: { select: { id: true, name: true } }
 					}
 				}
 			}
