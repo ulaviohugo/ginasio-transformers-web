@@ -41,6 +41,7 @@ export function ModalDelete({
 					text="Excluir"
 					icon={IconTrash}
 					disabled={isLoading}
+					isLoading={isLoading}
 					onClick={handleSubmit}
 				/>
 				<ButtonCancel onClick={onClose} />
