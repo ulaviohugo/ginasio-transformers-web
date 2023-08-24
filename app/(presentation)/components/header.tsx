@@ -2,15 +2,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ElementType } from 'react'
-import { IconHome, IconProduct, IconUser } from '.'
+import { ElementType, useState } from 'react'
+import { IconHome, IconProduct, IconSignout, IconUser, Spinner } from '.'
 import { setCurrentAccountAdapter } from '@/app/main/adapters'
 import { useAuth } from '../hooks'
 import { StringUtils } from '@/app/utils'
 
 export function Header() {
 	const user = useAuth()
+	const [isLoading, setIsLoading] = useState(false)
 	const handleSignout = async () => {
+		setIsLoading(true)
 		setCurrentAccountAdapter(null)
 	}
 	const path = usePathname()
@@ -45,10 +47,18 @@ export function Header() {
 						<span>{StringUtils.getFirstWord(user.name)}</span>
 					</div>
 					<button
-						className="btn hover:bg-white hover:text-primary border"
+						className="btn bg-gray-800 hover:bg-white hover:text-primary border hover:justify-between transition-all duration-300 ease-out"
 						onClick={handleSignout}
 					>
-						Sair
+						{isLoading ? (
+							<>
+								Saindo <Spinner />
+							</>
+						) : (
+							<>
+								Sair <IconSignout />
+							</>
+						)}
 					</button>
 				</div>
 			</nav>
