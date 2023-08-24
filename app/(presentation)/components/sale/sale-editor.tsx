@@ -5,11 +5,12 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Category, Product, Sale } from '@/app/domain/models'
+import { Purchase, Sale } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
-	IconClose,
+	IconProduct,
+	IconSearch,
 	Input,
 	InputPrice,
 	Modal,
@@ -19,21 +20,11 @@ import {
 	Select
 } from '..'
 
-import { ColorUtils, DateUtils, LabelUtils, NumberUtils } from '@/app/utils'
-import {
-	addSaleStore,
-	loadCategoryStore,
-	loadProductStore,
-	loadSupplierStore,
-	updateSaleStore
-} from '../../redux'
+import { LabelUtils, NumberUtils, StringUtils } from '@/app/utils'
+import { addSaleStore, loadPurchaseStore, updateSaleStore } from '../../redux'
 import { AddSale, UpdateSale } from '@/app/domain/usecases'
-import { useCategories, useProducts, useSuppliers } from '../../hooks'
-import {
-	makeRemoteLoadCategories,
-	makeRemoteLoadProduct,
-	makeRemoteLoadSuppliers
-} from '@/app/main/factories/usecases/remote'
+import { usePurchases } from '../../hooks'
+import { makeRemoteLoadPurchases } from '@/app/main/factories/usecases/remote'
 
 type SaleEditorProps = {
 	data?: Sale
@@ -51,16 +42,10 @@ export function SaleEditor({
 	updateSale
 }: SaleEditorProps) {
 	const dispatch = useDispatch()
-	const categories = useCategories()
-	const products = useProducts()
-	const suppliers = useSuppliers()
+	const stocks = usePurchases()
 
-	const [productList, setProductList] = useState<Product[]>([])
-	const [categoryList, setCategoryList] = useState<Category[]>([])
-
-	const [formData, setFormData] = useState<Sale>({} as Sale)
+	const [formData, setFormData] = useState<Sale>(data || ({} as Sale))
 	const [isLoading, setIsLoading] = useState(false)
-	const [photoPreview, setPhotoPreview] = useState('')
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -77,19 +62,9 @@ export function SaleEditor({
 	}
 
 	useEffect(() => {
-		if (categories.length < 1) {
-			fetchData(makeRemoteLoadCategories(), (response) => {
-				dispatch(loadCategoryStore(response))
-			})
-		}
-		if (products.length < 1) {
-			fetchData(makeRemoteLoadProduct(), (response) => {
-				dispatch(loadProductStore(response))
-			})
-		}
-		if (suppliers.length < 1) {
-			fetchData(makeRemoteLoadSuppliers(), (response) => {
-				dispatch(loadSupplierStore(response))
+		if (stocks.length < 1) {
+			fetchData(makeRemoteLoadPurchases(), (response) => {
+				dispatch(loadPurchaseStore(response))
 			})
 		}
 	}, [])
@@ -112,28 +87,23 @@ export function SaleEditor({
 			const quantity = Number(value)
 			data = {
 				...data,
-				unitPrice:
-					quantity > 0 ? NumberUtils.convertToNumber(formData.totalValue) / quantity : 0
+				totalValue:
+					quantity > 0 ? NumberUtils.convertToNumber(formData.unitPrice) * quantity : 0
 			}
 		}
 		setFormData(data)
 	}
 
-	const handleInputFile = (file: File) => {
-		if (file) {
-			const reader = new FileReader()
-
-			reader.onload = function (e) {
-				setPhotoPreview(String(e.target?.result))
-			}
-
-			reader.readAsDataURL(file)
-		}
-	}
-
-	const clearInputFile = () => {
-		setFormData((prev) => ({ ...prev, photo: '' }))
-		setPhotoPreview('')
+	const handleSelectItem = ({ id, sellingPriceUnit }: Purchase) => {
+		const quantity = Number(formData.quantity) || 1
+		const totalValue = quantity > 0 ? quantity * sellingPriceUnit : 0
+		setFormData({
+			...formData,
+			purchaseId: id,
+			unitPrice: sellingPriceUnit,
+			totalValue,
+			quantity
+		})
 	}
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -150,9 +120,7 @@ export function SaleEditor({
 			} else {
 				dispatch(addSaleStore(httpResponse))
 			}
-			toast.success(
-				`Funcionário ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`
-			)
+			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
@@ -162,49 +130,12 @@ export function SaleEditor({
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
-			<ModalTitle>{data?.id ? 'Editar' : 'Cadastrar'} venda</ModalTitle>
+			<ModalTitle>
+				{data?.id ? 'Editar' : 'Cadastrar'} venda {data?.purchase?.product?.name}
+			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
-						<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
-							<div className="flex">
-								<div className="mr-auto">
-									<Input
-										type="file"
-										id="photo"
-										name="photo"
-										// value={formDate?.photo || ''}
-										label={'Imagem'}
-										onChange={handleInputChange}
-										accept="photo/*"
-									/>
-								</div>
-								{photoPreview && (
-									<div className="relative border rounded-md p-3">
-										<Image
-											src={photoPreview}
-											width={120}
-											height={100}
-											alt="Pre-visualização"
-											className="object-cover aspect-square"
-										/>
-										<IconClose
-											className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
-											onClick={clearInputFile}
-										/>
-									</div>
-								)}
-							</div>
-						</div>
-						<div>
-							<InputPrice
-								id="totalValue"
-								name="totalValue"
-								value={formData?.totalValue || ''}
-								label={LabelUtils.translateField('totalValue')}
-								onChange={handleInputChange}
-							/>
-						</div>
 						<div>
 							<Input
 								type="number"
@@ -226,6 +157,16 @@ export function SaleEditor({
 							/>
 						</div>
 						<div>
+							<InputPrice
+								id="totalValue"
+								name="totalValue"
+								value={formData?.totalValue || ''}
+								label={'Total a pagar'}
+								onChange={handleInputChange}
+								disabled
+							/>
+						</div>
+						<div>
 							<Select
 								id="paymentMethod"
 								name="paymentMethod"
@@ -239,6 +180,9 @@ export function SaleEditor({
 							/>
 						</div>
 					</div>
+					<div className="flex-1 my-5">
+						<ItemList stocks={stocks} onSelect={handleSelectItem} />
+					</div>
 					<ModalFooter>
 						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
 						<ButtonCancel onClick={onClose} />
@@ -249,6 +193,80 @@ export function SaleEditor({
 	)
 }
 
-const Divisor = ({ label }: { label?: string }) => (
-	<div className="xl:col-span-4 lg:col-span-3 md:col-span-2 uppercase">{label || ''}</div>
-)
+type ItemListProps = {
+	stocks: Purchase[]
+	onSelect: (selectedStock: Purchase) => void
+}
+
+const ItemList = ({ stocks, onSelect }: ItemListProps) => {
+	const [search, setSearch] = useState('')
+	const [selectedItem, setSelectedItem] = useState(0)
+	const filteredStocks = !search.trim()
+		? stocks
+		: stocks.filter((stock) => {
+				let stockData =
+					(stock.category?.name?.toLocaleLowerCase() || '') +
+					(stock.product?.name?.toLocaleLowerCase() || '')
+				stockData = StringUtils.slug(stockData)
+				return stockData.includes(StringUtils.slug(search))
+		  })
+
+	const handleSelect = (stock: Purchase) => {
+		onSelect(stock)
+		setSelectedItem(stock.id)
+	}
+	return (
+		<div className="flex flex-col gap-1">
+			<Input
+				placeholder="Pesquisar por produto ou categoria"
+				icon={IconSearch}
+				onChange={({ target }) => setSearch(target.value)}
+				autoFocus
+			/>
+			<div className="max-h-64 overflow-auto">
+				<table className="table text-left text-sm border border-gray-100 w-full">
+					<tr>
+						<th className="p-1">Imagem</th>
+						<th className="p-1">Categoria</th>
+						<th className="p-1">Produto</th>
+						<th className="p-1">Preço/unid</th>
+						<th className="p-1">Cor</th>
+						<th className="p-1">Tamanho</th>
+						<th className="p-1">Quantidade</th>
+					</tr>
+					{filteredStocks.map((stock, i) => (
+						<tr
+							key={stock.id}
+							className={`${selectedItem == stock.id && '!bg-primary text-white'} ${
+								i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
+							} transition-all duration-200 ease-out cursor-pointer`}
+							onClick={() => handleSelect(stock)}
+						>
+							<td className="p-1">
+								{stock.photo ? (
+									<Image
+										src={stock.photo}
+										alt="Imagem"
+										width={30}
+										height={30}
+										className="aspect-square object-cover"
+									/>
+								) : (
+									<IconProduct size={25} />
+								)}
+							</td>
+							<td className="p-1">{stock.category?.name}</td>
+							<td className="p-1">{stock.product?.name}</td>
+							<td className="p-1">
+								{NumberUtils.formatCurrency(stock.sellingPriceUnit)}
+							</td>
+							<td className="p-1">{stock.color}</td>
+							<td className="p-1">{stock.size}</td>
+							<td className="p-1">{NumberUtils.format(stock.quantity)}</td>
+						</tr>
+					))}
+				</table>
+			</div>
+		</div>
+	)
+}
