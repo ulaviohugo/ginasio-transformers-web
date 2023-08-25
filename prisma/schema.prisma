@@ -111,7 +111,7 @@ model Category {
 model Product {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(70)
-  barCode     String    @unique @map("bar_code") @db.VarChar(70)
+  barCode     String?    @unique @map("bar_code") @db.VarChar(70)
   photo       String?   @db.VarChar(100)
   categoryId  Int       @map("category_id")
   price       Float
