@@ -141,6 +141,7 @@ export default function Vendas() {
 							<th className="p-1">Cor</th>
 							<th className="p-1">Quantidade</th>
 							<th className="p-1">Preço unitário</th>
+							<th className="p-1">Tamanho</th>
 							<th className="p-1">Pago</th>
 							<th className="p-1">Funcionário</th>
 							<th className="p-1">Data</th>
@@ -160,6 +161,7 @@ export default function Vendas() {
 								<td className="p-1">{sale.purchase?.color}</td>
 								<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
 								<td className="p-1">{NumberUtils.formatCurrency(sale.unitPrice)}</td>
+								<td className="p-1">{sale.purchase?.size}</td>
 								<td className="p-1">{NumberUtils.formatCurrency(sale.totalValue)}</td>
 								<td className="p-1">
 									{StringUtils.getFirstWord(sale.purchase?.employee?.name as string)}
