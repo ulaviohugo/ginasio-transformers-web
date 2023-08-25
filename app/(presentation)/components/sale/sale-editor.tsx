@@ -20,7 +20,7 @@ import {
 	Select
 } from '..'
 
-import { LabelUtils, NumberUtils, StringUtils } from '@/app/utils'
+import { LabelUtils, NumberUtils, PaymentUtils, StringUtils } from '@/app/utils'
 import { addSaleStore, loadPurchaseStore, updateSaleStore } from '../../redux'
 import { AddSale, UpdateSale } from '@/app/domain/usecases'
 import { usePurchases } from '../../hooks'
@@ -172,7 +172,7 @@ export function SaleEditor({
 								name="paymentMethod"
 								value={formData?.paymentMethod || ''}
 								label={LabelUtils.translateField('paymentMethod')}
-								data={['Dinheiro', 'TPA', 'Transferência'].map((paymentType) => ({
+								data={PaymentUtils.getMethods().map((paymentType) => ({
 									text: paymentType
 								}))}
 								defaultText="Selecione"

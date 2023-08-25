@@ -19,7 +19,7 @@ import {
 	Select
 } from '..'
 
-import { ColorUtils, DateUtils, LabelUtils, NumberUtils } from '@/app/utils'
+import { ColorUtils, DateUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/app/utils'
 import {
 	addPurchaseStore,
 	loadCategoryStore,
@@ -381,7 +381,7 @@ export function PurchaseEditor({
 								name="paymentMethod"
 								value={formData?.paymentMethod || ''}
 								label={LabelUtils.translateField('paymentMethod')}
-								data={['Dinheiro', 'TPA', 'Transferência'].map((paymentType) => ({
+								data={PaymentUtils.getMethods().map((paymentType) => ({
 									text: paymentType
 								}))}
 								defaultText="Selecione"
