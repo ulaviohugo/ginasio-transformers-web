@@ -1,9 +1,9 @@
 import { AddSupplier } from '@/app/domain/usecases'
-import { EmailInUseError } from '../../errors'
+import { EmailInUseError, MissingParamError, UnexpectedError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Supplier, SupplierProduct } from '@/app/domain/models'
-import { ArrayUtils, NumberUtils } from '@/app/utils'
+import { ArrayUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { Uploader } from '@/app/data/protocols/services'
@@ -19,6 +19,9 @@ export class AddSupplierController implements Controller {
 			const error = this.validation.validate(request)
 			if (error) {
 				return badRequest(error)
+			}
+			if (!request.supplierProducts || ObjectUtils.isEmpty(request.supplierProducts[0])) {
+				return badRequest(new UnexpectedError('Adicione pelo menos 1 produto'))
 			}
 
 			let uploader: Uploader = null as any

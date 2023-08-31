@@ -1,9 +1,9 @@
 import { UpdateSupplier } from '@/app/domain/usecases'
-import { EmailInUseError } from '../../errors'
+import { EmailInUseError, UnexpectedError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
 import { Supplier, SupplierProduct } from '@/app/domain/models'
-import { ArrayUtils, NumberUtils } from '@/app/utils'
+import { ArrayUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { Uploader } from '@/app/data/protocols/services'
@@ -20,6 +20,10 @@ export class UpdateSupplierController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+			if (!request.supplierProducts || ObjectUtils.isEmpty(request.supplierProducts[0])) {
+				return badRequest(new UnexpectedError('Adicione pelo menos 1 produto'))
+			}
+
 			let uploader: Uploader = null as any
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/suppliers')
