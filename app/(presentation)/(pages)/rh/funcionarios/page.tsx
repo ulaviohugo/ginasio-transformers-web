@@ -167,9 +167,6 @@ export default function Employees() {
 											{DateUtils.getDatePt(employee.contractEndDate, '/')}
 										</div>
 									)}
-									<div className="flex items-center gap-1 text-sm">
-										<IconPhone /> Telefone: {NumberUtils.format(employee.phone1)}
-									</div>
 									<CardActions
 										onClickDelete={() => handleOpenFormDelete(employee)}
 										onClickEdit={() => handleOpenDetalhe(employee)}
