@@ -12,6 +12,8 @@ import {
 	IconClose,
 	IconPlus,
 	Input,
+	InputEmail,
+	InputPhone,
 	Modal,
 	ModalBody,
 	ModalFooter,
@@ -278,8 +280,7 @@ export function SupplierEditor({
 						</div>
 						<Divisor label="Contactos" />
 						<div className={class2Cols}>
-							<Input
-								type="number"
+							<InputPhone
 								id="phone"
 								name="phone"
 								value={formDate?.phone || ''}
@@ -288,8 +289,7 @@ export function SupplierEditor({
 							/>
 						</div>
 						<div className={class2Cols}>
-							<Input
-								type="email"
+							<InputEmail
 								id="email"
 								name="email"
 								value={formDate?.email || ''}
