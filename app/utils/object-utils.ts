@@ -1,6 +1,6 @@
 export class ObjectUtils {
 	static isEmpty(param: any) {
-		return !param || JSON.stringify(param) == '{}'
+		return !param || JSON.stringify(param) == '{}' || param == '{}'
 	}
 
 	static removeProps<T extends object = any>(param: T, props: (keyof T)[]): T {
