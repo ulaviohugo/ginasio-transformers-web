@@ -109,7 +109,7 @@ export default function Home() {
 						icon={IconCategory}
 						isLoading={isLoadingCategories}
 						href="/comercial/categorias"
-						className="bg-gray-300"
+						className="bg-gray-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 					<Item
 						number={products}
@@ -117,7 +117,7 @@ export default function Home() {
 						icon={IconProduct}
 						isLoading={isLoadingProducts}
 						href="/comercial/produtos"
-						className="bg-blue-300"
+						className="bg-blue-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 					<Item
 						number={suppliers}
@@ -125,7 +125,7 @@ export default function Home() {
 						icon={IconSupplier}
 						isLoading={isLoadingSuppliers}
 						href="/comercial/fornecedores"
-						className="bg-red-300"
+						className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 					<Item
 						number={purchases}
@@ -133,7 +133,7 @@ export default function Home() {
 						icon={IconProduct}
 						isLoading={isLoadingPurchases}
 						href="/comercial/estoque"
-						className="bg-yellow-300"
+						className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 					<Item
 						number={sales}
@@ -141,7 +141,7 @@ export default function Home() {
 						icon={IconCurrency}
 						isLoading={isLoadingSales}
 						href="/comercial/vendas"
-						className="bg-green-300"
+						className="bg-green-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 				</div>
 			</LayoutBody>
@@ -153,7 +153,9 @@ const Item = ({ icon: Icon, number, title, isLoading, href, className }: ItemPro
 	return (
 		<Link
 			href={href}
-			className={`flex gap-2 shadow-md p-4 rounded-lg ${className || ''}`}
+			className={`flex gap-2 shadow-md p-4 rounded-lg hover:scale-105 transition-all duration-300 ${
+				className || ''
+			}`}
 		>
 			{Icon && <Icon className="text-7xl" />}
 			<div className={`flex-1`}>
