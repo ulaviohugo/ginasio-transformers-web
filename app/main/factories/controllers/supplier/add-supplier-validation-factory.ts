@@ -25,8 +25,7 @@ export const makeAddSupplierValidation = () => {
 	}
 	validations.push(
 		new EmailValidation('email'),
-		new NumberGreaterThanValidation('countryId', 0),
-		new NumberValidation('phone')
+		new NumberGreaterThanValidation('countryId', 0)
 	)
 	return new ValidationComposite(validations)
 }

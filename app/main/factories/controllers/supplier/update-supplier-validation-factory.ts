@@ -15,7 +15,6 @@ export const makeUpdateSupplierValidation = () => {
 	const fields: FieldTypes[] = [
 		'name',
 		'representative',
-		'phone',
 		'email',
 		'countryId',
 		'businessAddress'
