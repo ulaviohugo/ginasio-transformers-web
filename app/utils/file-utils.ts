@@ -20,7 +20,7 @@ export class FileUtils {
 		const splitFileName = fileName.split('.')
 		const occurrences = splitFileName.length
 
-		return occurrences < 1 ? '' : splitFileName[occurrences - 1]
+		return occurrences < 1 ? '' : splitFileName[occurrences - 1]?.toLocaleLowerCase()
 	}
 
 	static getUploadPath(filePath: string) {
