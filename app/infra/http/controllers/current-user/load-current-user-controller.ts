@@ -7,7 +7,7 @@ import { NumberUtils } from '@/app/utils'
 
 export class LoadCurrentUserController implements Controller {
 	constructor(private readonly loadCurrentUser: LoadCurrentUser) {}
-	async handle(param: ControllerParams<object>): Promise<HttpResponse> {
+	async handle(param: ControllerParams): Promise<HttpResponse> {
 		try {
 			const accountId = NumberUtils.convertToNumber(param.accountId)
 			const data = await this.loadCurrentUser.load(accountId)
