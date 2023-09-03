@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import {
 	authReducer,
 	categoryReducer,
+	customerReducer,
 	employeeReducer,
 	locationReducer,
 	productReducer,
@@ -13,9 +14,10 @@ import {
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		categories: categoryReducer,
+		customers: customerReducer,
 		employees: employeeReducer,
 		locations: locationReducer,
-		categories: categoryReducer,
 		products: productReducer,
 		purchases: purchaseReducer,
 		sales: saleReducer,

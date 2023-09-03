@@ -1,5 +1,6 @@
 export * from './auth-slice'
 export * from './categories-slice'
+export * from './customers-slice copy'
 export * from './employees-slice'
 export * from './locations-slice'
 export * from './products-slice'
