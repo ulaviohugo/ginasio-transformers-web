@@ -1,4 +1,4 @@
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { UpdateCategory } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,8 +10,8 @@ export class RemoteUpdateCategory implements UpdateCategory {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: Category): Promise<Category> {
-		const handledParam = ObjectUtils.removeProps<Category>(param, [
+	async update(param: CategoryModel): Promise<CategoryModel> {
+		const handledParam = ObjectUtils.removeProps<CategoryModel>(param, [
 			'createdAt',
 			'createdById',
 			'updatedAt',

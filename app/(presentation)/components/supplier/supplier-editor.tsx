@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -45,7 +45,7 @@ import {
 } from '@/app/main/factories/usecases/remote'
 
 type SupplierEditorProps = {
-	supplier?: Supplier
+	supplier?: SupplierModel
 	show: boolean
 	onClose: () => void
 	addSupplier: AddSupplier
@@ -72,7 +72,9 @@ export function SupplierEditor({
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<Supplier>(supplier || ({} as Supplier))
+	const [formDate, setFormData] = useState<SupplierModel>(
+		supplier || ({} as SupplierModel)
+	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setImagePreview] = useState('')
 
@@ -123,7 +125,7 @@ export function SupplierEditor({
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		let data: Supplier = { ...formDate, [name]: value }
+		let data: SupplierModel = { ...formDate, [name]: value }
 
 		if (name == 'countryId') {
 			data = { ...data, provinceId: undefined, municipalityId: undefined }
@@ -179,13 +181,13 @@ export function SupplierEditor({
 
 		const supplierProducts = ArrayUtils.convertToArray(productItems)
 
-		const data: Supplier = { ...formDate, supplierProducts }
+		const data: SupplierModel = { ...formDate, supplierProducts }
 		try {
 			console.log(data)
 
 			const httpResponse = (
 				formDate.id ? await updateSupplier.update(data) : await addSupplier.add(data)
-			) as Supplier
+			) as SupplierModel
 
 			if (formDate.id) {
 				dispatch(updateSupplierStore(httpResponse))

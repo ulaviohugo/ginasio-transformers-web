@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Category, Product, Purchase } from '@/app/domain/models'
+import { CategoryModel, ProductModel, PurchaseModel } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -36,7 +36,7 @@ import {
 } from '@/app/main/factories/usecases/remote'
 
 type PurchaseEditorProps = {
-	data?: Purchase
+	data?: PurchaseModel
 	show: boolean
 	onClose: () => void
 	addPurchase: AddPurchase
@@ -55,12 +55,12 @@ export function PurchaseEditor({
 	const products = useProducts()
 	const suppliers = useSuppliers()
 
-	const [productList, setProductList] = useState<Product[]>([])
-	const [categoryList, setCategoryList] = useState<Category[]>([])
+	const [productList, setProductList] = useState<ProductModel[]>([])
+	const [categoryList, setCategoryList] = useState<CategoryModel[]>([])
 
-	const [formData, setFormData] = useState<Purchase>(
+	const [formData, setFormData] = useState<PurchaseModel>(
 		(data?.id && data) ||
-			({ paid: true, purchaseDate: DateUtils.getDate(new Date()) as any } as Purchase)
+			({ paid: true, purchaseDate: DateUtils.getDate(new Date()) as any } as PurchaseModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
@@ -127,7 +127,7 @@ export function PurchaseEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Purchase = { ...formData, [name]: value }
+		let data: PurchaseModel = { ...formData, [name]: value }
 
 		if (name == 'supplierId') {
 			data = { ...data, categoryId: undefined as any, productId: undefined as any }
@@ -207,7 +207,7 @@ export function PurchaseEditor({
 				formData.id
 					? await updatePurchase.update(formData)
 					: await addPurchase.add(formData)
-			) as Purchase
+			) as PurchaseModel
 
 			if (formData.id) {
 				dispatch(updatePurchaseStore(httpResponse))

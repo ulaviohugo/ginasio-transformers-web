@@ -1,6 +1,6 @@
 import { EmployeeRepository } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaEmployeeMapper } from '../mappers'
 
@@ -10,46 +10,46 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 		this.prisma = prismaService
 	}
 
-	async add(param: Employee): Promise<Employee> {
+	async add(param: EmployeeModel): Promise<EmployeeModel> {
 		return (await this.prisma.employee.create({
 			data: PrismaEmployeeMapper.toPrisma(param)
-		})) as Employee
+		})) as EmployeeModel
 	}
 
-	async loadAll(): Promise<Employee[]> {
-		return (await this.prisma.employee.findMany()) as Employee[]
+	async loadAll(): Promise<EmployeeModel[]> {
+		return (await this.prisma.employee.findMany()) as EmployeeModel[]
 	}
 
-	async findById(id: number): Promise<Employee | null> {
+	async findById(id: number): Promise<EmployeeModel | null> {
 		return (await this.prisma.employee.findUnique({
 			where: { id }
-		})) as Employee
+		})) as EmployeeModel
 	}
 
-	async findByEmail(email: string): Promise<Employee | null> {
+	async findByEmail(email: string): Promise<EmployeeModel | null> {
 		return (await this.prisma.employee.findUnique({
 			where: { email }
-		})) as Employee
+		})) as EmployeeModel
 	}
 
 	async findByDocument(
 		documentType: string,
 		documentNumber: string
-	): Promise<Employee | null> {
+	): Promise<EmployeeModel | null> {
 		return (await this.prisma.employee.findFirst({
 			where: { documentType, documentNumber }
-		})) as Employee
+		})) as EmployeeModel
 	}
 
 	async count(): Promise<number> {
 		return this.prisma.employee.count()
 	}
 
-	async update(param: Employee): Promise<Employee> {
+	async update(param: EmployeeModel): Promise<EmployeeModel> {
 		return (await this.prisma.employee.update({
 			data: PrismaEmployeeMapper.toPrisma(param),
 			where: { id: param.id }
-		})) as Employee
+		})) as EmployeeModel
 	}
 
 	async delete(employeeId: number): Promise<boolean> {

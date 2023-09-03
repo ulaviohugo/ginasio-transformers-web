@@ -1,12 +1,12 @@
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 
 export interface ProductRepository {
-	add(param: Product): Promise<Product>
-	findByName(name: string): Promise<Product | null>
-	findByNameAndCategoryId(name: string, categoryId: number): Promise<Product | null>
-	findById(productId: number): Promise<Product | null>
-	loadAll(): Promise<Product[]>
-	update(param: Product): Promise<Product>
+	add(param: ProductModel): Promise<ProductModel>
+	findByName(name: string): Promise<ProductModel | null>
+	findByNameAndCategoryId(name: string, categoryId: number): Promise<ProductModel | null>
+	findById(productId: number): Promise<ProductModel | null>
+	loadAll(): Promise<ProductModel[]>
+	update(param: ProductModel): Promise<ProductModel>
 	delete(productId: number): Promise<boolean>
 	count(): Promise<number>
 }

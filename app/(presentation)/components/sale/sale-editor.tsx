@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Purchase, Sale } from '@/app/domain/models'
+import { PurchaseModel, Sale } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -94,7 +94,7 @@ export function SaleEditor({
 		setFormData(data)
 	}
 
-	const handleSelectItem = ({ id, sellingPriceUnit }: Purchase) => {
+	const handleSelectItem = ({ id, sellingPriceUnit }: PurchaseModel) => {
 		const quantity = Number(formData.quantity) || 1
 		const totalValue = quantity > 0 ? quantity * sellingPriceUnit : 0
 		setFormData({
@@ -194,8 +194,8 @@ export function SaleEditor({
 }
 
 type ItemListProps = {
-	stocks: Purchase[]
-	onSelect: (selectedStock: Purchase) => void
+	stocks: PurchaseModel[]
+	onSelect: (selectedStock: PurchaseModel) => void
 }
 
 const ItemList = ({ stocks, onSelect }: ItemListProps) => {
@@ -211,7 +211,7 @@ const ItemList = ({ stocks, onSelect }: ItemListProps) => {
 				return stockData.includes(StringUtils.slug(search))
 		  })
 
-	const handleSelect = (stock: Purchase) => {
+	const handleSelect = (stock: PurchaseModel) => {
 		onSelect(stock)
 		setSelectedItem(stock.id)
 	}

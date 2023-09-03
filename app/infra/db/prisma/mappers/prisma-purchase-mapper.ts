@@ -1,9 +1,9 @@
 import { Purchase as PurchaseRaw } from '@prisma/client'
 
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 
 export class PrismaPurchaseMapper {
-	static toPrisma(purchase: Purchase): PurchaseRaw {
+	static toPrisma(purchase: PurchaseModel): PurchaseRaw {
 		if (!purchase) return null as any
 		return {
 			id: purchase.id,

@@ -1,9 +1,9 @@
 import { Uploader } from '@/app/data/protocols/services'
-import { Supplier } from '../../models'
+import { SupplierModel } from '../../models'
 
 export interface UpdateSupplier {
 	update(
-		param: Supplier,
+		param: SupplierModel,
 		uploader?: Uploader
-	): Promise<Supplier | 'notFound' | 'emailInUse'>
+	): Promise<SupplierModel | 'notFound' | 'emailInUse'>
 }

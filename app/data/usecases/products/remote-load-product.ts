@@ -1,7 +1,7 @@
 import { LoadProducts } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 
 export class RemoteLoadProduct implements LoadProducts {
 	constructor(
@@ -9,7 +9,7 @@ export class RemoteLoadProduct implements LoadProducts {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<Product[]> {
+	async load(): Promise<ProductModel[]> {
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
 			url: this.url

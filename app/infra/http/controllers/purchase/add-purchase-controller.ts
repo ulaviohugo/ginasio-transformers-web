@@ -1,7 +1,7 @@
 import { AddPurchase } from '@/app/domain/usecases'
 import { badRequest, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -13,7 +13,7 @@ export class AddPurchaseController implements Controller {
 		private readonly addPurchase: AddPurchase,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Purchase>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<PurchaseModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

@@ -2,7 +2,7 @@ import { UpdateCategory } from '@/app/domain/usecases'
 import { UnexpectedError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { dbErrorHandler } from '@/app/infra/db'
@@ -12,7 +12,7 @@ export class UpdateCategoryController implements Controller {
 		private readonly UpdateCategory: UpdateCategory,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Category>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<CategoryModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

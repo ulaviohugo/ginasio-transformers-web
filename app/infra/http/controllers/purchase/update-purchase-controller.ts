@@ -1,7 +1,7 @@
 import { UpdatePurchase } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
@@ -13,7 +13,7 @@ export class UpdatePurchaseController implements Controller {
 		private readonly UpdatePurchase: UpdatePurchase,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Purchase>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<PurchaseModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

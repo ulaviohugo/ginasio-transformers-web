@@ -1,8 +1,8 @@
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface CategoryState {
-	categories: Category[]
+	categories: CategoryModel[]
 }
 
 const initialState: CategoryState = {
@@ -13,10 +13,10 @@ export const categorySlice = createSlice({
 	name: 'categories',
 	initialState,
 	reducers: {
-		addCategoryStore: (state, action: PayloadAction<Category>) => {
+		addCategoryStore: (state, action: PayloadAction<CategoryModel>) => {
 			state.categories.push(action.payload)
 		},
-		loadCategoryStore: (state, action: PayloadAction<Category[]>) => {
+		loadCategoryStore: (state, action: PayloadAction<CategoryModel[]>) => {
 			state.categories = action.payload
 		},
 		removeCategoryStore: (state, action: PayloadAction<number>) => {
@@ -24,7 +24,7 @@ export const categorySlice = createSlice({
 				(product) => product.id !== action.payload
 			)
 		},
-		updateCategoryStore: (state, action: PayloadAction<Category>) => {
+		updateCategoryStore: (state, action: PayloadAction<CategoryModel>) => {
 			state.categories = state.categories.map((product) => {
 				if (product.id == action.payload.id) {
 					return action.payload

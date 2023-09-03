@@ -1,4 +1,4 @@
-import { SupplierProduct } from '@/app/domain/models'
+import { SupplierProductModel } from '@/app/domain/models'
 
 export type SupplierProductFindDuplicatedParam = {
 	supplierId: number
@@ -7,16 +7,16 @@ export type SupplierProductFindDuplicatedParam = {
 }
 
 export interface SupplierProductRepository {
-	add(param: SupplierProduct): Promise<SupplierProduct>
-	findById(supplierId: number): Promise<SupplierProduct | null>
+	add(param: SupplierProductModel): Promise<SupplierProductModel>
+	findById(supplierId: number): Promise<SupplierProductModel | null>
 	findDuplicated({
 		supplierId,
 		categoryId,
 		productId
-	}: SupplierProductFindDuplicatedParam): Promise<SupplierProduct | null>
-	loadAll(): Promise<SupplierProduct[]>
-	update(param: SupplierProduct): Promise<SupplierProduct>
-	addOrUpdate(param: SupplierProduct): Promise<SupplierProduct>
+	}: SupplierProductFindDuplicatedParam): Promise<SupplierProductModel | null>
+	loadAll(): Promise<SupplierProductModel[]>
+	update(param: SupplierProductModel): Promise<SupplierProductModel>
+	addOrUpdate(param: SupplierProductModel): Promise<SupplierProductModel>
 	delete(supplierId: number): Promise<boolean>
 	count(): Promise<number>
 }

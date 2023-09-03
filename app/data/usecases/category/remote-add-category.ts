@@ -1,4 +1,4 @@
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { AddCategory } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,7 +10,7 @@ export class RemoteAddCategory implements AddCategory {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async add(param: Category): Promise<Category> {
+	async add(param: CategoryModel): Promise<CategoryModel> {
 		const body = FormDataUtils.createFormData(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',

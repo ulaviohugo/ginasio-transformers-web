@@ -1,5 +1,5 @@
-import { Category } from '../../models'
+import { CategoryModel } from '../../models'
 
 export interface AddCategory {
-	add(params: Category): Promise<Category>
+	add(params: CategoryModel): Promise<CategoryModel>
 }

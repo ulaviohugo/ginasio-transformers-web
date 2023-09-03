@@ -1,4 +1,4 @@
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
 	EmailValidation,
@@ -8,7 +8,7 @@ import {
 	ValidationComposite
 } from '@/app/validation/validators'
 
-type FieldTypes = keyof Purchase
+type FieldTypes = keyof PurchaseModel
 
 export const makeAddPurchaseValidation = () => {
 	const validations: Validation[] = []

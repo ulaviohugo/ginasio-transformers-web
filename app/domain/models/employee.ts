@@ -1,4 +1,4 @@
-export interface Employee {
+export interface EmployeeModel {
 	id: number
 	photo?: string
 	name: string

@@ -1,8 +1,8 @@
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface SupplierState {
-	suppliers: Supplier[]
+	suppliers: SupplierModel[]
 }
 
 const initialState: SupplierState = {
@@ -13,10 +13,10 @@ export const supplierSlice = createSlice({
 	name: 'suppliers',
 	initialState,
 	reducers: {
-		addSupplierStore: (state, action: PayloadAction<Supplier>) => {
+		addSupplierStore: (state, action: PayloadAction<SupplierModel>) => {
 			state.suppliers.push(action.payload)
 		},
-		loadSupplierStore: (state, action: PayloadAction<Supplier[]>) => {
+		loadSupplierStore: (state, action: PayloadAction<SupplierModel[]>) => {
 			state.suppliers = action.payload
 		},
 		removeSupplierStore: (state, action: PayloadAction<number>) => {
@@ -24,7 +24,7 @@ export const supplierSlice = createSlice({
 				(supplier) => supplier.id !== action.payload
 			)
 		},
-		updateSupplierStore: (state, action: PayloadAction<Supplier>) => {
+		updateSupplierStore: (state, action: PayloadAction<SupplierModel>) => {
 			state.suppliers = state.suppliers.map((supplier) => {
 				if (supplier.id == action.payload.id) {
 					return action.payload

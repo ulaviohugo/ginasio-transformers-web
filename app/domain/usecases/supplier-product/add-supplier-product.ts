@@ -1,7 +1,7 @@
-import { SupplierProduct } from '../../models'
+import { SupplierProductModel } from '../../models'
 
 export interface AddSupplierProduct {
-	add(param: SupplierProduct): Promise<AddSupplierProductResult>
+	add(param: SupplierProductModel): Promise<AddSupplierProductResult>
 }
 
-export type AddSupplierProductResult = SupplierProduct | 'emailInUse'
+export type AddSupplierProductResult = SupplierProductModel | 'emailInUse'

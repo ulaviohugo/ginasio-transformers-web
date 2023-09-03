@@ -1,6 +1,6 @@
 'use client'
 
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { AddCategory, UpdateCategory } from '@/app/domain/usecases'
 import {
 	ButtonCancel,
@@ -20,7 +20,7 @@ import { addCategoryStore, loadCategoryStore, updateCategoryStore } from '../../
 import { toast } from 'react-hot-toast'
 
 type CategoryEditorProps = {
-	data?: Category
+	data?: CategoryModel
 	show: boolean
 	onClose: () => void
 	addCategory: AddCategory
@@ -36,7 +36,7 @@ export function CategoryEditor({
 }: CategoryEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useCategories()
-	const [formDate, setFormData] = useState<Category>(data || ({} as Category))
+	const [formDate, setFormData] = useState<CategoryModel>(data || ({} as CategoryModel))
 	const [isLoading, setIsLoading] = useState(false)
 
 	const fetchCategories = async () => {
@@ -59,7 +59,7 @@ export function CategoryEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Category = { ...formDate, [name]: value }
+		let data: CategoryModel = { ...formDate, [name]: value }
 		setFormData(data)
 	}
 
@@ -72,7 +72,7 @@ export function CategoryEditor({
 				formDate.id
 					? await updateCategory.update(formDate)
 					: await addCategory.add(formDate)
-			) as Category
+			) as CategoryModel
 
 			if (formDate.id) {
 				dispatch(updateCategoryStore(httpResponse))

@@ -1,4 +1,4 @@
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import { UpdateSupplier } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,8 +10,8 @@ export class RemoteUpdateSupplier implements UpdateSupplier {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: Supplier): Promise<Supplier> {
-		const handledParam = ObjectUtils.removeProps<Supplier>(param, [
+	async update(param: SupplierModel): Promise<SupplierModel> {
+		const handledParam = ObjectUtils.removeProps<SupplierModel>(param, [
 			'createdAt',
 			'createdById',
 			'updatedAt',

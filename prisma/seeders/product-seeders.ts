@@ -1,4 +1,4 @@
-import { Category, Product } from '@/app/domain/models'
+import { CategoryModel, ProductModel } from '@/app/domain/models'
 import { prismaService as prisma } from '@/app/infra/db'
 import { ArrayUtils, ProductUtils } from '@/app/utils'
 
@@ -7,9 +7,9 @@ export class ProductSeeder {
 		await this.seedCategory(ProductUtils.categories())
 	}
 
-	static async seedCategory(categoriesData: Category[]) {
+	static async seedCategory(categoriesData: CategoryModel[]) {
 		if (!categoriesData?.length) return
-		const categories = ArrayUtils.order<Category>({
+		const categories = ArrayUtils.order<CategoryModel>({
 			data: categoriesData,
 			field: 'name'
 		})
@@ -27,9 +27,12 @@ export class ProductSeeder {
 		console.log(`Category seeding finished`)
 	}
 
-	static async seedProduct(productsData: Product[], categoryId: number): Promise<void> {
+	static async seedProduct(
+		productsData: ProductModel[],
+		categoryId: number
+	): Promise<void> {
 		if (!productsData?.length) return
-		const products = ArrayUtils.order<Product>({
+		const products = ArrayUtils.order<ProductModel>({
 			data: productsData,
 			field: 'name'
 		})

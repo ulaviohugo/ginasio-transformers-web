@@ -1,13 +1,13 @@
 import { UpdateProduct } from '@/app/domain/usecases'
 import { ProductRepository } from '../../protocols'
-import { Product } from '../../../domain/models'
+import { ProductModel } from '../../../domain/models'
 import { FileUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdateProduct implements UpdateProduct {
 	constructor(private readonly productRepository: ProductRepository) {}
 
-	async update(param: Product, uploader?: Uploader): Promise<Product> {
+	async update(param: ProductModel, uploader?: Uploader): Promise<ProductModel> {
 		const data = ObjectUtils.trimValues(param)
 
 		const foundById = await this.productRepository.findById(data.id)
@@ -22,7 +22,7 @@ export class DbUpdateProduct implements UpdateProduct {
 			image = await uploader.upload()
 		}
 
-		const product: Product = {
+		const product: ProductModel = {
 			...data,
 			photo: image,
 			price: NumberUtils.convertToNumber(param.price),

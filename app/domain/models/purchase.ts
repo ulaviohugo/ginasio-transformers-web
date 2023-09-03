@@ -1,7 +1,7 @@
 import { Supplier } from '@prisma/client'
-import { Category, Employee, Product } from '.'
+import { CategoryModel, EmployeeModel, ProductModel } from '.'
 
-export interface Purchase {
+export interface PurchaseModel {
 	id: number
 	photo?: string
 	supplierId: number
@@ -24,7 +24,7 @@ export interface Purchase {
 	updatedById?: number
 
 	supplier?: Supplier
-	category?: Category
-	product?: Product
-	employee?: Employee
+	category?: CategoryModel
+	product?: ProductModel
+	employee?: EmployeeModel
 }

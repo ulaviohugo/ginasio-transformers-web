@@ -1,4 +1,4 @@
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
 	DateGreaterThanValidation,
@@ -8,7 +8,7 @@ import {
 	ValidationComposite
 } from '@/app/validation/validators'
 
-type FieldTypes = keyof Employee
+type FieldTypes = keyof EmployeeModel
 
 export const makeAddEmployeeValidation = () => {
 	const validations: Validation[] = []

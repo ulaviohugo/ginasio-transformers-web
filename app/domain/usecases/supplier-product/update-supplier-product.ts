@@ -1,7 +1,7 @@
-import { SupplierProduct } from '../../models'
+import { SupplierProductModel } from '../../models'
 
 export interface UpdateSupplierProduct {
-	update(param: SupplierProduct): Promise<UpdateSupplierProductResult>
+	update(param: SupplierProductModel): Promise<UpdateSupplierProductResult>
 }
 
-export type UpdateSupplierProductResult = SupplierProduct | 'emailInUse'
+export type UpdateSupplierProductResult = SupplierProductModel | 'emailInUse'

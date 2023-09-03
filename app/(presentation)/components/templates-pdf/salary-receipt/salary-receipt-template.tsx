@@ -1,5 +1,5 @@
 'use client'
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { NumberUtils, SalaryUtils } from '@/app/utils'
 import { Document, Page, View, Text, PDFViewer } from '@react-pdf/renderer'
 
@@ -10,13 +10,13 @@ export type ReceiptDataProps = {
 }
 
 type SalaryReceiptProps = {
-	employee: Employee
+	employee: EmployeeModel
 	receiptData: ReceiptDataProps
 }
 
 type HeaderProps = {
 	title: string
-	employee: Employee
+	employee: EmployeeModel
 	receiptData: ReceiptDataProps
 }
 
@@ -31,7 +31,7 @@ const fontSize_md = 9
 const fontSize_title = 12
 
 export const getSalaryItems = (
-	employee: Employee,
+	employee: EmployeeModel,
 	receiptDate: ReceiptDataProps
 ): ItemProps[] => {
 	const { baseSalary = 0 } = employee

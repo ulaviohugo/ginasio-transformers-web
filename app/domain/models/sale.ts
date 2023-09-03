@@ -1,4 +1,4 @@
-import { Purchase } from '.'
+import { PurchaseModel } from '.'
 
 export interface Sale {
 	id: number
@@ -14,5 +14,5 @@ export interface Sale {
 	updatedAt?: Date
 	updatedById?: number
 
-	purchase?: Purchase
+	purchase?: PurchaseModel
 }

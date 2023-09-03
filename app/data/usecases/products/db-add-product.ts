@@ -1,12 +1,12 @@
 import { AddProduct } from '@/app/domain/usecases'
 import { ProductRepository } from '../../protocols'
-import { Product } from '../../../domain/models'
+import { ProductModel } from '../../../domain/models'
 import { NumberUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddProduct implements AddProduct {
 	constructor(private readonly productRepository: ProductRepository) {}
-	async add(param: Product, uploader?: Uploader): Promise<Product> {
+	async add(param: ProductModel, uploader?: Uploader): Promise<ProductModel> {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.productRepository.findByNameAndCategoryId(

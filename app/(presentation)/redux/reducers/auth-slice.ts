@@ -1,8 +1,8 @@
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface AuthState {
-	auth: Employee
+	auth: EmployeeModel
 }
 
 const initialState: AuthState = {
@@ -13,7 +13,7 @@ export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		addAuthStore: (state, action: PayloadAction<Employee>) => {
+		addAuthStore: (state, action: PayloadAction<EmployeeModel>) => {
 			state.auth = action.payload
 		},
 		removeAuthStore: (state) => {

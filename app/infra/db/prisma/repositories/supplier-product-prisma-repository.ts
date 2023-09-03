@@ -3,7 +3,7 @@ import {
 	SupplierProductRepository
 } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { SupplierProduct } from '@/app/domain/models'
+import { SupplierProductModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSupplierProductMapper } from '../mappers'
 
@@ -13,29 +13,29 @@ export class SupplierProductPrismaRepository implements SupplierProductRepositor
 		this.prisma = prismaService
 	}
 
-	async add(param: SupplierProduct): Promise<SupplierProduct> {
+	async add(param: SupplierProductModel): Promise<SupplierProductModel> {
 		const createdSupplierProduct = (await this.prisma.supplierProduct.create({
 			data: PrismaSupplierProductMapper.toPrisma(param)
-		})) as SupplierProduct
+		})) as SupplierProductModel
 
 		return createdSupplierProduct
 	}
 
-	async loadAll(): Promise<SupplierProduct[]> {
-		return (await this.prisma.supplierProduct.findMany()) as SupplierProduct[]
+	async loadAll(): Promise<SupplierProductModel[]> {
+		return (await this.prisma.supplierProduct.findMany()) as SupplierProductModel[]
 	}
 
-	async findById(id: number): Promise<SupplierProduct | null> {
+	async findById(id: number): Promise<SupplierProductModel | null> {
 		return (await this.prisma.supplierProduct.findUnique({
 			where: { id }
-		})) as SupplierProduct
+		})) as SupplierProductModel
 	}
 
 	async findDuplicated({
 		supplierId,
 		categoryId,
 		productId
-	}: SupplierProductFindDuplicatedParam): Promise<SupplierProduct | null> {
+	}: SupplierProductFindDuplicatedParam): Promise<SupplierProductModel | null> {
 		return this.prisma.supplierProduct.findFirst({
 			where: {
 				supplierId,
@@ -49,16 +49,16 @@ export class SupplierProductPrismaRepository implements SupplierProductRepositor
 		return this.prisma.supplierProduct.count()
 	}
 
-	async update(param: SupplierProduct): Promise<SupplierProduct> {
+	async update(param: SupplierProductModel): Promise<SupplierProductModel> {
 		const updatedSupplierProduct = (await this.prisma.supplierProduct.update({
 			data: PrismaSupplierProductMapper.toPrisma(param),
 			where: { id: param.id }
-		})) as SupplierProduct
+		})) as SupplierProductModel
 
 		return updatedSupplierProduct
 	}
 
-	async addOrUpdate(param: SupplierProduct): Promise<SupplierProduct> {
+	async addOrUpdate(param: SupplierProductModel): Promise<SupplierProductModel> {
 		const { supplierId, productId, categoryId } = param
 
 		const foundSupplierProduct = await this.findDuplicated({

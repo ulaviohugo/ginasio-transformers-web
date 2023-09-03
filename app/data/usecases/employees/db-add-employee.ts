@@ -1,6 +1,6 @@
 import { AddEmployee, AddEmployeesResult } from '@/app/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
-import { Employee } from '../../../domain/models'
+import { EmployeeModel } from '../../../domain/models'
 import { ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 import { Hasher } from '../../protocols/cryptography'
@@ -11,7 +11,7 @@ export class DbAddEmployee implements AddEmployee {
 		private readonly employeeRepository: EmployeeRepository,
 		private readonly hasher: Hasher
 	) {}
-	async add(param: Employee, uploader?: Uploader): Promise<AddEmployeesResult> {
+	async add(param: EmployeeModel, uploader?: Uploader): Promise<AddEmployeesResult> {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.employeeRepository.findByEmail(data.email)

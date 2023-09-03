@@ -1,6 +1,5 @@
-import { Category, Product, SupplierProduct } from '.'
-
-export interface Supplier {
+import { SupplierProductModel } from '.'
+export interface SupplierModel {
 	id: number
 	name: string
 	representative: string
@@ -16,5 +15,5 @@ export interface Supplier {
 	updatedAt?: Date
 	updatedById?: number
 
-	supplierProducts?: SupplierProduct[]
+	supplierProducts?: SupplierProductModel[]
 }

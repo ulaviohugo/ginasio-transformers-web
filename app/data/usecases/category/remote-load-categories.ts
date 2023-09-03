@@ -1,7 +1,7 @@
 import { LoadCategories } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 
 export class RemoteLoadCategories implements LoadCategories {
 	constructor(
@@ -9,7 +9,7 @@ export class RemoteLoadCategories implements LoadCategories {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<Category[]> {
+	async load(): Promise<CategoryModel[]> {
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
 			url: this.url

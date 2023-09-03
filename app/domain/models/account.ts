@@ -1,4 +1,4 @@
-export type Account = {
+export type AccountModel = {
 	accessToken: string
 	user: {
 		id: number

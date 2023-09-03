@@ -1,7 +1,7 @@
-import { Category, Product } from '../domain/models'
+import { CategoryModel, ProductModel } from '../domain/models'
 
 export class ProductUtils {
-	static categories(): Category[] {
+	static categories(): CategoryModel[] {
 		return [
 			{ id: 1, name: 'Acessório Feminino', products: this.products(1) },
 			{ id: 2, name: 'Bijuteria Feminina', products: this.products(2) },
@@ -11,10 +11,10 @@ export class ProductUtils {
 			{ id: 6, name: 'Perfumaria', products: this.products(6) },
 			{ id: 7, name: 'Roupa Feminina', products: this.products(7) },
 			{ id: 8, name: 'Roupa Masculina', products: this.products(8) }
-		] as Category[]
+		] as CategoryModel[]
 	}
 
-	static products(categoryId?: number): Product[] {
+	static products(categoryId?: number): ProductModel[] {
 		const products = [
 			//Bijuteria Feminina
 			{ id: 1, name: 'Bolsa', price: 50.0, categoryId: 1 },
@@ -54,7 +54,7 @@ export class ProductUtils {
 			//Roupa Masculina
 			{ id: 29, name: 'Camisa Masculina', price: 45.0, categoryId: 8 },
 			{ id: 30, name: 'Camiseta Masculina', price: 25.0, categoryId: 8 }
-		] as Product[]
+		] as ProductModel[]
 		return categoryId
 			? products.filter((product) => product.categoryId == categoryId)
 			: products

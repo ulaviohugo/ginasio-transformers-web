@@ -14,7 +14,7 @@ import {
 } from '@/app/(presentation)/components/templates-pdf'
 import { useEmployees } from '@/app/(presentation)/hooks'
 import { loadEmployeeStore } from '@/app/(presentation)/redux'
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { makeRemoteLoadEmployees } from '@/app/main/factories/usecases/remote'
 import { DateUtils, SubmenuUtils } from '@/app/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
@@ -25,7 +25,7 @@ export default function FolhaSalarial() {
 	const dispatch = useDispatch()
 
 	const employees = useEmployees()
-	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
+	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>({} as EmployeeModel)
 
 	const fetchData = async () => {
 		try {
@@ -45,7 +45,7 @@ export default function FolhaSalarial() {
 	const handleSelectEmployee = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { value } = e.target
 		const id = Number(value)
-		const emp = employees.find((employee) => employee.id == id) || ({} as Employee)
+		const emp = employees.find((employee) => employee.id == id) || ({} as EmployeeModel)
 		setSelectedEmployee(emp)
 	}
 	return (
@@ -77,7 +77,7 @@ export default function FolhaSalarial() {
 	)
 }
 
-const FolhaSalarialCard = ({ employee }: { employee: Employee }) => {
+const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
 	const date = new Date()
 	const years = [
 		date.getUTCFullYear() + 1,

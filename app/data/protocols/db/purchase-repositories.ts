@@ -1,10 +1,10 @@
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 
 export interface PurchaseRepository {
-	add(param: Purchase): Promise<Purchase>
-	findById(id: number): Promise<Purchase | null>
-	loadAll(): Promise<Purchase[]>
-	update(param: Purchase): Promise<Purchase>
+	add(param: PurchaseModel): Promise<PurchaseModel>
+	findById(id: number): Promise<PurchaseModel | null>
+	loadAll(): Promise<PurchaseModel[]>
+	update(param: PurchaseModel): Promise<PurchaseModel>
 	delete(id: number): Promise<boolean>
 	count(): Promise<number>
 }

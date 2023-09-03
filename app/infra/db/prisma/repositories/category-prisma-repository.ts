@@ -1,6 +1,6 @@
 import { CategoryRepository } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaCategoryMapper } from '../mappers'
 
@@ -9,37 +9,37 @@ export class CategoryPrismaRepository implements CategoryRepository {
 	constructor() {
 		this.prisma = prismaService
 	}
-	async add(param: Category): Promise<Category> {
+	async add(param: CategoryModel): Promise<CategoryModel> {
 		return (await this.prisma.category.create({
 			data: PrismaCategoryMapper.toPrisma(param)
-		})) as Category
+		})) as CategoryModel
 	}
 
-	async loadAll(): Promise<Category[]> {
-		return (await this.prisma.category.findMany()) as Category[]
+	async loadAll(): Promise<CategoryModel[]> {
+		return (await this.prisma.category.findMany()) as CategoryModel[]
 	}
 
-	async findByName(name: string): Promise<Category | null> {
+	async findByName(name: string): Promise<CategoryModel | null> {
 		return (await this.prisma.category.findUnique({
 			where: { name }
-		})) as Category
+		})) as CategoryModel
 	}
 
-	async findById(id: number): Promise<Category | null> {
+	async findById(id: number): Promise<CategoryModel | null> {
 		return (await this.prisma.category.findUnique({
 			where: { id }
-		})) as Category
+		})) as CategoryModel
 	}
 
 	async count(): Promise<number> {
 		return this.prisma.category.count()
 	}
 
-	async update(param: Category): Promise<Category> {
+	async update(param: CategoryModel): Promise<CategoryModel> {
 		return (await this.prisma.category.update({
 			data: PrismaCategoryMapper.toPrisma(param),
 			where: { id: param.id }
-		})) as Category
+		})) as CategoryModel
 	}
 
 	async delete(categoryId: number): Promise<boolean> {

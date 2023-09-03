@@ -1,7 +1,7 @@
-import { Account } from '@/app/domain/models'
+import { AccountModel } from '@/app/domain/models'
 import { makeLocalStorageAdapter } from '../factories/cache'
 
-export const setCurrentAccountAdapter = (account: Account | null): void => {
+export const setCurrentAccountAdapter = (account: AccountModel | null): void => {
 	if (!account) {
 		makeLocalStorageAdapter().remove('account')
 	} else {
@@ -9,7 +9,7 @@ export const setCurrentAccountAdapter = (account: Account | null): void => {
 	}
 }
 
-export const getCurrentAccountAdapter = (): Account => {
+export const getCurrentAccountAdapter = (): AccountModel => {
 	const account = makeLocalStorageAdapter().get('account')
 	return account ? JSON.parse(account) : null
 }

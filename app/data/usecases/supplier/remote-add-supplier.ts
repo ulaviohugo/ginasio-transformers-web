@@ -1,4 +1,4 @@
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import { AddSupplier } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,7 +10,7 @@ export class RemoteAddSupplier implements AddSupplier {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async add(param: Supplier): Promise<Supplier> {
+	async add(param: SupplierModel): Promise<SupplierModel> {
 		const body = FormDataUtils.createFormData({ ...param })
 		const httpResponse = await this.httpClient.request({
 			method: 'post',

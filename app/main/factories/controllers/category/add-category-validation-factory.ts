@@ -1,8 +1,8 @@
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import { RequiredFieldValidation, ValidationComposite } from '@/app/validation/validators'
 
-type FieldTypes = keyof Category
+type FieldTypes = keyof CategoryModel
 
 export const makeAddCategoryValidation = () => {
 	const validations: Validation[] = []

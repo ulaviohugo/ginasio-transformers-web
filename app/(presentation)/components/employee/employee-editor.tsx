@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -28,7 +28,7 @@ import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
 import { useLocations } from '../../hooks'
 
 type EmployeeEditorProps = {
-	employee?: Employee
+	employee?: EmployeeModel
 	show: boolean
 	onClose: () => void
 	addEmployee: AddEmployee
@@ -48,7 +48,7 @@ export function EmployeeEditor({
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<Employee>(employee || ({} as Employee))
+	const [formDate, setFormData] = useState<EmployeeModel>(employee || ({} as EmployeeModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
 
@@ -70,7 +70,7 @@ export function EmployeeEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Employee = { ...formDate, [name]: value }
+		let data: EmployeeModel = { ...formDate, [name]: value }
 
 		if (name == 'countryId') {
 			data = { ...data, provinceId: undefined, municipalityId: undefined }
@@ -119,7 +119,7 @@ export function EmployeeEditor({
 				formDate.id
 					? await updateEmployee.update(formDate)
 					: await addEmployee.add(formDate)
-			) as Employee
+			) as EmployeeModel
 
 			if (formDate.id) {
 				dispatch(updateEmployeeStore(httpResponse))

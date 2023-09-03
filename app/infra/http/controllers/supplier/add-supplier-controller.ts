@@ -2,7 +2,7 @@ import { AddSupplier } from '@/app/domain/usecases'
 import { EmailInUseError, MissingParamError, UnexpectedError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Supplier, SupplierProduct } from '@/app/domain/models'
+import { SupplierModel, SupplierProductModel } from '@/app/domain/models'
 import { ArrayUtils, NumberUtils, ObjectUtils } from '@/app/utils'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
@@ -14,7 +14,7 @@ export class AddSupplierController implements Controller {
 		private readonly addSupplier: AddSupplier,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Supplier>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<SupplierModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
@@ -32,7 +32,7 @@ export class AddSupplierController implements Controller {
 			}
 			const createdById = NumberUtils.convertToNumber(request.accountId)
 
-			let supplierProducts: SupplierProduct[] = ArrayUtils.convertToArray(
+			let supplierProducts: SupplierProductModel[] = ArrayUtils.convertToArray(
 				request.supplierProducts
 			)
 

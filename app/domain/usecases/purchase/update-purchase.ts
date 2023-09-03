@@ -1,6 +1,6 @@
 import { Uploader } from '@/app/data/protocols/services'
-import { Purchase } from '../../models'
+import { PurchaseModel } from '../../models'
 
 export interface UpdatePurchase {
-	update(param: Purchase, uploader?: Uploader): Promise<Purchase | 'notFound'>
+	update(param: PurchaseModel, uploader?: Uploader): Promise<PurchaseModel | 'notFound'>
 }

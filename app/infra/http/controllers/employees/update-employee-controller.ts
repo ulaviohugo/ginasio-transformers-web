@@ -2,7 +2,7 @@ import { UpdateEmployee } from '@/app/domain/usecases'
 import { DocumentInUseError, EmailInUseError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { DateUtils, NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
@@ -14,7 +14,7 @@ export class UpdateEmployeeController implements Controller {
 		private readonly UpdateEmployee: UpdateEmployee,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Employee>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<EmployeeModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

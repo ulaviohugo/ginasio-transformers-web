@@ -1,7 +1,7 @@
 import { UpdateProduct } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
@@ -13,7 +13,7 @@ export class UpdateProductController implements Controller {
 		private readonly UpdateProduct: UpdateProduct,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Product>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<ProductModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

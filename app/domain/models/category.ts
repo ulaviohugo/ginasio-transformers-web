@@ -1,11 +1,11 @@
-import { Product } from '.'
+import { ProductModel } from '.'
 
-export interface Category {
+export interface CategoryModel {
 	id: number
 	name: string
 	createdAt: Date
 	createdById?: number
 	updatedAt?: Date
 	updatedById?: number
-	products?: Product[]
+	products?: ProductModel[]
 }

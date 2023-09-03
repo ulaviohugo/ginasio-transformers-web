@@ -1,4 +1,4 @@
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
 	NumberGreaterThanValidation,
@@ -6,7 +6,7 @@ import {
 	ValidationComposite
 } from '@/app/validation/validators'
 
-type FieldTypes = keyof Category
+type FieldTypes = keyof CategoryModel
 
 export const makeUpdateCategoryValidation = () => {
 	const validations: Validation[] = []

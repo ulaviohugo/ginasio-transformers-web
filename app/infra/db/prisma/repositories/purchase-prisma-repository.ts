@@ -1,6 +1,6 @@
 import { PurchaseRepository } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaPurchaseMapper } from '../mappers'
 
@@ -10,7 +10,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		this.prisma = prismaService
 	}
 
-	async add(param: Purchase): Promise<Purchase> {
+	async add(param: PurchaseModel): Promise<PurchaseModel> {
 		return (await this.prisma.purchase.create({
 			data: PrismaPurchaseMapper.toPrisma(param),
 			include: {
@@ -18,30 +18,30 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as Purchase
+		})) as PurchaseModel
 	}
 
-	async loadAll(): Promise<Purchase[]> {
+	async loadAll(): Promise<PurchaseModel[]> {
 		return (await this.prisma.purchase.findMany({
 			include: {
 				category: { select: { name: true } },
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as Purchase[]
+		})) as PurchaseModel[]
 	}
 
-	async findById(id: number): Promise<Purchase | null> {
+	async findById(id: number): Promise<PurchaseModel | null> {
 		return (await this.prisma.purchase.findUnique({
 			where: { id }
-		})) as Purchase
+		})) as PurchaseModel
 	}
 
 	async count(): Promise<number> {
 		return this.prisma.purchase.count()
 	}
 
-	async update(param: Purchase): Promise<Purchase> {
+	async update(param: PurchaseModel): Promise<PurchaseModel> {
 		return (await this.prisma.purchase.update({
 			data: PrismaPurchaseMapper.toPrisma(param),
 			where: { id: param.id },
@@ -50,7 +50,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as Purchase
+		})) as PurchaseModel
 	}
 
 	async delete(id: number): Promise<boolean> {

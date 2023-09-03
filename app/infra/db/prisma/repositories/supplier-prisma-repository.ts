@@ -1,6 +1,6 @@
 import { SupplierRepository } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSupplierMapper } from '../mappers'
 
@@ -10,7 +10,7 @@ export class SupplierPrismaRepository implements SupplierRepository {
 		this.prisma = prismaService
 	}
 
-	async add(param: Supplier): Promise<Supplier> {
+	async add(param: SupplierModel): Promise<SupplierModel> {
 		const createdSupplier = (await this.prisma.supplier.create({
 			data: {
 				...PrismaSupplierMapper.toPrisma(param),
@@ -29,12 +29,12 @@ export class SupplierPrismaRepository implements SupplierRepository {
 					}
 				}
 			}
-		})) as Supplier
+		})) as SupplierModel
 
 		return createdSupplier
 	}
 
-	async loadAll(): Promise<Supplier[]> {
+	async loadAll(): Promise<SupplierModel[]> {
 		return (await this.prisma.supplier.findMany({
 			include: {
 				supplierProducts: {
@@ -49,26 +49,26 @@ export class SupplierPrismaRepository implements SupplierRepository {
 					}
 				}
 			}
-		})) as Supplier[]
+		})) as SupplierModel[]
 	}
 
-	async findById(id: number): Promise<Supplier | null> {
+	async findById(id: number): Promise<SupplierModel | null> {
 		return (await this.prisma.supplier.findUnique({
 			where: { id }
-		})) as Supplier
+		})) as SupplierModel
 	}
 
-	async findByEmail(email: string): Promise<Supplier | null> {
+	async findByEmail(email: string): Promise<SupplierModel | null> {
 		return (await this.prisma.supplier.findUnique({
 			where: { email }
-		})) as Supplier
+		})) as SupplierModel
 	}
 
 	async count(): Promise<number> {
 		return this.prisma.supplier.count()
 	}
 
-	async update(param: Supplier): Promise<Supplier> {
+	async update(param: SupplierModel): Promise<SupplierModel> {
 		const updatedSupplier = (await this.prisma.supplier.update({
 			data: PrismaSupplierMapper.toPrisma(param),
 			where: { id: param.id },
@@ -85,7 +85,7 @@ export class SupplierPrismaRepository implements SupplierRepository {
 					}
 				}
 			}
-		})) as Supplier
+		})) as SupplierModel
 
 		return updatedSupplier
 	}

@@ -2,7 +2,7 @@ import { AddProduct } from '@/app/domain/usecases'
 import { NameInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 import { UploadService } from '@/app/services'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { Uploader } from '@/app/data/protocols/services'
@@ -14,7 +14,7 @@ export class AddProductController implements Controller {
 		private readonly addProduct: AddProduct,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Product>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<ProductModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {

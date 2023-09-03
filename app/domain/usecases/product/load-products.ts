@@ -1,5 +1,5 @@
-import { Product } from '../../models'
+import { ProductModel } from '../../models'
 
 export interface LoadProducts {
-	load(): Promise<Product[]>
+	load(): Promise<ProductModel[]>
 }

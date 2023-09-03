@@ -1,9 +1,9 @@
 import { Product as ProductRaw } from '@prisma/client'
 
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 
 export class PrismaProductMapper {
-	static toPrisma(product: Product): ProductRaw {
+	static toPrisma(product: ProductModel): ProductRaw {
 		if (!product) return null as any
 		return {
 			id: product.id,
@@ -19,7 +19,7 @@ export class PrismaProductMapper {
 		} as any
 	}
 
-	static toDomain(productRaw: ProductRaw): Product {
+	static toDomain(productRaw: ProductRaw): ProductModel {
 		if (!productRaw) return null as any
 		return {
 			id: productRaw.id,

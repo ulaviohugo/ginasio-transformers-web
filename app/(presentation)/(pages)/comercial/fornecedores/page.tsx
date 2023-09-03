@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import {
 	CardActions,
 	SupplierEditor,
@@ -36,7 +36,9 @@ import Image from 'next/image'
 import { useSuppliers } from '../../../hooks'
 
 export default function Suppliers() {
-	const [selectedSupplier, setSelectedSupplier] = useState<Supplier>({} as Supplier)
+	const [selectedSupplier, setSelectedSupplier] = useState<SupplierModel>(
+		{} as SupplierModel
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
@@ -59,7 +61,7 @@ export default function Suppliers() {
 	}, [])
 
 	const clearSelectedSupplier = () => {
-		setSelectedSupplier({} as Supplier)
+		setSelectedSupplier({} as SupplierModel)
 	}
 
 	const handleCloseDetail = () => {
@@ -67,12 +69,12 @@ export default function Suppliers() {
 		setShowEditor(false)
 	}
 
-	const handleOpenDetalhe = (supplier?: Supplier) => {
+	const handleOpenDetalhe = (supplier?: SupplierModel) => {
 		if (supplier) setSelectedSupplier(supplier)
 		setShowEditor(true)
 	}
 
-	const handleOpenFormDelete = (supplier: Supplier) => {
+	const handleOpenFormDelete = (supplier: SupplierModel) => {
 		setSelectedSupplier(supplier)
 		setShowFormDelete(true)
 	}

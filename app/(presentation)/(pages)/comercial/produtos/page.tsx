@@ -18,7 +18,7 @@ import {
 } from '@/app/(presentation)/components'
 import { useProducts } from '@/app/(presentation)/hooks'
 import { loadProductStore, removeProductStore } from '@/app/(presentation)/redux'
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 import {
 	makeRemoteAddProduct,
 	makeRemoteDeleteProduct,
@@ -33,7 +33,7 @@ import { useDispatch } from 'react-redux'
 export default function Categorias() {
 	const dispatch = useDispatch()
 	const products = useProducts()
-	const [selectedProduct, setSelectedProduct] = useState<Product>({} as Product)
+	const [selectedProduct, setSelectedProduct] = useState<ProductModel>({} as ProductModel)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
@@ -54,10 +54,10 @@ export default function Categorias() {
 	}, [])
 
 	const clearSelectedProduct = () => {
-		setSelectedProduct({} as Product)
+		setSelectedProduct({} as ProductModel)
 	}
 
-	const handleOpenDetalhe = (product?: Product) => {
+	const handleOpenDetalhe = (product?: ProductModel) => {
 		if (product) setSelectedProduct(product)
 		setShowEditor(true)
 	}
@@ -67,7 +67,7 @@ export default function Categorias() {
 		setShowEditor(false)
 	}
 
-	const handleOpenFormDelete = (category: Product) => {
+	const handleOpenFormDelete = (category: ProductModel) => {
 		setSelectedProduct(category)
 		setShowFormDelete(true)
 	}

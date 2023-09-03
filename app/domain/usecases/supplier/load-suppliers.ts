@@ -1,7 +1,7 @@
-import { Supplier } from '../../models'
+import { SupplierModel } from '../../models'
 
 export interface LoadSuppliers {
 	load(): Promise<LoadSuppliersResult>
 }
 
-export type LoadSuppliersResult = Supplier[]
+export type LoadSuppliersResult = SupplierModel[]

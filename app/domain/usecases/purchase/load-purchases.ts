@@ -1,7 +1,7 @@
-import { Purchase } from '../../models'
+import { PurchaseModel } from '../../models'
 
 export interface LoadPurchases {
 	load(): Promise<LoadPurchasesResult>
 }
 
-export type LoadPurchasesResult = Purchase[]
+export type LoadPurchasesResult = PurchaseModel[]

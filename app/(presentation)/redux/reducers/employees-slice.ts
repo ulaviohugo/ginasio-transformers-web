@@ -1,8 +1,8 @@
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface EmployeeState {
-	employees: Employee[]
+	employees: EmployeeModel[]
 }
 
 const initialState: EmployeeState = {
@@ -13,10 +13,10 @@ export const employeeSlice = createSlice({
 	name: 'employees',
 	initialState,
 	reducers: {
-		addEmployeeStore: (state, action: PayloadAction<Employee>) => {
+		addEmployeeStore: (state, action: PayloadAction<EmployeeModel>) => {
 			state.employees.push(action.payload)
 		},
-		loadEmployeeStore: (state, action: PayloadAction<Employee[]>) => {
+		loadEmployeeStore: (state, action: PayloadAction<EmployeeModel[]>) => {
 			state.employees = action.payload
 		},
 		removeEmployeeStore: (state, action: PayloadAction<number>) => {
@@ -24,7 +24,7 @@ export const employeeSlice = createSlice({
 				(employee) => employee.id !== action.payload
 			)
 		},
-		updateEmployeeStore: (state, action: PayloadAction<Employee>) => {
+		updateEmployeeStore: (state, action: PayloadAction<EmployeeModel>) => {
 			state.employees = state.employees.map((employee) => {
 				if (employee.id == action.payload.id) {
 					return action.payload

@@ -1,4 +1,4 @@
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
 	EmailValidation,
@@ -8,7 +8,7 @@ import {
 	ValidationComposite
 } from '@/app/validation/validators'
 
-type FieldTypes = keyof Supplier
+type FieldTypes = keyof SupplierModel
 
 export const makeUpdateSupplierValidation = () => {
 	const validations: Validation[] = []

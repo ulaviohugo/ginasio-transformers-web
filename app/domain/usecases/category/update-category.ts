@@ -1,5 +1,5 @@
-import { Category } from '../../models'
+import { CategoryModel } from '../../models'
 
 export interface UpdateCategory {
-	update(param: Category): Promise<Category | 'notFound' | 'nameInUse'>
+	update(param: CategoryModel): Promise<CategoryModel | 'notFound' | 'nameInUse'>
 }

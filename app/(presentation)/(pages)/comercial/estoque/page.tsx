@@ -17,7 +17,7 @@ import {
 } from '@/app/(presentation)/components'
 import { usePurchases } from '@/app/(presentation)/hooks'
 import { loadPurchaseStore, removePurchaseStore } from '@/app/(presentation)/redux'
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import {
 	makeRemoteAddPurchase,
 	makeRemoteDeletePurchase,
@@ -33,7 +33,9 @@ import { useDispatch } from 'react-redux'
 export default function Entradas() {
 	const dispatch = useDispatch()
 	const purchases = usePurchases()
-	const [selectedPurchase, setSelectedPurchase] = useState<Purchase>({} as Purchase)
+	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
+		{} as PurchaseModel
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
@@ -54,10 +56,10 @@ export default function Entradas() {
 	}, [])
 
 	const clearSelectedPurchase = () => {
-		setSelectedPurchase({} as Purchase)
+		setSelectedPurchase({} as PurchaseModel)
 	}
 
-	const handleOpenDetalhe = (purchase?: Purchase) => {
+	const handleOpenDetalhe = (purchase?: PurchaseModel) => {
 		if (purchase) setSelectedPurchase(purchase)
 		setShowEditor(true)
 	}
@@ -67,7 +69,7 @@ export default function Entradas() {
 		setShowEditor(false)
 	}
 
-	const handleOpenFormDelete = (category: Purchase) => {
+	const handleOpenFormDelete = (category: PurchaseModel) => {
 		setSelectedPurchase(category)
 		setShowFormDelete(true)
 	}

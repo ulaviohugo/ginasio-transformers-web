@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import {
 	CardActions,
 	EmployeeEditor,
@@ -32,7 +32,9 @@ import Image from 'next/image'
 import { useEmployees } from '../../../hooks'
 
 export default function Employees() {
-	const [selectedEmployee, setSelectedEmployee] = useState<Employee>({} as Employee)
+	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
+		{} as EmployeeModel
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
@@ -55,7 +57,7 @@ export default function Employees() {
 	}, [])
 
 	const clearSelectedEmployee = () => {
-		setSelectedEmployee({} as Employee)
+		setSelectedEmployee({} as EmployeeModel)
 	}
 
 	const handleCloseDetail = () => {
@@ -63,12 +65,12 @@ export default function Employees() {
 		setShowEditor(false)
 	}
 
-	const handleOpenDetalhe = (employee?: Employee) => {
+	const handleOpenDetalhe = (employee?: EmployeeModel) => {
 		if (employee) setSelectedEmployee(employee)
 		setShowEditor(true)
 	}
 
-	const handleOpenFormDelete = (employee: Employee) => {
+	const handleOpenFormDelete = (employee: EmployeeModel) => {
 		setSelectedEmployee(employee)
 		setShowFormDelete(true)
 	}

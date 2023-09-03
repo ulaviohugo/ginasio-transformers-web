@@ -1,9 +1,9 @@
 import { Supplier as SupplierRaw } from '@prisma/client'
 
-import { Supplier } from '@/app/domain/models'
+import { SupplierModel } from '@/app/domain/models'
 
 export class PrismaSupplierMapper {
-	static toPrisma(supplier: Supplier): SupplierRaw {
+	static toPrisma(supplier: SupplierModel): SupplierRaw {
 		if (!supplier) return null as any
 		return {
 			id: supplier.id,

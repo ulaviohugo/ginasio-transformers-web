@@ -1,9 +1,9 @@
 import { Employee as EmployeeRaw } from '@prisma/client'
 
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 
 export class PrismaEmployeeMapper {
-	static toPrisma(employee: Employee): EmployeeRaw {
+	static toPrisma(employee: EmployeeModel): EmployeeRaw {
 		if (!employee) return null as any
 		return {
 			name: employee.name,
@@ -41,7 +41,7 @@ export class PrismaEmployeeMapper {
 		} as any
 	}
 
-	static toDomain(employeeRaw: any): Employee {
+	static toDomain(employeeRaw: any): EmployeeModel {
 		if (!employeeRaw) return null as any
 		return {
 			id: employeeRaw.id,

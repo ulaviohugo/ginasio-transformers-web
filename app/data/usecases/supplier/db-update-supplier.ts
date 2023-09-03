@@ -1,6 +1,6 @@
 import { UpdateSupplier } from '@/app/domain/usecases'
 import { SupplierProductRepository, SupplierRepository } from '../../protocols'
-import { Supplier, SupplierProduct } from '../../../domain/models'
+import { SupplierModel, SupplierProductModel } from '../../../domain/models'
 import { ArrayUtils, FileUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 
@@ -11,9 +11,9 @@ export class DbUpdateSupplier implements UpdateSupplier {
 	) {}
 
 	async update(
-		param: Supplier,
+		param: SupplierModel,
 		uploader?: Uploader
-	): Promise<Supplier | 'notFound' | 'emailInUse'> {
+	): Promise<SupplierModel | 'notFound' | 'emailInUse'> {
 		const data = ObjectUtils.trimValues(param)
 
 		const foundById = await this.supplierRepository.findById(data.id)
@@ -31,13 +31,13 @@ export class DbUpdateSupplier implements UpdateSupplier {
 			photo = await uploader.upload()
 		}
 
-		const supplier: Supplier = {
+		const supplier: SupplierModel = {
 			...data,
 			photo,
 			updatedAt: new Date()
 		}
 		const updatedSupplier = await this.supplierRepository.update(supplier)
-		let supplierProducts: SupplierProduct[] = []
+		let supplierProducts: SupplierProductModel[] = []
 		if (updatedSupplier && param.supplierProducts?.length) {
 			for (let i = 0; i < param.supplierProducts.length; i++) {
 				const element = param.supplierProducts[i]
@@ -46,7 +46,7 @@ export class DbUpdateSupplier implements UpdateSupplier {
 			}
 		}
 
-		supplierProducts = ArrayUtils.removeDuplicated<SupplierProduct>(
+		supplierProducts = ArrayUtils.removeDuplicated<SupplierProductModel>(
 			[...supplierProducts, ...(updatedSupplier.supplierProducts || [])],
 			'id'
 		)

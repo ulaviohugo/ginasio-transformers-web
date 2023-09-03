@@ -1,6 +1,6 @@
 'use client'
 
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 import { AddProduct, UpdateProduct } from '@/app/domain/usecases'
 import {
 	ButtonCancel,
@@ -23,7 +23,7 @@ import { addProductStore, loadCategoryStore, updateProductStore } from '../../re
 import { toast } from 'react-hot-toast'
 
 type ProductEditorProps = {
-	data?: Product
+	data?: ProductModel
 	show: boolean
 	onClose: () => void
 	addProduct: AddProduct
@@ -39,7 +39,7 @@ export function ProductEditor({
 }: ProductEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useCategories()
-	const [formDate, setFormData] = useState<Product>(data || ({} as Product))
+	const [formDate, setFormData] = useState<ProductModel>(data || ({} as ProductModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
 
@@ -63,7 +63,7 @@ export function ProductEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Product = { ...formDate, [name]: value }
+		let data: ProductModel = { ...formDate, [name]: value }
 
 		if (name == 'photo') {
 			const file = (e.target as any)?.files[0]
@@ -82,7 +82,7 @@ export function ProductEditor({
 				formDate.id
 					? await updateProduct.update(formDate)
 					: await addProduct.add(formDate)
-			) as Product
+			) as ProductModel
 
 			if (formDate.id) {
 				dispatch(updateProductStore(httpResponse))

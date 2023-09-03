@@ -1,4 +1,4 @@
-import { Account } from '../../models'
+import { AccountModel } from '../../models'
 
 export interface Authentication {
 	auth(params: AuthenticationParams): Promise<AuthenticationResult>
@@ -9,4 +9,4 @@ export type AuthenticationParams = {
 	password: string
 }
 
-export type AuthenticationResult = Account | 'canNotLogin' | 'invalidCredential'
+export type AuthenticationResult = AccountModel | 'canNotLogin' | 'invalidCredential'

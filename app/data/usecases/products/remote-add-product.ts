@@ -1,4 +1,4 @@
-import { Product } from '@/app/domain/models'
+import { ProductModel } from '@/app/domain/models'
 import { AddProduct } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,7 +10,7 @@ export class RemoteAddProduct implements AddProduct {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async add(param: Product): Promise<Product> {
+	async add(param: ProductModel): Promise<ProductModel> {
 		const body = FormDataUtils.createFormData(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',

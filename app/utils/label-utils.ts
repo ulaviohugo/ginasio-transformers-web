@@ -1,10 +1,16 @@
-import { Category, Employee, Product, Purchase, Supplier } from '../domain/models'
+import {
+	CategoryModel,
+	EmployeeModel,
+	ProductModel,
+	PurchaseModel,
+	SupplierModel
+} from '../domain/models'
 
-type FieldTypes = Partial<Record<keyof Category, string>> &
-	Partial<Record<keyof Employee, string>> &
-	Partial<Record<keyof Product, string>> &
-	Partial<Record<keyof Supplier, string>> &
-	Partial<Record<keyof Purchase, string>>
+type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
+	Partial<Record<keyof EmployeeModel, string>> &
+	Partial<Record<keyof ProductModel, string>> &
+	Partial<Record<keyof SupplierModel, string>> &
+	Partial<Record<keyof PurchaseModel, string>>
 
 export class LabelUtils {
 	private static labelFields: FieldTypes = {

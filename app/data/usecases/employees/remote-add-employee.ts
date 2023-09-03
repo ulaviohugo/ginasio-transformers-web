@@ -1,4 +1,4 @@
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { AddEmployee } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,7 +10,7 @@ export class RemoteAddEmployee implements AddEmployee {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async add(param: Employee): Promise<Employee> {
+	async add(param: EmployeeModel): Promise<EmployeeModel> {
 		const body = FormDataUtils.createFormData(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',

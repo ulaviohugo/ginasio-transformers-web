@@ -1,8 +1,8 @@
 import { Uploader } from '@/app/data/protocols/services'
-import { Purchase } from '../../models'
+import { PurchaseModel } from '../../models'
 
 export interface AddPurchase {
-	add(param: Purchase, uploader?: Uploader): Promise<AddPurchasesResult>
+	add(param: PurchaseModel, uploader?: Uploader): Promise<AddPurchasesResult>
 }
 
-export type AddPurchasesResult = Purchase
+export type AddPurchasesResult = PurchaseModel

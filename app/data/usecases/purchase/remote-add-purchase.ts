@@ -1,4 +1,4 @@
-import { Purchase } from '@/app/domain/models'
+import { PurchaseModel } from '@/app/domain/models'
 import { AddPurchase } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,7 +10,7 @@ export class RemoteAddPurchase implements AddPurchase {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async add(param: Purchase): Promise<Purchase> {
+	async add(param: PurchaseModel): Promise<PurchaseModel> {
 		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
 		const totalValue = NumberUtils.convertToNumber(param.totalValue)
 		const sellingPriceUnit = NumberUtils.convertToNumber(param.sellingPriceUnit)

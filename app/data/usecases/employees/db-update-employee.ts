@@ -1,6 +1,6 @@
 import { UpdateEmployee } from '@/app/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
-import { Employee } from '../../../domain/models'
+import { EmployeeModel } from '../../../domain/models'
 import { FileUtils, ObjectUtils } from '@/app/utils'
 import { Uploader } from '../../protocols/services'
 import { Hasher } from '../../protocols/cryptography'
@@ -13,9 +13,9 @@ export class DbUpdateEmployee implements UpdateEmployee {
 	) {}
 
 	async update(
-		param: Employee,
+		param: EmployeeModel,
 		uploader?: Uploader
-	): Promise<Employee | 'notFound' | 'emailInUse' | 'documentInUse'> {
+	): Promise<EmployeeModel | 'notFound' | 'emailInUse' | 'documentInUse'> {
 		const data = ObjectUtils.trimValues(param)
 
 		const foundById = await this.employeeRepository.findById(data.id)

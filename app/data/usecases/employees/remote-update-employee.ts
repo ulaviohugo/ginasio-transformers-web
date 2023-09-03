@@ -1,4 +1,4 @@
-import { Employee } from '@/app/domain/models'
+import { EmployeeModel } from '@/app/domain/models'
 import { UpdateEmployee } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,8 +10,8 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: Employee): Promise<Employee> {
-		const handledParam = ObjectUtils.removeProps<Employee>(param, [
+	async update(param: EmployeeModel): Promise<EmployeeModel> {
+		const handledParam = ObjectUtils.removeProps<EmployeeModel>(param, [
 			'createdAt',
 			'createdById',
 			'updatedAt',

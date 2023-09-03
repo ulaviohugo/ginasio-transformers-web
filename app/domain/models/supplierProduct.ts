@@ -1,13 +1,13 @@
-import { Category, Product } from '.'
+import { CategoryModel, ProductModel } from '.'
 
-export interface SupplierProduct {
+export interface SupplierProductModel {
 	id: number
 	supplierId: number
 	categoryId: number
 	productId: number
 	unitPrice: number
-	category?: Category
-	product?: Product
+	category?: CategoryModel
+	product?: ProductModel
 	createdAt: Date
 	createdById?: number
 	updatedAt?: Date

@@ -15,7 +15,7 @@ import {
 } from '@/app/(presentation)/components'
 import { useCategories } from '@/app/(presentation)/hooks'
 import { loadCategoryStore, removeCategoryStore } from '@/app/(presentation)/redux'
-import { Category } from '@/app/domain/models'
+import { CategoryModel } from '@/app/domain/models'
 import {
 	makeRemoteAddCategory,
 	makeRemoteDeleteCategory,
@@ -31,7 +31,9 @@ export default function Categorias() {
 	const dispatch = useDispatch()
 	const categories = useCategories()
 	const [isLoading, setIsLoading] = useState(true)
-	const [selectedCategory, setSelectedCategory] = useState<Category>({} as Category)
+	const [selectedCategory, setSelectedCategory] = useState<CategoryModel>(
+		{} as CategoryModel
+	)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
@@ -51,10 +53,10 @@ export default function Categorias() {
 	}, [])
 
 	const clearSelectedCategory = () => {
-		setSelectedCategory({} as Category)
+		setSelectedCategory({} as CategoryModel)
 	}
 
-	const handleOpenDetalhe = (product?: Category) => {
+	const handleOpenDetalhe = (product?: CategoryModel) => {
 		if (product) setSelectedCategory(product)
 		setShowEditor(true)
 	}
@@ -64,7 +66,7 @@ export default function Categorias() {
 		setShowEditor(false)
 	}
 
-	const handleOpenFormDelete = (category: Category) => {
+	const handleOpenFormDelete = (category: CategoryModel) => {
 		setSelectedCategory(category)
 		setShowFormDelete(true)
 	}
