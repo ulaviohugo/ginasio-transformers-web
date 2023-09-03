@@ -20,6 +20,8 @@ export class AddSupplierController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+			request.supplierProducts = ArrayUtils.convertToArray(request.supplierProducts)
+
 			if (!request.supplierProducts || ObjectUtils.isEmpty(request.supplierProducts[0])) {
 				return badRequest(new UnexpectedError('Adicione pelo menos 1 produto'))
 			}
@@ -48,6 +50,7 @@ export class AddSupplierController implements Controller {
 					countryId: NumberUtils.convertToNumber(request.countryId),
 					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+					phone: NumberUtils.convertToNumber(request.phone).toString(),
 					createdById
 				},
 				uploader
