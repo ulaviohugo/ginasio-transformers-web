@@ -5,7 +5,7 @@ import { CustomerModel } from '@/app/domain/models'
 import {
 	CardActions,
 	CustomerEditor,
-	IconClock,
+	IconEmail,
 	IconPhone,
 	IconPlus,
 	IconSearch,
@@ -137,8 +137,8 @@ export default function Customers() {
 					) : (
 						<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
 							{customers.map((customer) => (
-								<li key={customer.id} className="p-4 shadow">
-									<div className="flex items-center gap-1 mb-3">
+								<li key={customer.id} className="flex flex-col p-4 shadow">
+									<div className="flex items-center gap-1">
 										{customer.photo ? (
 											<Image
 												src={customer.photo}
@@ -152,14 +152,27 @@ export default function Customers() {
 										)}
 										<div>
 											<div className="font-semibold">{customer.name}</div>
-											<div className="flex items-center gap-1 text-sm font-normal">
-												<IconPhone /> {NumberUtils.format(customer.phone)}
-											</div>
+											{customer.phone && (
+												<div className="flex items-center gap-1 text-sm font-normal">
+													<IconPhone />
+													{NumberUtils.format(customer.phone)}
+												</div>
+											)}
 										</div>
 									</div>
+									{customer.email && (
+										<div className="flex items-center gap-1 text-sm font-normal">
+											<IconEmail />
+											<a href={`mailto:${customer.email}`} className="link">
+												{customer.email}
+											</a>
+										</div>
+									)}
 									<CardActions
 										onClickDelete={() => handleOpenFormDelete(customer)}
 										onClickEdit={() => handleOpenDetalhe(customer)}
+										border
+										className="mt-auto"
 									/>
 								</li>
 							))}
