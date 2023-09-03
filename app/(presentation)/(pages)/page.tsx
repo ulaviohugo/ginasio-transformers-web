@@ -3,6 +3,7 @@
 import {
 	IconCategory,
 	IconCurrency,
+	IconCustomer,
 	IconProduct,
 	IconSupplier,
 	IconUser,
@@ -14,6 +15,7 @@ import { ElementType, useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
 	makeRemoteCountCategories,
+	makeRemoteCountCustomers,
 	makeRemoteCountEmployees,
 	makeRemoteCountProduct,
 	makeRemoteCountPurchases,
@@ -43,6 +45,9 @@ export default function Home() {
 
 	const [suppliers, setSuppliers] = useState(0)
 	const [isLoadingSuppliers, setIsLoadingSuppliers] = useState(true)
+
+	const [customers, setCustomers] = useState(0)
+	const [isLoadingCustomers, setIsLoadingCustomers] = useState(true)
 
 	const [purchases, setPurchases] = useState(0)
 	const [isLoadingPurchases, setIsLoadingPurchases] = useState(true)
@@ -81,6 +86,10 @@ export default function Home() {
 		fetchCount(makeRemoteCountSuppliers(), (response) => {
 			setSuppliers(response)
 			setIsLoadingSuppliers(false)
+		})
+		fetchCount(makeRemoteCountCustomers(), (response) => {
+			setCustomers(response)
+			setIsLoadingCustomers(false)
 		})
 		fetchCount(makeRemoteCountSales(), (response) => {
 			setSales(response)
@@ -126,6 +135,14 @@ export default function Home() {
 						isLoading={isLoadingSuppliers}
 						href="/comercial/fornecedores"
 						className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
+					/>
+					<Item
+						number={customers}
+						title={'Clientes'}
+						icon={IconCustomer}
+						isLoading={isLoadingCustomers}
+						href="/comercial/clientes"
+						className="bg-orange-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 					<Item
 						number={purchases}
