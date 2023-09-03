@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { HtmlHTMLAttributes } from 'react'
 import { IconEdit, IconTrash } from '..'
 
-type CardFooterProps = {
+type CardFooterProps = HtmlHTMLAttributes<HTMLDivElement> & {
 	onClickEdit?: () => void
 	onClickDelete?: () => void
 	border?: boolean
@@ -10,22 +10,21 @@ type CardFooterProps = {
 export function CardActions({
 	onClickDelete,
 	onClickEdit,
-	border = false
+	border = false,
+	className,
+	...props
 }: CardFooterProps) {
 	return (
-		<div className={`flex items-center gap-1 text-xl ${border && 'border-t mt-1 pt-1'} `}>
-			<button
-				onClick={onClickEdit}
-				className="hover:scale-110"
-				title="Editar funcionário"
-			>
+		<div
+			className={`flex items-center gap-1 text-xl ${border && 'border-t mt-1 pt-1'} ${
+				className || ''
+			}`}
+			{...props}
+		>
+			<button onClick={onClickEdit} className="hover:scale-110" title="Editar">
 				<IconEdit />
 			</button>
-			<button
-				onClick={onClickDelete}
-				className="hover:scale-110"
-				title="Excluir funcionário"
-			>
+			<button onClick={onClickDelete} className="hover:scale-110" title="Excluir">
 				<IconTrash />
 			</button>
 		</div>
