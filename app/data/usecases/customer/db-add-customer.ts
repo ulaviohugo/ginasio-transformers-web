@@ -9,8 +9,8 @@ export class DbAddCustomer implements AddCustomer {
 	async add(param: CustomerModel, uploader?: Uploader): Promise<AddCustomersResult> {
 		const data = ObjectUtils.trimValues(param)
 
-		const exists = await this.employeeRepository.findByEmail(data.email)
-		if (exists && exists.id !== data.id) return 'emailInUse'
+		const exists = data.email && (await this.employeeRepository.findByEmail(data.email))
+		if (exists) return 'emailInUse'
 		let image
 		if (uploader) {
 			image = await uploader.upload()

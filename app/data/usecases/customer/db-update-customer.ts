@@ -16,7 +16,7 @@ export class DbUpdateCustomer implements UpdateCustomer {
 		const foundById = await this.employeeRepository.findById(data.id)
 		if (!foundById) return 'notFound'
 
-		const exists = await this.employeeRepository.findByEmail(data.email)
+		const exists = data.email && (await this.employeeRepository.findByEmail(data.email))
 		if (exists && exists.id !== data.id) return 'emailInUse'
 
 		let image
