@@ -9,7 +9,7 @@ export class DbAddCategory implements AddCategory {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.categoryRepository.findByName(data.name)
-		if (exists && exists.id !== data.id) return null as any
+		if (exists) return null as any
 
 		return this.categoryRepository.add(data)
 	}

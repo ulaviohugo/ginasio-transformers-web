@@ -15,13 +15,13 @@ export class DbAddEmployee implements AddEmployee {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.employeeRepository.findByEmail(data.email)
-		if (exists && exists.id !== data.id) return 'emailInUse'
+		if (exists) return 'emailInUse'
 
 		const foundByDoc = await this.employeeRepository.findByDocument(
 			data.documentType,
 			data.documentNumber
 		)
-		if (foundByDoc && foundByDoc.id !== data.id) return 'documentInUse'
+		if (foundByDoc) return 'documentInUse'
 
 		let image
 		if (uploader) {

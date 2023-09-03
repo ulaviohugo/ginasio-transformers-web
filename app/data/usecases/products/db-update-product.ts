@@ -13,6 +13,12 @@ export class DbUpdateProduct implements UpdateProduct {
 		const foundById = await this.productRepository.findById(data.id)
 		if (!foundById) return null as any
 
+		const exists = await this.productRepository.findByNameAndCategoryId(
+			data.name,
+			data.categoryId
+		)
+		if (exists && exists.id !== data.id) return null as any
+
 		let image
 		if (uploader) {
 			if (foundById.photo) {

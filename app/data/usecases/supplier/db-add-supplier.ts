@@ -10,7 +10,7 @@ export class DbAddSupplier implements AddSupplier {
 		const data = ObjectUtils.trimValues(param)
 
 		const exists = await this.supplierRepository.findByEmail(data.email)
-		if (exists && exists.id !== data.id) return 'emailInUse'
+		if (exists) return 'emailInUse'
 
 		let photo
 		if (uploader) {
