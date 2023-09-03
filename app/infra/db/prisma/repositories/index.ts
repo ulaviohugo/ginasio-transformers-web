@@ -1,4 +1,5 @@
 export * from './category-prisma-repository'
+export * from './customer-prisma-repository'
 export * from './employee-prisma-repository'
 export * from './product-prisma-repository'
 export * from './purchase-prisma-repository'

@@ -48,7 +48,9 @@ export function EmployeeEditor({
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<EmployeeModel>(employee || ({} as EmployeeModel))
+	const [formDate, setFormData] = useState<EmployeeModel>(
+		employee || ({} as EmployeeModel)
+	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
 

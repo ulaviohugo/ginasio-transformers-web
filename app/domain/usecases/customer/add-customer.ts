@@ -1,8 +1,8 @@
 import { Uploader } from '@/app/data/protocols/services'
-import { EmployeeModel } from '../../models'
+import { CustomerModel } from '../../models'
 
-export interface AddEmployee {
-	add(param: EmployeeModel, uploader?: Uploader): Promise<AddEmployeesResult>
+export interface AddCustomer {
+	add(param: CustomerModel, uploader?: Uploader): Promise<AddCustomersResult>
 }
 
-export type AddEmployeesResult = EmployeeModel | 'emailInUse' | 'documentInUse'
+export type AddCustomersResult = CustomerModel | 'emailInUse'

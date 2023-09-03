@@ -60,7 +60,10 @@ export function PurchaseEditor({
 
 	const [formData, setFormData] = useState<PurchaseModel>(
 		(data?.id && data) ||
-			({ paid: true, purchaseDate: DateUtils.getDate(new Date()) as any } as PurchaseModel)
+			({
+				paid: true,
+				purchaseDate: DateUtils.getDate(new Date()) as any
+			} as PurchaseModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')

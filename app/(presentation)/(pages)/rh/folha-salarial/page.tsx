@@ -25,7 +25,9 @@ export default function FolhaSalarial() {
 	const dispatch = useDispatch()
 
 	const employees = useEmployees()
-	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>({} as EmployeeModel)
+	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
+		{} as EmployeeModel
+	)
 
 	const fetchData = async () => {
 		try {
