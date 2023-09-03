@@ -3,9 +3,9 @@ export interface CustomerModel {
 	photo?: string
 	name: string
 	gender: string
-	dateOfBirth: Date
-	phone: string
-	email: string
+	dateOfBirth?: Date
+	phone?: string
+	email?: string
 	countryId: number
 	provinceId?: number
 	municipalityId?: number

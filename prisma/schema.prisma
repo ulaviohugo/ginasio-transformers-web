@@ -178,10 +178,10 @@ model Customer {
   id                 Int       @id @default(autoincrement())
   name               String    @db.VarChar(50)
   photo              String?   @db.VarChar(100)
-  gender             String    @db.VarChar(10)
-  dateOfBirth        DateTime  @map("date_of_birth") @db.Date
-  phone              String    @db.VarChar(15)
-  email              String    @unique @db.VarChar(50)
+  gender             String   @db.VarChar(10)
+  dateOfBirth        DateTime? @map("date_of_birth") @db.Date
+  phone              String?   @db.VarChar(15)
+  email              String?   @unique @db.VarChar(50)
   countryId          Int       @map("country_id")
   provinceId         Int?      @map("province_id")
   municipalityId     Int?      @map("municipality_id")

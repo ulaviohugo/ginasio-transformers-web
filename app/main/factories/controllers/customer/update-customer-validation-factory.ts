@@ -1,7 +1,6 @@
 import { CustomerModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
-	EmailValidation,
 	NumberGreaterThanValidation,
 	RequiredFieldValidation,
 	ValidationComposite
@@ -11,18 +10,10 @@ type FieldTypes = keyof CustomerModel
 
 export const makeUpdateCustomerValidation = () => {
 	const validations: Validation[] = []
-	const fields: FieldTypes[] = [
-		'name',
-		'gender',
-		'dateOfBirth',
-		'phone',
-		'email',
-		'countryId',
-		'residentialAddress'
-	]
+	const fields: FieldTypes[] = ['name', 'gender', 'countryId', 'residentialAddress']
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
 	}
-	validations.push(new NumberGreaterThanValidation('id', 0), new EmailValidation('email'))
+	validations.push(new NumberGreaterThanValidation('id', 0))
 	return new ValidationComposite(validations)
 }
