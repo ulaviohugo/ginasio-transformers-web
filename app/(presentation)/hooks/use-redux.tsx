@@ -5,6 +5,7 @@ export const useRedux = () => useSelector((state: RootState) => state)
 
 export const useAuth = () => useRedux().auth.auth
 export const useCategories = () => useRedux().categories.categories
+export const useCustomers = () => useRedux().customers.customers
 export const useEmployees = () => useRedux().employees.employees
 export const useLocations = () => useRedux().locations
 export const useProducts = () => useRedux().products.products

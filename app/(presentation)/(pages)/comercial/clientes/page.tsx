@@ -1,0 +1,172 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { CustomerModel } from '@/app/domain/models'
+import {
+	CardActions,
+	CustomerEditor,
+	IconClock,
+	IconPhone,
+	IconPlus,
+	IconSearch,
+	IconUser,
+	Input,
+	Layout,
+	LayoutBody,
+	ModalDelete,
+	Spinner,
+	SubMenu,
+	Title
+} from '@/app/(presentation)/components'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
+import { toast } from 'react-hot-toast'
+import {
+	makeRemoteDeleteCustomer,
+	makeRemoteUpdateCustomer,
+	makeRemoteAddCustomer,
+	makeRemoteLoadCustomers
+} from '@/app/main/factories/usecases/remote'
+import { loadCustomerStore, removeCustomerStore } from '../../../redux'
+import { useDispatch } from 'react-redux'
+import Image from 'next/image'
+import { useCustomers } from '../../../hooks'
+
+export default function Customers() {
+	const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>(
+		{} as CustomerModel
+	)
+	const [isLoading, setIsLoading] = useState(true)
+	const [showEditor, setShowEditor] = useState(false)
+	const [showFormDelete, setShowFormDelete] = useState(false)
+	const customers = useCustomers()
+	const dispatch = useDispatch()
+
+	const fetchData = async () => {
+		try {
+			const httpResponse = await makeRemoteLoadCustomers().load()
+			dispatch(loadCustomerStore(httpResponse))
+		} catch (error: any) {
+			toast.error(error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, [])
+
+	const clearSelectedCustomer = () => {
+		setSelectedCustomer({} as CustomerModel)
+	}
+
+	const handleCloseDetail = () => {
+		clearSelectedCustomer()
+		setShowEditor(false)
+	}
+
+	const handleOpenDetalhe = (customer?: CustomerModel) => {
+		if (customer) setSelectedCustomer(customer)
+		setShowEditor(true)
+	}
+
+	const handleOpenFormDelete = (customer: CustomerModel) => {
+		setSelectedCustomer(customer)
+		setShowFormDelete(true)
+	}
+
+	const handleCloseFormDelete = () => {
+		clearSelectedCustomer()
+		setShowFormDelete(false)
+	}
+
+	const handleDelete = async () => {
+		try {
+			await makeRemoteDeleteCustomer().delete(selectedCustomer.id)
+			dispatch(removeCustomerStore(selectedCustomer.id))
+			toast.success(`Cliente ${selectedCustomer.name} foi excluído`)
+			handleCloseFormDelete()
+		} catch (error: any) {
+			toast.error(error.message)
+		}
+	}
+
+	return (
+		<Layout>
+			{showEditor && (
+				<CustomerEditor
+					customer={selectedCustomer}
+					show={showEditor}
+					onClose={handleCloseDetail}
+					addCustomer={makeRemoteAddCustomer()}
+					updateCustomer={makeRemoteUpdateCustomer()}
+				/>
+			)}
+			{showFormDelete && (
+				<ModalDelete
+					entity="cliente"
+					description={`Deseja realmente excluir ${selectedCustomer.name}?`}
+					show={showFormDelete}
+					onClose={handleCloseFormDelete}
+					onSubmit={handleDelete}
+				/>
+			)}
+			<LayoutBody>
+				<div className="flex flex-col gap-2">
+					<SubMenu submenus={SubmenuUtils.commercial} />
+					<Title
+						title={`Clientes ${isLoading ? '' : `(${customers?.length})`}`}
+						icon={IconUser}
+					/>
+					<div className="flex items-center gap-2">
+						<button
+							className="bg-primary px-2 py-1 rounded-md text-gray-200"
+							title="Novo cliente"
+							onClick={() => handleOpenDetalhe()}
+						>
+							<IconPlus />
+						</button>
+						<div className="w-full max-w-xs">
+							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
+						</div>
+					</div>
+					{isLoading ? (
+						<Spinner data="Carregando clientes..." />
+					) : customers?.length < 1 ? (
+						<div>Nenhum cliente de momento.</div>
+					) : (
+						<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+							{customers.map((customer) => (
+								<li key={customer.id} className="p-4 shadow">
+									<div className="flex items-center gap-1 mb-3">
+										{customer.photo ? (
+											<Image
+												src={customer.photo}
+												alt={`Foto de perfil`}
+												width={50}
+												height={50}
+												className="rounded-full object-cover aspect-square"
+											/>
+										) : (
+											<IconUser size={50} />
+										)}
+										<div>
+											<div className="font-semibold">{customer.name}</div>
+											<div className="flex items-center gap-1 text-sm font-normal">
+												<IconPhone /> {NumberUtils.format(customer.phone)}
+											</div>
+										</div>
+									</div>
+									<CardActions
+										onClickDelete={() => handleOpenFormDelete(customer)}
+										onClickEdit={() => handleOpenDetalhe(customer)}
+									/>
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
+			</LayoutBody>
+		</Layout>
+	)
+}
