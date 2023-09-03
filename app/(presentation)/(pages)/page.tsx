@@ -28,6 +28,7 @@ type ItemProps = {
 	icon?: ElementType
 	isLoading?: boolean
 	href: string
+	className?: string
 }
 
 export default function Home() {
@@ -108,6 +109,7 @@ export default function Home() {
 						icon={IconCategory}
 						isLoading={isLoadingCategories}
 						href="/comercial/categorias"
+						className="bg-gray-300"
 					/>
 					<Item
 						number={products}
@@ -115,6 +117,7 @@ export default function Home() {
 						icon={IconProduct}
 						isLoading={isLoadingProducts}
 						href="/comercial/produtos"
+						className="bg-blue-300"
 					/>
 					<Item
 						number={suppliers}
@@ -122,6 +125,7 @@ export default function Home() {
 						icon={IconSupplier}
 						isLoading={isLoadingSuppliers}
 						href="/comercial/fornecedores"
+						className="bg-red-300"
 					/>
 					<Item
 						number={purchases}
@@ -129,6 +133,7 @@ export default function Home() {
 						icon={IconProduct}
 						isLoading={isLoadingPurchases}
 						href="/comercial/estoque"
+						className="bg-yellow-300"
 					/>
 					<Item
 						number={sales}
@@ -136,6 +141,7 @@ export default function Home() {
 						icon={IconCurrency}
 						isLoading={isLoadingSales}
 						href="/comercial/vendas"
+						className="bg-green-300"
 					/>
 				</div>
 			</LayoutBody>
@@ -143,9 +149,12 @@ export default function Home() {
 	)
 }
 
-const Item = ({ icon: Icon, number, title, isLoading, href }: ItemProps) => {
+const Item = ({ icon: Icon, number, title, isLoading, href, className }: ItemProps) => {
 	return (
-		<Link href={href} className="flex gap-2 shadow-md p-4 rounded-lg">
+		<Link
+			href={href}
+			className={`flex gap-2 shadow-md p-4 rounded-lg ${className || ''}`}
+		>
 			{Icon && <Icon className="text-7xl" />}
 			<div className={`flex-1`}>
 				<h2 className="">{title}</h2>
