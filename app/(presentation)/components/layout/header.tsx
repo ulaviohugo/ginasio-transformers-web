@@ -3,10 +3,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ElementType, useState } from 'react'
-import { IconHome, IconProduct, IconSignout, IconUser, Spinner } from '.'
+import {
+	IconHome,
+	IconProduct,
+	IconSignout,
+	IconUser,
+	Spinner
+} from '@/app/(presentation)/components'
 import { setCurrentAccountAdapter } from '@/app/main/adapters'
-import { useAuth } from '../hooks'
 import { StringUtils } from '@/app/utils'
+import { useAuth } from '@/app/(presentation)/hooks'
 
 export function Header() {
 	const user = useAuth()
