@@ -17,7 +17,7 @@ import {
 } from '@/app/(presentation)/components'
 import { useSales } from '@/app/(presentation)/hooks'
 import { loadSaleStore, removeSaleStore } from '@/app/(presentation)/redux'
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import {
 	makeRemoteAddSale,
 	makeRemoteDeleteSale,
@@ -33,7 +33,7 @@ import { useDispatch } from 'react-redux'
 export default function Vendas() {
 	const dispatch = useDispatch()
 	const sales = useSales()
-	const [selectedSale, setSelectedSale] = useState<Sale>({} as Sale)
+	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
@@ -54,10 +54,10 @@ export default function Vendas() {
 	}, [])
 
 	const clearSelectedSale = () => {
-		setSelectedSale({} as Sale)
+		setSelectedSale({} as SaleModel)
 	}
 
-	const handleOpenDetalhe = (sale?: Sale) => {
+	const handleOpenDetalhe = (sale?: SaleModel) => {
 		if (sale) setSelectedSale(sale)
 		setShowEditor(true)
 	}
@@ -67,7 +67,7 @@ export default function Vendas() {
 		setShowEditor(false)
 	}
 
-	const handleOpenFormDelete = (category: Sale) => {
+	const handleOpenFormDelete = (category: SaleModel) => {
 		setSelectedSale(category)
 		setShowFormDelete(true)
 	}

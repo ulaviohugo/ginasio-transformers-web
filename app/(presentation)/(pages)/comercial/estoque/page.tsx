@@ -13,7 +13,8 @@ import {
 	Spinner,
 	SubMenu,
 	Title,
-	IconProduct
+	IconProduct,
+	IconStock
 } from '@/app/(presentation)/components'
 import { usePurchases } from '@/app/(presentation)/hooks'
 import { loadPurchaseStore, removePurchaseStore } from '@/app/(presentation)/redux'
@@ -115,7 +116,7 @@ export default function Entradas() {
 					<SubMenu submenus={SubmenuUtils.commercial} />
 					<Title
 						title={`Entradas ${isLoading ? '' : `(${purchases?.length})`}`}
-						icon={IconProduct}
+						icon={IconStock}
 					/>
 					<div className="flex items-center gap-2">
 						<button
@@ -167,7 +168,7 @@ export default function Entradas() {
 											className="aspect-square object-cover"
 										/>
 									) : (
-										<IconProduct size={25} />
+										<IconStock size={25} />
 									)}
 								</td>
 								<td className="p-1">{purchase.supplier?.name}</td>

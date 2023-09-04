@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { IconClose } from '.'
 
 type ImagePreviewProps = {
@@ -15,7 +15,12 @@ export function ImagePreview({
 	clearInputFile,
 	onInputFileChange
 }: ImagePreviewProps) {
-	const [preview, setPreview] = useState(photoPreview)
+	const [preview, setPreview] = useState('')
+	console.log({ photoPreview, preview })
+
+	useEffect(() => {
+		setPreview(photoPreview)
+	}, [photoPreview])
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = (e.target as any)?.files[0]

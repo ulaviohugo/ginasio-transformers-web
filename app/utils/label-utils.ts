@@ -3,12 +3,14 @@ import {
 	EmployeeModel,
 	ProductModel,
 	PurchaseModel,
+	SaleModel,
 	SupplierModel
 } from '../domain/models'
 
 type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof EmployeeModel, string>> &
 	Partial<Record<keyof ProductModel, string>> &
+	Partial<Record<keyof SaleModel, string>> &
 	Partial<Record<keyof SupplierModel, string>> &
 	Partial<Record<keyof PurchaseModel, string>>
 
@@ -22,6 +24,7 @@ export class LabelUtils {
 		color: 'Cor',
 		contractEndDate: 'Data de fim de contrato',
 		countryId: 'País',
+		customerId: 'Cliente',
 		createdAt: 'Data de criação',
 		createdById: 'Criado por',
 		dateOfBirth: 'Data de nascimento',

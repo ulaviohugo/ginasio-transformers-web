@@ -1,6 +1,6 @@
 import { SaleRepository } from '@/app/data/protocols'
 import { prismaService } from '..'
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSaleMapper } from '../mappers'
 
@@ -10,7 +10,7 @@ export class SalePrismaRepository implements SaleRepository {
 		this.prisma = prismaService
 	}
 
-	async add(param: Sale): Promise<Sale> {
+	async add(param: SaleModel): Promise<SaleModel> {
 		const createdSale = (await this.prisma.sale.create({
 			data: PrismaSaleMapper.toPrisma(param),
 			include: {
@@ -22,12 +22,12 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as Sale
+		})) as SaleModel
 
 		return createdSale
 	}
 
-	async loadAll(): Promise<Sale[]> {
+	async loadAll(): Promise<SaleModel[]> {
 		return (await this.prisma.sale.findMany({
 			include: {
 				purchase: {
@@ -38,20 +38,20 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as Sale[]
+		})) as SaleModel[]
 	}
 
-	async findById(id: number): Promise<Sale | null> {
+	async findById(id: number): Promise<SaleModel | null> {
 		return (await this.prisma.sale.findUnique({
 			where: { id }
-		})) as Sale
+		})) as SaleModel
 	}
 
 	async count(): Promise<number> {
 		return this.prisma.sale.count()
 	}
 
-	async update(param: Sale): Promise<Sale> {
+	async update(param: SaleModel): Promise<SaleModel> {
 		return (await this.prisma.sale.update({
 			data: PrismaSaleMapper.toPrisma(param),
 			where: { id: param.id },
@@ -64,7 +64,7 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as Sale
+		})) as SaleModel
 	}
 
 	async delete(id: number): Promise<boolean> {

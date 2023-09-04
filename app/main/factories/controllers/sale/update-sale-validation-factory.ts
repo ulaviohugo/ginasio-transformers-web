@@ -1,4 +1,4 @@
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import { Validation } from '@/app/infra/http/protocols'
 import {
 	NumberGreaterThanValidation,
@@ -6,7 +6,7 @@ import {
 	ValidationComposite
 } from '@/app/validation/validators'
 
-type FieldTypes = keyof Sale
+type FieldTypes = keyof SaleModel
 
 export const makeUpdateSaleValidation = () => {
 	const validations: Validation[] = []

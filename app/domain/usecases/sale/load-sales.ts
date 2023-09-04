@@ -1,7 +1,7 @@
-import { Sale } from '../../models'
+import { SaleModel } from '../../models'
 
 export interface LoadSales {
 	load(): Promise<LoadSalesResult>
 }
 
-export type LoadSalesResult = Sale[]
+export type LoadSalesResult = SaleModel[]

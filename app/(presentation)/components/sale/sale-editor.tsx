@@ -5,12 +5,14 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { PurchaseModel, Sale } from '@/app/domain/models'
+import { PurchaseModel, SaleModel } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconProduct,
 	IconSearch,
+	IconStock,
+	ImagePreview,
 	Input,
 	InputPrice,
 	Modal,
@@ -20,14 +22,28 @@ import {
 	Select
 } from '..'
 
-import { LabelUtils, NumberUtils, PaymentUtils, StringUtils } from '@/app/utils'
-import { addSaleStore, loadPurchaseStore, updateSaleStore } from '../../redux'
+import {
+	ColorUtils,
+	LabelUtils,
+	NumberUtils,
+	PaymentUtils,
+	StringUtils
+} from '@/app/utils'
+import {
+	addSaleStore,
+	loadCustomerStore,
+	loadPurchaseStore,
+	updateSaleStore
+} from '../../redux'
 import { AddSale, UpdateSale } from '@/app/domain/usecases'
-import { usePurchases } from '../../hooks'
-import { makeRemoteLoadPurchases } from '@/app/main/factories/usecases/remote'
+import { useCustomers, usePurchases } from '../../hooks'
+import {
+	makeRemoteLoadCustomers,
+	makeRemoteLoadPurchases
+} from '@/app/main/factories/usecases/remote'
 
 type SaleEditorProps = {
-	data?: Sale
+	data?: SaleModel
 	show: boolean
 	onClose: () => void
 	addSale: AddSale
@@ -43,9 +59,11 @@ export function SaleEditor({
 }: SaleEditorProps) {
 	const dispatch = useDispatch()
 	const stocks = usePurchases()
+	const customers = useCustomers()
 
-	const [formData, setFormData] = useState<Sale>(data || ({} as Sale))
+	const [formData, setFormData] = useState<SaleModel>(data || ({} as SaleModel))
 	const [isLoading, setIsLoading] = useState(false)
+	const [photPreview, setPhotPreview] = useState('')
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -67,6 +85,11 @@ export function SaleEditor({
 				dispatch(loadPurchaseStore(response))
 			})
 		}
+		if (customers.length < 1) {
+			fetchData(makeRemoteLoadCustomers(), (response) => {
+				dispatch(loadCustomerStore(response))
+			})
+		}
 	}, [])
 
 	const handleInputChange = async (
@@ -74,7 +97,7 @@ export function SaleEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: Sale = { ...formData, [name]: value }
+		let data: SaleModel = { ...formData, [name]: value }
 
 		if (name == 'totalValue') {
 			const totalValue = NumberUtils.convertToNumber(value)
@@ -94,15 +117,24 @@ export function SaleEditor({
 		setFormData(data)
 	}
 
-	const handleSelectItem = ({ id, sellingPriceUnit }: PurchaseModel) => {
+	const handleSelectItem = ({
+		id,
+		sellingPriceUnit: unitPrice,
+		color,
+		size,
+		photo
+	}: PurchaseModel) => {
 		const quantity = Number(formData.quantity) || 1
-		const totalValue = quantity > 0 ? quantity * sellingPriceUnit : 0
+		const totalValue = quantity > 0 ? quantity * unitPrice : 0
+		setPhotPreview(photo || '')
 		setFormData({
 			...formData,
 			purchaseId: id,
-			unitPrice: sellingPriceUnit,
+			unitPrice,
 			totalValue,
-			quantity
+			quantity,
+			color,
+			size
 		})
 	}
 
@@ -113,7 +145,7 @@ export function SaleEditor({
 		try {
 			const httpResponse = (
 				formData.id ? await updateSale.update(formData) : await addSale.add(formData)
-			) as Sale
+			) as SaleModel
 
 			if (formData.id) {
 				dispatch(updateSaleStore(httpResponse))
@@ -135,49 +167,90 @@ export function SaleEditor({
 			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
-					<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+					<div className="flex gap-2">
+						<ImagePreview photoPreview={photPreview} />
 						<div>
-							<Input
-								type="number"
-								id="quantity"
-								name="quantity"
-								value={formData?.quantity || ''}
-								label={LabelUtils.translateField('quantity')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<InputPrice
-								id="unitPrice"
-								name="unitPrice"
-								value={formData?.unitPrice || ''}
-								label={LabelUtils.translateField('unitPrice')}
-								onChange={handleInputChange}
-								disabled
-							/>
-						</div>
-						<div>
-							<InputPrice
-								id="totalValue"
-								name="totalValue"
-								value={formData?.totalValue || ''}
-								label={'Total a pagar'}
-								onChange={handleInputChange}
-								disabled
-							/>
-						</div>
-						<div>
-							<Select
-								id="paymentMethod"
-								name="paymentMethod"
-								value={formData?.paymentMethod || ''}
-								label={LabelUtils.translateField('paymentMethod')}
-								data={PaymentUtils.getMethods().map((paymentType) => ({
-									text: paymentType
-								}))}
-								defaultText="Selecione"
-								onChange={handleInputChange}
-							/>
+							<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+								<div>
+									<Select
+										id="customerId"
+										name="customerId"
+										value={formData?.customerId || ''}
+										label={LabelUtils.translateField('customerId')}
+										data={customers.map((customer) => ({
+											text: customer.name,
+											value: customer.id
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<Select
+										id="color"
+										name="color"
+										value={formData?.color || ''}
+										label={LabelUtils.translateField('color')}
+										data={ColorUtils.colors.map((color) => ({
+											text: color
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<Input
+										id="size"
+										name="size"
+										value={formData?.size || ''}
+										label={LabelUtils.translateField('size')}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<Input
+										type="number"
+										id="quantity"
+										name="quantity"
+										value={formData?.quantity || ''}
+										label={LabelUtils.translateField('quantity')}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<InputPrice
+										id="unitPrice"
+										name="unitPrice"
+										value={formData?.unitPrice || ''}
+										label={LabelUtils.translateField('unitPrice')}
+										onChange={handleInputChange}
+										disabled
+									/>
+								</div>
+								<div>
+									<InputPrice
+										id="totalValue"
+										name="totalValue"
+										value={formData?.totalValue || ''}
+										label={'Total a pagar'}
+										onChange={handleInputChange}
+										disabled
+									/>
+								</div>
+								<div>
+									<Select
+										id="paymentMethod"
+										name="paymentMethod"
+										value={formData?.paymentMethod || ''}
+										label={LabelUtils.translateField('paymentMethod')}
+										data={PaymentUtils.getMethods().map((paymentType) => ({
+											text: paymentType
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div className="flex-1 my-5">
@@ -216,7 +289,10 @@ const ItemList = ({ stocks, onSelect }: ItemListProps) => {
 		setSelectedItem(stock.id)
 	}
 	return (
-		<div className="flex flex-col gap-1">
+		<div className="flex flex-col gap-1 border-t pt-2 mt-2">
+			<div className="flex items-center gap-2">
+				<IconStock /> Produtos em estoque
+			</div>
 			<Input
 				placeholder="Pesquisar por produto ou categoria"
 				icon={IconSearch}

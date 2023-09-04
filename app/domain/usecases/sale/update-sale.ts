@@ -1,5 +1,5 @@
-import { Sale } from '../../models'
+import { SaleModel } from '../../models'
 
 export interface UpdateSale {
-	update(param: Sale): Promise<Sale | 'notFound'>
+	update(param: SaleModel): Promise<SaleModel | 'notFound'>
 }

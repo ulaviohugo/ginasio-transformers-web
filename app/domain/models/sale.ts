@@ -1,11 +1,14 @@
 import { PurchaseModel } from '.'
 
-export interface Sale {
+export interface SaleModel {
 	id: number
 	purchaseId: number
+	customerId?: number
 	quantity: number
 	totalValue: number
 	unitPrice: number
+	color?: string
+	size?: string
 	discount: number
 	paymentMethod: string
 	employeeId: number

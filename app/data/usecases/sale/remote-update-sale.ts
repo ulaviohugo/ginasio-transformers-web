@@ -1,4 +1,4 @@
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import { UpdateSale } from '@/app/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
 import { UnexpectedError } from '@/app/infra/http/errors'
@@ -10,11 +10,11 @@ export class RemoteUpdateSale implements UpdateSale {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: Sale): Promise<Sale> {
+	async update(param: SaleModel): Promise<SaleModel> {
 		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
 		const totalValue = NumberUtils.convertToNumber(param.totalValue)
 		const purchaseId = NumberUtils.convertToNumber(param.purchaseId)
-		const handledParam = ObjectUtils.removeProps<Sale>(
+		const handledParam = ObjectUtils.removeProps<SaleModel>(
 			{ ...param, unitPrice, totalValue, purchaseId },
 			['createdAt', 'createdById', 'updatedAt', 'updatedById']
 		)

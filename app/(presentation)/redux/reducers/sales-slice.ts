@@ -1,8 +1,8 @@
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface SaleState {
-	sales: Sale[]
+	sales: SaleModel[]
 }
 
 const initialState: SaleState = {
@@ -13,16 +13,16 @@ export const saleSlice = createSlice({
 	name: 'sales',
 	initialState,
 	reducers: {
-		addSaleStore: (state, action: PayloadAction<Sale>) => {
+		addSaleStore: (state, action: PayloadAction<SaleModel>) => {
 			state.sales.push(action.payload)
 		},
-		loadSaleStore: (state, action: PayloadAction<Sale[]>) => {
+		loadSaleStore: (state, action: PayloadAction<SaleModel[]>) => {
 			state.sales = action.payload
 		},
 		removeSaleStore: (state, action: PayloadAction<number>) => {
 			state.sales = state.sales.filter((sale) => sale.id !== action.payload)
 		},
-		updateSaleStore: (state, action: PayloadAction<Sale>) => {
+		updateSaleStore: (state, action: PayloadAction<SaleModel>) => {
 			state.sales = state.sales.map((sale) => {
 				if (sale.id == action.payload.id) {
 					return action.payload

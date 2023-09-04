@@ -18,6 +18,7 @@ import {
 	AiOutlineCheckCircle
 } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
+import { GrStorage } from 'react-icons/gr'
 import { IoMdClose } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt } from 'react-icons/bi'
 import { FaHouseUser, FaSignOutAlt } from 'react-icons/fa'
@@ -78,3 +79,5 @@ export const IconSearch = (props: IconBaseProps): React.ReactElement => (
 export const IconEdit = (props: IconBaseProps) => <HiPencilAlt {...props} />
 export const IconTrash = (props: IconBaseProps) => <HiTrash {...props} />
 export const IconClose = (props: IconBaseProps) => <IoMdClose {...props} />
+
+export const IconStock = (props: IconBaseProps) => <GrStorage {...props} />

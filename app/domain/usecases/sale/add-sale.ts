@@ -1,7 +1,7 @@
-import { Sale } from '../../models'
+import { SaleModel } from '../../models'
 
 export interface AddSale {
-	add(param: Sale): Promise<AddSalesResult>
+	add(param: SaleModel): Promise<AddSalesResult>
 }
 
-export type AddSalesResult = Sale
+export type AddSalesResult = SaleModel

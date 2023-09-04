@@ -1,7 +1,7 @@
 import { UpdateSale } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { Sale } from '@/app/domain/models'
+import { SaleModel } from '@/app/domain/models'
 import { NumberUtils } from '@/app/utils'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { dbErrorHandler } from '@/app/infra/db'
@@ -11,7 +11,7 @@ export class UpdateSaleController implements Controller {
 		private readonly UpdateSale: UpdateSale,
 		private readonly validation: Validation
 	) {}
-	async handle(request: ControllerParams<Sale>): Promise<HttpResponse> {
+	async handle(request: ControllerParams<SaleModel>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate(request)
 			if (error) {
