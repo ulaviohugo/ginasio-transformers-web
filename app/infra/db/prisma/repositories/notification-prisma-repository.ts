@@ -12,17 +12,48 @@ export class NotificationPrismaRepository implements NotificationRepository {
 
 	async add(param: NotificationModel): Promise<NotificationModel> {
 		return (await this.prisma.notification.create({
-			data: PrismaNotificationMapper.toPrisma(param)
+			data: PrismaNotificationMapper.toPrisma(param),
+			include: {
+				stock: {
+					select: {
+						id: true,
+						quantity: true,
+						product: { select: { id: true, name: true } },
+						category: { select: { id: true, name: true } }
+					}
+				}
+			}
 		})) as NotificationModel
 	}
 
 	async loadAll(): Promise<NotificationModel[]> {
-		return (await this.prisma.notification.findMany()) as NotificationModel[]
+		return (await this.prisma.notification.findMany({
+			include: {
+				stock: {
+					select: {
+						id: true,
+						quantity: true,
+						product: { select: { id: true, name: true } },
+						category: { select: { id: true, name: true } }
+					}
+				}
+			}
+		})) as NotificationModel[]
 	}
 
 	async findById(id: number): Promise<NotificationModel | null> {
 		return (await this.prisma.notification.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				stock: {
+					select: {
+						id: true,
+						quantity: true,
+						product: { select: { id: true, name: true } },
+						category: { select: { id: true, name: true } }
+					}
+				}
+			}
 		})) as NotificationModel
 	}
 
@@ -33,7 +64,17 @@ export class NotificationPrismaRepository implements NotificationRepository {
 	async update(param: NotificationModel): Promise<NotificationModel> {
 		return (await this.prisma.notification.update({
 			data: PrismaNotificationMapper.toPrisma(param),
-			where: { id: param.id }
+			where: { id: param.id },
+			include: {
+				stock: {
+					select: {
+						id: true,
+						quantity: true,
+						product: { select: { id: true, name: true } },
+						category: { select: { id: true, name: true } }
+					}
+				}
+			}
 		})) as NotificationModel
 	}
 

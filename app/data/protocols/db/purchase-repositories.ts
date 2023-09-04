@@ -3,6 +3,7 @@ import { PurchaseModel } from '@/app/domain/models'
 export interface PurchaseRepository {
 	add(param: PurchaseModel): Promise<PurchaseModel>
 	findById(id: number): Promise<PurchaseModel | null>
+	findLowStock(): Promise<PurchaseModel[]>
 	loadAll(): Promise<PurchaseModel[]>
 	update(param: PurchaseModel): Promise<PurchaseModel>
 	delete(id: number): Promise<boolean>

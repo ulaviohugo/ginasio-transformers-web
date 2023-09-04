@@ -18,7 +18,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as PurchaseModel
+		})) as any
 	}
 
 	async loadAll(): Promise<PurchaseModel[]> {
@@ -28,13 +28,29 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as PurchaseModel[]
+		})) as any
 	}
 
 	async findById(id: number): Promise<PurchaseModel | null> {
 		return (await this.prisma.purchase.findUnique({
-			where: { id }
-		})) as PurchaseModel
+			where: { id },
+			include: {
+				category: { select: { name: true } },
+				product: { select: { name: true } },
+				supplier: { select: { name: true } }
+			}
+		})) as any
+	}
+
+	async findLowStock(): Promise<PurchaseModel[]> {
+		return (await this.prisma.purchase.findMany({
+			where: { quantity: { lt: 5 } },
+			include: {
+				category: { select: { name: true } },
+				product: { select: { name: true } },
+				supplier: { select: { name: true } }
+			}
+		})) as any
 	}
 
 	async count(): Promise<number> {
@@ -50,7 +66,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
 			}
-		})) as PurchaseModel
+		})) as any
 	}
 
 	async delete(id: number): Promise<boolean> {

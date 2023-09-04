@@ -3,10 +3,9 @@
 import { StringUtils } from '@/app/utils'
 import { IconNotification, IconUser } from '..'
 import { useAuth } from '../../hooks'
+import Link from 'next/link'
 
-type TopBarProps = {}
-
-export function TopBar(props: TopBarProps) {
+export function TopBar() {
 	const user = useAuth()
 	return (
 		<nav className="flex bg-white -mx-4 px-4">
@@ -17,8 +16,10 @@ export function TopBar(props: TopBarProps) {
 					</span>
 					{StringUtils.getFirstAndLastWord(user.name)}
 				</li>
-				<li>
-					<IconNotification />
+				<li className="rounded-full hover:bg-gray-200 hover:scale-110 transition-all duration-300">
+					<Link href={'/notificacoes'} className="flex p-1" title="Notificações">
+						<IconNotification size={24} />
+					</Link>
 				</li>
 			</ul>
 		</nav>

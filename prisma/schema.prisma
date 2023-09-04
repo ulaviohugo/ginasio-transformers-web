@@ -223,13 +223,14 @@ model Purchase {
   updatedById      Int?      @map("updated_by_id")
   updatedAt        DateTime? @map("updated_at")
 
-  supplier   Supplier  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
-  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
-  sales      Sale[]
-  Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId Int?
+  supplier     Supplier       @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  product      Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  employee     Employee?      @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  sales        Sale[]
+  Customer     Customer?      @relation(fields: [customerId], references: [id])
+  customerId   Int?
+  Notification Notification[]
 
   @@map("tb_purchases")
 }
@@ -267,4 +268,6 @@ model Notification {
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedById  Int?      @map("updated_by_id")
   updatedAt    DateTime? @map("updated_at")
+
+  stock Purchase @relation(fields: [notifiableId], references: [id])
 }
