@@ -1,13 +1,12 @@
-import { DeleteCustomer } from '@/app/domain/usecases'
+import { DeleteNotification } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
-import { UploadService } from '@/app/services'
 import { dbErrorHandler } from '@/app/infra/db'
 
-export class DeleteCustomerController implements Controller {
+export class DeleteNotificationController implements Controller {
 	constructor(
-		private readonly deleteCustomer: DeleteCustomer,
+		private readonly deleteNotification: DeleteNotification,
 		private readonly validation: Validation
 	) {}
 
@@ -17,7 +16,7 @@ export class DeleteCustomerController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			const result = await this.deleteCustomer.delete(Number(id), new UploadService())
+			const result = await this.deleteNotification.delete(Number(id))
 			if (result === null) {
 				return notFound()
 			}
