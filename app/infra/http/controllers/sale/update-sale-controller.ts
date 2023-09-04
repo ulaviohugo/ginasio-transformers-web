@@ -22,11 +22,13 @@ export class UpdateSaleController implements Controller {
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
 				purchaseId: NumberUtils.convertToNumber(request.purchaseId),
+				customerId: NumberUtils.convertToNumber(request.customerId),
 				quantity: NumberUtils.convertToNumber(request.quantity),
 				employeeId: undefined as any,
 				totalValue: NumberUtils.convertToNumber(request.totalValue),
 				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
 				discount: NumberUtils.convertToNumber(request.discount),
+				amountPaid: NumberUtils.convertToNumber(request.amountPaid),
 				updatedById: NumberUtils.convertToNumber(request.accountId),
 				updatedAt: new Date()
 			})

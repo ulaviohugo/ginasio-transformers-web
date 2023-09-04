@@ -80,16 +80,12 @@ export function SaleEditor({
 	}
 
 	useEffect(() => {
-		if (stocks.length < 1) {
-			fetchData(makeRemoteLoadPurchases(), (response) => {
-				dispatch(loadPurchaseStore(response))
-			})
-		}
-		if (customers.length < 1) {
-			fetchData(makeRemoteLoadCustomers(), (response) => {
-				dispatch(loadCustomerStore(response))
-			})
-		}
+		fetchData(makeRemoteLoadPurchases(), (response) => {
+			dispatch(loadPurchaseStore(response))
+		})
+		fetchData(makeRemoteLoadCustomers(), (response) => {
+			dispatch(loadCustomerStore(response))
+		})
 	}, [])
 
 	const handleInputChange = async (
@@ -107,11 +103,27 @@ export function SaleEditor({
 			}
 		}
 		if (name == 'quantity') {
-			const quantity = Number(value)
+			const quantity = NumberUtils.convertToNumber(value)
+			const discount = NumberUtils.convertToNumber(formData.discount)
+			const totalValue =
+				quantity > 0
+					? NumberUtils.convertToNumber(formData.unitPrice) * quantity - discount
+					: 0
 			data = {
 				...data,
-				totalValue:
-					quantity > 0 ? NumberUtils.convertToNumber(formData.unitPrice) * quantity : 0
+				totalValue,
+				amountPaid: totalValue
+			}
+		}
+		if (name == 'discount') {
+			const discount = NumberUtils.convertToNumber(value)
+			const quantity = NumberUtils.convertToNumber(formData.quantity)
+			const unitPrice = NumberUtils.convertToNumber(formData.unitPrice)
+			const totalValue = quantity > 0 ? quantity * unitPrice : 0
+
+			data = {
+				...data,
+				amountPaid: discount > 0 ? totalValue - discount : totalValue
 			}
 		}
 		setFormData(data)
@@ -132,6 +144,7 @@ export function SaleEditor({
 			purchaseId: id,
 			unitPrice,
 			totalValue,
+			amountPaid: totalValue,
 			quantity,
 			color,
 			size
@@ -229,12 +242,21 @@ export function SaleEditor({
 								</div>
 								<div>
 									<InputPrice
-										id="totalValue"
-										name="totalValue"
-										value={formData?.totalValue || ''}
+										id="amountPaid"
+										name="amountPaid"
+										value={formData?.amountPaid || ''}
 										label={'Total a pagar'}
 										onChange={handleInputChange}
 										disabled
+									/>
+								</div>
+								<div>
+									<InputPrice
+										id="discount"
+										name="discount"
+										value={formData?.discount || ''}
+										label={'Desconto'}
+										onChange={handleInputChange}
 									/>
 								</div>
 								<div>

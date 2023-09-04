@@ -8,9 +8,11 @@ export class PrismaSaleMapper {
 		return {
 			id: sale.id,
 			purchaseId: sale.purchaseId,
+			customerId: sale.customerId,
 			quantity: sale.quantity,
 			totalValue: sale.totalValue,
 			unitPrice: sale.unitPrice,
+			amountPaid: sale.amountPaid,
 			discount: sale.discount,
 			paymentMethod: sale.paymentMethod,
 			employeeId: sale.employeeId,

@@ -241,6 +241,7 @@ model Sale {
   quantity      Int
   totalValue    Float     @map("total_value")
   unitPrice     Float     @map("unit_price")
+  amountPaid    Float     @default(0) @map("amount_paid")
   color         String?
   size          String?
   discount      Float     @map("discount")

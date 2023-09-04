@@ -71,7 +71,8 @@ export function InputPrice(props: InputProps) {
 		thousandsSeparatorSymbol: ' ',
 		allowDecimal: true,
 		decimalSymbol: '.',
-		decimalLimit: 2
+		decimalLimit: 2,
+		allowNegative: true
 	})
 	return <InputMask mask={priceMask} {...props} />
 }

@@ -7,6 +7,7 @@ export interface SaleModel {
 	quantity: number
 	totalValue: number
 	unitPrice: number
+	amountPaid: number
 	color?: string
 	size?: string
 	discount: number
