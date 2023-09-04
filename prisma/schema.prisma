@@ -242,10 +242,10 @@ model Sale {
   totalValue    Float     @map("total_value")
   unitPrice     Float     @map("unit_price")
   amountPaid    Float     @default(0) @map("amount_paid")
-  color         String?
-  size          String?
+  color         String?   @db.VarChar(15)
+  size          String?   @db.VarChar(20)
   discount      Float     @map("discount")
-  paymentMethod String    @map("payment_method")
+  paymentMethod String    @map("payment_method") @db.VarChar(50)
   employeeId    Int       @map("employee_id")
   createdById   Int?      @map("created_by_id")
   createdAt     DateTime  @default(now()) @map("created_at")
@@ -257,4 +257,14 @@ model Sale {
   employee Employee  @relation(fields: [employeeId], references: [id])
 
   @@map("tb_sales")
+}
+
+model Notification {
+  id           Int       @id @default(autoincrement())
+  notifiable   String    @db.VarChar(30)
+  notifiableId Int       @map("notifiable_id")
+  text         String
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedById  Int?      @map("updated_by_id")
+  updatedAt    DateTime? @map("updated_at")
 }
