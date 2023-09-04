@@ -1,6 +1,6 @@
 'use client'
 import { ReactNode, useEffect } from 'react'
-import { Footer, Header } from '.'
+import { Footer, Header, TopBar } from '.'
 
 type LayoutProps = {
 	children: ReactNode
@@ -11,11 +11,7 @@ export function Layout({ children }: LayoutProps) {
 		<div className="flex">
 			<Header />
 			<div className="flex-1 flex flex-col px-4 pb-4 gap-4 bg-gray-200">
-				<nav className="flex bg-white -mx-4 px-4">
-					<ul className="ml-auto">
-						<li>Nav</li>
-					</ul>
-				</nav>
+				<TopBar />
 				<main className="flex-1 flex">{children}</main>
 				<Footer />
 			</div>
