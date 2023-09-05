@@ -64,7 +64,7 @@ export function ImagePreview({
 						width={200}
 						height={200}
 						alt="Pre-visualização"
-						className="object-cover aspect-square"
+						// className="object-cover aspect-square"
 					/>
 					{!disabled && (
 						<IconClose
