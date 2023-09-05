@@ -17,8 +17,19 @@ export class SalePrismaRepository implements SaleRepository {
 				purchase: {
 					include: {
 						category: true,
-						product: true,
-						employee: { select: { id: true, name: true } }
+						product: true
+					}
+				},
+				employee: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				customer: {
+					select: {
+						id: true,
+						name: true
 					}
 				}
 			}
@@ -33,8 +44,19 @@ export class SalePrismaRepository implements SaleRepository {
 				purchase: {
 					include: {
 						category: true,
-						product: true,
-						employee: { select: { id: true, name: true } }
+						product: true
+					}
+				},
+				employee: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				customer: {
+					select: {
+						id: true,
+						name: true
 					}
 				}
 			}
@@ -43,7 +65,27 @@ export class SalePrismaRepository implements SaleRepository {
 
 	async findById(id: number): Promise<SaleModel | null> {
 		return (await this.prisma.sale.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				purchase: {
+					include: {
+						category: true,
+						product: true
+					}
+				},
+				employee: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				customer: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			}
 		})) as SaleModel
 	}
 
@@ -59,8 +101,13 @@ export class SalePrismaRepository implements SaleRepository {
 				purchase: {
 					include: {
 						category: true,
-						product: true,
-						employee: { select: { id: true, name: true } }
+						product: true
+					}
+				},
+				employee: {
+					select: {
+						id: true,
+						name: true
 					}
 				}
 			}
