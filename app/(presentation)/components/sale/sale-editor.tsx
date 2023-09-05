@@ -179,9 +179,9 @@ export function SaleEditor({
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="flex gap-2">
-						<div className="flex flex-col">
+						<div className="flex flex-col gap-2">
 							<ImagePreview photoPreview={photPreview} disabled />
-							<div className="">
+							<div className="bg-green-50 border border-green-200 p-2">
 								<div>
 									<InputPrice
 										id="unitPrice"
@@ -358,7 +358,7 @@ const ItemList = ({ stocks, onSelect }: ItemListProps) => {
 	}
 	return (
 		<div className="flex flex-col gap-1 border-t pt-2 mt-2">
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 uppercase text-xs font-semibold">
 				<IconStock /> Produtos em estoque
 			</div>
 			<Input
@@ -376,7 +376,7 @@ const ItemList = ({ stocks, onSelect }: ItemListProps) => {
 						<th className="p-1">Preço/unid</th>
 						<th className="p-1">Cor</th>
 						<th className="p-1">Tamanho</th>
-						<th className="p-1">Quantidade</th>
+						<th className="p-1">Estoque</th>
 					</tr>
 					{filteredStocks.map((stock, i) => (
 						<tr
