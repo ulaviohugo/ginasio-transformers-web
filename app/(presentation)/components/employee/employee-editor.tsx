@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
@@ -9,7 +8,6 @@ import { EmployeeModel } from '@/app/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
-	IconClose,
 	IconUser,
 	ImagePreview,
 	Input,
@@ -94,6 +92,11 @@ export function EmployeeEditor({
 		}
 		if (name == 'phone1' && !value) {
 			data = { ...data, phone2: '' }
+		}
+
+		if (name == 'canLogin') {
+			const checked = (e.target as any).checked
+			data = { ...data, [name]: checked }
 		}
 		setFormData(data)
 	}
@@ -396,7 +399,7 @@ export function EmployeeEditor({
 									)} para habilitar este campo`}
 								/>
 							</div>
-							<div className="grid grid-cols-3 gap-1">
+							<div className="grid grid-cols-2 gap-1">
 								<Select
 									id="bankName"
 									name="bankName"
@@ -416,14 +419,6 @@ export function EmployeeEditor({
 									defaultText="Selecione"
 									onChange={handleInputChange}
 								/>
-								<InputIBAN
-									id="iban"
-									name="iban"
-									value={formDate?.iban || ''}
-									label={LabelUtils.translateField('iban')}
-									onChange={handleInputChange}
-									disabled={!formDate?.bankName}
-								/>
 								<Input
 									type="text"
 									id="accountNumber"
@@ -434,6 +429,43 @@ export function EmployeeEditor({
 									disabled={!formDate?.bankName}
 								/>
 							</div>
+							<InputIBAN
+								id="iban"
+								name="iban"
+								value={formDate?.iban || ''}
+								label={LabelUtils.translateField('iban')}
+								onChange={handleInputChange}
+								disabled={!formDate?.bankName}
+							/>
+							<div>
+								<div className="inline-flex">
+									<Input
+										type="checkbox"
+										name="canLogin"
+										label="Pode iniciar sessão"
+										checked={formDate.canLogin}
+										onChange={handleInputChange}
+									/>
+								</div>
+							</div>
+							{formDate.canLogin && (
+								<div className="flex gap-1">
+									<Input
+										type="password"
+										name="password"
+										label="Senha"
+										value={formDate.password || ''}
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="password"
+										name="passwordConfirmation"
+										label="Confirme a senha"
+										value={formDate.passwordConfirmation || ''}
+										onChange={handleInputChange}
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 					<ModalFooter>

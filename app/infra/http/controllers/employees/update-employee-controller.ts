@@ -20,6 +20,9 @@ export class UpdateEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
+			const canLogin = request.canLogin === true || (request as any).canLogin == 'true'
+			if (canLogin && !request.password) return badRequest(new Error('Informe a senha'))
+
 			let uploader: Uploader = null as any
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/employees')
@@ -34,7 +37,7 @@ export class UpdateEmployeeController implements Controller {
 					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
 					dependents: NumberUtils.convertToNumber(request.dependents),
 					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
-					canLogin: !!request.canLogin,
+					canLogin,
 					hireDate: DateUtils.convertToDate(request.hireDate),
 					contractEndDate: DateUtils.convertToDate(request.contractEndDate),
 					updatedById: NumberUtils.convertToNumber(request.accountId)

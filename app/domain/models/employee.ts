@@ -16,6 +16,7 @@ export interface EmployeeModel {
 	email: string
 	userName?: string
 	password?: string
+	passwordConfirmation?: string
 	canLogin: boolean
 	countryId: number
 	provinceId?: number
