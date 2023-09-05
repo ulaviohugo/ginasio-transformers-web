@@ -36,7 +36,7 @@ import {
 	updateSaleStore
 } from '../../redux'
 import { AddSale, UpdateSale } from '@/app/domain/usecases'
-import { useCustomers, usePurchases } from '../../hooks'
+import { useAuth, useCustomers, usePurchases } from '../../hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadPurchases
@@ -60,6 +60,8 @@ export function SaleEditor({
 	const dispatch = useDispatch()
 	const stocks = usePurchases()
 	const customers = useCustomers()
+
+	const user = useAuth()
 
 	const [formData, setFormData] = useState<SaleModel>(data || ({} as SaleModel))
 	const [isLoading, setIsLoading] = useState(false)
@@ -87,6 +89,12 @@ export function SaleEditor({
 		fetchData(makeRemoteLoadCustomers(), (response) => {
 			dispatch(loadCustomerStore(response))
 		})
+		if (data?.purchase) {
+			setSelectedItem(data.purchase)
+		}
+		if (data?.purchase?.photo) {
+			setPhotPreview(data.purchase.photo)
+		}
 	}, [])
 
 	const handleInputChange = async (
@@ -174,7 +182,7 @@ export function SaleEditor({
 	return (
 		<Modal show={show} onClose={onClose}>
 			<ModalTitle>
-				{data?.id ? 'Editar' : 'Cadastrar'} venda {data?.purchase?.product?.name}
+				{data?.id ? `Venda - ${data?.purchase?.product?.name}` : 'Cadastrar venda'}
 			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
@@ -317,6 +325,11 @@ export function SaleEditor({
 										onChange={handleInputChange}
 									/>
 								</div>
+								<Input
+									value={data?.employee?.name || user.name}
+									label={`Funcionário`}
+									disabled
+								/>
 							</div>
 							<div className="flex-1 my-5">
 								<ItemList stocks={stocks} onSelect={handleSelectItem} />

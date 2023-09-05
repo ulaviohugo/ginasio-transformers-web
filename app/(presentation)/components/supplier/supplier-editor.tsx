@@ -11,6 +11,7 @@ import {
 	ButtonSubmit,
 	IconClose,
 	IconPlus,
+	IconSupplier,
 	ImagePreview,
 	Input,
 	InputEmail,
@@ -224,7 +225,10 @@ export function SupplierEditor({
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
-			<ModalTitle>{supplier?.id ? 'Editar' : 'Cadastrar'} fornecedor</ModalTitle>
+			<ModalTitle>
+				<IconSupplier />{' '}
+				{supplier?.id ? `Fornecedor - ${supplier.name}` : 'Cadastrar fornecedor'}
+			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="flex gap-1">

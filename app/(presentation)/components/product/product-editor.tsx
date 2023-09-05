@@ -6,6 +6,7 @@ import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconClose,
+	IconProduct,
 	Input,
 	Modal,
 	ModalBody,
@@ -99,7 +100,9 @@ export function ProductEditor({
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
-			<ModalTitle>{data?.id ? 'Editar' : 'Cadastrar'} produto</ModalTitle>
+			<ModalTitle>
+				<IconProduct /> {data?.id ? `Produto - ${data.name}` : 'Cadastrar produto'}
+			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 					<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">

@@ -89,7 +89,9 @@ export function CategoryEditor({
 	}
 	return (
 		<Modal show={show} onClose={onClose}>
-			<ModalTitle>{data?.id ? 'Editar' : 'Cadastrar'} categoria</ModalTitle>
+			<ModalTitle>
+				{data?.id ? `Categoria - ${data.name}` : 'Cadastrar categoria'}
+			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 					<Input
