@@ -13,6 +13,8 @@ export class PrismaSaleMapper {
 			totalValue: sale.totalValue,
 			unitPrice: sale.unitPrice,
 			amountPaid: sale.amountPaid,
+			size: sale.size,
+			color: sale.color,
 			discount: sale.discount,
 			paymentMethod: sale.paymentMethod,
 			employeeId: sale.employeeId,
