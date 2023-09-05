@@ -18,8 +18,6 @@ export function ImagePreview({
 	disabled
 }: ImagePreviewProps) {
 	const [preview, setPreview] = useState('')
-	console.log({ photoPreview, preview })
-
 	useEffect(() => {
 		setPreview(photoPreview)
 	}, [photoPreview])
