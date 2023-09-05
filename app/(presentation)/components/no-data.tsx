@@ -5,5 +5,5 @@ type NoDataProps = {
 }
 
 export function NoData({ data = 'Nenhum registo de momento' }: NoDataProps) {
-	return <div>{data}</div>
+	return <div className="flex h-full justify-center items-center">{data}</div>
 }
