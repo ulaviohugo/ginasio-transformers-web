@@ -234,23 +234,14 @@ export function PurchaseEditor({
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="md:flex gap-4">
-						<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
+						<div className="">
 							<ImagePreview
 								photoPreview={photoPreview}
 								onInputFileChange={handleInputChange}
 							/>
 						</div>
-						<div className="grid lg:grid-cols-3 md:grid-cols-2">
-							<div>
-								<Input
-									id="lot"
-									name="lot"
-									value={formData?.lot || ''}
-									label={LabelUtils.translateField('lot')}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div>
+						<div>
+							<div className="flex gap-1">
 								<Select
 									id="supplierId"
 									name="supplierId"
@@ -263,8 +254,6 @@ export function PurchaseEditor({
 									defaultText="Selecione"
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Select
 									id="categoryId"
 									name="categoryId"
@@ -277,8 +266,6 @@ export function PurchaseEditor({
 									defaultText="Selecione"
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Select
 									id="productId"
 									name="productId"
@@ -292,7 +279,14 @@ export function PurchaseEditor({
 									onChange={handleInputChange}
 								/>
 							</div>
-							<div>
+							<div className="flex gap-1">
+								<Input
+									id="lot"
+									name="lot"
+									value={formData?.lot || ''}
+									label={LabelUtils.translateField('lot')}
+									onChange={handleInputChange}
+								/>
 								<Input
 									id="barCode"
 									name="barCode"
@@ -300,8 +294,6 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('barCode')}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Select
 									id="color"
 									name="color"
@@ -314,7 +306,7 @@ export function PurchaseEditor({
 									onChange={handleInputChange}
 								/>
 							</div>
-							<div>
+							<div className="flex gap-1">
 								<Input
 									id="size"
 									name="size"
@@ -322,8 +314,6 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('size')}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Input
 									type="date"
 									id="purchaseDate"
@@ -336,8 +326,6 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('purchaseDate')}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Input
 									type="date"
 									id="dueDate"
@@ -347,7 +335,7 @@ export function PurchaseEditor({
 									onChange={handleInputChange}
 								/>
 							</div>
-							<div>
+							<div className="flex gap-1">
 								<InputPrice
 									id="totalValue"
 									name="totalValue"
@@ -355,8 +343,6 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('totalValue')}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<Input
 									type="number"
 									id="quantity"
@@ -365,8 +351,6 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('quantity')}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
 								<InputPrice
 									id="unitPrice"
 									name="unitPrice"
@@ -376,7 +360,7 @@ export function PurchaseEditor({
 									disabled
 								/>
 							</div>
-							<div>
+							<div className="grid grid-cols-3 gap-1">
 								<Select
 									id="paymentMethod"
 									name="paymentMethod"
@@ -388,20 +372,6 @@ export function PurchaseEditor({
 									defaultText="Selecione"
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div>
-								<div className="inline-flex">
-									<Input
-										type="checkbox"
-										id="paid"
-										name="paid"
-										checked={formData?.paid}
-										label={LabelUtils.translateField('paid')}
-										onChange={handleInputChange}
-									/>
-								</div>
-							</div>
-							<div>
 								<InputPrice
 									id="sellingPriceUnit"
 									name="sellingPriceUnit"
@@ -409,6 +379,18 @@ export function PurchaseEditor({
 									label={LabelUtils.translateField('sellingPriceUnit')}
 									onChange={handleInputChange}
 								/>
+								<div className="flex">
+									<div>
+										<Input
+											type="checkbox"
+											id="paid"
+											name="paid"
+											checked={formData?.paid}
+											label={LabelUtils.translateField('paid')}
+											onChange={handleInputChange}
+										/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
