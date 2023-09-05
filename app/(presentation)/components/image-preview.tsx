@@ -50,12 +50,19 @@ export function ImagePreview({
 				id="photo"
 				name="photo"
 				onChange={handleInput}
-				accept="photo/*"
+				accept="image/*"
 				className="hidden"
 			/>
 			{!preview ? (
-				<div className="mr-auto">
-					{!disabled && <label htmlFor="photo">Selecionar imagem</label>}
+				<div className="mr-auto flex">
+					{!disabled && (
+						<label
+							htmlFor="photo"
+							className="flex-1 flex flex-col justify-center cursor-pointer text-sm text-gray-400 hover:text-green-500 hover:bg-green-50 px-2"
+						>
+							Selecionar imagem
+						</label>
+					)}
 				</div>
 			) : (
 				<div className="relative">
