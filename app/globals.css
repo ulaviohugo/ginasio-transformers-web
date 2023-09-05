@@ -10,6 +10,10 @@ body {
 	@apply !cursor-not-allowed opacity-80;
 }
 
+input:disabled{
+	@apply bg-white
+}
+
 /* width */
 ::-webkit-scrollbar {
 	@apply w-2 bg-gray-300 bg-opacity-50;
