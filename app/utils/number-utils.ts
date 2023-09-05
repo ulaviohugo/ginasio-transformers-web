@@ -29,6 +29,11 @@ export class NumberUtils {
 		return Number(number.replaceAll(' ', ''))
 	}
 
+	static convertToPrice(value: number | string | undefined, nullable = false) {
+		const price = this.convertToNumber(value, nullable)
+		return Number(price.toFixed(2))
+	}
+
 	static random(min: number, max: number): number {
 		if (min > max) {
 			throw new Error('min deve ser menor ou igual a max')
