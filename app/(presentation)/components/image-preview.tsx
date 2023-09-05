@@ -70,6 +70,7 @@ export function ImagePreview({
 						<IconClose
 							className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full cursor-pointer"
 							onClick={handleClear}
+							title="Remover foto"
 						/>
 					)}
 				</div>
