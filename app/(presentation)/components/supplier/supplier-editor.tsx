@@ -11,6 +11,7 @@ import {
 	ButtonSubmit,
 	IconClose,
 	IconPlus,
+	ImagePreview,
 	Input,
 	InputEmail,
 	InputPhone,
@@ -52,7 +53,6 @@ type SupplierEditorProps = {
 	updateSupplier: UpdateSupplier
 }
 
-const classFullWidth = 'flex flex-row gap-1 xl:col-span-12 lg:col-span-6 md:col-span-12'
 export function SupplierEditor({
 	supplier,
 	show,
@@ -60,14 +60,14 @@ export function SupplierEditor({
 	addSupplier,
 	updateSupplier
 }: SupplierEditorProps) {
-	const class2Cols = 'xl:col-span-6 lg:col-span-3 md:col-span-6'
-	const class3Cols = 'flex flex-row gap-1 xl:col-span-4 lg:col-span-6 md:col-span-6'
 	const dispatch = useDispatch()
 	const { countries, provinces, municipalities } = useLocations()
 	const categories = useCategories()
 	const products = useProducts()
 
 	const [productItems, setProductItems] = useState<any>({ 0: {} })
+
+	const productList = Object.keys(productItems)
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
@@ -76,7 +76,7 @@ export function SupplierEditor({
 		supplier || ({} as SupplierModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
-	const [photoPreview, setImagePreview] = useState('')
+	const [photoPreview, setPhotoPreview] = useState('')
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -106,6 +106,7 @@ export function SupplierEditor({
 				setProductItems(ObjectUtils.convertToObject(supplier.supplierProducts))
 			}
 		}
+		if (supplier?.photo) setPhotoPreview(supplier.photo)
 	}, [supplier])
 
 	useEffect(() => {
@@ -162,7 +163,7 @@ export function SupplierEditor({
 			const reader = new FileReader()
 
 			reader.onload = function (e) {
-				setImagePreview(String(e.target?.result))
+				setPhotoPreview(String(e.target?.result))
 			}
 
 			reader.readAsDataURL(file)
@@ -171,7 +172,7 @@ export function SupplierEditor({
 
 	const clearInputFile = () => {
 		setFormData((prev) => ({ ...prev, photo: '' }))
-		setImagePreview('')
+		setPhotoPreview('')
 	}
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -183,8 +184,6 @@ export function SupplierEditor({
 
 		const data: SupplierModel = { ...formDate, supplierProducts }
 		try {
-			console.log(data)
-
 			const httpResponse = (
 				formDate.id ? await updateSupplier.update(data) : await addSupplier.add(data)
 			) as SupplierModel
@@ -195,7 +194,7 @@ export function SupplierEditor({
 				dispatch(addSupplierStore(httpResponse))
 			}
 			toast.success(
-				`Funcionário ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
+				`Fornecedor ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
 			)
 			onClose()
 		} catch (error: any) {
@@ -228,121 +227,90 @@ export function SupplierEditor({
 			<ModalTitle>{supplier?.id ? 'Editar' : 'Cadastrar'} fornecedor</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
-					<div className="grid xl:grid-cols-12 lg:grid-cols-6 md:grid-cols-3 gap-4">
-						<div className={classFullWidth}>
-							<div className="flex">
-								<div className="mr-auto">
-									<Input
-										type="file"
-										id="photo"
-										name="photo"
-										// value={formDate?.photo || ''}
-										label={'Imagem'}
-										onChange={handleInputChange}
-										accept="photo/*"
-									/>
-								</div>
-								{photoPreview && (
-									<div className="relative border rounded-md p-3">
-										<Image
-											src={photoPreview}
-											width={120}
-											height={100}
-											alt="Pre-visualização"
-											className="object-cover aspect-square"
-										/>
-										<IconClose
-											className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
-											onClick={clearInputFile}
-										/>
-									</div>
-								)}
+					<div className="flex gap-1">
+						<div>
+							<ImagePreview
+								photoPreview={photoPreview}
+								onInputFileChange={handleInputChange}
+								clearInputFile={clearInputFile}
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<div className="flex gap-1">
+								<Input
+									type="text"
+									id="name"
+									name="name"
+									value={formDate?.name || ''}
+									label={LabelUtils.translateField('name')}
+									onChange={handleInputChange}
+									autoFocus
+								/>
+								<Input
+									type="text"
+									id="representative"
+									name="representative"
+									value={formDate?.representative || ''}
+									label={LabelUtils.translateField('representative')}
+									onChange={handleInputChange}
+								/>
 							</div>
-						</div>
-						<div className={class2Cols}>
-							<Input
-								type="text"
-								id="name"
-								name="name"
-								value={formDate?.name || ''}
-								label={LabelUtils.translateField('name')}
-								onChange={handleInputChange}
-								autoFocus
-							/>
-						</div>
-						<div className={class2Cols}>
-							<Input
-								type="text"
-								id="representative"
-								name="representative"
-								value={formDate?.representative || ''}
-								label={LabelUtils.translateField('representative')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<Divisor label="Contactos" />
-						<div className={class2Cols}>
-							<InputPhone
-								id="phone"
-								name="phone"
-								value={formDate?.phone || ''}
-								label={LabelUtils.translateField('phone')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className={class2Cols}>
-							<InputEmail
-								id="email"
-								name="email"
-								value={formDate?.email || ''}
-								label={LabelUtils.translateField('email')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<Divisor label="Endereço" />
-						<div className={class3Cols}>
-							<Select
-								id="countryId"
-								name="countryId"
-								value={formDate?.countryId || ''}
-								label={LabelUtils.translateField('countryId')}
-								data={countries.map(({ name, id }) => ({
-									text: name,
-									value: id
-								}))}
-								defaultText="Selecione"
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className={class3Cols}>
-							<Select
-								id="provinceId"
-								name="provinceId"
-								value={formDate?.provinceId || ''}
-								label={LabelUtils.translateField('provinceId')}
-								data={provinceList.map(({ name, id }) => ({
-									text: name,
-									value: id
-								}))}
-								defaultText="Selecione"
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className={class3Cols}>
-							<Select
-								id="municipalityId"
-								name="municipalityId"
-								value={formDate?.municipalityId || ''}
-								label={LabelUtils.translateField('municipalityId')}
-								data={municipalityList.map(({ name, id }) => ({
-									text: name,
-									value: id
-								}))}
-								defaultText="Selecione"
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className={class3Cols}>
+							<Divisor label="Contactos" />
+							<div className="flex gap-1">
+								<InputPhone
+									id="phone"
+									name="phone"
+									value={formDate?.phone || ''}
+									label={LabelUtils.translateField('phone')}
+									onChange={handleInputChange}
+								/>
+								<InputEmail
+									id="email"
+									name="email"
+									value={formDate?.email || ''}
+									label={LabelUtils.translateField('email')}
+									onChange={handleInputChange}
+								/>
+							</div>
+							<Divisor label="Endereço" />
+							<div className="flex gap-1">
+								<Select
+									id="countryId"
+									name="countryId"
+									value={formDate?.countryId || ''}
+									label={LabelUtils.translateField('countryId')}
+									data={countries.map(({ name, id }) => ({
+										text: name,
+										value: id
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+								<Select
+									id="provinceId"
+									name="provinceId"
+									value={formDate?.provinceId || ''}
+									label={LabelUtils.translateField('provinceId')}
+									data={provinceList.map(({ name, id }) => ({
+										text: name,
+										value: id
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+								<Select
+									id="municipalityId"
+									name="municipalityId"
+									value={formDate?.municipalityId || ''}
+									label={LabelUtils.translateField('municipalityId')}
+									data={municipalityList.map(({ name, id }) => ({
+										text: name,
+										value: id
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+							</div>
 							<Input
 								type="text"
 								id="businessAddress"
@@ -351,29 +319,33 @@ export function SupplierEditor({
 								label={LabelUtils.translateField('businessAddress')}
 								onChange={handleInputChange}
 							/>
-						</div>
-						<Divisor label="Produtos">
 							<div>
-								<span
-									className="btn-primary"
-									onClick={handleAddProductItem}
-									title="Adicionar producto"
-								>
-									<IconPlus />
-								</span>
+								<Divisor label={`Produtos fornecidos (${productList?.length})`}>
+									<div>
+										<span
+											className="btn-primary"
+											onClick={handleAddProductItem}
+											title="Adicionar producto"
+										>
+											<IconPlus />
+										</span>
+									</div>
+								</Divisor>
+								<div className="max-h-[250px] overflow-auto">
+									{productList?.map((key, i) => (
+										<div key={key}>
+											<SupplierProductEditor
+												itemIndex={Number(key)}
+												index={i}
+												supplierProduct={productItems[key]}
+												onChange={handleChangeProduct}
+												onRemoveItem={handleRemoveProductItem}
+											/>
+										</div>
+									))}
+								</div>
 							</div>
-						</Divisor>
-						{Object.keys(productItems)?.map((key, i) => (
-							<div key={key} className={classFullWidth}>
-								<SupplierProductEditor
-									itemIndex={Number(key)}
-									index={i}
-									supplierProduct={productItems[key]}
-									onChange={handleChangeProduct}
-									onRemoveItem={handleRemoveProductItem}
-								/>
-							</div>
-						))}
+						</div>
 					</div>
 					<ModalFooter>
 						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
@@ -386,7 +358,7 @@ export function SupplierEditor({
 }
 
 const Divisor = ({ label, children }: { label?: string; children?: ReactNode }) => (
-	<div className={classFullWidth}>
+	<div className="mt-3 uppercase">
 		{label || ''} {children}
 	</div>
 )
