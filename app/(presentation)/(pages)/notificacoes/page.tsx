@@ -4,11 +4,11 @@ import {
 	IconNotification,
 	Layout,
 	LayoutBody,
+	NoData,
 	Spinner,
 	Title
 } from '@/app/(presentation)/components'
-import { ElementType, useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
 import { useNotifications } from '../../hooks'
@@ -38,9 +38,14 @@ export default function Notifications() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<Title title={`Notificações `} icon={IconNotification} />
+				<Title
+					title={`Notificações ${!isLoading ? `(${notifications.length})` : ''}`}
+					icon={IconNotification}
+				/>
 				{isLoading ? (
 					<Spinner data="Carregando notificações" />
+				) : notifications.length < 1 ? (
+					<NoData data="Nenhuma notificação de momento" />
 				) : (
 					<ul className="flex flex-col">
 						{notifications.map(
