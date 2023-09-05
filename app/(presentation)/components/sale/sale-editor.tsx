@@ -64,6 +64,7 @@ export function SaleEditor({
 	const [formData, setFormData] = useState<SaleModel>(data || ({} as SaleModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [photPreview, setPhotPreview] = useState('')
+	const [selectedItem, setSelectedItem] = useState<PurchaseModel>({} as any)
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -129,13 +130,10 @@ export function SaleEditor({
 		setFormData(data)
 	}
 
-	const handleSelectItem = ({
-		id,
-		sellingPriceUnit: unitPrice,
-		color,
-		size,
-		photo
-	}: PurchaseModel) => {
+	const handleSelectItem = (selectedItem: PurchaseModel) => {
+		const { id, sellingPriceUnit: unitPrice, color, size, photo } = selectedItem
+		setSelectedItem(selectedItem)
+
 		const quantity = Number(formData.quantity) || 1
 		const totalValue = quantity > 0 ? quantity * unitPrice : 0
 		setPhotPreview(photo || '')
@@ -181,7 +179,50 @@ export function SaleEditor({
 			<ModalBody>
 				<form onSubmit={handleSubmit}>
 					<div className="flex gap-2">
-						<ImagePreview photoPreview={photPreview} />
+						<div className="flex flex-col">
+							<ImagePreview photoPreview={photPreview} disabled />
+							<div className="">
+								<div>
+									<InputPrice
+										id="unitPrice"
+										name="unitPrice"
+										value={formData?.unitPrice || ''}
+										label={LabelUtils.translateField('unitPrice')}
+										onChange={handleInputChange}
+										disabled
+									/>
+								</div>
+								<div>
+									<Input
+										type="number"
+										id="quantity"
+										name="quantity"
+										value={formData?.quantity || ''}
+										label={LabelUtils.translateField('quantity')}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<InputPrice
+										id="discount"
+										name="discount"
+										value={formData?.discount || ''}
+										label={'Desconto'}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<InputPrice
+										id="amountPaid"
+										name="amountPaid"
+										value={formData?.amountPaid || ''}
+										label={'Total a pagar'}
+										onChange={handleInputChange}
+										disabled
+									/>
+								</div>
+							</div>
+						</div>
 						<div>
 							<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
 								<div>
@@ -196,6 +237,33 @@ export function SaleEditor({
 										}))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<Input
+										id="categoryId"
+										name="categoryId"
+										value={selectedItem.category?.name || ''}
+										label={LabelUtils.translateField('categoryId')}
+										disabled
+									/>
+								</div>
+								<div>
+									<Input
+										id="productId"
+										name="productId"
+										value={selectedItem.product?.name || ''}
+										label={LabelUtils.translateField('productId')}
+										disabled
+									/>
+								</div>
+								<div>
+									<Input
+										id="barCode"
+										name="barCode"
+										value={selectedItem.barCode || ''}
+										label={LabelUtils.translateField('barCode')}
+										disabled
 									/>
 								</div>
 								<div>
@@ -222,41 +290,18 @@ export function SaleEditor({
 								</div>
 								<div>
 									<Input
-										type="number"
-										id="quantity"
-										name="quantity"
-										value={formData?.quantity || ''}
-										label={LabelUtils.translateField('quantity')}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<InputPrice
-										id="unitPrice"
-										name="unitPrice"
-										value={formData?.unitPrice || ''}
-										label={LabelUtils.translateField('unitPrice')}
-										onChange={handleInputChange}
+										id="lot"
+										name="lot"
+										value={selectedItem.lot || ''}
+										label={LabelUtils.translateField('lot')}
 										disabled
 									/>
 								</div>
 								<div>
-									<InputPrice
-										id="amountPaid"
-										name="amountPaid"
-										value={formData?.amountPaid || ''}
-										label={'Total a pagar'}
-										onChange={handleInputChange}
+									<Input
+										value={selectedItem.unitPrice || ''}
+										label={`Preço compra`}
 										disabled
-									/>
-								</div>
-								<div>
-									<InputPrice
-										id="discount"
-										name="discount"
-										value={formData?.discount || ''}
-										label={'Desconto'}
-										onChange={handleInputChange}
 									/>
 								</div>
 								<div>
@@ -273,11 +318,12 @@ export function SaleEditor({
 									/>
 								</div>
 							</div>
+							<div className="flex-1 my-5">
+								<ItemList stocks={stocks} onSelect={handleSelectItem} />
+							</div>
 						</div>
 					</div>
-					<div className="flex-1 my-5">
-						<ItemList stocks={stocks} onSelect={handleSelectItem} />
-					</div>
+
 					<ModalFooter>
 						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
 						<ButtonCancel onClick={onClose} />

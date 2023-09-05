@@ -8,6 +8,8 @@ export class PrismaPurchaseMapper {
 		return {
 			id: purchase.id,
 			photo: purchase.photo,
+			lot: purchase.lot,
+			barCode: purchase.barCode,
 			supplierId: purchase.supplierId,
 			categoryId: purchase.categoryId,
 			productId: purchase.productId,

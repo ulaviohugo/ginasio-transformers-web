@@ -204,6 +204,8 @@ model Customer {
 model Purchase {
   id               Int       @id @default(autoincrement())
   photo            String?   @db.VarChar(100)
+  lot              String?   @db.VarChar(70)
+  barCode          String?   @map("bar_code") @db.VarChar(70)
   supplierId       Int       @map("supplier_id")
   categoryId       Int       @map("category_id")
   productId        Int       @map("product_id")

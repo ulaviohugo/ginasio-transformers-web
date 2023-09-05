@@ -32,10 +32,10 @@ export class AddPurchaseController implements Controller {
 					employeeId:
 						NumberUtils.convertToNumber(request.employeeId, true) || createdById,
 					productId: NumberUtils.convertToNumber(request.productId),
-					unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-					totalValue: NumberUtils.convertToNumber(request.totalValue),
+					unitPrice: NumberUtils.convertToPrice(request.unitPrice),
+					totalValue: NumberUtils.convertToPrice(request.totalValue),
 					quantity: NumberUtils.convertToNumber(request.quantity),
-					sellingPriceUnit: NumberUtils.convertToNumber(request.sellingPriceUnit),
+					sellingPriceUnit: NumberUtils.convertToPrice(request.sellingPriceUnit),
 					paid: !!request.paid,
 					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
 					dueDate: DateUtils.convertToDate(request.dueDate),

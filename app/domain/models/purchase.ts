@@ -4,6 +4,8 @@ import { CategoryModel, EmployeeModel, ProductModel } from '.'
 export interface PurchaseModel {
 	id: number
 	photo?: string
+	lot?: string
+	barCode?: string
 	supplierId: number
 	categoryId: number
 	productId: number

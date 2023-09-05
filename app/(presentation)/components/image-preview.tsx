@@ -8,12 +8,14 @@ type ImagePreviewProps = {
 	photoPreview: string
 	clearInputFile?: () => void
 	onInputFileChange?: (e: ChangeEvent<HTMLInputElement>) => void
+	disabled?: boolean
 }
 
 export function ImagePreview({
 	photoPreview,
 	clearInputFile,
-	onInputFileChange
+	onInputFileChange,
+	disabled
 }: ImagePreviewProps) {
 	const [preview, setPreview] = useState('')
 	console.log({ photoPreview, preview })
@@ -55,10 +57,10 @@ export function ImagePreview({
 			/>
 			{!preview ? (
 				<div className="mr-auto">
-					<label htmlFor="photo">Selecionar imagem</label>
+					{!disabled && <label htmlFor="photo">Selecionar imagem</label>}
 				</div>
 			) : (
-				<div className="relative border rounded-md p-3">
+				<div className="relative">
 					<Image
 						src={preview}
 						width={200}
@@ -66,10 +68,12 @@ export function ImagePreview({
 						alt="Pre-visualização"
 						className="object-cover aspect-square"
 					/>
-					<IconClose
-						className="absolute top-1 right-1 bg-red-600 text-white rounded-full cursor-pointer"
-						onClick={handleClear}
-					/>
+					{!disabled && (
+						<IconClose
+							className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full cursor-pointer"
+							onClick={handleClear}
+						/>
+					)}
 				</div>
 			)}
 		</div>

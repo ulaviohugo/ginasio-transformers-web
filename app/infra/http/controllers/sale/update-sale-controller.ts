@@ -25,10 +25,10 @@ export class UpdateSaleController implements Controller {
 				customerId: NumberUtils.convertToNumber(request.customerId),
 				quantity: NumberUtils.convertToNumber(request.quantity),
 				employeeId: undefined as any,
-				totalValue: NumberUtils.convertToNumber(request.totalValue),
-				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-				discount: NumberUtils.convertToNumber(request.discount),
-				amountPaid: NumberUtils.convertToNumber(request.amountPaid),
+				totalValue: NumberUtils.convertToPrice(request.totalValue),
+				unitPrice: NumberUtils.convertToPrice(request.unitPrice),
+				discount: NumberUtils.convertToPrice(request.discount),
+				amountPaid: NumberUtils.convertToPrice(request.amountPaid),
 				updatedById: NumberUtils.convertToNumber(request.accountId),
 				updatedAt: new Date()
 			})

@@ -10,6 +10,7 @@ import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconClose,
+	ImagePreview,
 	Input,
 	InputPrice,
 	Modal,
@@ -234,37 +235,21 @@ export function PurchaseEditor({
 				<form onSubmit={handleSubmit}>
 					<div className="md:flex gap-4">
 						<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
-							<div className="flex border border-dashed p-2">
-								<input
-									type="file"
-									id="photo"
-									name="photo"
-									onChange={handleInputChange}
-									accept="photo/*"
-									className="hidden"
-								/>
-								{!photoPreview ? (
-									<div className="mr-auto">
-										<label htmlFor="photo">Selecionar imagem</label>
-									</div>
-								) : (
-									<div className="relative border rounded-md p-3">
-										<Image
-											src={photoPreview}
-											width={200}
-											height={200}
-											alt="Pre-visualização"
-											className="object-cover aspect-square"
-										/>
-										<IconClose
-											className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
-											onClick={clearInputFile}
-										/>
-									</div>
-								)}
-							</div>
+							<ImagePreview
+								photoPreview={photoPreview}
+								onInputFileChange={handleInputChange}
+							/>
 						</div>
 						<div className="grid lg:grid-cols-3 md:grid-cols-2">
+							<div>
+								<Input
+									id="lot"
+									name="lot"
+									value={formData?.lot || ''}
+									label={LabelUtils.translateField('lot')}
+									onChange={handleInputChange}
+								/>
+							</div>
 							<div>
 								<Select
 									id="supplierId"
@@ -304,6 +289,15 @@ export function PurchaseEditor({
 										value: id
 									}))}
 									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+							</div>
+							<div>
+								<Input
+									id="barCode"
+									name="barCode"
+									value={formData?.barCode || ''}
+									label={LabelUtils.translateField('barCode')}
 									onChange={handleInputChange}
 								/>
 							</div>

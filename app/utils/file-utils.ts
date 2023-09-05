@@ -1,7 +1,7 @@
 import path from 'path'
 
 export class FileUtils {
-	static readonly IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'ico']
+	static readonly IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'ico', 'webp']
 	static readonly SIZE_1MB = 1024 * 1024
 	static readonly SIZE_10MB = this.SIZE_1MB * 10
 	static readonly UPLOAD_ABSOLUTE_PATH = path.join(process.cwd(), 'public', 'uploads')

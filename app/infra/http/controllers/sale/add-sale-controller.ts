@@ -39,10 +39,10 @@ export class AddSaleController implements Controller {
 				customerId: request.customerId && NumberUtils.convertToNumber(request.customerId),
 				quantity,
 				employeeId: NumberUtils.convertToNumber(request.employeeId) || createdById,
-				totalValue: NumberUtils.convertToNumber(request.totalValue),
-				unitPrice: NumberUtils.convertToNumber(request.unitPrice),
-				amountPaid: NumberUtils.convertToNumber(request.amountPaid),
-				discount: NumberUtils.convertToNumber(request.discount),
+				totalValue: NumberUtils.convertToPrice(request.totalValue),
+				unitPrice: NumberUtils.convertToPrice(request.unitPrice),
+				amountPaid: NumberUtils.convertToPrice(request.amountPaid),
+				discount: NumberUtils.convertToPrice(request.discount),
 				createdById
 			})
 
