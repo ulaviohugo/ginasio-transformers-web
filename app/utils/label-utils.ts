@@ -18,7 +18,7 @@ export class LabelUtils {
 	private static labelFields: FieldTypes = {
 		accountNumber: 'Nº de conta bancária',
 		baseSalary: 'Salário base',
-		bankName: 'Banco',
+		bankName: 'Nome do banco',
 		barCode: 'Código de barra',
 		businessAddress: 'Endereço comercial',
 		categoryId: 'Categoria',
