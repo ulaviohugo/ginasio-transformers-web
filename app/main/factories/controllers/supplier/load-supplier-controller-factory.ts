@@ -1,5 +1,5 @@
-import { LoadSupplierController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { LoadSupplierController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeLoadSupplier } from '../..'
 
 export const makeLoadSupplierController = (): Controller => {

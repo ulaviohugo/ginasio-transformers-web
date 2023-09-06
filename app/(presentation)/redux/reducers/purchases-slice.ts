@@ -1,4 +1,4 @@
-import { PurchaseModel } from '@/app/domain/models'
+import { PurchaseModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface PurchaseState {

@@ -1,6 +1,6 @@
 'use client'
 
-import { FormLogin, Logo } from '@/app/(presentation)/components'
+import { FormLogin, Logo } from '@/(presentation)/components'
 
 export default function Login() {
 	return (

@@ -1,6 +1,6 @@
-import { HttpResponse, HttpStatusCode } from '@/app/data/protocols/http'
-import { prismaService } from '@/app/infra/db'
-import { adaptResponse } from '@/app/main/adapters'
+import { HttpResponse, HttpStatusCode } from '@/data/protocols/http'
+import { prismaService } from '@/infra/db'
+import { adaptResponse } from '@/main/adapters'
 
 export async function GET() {
 	let response: HttpResponse

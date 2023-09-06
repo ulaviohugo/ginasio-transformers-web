@@ -1,4 +1,4 @@
-import { RemoteLoadSuppliers } from '@/app/data/usecases'
+import { RemoteLoadSuppliers } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

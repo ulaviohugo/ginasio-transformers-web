@@ -1,7 +1,7 @@
-import { AddProduct } from '@/app/domain/usecases'
+import { AddProduct } from '@/domain/usecases'
 import { ProductRepository } from '../../protocols'
 import { ProductModel } from '../../../domain/models'
-import { NumberUtils, ObjectUtils } from '@/app/utils'
+import { NumberUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddProduct implements AddProduct {

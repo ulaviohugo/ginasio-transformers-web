@@ -1,8 +1,8 @@
-import { ProductModel } from '@/app/domain/models'
-import { AddProduct } from '@/app/domain/usecases'
+import { ProductModel } from '@/domain/models'
+import { AddProduct } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils } from '@/utils'
 
 export class RemoteAddProduct implements AddProduct {
 	constructor(

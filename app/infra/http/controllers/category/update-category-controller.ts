@@ -1,11 +1,11 @@
-import { UpdateCategory } from '@/app/domain/usecases'
+import { UpdateCategory } from '@/domain/usecases'
 import { UnexpectedError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { CategoryModel } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { CategoryModel } from '@/domain/models'
+import { NumberUtils } from '@/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class UpdateCategoryController implements Controller {
 	constructor(

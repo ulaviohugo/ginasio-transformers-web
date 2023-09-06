@@ -1,13 +1,13 @@
-import { UpdateEmployee } from '@/app/domain/usecases'
+import { UpdateEmployee } from '@/domain/usecases'
 import { DocumentInUseError, EmailInUseError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { EmployeeModel } from '@/app/domain/models'
-import { DateUtils, NumberUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { UploadService } from '@/app/services'
-import { Uploader } from '@/app/data/protocols/services'
-import { dbErrorHandler } from '@/app/infra/db'
+import { EmployeeModel } from '@/domain/models'
+import { DateUtils, NumberUtils } from '@/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { UploadService } from '@/services'
+import { Uploader } from '@/data/protocols/services'
+import { dbErrorHandler } from '@/infra/db'
 
 export class UpdateEmployeeController implements Controller {
 	constructor(

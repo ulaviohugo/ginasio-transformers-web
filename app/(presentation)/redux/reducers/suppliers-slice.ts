@@ -1,4 +1,4 @@
-import { SupplierModel } from '@/app/domain/models'
+import { SupplierModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface SupplierState {

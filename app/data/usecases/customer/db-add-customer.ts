@@ -1,7 +1,7 @@
-import { AddCustomer, AddCustomersResult } from '@/app/domain/usecases'
+import { AddCustomer, AddCustomersResult } from '@/domain/usecases'
 import { CustomerRepository } from '../../protocols'
 import { CustomerModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddCustomer implements AddCustomer {

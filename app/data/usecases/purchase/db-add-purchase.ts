@@ -1,7 +1,7 @@
-import { AddPurchase, AddPurchasesResult } from '@/app/domain/usecases'
+import { AddPurchase, AddPurchasesResult } from '@/domain/usecases'
 import { PurchaseRepository } from '../../protocols'
 import { PurchaseModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddPurchase implements AddPurchase {

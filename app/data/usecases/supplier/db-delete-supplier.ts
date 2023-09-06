@@ -1,5 +1,5 @@
-import { DeleteSupplier } from '@/app/domain/usecases'
-import { FileUtils } from '@/app/utils'
+import { DeleteSupplier } from '@/domain/usecases'
+import { FileUtils } from '@/utils'
 import { SupplierRepository } from '../../protocols'
 import { Uploader } from '../../protocols/services'
 

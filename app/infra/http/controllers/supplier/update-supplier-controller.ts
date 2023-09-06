@@ -1,13 +1,13 @@
-import { UpdateSupplier } from '@/app/domain/usecases'
+import { UpdateSupplier } from '@/domain/usecases'
 import { EmailInUseError, UnexpectedError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { SupplierModel, SupplierProductModel } from '@/app/domain/models'
-import { ArrayUtils, NumberUtils, ObjectUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { UploadService } from '@/app/services'
-import { Uploader } from '@/app/data/protocols/services'
-import { dbErrorHandler } from '@/app/infra/db'
+import { SupplierModel, SupplierProductModel } from '@/domain/models'
+import { ArrayUtils, NumberUtils, ObjectUtils } from '@/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { UploadService } from '@/services'
+import { Uploader } from '@/data/protocols/services'
+import { dbErrorHandler } from '@/infra/db'
 
 export class UpdateSupplierController implements Controller {
 	constructor(

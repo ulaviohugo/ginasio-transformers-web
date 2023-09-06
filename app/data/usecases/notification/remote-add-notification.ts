@@ -1,8 +1,8 @@
-import { NotificationModel } from '@/app/domain/models'
-import { AddNotification } from '@/app/domain/usecases'
+import { NotificationModel } from '@/domain/models'
+import { AddNotification } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils } from '@/utils'
 
 export class RemoteAddNotification implements AddNotification {
 	constructor(

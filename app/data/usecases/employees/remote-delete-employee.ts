@@ -1,6 +1,6 @@
-import { DeleteEmployee } from '@/app/domain/usecases'
+import { DeleteEmployee } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteDeleteEmployee implements DeleteEmployee {
 	constructor(

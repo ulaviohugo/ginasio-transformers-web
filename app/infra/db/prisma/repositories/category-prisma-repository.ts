@@ -1,6 +1,6 @@
-import { CategoryRepository } from '@/app/data/protocols'
+import { CategoryRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { CategoryModel } from '@/app/domain/models'
+import { CategoryModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaCategoryMapper } from '../mappers'
 

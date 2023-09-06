@@ -1,6 +1,6 @@
 'use client'
 
-import { StringUtils } from '@/app/utils'
+import { StringUtils } from '@/utils'
 import { ElementType, TextareaHTMLAttributes, useState } from 'react'
 import { FormControlWrapper } from '.'
 

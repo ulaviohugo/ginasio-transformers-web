@@ -1,4 +1,4 @@
-import { NotificationModel } from '@/app/domain/models'
+import { NotificationModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface NotificationState {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { SupplierModel } from '@/app/domain/models'
+import { SupplierModel } from '@/domain/models'
 import {
 	CardActions,
 	SupplierEditor,
@@ -21,15 +21,15 @@ import {
 	IconCategory,
 	IconProduct,
 	IconSupplier
-} from '@/app/(presentation)/components'
-import { ArrayUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
+} from '@/(presentation)/components'
+import { ArrayUtils, NumberUtils, SubmenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteSupplier,
 	makeRemoteUpdateSupplier,
 	makeRemoteAddSupplier,
 	makeRemoteLoadSuppliers
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 import { loadSupplierStore, removeSupplierStore } from '../../../redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'

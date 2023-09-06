@@ -1,4 +1,4 @@
-import { RemoteLoadCurrentUser } from '@/app/data/usecases'
+import { RemoteLoadCurrentUser } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

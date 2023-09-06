@@ -1,5 +1,5 @@
-import { LoadEmployeeController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { LoadEmployeeController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeLoadEmployee } from '../..'
 
 export const makeLoadEmployeeController = (): Controller => {

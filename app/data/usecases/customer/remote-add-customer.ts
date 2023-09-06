@@ -1,8 +1,8 @@
-import { CustomerModel } from '@/app/domain/models'
-import { AddCustomer } from '@/app/domain/usecases'
+import { CustomerModel } from '@/domain/models'
+import { AddCustomer } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils } from '@/utils'
 
 export class RemoteAddCustomer implements AddCustomer {
 	constructor(

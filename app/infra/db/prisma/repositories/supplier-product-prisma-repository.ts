@@ -1,9 +1,9 @@
 import {
 	SupplierProductFindDuplicatedParam,
 	SupplierProductRepository
-} from '@/app/data/protocols'
+} from '@/data/protocols'
 import { prismaService } from '..'
-import { SupplierProductModel } from '@/app/domain/models'
+import { SupplierProductModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSupplierProductMapper } from '../mappers'
 

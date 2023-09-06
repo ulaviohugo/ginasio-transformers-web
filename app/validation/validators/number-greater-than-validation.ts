@@ -1,6 +1,6 @@
-import { Validation } from '@/app/infra/http/protocols'
+import { Validation } from '@/infra/http/protocols'
 import { NumberValidation } from '.'
-import { LabelUtils } from '@/app/utils'
+import { LabelUtils } from '@/utils'
 
 export class NumberGreaterThanValidation implements Validation {
 	constructor(

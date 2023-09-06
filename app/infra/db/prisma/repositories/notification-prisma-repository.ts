@@ -1,6 +1,6 @@
-import { NotificationRepository } from '@/app/data/protocols'
+import { NotificationRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { NotificationModel } from '@/app/domain/models'
+import { NotificationModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaNotificationMapper } from '../mappers'
 

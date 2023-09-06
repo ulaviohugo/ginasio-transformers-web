@@ -1,7 +1,7 @@
 'use client'
 
-import { ProductModel } from '@/app/domain/models'
-import { AddProduct, UpdateProduct } from '@/app/domain/usecases'
+import { ProductModel } from '@/domain/models'
+import { AddProduct, UpdateProduct } from '@/domain/usecases'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -16,10 +16,10 @@ import {
 } from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { LabelUtils } from '@/app/utils'
+import { LabelUtils } from '@/utils'
 import { useCategories } from '../../hooks'
 import { useDispatch } from 'react-redux'
-import { makeRemoteLoadCategories } from '@/app/main/factories/usecases/remote'
+import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
 import { addProductStore, loadCategoryStore, updateProductStore } from '../../redux'
 import { toast } from 'react-hot-toast'
 

@@ -1,8 +1,8 @@
-import { CountCustomer } from '@/app/domain/usecases'
+import { CountCustomer } from '@/domain/usecases'
 import { Controller } from '../../protocols'
 import { ok, serverError } from '../../helper'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class CountCustomerController implements Controller {
 	constructor(private readonly countCustomer: CountCustomer) {}

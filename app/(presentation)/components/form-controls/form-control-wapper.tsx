@@ -1,4 +1,4 @@
-import { StringUtils } from '@/app/utils'
+import { StringUtils } from '@/utils'
 import { ElementType, HTMLAttributes, ReactNode } from 'react'
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {

@@ -9,10 +9,10 @@ import {
 	IconSignout,
 	IconUser,
 	Spinner
-} from '@/app/(presentation)/components'
-import { setCurrentAccountAdapter } from '@/app/main/adapters'
-import { StringUtils } from '@/app/utils'
-import { useAuth } from '@/app/(presentation)/hooks'
+} from '@/(presentation)/components'
+import { setCurrentAccountAdapter } from '@/main/adapters'
+import { StringUtils } from '@/utils'
+import { useAuth } from '@/(presentation)/hooks'
 
 export function Header() {
 	const user = useAuth()

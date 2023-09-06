@@ -1,4 +1,4 @@
-import { DeleteNotification } from '@/app/domain/usecases'
+import { DeleteNotification } from '@/domain/usecases'
 import { NotificationRepository } from '../../protocols'
 
 export class DbDeleteNotification implements DeleteNotification {

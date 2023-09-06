@@ -1,7 +1,7 @@
-import { Crypto } from '@/app/data/protocols/cryptography'
+import { Crypto } from '@/data/protocols/cryptography'
 import { Middleware } from '../protocols'
 import { ok, unauthorized } from '../helper'
-import { HttpResponse } from '@/app/data/protocols/http'
+import { HttpResponse } from '@/data/protocols/http'
 
 export class AuthMiddleware implements Middleware {
 	constructor(private readonly decrypter: Crypto) {}

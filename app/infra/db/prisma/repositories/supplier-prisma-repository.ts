@@ -1,6 +1,6 @@
-import { SupplierRepository } from '@/app/data/protocols'
+import { SupplierRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { SupplierModel } from '@/app/domain/models'
+import { SupplierModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSupplierMapper } from '../mappers'
 

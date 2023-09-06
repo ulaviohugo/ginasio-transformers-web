@@ -1,8 +1,8 @@
-import { Controller } from '@/app/infra/http/protocols'
+import { Controller } from '@/infra/http/protocols'
 import { makeAddSaleValidation } from '..'
 import { makeAddSale } from '../..'
-import { AddSaleController } from '@/app/infra/http/controllers'
-import { NotificationPrismaRepository, PurchasePrismaRepository } from '@/app/infra/db'
+import { AddSaleController } from '@/infra/http/controllers'
+import { NotificationPrismaRepository, PurchasePrismaRepository } from '@/infra/db'
 
 export const makeAddSaleController = (): Controller => {
 	return new AddSaleController(

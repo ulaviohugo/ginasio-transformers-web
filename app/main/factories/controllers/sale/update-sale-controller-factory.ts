@@ -1,5 +1,5 @@
-import { UpdateSaleController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { UpdateSaleController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeUpdateSaleValidation } from '.'
 import { makeUpdateSale } from '../..'
 

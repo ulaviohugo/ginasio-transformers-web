@@ -1,5 +1,5 @@
-import { CountProductController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { CountProductController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeCountProduct } from '../..'
 
 export const makeCountProductController = (): Controller => {

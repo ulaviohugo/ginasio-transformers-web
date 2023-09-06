@@ -1,6 +1,6 @@
-import { CountPurchase } from '@/app/domain/usecases'
+import { CountPurchase } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteCountPurchase implements CountPurchase {
 	constructor(

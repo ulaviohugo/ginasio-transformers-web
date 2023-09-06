@@ -1,6 +1,6 @@
-import { DeleteProduct } from '@/app/domain/usecases'
+import { DeleteProduct } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteDeleteProduct implements DeleteProduct {
 	constructor(

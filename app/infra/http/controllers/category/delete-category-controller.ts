@@ -1,8 +1,8 @@
-import { DeleteCategory } from '@/app/domain/usecases'
+import { DeleteCategory } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class DeleteCategoryController implements Controller {
 	constructor(

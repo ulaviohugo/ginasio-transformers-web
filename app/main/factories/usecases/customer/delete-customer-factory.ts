@@ -1,5 +1,5 @@
-import { DbDeleteCustomer } from '@/app/data/usecases'
-import { CustomerPrismaRepository } from '@/app/infra/db'
+import { DbDeleteCustomer } from '@/data/usecases'
+import { CustomerPrismaRepository } from '@/infra/db'
 
 export const makeDeleteCustomer = () => {
 	return new DbDeleteCustomer(new CustomerPrismaRepository())

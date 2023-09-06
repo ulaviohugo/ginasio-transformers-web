@@ -7,16 +7,16 @@ import {
 	Select,
 	SubMenu,
 	Title
-} from '@/app/(presentation)/components'
+} from '@/(presentation)/components'
 import {
 	ReceiptDataProps,
 	SalaryReceiptTemplate
-} from '@/app/(presentation)/components/templates-pdf'
-import { useEmployees } from '@/app/(presentation)/hooks'
-import { loadEmployeeStore } from '@/app/(presentation)/redux'
-import { EmployeeModel } from '@/app/domain/models'
-import { makeRemoteLoadEmployees } from '@/app/main/factories/usecases/remote'
-import { DateUtils, SubmenuUtils } from '@/app/utils'
+} from '@/(presentation)/components/templates-pdf'
+import { useEmployees } from '@/(presentation)/hooks'
+import { loadEmployeeStore } from '@/(presentation)/redux'
+import { EmployeeModel } from '@/domain/models'
+import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
+import { DateUtils, SubmenuUtils } from '@/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'

@@ -1,6 +1,6 @@
-import { SaleRepository } from '@/app/data/protocols'
+import { SaleRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { SaleModel } from '@/app/domain/models'
+import { SaleModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSaleMapper } from '../mappers'
 

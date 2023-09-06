@@ -1,4 +1,4 @@
-import { LabelUtils } from '@/app/utils'
+import { LabelUtils } from '@/utils'
 
 export class InvalidParamError extends Error {
 	constructor(paramName: string) {

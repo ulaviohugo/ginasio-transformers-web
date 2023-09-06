@@ -1,4 +1,4 @@
-import { Controller, Middleware } from '@/app/infra/http/protocols'
+import { Controller, Middleware } from '@/infra/http/protocols'
 import { adaptResponse, adaptRoute } from '.'
 
 export const adaptMiddleware = async (

@@ -1,6 +1,6 @@
 'use client'
 
-import { StringUtils } from '@/app/utils'
+import { StringUtils } from '@/utils'
 import { IconNotification, IconUser } from '..'
 import { useAuth } from '../../hooks'
 import Link from 'next/link'

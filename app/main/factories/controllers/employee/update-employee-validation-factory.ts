@@ -1,5 +1,5 @@
-import { EmployeeModel } from '@/app/domain/models'
-import { Validation } from '@/app/infra/http/protocols'
+import { EmployeeModel } from '@/domain/models'
+import { Validation } from '@/infra/http/protocols'
 import {
 	DateGreaterThanValidation,
 	EmailValidation,
@@ -7,7 +7,7 @@ import {
 	NumberValidation,
 	RequiredFieldValidation,
 	ValidationComposite
-} from '@/app/validation/validators'
+} from '@/validation/validators'
 
 type FieldTypes = keyof EmployeeModel
 

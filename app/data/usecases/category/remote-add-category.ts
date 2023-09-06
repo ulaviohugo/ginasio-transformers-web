@@ -1,8 +1,8 @@
-import { CategoryModel } from '@/app/domain/models'
-import { AddCategory } from '@/app/domain/usecases'
+import { CategoryModel } from '@/domain/models'
+import { AddCategory } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils } from '@/utils'
 
 export class RemoteAddCategory implements AddCategory {
 	constructor(

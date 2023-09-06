@@ -1,8 +1,8 @@
-import { EmployeeModel } from '@/app/domain/models'
-import { UpdateEmployee } from '@/app/domain/usecases'
+import { EmployeeModel } from '@/domain/models'
+import { UpdateEmployee } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils, ObjectUtils } from '@/utils'
 
 export class RemoteUpdateEmployee implements UpdateEmployee {
 	constructor(

@@ -5,7 +5,7 @@ import MaskedInput, { Mask } from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import emailMask from 'text-mask-addons/dist/emailMask'
 
-import { StringUtils } from '@/app/utils'
+import { StringUtils } from '@/utils'
 import { FormControlWrapper } from '.'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {

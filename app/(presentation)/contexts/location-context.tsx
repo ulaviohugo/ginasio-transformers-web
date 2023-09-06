@@ -1,7 +1,7 @@
 'use client'
 
-import { HttpStatusCode } from '@/app/data/protocols/http'
-import { makeApiUrl, makeFetchHttpClient } from '@/app/main/factories/http'
+import { HttpStatusCode } from '@/data/protocols/http'
+import { makeApiUrl, makeFetchHttpClient } from '@/main/factories/http'
 import { ReactNode, createContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { loadLocationStore } from '../redux'

@@ -1,5 +1,5 @@
-import { DeletePurchase } from '@/app/domain/usecases'
-import { FileUtils } from '@/app/utils'
+import { DeletePurchase } from '@/domain/usecases'
+import { FileUtils } from '@/utils'
 import { PurchaseRepository } from '../../protocols'
 import { Uploader } from '../../protocols/services'
 

@@ -1,4 +1,4 @@
-import { RemoteAddPurchase } from '@/app/data/usecases'
+import { RemoteAddPurchase } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

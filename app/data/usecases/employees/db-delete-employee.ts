@@ -1,5 +1,5 @@
-import { DeleteEmployee } from '@/app/domain/usecases'
-import { FileUtils } from '@/app/utils'
+import { DeleteEmployee } from '@/domain/usecases'
+import { FileUtils } from '@/utils'
 import { EmployeeRepository } from '../../protocols'
 import { Uploader } from '../../protocols/services'
 

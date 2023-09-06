@@ -1,6 +1,6 @@
 import { Category as CategoryRaw } from '@prisma/client'
 
-import { CategoryModel } from '@/app/domain/models'
+import { CategoryModel } from '@/domain/models'
 
 export class PrismaCategoryMapper {
 	static toPrisma(category: CategoryModel): CategoryRaw {

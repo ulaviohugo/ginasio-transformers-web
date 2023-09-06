@@ -1,7 +1,7 @@
-import { AddSupplier, AddSuppliersResult } from '@/app/domain/usecases'
+import { AddSupplier, AddSuppliersResult } from '@/domain/usecases'
 import { SupplierRepository } from '../../protocols'
 import { SupplierModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbAddSupplier implements AddSupplier {

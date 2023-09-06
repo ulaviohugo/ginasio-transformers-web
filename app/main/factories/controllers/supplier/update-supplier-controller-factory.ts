@@ -1,5 +1,5 @@
-import { UpdateSupplierController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { UpdateSupplierController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeUpdateSupplierValidation } from '.'
 import { makeUpdateSupplier } from '../..'
 

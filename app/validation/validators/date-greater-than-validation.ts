@@ -1,5 +1,5 @@
-import { Validation } from '@/app/infra/http/protocols'
-import { DateUtils, LabelUtils } from '@/app/utils'
+import { Validation } from '@/infra/http/protocols'
+import { DateUtils, LabelUtils } from '@/utils'
 
 export class DateGreaterThanValidation implements Validation {
 	constructor(

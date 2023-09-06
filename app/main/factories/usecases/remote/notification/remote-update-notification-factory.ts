@@ -1,6 +1,6 @@
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 import { makeApiUrl } from '../../../http'
-import { RemoteUpdateNotification } from '@/app/data/usecases'
+import { RemoteUpdateNotification } from '@/data/usecases'
 
 export const makeRemoteUpdateNotification = () => {
 	return new RemoteUpdateNotification(

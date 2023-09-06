@@ -1,6 +1,6 @@
 import { Purchase as PurchaseRaw } from '@prisma/client'
 
-import { PurchaseModel } from '@/app/domain/models'
+import { PurchaseModel } from '@/domain/models'
 
 export class PrismaPurchaseMapper {
 	static toPrisma(purchase: PurchaseModel): PurchaseRaw {

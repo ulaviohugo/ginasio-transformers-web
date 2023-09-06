@@ -1,4 +1,4 @@
-import { CategoryModel } from '@/app/domain/models'
+import { CategoryModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface CategoryState {

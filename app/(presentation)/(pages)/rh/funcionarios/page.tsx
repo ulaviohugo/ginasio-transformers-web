@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { EmployeeModel } from '@/app/domain/models'
+import { EmployeeModel } from '@/domain/models'
 import {
 	CardActions,
 	EmployeeEditor,
@@ -17,15 +17,15 @@ import {
 	Spinner,
 	SubMenu,
 	Title
-} from '@/app/(presentation)/components'
-import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
+} from '@/(presentation)/components'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteEmployee,
 	makeRemoteUpdateEmployee,
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 import { loadEmployeeStore, removeEmployeeStore } from '../../../redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'

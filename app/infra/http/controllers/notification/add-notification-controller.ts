@@ -1,9 +1,9 @@
-import { AddNotification } from '@/app/domain/usecases'
+import { AddNotification } from '@/domain/usecases'
 import { badRequest, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { NotificationModel } from '@/app/domain/models'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { NotificationModel } from '@/domain/models'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class AddNotificationController implements Controller {
 	constructor(

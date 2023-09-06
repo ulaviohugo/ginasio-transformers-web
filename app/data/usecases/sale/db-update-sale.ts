@@ -1,7 +1,7 @@
-import { UpdateSale } from '@/app/domain/usecases'
+import { UpdateSale } from '@/domain/usecases'
 import { SaleRepository } from '../../protocols'
 import { SaleModel } from '../../../domain/models'
-import { FileUtils, ObjectUtils } from '@/app/utils'
+import { FileUtils, ObjectUtils } from '@/utils'
 
 export class DbUpdateSale implements UpdateSale {
 	constructor(private readonly saleRepository: SaleRepository) {}

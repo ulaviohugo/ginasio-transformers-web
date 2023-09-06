@@ -1,4 +1,4 @@
-import { LoadSales, LoadSalesResult } from '@/app/domain/usecases'
+import { LoadSales, LoadSalesResult } from '@/domain/usecases'
 import { SaleRepository } from '../../protocols'
 
 export class DbLoadSale implements LoadSales {

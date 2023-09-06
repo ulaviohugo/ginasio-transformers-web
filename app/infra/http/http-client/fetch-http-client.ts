@@ -4,7 +4,7 @@ import {
 	HttpRequestParams,
 	HttpResponse,
 	HttpStatusCode
-} from '@/app/data/protocols/http'
+} from '@/data/protocols/http'
 
 export class FetchHttpClient implements HttpClient {
 	async request(data: HttpRequestParams): Promise<HttpResponse> {

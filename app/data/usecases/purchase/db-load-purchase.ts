@@ -1,4 +1,4 @@
-import { LoadPurchases, LoadPurchasesResult } from '@/app/domain/usecases'
+import { LoadPurchases, LoadPurchasesResult } from '@/domain/usecases'
 import { PurchaseRepository } from '../../protocols'
 
 export class DbLoadPurchase implements LoadPurchases {

@@ -1,7 +1,7 @@
-import { UpdateSupplierProduct, UpdateSupplierProductResult } from '@/app/domain/usecases'
+import { UpdateSupplierProduct, UpdateSupplierProductResult } from '@/domain/usecases'
 import { SupplierProductRepository } from '../../protocols'
 import { SupplierProductModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 
 export class DbUpdateSupplierProduct implements UpdateSupplierProduct {
 	constructor(private readonly supplierRepository: SupplierProductRepository) {}

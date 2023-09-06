@@ -1,6 +1,6 @@
-import { LoadEmployees, LoadEmployeesResult } from '@/app/domain/usecases'
+import { LoadEmployees, LoadEmployeesResult } from '@/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
-import { PrismaEmployeeMapper } from '@/app/infra/db/prisma/mappers'
+import { PrismaEmployeeMapper } from '@/infra/db/prisma/mappers'
 
 export class DbLoadEmployees implements LoadEmployees {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}

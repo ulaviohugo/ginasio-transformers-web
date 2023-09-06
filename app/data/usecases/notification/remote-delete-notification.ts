@@ -1,6 +1,6 @@
-import { DeleteNotification } from '@/app/domain/usecases'
+import { DeleteNotification } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteDeleteNotification implements DeleteNotification {
 	constructor(

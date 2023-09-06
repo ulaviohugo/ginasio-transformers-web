@@ -1,4 +1,4 @@
-import { RemoteUpdateCategory } from '@/app/data/usecases'
+import { RemoteUpdateCategory } from '@/data/usecases'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 import { makeApiUrl } from '../../../http'
 

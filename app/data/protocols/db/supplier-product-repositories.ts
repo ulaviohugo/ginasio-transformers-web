@@ -1,4 +1,4 @@
-import { SupplierProductModel } from '@/app/domain/models'
+import { SupplierProductModel } from '@/domain/models'
 
 export type SupplierProductFindDuplicatedParam = {
 	supplierId: number

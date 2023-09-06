@@ -1,5 +1,5 @@
-import { DbAddProduct } from '@/app/data/usecases'
-import { ProductPrismaRepository } from '@/app/infra/db'
+import { DbAddProduct } from '@/data/usecases'
+import { ProductPrismaRepository } from '@/infra/db'
 
 export const makeAddProduct = () => {
 	return new DbAddProduct(new ProductPrismaRepository())

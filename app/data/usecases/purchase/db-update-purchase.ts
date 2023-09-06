@@ -1,7 +1,7 @@
-import { UpdatePurchase } from '@/app/domain/usecases'
+import { UpdatePurchase } from '@/domain/usecases'
 import { PurchaseRepository } from '../../protocols'
 import { PurchaseModel } from '../../../domain/models'
-import { FileUtils, ObjectUtils } from '@/app/utils'
+import { FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdatePurchase implements UpdatePurchase {

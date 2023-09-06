@@ -14,17 +14,17 @@ import {
 	SubMenu,
 	Title,
 	IconProduct
-} from '@/app/(presentation)/components'
-import { useSales } from '@/app/(presentation)/hooks'
-import { loadSaleStore, removeSaleStore } from '@/app/(presentation)/redux'
-import { SaleModel } from '@/app/domain/models'
+} from '@/(presentation)/components'
+import { useSales } from '@/(presentation)/hooks'
+import { loadSaleStore, removeSaleStore } from '@/(presentation)/redux'
+import { SaleModel } from '@/domain/models'
 import {
 	makeRemoteAddSale,
 	makeRemoteDeleteSale,
 	makeRemoteLoadSales,
 	makeRemoteUpdateSale
-} from '@/app/main/factories/usecases/remote'
-import { DateUtils, NumberUtils, StringUtils, SubmenuUtils } from '@/app/utils'
+} from '@/main/factories/usecases/remote'
+import { DateUtils, NumberUtils, StringUtils, SubmenuUtils } from '@/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'

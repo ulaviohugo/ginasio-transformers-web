@@ -1,7 +1,7 @@
-import { UpdateProduct } from '@/app/domain/usecases'
+import { UpdateProduct } from '@/domain/usecases'
 import { ProductRepository } from '../../protocols'
 import { ProductModel } from '../../../domain/models'
-import { FileUtils, NumberUtils, ObjectUtils } from '@/app/utils'
+import { FileUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdateProduct implements UpdateProduct {

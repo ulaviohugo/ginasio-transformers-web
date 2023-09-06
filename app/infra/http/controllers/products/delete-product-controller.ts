@@ -1,9 +1,9 @@
-import { DeleteProduct } from '@/app/domain/usecases'
+import { DeleteProduct } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, ControllerParams, Validation } from '@/app/infra/http/protocols'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { UploadService } from '@/app/services'
-import { dbErrorHandler } from '@/app/infra/db'
+import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
+import { HttpResponse } from '@/data/protocols/http'
+import { UploadService } from '@/services'
+import { dbErrorHandler } from '@/infra/db'
 
 export class DeleteProductController implements Controller {
 	constructor(

@@ -1,6 +1,6 @@
 'use client'
-import { EmployeeModel } from '@/app/domain/models'
-import { NumberUtils, SalaryUtils } from '@/app/utils'
+import { EmployeeModel } from '@/domain/models'
+import { NumberUtils, SalaryUtils } from '@/utils'
 import { Document, Page, View, Text, PDFViewer } from '@react-pdf/renderer'
 
 export type ReceiptDataProps = {

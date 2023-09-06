@@ -1,5 +1,5 @@
-import { DbUpdateSupplier } from '@/app/data/usecases'
-import { SupplierPrismaRepository, SupplierProductPrismaRepository } from '@/app/infra/db'
+import { DbUpdateSupplier } from '@/data/usecases'
+import { SupplierPrismaRepository, SupplierProductPrismaRepository } from '@/infra/db'
 
 export const makeUpdateSupplier = () => {
 	return new DbUpdateSupplier(

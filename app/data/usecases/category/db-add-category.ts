@@ -1,7 +1,7 @@
-import { AddCategory } from '@/app/domain/usecases'
+import { AddCategory } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
 import { CategoryModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 
 export class DbAddCategory implements AddCategory {
 	constructor(private readonly categoryRepository: CategoryRepository) {}

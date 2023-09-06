@@ -1,6 +1,6 @@
-import { NotificationModel } from '@/app/domain/models'
-import { Validation } from '@/app/infra/http/protocols'
-import { RequiredFieldValidation, ValidationComposite } from '@/app/validation/validators'
+import { NotificationModel } from '@/domain/models'
+import { Validation } from '@/infra/http/protocols'
+import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
 
 type FieldTypes = keyof NotificationModel
 

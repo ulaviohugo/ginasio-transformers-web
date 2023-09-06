@@ -1,8 +1,8 @@
-import { LoadNotifications } from '@/app/domain/usecases'
+import { LoadNotifications } from '@/domain/usecases'
 import { ok, serverError } from '../../helper'
 import { Controller } from '../../protocols'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class LoadNotificationController implements Controller {
 	constructor(private readonly loadNotification: LoadNotifications) {}

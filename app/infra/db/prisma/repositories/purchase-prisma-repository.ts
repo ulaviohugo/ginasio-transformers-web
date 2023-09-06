@@ -1,6 +1,6 @@
-import { PurchaseRepository } from '@/app/data/protocols'
+import { PurchaseRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { PurchaseModel } from '@/app/domain/models'
+import { PurchaseModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaPurchaseMapper } from '../mappers'
 

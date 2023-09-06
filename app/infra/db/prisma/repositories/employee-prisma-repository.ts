@@ -1,6 +1,6 @@
-import { EmployeeRepository } from '@/app/data/protocols'
+import { EmployeeRepository } from '@/data/protocols'
 import { prismaService } from '..'
-import { EmployeeModel } from '@/app/domain/models'
+import { EmployeeModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaEmployeeMapper } from '../mappers'
 

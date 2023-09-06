@@ -21,7 +21,7 @@ import {
 	makeRemoteCountPurchases,
 	makeRemoteCountSales,
 	makeRemoteCountSuppliers
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 import { toast } from 'react-hot-toast'
 
 type ItemProps = {

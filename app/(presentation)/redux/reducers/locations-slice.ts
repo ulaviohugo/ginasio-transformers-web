@@ -1,4 +1,4 @@
-import { CountryProps, MunicipalityProps, ProvinceProps } from '@/app/utils'
+import { CountryProps, MunicipalityProps, ProvinceProps } from '@/utils'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface LocationState {

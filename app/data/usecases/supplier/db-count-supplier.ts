@@ -1,4 +1,4 @@
-import { CountSupplier } from '@/app/domain/usecases'
+import { CountSupplier } from '@/domain/usecases'
 import { SupplierRepository } from '../../protocols'
 
 export class DbCountSupplier implements CountSupplier {

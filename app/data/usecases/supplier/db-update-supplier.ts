@@ -1,7 +1,7 @@
-import { UpdateSupplier } from '@/app/domain/usecases'
+import { UpdateSupplier } from '@/domain/usecases'
 import { SupplierProductRepository, SupplierRepository } from '../../protocols'
 import { SupplierModel, SupplierProductModel } from '../../../domain/models'
-import { ArrayUtils, FileUtils, ObjectUtils } from '@/app/utils'
+import { ArrayUtils, FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdateSupplier implements UpdateSupplier {

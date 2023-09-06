@@ -1,13 +1,13 @@
-import { AddProduct } from '@/app/domain/usecases'
+import { AddProduct } from '@/domain/usecases'
 import { NameInUseError } from '../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { ProductModel } from '@/app/domain/models'
-import { UploadService } from '@/app/services'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { Uploader } from '@/app/data/protocols/services'
-import { NumberUtils } from '@/app/utils'
-import { dbErrorHandler } from '@/app/infra/db'
+import { ProductModel } from '@/domain/models'
+import { UploadService } from '@/services'
+import { HttpResponse } from '@/data/protocols/http'
+import { Uploader } from '@/data/protocols/services'
+import { NumberUtils } from '@/utils'
+import { dbErrorHandler } from '@/infra/db'
 
 export class AddProductController implements Controller {
 	constructor(

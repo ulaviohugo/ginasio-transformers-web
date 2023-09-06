@@ -15,17 +15,17 @@ import {
 	SubMenu,
 	Title,
 	IconCategory
-} from '@/app/(presentation)/components'
-import { useProducts } from '@/app/(presentation)/hooks'
-import { loadProductStore, removeProductStore } from '@/app/(presentation)/redux'
-import { ProductModel } from '@/app/domain/models'
+} from '@/(presentation)/components'
+import { useProducts } from '@/(presentation)/hooks'
+import { loadProductStore, removeProductStore } from '@/(presentation)/redux'
+import { ProductModel } from '@/domain/models'
 import {
 	makeRemoteAddProduct,
 	makeRemoteDeleteProduct,
 	makeRemoteLoadProduct,
 	makeRemoteUpdateProduct
-} from '@/app/main/factories/usecases/remote'
-import { NumberUtils, SubmenuUtils } from '@/app/utils'
+} from '@/main/factories/usecases/remote'
+import { NumberUtils, SubmenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'

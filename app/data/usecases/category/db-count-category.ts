@@ -1,4 +1,4 @@
-import { CountCategory } from '@/app/domain/usecases'
+import { CountCategory } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
 
 export class DbCountCategory implements CountCategory {

@@ -1,7 +1,7 @@
-import { UpdateCustomer } from '@/app/domain/usecases'
+import { UpdateCustomer } from '@/domain/usecases'
 import { CustomerRepository } from '../../protocols'
 import { CustomerModel } from '../../../domain/models'
-import { FileUtils, ObjectUtils } from '@/app/utils'
+import { FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 
 export class DbUpdateCustomer implements UpdateCustomer {

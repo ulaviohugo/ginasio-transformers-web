@@ -1,6 +1,6 @@
 import { Employee as EmployeeRaw } from '@prisma/client'
 
-import { EmployeeModel } from '@/app/domain/models'
+import { EmployeeModel } from '@/domain/models'
 
 export class PrismaEmployeeMapper {
 	static toPrisma(employee: EmployeeModel): EmployeeRaw {

@@ -1,4 +1,4 @@
-import { RemoteAddNotification } from '@/app/data/usecases'
+import { RemoteAddNotification } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

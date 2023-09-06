@@ -1,6 +1,6 @@
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 import { makeApiUrl } from '../../../http'
-import { RemoteUpdatePurchase } from '@/app/data/usecases'
+import { RemoteUpdatePurchase } from '@/data/usecases'
 
 export const makeRemoteUpdatePurchase = () => {
 	return new RemoteUpdatePurchase(

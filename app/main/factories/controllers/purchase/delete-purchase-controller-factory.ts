@@ -1,6 +1,6 @@
-import { DeletePurchaseController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
-import { NumberGreaterThanValidation } from '@/app/validation/validators'
+import { DeletePurchaseController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
+import { NumberGreaterThanValidation } from '@/validation/validators'
 import { makeDeletePurchase } from '../..'
 
 export const makeDeletePurchaseController = (): Controller => {

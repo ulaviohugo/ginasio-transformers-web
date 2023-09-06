@@ -1,4 +1,4 @@
-import { IStorage } from '@/app/data/protocols/cache'
+import { IStorage } from '@/data/protocols/cache'
 
 export class LocalStorageAdapter implements IStorage {
 	set(key: string, value: string): void {

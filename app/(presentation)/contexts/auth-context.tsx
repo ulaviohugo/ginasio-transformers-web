@@ -5,7 +5,7 @@ import { useAuth } from '../hooks'
 import { usePathname } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { addAuthStore } from '../redux'
-import { getCurrentAccountAdapter } from '@/app/main/adapters'
+import { getCurrentAccountAdapter } from '@/main/adapters'
 
 const AuthContext = createContext({})
 

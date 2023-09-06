@@ -1,4 +1,4 @@
-import { HttpClient } from '@/app/data/protocols/http'
+import { HttpClient } from '@/data/protocols/http'
 import { makeLocalStorageAdapter } from '../cache'
 import { makeFetchHttpClient } from '../http'
 import { AuthorizeHttpClientDecorator } from '../../decorators'

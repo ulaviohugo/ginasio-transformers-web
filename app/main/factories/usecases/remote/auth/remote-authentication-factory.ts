@@ -1,4 +1,4 @@
-import { RemoteAuthentication } from '@/app/data/usecases'
+import { RemoteAuthentication } from '@/data/usecases'
 import { makeApiUrl, makeFetchHttpClient } from '../../../http'
 
 export const makeRemoteAuthentication = () => {

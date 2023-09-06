@@ -1,4 +1,4 @@
-import { HttpResponse } from '@/app/data/protocols/http'
+import { HttpResponse } from '@/data/protocols/http'
 import { NotFoundError, ServerError, UnauthorizedError } from '../errors'
 
 export const ok = (data: any): HttpResponse => ({ body: data, statusCode: 200 })

@@ -1,7 +1,7 @@
-import { LoadProducts } from '@/app/domain/usecases'
+import { LoadProducts } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { ProductModel } from '@/app/domain/models'
+import { UnexpectedError } from '@/infra/http/errors'
+import { ProductModel } from '@/domain/models'
 
 export class RemoteLoadProduct implements LoadProducts {
 	constructor(

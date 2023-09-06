@@ -1,8 +1,8 @@
-import { CategoryModel } from '@/app/domain/models'
-import { UpdateCategory } from '@/app/domain/usecases'
+import { CategoryModel } from '@/domain/models'
+import { UpdateCategory } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils, ObjectUtils } from '@/utils'
 
 export class RemoteUpdateCategory implements UpdateCategory {
 	constructor(

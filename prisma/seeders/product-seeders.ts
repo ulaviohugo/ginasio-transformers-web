@@ -1,6 +1,6 @@
-import { CategoryModel, ProductModel } from '@/app/domain/models'
-import { prismaService as prisma } from '@/app/infra/db'
-import { ArrayUtils, ProductUtils } from '@/app/utils'
+import { CategoryModel, ProductModel } from '@/domain/models'
+import { prismaService as prisma } from '@/infra/db'
+import { ArrayUtils, ProductUtils } from '@/utils'
 
 export class ProductSeeder {
 	static async run() {

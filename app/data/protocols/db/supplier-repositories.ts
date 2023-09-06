@@ -1,4 +1,4 @@
-import { SupplierModel } from '@/app/domain/models'
+import { SupplierModel } from '@/domain/models'
 
 export interface SupplierRepository {
 	add(param: SupplierModel): Promise<SupplierModel>

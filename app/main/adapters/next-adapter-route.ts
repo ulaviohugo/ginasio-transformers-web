@@ -1,5 +1,5 @@
-import { Controller } from '@/app/infra/http/protocols'
-import { ObjectUtils } from '@/app/utils'
+import { Controller } from '@/infra/http/protocols'
+import { ObjectUtils } from '@/utils'
 import { adaptResponse } from '.'
 
 export const adaptRoute = async (controller: Controller, req?: Request) => {

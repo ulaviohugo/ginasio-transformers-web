@@ -1,4 +1,4 @@
-import { EmployeeModel } from '@/app/domain/models'
+import { EmployeeModel } from '@/domain/models'
 
 export interface EmployeeRepository {
 	add(param: EmployeeModel): Promise<EmployeeModel>

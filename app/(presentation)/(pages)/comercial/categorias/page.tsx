@@ -12,17 +12,17 @@ import {
 	Spinner,
 	SubMenu,
 	Title
-} from '@/app/(presentation)/components'
-import { useCategories } from '@/app/(presentation)/hooks'
-import { loadCategoryStore, removeCategoryStore } from '@/app/(presentation)/redux'
-import { CategoryModel } from '@/app/domain/models'
+} from '@/(presentation)/components'
+import { useCategories } from '@/(presentation)/hooks'
+import { loadCategoryStore, removeCategoryStore } from '@/(presentation)/redux'
+import { CategoryModel } from '@/domain/models'
 import {
 	makeRemoteAddCategory,
 	makeRemoteDeleteCategory,
 	makeRemoteLoadCategories,
 	makeRemoteUpdateCategory
-} from '@/app/main/factories/usecases/remote'
-import { SubmenuUtils } from '@/app/utils'
+} from '@/main/factories/usecases/remote'
+import { SubmenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'

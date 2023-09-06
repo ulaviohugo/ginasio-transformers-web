@@ -1,7 +1,7 @@
-import { LoadCategories } from '@/app/domain/usecases'
+import { LoadCategories } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { CategoryModel } from '@/app/domain/models'
+import { UnexpectedError } from '@/infra/http/errors'
+import { CategoryModel } from '@/domain/models'
 
 export class RemoteLoadCategories implements LoadCategories {
 	constructor(

@@ -1,5 +1,5 @@
-import { Validation } from '@/app/infra/http/protocols'
-import { LabelUtils } from '@/app/utils'
+import { Validation } from '@/infra/http/protocols'
+import { LabelUtils } from '@/utils'
 
 export class NumberValidation implements Validation {
 	constructor(private readonly fieldName: string) {}

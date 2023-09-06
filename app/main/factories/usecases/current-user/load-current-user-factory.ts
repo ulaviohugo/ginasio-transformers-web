@@ -1,5 +1,5 @@
-import { DbLoadCurrentUser } from '@/app/data/usecases'
-import { EmployeePrismaRepository } from '@/app/infra/db'
+import { DbLoadCurrentUser } from '@/data/usecases'
+import { EmployeePrismaRepository } from '@/infra/db'
 
 export const makeLoadCurrentUser = () => {
 	return new DbLoadCurrentUser(new EmployeePrismaRepository())

@@ -1,6 +1,6 @@
-import { DeleteSupplier } from '@/app/domain/usecases'
+import { DeleteSupplier } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteDeleteSupplier implements DeleteSupplier {
 	constructor(

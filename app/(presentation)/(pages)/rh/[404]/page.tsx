@@ -1,7 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { Layout, LayoutBody, SubMenu } from '@/app/(presentation)/components'
-import { SubmenuUtils } from '@/app/utils'
+import { Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
+import { SubmenuUtils } from '@/utils'
 
 export const metadata: Metadata = {
 	title: 'Página não encontrada'

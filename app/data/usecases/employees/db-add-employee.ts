@@ -1,10 +1,10 @@
-import { AddEmployee, AddEmployeesResult } from '@/app/domain/usecases'
+import { AddEmployee, AddEmployeesResult } from '@/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
 import { EmployeeModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 import { Hasher } from '../../protocols/cryptography'
-import { PrismaEmployeeMapper } from '@/app/infra/db/prisma/mappers'
+import { PrismaEmployeeMapper } from '@/infra/db/prisma/mappers'
 
 export class DbAddEmployee implements AddEmployee {
 	constructor(

@@ -1,6 +1,6 @@
-import { CountNotificationController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
-import { makeCountNotification } from '@/app/main/factories'
+import { CountNotificationController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
+import { makeCountNotification } from '@/main/factories'
 
 export const makeCountNotificationController = (): Controller => {
 	return new CountNotificationController(makeCountNotification())

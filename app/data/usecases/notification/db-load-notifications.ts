@@ -1,4 +1,4 @@
-import { LoadNotifications, LoadNotificationsResult } from '@/app/domain/usecases'
+import { LoadNotifications, LoadNotificationsResult } from '@/domain/usecases'
 import { NotificationRepository } from '../../protocols'
 
 export class DbLoadNotifications implements LoadNotifications {

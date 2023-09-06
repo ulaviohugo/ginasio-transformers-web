@@ -1,6 +1,6 @@
 import { Notification } from '@prisma/client'
 
-import { NotificationModel } from '@/app/domain/models'
+import { NotificationModel } from '@/domain/models'
 
 export class PrismaNotificationMapper {
 	static toPrisma(notification: NotificationModel): Notification {

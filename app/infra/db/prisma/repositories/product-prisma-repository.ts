@@ -1,6 +1,6 @@
-import { ProductRepository } from '@/app/data/protocols'
+import { ProductRepository } from '@/data/protocols'
 import { prismaService as prisma } from '..'
-import { ProductModel } from '@/app/domain/models'
+import { ProductModel } from '@/domain/models'
 import { PrismaProductMapper } from '../mappers'
 
 export class ProductPrismaRepository implements ProductRepository {

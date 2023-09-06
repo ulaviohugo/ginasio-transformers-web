@@ -1,11 +1,11 @@
-import { prismaService as prisma } from '@/app/infra/db'
+import { prismaService as prisma } from '@/infra/db'
 import {
 	ArrayUtils,
 	CountryProps,
 	LocationUtils,
 	MunicipalityProps,
 	ProvinceProps
-} from '@/app/utils'
+} from '@/utils'
 import { Municipality } from '@prisma/client'
 
 export class LocationSeeder {

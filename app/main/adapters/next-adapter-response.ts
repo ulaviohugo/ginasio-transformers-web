@@ -1,4 +1,4 @@
-import { HttpResponse } from '@/app/data/protocols/http'
+import { HttpResponse } from '@/data/protocols/http'
 
 export const adaptResponse = ({ body, statusCode, headers }: HttpResponse) => {
 	const httpResponse = typeof body == 'string' ? body : JSON.stringify(body)

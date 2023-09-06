@@ -1,7 +1,7 @@
-import { UpdateNotification } from '@/app/domain/usecases'
+import { UpdateNotification } from '@/domain/usecases'
 import { NotificationRepository } from '../../protocols'
 import { NotificationModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 
 export class DbUpdateNotification implements UpdateNotification {
 	constructor(private readonly notificationRepository: NotificationRepository) {}

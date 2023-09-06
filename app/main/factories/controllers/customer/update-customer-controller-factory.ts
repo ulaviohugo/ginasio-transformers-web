@@ -1,7 +1,7 @@
-import { UpdateCustomerController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { UpdateCustomerController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeUpdateCustomerValidation } from '.'
-import { makeUpdateCustomer } from '@/app/main/factories'
+import { makeUpdateCustomer } from '@/main/factories'
 
 export const makeUpdateCustomerController = (): Controller => {
 	return new UpdateCustomerController(

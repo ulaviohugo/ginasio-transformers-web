@@ -1,6 +1,6 @@
-import { DbUpdateCustomer } from '@/app/data/usecases'
-import { BcryptAdapter } from '@/app/infra/cryptography'
-import { CustomerPrismaRepository } from '@/app/infra/db'
+import { DbUpdateCustomer } from '@/data/usecases'
+import { BcryptAdapter } from '@/infra/cryptography'
+import { CustomerPrismaRepository } from '@/infra/db'
 
 export const makeUpdateCustomer = () => {
 	return new DbUpdateCustomer(new CustomerPrismaRepository())

@@ -1,6 +1,6 @@
-import { adaptMiddleware } from '@/app/main/adapters'
-import { makeLoadCurrentUserController } from '@/app/main/factories'
-import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
+import { adaptMiddleware } from '@/main/adapters'
+import { makeLoadCurrentUserController } from '@/main/factories'
+import { makeAuthMiddleware } from '@/main/factories/middlewares'
 
 export const GET = (request: Request) => handle(request)
 export const POST = (request: Request) => handle(request)

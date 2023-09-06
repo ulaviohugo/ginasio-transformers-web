@@ -7,15 +7,15 @@ import {
 	NoData,
 	Spinner,
 	Title
-} from '@/app/(presentation)/components'
+} from '@/(presentation)/components'
 import { useEffect, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
 import { useNotifications } from '../../hooks'
-import { RemoteLoadNotifications } from '@/app/data/usecases'
+import { RemoteLoadNotifications } from '@/data/usecases'
 import { useDispatch } from 'react-redux'
 import { loadNotificationStore } from '../../redux'
-import { makeRemoteLoadNotifications } from '@/app/main/factories/usecases/remote'
+import { makeRemoteLoadNotifications } from '@/main/factories/usecases/remote'
 
 export default function Notifications() {
 	const dispatch = useDispatch()

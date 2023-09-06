@@ -1,5 +1,5 @@
-import { DbLoadSale } from '@/app/data/usecases'
-import { SalePrismaRepository } from '@/app/infra/db'
+import { DbLoadSale } from '@/data/usecases'
+import { SalePrismaRepository } from '@/infra/db'
 
 export const makeLoadSale = () => {
 	return new DbLoadSale(new SalePrismaRepository())

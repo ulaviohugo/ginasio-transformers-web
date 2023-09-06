@@ -1,6 +1,6 @@
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 import { makeApiUrl } from '../../../http'
-import { RemoteDeleteCategory } from '@/app/data/usecases'
+import { RemoteDeleteCategory } from '@/data/usecases'
 
 export const makeRemoteDeleteCategory = () => {
 	return new RemoteDeleteCategory(

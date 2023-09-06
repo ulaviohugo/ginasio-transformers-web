@@ -1,11 +1,11 @@
-import { AddSale } from '@/app/domain/usecases'
+import { AddSale } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { SaleModel, Notifiable } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
-import { NotificationRepository, PurchaseRepository } from '@/app/data/protocols'
+import { SaleModel, Notifiable } from '@/domain/models'
+import { NumberUtils } from '@/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
+import { NotificationRepository, PurchaseRepository } from '@/data/protocols'
 
 export class AddSaleController implements Controller {
 	constructor(

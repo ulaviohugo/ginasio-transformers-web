@@ -1,4 +1,4 @@
-import { CustomerModel } from '@/app/domain/models'
+import { CustomerModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface CustomerState {

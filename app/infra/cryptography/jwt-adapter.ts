@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { Crypto } from '@/app/data/protocols/cryptography'
+import { Crypto } from '@/data/protocols/cryptography'
 
 export class JwtAdapter implements Crypto {
 	constructor(private readonly secret: string) {}

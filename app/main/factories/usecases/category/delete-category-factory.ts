@@ -1,5 +1,5 @@
-import { DbDeleteCategory } from '@/app/data/usecases'
-import { CategoryPrismaRepository } from '@/app/infra/db'
+import { DbDeleteCategory } from '@/data/usecases'
+import { CategoryPrismaRepository } from '@/infra/db'
 
 export const makeDeleteCategory = () => {
 	return new DbDeleteCategory(new CategoryPrismaRepository())

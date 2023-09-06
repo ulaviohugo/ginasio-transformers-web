@@ -1,4 +1,4 @@
-import { CountSale } from '@/app/domain/usecases'
+import { CountSale } from '@/domain/usecases'
 import { SaleRepository } from '../../protocols'
 
 export class DbCountSale implements CountSale {

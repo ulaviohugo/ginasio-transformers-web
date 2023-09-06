@@ -1,10 +1,10 @@
-import { UpdateNotification } from '@/app/domain/usecases'
+import { UpdateNotification } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { NotificationModel } from '@/app/domain/models'
-import { NumberUtils } from '@/app/utils'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
+import { NotificationModel } from '@/domain/models'
+import { NumberUtils } from '@/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
 
 export class UpdateNotificationController implements Controller {
 	constructor(

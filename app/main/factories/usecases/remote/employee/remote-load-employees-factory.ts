@@ -1,4 +1,4 @@
-import { RemoteLoadEmployees } from '@/app/data/usecases'
+import { RemoteLoadEmployees } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

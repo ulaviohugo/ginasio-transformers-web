@@ -1,9 +1,6 @@
-import { adaptMiddleware } from '@/app/main/adapters'
-import {
-	makeAddCustomerController,
-	makeLoadCustomerController
-} from '@/app/main/factories'
-import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
+import { adaptMiddleware } from '@/main/adapters'
+import { makeAddCustomerController, makeLoadCustomerController } from '@/main/factories'
+import { makeAuthMiddleware } from '@/main/factories/middlewares'
 
 export async function GET(request: Request) {
 	return adaptMiddleware(makeAuthMiddleware(), request, makeLoadCustomerController())

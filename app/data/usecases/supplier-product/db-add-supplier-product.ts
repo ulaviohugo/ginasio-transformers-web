@@ -1,7 +1,7 @@
-import { AddSupplierProduct, AddSupplierProductResult } from '@/app/domain/usecases'
+import { AddSupplierProduct, AddSupplierProductResult } from '@/domain/usecases'
 import { SupplierProductRepository } from '../../protocols'
 import { SupplierProductModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 
 export class DbAddSupplierProduct implements AddSupplierProduct {
 	constructor(private readonly supplierRepository: SupplierProductRepository) {}

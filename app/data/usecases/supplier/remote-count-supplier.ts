@@ -1,6 +1,6 @@
-import { CountSupplier } from '@/app/domain/usecases'
+import { CountSupplier } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteCountSupplier implements CountSupplier {
 	constructor(

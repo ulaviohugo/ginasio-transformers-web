@@ -1,6 +1,6 @@
 import { Sale as SaleRaw } from '@prisma/client'
 
-import { SaleModel } from '@/app/domain/models'
+import { SaleModel } from '@/domain/models'
 
 export class PrismaSaleMapper {
 	static toPrisma(sale: SaleModel): SaleRaw {

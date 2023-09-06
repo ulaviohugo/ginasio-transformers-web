@@ -1,12 +1,12 @@
-import { AddPurchase } from '@/app/domain/usecases'
+import { AddPurchase } from '@/domain/usecases'
 import { badRequest, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { PurchaseModel } from '@/app/domain/models'
-import { DateUtils, NumberUtils } from '@/app/utils'
-import { UploadService } from '@/app/services'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { Uploader } from '@/app/data/protocols/services'
-import { dbErrorHandler } from '@/app/infra/db'
+import { PurchaseModel } from '@/domain/models'
+import { DateUtils, NumberUtils } from '@/utils'
+import { UploadService } from '@/services'
+import { HttpResponse } from '@/data/protocols/http'
+import { Uploader } from '@/data/protocols/services'
+import { dbErrorHandler } from '@/infra/db'
 
 export class AddPurchaseController implements Controller {
 	constructor(

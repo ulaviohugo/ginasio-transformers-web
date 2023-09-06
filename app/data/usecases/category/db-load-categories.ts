@@ -1,6 +1,6 @@
-import { LoadCategories } from '@/app/domain/usecases'
+import { LoadCategories } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
-import { CategoryModel } from '@/app/domain/models'
+import { CategoryModel } from '@/domain/models'
 
 export class DbLoadCategories implements LoadCategories {
 	constructor(private readonly categoryRepository: CategoryRepository) {}

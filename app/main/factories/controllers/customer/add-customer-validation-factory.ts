@@ -1,6 +1,6 @@
-import { CustomerModel } from '@/app/domain/models'
-import { Validation } from '@/app/infra/http/protocols'
-import { RequiredFieldValidation, ValidationComposite } from '@/app/validation/validators'
+import { CustomerModel } from '@/domain/models'
+import { Validation } from '@/infra/http/protocols'
+import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
 
 type FieldTypes = keyof CustomerModel
 

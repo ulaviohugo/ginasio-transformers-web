@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { PurchaseModel, SaleModel } from '@/app/domain/models'
+import { PurchaseModel, SaleModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -22,25 +22,19 @@ import {
 	Select
 } from '..'
 
-import {
-	ColorUtils,
-	LabelUtils,
-	NumberUtils,
-	PaymentUtils,
-	StringUtils
-} from '@/app/utils'
+import { ColorUtils, LabelUtils, NumberUtils, PaymentUtils, StringUtils } from '@/utils'
 import {
 	addSaleStore,
 	loadCustomerStore,
 	loadPurchaseStore,
 	updateSaleStore
 } from '../../redux'
-import { AddSale, UpdateSale } from '@/app/domain/usecases'
+import { AddSale, UpdateSale } from '@/domain/usecases'
 import { useAuth, useCustomers, usePurchases } from '../../hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadPurchases
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 
 type SaleEditorProps = {
 	data?: SaleModel

@@ -1,6 +1,6 @@
-import { DeleteCategory } from '@/app/domain/usecases'
+import { DeleteCategory } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteDeleteCategory implements DeleteCategory {
 	constructor(

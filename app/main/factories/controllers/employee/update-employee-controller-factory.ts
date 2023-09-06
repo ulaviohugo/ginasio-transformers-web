@@ -1,5 +1,5 @@
-import { UpdateEmployeeController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { UpdateEmployeeController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeUpdateEmployeeValidation } from '.'
 import { makeUpdateEmployee } from '../..'
 

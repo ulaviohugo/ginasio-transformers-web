@@ -1,6 +1,6 @@
-import { DeleteSupplierController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
-import { NumberGreaterThanValidation } from '@/app/validation/validators'
+import { DeleteSupplierController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
+import { NumberGreaterThanValidation } from '@/validation/validators'
 import { makeDeleteSupplier } from '../..'
 
 export const makeDeleteSupplierController = (): Controller => {

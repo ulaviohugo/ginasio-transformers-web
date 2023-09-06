@@ -1,4 +1,4 @@
-import { CategoryModel } from '@/app/domain/models'
+import { CategoryModel } from '@/domain/models'
 
 export interface CategoryRepository {
 	add(param: CategoryModel): Promise<CategoryModel>

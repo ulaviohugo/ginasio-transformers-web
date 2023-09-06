@@ -1,12 +1,12 @@
-import { SupplierModel } from '@/app/domain/models'
-import { Validation } from '@/app/infra/http/protocols'
+import { SupplierModel } from '@/domain/models'
+import { Validation } from '@/infra/http/protocols'
 import {
 	EmailValidation,
 	NumberGreaterThanValidation,
 	NumberValidation,
 	RequiredFieldValidation,
 	ValidationComposite
-} from '@/app/validation/validators'
+} from '@/validation/validators'
 
 type FieldTypes = keyof SupplierModel
 

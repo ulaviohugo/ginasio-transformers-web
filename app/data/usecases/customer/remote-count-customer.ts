@@ -1,6 +1,6 @@
-import { CountCustomer } from '@/app/domain/usecases'
+import { CountCustomer } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteCountCustomer implements CountCustomer {
 	constructor(

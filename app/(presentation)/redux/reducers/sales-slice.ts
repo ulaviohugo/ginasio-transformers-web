@@ -1,4 +1,4 @@
-import { SaleModel } from '@/app/domain/models'
+import { SaleModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface SaleState {

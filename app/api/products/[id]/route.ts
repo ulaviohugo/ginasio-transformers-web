@@ -1,10 +1,7 @@
-import { adaptMiddleware } from '@/app/main/adapters'
-import {
-	makeCountProductController,
-	makeUpdateProductController
-} from '@/app/main/factories'
-import { makeDeleteProductController } from '@/app/main/factories/controllers/product/delete-category-controller-factory'
-import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
+import { adaptMiddleware } from '@/main/adapters'
+import { makeCountProductController, makeUpdateProductController } from '@/main/factories'
+import { makeDeleteProductController } from '@/main/factories/controllers/product/delete-category-controller-factory'
+import { makeAuthMiddleware } from '@/main/factories/middlewares'
 
 type Params = {
 	params: {

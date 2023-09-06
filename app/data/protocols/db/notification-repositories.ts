@@ -1,4 +1,4 @@
-import { NotificationModel } from '@/app/domain/models'
+import { NotificationModel } from '@/domain/models'
 
 export interface NotificationRepository {
 	add(param: NotificationModel): Promise<NotificationModel>

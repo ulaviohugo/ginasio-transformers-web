@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CustomerModel } from '@/app/domain/models'
+import { CustomerModel } from '@/domain/models'
 import {
 	CardActions,
 	CustomerEditor,
@@ -17,15 +17,15 @@ import {
 	Spinner,
 	SubMenu,
 	Title
-} from '@/app/(presentation)/components'
-import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
+} from '@/(presentation)/components'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteCustomer,
 	makeRemoteUpdateCustomer,
 	makeRemoteAddCustomer,
 	makeRemoteLoadCustomers
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 import { loadCustomerStore, removeCustomerStore } from '../../../redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'

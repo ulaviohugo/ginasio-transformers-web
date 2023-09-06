@@ -1,9 +1,9 @@
-import { LoadCurrentUser } from '@/app/domain/usecases'
+import { LoadCurrentUser } from '@/domain/usecases'
 import { ok, serverError } from '../../helper'
 import { Controller, ControllerParams } from '../../protocols'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { dbErrorHandler } from '@/app/infra/db'
-import { NumberUtils } from '@/app/utils'
+import { HttpResponse } from '@/data/protocols/http'
+import { dbErrorHandler } from '@/infra/db'
+import { NumberUtils } from '@/utils'
 
 export class LoadCurrentUserController implements Controller {
 	constructor(private readonly loadCurrentUser: LoadCurrentUser) {}

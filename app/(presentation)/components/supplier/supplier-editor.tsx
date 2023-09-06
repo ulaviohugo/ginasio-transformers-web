@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { SupplierModel } from '@/app/domain/models'
+import { SupplierModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -32,19 +32,19 @@ import {
 	NumberUtils,
 	ObjectUtils,
 	ProvinceProps
-} from '@/app/utils'
+} from '@/utils'
 import {
 	addSupplierStore,
 	loadCategoryStore,
 	loadProductStore,
 	updateSupplierStore
 } from '../../redux'
-import { AddSupplier, UpdateSupplier } from '@/app/domain/usecases'
+import { AddSupplier, UpdateSupplier } from '@/domain/usecases'
 import { useCategories, useLocations, useProducts } from '../../hooks'
 import {
 	makeRemoteLoadCategories,
 	makeRemoteLoadProduct
-} from '@/app/main/factories/usecases/remote'
+} from '@/main/factories/usecases/remote'
 
 type SupplierEditorProps = {
 	supplier?: SupplierModel

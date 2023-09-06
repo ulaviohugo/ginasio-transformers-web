@@ -1,4 +1,4 @@
-import { DeleteCategory } from '@/app/domain/usecases'
+import { DeleteCategory } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
 
 export class DbDeleteCategory implements DeleteCategory {

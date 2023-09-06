@@ -1,8 +1,8 @@
-import { SaleModel } from '@/app/domain/models'
-import { UpdateSale } from '@/app/domain/usecases'
+import { SaleModel } from '@/domain/models'
+import { UpdateSale } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, NumberUtils, ObjectUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils, NumberUtils, ObjectUtils } from '@/utils'
 
 export class RemoteUpdateSale implements UpdateSale {
 	constructor(

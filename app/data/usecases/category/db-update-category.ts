@@ -1,7 +1,7 @@
-import { UpdateCategory } from '@/app/domain/usecases'
+import { UpdateCategory } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
 import { CategoryModel } from '../../../domain/models'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 
 export class DbUpdateCategory implements UpdateCategory {
 	constructor(private readonly categoryRepository: CategoryRepository) {}

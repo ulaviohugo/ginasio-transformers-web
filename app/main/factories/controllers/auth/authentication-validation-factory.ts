@@ -1,10 +1,10 @@
-import { AuthenticationParams } from '@/app/domain/usecases'
-import { Validation } from '@/app/infra/http/protocols'
+import { AuthenticationParams } from '@/domain/usecases'
+import { Validation } from '@/infra/http/protocols'
 import {
 	EmailValidation,
 	RequiredFieldValidation,
 	ValidationComposite
-} from '@/app/validation/validators'
+} from '@/validation/validators'
 
 type FieldTypes = keyof AuthenticationParams
 

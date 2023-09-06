@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { EmployeeModel } from '@/app/domain/models'
+import { EmployeeModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -22,9 +22,9 @@ import {
 	Select
 } from '..'
 
-import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
+import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
 import { addEmployeeStore, updateEmployeeStore } from '../../redux'
-import { AddEmployee, UpdateEmployee } from '@/app/domain/usecases'
+import { AddEmployee, UpdateEmployee } from '@/domain/usecases'
 import { useLocations } from '../../hooks'
 
 type EmployeeEditorProps = {

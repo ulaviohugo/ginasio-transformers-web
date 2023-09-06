@@ -1,4 +1,4 @@
-import { CustomerModel } from '@/app/domain/models'
+import { CustomerModel } from '@/domain/models'
 
 export interface CustomerRepository {
 	add(param: CustomerModel): Promise<CustomerModel>

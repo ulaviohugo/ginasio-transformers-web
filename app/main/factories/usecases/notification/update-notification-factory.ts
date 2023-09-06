@@ -1,5 +1,5 @@
-import { DbUpdateNotification } from '@/app/data/usecases'
-import { NotificationPrismaRepository } from '@/app/infra/db'
+import { DbUpdateNotification } from '@/data/usecases'
+import { NotificationPrismaRepository } from '@/infra/db'
 
 export const makeUpdateNotification = () => {
 	return new DbUpdateNotification(new NotificationPrismaRepository())

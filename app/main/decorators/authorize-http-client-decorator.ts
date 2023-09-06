@@ -1,5 +1,5 @@
-import { IStorage } from '@/app/data/protocols/cache'
-import { HttpClient, HttpRequestParams, HttpResponse } from '@/app/data/protocols/http'
+import { IStorage } from '@/data/protocols/cache'
+import { HttpClient, HttpRequestParams, HttpResponse } from '@/data/protocols/http'
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
 	constructor(

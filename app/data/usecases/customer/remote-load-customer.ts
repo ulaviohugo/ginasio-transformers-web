@@ -1,6 +1,6 @@
-import { LoadCustomers, LoadCustomersResult } from '@/app/domain/usecases'
+import { LoadCustomers, LoadCustomersResult } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
+import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteLoadCustomers implements LoadCustomers {
 	constructor(

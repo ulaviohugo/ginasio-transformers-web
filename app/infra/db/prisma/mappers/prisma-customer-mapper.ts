@@ -1,6 +1,6 @@
 import { Customer as CustomerRaw } from '@prisma/client'
 
-import { CustomerModel } from '@/app/domain/models'
+import { CustomerModel } from '@/domain/models'
 
 export class PrismaCustomerMapper {
 	static toPrisma(employee: CustomerModel): CustomerRaw {

@@ -1,7 +1,7 @@
-import { LoadCurrentUser } from '@/app/domain/usecases'
+import { LoadCurrentUser } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { EmployeeModel } from '@/app/domain/models'
+import { UnexpectedError } from '@/infra/http/errors'
+import { EmployeeModel } from '@/domain/models'
 
 export class RemoteLoadCurrentUser implements LoadCurrentUser {
 	constructor(

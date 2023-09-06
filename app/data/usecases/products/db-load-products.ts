@@ -1,6 +1,6 @@
-import { LoadProducts } from '@/app/domain/usecases'
+import { LoadProducts } from '@/domain/usecases'
 import { ProductRepository } from '../../protocols'
-import { ProductModel } from '@/app/domain/models'
+import { ProductModel } from '@/domain/models'
 
 export class DbLoadProducts implements LoadProducts {
 	constructor(private readonly productRepository: ProductRepository) {}

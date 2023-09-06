@@ -7,8 +7,8 @@ import {
 	LayoutBody,
 	SubMenu,
 	Title
-} from '@/app/(presentation)/components'
-import { SubmenuUtils } from '@/app/utils'
+} from '@/(presentation)/components'
+import { SubmenuUtils } from '@/utils'
 
 export default function Comercial() {
 	return (

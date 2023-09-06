@@ -15,17 +15,17 @@ import {
 	Title,
 	IconProduct,
 	IconStock
-} from '@/app/(presentation)/components'
-import { usePurchases } from '@/app/(presentation)/hooks'
-import { loadPurchaseStore, removePurchaseStore } from '@/app/(presentation)/redux'
-import { PurchaseModel } from '@/app/domain/models'
+} from '@/(presentation)/components'
+import { usePurchases } from '@/(presentation)/hooks'
+import { loadPurchaseStore, removePurchaseStore } from '@/(presentation)/redux'
+import { PurchaseModel } from '@/domain/models'
 import {
 	makeRemoteAddPurchase,
 	makeRemoteDeletePurchase,
 	makeRemoteLoadPurchases,
 	makeRemoteUpdatePurchase
-} from '@/app/main/factories/usecases/remote'
-import { DateUtils, NumberUtils, SubmenuUtils } from '@/app/utils'
+} from '@/main/factories/usecases/remote'
+import { DateUtils, NumberUtils, SubmenuUtils } from '@/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'

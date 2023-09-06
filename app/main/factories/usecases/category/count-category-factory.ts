@@ -1,5 +1,5 @@
-import { DbCountCategory } from '@/app/data/usecases'
-import { CategoryPrismaRepository } from '@/app/infra/db'
+import { DbCountCategory } from '@/data/usecases'
+import { CategoryPrismaRepository } from '@/infra/db'
 
 export const makeCountCategory = () => {
 	return new DbCountCategory(new CategoryPrismaRepository())

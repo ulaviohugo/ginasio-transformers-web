@@ -2,9 +2,9 @@ import {
 	Authentication,
 	AuthenticationParams,
 	AuthenticationResult
-} from '@/app/domain/usecases'
+} from '@/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
-import { ObjectUtils } from '@/app/utils'
+import { ObjectUtils } from '@/utils'
 import { Hasher, Crypto } from '../../protocols/cryptography'
 
 export class DbAuthentication implements Authentication {

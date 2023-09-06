@@ -1,4 +1,4 @@
-import { SaleModel } from '@/app/domain/models'
+import { SaleModel } from '@/domain/models'
 
 export interface SaleRepository {
 	add(param: SaleModel): Promise<SaleModel>

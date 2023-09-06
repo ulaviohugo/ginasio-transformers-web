@@ -1,4 +1,4 @@
-import { LoadSuppliers, LoadSuppliersResult } from '@/app/domain/usecases'
+import { LoadSuppliers, LoadSuppliersResult } from '@/domain/usecases'
 import { SupplierRepository } from '../../protocols'
 
 export class DbLoadSuppliers implements LoadSuppliers {

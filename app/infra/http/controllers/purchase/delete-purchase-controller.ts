@@ -1,9 +1,9 @@
-import { DeletePurchase } from '@/app/domain/usecases'
+import { DeletePurchase } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
 import { Controller, ControllerParams, Validation } from '../../protocols'
-import { HttpResponse } from '@/app/data/protocols/http'
-import { UploadService } from '@/app/services'
-import { dbErrorHandler } from '@/app/infra/db'
+import { HttpResponse } from '@/data/protocols/http'
+import { UploadService } from '@/services'
+import { dbErrorHandler } from '@/infra/db'
 
 export class DeletePurchaseController implements Controller {
 	constructor(

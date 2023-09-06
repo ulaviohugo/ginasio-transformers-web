@@ -1,7 +1,7 @@
 'use client'
 
-import { CategoryModel } from '@/app/domain/models'
-import { AddCategory, UpdateCategory } from '@/app/domain/usecases'
+import { CategoryModel } from '@/domain/models'
+import { AddCategory, UpdateCategory } from '@/domain/usecases'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -12,10 +12,10 @@ import {
 	ModalTitle
 } from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { LabelUtils } from '@/app/utils'
+import { LabelUtils } from '@/utils'
 import { useCategories } from '../../hooks'
 import { useDispatch } from 'react-redux'
-import { makeRemoteLoadCategories } from '@/app/main/factories/usecases/remote'
+import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
 import { addCategoryStore, loadCategoryStore, updateCategoryStore } from '../../redux'
 import { toast } from 'react-hot-toast'
 

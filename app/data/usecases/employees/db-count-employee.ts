@@ -1,4 +1,4 @@
-import { CountEmployee } from '@/app/domain/usecases'
+import { CountEmployee } from '@/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
 
 export class DbCountEmployee implements CountEmployee {

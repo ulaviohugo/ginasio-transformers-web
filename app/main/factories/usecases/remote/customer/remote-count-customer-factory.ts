@@ -1,4 +1,4 @@
-import { RemoteCountCustomer } from '@/app/data/usecases'
+import { RemoteCountCustomer } from '@/data/usecases'
 import { makeApiUrl } from '../../../http'
 import { makeAuthorizeHttpClientDecorator } from '../../../decorators'
 

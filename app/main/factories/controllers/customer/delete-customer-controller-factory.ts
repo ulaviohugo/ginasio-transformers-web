@@ -1,7 +1,7 @@
-import { DeleteCustomerController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
-import { NumberGreaterThanValidation } from '@/app/validation/validators'
-import { makeDeleteCustomer } from '@/app/main/factories'
+import { DeleteCustomerController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
+import { NumberGreaterThanValidation } from '@/validation/validators'
+import { makeDeleteCustomer } from '@/main/factories'
 
 export const makeDeleteCustomerController = (): Controller => {
 	return new DeleteCustomerController(

@@ -1,6 +1,6 @@
-import { DbAddEmployee } from '@/app/data/usecases'
-import { BcryptAdapter } from '@/app/infra/cryptography'
-import { EmployeePrismaRepository } from '@/app/infra/db'
+import { DbAddEmployee } from '@/data/usecases'
+import { BcryptAdapter } from '@/infra/cryptography'
+import { EmployeePrismaRepository } from '@/infra/db'
 
 export class EmployeeSeeder {
 	static async run() {

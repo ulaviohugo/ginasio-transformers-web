@@ -1,4 +1,4 @@
-import { LoadCustomers, LoadCustomersResult } from '@/app/domain/usecases'
+import { LoadCustomers, LoadCustomersResult } from '@/domain/usecases'
 import { CustomerRepository } from '../../protocols'
 
 export class DbLoadCustomers implements LoadCustomers {

@@ -1,4 +1,4 @@
-import { DeleteSale } from '@/app/domain/usecases'
+import { DeleteSale } from '@/domain/usecases'
 import { SaleRepository } from '../../protocols'
 
 export class DbDeleteSale implements DeleteSale {

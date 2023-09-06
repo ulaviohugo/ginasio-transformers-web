@@ -1,10 +1,10 @@
-import { adaptMiddleware } from '@/app/main/adapters'
+import { adaptMiddleware } from '@/main/adapters'
 import {
 	makeCountSaleController,
 	makeDeleteSaleController,
 	makeUpdateSaleController
-} from '@/app/main/factories'
-import { makeAuthMiddleware } from '@/app/main/factories/middlewares'
+} from '@/main/factories'
+import { makeAuthMiddleware } from '@/main/factories/middlewares'
 
 type Params = {
 	params: {

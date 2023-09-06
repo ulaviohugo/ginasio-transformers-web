@@ -1,8 +1,8 @@
-import { PurchaseModel } from '@/app/domain/models'
-import { AddPurchase } from '@/app/domain/usecases'
+import { PurchaseModel } from '@/domain/models'
+import { AddPurchase } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils, NumberUtils } from '@/app/utils'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils, NumberUtils } from '@/utils'
 
 export class RemoteAddPurchase implements AddPurchase {
 	constructor(

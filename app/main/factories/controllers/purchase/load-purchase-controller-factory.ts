@@ -1,5 +1,5 @@
-import { LoadPurchaseController } from '@/app/infra/http/controllers'
-import { Controller } from '@/app/infra/http/protocols'
+import { LoadPurchaseController } from '@/infra/http/controllers'
+import { Controller } from '@/infra/http/protocols'
 import { makeLoadPurchase } from '../..'
 
 export const makeLoadPurchaseController = (): Controller => {

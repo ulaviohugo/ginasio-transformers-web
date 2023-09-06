@@ -1,4 +1,4 @@
-import { Uploader } from '@/app/data/protocols/services'
+import { Uploader } from '@/data/protocols/services'
 import { CustomerModel } from '../../models'
 
 export interface AddCustomer {

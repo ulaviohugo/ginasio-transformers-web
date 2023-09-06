@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useCategories, useProducts } from '../../hooks'
 import { Product, SupplierProduct } from '@prisma/client'
 import { IconClose, InputPrice, Select } from '..'
-import { LabelUtils } from '@/app/utils'
+import { LabelUtils } from '@/utils'
 
 export type ProductCardChangeProps = {
 	index: number

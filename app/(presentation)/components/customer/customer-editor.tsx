@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
-import { CustomerModel } from '@/app/domain/models'
+import { CustomerModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
@@ -19,9 +19,9 @@ import {
 	Select
 } from '..'
 
-import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/app/utils'
+import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
 import { addCustomerStore, updateCustomerStore } from '../../redux'
-import { AddCustomer, UpdateCustomer } from '@/app/domain/usecases'
+import { AddCustomer, UpdateCustomer } from '@/domain/usecases'
 import { useLocations } from '../../hooks'
 
 type CustomerEditorProps = {

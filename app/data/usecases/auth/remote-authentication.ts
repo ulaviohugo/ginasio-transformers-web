@@ -1,8 +1,8 @@
-import { Authentication, AuthenticationParams } from '@/app/domain/usecases'
+import { Authentication, AuthenticationParams } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '../../protocols/http'
-import { UnexpectedError } from '@/app/infra/http/errors'
-import { FormDataUtils } from '@/app/utils'
-import { AccountModel } from '@/app/domain/models'
+import { UnexpectedError } from '@/infra/http/errors'
+import { FormDataUtils } from '@/utils'
+import { AccountModel } from '@/domain/models'
 
 export class RemoteAuthentication implements Authentication {
 	constructor(
