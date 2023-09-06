@@ -161,186 +161,194 @@ export function EmployeeEditor({
 							/>
 						</div>
 						<div className="flex flex-col gap-2">
-							<div className="flex gap-1">
-								<Input
-									type="text"
-									id="name"
-									name="name"
-									value={formDate?.name || ''}
-									label={LabelUtils.translateField('name')}
-									onChange={handleInputChange}
-									autoFocus
-								/>
-							</div>
-							<div className="grid grid-cols-3 gap-1">
-								<Select
-									id="gender"
-									name="gender"
-									value={formDate?.gender || ''}
-									label={LabelUtils.translateField('gender')}
-									data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Input
-									type="date"
-									id="dateOfBirth"
-									name="dateOfBirth"
-									value={
-										(formDate?.dateOfBirth && DateUtils.getDate(formDate?.dateOfBirth)) ||
-										''
-									}
-									label={LabelUtils.translateField('dateOfBirth')}
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="maritalStatus"
-									name="maritalStatus"
-									value={formDate?.maritalStatus || ''}
-									label={LabelUtils.translateField('maritalStatus')}
-									data={[
-										{ text: 'Solteiro(a)' },
-										{ text: 'Casado(a)' },
-										{ text: 'Divorciado(a)' },
-										{ text: 'Viúvo(a)' }
-									]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="documentType"
-									name="documentType"
-									value={formDate?.documentType || ''}
-									label={LabelUtils.translateField('documentType')}
-									data={[
-										{ text: 'Bilhete de identidade' },
-										{ text: 'Passaporte' },
-										{ text: 'Cartão de residência' }
-									]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Input
-									type="text"
-									id="documentNumber"
-									name="documentNumber"
-									value={formDate?.documentNumber || ''}
-									label={LabelUtils.translateField('documentNumber')}
-									onChange={handleInputChange}
-									disabled={!formDate?.documentType}
-								/>
-								<Input
-									type="text"
-									id="nif"
-									name="nif"
-									value={formDate?.nif || ''}
-									label={LabelUtils.translateField('nif')}
-									onChange={handleInputChange}
-								/>
-								<Input
-									type="text"
-									id="socialSecurity"
-									name="socialSecurity"
-									value={formDate?.socialSecurity || ''}
-									label={LabelUtils.translateField('socialSecurity')}
-									onChange={handleInputChange}
-								/>
-								<Input
-									type="number"
-									id="dependents"
-									name="dependents"
-									value={formDate?.dependents || ''}
-									label={LabelUtils.translateField('dependents')}
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="educationDegree"
-									name="educationDegree"
-									value={formDate?.educationDegree || ''}
-									label={LabelUtils.translateField('educationDegree')}
-									data={[
-										{ text: 'Ensino primário' },
-										{ text: 'Ensino secundário' },
-										{ text: 'Ensino médio' },
-										{ text: 'Ensino superior' }
-									]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="grid grid-cols-3 gap-1">
-								<InputPhone
-									id="phone1"
-									name="phone1"
-									value={formDate?.phone1 || ''}
-									label={LabelUtils.translateField('phone1')}
-									onChange={handleInputChange}
-								/>
-								<InputPhone
-									id="phone2"
-									name="phone2"
-									value={!formDate?.phone1 ? '' : formDate?.phone2 || ''}
-									label={LabelUtils.translateField('phone2')}
-									onChange={handleInputChange}
-									disabled={!formDate?.phone1}
-								/>
-								<InputEmail
-									id="email"
-									name="email"
-									value={formDate?.email || ''}
-									label={LabelUtils.translateField('email')}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="grid grid-cols-3 gap-1">
-								<Select
-									id="countryId"
-									name="countryId"
-									value={formDate?.countryId || ''}
-									label={LabelUtils.translateField('countryId')}
-									data={countries.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="provinceId"
-									name="provinceId"
-									value={formDate?.provinceId || ''}
-									label={LabelUtils.translateField('provinceId')}
-									data={provinceList.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="municipalityId"
-									name="municipalityId"
-									value={formDate?.municipalityId || ''}
-									label={LabelUtils.translateField('municipalityId')}
-									data={municipalityList.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div>
-								<Input
-									type="text"
-									id="residentialAddress"
-									name="residentialAddress"
-									value={formDate?.residentialAddress || ''}
-									label={LabelUtils.translateField('residentialAddress')}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="grid grid-cols-2 gap-1">
+							<fieldset>
+								<legend>Dados pessoais</legend>
+								<div className="flex gap-1">
+									<Input
+										type="text"
+										id="name"
+										name="name"
+										value={formDate?.name || ''}
+										label={LabelUtils.translateField('name')}
+										onChange={handleInputChange}
+										autoFocus
+									/>
+								</div>
+								<div className="grid grid-cols-3 gap-1">
+									<Select
+										id="gender"
+										name="gender"
+										value={formDate?.gender || ''}
+										label={LabelUtils.translateField('gender')}
+										data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="date"
+										id="dateOfBirth"
+										name="dateOfBirth"
+										value={
+											(formDate?.dateOfBirth &&
+												DateUtils.getDate(formDate?.dateOfBirth)) ||
+											''
+										}
+										label={LabelUtils.translateField('dateOfBirth')}
+										onChange={handleInputChange}
+									/>
+									<Select
+										id="maritalStatus"
+										name="maritalStatus"
+										value={formDate?.maritalStatus || ''}
+										label={LabelUtils.translateField('maritalStatus')}
+										data={[
+											{ text: 'Solteiro(a)' },
+											{ text: 'Casado(a)' },
+											{ text: 'Divorciado(a)' },
+											{ text: 'Viúvo(a)' }
+										]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Select
+										id="documentType"
+										name="documentType"
+										value={formDate?.documentType || ''}
+										label={LabelUtils.translateField('documentType')}
+										data={[
+											{ text: 'Bilhete de identidade' },
+											{ text: 'Passaporte' },
+											{ text: 'Cartão de residência' }
+										]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="text"
+										id="documentNumber"
+										name="documentNumber"
+										value={formDate?.documentNumber || ''}
+										label={LabelUtils.translateField('documentNumber')}
+										onChange={handleInputChange}
+										disabled={!formDate?.documentType}
+										title={
+											!formDate?.documentType ? 'Selecione 1º o tipo de documento' : ''
+										}
+									/>
+									<Input
+										type="text"
+										id="nif"
+										name="nif"
+										value={formDate?.nif || ''}
+										label={LabelUtils.translateField('nif')}
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="text"
+										id="socialSecurity"
+										name="socialSecurity"
+										value={formDate?.socialSecurity || ''}
+										label={LabelUtils.translateField('socialSecurity')}
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="number"
+										id="dependents"
+										name="dependents"
+										value={formDate?.dependents || ''}
+										label={LabelUtils.translateField('dependents')}
+										onChange={handleInputChange}
+									/>
+									<Select
+										id="educationDegree"
+										name="educationDegree"
+										value={formDate?.educationDegree || ''}
+										label={LabelUtils.translateField('educationDegree')}
+										data={[
+											{ text: 'Ensino primário' },
+											{ text: 'Ensino secundário' },
+											{ text: 'Ensino médio' },
+											{ text: 'Ensino superior' }
+										]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div className="grid grid-cols-3 gap-1">
+									<InputPhone
+										id="phone1"
+										name="phone1"
+										value={formDate?.phone1 || ''}
+										label={LabelUtils.translateField('phone1')}
+										onChange={handleInputChange}
+									/>
+									<InputPhone
+										id="phone2"
+										name="phone2"
+										value={!formDate?.phone1 ? '' : formDate?.phone2 || ''}
+										label={LabelUtils.translateField('phone2')}
+										onChange={handleInputChange}
+										disabled={!formDate?.phone1}
+									/>
+									<InputEmail
+										id="email"
+										name="email"
+										value={formDate?.email || ''}
+										label={LabelUtils.translateField('email')}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div className="grid grid-cols-3 gap-1">
+									<Select
+										id="countryId"
+										name="countryId"
+										value={formDate?.countryId || ''}
+										label={LabelUtils.translateField('countryId')}
+										data={countries.map(({ name, id }) => ({
+											text: name,
+											value: id
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Select
+										id="provinceId"
+										name="provinceId"
+										value={formDate?.provinceId || ''}
+										label={LabelUtils.translateField('provinceId')}
+										data={provinceList.map(({ name, id }) => ({
+											text: name,
+											value: id
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Select
+										id="municipalityId"
+										name="municipalityId"
+										value={formDate?.municipalityId || ''}
+										label={LabelUtils.translateField('municipalityId')}
+										data={municipalityList.map(({ name, id }) => ({
+											text: name,
+											value: id
+										}))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div>
+									<Input
+										type="text"
+										id="residentialAddress"
+										name="residentialAddress"
+										value={formDate?.residentialAddress || ''}
+										label={LabelUtils.translateField('residentialAddress')}
+										onChange={handleInputChange}
+									/>
+								</div>
+							</fieldset>
+							<fieldset className="grid grid-cols-2 gap-1">
+								<legend>Dados profissionais</legend>
 								<Select
 									id="position"
 									name="position"
@@ -366,8 +374,6 @@ export function EmployeeEditor({
 										'position'
 									)} para habilitar este campo`}
 								/>
-							</div>
-							<div className="grid grid-cols-2 gap-1">
 								<Input
 									type="date"
 									id="hireDate"
@@ -398,74 +404,83 @@ export function EmployeeEditor({
 										'position'
 									)} para habilitar este campo`}
 								/>
-							</div>
-							<div className="grid grid-cols-2 gap-1">
-								<Select
-									id="bankName"
-									name="bankName"
-									value={formDate?.bankName || ''}
-									label={LabelUtils.translateField('bankName')}
-									data={[
-										{ text: 'BAI' },
-										{ text: 'BCI' },
-										{ text: 'BIC' },
-										{ text: 'BFA' },
-										{ text: 'BNI' },
-										{ text: 'BPC' },
-										{ text: 'Millenium' },
-										{ text: 'SOL' },
-										{ text: 'Standard Bank' }
-									]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Input
-									type="text"
-									id="accountNumber"
-									name="accountNumber"
-									value={formDate?.accountNumber || ''}
-									label={LabelUtils.translateField('accountNumber')}
+							</fieldset>
+							<fieldset className="grid gap-1">
+								<legend>Dados bancário</legend>
+								<div className="grid grid-cols-2 gap-1">
+									<Select
+										id="bankName"
+										name="bankName"
+										value={formDate?.bankName || ''}
+										label={LabelUtils.translateField('bankName')}
+										data={[
+											{ text: 'BAI' },
+											{ text: 'BCI' },
+											{ text: 'BIC' },
+											{ text: 'BFA' },
+											{ text: 'BNI' },
+											{ text: 'BPC' },
+											{ text: 'Millennium Atlantico' },
+											{ text: 'SOL' },
+											{ text: 'Standard Bank' }
+										]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+									<Input
+										type="text"
+										id="accountNumber"
+										name="accountNumber"
+										value={formDate?.accountNumber || ''}
+										label={LabelUtils.translateField('accountNumber')}
+										onChange={handleInputChange}
+										disabled={!formDate?.bankName}
+										title={!formDate?.documentType ? 'Selecione 1º o nome do banco' : ''}
+									/>
+								</div>
+
+								<InputIBAN
+									id="iban"
+									name="iban"
+									value={formDate?.iban || ''}
+									label={LabelUtils.translateField('iban')}
 									onChange={handleInputChange}
 									disabled={!formDate?.bankName}
+									title={!formDate?.documentType ? 'Selecione 1º o nome do banco' : ''}
 								/>
-							</div>
-							<InputIBAN
-								id="iban"
-								name="iban"
-								value={formDate?.iban || ''}
-								label={LabelUtils.translateField('iban')}
-								onChange={handleInputChange}
-								disabled={!formDate?.bankName}
-							/>
-							<div>
-								<div className="inline-flex">
-									<Input
-										type="checkbox"
-										name="canLogin"
-										label="Pode iniciar sessão"
-										checked={formDate.canLogin}
-										onChange={handleInputChange}
-									/>
+							</fieldset>
+							<fieldset className="flex flex-col gap-1">
+								<legend>Acesso ao sistema</legend>
+								<div>
+									<div className="inline-flex">
+										<Input
+											type="checkbox"
+											name="canLogin"
+											label="Pode iniciar sessão"
+											checked={formDate.canLogin}
+											onChange={handleInputChange}
+										/>
+									</div>
 								</div>
-							</div>
-							{formDate.canLogin && (
-								<div className="flex gap-1">
-									<Input
-										type="password"
-										name="password"
-										label="Senha"
-										value={formDate.password || ''}
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="password"
-										name="passwordConfirmation"
-										label="Confirme a senha"
-										value={formDate.passwordConfirmation || ''}
-										onChange={handleInputChange}
-									/>
-								</div>
-							)}
+								{formDate.canLogin && (
+									<div className="flex gap-1">
+										<Input
+											type="password"
+											name="password"
+											label="Senha"
+											value={formDate.password || ''}
+											onChange={handleInputChange}
+										/>
+										<Input
+											type="password"
+											name="passwordConfirmation"
+											label="Confirme a senha"
+											value={formDate.passwordConfirmation || ''}
+											onChange={handleInputChange}
+										/>
+									</div>
+								)}
+							</fieldset>
 						</div>
 					</div>
 					<ModalFooter>
