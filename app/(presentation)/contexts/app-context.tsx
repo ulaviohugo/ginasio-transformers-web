@@ -3,7 +3,7 @@
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'
-import { store } from '../redux'
+import { store } from '@/(presentation)/redux'
 import { AuthProvider, LocationProvider } from '.'
 
 type Props = {

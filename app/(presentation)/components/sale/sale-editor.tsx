@@ -28,9 +28,9 @@ import {
 	loadCustomerStore,
 	loadPurchaseStore,
 	updateSaleStore
-} from '../../redux'
+} from '@/(presentation)/redux'
 import { AddSale, UpdateSale } from '@/domain/usecases'
-import { useAuth, useCustomers, usePurchases } from '../../hooks'
+import { useAuth, useCustomers, usePurchases } from '@/(presentation)/hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadPurchases

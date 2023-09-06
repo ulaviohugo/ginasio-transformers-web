@@ -1,4 +1,4 @@
-import { RouteUtils } from '../../utils'
+import { RouteUtils } from '@/utils'
 
 export function GET() {
 	return RouteUtils.notFound()

@@ -1,8 +1,8 @@
 import { UpdatePurchase } from '@/domain/usecases'
-import { PurchaseRepository } from '../../protocols'
+import { PurchaseRepository } from '@/data/protocols'
 import { PurchaseModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
-import { Uploader } from '../../protocols/services'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbUpdatePurchase implements UpdatePurchase {
 	constructor(private readonly purchaseRepository: PurchaseRepository) {}

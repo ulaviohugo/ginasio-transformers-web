@@ -1,7 +1,7 @@
 import { DeleteProduct } from '@/domain/usecases'
 import { FileUtils } from '@/utils'
-import { ProductRepository } from '../../protocols'
-import { Uploader } from '../../protocols/services'
+import { ProductRepository } from '@/data/protocols'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbDeleteProduct implements DeleteProduct {
 	constructor(private readonly employeeRepository: ProductRepository) {}

@@ -1,8 +1,8 @@
 import { AddEmployee, AddEmployeesResult } from '@/domain/usecases'
-import { EmployeeRepository } from '../../protocols'
+import { EmployeeRepository } from '@/data/protocols'
 import { EmployeeModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
-import { Uploader } from '../../protocols/services'
+import { Uploader } from '@/data/protocols/services'
 import { Hasher } from '@/data/protocols/cryptography'
 import { PrismaEmployeeMapper } from '@/infra/db/prisma/mappers'
 

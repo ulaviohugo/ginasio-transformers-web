@@ -1,10 +1,10 @@
 'use client'
 
 import { ReactNode, createContext, useEffect } from 'react'
-import { useAuth } from '../hooks'
+import { useAuth } from '@/(presentation)/hooks'
 import { usePathname } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { addAuthStore } from '../redux'
+import { addAuthStore } from '@/(presentation)/redux'
 import { getCurrentAccountAdapter } from '@/main/adapters'
 
 const AuthContext = createContext({})

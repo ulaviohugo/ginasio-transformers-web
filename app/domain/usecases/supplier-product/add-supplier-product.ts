@@ -1,4 +1,4 @@
-import { SupplierProductModel } from '../../models'
+import { SupplierProductModel } from '@/domain/models'
 
 export interface AddSupplierProduct {
 	add(param: SupplierProductModel): Promise<AddSupplierProductResult>

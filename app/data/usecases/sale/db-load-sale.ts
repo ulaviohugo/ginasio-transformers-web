@@ -1,5 +1,5 @@
 import { LoadSales, LoadSalesResult } from '@/domain/usecases'
-import { SaleRepository } from '../../protocols'
+import { SaleRepository } from '@/data/protocols'
 
 export class DbLoadSale implements LoadSales {
 	constructor(private readonly saleRepository: SaleRepository) {}

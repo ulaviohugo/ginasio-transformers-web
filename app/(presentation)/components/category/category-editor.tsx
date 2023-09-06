@@ -13,10 +13,14 @@ import {
 } from '..'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { LabelUtils } from '@/utils'
-import { useCategories } from '../../hooks'
+import { useCategories } from '@/(presentation)/hooks'
 import { useDispatch } from 'react-redux'
 import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
-import { addCategoryStore, loadCategoryStore, updateCategoryStore } from '../../redux'
+import {
+	addCategoryStore,
+	loadCategoryStore,
+	updateCategoryStore
+} from '@/(presentation)/redux'
 import { toast } from 'react-hot-toast'
 
 type CategoryEditorProps = {

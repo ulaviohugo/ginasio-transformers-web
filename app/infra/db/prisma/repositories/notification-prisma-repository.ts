@@ -1,8 +1,8 @@
 import { NotificationRepository } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { NotificationModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaNotificationMapper } from '../mappers'
+import { PrismaNotificationMapper } from '@/infra/db/prisma/mappers'
 
 export class NotificationPrismaRepository implements NotificationRepository {
 	private prisma: PrismaClient

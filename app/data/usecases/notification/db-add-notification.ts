@@ -1,5 +1,5 @@
 import { AddNotification } from '@/domain/usecases'
-import { NotificationRepository } from '../../protocols'
+import { NotificationRepository } from '@/data/protocols'
 import { NotificationModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 

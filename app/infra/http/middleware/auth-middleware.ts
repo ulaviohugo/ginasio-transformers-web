@@ -1,6 +1,6 @@
 import { Crypto } from '@/data/protocols/cryptography'
-import { Middleware } from '../protocols'
-import { ok, unauthorized } from '../helper'
+import { Middleware } from '@/infra/http/protocols'
+import { ok, unauthorized } from '@/infra/http/helper'
 import { HttpResponse } from '@/data/protocols/http'
 
 export class AuthMiddleware implements Middleware {

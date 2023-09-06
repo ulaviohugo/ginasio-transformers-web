@@ -1,5 +1,5 @@
 import { CountCustomer } from '@/domain/usecases'
-import { CustomerRepository } from '../../protocols'
+import { CustomerRepository } from '@/data/protocols'
 
 export class DbCountCustomer implements CountCustomer {
 	constructor(private readonly employeeRepository: CustomerRepository) {}

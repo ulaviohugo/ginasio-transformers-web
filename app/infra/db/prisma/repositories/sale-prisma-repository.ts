@@ -1,8 +1,8 @@
 import { SaleRepository } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { SaleModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaSaleMapper } from '../mappers'
+import { PrismaSaleMapper } from '@/infra/db/prisma/mappers'
 
 export class SalePrismaRepository implements SaleRepository {
 	private prisma: PrismaClient

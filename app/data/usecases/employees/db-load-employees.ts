@@ -1,5 +1,5 @@
 import { LoadEmployees, LoadEmployeesResult } from '@/domain/usecases'
-import { EmployeeRepository } from '../../protocols'
+import { EmployeeRepository } from '@/data/protocols'
 import { PrismaEmployeeMapper } from '@/infra/db/prisma/mappers'
 
 export class DbLoadEmployees implements LoadEmployees {

@@ -1,6 +1,6 @@
 import { AddPurchase } from '@/domain/usecases'
-import { badRequest, ok, serverError } from '../../helper'
-import { Controller, ControllerParams, Validation } from '../../protocols'
+import { badRequest, ok, serverError } from '@/infra/http/helper'
+import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { PurchaseModel } from '@/domain/models'
 import { DateUtils, NumberUtils } from '@/utils'
 import { UploadService } from '@/services'

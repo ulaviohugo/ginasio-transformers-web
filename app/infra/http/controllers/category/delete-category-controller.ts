@@ -1,6 +1,6 @@
 import { DeleteCategory } from '@/domain/usecases'
-import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, ControllerParams, Validation } from '../../protocols'
+import { badRequest, notFound, ok, serverError } from '@/infra/http/helper'
+import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 

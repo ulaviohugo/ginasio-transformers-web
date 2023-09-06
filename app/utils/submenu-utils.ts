@@ -1,4 +1,4 @@
-import { SubmenuProps } from '../(presentation)/components'
+import { SubmenuProps } from '@/(presentation)/components'
 
 export class SubmenuUtils {
 	static readonly hr: SubmenuProps[] = [

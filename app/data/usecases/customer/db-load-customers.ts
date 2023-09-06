@@ -1,5 +1,5 @@
 import { LoadCustomers, LoadCustomersResult } from '@/domain/usecases'
-import { CustomerRepository } from '../../protocols'
+import { CustomerRepository } from '@/data/protocols'
 
 export class DbLoadCustomers implements LoadCustomers {
 	constructor(private readonly employeeRepository: CustomerRepository) {}

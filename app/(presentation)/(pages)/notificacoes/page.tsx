@@ -11,10 +11,10 @@ import {
 import { useEffect, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
-import { useNotifications } from '../../hooks'
+import { useNotifications } from '@/(presentation)/hooks'
 import { RemoteLoadNotifications } from '@/data/usecases'
 import { useDispatch } from 'react-redux'
-import { loadNotificationStore } from '../../redux'
+import { loadNotificationStore } from '@/(presentation)/redux'
 import { makeRemoteLoadNotifications } from '@/main/factories/usecases/remote'
 
 export default function Notifications() {

@@ -1,5 +1,5 @@
 import { CountNotification } from '@/domain/usecases'
-import { NotificationRepository } from '../../protocols'
+import { NotificationRepository } from '@/data/protocols'
 
 export class DbCountNotification implements CountNotification {
 	constructor(private readonly notificationRepository: NotificationRepository) {}

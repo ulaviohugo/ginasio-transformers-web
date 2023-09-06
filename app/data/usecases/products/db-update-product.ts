@@ -1,8 +1,8 @@
 import { UpdateProduct } from '@/domain/usecases'
-import { ProductRepository } from '../../protocols'
+import { ProductRepository } from '@/data/protocols'
 import { ProductModel } from '@/domain/models'
 import { FileUtils, NumberUtils, ObjectUtils } from '@/utils'
-import { Uploader } from '../../protocols/services'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbUpdateProduct implements UpdateProduct {
 	constructor(private readonly productRepository: ProductRepository) {}

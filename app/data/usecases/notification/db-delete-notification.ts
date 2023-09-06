@@ -1,5 +1,5 @@
 import { DeleteNotification } from '@/domain/usecases'
-import { NotificationRepository } from '../../protocols'
+import { NotificationRepository } from '@/data/protocols'
 
 export class DbDeleteNotification implements DeleteNotification {
 	constructor(private readonly notificationRepository: NotificationRepository) {}

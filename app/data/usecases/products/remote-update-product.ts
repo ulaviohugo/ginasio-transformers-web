@@ -1,6 +1,6 @@
 import { ProductModel } from '@/domain/models'
 import { UpdateProduct } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../../protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
 import { FormDataUtils, ObjectUtils } from '@/utils'
 

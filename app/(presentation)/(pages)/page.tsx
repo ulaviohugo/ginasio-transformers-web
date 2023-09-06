@@ -10,7 +10,7 @@ import {
 	Layout,
 	LayoutBody,
 	Spinner
-} from '../components'
+} from '@/(presentation)/components'
 import { ElementType, useEffect, useState } from 'react'
 import Link from 'next/link'
 import {

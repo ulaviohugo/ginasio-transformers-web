@@ -1,5 +1,5 @@
 import { LoadCategories } from '@/domain/usecases'
-import { CategoryRepository } from '../../protocols'
+import { CategoryRepository } from '@/data/protocols'
 import { CategoryModel } from '@/domain/models'
 
 export class DbLoadCategories implements LoadCategories {

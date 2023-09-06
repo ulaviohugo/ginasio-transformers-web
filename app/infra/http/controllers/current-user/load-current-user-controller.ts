@@ -1,6 +1,6 @@
 import { LoadCurrentUser } from '@/domain/usecases'
-import { ok, serverError } from '../../helper'
-import { Controller, ControllerParams } from '../../protocols'
+import { ok, serverError } from '@/infra/http/helper'
+import { Controller, ControllerParams } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 import { NumberUtils } from '@/utils'

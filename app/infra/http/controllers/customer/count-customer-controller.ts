@@ -1,6 +1,6 @@
 import { CountCustomer } from '@/domain/usecases'
-import { Controller } from '../../protocols'
-import { ok, serverError } from '../../helper'
+import { Controller } from '@/infra/http/protocols'
+import { ok, serverError } from '@/infra/http/helper'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 

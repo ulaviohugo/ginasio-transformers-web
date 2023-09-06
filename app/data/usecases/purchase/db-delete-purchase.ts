@@ -1,7 +1,7 @@
 import { DeletePurchase } from '@/domain/usecases'
 import { FileUtils } from '@/utils'
-import { PurchaseRepository } from '../../protocols'
-import { Uploader } from '../../protocols/services'
+import { PurchaseRepository } from '@/data/protocols'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbDeletePurchase implements DeletePurchase {
 	constructor(private readonly purchaseRepository: PurchaseRepository) {}

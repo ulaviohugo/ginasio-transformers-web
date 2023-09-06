@@ -1,6 +1,6 @@
 import { Authentication, AuthenticationParams } from '@/domain/usecases'
-import { badRequest, ok, serverError, unauthorized } from '../../helper'
-import { Controller, ControllerParams, Validation } from '../../protocols'
+import { badRequest, ok, serverError, unauthorized } from '@/infra/http/helper'
+import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 

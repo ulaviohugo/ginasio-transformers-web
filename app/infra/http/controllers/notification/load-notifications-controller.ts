@@ -1,6 +1,6 @@
 import { LoadNotifications } from '@/domain/usecases'
-import { ok, serverError } from '../../helper'
-import { Controller } from '../../protocols'
+import { ok, serverError } from '@/infra/http/helper'
+import { Controller } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 

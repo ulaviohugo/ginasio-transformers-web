@@ -1,5 +1,5 @@
 import { LoadNotifications, LoadNotificationsResult } from '@/domain/usecases'
-import { NotificationRepository } from '../../protocols'
+import { NotificationRepository } from '@/data/protocols'
 
 export class DbLoadNotifications implements LoadNotifications {
 	constructor(private readonly notificationRepository: NotificationRepository) {}

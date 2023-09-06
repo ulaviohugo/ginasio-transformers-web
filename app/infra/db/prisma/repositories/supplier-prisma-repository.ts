@@ -1,8 +1,8 @@
 import { SupplierRepository } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { SupplierModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaSupplierMapper } from '../mappers'
+import { PrismaSupplierMapper } from '@/infra/db/prisma/mappers'
 
 export class SupplierPrismaRepository implements SupplierRepository {
 	private prisma: PrismaClient

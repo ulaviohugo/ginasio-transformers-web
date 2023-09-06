@@ -1,8 +1,8 @@
 import { SupplierModel } from '@/domain/models'
 import { AddSupplier } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../../protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, NumberUtils } from '@/utils'
+import { FormDataUtils } from '@/utils'
 
 export class RemoteAddSupplier implements AddSupplier {
 	constructor(

@@ -30,10 +30,10 @@ import {
 	makeRemoteAddSupplier,
 	makeRemoteLoadSuppliers
 } from '@/main/factories/usecases/remote'
-import { loadSupplierStore, removeSupplierStore } from '../../../redux'
+import { loadSupplierStore, removeSupplierStore } from '@/(presentation)/redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
-import { useSuppliers } from '../../../hooks'
+import { useSuppliers } from '@/(presentation)/hooks'
 
 export default function Suppliers() {
 	const [selectedSupplier, setSelectedSupplier] = useState<SupplierModel>(

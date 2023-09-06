@@ -1,8 +1,8 @@
 import { PurchaseRepository } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { PurchaseModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaPurchaseMapper } from '../mappers'
+import { PrismaPurchaseMapper } from '@/infra/db/prisma/mappers'
 
 export class PurchasePrismaRepository implements PurchaseRepository {
 	private prisma: PrismaClient

@@ -1,5 +1,5 @@
 import { UpdateCategory } from '@/domain/usecases'
-import { CategoryRepository } from '../../protocols'
+import { CategoryRepository } from '@/data/protocols'
 import { CategoryModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 

@@ -1,4 +1,4 @@
-import { PurchaseModel } from '../../models'
+import { PurchaseModel } from '@/domain/models'
 
 export interface LoadPurchases {
 	load(): Promise<LoadPurchasesResult>

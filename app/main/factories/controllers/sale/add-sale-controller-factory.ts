@@ -1,6 +1,6 @@
 import { Controller } from '@/infra/http/protocols'
 import { makeAddSaleValidation } from '..'
-import { makeAddSale } from '../..'
+import { makeAddSale } from '@/main/factories'
 import { AddSaleController } from '@/infra/http/controllers'
 import { NotificationPrismaRepository, PurchasePrismaRepository } from '@/infra/db'
 

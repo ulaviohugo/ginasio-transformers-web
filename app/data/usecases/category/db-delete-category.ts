@@ -1,5 +1,5 @@
 import { DeleteCategory } from '@/domain/usecases'
-import { CategoryRepository } from '../../protocols'
+import { CategoryRepository } from '@/data/protocols'
 
 export class DbDeleteCategory implements DeleteCategory {
 	constructor(private readonly categoryRepository: CategoryRepository) {}

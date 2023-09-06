@@ -38,9 +38,9 @@ import {
 	loadCategoryStore,
 	loadProductStore,
 	updateSupplierStore
-} from '../../redux'
+} from '@/(presentation)/redux'
 import { AddSupplier, UpdateSupplier } from '@/domain/usecases'
-import { useCategories, useLocations, useProducts } from '../../hooks'
+import { useCategories, useLocations, useProducts } from '@/(presentation)/hooks'
 import {
 	makeRemoteLoadCategories,
 	makeRemoteLoadProduct

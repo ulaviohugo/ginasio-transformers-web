@@ -1,5 +1,5 @@
-import { HttpStatusCode } from '../data/protocols/http'
-import { adaptResponse } from '../main/adapters'
+import { HttpStatusCode } from '@/data/protocols/http'
+import { adaptResponse } from '@/main/adapters'
 
 export class RouteUtils {
 	static notFound() {

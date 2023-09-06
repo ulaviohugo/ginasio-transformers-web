@@ -1,5 +1,5 @@
 import { UpdateSupplierProduct, UpdateSupplierProductResult } from '@/domain/usecases'
-import { SupplierProductRepository } from '../../protocols'
+import { SupplierProductRepository } from '@/data/protocols'
 import { SupplierProductModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 

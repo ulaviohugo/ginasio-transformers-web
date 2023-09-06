@@ -1,6 +1,6 @@
 import { UpdateSale } from '@/domain/usecases'
-import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, ControllerParams, Validation } from '../../protocols'
+import { badRequest, notFound, ok, serverError } from '@/infra/http/helper'
+import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { SaleModel } from '@/domain/models'
 import { NumberUtils } from '@/utils'
 import { HttpResponse } from '@/data/protocols/http'

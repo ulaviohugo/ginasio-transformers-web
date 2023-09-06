@@ -1,5 +1,5 @@
 import { CountCategory } from '@/domain/usecases'
-import { CategoryRepository } from '../../protocols'
+import { CategoryRepository } from '@/data/protocols'
 
 export class DbCountCategory implements CountCategory {
 	constructor(private readonly categoryRepository: CategoryRepository) {}

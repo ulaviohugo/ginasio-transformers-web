@@ -17,10 +17,14 @@ import {
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { LabelUtils } from '@/utils'
-import { useCategories } from '../../hooks'
+import { useCategories } from '@/(presentation)/hooks'
 import { useDispatch } from 'react-redux'
 import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
-import { addProductStore, loadCategoryStore, updateProductStore } from '../../redux'
+import {
+	addProductStore,
+	loadCategoryStore,
+	updateProductStore
+} from '@/(presentation)/redux'
 import { toast } from 'react-hot-toast'
 
 type ProductEditorProps = {

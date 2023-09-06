@@ -1,8 +1,8 @@
 import { CategoryRepository } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { CategoryModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaCategoryMapper } from '../mappers'
+import { PrismaCategoryMapper } from '@/infra/db/prisma/mappers'
 
 export class CategoryPrismaRepository implements CategoryRepository {
 	private prisma: PrismaClient

@@ -1,8 +1,8 @@
 import { SupplierModel } from '@/domain/models'
 import { UpdateSupplier } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../../protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, NumberUtils, ObjectUtils } from '@/utils'
+import { FormDataUtils, ObjectUtils } from '@/utils'
 
 export class RemoteUpdateSupplier implements UpdateSupplier {
 	constructor(

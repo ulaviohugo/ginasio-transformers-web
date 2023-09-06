@@ -1,8 +1,8 @@
 import { AddSupplier, AddSuppliersResult } from '@/domain/usecases'
-import { SupplierRepository } from '../../protocols'
+import { SupplierRepository } from '@/data/protocols'
 import { SupplierModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
-import { Uploader } from '../../protocols/services'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbAddSupplier implements AddSupplier {
 	constructor(private readonly supplierRepository: SupplierRepository) {}

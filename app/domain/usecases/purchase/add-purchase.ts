@@ -1,5 +1,5 @@
 import { Uploader } from '@/data/protocols/services'
-import { PurchaseModel } from '../../models'
+import { PurchaseModel } from '@/domain/models'
 
 export interface AddPurchase {
 	add(param: PurchaseModel, uploader?: Uploader): Promise<AddPurchasesResult>

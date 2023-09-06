@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { FileUtils, StringUtils } from '../utils'
-import { Uploader } from '../data/protocols/services'
+import { FileUtils, StringUtils } from '@/utils'
+import { Uploader } from '@/data/protocols/services'
 
 export class UploadService implements Uploader {
 	constructor(

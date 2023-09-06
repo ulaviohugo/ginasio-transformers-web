@@ -2,7 +2,7 @@
 
 import { StringUtils } from '@/utils'
 import { IconNotification, IconUser } from '..'
-import { useAuth } from '../../hooks'
+import { useAuth } from '@/(presentation)/hooks'
 import Link from 'next/link'
 
 export function TopBar() {

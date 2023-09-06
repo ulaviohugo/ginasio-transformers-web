@@ -1,4 +1,4 @@
-import { SupplierProductModel } from '../../models'
+import { SupplierProductModel } from '@/domain/models'
 
 export interface UpdateSupplierProduct {
 	update(param: SupplierProductModel): Promise<UpdateSupplierProductResult>

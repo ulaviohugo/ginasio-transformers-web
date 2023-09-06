@@ -23,9 +23,9 @@ import {
 } from '..'
 
 import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
-import { addEmployeeStore, updateEmployeeStore } from '../../redux'
+import { addEmployeeStore, updateEmployeeStore } from '@/(presentation)/redux'
 import { AddEmployee, UpdateEmployee } from '@/domain/usecases'
-import { useLocations } from '../../hooks'
+import { useLocations } from '@/(presentation)/hooks'
 
 type EmployeeEditorProps = {
 	employee?: EmployeeModel

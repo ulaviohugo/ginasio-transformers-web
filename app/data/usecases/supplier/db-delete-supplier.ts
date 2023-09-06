@@ -1,7 +1,7 @@
 import { DeleteSupplier } from '@/domain/usecases'
 import { FileUtils } from '@/utils'
-import { SupplierRepository } from '../../protocols'
-import { Uploader } from '../../protocols/services'
+import { SupplierRepository } from '@/data/protocols'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbDeleteSupplier implements DeleteSupplier {
 	constructor(private readonly supplierRepository: SupplierRepository) {}

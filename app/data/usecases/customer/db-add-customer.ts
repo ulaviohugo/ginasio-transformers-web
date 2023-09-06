@@ -1,8 +1,8 @@
 import { AddCustomer, AddCustomersResult } from '@/domain/usecases'
-import { CustomerRepository } from '../../protocols'
+import { CustomerRepository } from '@/data/protocols'
 import { CustomerModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
-import { Uploader } from '../../protocols/services'
+import { Uploader } from '@/data/protocols/services'
 
 export class DbAddCustomer implements AddCustomer {
 	constructor(private readonly employeeRepository: CustomerRepository) {}

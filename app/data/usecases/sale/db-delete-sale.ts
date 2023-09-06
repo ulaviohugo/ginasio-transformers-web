@@ -1,5 +1,5 @@
 import { DeleteSale } from '@/domain/usecases'
-import { SaleRepository } from '../../protocols'
+import { SaleRepository } from '@/data/protocols'
 
 export class DbDeleteSale implements DeleteSale {
 	constructor(private readonly saleRepository: SaleRepository) {}

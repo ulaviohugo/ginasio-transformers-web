@@ -20,9 +20,9 @@ import {
 } from '..'
 
 import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
-import { addCustomerStore, updateCustomerStore } from '../../redux'
+import { addCustomerStore, updateCustomerStore } from '@/(presentation)/redux'
 import { AddCustomer, UpdateCustomer } from '@/domain/usecases'
-import { useLocations } from '../../hooks'
+import { useLocations } from '@/(presentation)/hooks'
 
 type CustomerEditorProps = {
 	customer?: CustomerModel

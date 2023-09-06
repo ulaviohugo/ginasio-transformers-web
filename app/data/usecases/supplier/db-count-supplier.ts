@@ -1,5 +1,5 @@
 import { CountSupplier } from '@/domain/usecases'
-import { SupplierRepository } from '../../protocols'
+import { SupplierRepository } from '@/data/protocols'
 
 export class DbCountSupplier implements CountSupplier {
 	constructor(private readonly supplierRepository: SupplierRepository) {}

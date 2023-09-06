@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEvent, useEffect, useState } from 'react'
-import { useCategories, useProducts } from '../../hooks'
+import { useCategories, useProducts } from '@/(presentation)/hooks'
 import { Product, SupplierProduct } from '@prisma/client'
 import { IconClose, InputPrice, Select } from '..'
 import { LabelUtils } from '@/utils'

@@ -1,5 +1,5 @@
 import { UpdateSale } from '@/domain/usecases'
-import { SaleRepository } from '../../protocols'
+import { SaleRepository } from '@/data/protocols'
 import { SaleModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
 

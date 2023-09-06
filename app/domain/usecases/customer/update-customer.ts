@@ -1,5 +1,5 @@
 import { Uploader } from '@/data/protocols/services'
-import { CustomerModel } from '../../models'
+import { CustomerModel } from '@/domain/models'
 
 export interface UpdateCustomer {
 	update(

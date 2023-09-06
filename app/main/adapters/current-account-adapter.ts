@@ -1,5 +1,5 @@
 import { AccountModel } from '@/domain/models'
-import { makeLocalStorageAdapter } from '../factories/cache'
+import { makeLocalStorageAdapter } from '@/main/factories/cache'
 
 export const setCurrentAccountAdapter = (account: AccountModel | null): void => {
 	if (!account) {

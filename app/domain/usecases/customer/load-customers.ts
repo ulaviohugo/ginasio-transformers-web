@@ -1,4 +1,4 @@
-import { CustomerModel } from '../../models'
+import { CustomerModel } from '@/domain/models'
 
 export interface LoadCustomers {
 	load(): Promise<LoadCustomersResult>

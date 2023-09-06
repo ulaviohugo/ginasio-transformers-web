@@ -26,10 +26,10 @@ import {
 	makeRemoteAddCustomer,
 	makeRemoteLoadCustomers
 } from '@/main/factories/usecases/remote'
-import { loadCustomerStore, removeCustomerStore } from '../../../redux'
+import { loadCustomerStore, removeCustomerStore } from '@/(presentation)/redux'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
-import { useCustomers } from '../../../hooks'
+import { useCustomers } from '@/(presentation)/hooks'
 
 export default function Customers() {
 	const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>(

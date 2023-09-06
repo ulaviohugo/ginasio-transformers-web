@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '../redux'
+import { RootState } from '@/(presentation)/redux'
 
 export const useRedux = () => useSelector((state: RootState) => state)
 

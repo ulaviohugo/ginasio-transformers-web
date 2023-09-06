@@ -1,5 +1,5 @@
 import { LoadProducts } from '@/domain/usecases'
-import { ProductRepository } from '../../protocols'
+import { ProductRepository } from '@/data/protocols'
 import { ProductModel } from '@/domain/models'
 
 export class DbLoadProducts implements LoadProducts {

@@ -1,5 +1,5 @@
 import { LoadPurchases, LoadPurchasesResult } from '@/domain/usecases'
-import { PurchaseRepository } from '../../protocols'
+import { PurchaseRepository } from '@/data/protocols'
 
 export class DbLoadPurchase implements LoadPurchases {
 	constructor(private readonly purchaseRepository: PurchaseRepository) {}

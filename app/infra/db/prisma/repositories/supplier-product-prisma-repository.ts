@@ -2,10 +2,10 @@ import {
 	SupplierProductFindDuplicatedParam,
 	SupplierProductRepository
 } from '@/data/protocols'
-import { prismaService } from '..'
+import { prismaService } from '@/infra/db'
 import { SupplierProductModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaSupplierProductMapper } from '../mappers'
+import { PrismaSupplierProductMapper } from '@/infra/db/prisma/mappers'
 
 export class SupplierProductPrismaRepository implements SupplierProductRepository {
 	private prisma: PrismaClient

@@ -4,8 +4,8 @@ import { HttpStatusCode } from '@/data/protocols/http'
 import { makeApiUrl, makeFetchHttpClient } from '@/main/factories/http'
 import { ReactNode, createContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { loadLocationStore } from '../redux'
-import { useAuth } from '../hooks'
+import { loadLocationStore } from '@/(presentation)/redux'
+import { useAuth } from '@/(presentation)/hooks'
 
 const LocationContext = createContext({})
 

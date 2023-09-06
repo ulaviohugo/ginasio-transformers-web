@@ -1,5 +1,5 @@
 import { LoadNotifications, LoadNotificationsResult } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '../../protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
 
 export class RemoteLoadNotifications implements LoadNotifications {

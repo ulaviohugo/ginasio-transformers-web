@@ -1,5 +1,5 @@
 import { DeleteProduct } from '@/domain/usecases'
-import { badRequest, notFound, ok, serverError } from '../../helper'
+import { badRequest, notFound, ok, serverError } from '@/infra/http/helper'
 import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { UploadService } from '@/services'

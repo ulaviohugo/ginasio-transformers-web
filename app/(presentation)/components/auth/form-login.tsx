@@ -5,7 +5,7 @@ import { IconEmail, IconKey, Input, Spinner } from '..'
 import { makeRemoteAuthentication } from '@/main/factories/usecases/remote/auth'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { addAuthStore } from '../../redux'
+import { addAuthStore } from '@/(presentation)/redux'
 import { setCurrentAccountAdapter } from '@/main/adapters'
 
 type FormProps = {

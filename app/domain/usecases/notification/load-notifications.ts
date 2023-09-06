@@ -1,4 +1,4 @@
-import { NotificationModel } from '../../models'
+import { NotificationModel } from '@/domain/models'
 
 export interface LoadNotifications {
 	load(): Promise<LoadNotificationsResult>

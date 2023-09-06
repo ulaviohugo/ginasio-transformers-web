@@ -1,5 +1,5 @@
 import { LoadSuppliers, LoadSuppliersResult } from '@/domain/usecases'
-import { SupplierRepository } from '../../protocols'
+import { SupplierRepository } from '@/data/protocols'
 
 export class DbLoadSuppliers implements LoadSuppliers {
 	constructor(private readonly supplierRepository: SupplierRepository) {}
