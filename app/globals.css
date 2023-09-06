@@ -10,8 +10,16 @@ body {
 	@apply !cursor-not-allowed opacity-80;
 }
 
-input:disabled{
-	@apply bg-white
+input:disabled {
+	@apply bg-white;
+}
+
+fieldset {
+	@apply border-2 rounded-lg p-2;
+}
+
+fieldset legend {
+	@apply px-2 font-semibold uppercase text-gray-400;
 }
 
 /* width */
