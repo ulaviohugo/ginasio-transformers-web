@@ -1,6 +1,6 @@
 import { Authentication, AuthenticationParams } from '@/app/domain/usecases'
 import { badRequest, ok, serverError, unauthorized } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '../../protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { dbErrorHandler } from '@/app/infra/db'
 
@@ -9,7 +9,7 @@ export class AuthenticationController implements Controller {
 		private readonly authentication: Authentication,
 		private readonly validation: Validation
 	) {}
-	async handle(request: AuthenticationParams): Promise<HttpResponse> {
+	async handle(request: ControllerParams<AuthenticationParams>): Promise<HttpResponse> {
 		const error = this.validation.validate(request)
 		if (error) {
 			return badRequest(error)

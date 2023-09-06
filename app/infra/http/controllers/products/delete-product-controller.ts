@@ -1,6 +1,6 @@
 import { DeleteProduct } from '@/app/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '../../helper'
-import { Controller, Validation } from '../../protocols'
+import { Controller, ControllerParams, Validation } from '@/app/infra/http/protocols'
 import { HttpResponse } from '@/app/data/protocols/http'
 import { UploadService } from '@/app/services'
 import { dbErrorHandler } from '@/app/infra/db'
@@ -11,7 +11,7 @@ export class DeleteProductController implements Controller {
 		private readonly validation: Validation
 	) {}
 
-	async handle({ id }: DeleteProductControllerRequest): Promise<HttpResponse> {
+	async handle({ id }: ControllerParams<Param>): Promise<HttpResponse> {
 		try {
 			const error = this.validation.validate({ id })
 			if (error) {
@@ -28,6 +28,6 @@ export class DeleteProductController implements Controller {
 	}
 }
 
-type DeleteProductControllerRequest = {
+type Param = {
 	id: number
 }
