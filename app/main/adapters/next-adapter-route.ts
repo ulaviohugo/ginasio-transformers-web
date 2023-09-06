@@ -3,7 +3,7 @@ import { ObjectUtils } from '@/utils'
 import { adaptResponse } from '.'
 
 export const adaptRoute = async (controller: Controller, req?: Request) => {
-	let data = {}
+	let data: any = {}
 	try {
 		const form = await req?.formData()
 		if (form) {
