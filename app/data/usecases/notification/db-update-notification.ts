@@ -1,6 +1,6 @@
 import { UpdateNotification } from '@/domain/usecases'
 import { NotificationRepository } from '../../protocols'
-import { NotificationModel } from '../../../domain/models'
+import { NotificationModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 
 export class DbUpdateNotification implements UpdateNotification {

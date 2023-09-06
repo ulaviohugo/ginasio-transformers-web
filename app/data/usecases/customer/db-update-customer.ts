@@ -1,6 +1,6 @@
 import { UpdateCustomer } from '@/domain/usecases'
 import { CustomerRepository } from '../../protocols'
-import { CustomerModel } from '../../../domain/models'
+import { CustomerModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 

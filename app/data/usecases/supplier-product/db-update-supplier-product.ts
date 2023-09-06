@@ -1,6 +1,6 @@
 import { UpdateSupplierProduct, UpdateSupplierProductResult } from '@/domain/usecases'
 import { SupplierProductRepository } from '../../protocols'
-import { SupplierProductModel } from '../../../domain/models'
+import { SupplierProductModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 
 export class DbUpdateSupplierProduct implements UpdateSupplierProduct {

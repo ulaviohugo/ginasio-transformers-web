@@ -1,6 +1,6 @@
 import { AddCustomer, AddCustomersResult } from '@/domain/usecases'
 import { CustomerRepository } from '../../protocols'
-import { CustomerModel } from '../../../domain/models'
+import { CustomerModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 

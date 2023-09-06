@@ -1,6 +1,6 @@
 import { AddSupplier, AddSuppliersResult } from '@/domain/usecases'
 import { SupplierRepository } from '../../protocols'
-import { SupplierModel } from '../../../domain/models'
+import { SupplierModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 

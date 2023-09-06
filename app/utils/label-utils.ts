@@ -5,7 +5,7 @@ import {
 	PurchaseModel,
 	SaleModel,
 	SupplierModel
-} from '../domain/models'
+} from '@/domain/models'
 
 type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof EmployeeModel, string>> &

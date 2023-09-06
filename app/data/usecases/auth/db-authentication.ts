@@ -3,9 +3,9 @@ import {
 	AuthenticationParams,
 	AuthenticationResult
 } from '@/domain/usecases'
-import { EmployeeRepository } from '../../protocols'
+import { EmployeeRepository } from '@/data/protocols'
 import { ObjectUtils } from '@/utils'
-import { Hasher, Crypto } from '../../protocols/cryptography'
+import { Hasher, Crypto } from '@/data/protocols/cryptography'
 
 export class DbAuthentication implements Authentication {
 	constructor(

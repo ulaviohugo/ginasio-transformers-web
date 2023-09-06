@@ -1,6 +1,6 @@
 import { UpdateCategory } from '@/domain/usecases'
 import { CategoryRepository } from '../../protocols'
-import { CategoryModel } from '../../../domain/models'
+import { CategoryModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 
 export class DbUpdateCategory implements UpdateCategory {

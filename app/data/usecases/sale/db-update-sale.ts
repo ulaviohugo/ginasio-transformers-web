@@ -1,6 +1,6 @@
 import { UpdateSale } from '@/domain/usecases'
 import { SaleRepository } from '../../protocols'
-import { SaleModel } from '../../../domain/models'
+import { SaleModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
 
 export class DbUpdateSale implements UpdateSale {

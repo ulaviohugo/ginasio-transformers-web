@@ -1,6 +1,6 @@
 import { UpdatePurchase } from '@/domain/usecases'
 import { PurchaseRepository } from '../../protocols'
-import { PurchaseModel } from '../../../domain/models'
+import { PurchaseModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 

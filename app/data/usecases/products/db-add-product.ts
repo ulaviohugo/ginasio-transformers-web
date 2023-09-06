@@ -1,6 +1,6 @@
 import { AddProduct } from '@/domain/usecases'
 import { ProductRepository } from '../../protocols'
-import { ProductModel } from '../../../domain/models'
+import { ProductModel } from '@/domain/models'
 import { NumberUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
 

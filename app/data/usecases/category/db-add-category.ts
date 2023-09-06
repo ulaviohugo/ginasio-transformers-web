@@ -1,6 +1,6 @@
 import { AddCategory } from '@/domain/usecases'
-import { CategoryRepository } from '../../protocols'
-import { CategoryModel } from '../../../domain/models'
+import { CategoryRepository } from '@/data/protocols'
+import { CategoryModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 
 export class DbAddCategory implements AddCategory {

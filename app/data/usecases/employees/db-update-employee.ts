@@ -1,9 +1,9 @@
 import { UpdateEmployee } from '@/domain/usecases'
 import { EmployeeRepository } from '../../protocols'
-import { EmployeeModel } from '../../../domain/models'
+import { EmployeeModel } from '@/domain/models'
 import { FileUtils, ObjectUtils } from '@/utils'
 import { Uploader } from '../../protocols/services'
-import { Hasher } from '../../protocols/cryptography'
+import { Hasher } from '@/data/protocols/cryptography'
 import { PrismaEmployeeMapper } from '@/infra/db/prisma/mappers'
 
 export class DbUpdateEmployee implements UpdateEmployee {
