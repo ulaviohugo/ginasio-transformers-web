@@ -33,7 +33,7 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as SaleModel
+		})) as any
 
 		return createdSale
 	}
@@ -60,7 +60,7 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as SaleModel[]
+		})) as any
 	}
 
 	async findById(id: number): Promise<SaleModel | null> {
@@ -86,7 +86,7 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as SaleModel
+		})) as any
 	}
 
 	async count(): Promise<number> {
@@ -111,7 +111,7 @@ export class SalePrismaRepository implements SaleRepository {
 					}
 				}
 			}
-		})) as SaleModel
+		})) as any
 	}
 
 	async delete(id: number): Promise<boolean> {
