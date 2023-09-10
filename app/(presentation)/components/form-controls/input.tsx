@@ -69,6 +69,11 @@ export function InputPhone(props: InputProps) {
 	return <InputMask mask={mask} {...props} />
 }
 
+export function InputYear(props: InputProps) {
+	const mask = ['2', '0', /[0-9]/, /\d/]
+	return <InputMask mask={mask} {...props} />
+}
+
 export function InputPrice(props: InputProps) {
 	const priceMask = createNumberMask({
 		prefix: '',

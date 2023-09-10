@@ -20,7 +20,7 @@ import {
 import { ImSpinner2 } from 'react-icons/im'
 import { GrStorage } from 'react-icons/gr'
 import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
-import { BiSearch, BiCategoryAlt } from 'react-icons/bi'
+import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { FaHouseUser, FaSignOutAlt } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
 
@@ -29,6 +29,12 @@ export const IconService = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconCategory = (props: IconBaseProps): React.ReactElement => (
 	<BiCategoryAlt {...props} />
+)
+export const IconChevronLeft = (props: IconBaseProps): React.ReactElement => (
+	<BiChevronLeft {...props} />
+)
+export const IconChevronRight = (props: IconBaseProps): React.ReactElement => (
+	<BiChevronRight {...props} />
 )
 export const IconCurrency = (props: IconBaseProps): React.ReactElement => (
 	<HiOutlineCurrencyDollar {...props} />

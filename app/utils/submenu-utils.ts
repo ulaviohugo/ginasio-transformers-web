@@ -3,6 +3,7 @@ import { SubmenuProps } from '@/(presentation)/components'
 export class SubmenuUtils {
 	static readonly hr: SubmenuProps[] = [
 		{ link: '/rh/funcionarios', text: 'Funcionários' },
+		{ link: '/rh/presenca', text: 'Presença' },
 		{ link: '/rh/folha-salarial', text: 'Folha salarial' }
 	]
 

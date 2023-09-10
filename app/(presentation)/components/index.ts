@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './cards'
+export * from './presence'
 export * from './category'
 export * from './customer'
 export * from './employee'

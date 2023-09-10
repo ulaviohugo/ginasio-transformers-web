@@ -13,6 +13,16 @@ const months = [
 	'Dezembro'
 ]
 
+const weekDays = [
+	'Segunda-feira',
+	'Terça-feira',
+	'Quarta-feira',
+	'Quinta-feira',
+	'Sexta-feira',
+	'Sábado',
+	'Domingo'
+]
+
 export class DateUtils {
 	static getDate(dateParam: Date | string, separator = '-') {
 		if (!dateParam) return null
@@ -20,7 +30,7 @@ export class DateUtils {
 
 		const year = date.getUTCFullYear(),
 			month = (date.getUTCMonth() + 1).toString().padStart(2, '0'),
-			day = date.getUTCDate().toString().padStart(2, '0')
+			day = date.getDate().toString().padStart(2, '0')
 		return `${year}${separator}${month}${separator}${day}`
 	}
 
@@ -30,7 +40,7 @@ export class DateUtils {
 
 		const year = date.getUTCFullYear(),
 			month = (date.getUTCMonth() + 1).toString().padStart(2, '0'),
-			day = date.getUTCDate().toString().padStart(2, '0')
+			day = date.getDate().toString().padStart(2, '0')
 		return `${day}${separator}${month}${separator}${year}`
 	}
 
@@ -54,6 +64,10 @@ export class DateUtils {
 
 	static getMonthListExt(): string[] {
 		return this.getMonthList().map((_, i) => this.getMonthExt(i))
+	}
+
+	static getWeekDay(date: Date) {
+		return weekDays[date.getDay()]
 	}
 
 	static convertToDate(date: Date | string | undefined): Date {
