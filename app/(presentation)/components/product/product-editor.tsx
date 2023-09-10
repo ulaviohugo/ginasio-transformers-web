@@ -7,6 +7,7 @@ import {
 	ButtonSubmit,
 	IconClose,
 	IconProduct,
+	ImagePreview,
 	Input,
 	Modal,
 	ModalBody,
@@ -61,6 +62,7 @@ export function ProductEditor({
 		if (categories.length < 1) {
 			fetchCategories()
 		}
+		if (data?.photo) setImagePreview(data.photo)
 	}, [])
 
 	const handleInputChange = async (
@@ -109,65 +111,43 @@ export function ProductEditor({
 			</ModalTitle>
 			<ModalBody>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-2">
-					<div className="flex flex-row xl:col-span-4 lg:col-span-3 md:col-span-2">
-						<div className="flex">
-							<div className="mr-auto">
-								<Input
-									type="file"
-									id="photo"
-									name="photo"
-									// value={formDate?.photo || ''}
-									label={'Imagem'}
-									onChange={handleInputChange}
-									accept="image/*"
-								/>
-							</div>
-							{imagePreview && (
-								<div className="relative border rounded-md p-3">
-									<Image
-										src={imagePreview}
-										width={120}
-										height={100}
-										alt="Pre-visualização"
-										className="object-cover aspect-square"
-									/>
-									<IconClose
-										className="absolute top-1 right-1 bg-red-600 text-white rounded-full"
-										// onClick={clearInputFile}
-									/>
-								</div>
-							)}
+					<div className="flex gap-2">
+						<ImagePreview
+							photoPreview={imagePreview}
+							onInputFileChange={handleInputChange}
+						/>
+						<div className="flex flex-col gap-1">
+							<Input
+								type="text"
+								id="name"
+								name="name"
+								value={formDate?.name || ''}
+								label={LabelUtils.translateField('name')}
+								onChange={handleInputChange}
+								autoFocus
+							/>
+							<Input
+								type="number"
+								id="price"
+								name="price"
+								value={formDate?.price || ''}
+								label={LabelUtils.translateField('price')}
+								onChange={handleInputChange}
+							/>
+							<Select
+								id="categoryId"
+								name="categoryId"
+								value={formDate.categoryId}
+								label={LabelUtils.translateField('categoryId')}
+								data={categories.map((category) => ({
+									text: category.name,
+									value: category.id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
 						</div>
 					</div>
-					<Input
-						type="text"
-						id="name"
-						name="name"
-						value={formDate?.name || ''}
-						label={LabelUtils.translateField('name')}
-						onChange={handleInputChange}
-						autoFocus
-					/>
-					<Input
-						type="number"
-						id="price"
-						name="price"
-						value={formDate?.price || ''}
-						label={LabelUtils.translateField('price')}
-						onChange={handleInputChange}
-					/>
-					<Select
-						id="categoryId"
-						name="categoryId"
-						value={formDate.categoryId}
-						label={LabelUtils.translateField('categoryId')}
-						data={categories.map((category) => ({
-							text: category.name,
-							value: category.id
-						}))}
-						defaultText="Selecione"
-						onChange={handleInputChange}
-					/>
 					<ModalFooter>
 						<ButtonSubmit isLoading={isLoading} />
 						<ButtonCancel onClick={onClose} />
