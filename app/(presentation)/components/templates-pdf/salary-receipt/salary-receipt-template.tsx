@@ -35,7 +35,11 @@ export const getSalaryItems = (
 	receiptDate: ReceiptDataProps
 ): ItemProps[] => {
 	const { baseSalary = 0 } = employee
-	const percent = SalaryUtils.getIRtPercent(baseSalary)
+	const workedDays = NumberUtils.convertToNumber(receiptDate.workedDays)
+	const currentBaseSalary = SalaryUtils.getSalaryPerDay(baseSalary) * workedDays
+	console.log({ workedDays })
+
+	const percent = SalaryUtils.getIRtPercent(currentBaseSalary)
 	const irtPercent = percent ? `${percent}%` : 'Isento'
 	return [
 		{
@@ -60,10 +64,10 @@ export const getSalaryItems = (
 		{
 			title: 'Referência',
 			contents: [
-				`${receiptDate.workedDays} Dias`,
-				`${receiptDate.workedDays} Dias`,
-				`${receiptDate.workedDays} Dias`,
-				`${receiptDate.workedDays} Dias`,
+				`${workedDays} Dias`,
+				`${workedDays} Dias`,
+				`${workedDays} Dias`,
+				`${workedDays} Dias`,
 				'Mensal',
 				'3%',
 				irtPercent,
@@ -74,7 +78,7 @@ export const getSalaryItems = (
 		},
 		{
 			title: 'Vencimentos',
-			contents: [baseSalary, 5000, 10000, 1000, 0, 0, 0, 0, 0, 0]
+			contents: [currentBaseSalary, 5000, 10000, 1000, 0, 0, 0, 0, 0, 0]
 		},
 		{
 			title: 'Descontos',
@@ -84,8 +88,8 @@ export const getSalaryItems = (
 				0,
 				0,
 				0,
-				SalaryUtils.getINSS(baseSalary),
-				SalaryUtils.getIRtValue(baseSalary),
+				SalaryUtils.getINSS(currentBaseSalary),
+				SalaryUtils.getIRtValue(currentBaseSalary),
 				0,
 				0,
 				0
@@ -231,60 +235,89 @@ function Body({ items }: { items: ItemProps[] }) {
 
 function ResumeContent({ employee, receiptData }: SalaryReceiptProps) {
 	const salaryHeaders = getSalaryItems(employee, receiptData)
-	const totalSalary = salaryHeaders
-		.filter((salary) => salary.title == 'Vencimentos')
-		.map((salary) => salary.contents)
-		.reduce((acc, current) => Number(acc) + Number(current), 0)
+	const totalSalary =
+		salaryHeaders
+			.find((salary) => salary.title == 'Vencimentos')
+			?.contents?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
 
-	const totalDiscount = salaryHeaders
-		.filter((salary) => salary.title == 'Descontos')
-		.map((salary) => salary.contents)
-		.reduce((acc, current) => Number(acc) + Number(current), 0)
+	const totalDiscount =
+		salaryHeaders
+			.find((salary) => salary.title == 'Descontos')
+			?.contents?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
+
+	const netSalary = Number(totalSalary) - Number(totalDiscount)
+
+	const salaryPerDay = SalaryUtils.getSalaryPerDay(employee.baseSalary)
+	const salaryPerHour = SalaryUtils.getSalaryPerHour(employee.baseSalary)
 
 	return (
-		<View
-			style={{
-				flexDirection: 'row',
-				marginHorizontal: 8,
-				marginTop: 8,
-				border: border
-			}}
-		>
+		<View>
 			<View
 				style={{
-					padding: 8,
-					gap: 8,
-					alignItems: 'center',
-					borderRight: border
+					flexDirection: 'row',
+					marginHorizontal: 8,
+					marginTop: 8,
+					border: border
 				}}
 			>
-				<Text>ENTREGUEI</Text>
-				<Text style={{ borderTop: border, width: 150, marginTop: 8 }}></Text>
-				<Text>{employee.name}</Text>
-			</View>
-
-			<View style={{ flex: 1 }}>
 				<View
 					style={{
-						flexDirection: 'row',
-						justifyContent: 'space-between'
+						padding: 8,
+						gap: 8,
+						alignItems: 'center',
+						borderRight: border
 					}}
 				>
-					<View
-						style={{ borderBottom: border, padding: 8, flex: 1, borderRight: border }}
-					>
-						<Text>Total de Vencimentos</Text>
-						<Text>{totalSalary}</Text>
-					</View>
+					<Text>ENTREGUEI</Text>
+					<Text style={{ borderTop: border, width: 150, marginTop: 8 }}></Text>
+					<Text>{employee.name}</Text>
+				</View>
 
-					<View style={{ borderBottom: border, padding: 8, flex: 1 }}>
-						<Text>Total de Descontos</Text>
-						<Text>{totalDiscount}</Text>
+				<View style={{ flex: 1 }}>
+					<View
+						style={{
+							flexDirection: 'row',
+							justifyContent: 'space-between'
+						}}
+					>
+						<View
+							style={{ borderBottom: border, padding: 8, flex: 1, borderRight: border }}
+						>
+							<Text>Total de Vencimentos</Text>
+							<Text>{NumberUtils.formatCurrency(totalSalary)}</Text>
+						</View>
+
+						<View style={{ borderBottom: border, padding: 8, flex: 1 }}>
+							<Text>Total de Descontos</Text>
+							<Text>{NumberUtils.formatCurrency(totalDiscount)}</Text>
+						</View>
+					</View>
+					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+						<Text style={{ padding: 8 }}>Valor líquido</Text>
+						<Text style={{ padding: 8 }}>{NumberUtils.formatCurrency(netSalary)}</Text>
 					</View>
 				</View>
-				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-					<Text style={{ padding: 8 }}>Valor líquido</Text>
-					<Text style={{ padding: 8 }}>15000</Text>
+			</View>
+			<View
+				style={{
+					flexDirection: 'row',
+					padding: 8,
+					margin: 8,
+					justifyContent: 'space-between',
+					border
+				}}
+			>
+				<View>
+					<Text>Salário base</Text>
+					<Text>{NumberUtils.formatCurrency(employee.baseSalary)}</Text>
+				</View>
+				<View>
+					<Text>Salário por dia</Text>
+					<Text>{NumberUtils.formatCurrency(salaryPerDay)}</Text>
+				</View>
+				<View>
+					<Text>Salário por hora</Text>
+					<Text>{NumberUtils.formatCurrency(salaryPerHour)}</Text>
 				</View>
 			</View>
 		</View>
