@@ -2,6 +2,7 @@ import { EmployeePresenceRepository } from '@/data/protocols'
 import { prismaService } from '@/infra/db'
 import { EmployeePresenceModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
+import { PrismaEmployeePresenceMapper } from '../mappers'
 
 export class EmployeePresencePrismaRepository implements EmployeePresenceRepository {
 	private prisma: PrismaClient
@@ -10,35 +11,40 @@ export class EmployeePresencePrismaRepository implements EmployeePresenceReposit
 	}
 
 	async add(param: EmployeePresenceModel): Promise<EmployeePresenceModel> {
-		return (await this.prisma.employee.create({
-			data: param as any
+		return (await this.prisma.employeePresence.create({
+			data: PrismaEmployeePresenceMapper.toPrisma(param),
+			include: { employee: { select: { id: true, name: true } } }
 		})) as any
 	}
 
 	async loadAll(): Promise<EmployeePresenceModel[]> {
-		return (await this.prisma.employee.findMany()) as any
+		return (await this.prisma.employeePresence.findMany({
+			include: { employee: { select: { id: true, name: true } } }
+		})) as any
 	}
 
 	async findById(id: number): Promise<EmployeePresenceModel | null> {
-		return (await this.prisma.employee.findUnique({
-			where: { id }
+		return (await this.prisma.employeePresence.findUnique({
+			where: { id },
+			include: { employee: { select: { id: true, name: true } } }
 		})) as any
 	}
 
 	async count(): Promise<number> {
-		return this.prisma.employee.count()
+		return this.prisma.employeePresence.count()
 	}
 
 	async update(param: EmployeePresenceModel): Promise<EmployeePresenceModel> {
-		return (await this.prisma.employee.update({
-			data: param,
-			where: { id: param.id }
+		return (await this.prisma.employeePresence.update({
+			data: PrismaEmployeePresenceMapper.toPrisma(param),
+			where: { id: param.id },
+			include: { employee: { select: { id: true, name: true } } }
 		})) as any
 	}
 
-	async delete(employeeId: number): Promise<boolean> {
-		const deletedEmployeePresence = await this.prisma.employee.delete({
-			where: { id: employeeId }
+	async delete(employeePresenceId: number): Promise<boolean> {
+		const deletedEmployeePresence = await this.prisma.employeePresence.delete({
+			where: { id: employeePresenceId }
 		})
 		return !!deletedEmployeePresence
 	}
