@@ -10,9 +10,9 @@ export class NumberUtils {
 
 	static formatCurrency(number: number | string): string {
 		if (!number) return '0'
-		const numStr = this.convertToNumber(number)
+		const numStr = this.convertToNumber(number).toFixed(2)
 
-		return numStr.toLocaleString('pt-AO', {
+		return Number(numStr).toLocaleString('pt-AO', {
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2
 		})
