@@ -3,8 +3,8 @@ import { EmployeePresenceRepository } from '@/data/protocols'
 import { EmployeePresenceModel } from '@/domain/models'
 
 export class DbLoadEmployeePresences implements LoadEmployeePresences {
-	constructor(private readonly employeeRepository: EmployeePresenceRepository) {}
+	constructor(private readonly employeePresenceRepository: EmployeePresenceRepository) {}
 	async load(): Promise<EmployeePresenceModel[]> {
-		return this.employeeRepository.loadAll()
+		return this.employeePresenceRepository.loadAll()
 	}
 }
