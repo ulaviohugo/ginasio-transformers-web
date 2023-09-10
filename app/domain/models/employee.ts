@@ -23,7 +23,7 @@ export interface EmployeeModel {
 	municipalityId?: number
 	residentialAddress: string
 	position: string
-	baseSalary?: number
+	baseSalary: number
 	hireDate: Date
 	contractEndDate?: Date
 	bankName?: string
