@@ -27,4 +27,12 @@ export class SalaryUtils {
 
 		return (salary * 3) / 100
 	}
+
+	static getSalaryPerDay(baseSalary: number, workDays = 26) {
+		return NumberUtils.convertToNumber(baseSalary) / workDays
+	}
+
+	static getSalaryPerHour(baseSalary: number, workDays = 26) {
+		return (this.getSalaryPerDay(baseSalary, workDays) * 4) / 9
+	}
 }
