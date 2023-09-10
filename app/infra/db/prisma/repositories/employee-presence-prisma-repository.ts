@@ -1,4 +1,7 @@
-import { EmployeePresenceRepository } from '@/data/protocols'
+import {
+	EmployeePresenceRepository,
+	EmployeePresenceRepositoryFindProps
+} from '@/data/protocols'
 import { prismaService } from '@/infra/db'
 import { EmployeePresenceModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
@@ -23,9 +26,11 @@ export class EmployeePresencePrismaRepository implements EmployeePresenceReposit
 		})) as any
 	}
 
-	async findById(id: number): Promise<EmployeePresenceModel | null> {
-		return (await this.prisma.employeePresence.findUnique({
-			where: { id },
+	async find(
+		param: EmployeePresenceRepositoryFindProps
+	): Promise<EmployeePresenceModel | null> {
+		return (await this.prisma.employeePresence.findFirst({
+			where: param,
 			include: { employee: { select: { id: true, name: true } } }
 		})) as any
 	}

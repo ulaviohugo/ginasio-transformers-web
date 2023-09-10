@@ -6,7 +6,7 @@ export class DbUpdateEmployeePresence implements UpdateEmployeePresence {
 	constructor(private readonly employeeRepository: EmployeePresenceRepository) {}
 
 	async update(param: EmployeePresenceModel): Promise<EmployeePresenceModel> {
-		const foundById = await this.employeeRepository.findById(param.id)
+		const foundById = await this.employeeRepository.find({ id: param.id })
 		if (!foundById) return null as any
 
 		const updatedEmployeePresence = await this.employeeRepository.update({

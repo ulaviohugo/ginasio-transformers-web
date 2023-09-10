@@ -1,5 +1,5 @@
 import { AddEmployeePresence } from '@/domain/usecases'
-import { badRequest, ok, serverError } from '@/infra/http/helper'
+import { badRequest, forbidden, ok, serverError } from '@/infra/http/helper'
 import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
 import { EmployeePresenceModel } from '@/domain/models'
 import { DateUtils, NumberUtils } from '@/utils'
@@ -23,6 +23,11 @@ export class AddEmployeePresenceController implements Controller {
 				date: DateUtils.convertToDate(request.date),
 				createdById: NumberUtils.convertToNumber(request.accountId)
 			})
+
+			if (!createdEmployeePresence) {
+				return forbidden(new Error('O registo já foi inserido'))
+			}
+
 			return ok(createdEmployeePresence)
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
