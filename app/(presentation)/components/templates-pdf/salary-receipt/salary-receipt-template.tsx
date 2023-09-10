@@ -257,14 +257,14 @@ function Body({ items }: { items: ItemProps[] }) {
 function ResumeContent({ employee, receiptData, currentUser }: SalaryReceiptProps) {
 	const salaryHeaders = getSalaryItems(employee, receiptData)
 	const totalSalary =
-		salaryHeaders
-			.find((salary) => salary.title == 'Vencimentos')
-			?.contents?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
+		(
+			salaryHeaders.find((salary) => salary.title == 'Vencimentos')?.contents as number[]
+		)?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
 
 	const totalDiscount =
-		salaryHeaders
-			.find((salary) => salary.title == 'Descontos')
-			?.contents?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
+		(
+			salaryHeaders.find((salary) => salary.title == 'Descontos')?.contents as number[]
+		)?.reduce((acc, current) => Number(acc) + Number(current), 0) || 0
 
 	const netSalary = Number(totalSalary) - Number(totalDiscount)
 
