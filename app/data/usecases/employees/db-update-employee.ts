@@ -50,6 +50,6 @@ export class DbUpdateEmployee implements UpdateEmployee {
 			updatedAt: new Date()
 		})
 
-		return PrismaEmployeeMapper.toDomain(updatedEmployee)
+		return updatedEmployee
 	}
 }

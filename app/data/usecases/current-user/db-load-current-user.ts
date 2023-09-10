@@ -6,7 +6,6 @@ import { EmployeeModel } from '@/domain/models'
 export class DbLoadCurrentUser implements LoadCurrentUser {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
 	async load(id: number): Promise<EmployeeModel> {
-		const employees = await this.employeeRepository.findById(id)
-		return PrismaEmployeeMapper.toDomain(employees)
+		return this.employeeRepository.findById(id) as any
 	}
 }

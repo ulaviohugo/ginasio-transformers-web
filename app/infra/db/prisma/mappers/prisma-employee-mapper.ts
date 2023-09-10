@@ -41,41 +41,11 @@ export class PrismaEmployeeMapper {
 		} as any
 	}
 
-	static toDomain(employeeRaw: any): EmployeeModel {
+	static toDomain(employeeRaw: EmployeeRaw): EmployeeModel {
 		if (!employeeRaw) return null as any
 		return {
-			id: employeeRaw.id,
-			name: employeeRaw.name,
-			photo: employeeRaw.photo,
-			gender: employeeRaw.gender,
-			dateOfBirth: employeeRaw.dateOfBirth,
-			maritalStatus: employeeRaw.maritalStatus,
-			documentType: employeeRaw.documentType,
-			documentNumber: employeeRaw.documentNumber,
-			nif: employeeRaw.nif,
-			socialSecurity: employeeRaw.socialSecurity,
-			dependents: employeeRaw.dependents,
-			educationDegree: employeeRaw.educationDegree,
-			phone1: employeeRaw.phone1,
-			phone2: employeeRaw.phone2,
-			email: employeeRaw.email,
-			canLogin: employeeRaw.canLogin,
-			userName: employeeRaw.userName,
-			countryId: employeeRaw.countryId,
-			provinceId: employeeRaw.provinceId,
-			municipalityId: employeeRaw.municipalityId,
-			residentialAddress: employeeRaw.residentialAddress,
-			position: employeeRaw.position,
-			baseSalary: employeeRaw.baseSalary,
-			hireDate: employeeRaw.hireDate,
-			contractEndDate: employeeRaw.contractEndDate,
-			bankName: employeeRaw.bankName,
-			iban: employeeRaw.iban,
-			accountNumber: employeeRaw.accountNumber,
-			createdById: employeeRaw.createdById,
-			createdAt: employeeRaw.createdAt,
-			updatedById: employeeRaw.updatedById,
-			updatedAt: employeeRaw.updatedAt
-		} as any
+			...employeeRaw,
+			password: undefined
+		} as EmployeeModel
 	}
 }

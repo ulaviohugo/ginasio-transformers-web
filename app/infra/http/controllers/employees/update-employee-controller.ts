@@ -8,6 +8,7 @@ import { HttpResponse } from '@/data/protocols/http'
 import { UploadService } from '@/services'
 import { Uploader } from '@/data/protocols/services'
 import { dbErrorHandler } from '@/infra/db'
+import { EmployeeViewModel } from '@/infra/http/view-models'
 
 export class UpdateEmployeeController implements Controller {
 	constructor(
@@ -21,7 +22,6 @@ export class UpdateEmployeeController implements Controller {
 				return badRequest(error)
 			}
 			const canLogin = request.canLogin === true || (request as any).canLogin == 'true'
-			if (canLogin && !request.password) return badRequest(new Error('Informe a senha'))
 
 			let uploader: Uploader = null as any
 			if (request.photo && typeof request.photo != 'string') {
@@ -53,7 +53,7 @@ export class UpdateEmployeeController implements Controller {
 			if (updatedEmployee == 'documentInUse') {
 				return forbidden(new DocumentInUseError())
 			}
-			return ok(updatedEmployee)
+			return ok(EmployeeViewModel.toHTTP(updatedEmployee))
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
 		}

@@ -4,6 +4,7 @@ import { Controller, ControllerParams } from '@/infra/http/protocols'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
 import { NumberUtils } from '@/utils'
+import { EmployeeViewModel } from '@/infra/http/view-models'
 
 export class LoadCurrentUserController implements Controller {
 	constructor(private readonly loadCurrentUser: LoadCurrentUser) {}
@@ -11,7 +12,7 @@ export class LoadCurrentUserController implements Controller {
 		try {
 			const accountId = NumberUtils.convertToNumber(param.accountId)
 			const data = await this.loadCurrentUser.load(accountId)
-			return ok(data)
+			return ok(EmployeeViewModel.toHTTP(data))
 		} catch (error: any) {
 			return serverError(dbErrorHandler(error))
 		}

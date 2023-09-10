@@ -68,7 +68,7 @@ export class UploadService implements Uploader {
 		await fs.unlink(path)
 	}
 
-	private async fileExists(filePath: string): Promise<boolean> {
+	async fileExists(filePath: string): Promise<boolean> {
 		try {
 			await fs.access(filePath)
 			return true

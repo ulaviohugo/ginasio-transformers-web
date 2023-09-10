@@ -38,6 +38,6 @@ export class DbAddEmployee implements AddEmployee {
 			password: hashedPassword
 		})
 
-		return PrismaEmployeeMapper.toDomain(createdEmployee as any)
+		return createdEmployee
 	}
 }

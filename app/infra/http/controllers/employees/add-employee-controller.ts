@@ -8,6 +8,7 @@ import { UploadService } from '@/services'
 import { HttpResponse } from '@/data/protocols/http'
 import { Uploader } from '@/data/protocols/services'
 import { dbErrorHandler } from '@/infra/db'
+import { EmployeeViewModel } from '@/infra/http/view-models'
 
 export class AddEmployeeController implements Controller {
 	constructor(
@@ -50,7 +51,7 @@ export class AddEmployeeController implements Controller {
 			if (createdEmployee == 'documentInUse') {
 				return forbidden(new DocumentInUseError())
 			}
-			return ok(createdEmployee)
+			return ok(EmployeeViewModel.toHTTP(createdEmployee))
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
 		}
