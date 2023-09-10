@@ -52,9 +52,24 @@ model Employee {
   purchases    Purchase[]
   Sale         Sale[]
 
+  employeePresences EmployeePresence[]
+
   @@unique([documentType, documentNumber])
   @@unique([bankName, accountNumber])
   @@map("tb_employees")
+}
+
+model EmployeePresence {
+  id             Int       @id @default(autoincrement())
+  employeeId     Int       @map("employee_id")
+  date           DateTime
+  presenceStatus String    @map("presence_status")
+  createdById    Int?      @map("created_by_id")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedById    Int?      @map("updated_by_id")
+  updatedAt      DateTime? @map("updated_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
 }
 
 model Country {
@@ -196,7 +211,7 @@ model Customer {
   province     Province?     @relation(fields: [provinceId], references: [id])
   municipality Municipality? @relation(fields: [municipalityId], references: [id])
   purchases    Purchase[]
-  sales         Sale[]
+  sales        Sale[]
 
   @@map("tb_customers")
 }
