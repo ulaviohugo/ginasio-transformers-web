@@ -12,7 +12,7 @@ import {
 	ReceiptDataProps,
 	SalaryReceiptTemplate
 } from '@/(presentation)/components/templates-pdf'
-import { useEmployees } from '@/(presentation)/hooks'
+import { useAuth, useEmployees } from '@/(presentation)/hooks'
 import { loadEmployeeStore } from '@/(presentation)/redux'
 import { EmployeeModel } from '@/domain/models'
 import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
@@ -80,6 +80,7 @@ export default function FolhaSalarial() {
 }
 
 const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
+	const user = useAuth()
 	const date = new Date()
 	const years = [
 		date.getUTCFullYear() + 1,
@@ -134,7 +135,11 @@ const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
 					onChange={handleChange}
 				/>
 			</div>
-			<SalaryReceiptTemplate employee={employee} receiptData={receiptData} />
+			<SalaryReceiptTemplate
+				employee={employee}
+				receiptData={receiptData}
+				currentUser={user}
+			/>
 		</div>
 	)
 }

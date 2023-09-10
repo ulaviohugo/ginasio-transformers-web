@@ -1,4 +1,5 @@
 'use client'
+
 import { EmployeeModel } from '@/domain/models'
 import { NumberUtils, SalaryUtils } from '@/utils'
 import { Document, Page, View, Text, PDFViewer } from '@react-pdf/renderer'
@@ -12,12 +13,14 @@ export type ReceiptDataProps = {
 type SalaryReceiptProps = {
 	employee: EmployeeModel
 	receiptData: ReceiptDataProps
+	currentUser: EmployeeModel
 }
 
 type HeaderProps = {
 	title: string
 	employee: EmployeeModel
 	receiptData: ReceiptDataProps
+	currentUser: EmployeeModel
 }
 
 type ItemProps = {
@@ -98,7 +101,11 @@ export const getSalaryItems = (
 	]
 }
 
-export function SalaryReceiptTemplate({ employee, receiptData }: SalaryReceiptProps) {
+export function SalaryReceiptTemplate({
+	employee,
+	receiptData,
+	currentUser
+}: SalaryReceiptProps) {
 	return (
 		<PDFViewer width={'100%'} style={{ height: 'calc(100vh - 30px)' }}>
 			<Document title={employee.name}>
@@ -107,27 +114,41 @@ export function SalaryReceiptTemplate({ employee, receiptData }: SalaryReceiptPr
 					style={{ flexDirection: 'row', justifyContent: 'space-between' }}
 					orientation="landscape"
 				>
-					<Container title="Original" employee={employee} receiptData={receiptData} />
+					<Container
+						title="Original"
+						employee={employee}
+						receiptData={receiptData}
+						currentUser={currentUser}
+					/>
 					<View style={{ border: border }}></View>
-					<Container title="Cópia" employee={employee} receiptData={receiptData} />
+					<Container
+						title="Cópia"
+						employee={employee}
+						receiptData={receiptData}
+						currentUser={currentUser}
+					/>
 				</Page>
 			</Document>
 		</PDFViewer>
 	)
 }
 
-function Container({ title, employee, receiptData }: HeaderProps) {
+function Container({ title, employee, receiptData, currentUser }: HeaderProps) {
 	const items = getSalaryItems(employee, receiptData)
 	return (
 		<View style={{ flexDirection: 'column', width: '100%', fontSize: fontSize_md }}>
 			<Header title={title} employee={employee} receiptData={receiptData} />
 			<Body items={items} />
-			<ResumeContent employee={employee} receiptData={receiptData} />
+			<ResumeContent
+				employee={employee}
+				receiptData={receiptData}
+				currentUser={currentUser}
+			/>
 		</View>
 	)
 }
 
-function Header({ title, employee, receiptData }: HeaderProps) {
+function Header({ title, employee, receiptData }: Omit<HeaderProps, 'currentUser'>) {
 	return (
 		<View
 			style={{
@@ -166,7 +187,7 @@ function Header({ title, employee, receiptData }: HeaderProps) {
 				</View>
 				<View>
 					<Text>FUNCIONÁRIO</Text>
-					<Text>{employee.name}</Text>
+					<Text style={{ flexWrap: 'nowrap' }}>{employee.name}</Text>
 				</View>
 				<View>
 					<Text>FUNÇÃO</Text>
@@ -233,7 +254,7 @@ function Body({ items }: { items: ItemProps[] }) {
 	)
 }
 
-function ResumeContent({ employee, receiptData }: SalaryReceiptProps) {
+function ResumeContent({ employee, receiptData, currentUser }: SalaryReceiptProps) {
 	const salaryHeaders = getSalaryItems(employee, receiptData)
 	const totalSalary =
 		salaryHeaders
@@ -270,7 +291,7 @@ function ResumeContent({ employee, receiptData }: SalaryReceiptProps) {
 				>
 					<Text>ENTREGUEI</Text>
 					<Text style={{ borderTop: border, width: 150, marginTop: 8 }}></Text>
-					<Text>{employee.name}</Text>
+					<Text>{currentUser.name}</Text>
 				</View>
 
 				<View style={{ flex: 1 }}>
@@ -318,6 +339,33 @@ function ResumeContent({ employee, receiptData }: SalaryReceiptProps) {
 				<View>
 					<Text>Salário por hora</Text>
 					<Text>{NumberUtils.formatCurrency(salaryPerHour)}</Text>
+				</View>
+			</View>
+			<View
+				style={{
+					padding: 8,
+					margin: 8,
+					gap: 8,
+					border
+				}}
+			>
+				<Text style={{ textAlign: 'center' }}>
+					DECLARO TER RECEBIDO A IMPORTÂNCIA LÍQUIDA DISCRIMINADA NESTE RECIBO
+				</Text>
+				<View
+					style={{
+						flexDirection: 'row',
+						justifyContent: 'space-between'
+					}}
+				>
+					<View style={{ alignItems: 'center', gap: 8 }}>
+						<Text>_____/_____/_____</Text>
+						<Text>DATA</Text>
+					</View>
+					<View style={{ alignItems: 'center', gap: 8 }}>
+						<Text>________________________________</Text>
+						<Text>ASSINATURA DO FUNCIONÁRIO</Text>
+					</View>
 				</View>
 			</View>
 		</View>
