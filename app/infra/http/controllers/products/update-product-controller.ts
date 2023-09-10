@@ -7,6 +7,7 @@ import { HttpResponse } from '@/data/protocols/http'
 import { UploadService } from '@/services'
 import { Uploader } from '@/data/protocols/services'
 import { dbErrorHandler } from '@/infra/db'
+import { ProductViewModel } from '@/infra/http/view-models'
 
 export class UpdateProductController implements Controller {
 	constructor(
@@ -34,7 +35,7 @@ export class UpdateProductController implements Controller {
 				uploader
 			)
 			if (updatedProduct == null) return notFound()
-			return ok(updatedProduct)
+			return ok(ProductViewModel.toHTTP(updatedProduct))
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
 		}

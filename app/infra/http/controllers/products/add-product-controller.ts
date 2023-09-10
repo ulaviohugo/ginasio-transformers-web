@@ -8,6 +8,7 @@ import { HttpResponse } from '@/data/protocols/http'
 import { Uploader } from '@/data/protocols/services'
 import { NumberUtils } from '@/utils'
 import { dbErrorHandler } from '@/infra/db'
+import { ProductViewModel } from '@/infra/http/view-models'
 
 export class AddProductController implements Controller {
 	constructor(
@@ -36,7 +37,7 @@ export class AddProductController implements Controller {
 			if (createdProduct == null) {
 				return forbidden(new NameInUseError())
 			}
-			return ok(createdProduct)
+			return ok(ProductViewModel.toHTTP(createdProduct))
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
 		}

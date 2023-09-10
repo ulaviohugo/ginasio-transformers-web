@@ -8,6 +8,7 @@ import { UploadService } from '@/services'
 import { HttpResponse } from '@/data/protocols/http'
 import { Uploader } from '@/data/protocols/services'
 import { dbErrorHandler } from '@/infra/db'
+import { CustomerViewModel } from '@/infra/http/view-models'
 
 export class AddCustomerController implements Controller {
 	constructor(
@@ -39,7 +40,7 @@ export class AddCustomerController implements Controller {
 			if (createdCustomer == 'emailInUse') {
 				return forbidden(new EmailInUseError())
 			}
-			return ok(createdCustomer)
+			return ok(CustomerViewModel.toHTTP(createdCustomer))
 		} catch (error) {
 			return serverError(dbErrorHandler(error))
 		}
