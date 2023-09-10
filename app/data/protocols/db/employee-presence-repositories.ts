@@ -1,8 +1,12 @@
 import { EmployeePresenceModel } from '@/domain/models'
 
+export type EmployeePresenceRepositoryFindProps = {
+	[key in keyof EmployeePresenceModel]?: EmployeePresenceModel[key]
+}
+
 export interface EmployeePresenceRepository {
 	add(param: EmployeePresenceModel): Promise<EmployeePresenceModel>
-	findById(employeeId: number): Promise<EmployeePresenceModel | null>
+	find(param: EmployeePresenceRepositoryFindProps): Promise<EmployeePresenceModel | null>
 	loadAll(): Promise<EmployeePresenceModel[]>
 	update(param: EmployeePresenceModel): Promise<EmployeePresenceModel>
 	delete(employeeId: number): Promise<boolean>
