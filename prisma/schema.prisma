@@ -72,6 +72,7 @@ model EmployeePresence {
   employee Employee @relation(fields: [employeeId], references: [id])
 
   @@unique([employeeId, date])
+	@@map("tb_employee_presences")
 }
 
 model Country {
