@@ -7,6 +7,7 @@ import {
 	Layout,
 	LayoutBody,
 	Select,
+	Spinner,
 	SubMenu,
 	Title
 } from '@/(presentation)/components'
@@ -68,8 +69,10 @@ export default function Employees() {
 								/>
 							</div>
 						</div>
-						{employees.length < 1 ? (
-							<div>Selecione um funcionário</div>
+						{isLoading ? (
+							<Spinner data="Carregando funcionários" />
+						) : employees.length < 1 ? (
+							<div>Nenhum funcionário registado</div>
 						) : (
 							<CalendarPresence employees={employees} />
 						)}
