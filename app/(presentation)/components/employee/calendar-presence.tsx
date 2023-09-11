@@ -1,18 +1,9 @@
 'use client'
 
 import { EmployeeModel } from '@/domain/models'
-import { DateUtils, StringUtils } from '@/utils'
+import { DateUtils } from '@/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import {
-	ButtonSubmit,
-	CalendarEvent,
-	IconChevronLeft,
-	IconChevronRight,
-	IconSearch,
-	Input,
-	InputYear,
-	Select
-} from '..'
+import { CalendarEvent, IconChevronLeft, IconChevronRight, Input, Select } from '..'
 
 type CalendarPresenceProps = {
 	employees: EmployeeModel[]
