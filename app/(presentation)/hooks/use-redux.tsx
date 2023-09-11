@@ -7,6 +7,7 @@ export const useAuth = () => useRedux().auth.auth
 export const useCategories = () => useRedux().categories.categories
 export const useCustomers = () => useRedux().customers.customers
 export const useEmployees = () => useRedux().employees.employees
+export const useEmployeePresences = () => useRedux().employeePresences.employeePresences
 export const useLocations = () => useRedux().locations
 export const useNotifications = () => useRedux().notifications.notifications
 export const useProducts = () => useRedux().products.products
