@@ -1,3 +1,5 @@
+import { EmployeePresenceModel } from '.'
+
 export interface EmployeeModel {
 	id: number
 	photo?: string
@@ -33,4 +35,6 @@ export interface EmployeeModel {
 	createdById?: number
 	updatedAt?: Date
 	updatedById?: number
+
+	employeePresences: EmployeePresenceModel[]
 }

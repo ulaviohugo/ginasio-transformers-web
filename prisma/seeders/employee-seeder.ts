@@ -37,7 +37,7 @@ export class EmployeeSeeder {
 				hireDate: date,
 				contractEndDate: new Date(date.getTime() + 1000 * 86400 * 30 * 12), //1 year
 				createdAt: date
-			})
+			} as any)
 		} catch (error: any) {
 			console.error(error.message)
 		}

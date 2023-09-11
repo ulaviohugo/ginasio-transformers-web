@@ -13,7 +13,7 @@ import {
 } from '@/(presentation)/components'
 import { SubmenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
-import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
+import { makeRemoteLoadEmployeePresences } from '@/main/factories/usecases/remote'
 import { loadEmployeeStore } from '@/(presentation)/redux'
 import { useDispatch } from 'react-redux'
 import { useEmployees } from '@/(presentation)/hooks'
@@ -23,14 +23,12 @@ export default function Employees() {
 		{} as EmployeeModel
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const [showEditor, setShowEditor] = useState(false)
-	const [showFormDelete, setShowFormDelete] = useState(false)
 	const employees = useEmployees()
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
 		try {
-			const httpResponse = await makeRemoteLoadEmployees().load()
+			const httpResponse = await makeRemoteLoadEmployeePresences().load()
 			dispatch(loadEmployeeStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)

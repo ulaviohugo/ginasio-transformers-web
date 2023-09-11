@@ -12,6 +12,9 @@ import {
 } from '..'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { EmployeeModel } from '@/domain/models'
+import { makeAddEmployeePresence } from '@/main/factories'
+import { makeRemoteAddEmployeePresence } from '@/main/factories/usecases/remote'
+import toast from 'react-hot-toast'
 
 type CalendarEventProps = {
 	eventItem: EventItemProps
@@ -22,6 +25,7 @@ type CalendarEventProps = {
 type FormProps = {
 	presenceStatus: string
 	date: Date
+	employeeId: number
 }
 
 export type EventItemProps = {
@@ -41,7 +45,11 @@ export const CalendarEvent = ({ eventItem, open, onClose }: CalendarEventProps) 
 	}
 
 	const handleSubmit = async () => {
-		const data: FormProps = { ...formData, date }
+		const data: FormProps = { ...formData, date, employeeId: employee.id }
+		makeRemoteAddEmployeePresence()
+			.add(data as any)
+			.then(() => {})
+			.catch((error: any) => toast.error(error.message))
 	}
 
 	return (

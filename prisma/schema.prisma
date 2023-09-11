@@ -64,6 +64,7 @@ model EmployeePresence {
   employeeId     Int       @map("employee_id")
   date           DateTime  @db.Date()
   presenceStatus String    @map("presence_status")
+  description    String?
   createdById    Int?      @map("created_by_id")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedById    Int?      @map("updated_by_id")
@@ -72,7 +73,7 @@ model EmployeePresence {
   employee Employee @relation(fields: [employeeId], references: [id])
 
   @@unique([employeeId, date])
-	@@map("tb_employee_presences")
+  @@map("tb_employee_presences")
 }
 
 model Country {

@@ -1,5 +1,5 @@
-import { EmployeePresenceModel } from '@/domain/models'
+import { EmployeeModel } from '@/domain/models'
 
 export interface LoadEmployeePresences {
-	load(): Promise<EmployeePresenceModel[]>
+	load(): Promise<EmployeeModel[]>
 }

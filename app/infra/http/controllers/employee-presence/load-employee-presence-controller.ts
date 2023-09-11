@@ -9,7 +9,7 @@ export class LoadEmployeePresenceController implements Controller {
 	async handle(): Promise<HttpResponse> {
 		try {
 			const employees = await this.loadEmployeePresence.load()
-			return ok(employees)
+			return ok(employees.map((employee) => ({ ...employee, password: undefined })))
 		} catch (error: any) {
 			return serverError(dbErrorHandler(error))
 		}

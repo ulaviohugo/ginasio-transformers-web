@@ -3,7 +3,7 @@ import {
 	EmployeePresenceRepositoryFindProps
 } from '@/data/protocols'
 import { prismaService } from '@/infra/db'
-import { EmployeePresenceModel } from '@/domain/models'
+import { EmployeeModel, EmployeePresenceModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaEmployeePresenceMapper } from '../mappers'
 
@@ -20,9 +20,13 @@ export class EmployeePresencePrismaRepository implements EmployeePresenceReposit
 		})) as any
 	}
 
-	async loadAll(): Promise<EmployeePresenceModel[]> {
-		return (await this.prisma.employeePresence.findMany({
-			include: { employee: { select: { id: true, name: true } } }
+	async loadAll(): Promise<EmployeeModel[]> {
+		return (await this.prisma.employee.findMany({
+			include: {
+				employeePresences: {
+					select: { date: true, presenceStatus: true, description: true }
+				}
+			}
 		})) as any
 	}
 
@@ -30,7 +34,7 @@ export class EmployeePresencePrismaRepository implements EmployeePresenceReposit
 		param: EmployeePresenceRepositoryFindProps
 	): Promise<EmployeePresenceModel | null> {
 		return (await this.prisma.employeePresence.findFirst({
-			where: param,
+			where: param as any,
 			include: { employee: { select: { id: true, name: true } } }
 		})) as any
 	}

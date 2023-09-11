@@ -1,8 +1,8 @@
 'use client'
 
-import { EmployeeModel } from '@/domain/models'
+import { EmployeeModel, PresentStatus } from '@/domain/models'
 import { DateUtils } from '@/utils'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { CalendarEvent, IconChevronLeft, IconChevronRight, Input, Select } from '..'
 
 type CalendarPresenceProps = {
@@ -42,15 +42,24 @@ export function CalendarPresence({ employees }: CalendarPresenceProps) {
 		setFormData(data)
 	}
 
-	const handleLoadDays = () => {
+	const handleLoadDays = useCallback(() => {
 		const lastDayOfMonth = new Date(formData.year, formData.month, 0).getDate()
 		console.log({ lastDayOfMonth, month: formData.month })
 
 		setCalendarDays(Array.from(Array(lastDayOfMonth)))
-	}
+	}, [formData.month, formData.year])
 
 	const handleShowOption = (item: ItemProps) => {
 		setSelectedEventItem(item)
+	}
+
+	const compareDates = (date1: Date, date2: Date) => {
+		const d1 = DateUtils.convertToDate(date1)
+		const d2 = DateUtils.convertToDate(date2)
+		return (
+			`${d1.getFullYear()}${d1.getMonth()}${d1.getDate()}` ==
+			`${d2.getFullYear()}${d2.getMonth()}${d2.getDate()}`
+		)
 	}
 
 	return (
@@ -106,7 +115,7 @@ export function CalendarPresence({ employees }: CalendarPresenceProps) {
 										new Date(formData.year, formData.month, i)
 									)
 									return (
-										<th key={`wek-day-${i}`} className=" bg-primary text-white p-4">
+										<th key={`wek-day-${i}`} className="bg-primary text-white p-4">
 											{weekDay.toLocaleLowerCase().slice(0, 3)}
 										</th>
 									)
@@ -125,28 +134,43 @@ export function CalendarPresence({ employees }: CalendarPresenceProps) {
 										const day = i + 1
 										const selfDate = new Date(formData.year, formData.month, day)
 										const active = date >= selfDate
-										const isToday =
-											date.getFullYear() == selfDate.getUTCFullYear() &&
-											date.getMonth() == selfDate.getUTCMonth() &&
-											date.getDate() == selfDate.getUTCDate()
+										const isToday = compareDates(date, selfDate)
+										// date.getFullYear() == selfDate.getUTCFullYear() &&
+										// date.getMonth() == selfDate.getUTCMonth() &&
+										// date.getDate() == selfDate.getUTCDate()
+
+										const present = employee.employeePresences.find(({ date }) =>
+											compareDates(date, selfDate)
+										)
+										console.log({ present })
+
+										const isAbsent = present?.presenceStatus == PresentStatus.F
+										const isPresent = present?.presenceStatus == PresentStatus.P
+
 										return (
 											<td
-												key={`day-${i}`}
+												key={`key-${i}-${employee.id}`}
 												onClick={() =>
 													active && handleShowOption({ date: selfDate, employee })
 												}
 											>
-												<span
+												<div
 													className={`flex ${
 														active
 															? `${
-																	isToday ? 'bg-blue-400 text-white' : 'bg-green-50'
+																	isPresent
+																		? 'bg-green-100'
+																		: isAbsent
+																		? 'bg-red-300'
+																		: isToday
+																		? 'bg-sky-100'
+																		: 'bg-red-50'
 															  } cursor-pointer hover:font-semibold transition-all duration-300 hover:scale-105`
-															: 'bg-gray-100 cursor-not-allowed'
-													} p-4 text-left`}
+															: 'bg-gray-100 text-gray-400 cursor-not-allowed'
+													} ${isToday && 'font-semibold underline'} p-4 text-left`}
 												>
 													{day}
-												</span>
+												</div>
 											</td>
 										)
 									})}
