@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       target: runner
-    container_name: sistema_wo
+    container_name: medlopes_wo
     volumes:
       - .:/app
     ports:

@@ -3,7 +3,7 @@ import React from 'react'
 export function Footer() {
 	return (
 		<footer className="text-xs flex justify-between">
-			<div>Copyright © 2023 WO. Todos os direitos reservados.</div>
+			<div>Copyright © 2023 MEDLOPES. Todos os direitos reservados.</div>
 			<div>
 				Desenvolvido por{' '}
 				<a

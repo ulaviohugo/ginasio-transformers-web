@@ -8,6 +8,7 @@ import {
 	IconProduct,
 	IconSignout,
 	IconUser,
+	Logo,
 	Spinner
 } from '@/(presentation)/components'
 import { setCurrentAccountAdapter } from '@/main/adapters'
@@ -23,9 +24,9 @@ export function Header() {
 	}
 	const path = usePathname()
 	return (
-		<header className="bg-primary text-gray-200 h-screen">
+		<header className=" text-gray-200 h-screen">
 			<nav className="flex flex-col gap-4 py-4 items-center h-full">
-				<Image src={'/images/logo-tipo.png'} width={100} height={100} alt="Logo" />
+				<Logo />
 				<ul className="flex flex-col">
 					<Item active={path == '/'} link={'/'} text="Dashboard" icon={IconHome} />
 					<Item

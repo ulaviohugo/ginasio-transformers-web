@@ -4,7 +4,7 @@ import React from 'react'
 type LogoProps = Partial<ImageProps>
 
 export function Logo({
-	src = '/images/logo-tipo.png',
+	src = '/images/logo.png',
 	alt = 'Logo',
 	width = 100,
 	height = 100,

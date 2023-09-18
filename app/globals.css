@@ -6,6 +6,9 @@ body {
 	@apply text-primary;
 }
 
+header {
+	background: linear-gradient(250deg, #04b3e1 0.27%, #0d7a9e 99.39%), #fff;
+}
 :disabled {
 	@apply !cursor-not-allowed opacity-80;
 }
