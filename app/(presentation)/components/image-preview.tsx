@@ -54,24 +54,24 @@ export function ImagePreview({
 				className="hidden"
 			/>
 			{!preview ? (
-				<div className="mr-auto flex">
+				<div className="mr-auto flex w-full">
 					{!disabled && (
 						<label
 							htmlFor="photo"
-							className="flex-1 flex flex-col justify-center cursor-pointer text-sm text-gray-400 hover:text-green-500 hover:bg-green-50 px-2"
+							className="flex-1 flex flex-col justify-center cursor-pointer text-sm text-gray-400 text-center hover:text-green-500 hover:bg-green-50 px-2"
 						>
 							Selecionar imagem
 						</label>
 					)}
 				</div>
 			) : (
-				<div className="relative">
+				<div className="relative flex">
 					<Image
 						src={preview}
 						width={200}
 						height={200}
 						alt="Pre-visualização"
-						className="shadow-md"
+						className="shadow-md mx-auto"
 					/>
 					{!disabled && (
 						<IconClose

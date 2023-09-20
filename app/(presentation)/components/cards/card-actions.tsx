@@ -21,10 +21,20 @@ export function CardActions({
 			}`}
 			{...props}
 		>
-			<button onClick={onClickEdit} className="hover:scale-110" title="Editar">
+			<button
+				type="button"
+				onClick={onClickEdit}
+				className="hover:scale-110"
+				title="Editar"
+			>
 				<IconEdit />
 			</button>
-			<button onClick={onClickDelete} className="hover:scale-110" title="Excluir">
+			<button
+				type="button"
+				onClick={onClickDelete}
+				className="hover:scale-110"
+				title="Excluir"
+			>
 				<IconTrash />
 			</button>
 		</div>
