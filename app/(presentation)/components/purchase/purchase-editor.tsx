@@ -167,15 +167,27 @@ export function PurchaseEditor({
 		}
 		if (name == 'totalValue') {
 			const totalValue = NumberUtils.convertToNumber(value)
+			const quantity = NumberUtils.convertToNumber(formData.quantity)
 			data = {
 				...data,
-				unitPrice: formData.quantity > 0 ? totalValue / formData.quantity : 0
+				totalValue,
+				unitPrice: quantity > 0 ? totalValue / quantity : 0
+			}
+		}
+		if (name == 'unitPrice') {
+			const unitPrice = NumberUtils.convertToNumber(value)
+			const quantity = NumberUtils.convertToNumber(formData.quantity)
+			data = {
+				...data,
+				unitPrice,
+				totalValue: quantity > 0 ? unitPrice * quantity : unitPrice
 			}
 		}
 		if (name == 'quantity') {
 			const quantity = Number(value)
 			data = {
 				...data,
+				quantity,
 				unitPrice:
 					quantity > 0 ? NumberUtils.convertToNumber(formData.totalValue) / quantity : 0
 			}
@@ -241,7 +253,6 @@ export function PurchaseEditor({
 							value={formData?.unitPrice || ''}
 							label={LabelUtils.translateField('unitPrice')}
 							onChange={handleInputChange}
-							disabled
 						/>
 						<Input
 							type="number"
