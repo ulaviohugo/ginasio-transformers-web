@@ -46,7 +46,13 @@ export class ObjectUtils {
 	static toQueryParams(params: any, url?: string) {
 		const esc = encodeURIComponent
 		const queryParams = Object.keys(params)
-			.map((key) => esc(key) + '=' + esc(params[key]))
+			.map((key) => {
+				let value = params[key]
+				if (typeof value != 'string' && typeof value != 'number') {
+					value = JSON.stringify(value)
+				}
+				return esc(key) + '=' + esc(value)
+			})
 			.join('&')
 
 		const queryMergedWithUrl =

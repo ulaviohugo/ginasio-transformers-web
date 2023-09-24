@@ -88,7 +88,7 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		if (ObjectUtils.isEmpty(filterData)) {
 			return toast.error('Selecione alguns campos para filtrar resultados')
 		}
-		fetchData({ filter: JSON.stringify(filterData) as any })
+		fetchData({ filter: filterData })
 	}
 
 	const clearFilter = () => {
