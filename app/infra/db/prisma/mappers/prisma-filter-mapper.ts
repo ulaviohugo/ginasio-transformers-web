@@ -1,6 +1,8 @@
 import { NumberUtils } from '@/utils'
 
-const regExDate = /^\d{4}-\d{2}-\d{2}$/
+const regExDate =
+	/^(\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)$/
+
 const regexNumber = /^[0-9.]{1,50}$/
 
 export class PrismaFilterMapper {
@@ -8,6 +10,7 @@ export class PrismaFilterMapper {
 		if (!data) return
 		return Object.keys(data).reduce((prev, current) => {
 			let currentValue = data[current]
+			console.log({ currentValue })
 
 			if (regexNumber.test(currentValue)) {
 				currentValue = NumberUtils.convertToNumber(currentValue)
