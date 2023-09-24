@@ -40,7 +40,9 @@ export default function Vendas() {
 
 	const fetchData = async () => {
 		try {
-			const httpResponse = await makeRemoteLoadSales().load()
+			const httpResponse = await makeRemoteLoadSales().load({
+				filter: { createdAt: new Date() }
+			})
 			dispatch(loadSaleStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)

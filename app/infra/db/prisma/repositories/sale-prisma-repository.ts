@@ -1,8 +1,8 @@
-import { SaleRepository } from '@/data/protocols'
+import { QueryParams, SaleRepository } from '@/data/protocols'
 import { prismaService } from '@/infra/db'
 import { SaleModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaSaleMapper } from '@/infra/db/prisma/mappers'
+import { PrismaFilterMapper, PrismaSaleMapper } from '@/infra/db/prisma/mappers'
 
 export class SalePrismaRepository implements SaleRepository {
 	private prisma: PrismaClient
@@ -38,8 +38,14 @@ export class SalePrismaRepository implements SaleRepository {
 		return createdSale
 	}
 
-	async loadAll(): Promise<SaleModel[]> {
+	async loadAll(queryParams?: QueryParams<SaleModel>): Promise<SaleModel[]> {
+		const filter = queryParams
+			? PrismaFilterMapper.toWhere(queryParams.filter)
+			: undefined
+		console.log({ filter })
+
 		return (await this.prisma.sale.findMany({
+			where: filter,
 			include: {
 				purchase: {
 					include: {

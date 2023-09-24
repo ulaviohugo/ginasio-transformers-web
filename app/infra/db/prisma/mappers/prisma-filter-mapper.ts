@@ -10,7 +10,6 @@ export class PrismaFilterMapper {
 		if (!data) return
 		return Object.keys(data).reduce((prev, current) => {
 			let currentValue = data[current]
-			console.log({ currentValue })
 
 			if (regexNumber.test(currentValue)) {
 				currentValue = NumberUtils.convertToNumber(currentValue)

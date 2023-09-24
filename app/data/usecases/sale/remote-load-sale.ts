@@ -1,6 +1,9 @@
 import { LoadSales, LoadSalesResult } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
+import { QueryParams } from '@/data/protocols'
+import { SaleModel } from '@/domain/models'
+import { ObjectUtils } from '@/utils'
 
 export class RemoteLoadSale implements LoadSales {
 	constructor(
@@ -8,10 +11,12 @@ export class RemoteLoadSale implements LoadSales {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<LoadSalesResult> {
+	async load(queryParams?: QueryParams<SaleModel>): Promise<LoadSalesResult> {
+		const url = queryParams ? ObjectUtils.toQueryParams(queryParams, this.url) : this.url
+
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
-			url: this.url
+			url
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

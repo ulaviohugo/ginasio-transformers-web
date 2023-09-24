@@ -25,7 +25,6 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		const filter = queryParams
 			? PrismaFilterMapper.toWhere(queryParams.filter)
 			: undefined
-		console.log({ filter })
 
 		return (await this.prisma.purchase.findMany({
 			include: {
