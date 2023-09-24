@@ -25,7 +25,7 @@ import {
 	updatePurchaseStore
 } from '@/(presentation)/redux'
 import { AddPurchase, UpdatePurchase } from '@/domain/usecases'
-import { useCategories, useProducts, useSuppliers } from '@/(presentation)/hooks'
+import { useAuth, useCategories, useProducts, useSuppliers } from '@/(presentation)/hooks'
 import {
 	makeRemoteDeletePurchase,
 	makeRemoteLoadCategories,
@@ -53,6 +53,7 @@ export function PurchaseEditor({
 	const categories = useCategories()
 	const products = useProducts()
 	const suppliers = useSuppliers()
+	const user = useAuth()
 
 	const [productList, setProductList] = useState<ProductModel[]>([])
 	const [categoryList, setCategoryList] = useState<CategoryModel[]>([])
@@ -239,172 +240,174 @@ export function PurchaseEditor({
 		}
 	}
 	return (
-		<form onSubmit={handleSubmit} className="">
-			<div className="grid grid-cols-12 gap-4">
-				<div className="col-span-3">
-					<ImagePreview
-						photoPreview={photoPreview}
-						onInputFileChange={handleInputChange}
-					/>
-					<div className="flex flex-col gap-2">
-						<InputPrice
-							id="unitPrice"
-							name="unitPrice"
-							value={formData?.unitPrice || ''}
-							label={LabelUtils.translateField('unitPrice')}
-							onChange={handleInputChange}
+		<div className="">
+			<form onSubmit={handleSubmit} className="">
+				<div className="grid grid-cols-12 gap-4">
+					<div className="col-span-3">
+						<ImagePreview
+							photoPreview={photoPreview}
+							onInputFileChange={handleInputChange}
 						/>
-						<Input
-							type="number"
-							id="quantity"
-							name="quantity"
-							value={formData?.quantity || ''}
-							label={LabelUtils.translateField('quantity')}
-							onChange={handleInputChange}
-						/>
-						<InputPrice
-							id="totalValue"
-							name="totalValue"
-							value={formData?.totalValue || ''}
-							label={LabelUtils.translateField('totalValue')}
-							onChange={handleInputChange}
-						/>
-					</div>
-				</div>
-				<div className="col-span-9">
-					<div className="grid grid-cols-4 gap-2">
-						<Input
-							id="lot"
-							name="lot"
-							value={formData?.lot || ''}
-							label={LabelUtils.translateField('lot')}
-							onChange={handleInputChange}
-						/>
-						<Select
-							id="supplierId"
-							name="supplierId"
-							value={formData?.supplierId || ''}
-							label={LabelUtils.translateField('supplierId')}
-							data={suppliers.map(({ name, id }) => ({
-								text: name,
-								value: id
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<Select
-							id="categoryId"
-							name="categoryId"
-							value={formData?.categoryId || ''}
-							label={LabelUtils.translateField('categoryId')}
-							data={categoryList.map(({ name, id }) => ({
-								text: name,
-								value: id
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<Select
-							id="productId"
-							name="productId"
-							value={formData?.productId || ''}
-							label={LabelUtils.translateField('productId')}
-							data={productList.map(({ name, id }) => ({
-								text: name,
-								value: id
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="grid grid-cols-4 gap-2">
-						<Input
-							id="barCode"
-							name="barCode"
-							value={formData?.barCode || ''}
-							label={LabelUtils.translateField('barCode')}
-							onChange={handleInputChange}
-						/>
-						<Select
-							id="color"
-							name="color"
-							value={formData?.color || ''}
-							label={LabelUtils.translateField('color')}
-							data={ColorUtils.colors.map((color) => ({
-								text: color
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<Input
-							id="size"
-							name="size"
-							value={formData?.size || ''}
-							label={LabelUtils.translateField('size')}
-							onChange={handleInputChange}
-						/>
-						<div className="flex">
-							<div>
-								<Input
-									type="checkbox"
-									id="paid"
-									name="paid"
-									checked={formData?.paid}
-									label={LabelUtils.translateField('paid')}
-									onChange={handleInputChange}
-								/>
-							</div>
+						<div className="flex flex-col gap-2">
+							<InputPrice
+								id="unitPrice"
+								name="unitPrice"
+								value={formData?.unitPrice || ''}
+								label={LabelUtils.translateField('unitPrice')}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="number"
+								id="quantity"
+								name="quantity"
+								value={formData?.quantity || ''}
+								label={LabelUtils.translateField('quantity')}
+								onChange={handleInputChange}
+							/>
+							<InputPrice
+								id="totalValue"
+								name="totalValue"
+								value={formData?.totalValue || ''}
+								label={LabelUtils.translateField('totalValue')}
+								onChange={handleInputChange}
+							/>
 						</div>
 					</div>
-					<div className="grid grid-cols-4 gap-2">
-						<Select
-							id="paymentMethod"
-							name="paymentMethod"
-							value={formData?.paymentMethod || ''}
-							label={LabelUtils.translateField('paymentMethod')}
-							data={PaymentUtils.getMethods().map((paymentType) => ({
-								text: paymentType
-							}))}
-							defaultText="Selecione"
-							onChange={handleInputChange}
-						/>
-						<Input
-							type="date"
-							id="purchaseDate"
-							name="purchaseDate"
-							value={
-								(formData?.purchaseDate && DateUtils.getDate(formData.purchaseDate)) || ''
-							}
-							label={LabelUtils.translateField('purchaseDate')}
-							onChange={handleInputChange}
-						/>
-						<Input
-							type="date"
-							id="dueDate"
-							name="dueDate"
-							value={(formData?.dueDate && DateUtils.getDate(formData.dueDate)) || ''}
-							label={LabelUtils.translateField('dueDate')}
-							onChange={handleInputChange}
-						/>
-						<InputPrice
-							id="sellingPriceUnit"
-							name="sellingPriceUnit"
-							value={formData?.sellingPriceUnit || ''}
-							label={LabelUtils.translateField('sellingPriceUnit')}
-							onChange={handleInputChange}
-						/>
+					<div className="col-span-9 flex flex-col gap-4">
+						<div className="grid grid-cols-4 gap-2">
+							<Input
+								id="lot"
+								name="lot"
+								value={formData?.lot || ''}
+								label={LabelUtils.translateField('lot')}
+								onChange={handleInputChange}
+							/>
+							<Select
+								id="supplierId"
+								name="supplierId"
+								value={formData?.supplierId || ''}
+								label={LabelUtils.translateField('supplierId')}
+								data={suppliers.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+							<Select
+								id="categoryId"
+								name="categoryId"
+								value={formData?.categoryId || ''}
+								label={LabelUtils.translateField('categoryId')}
+								data={categoryList.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+							<Select
+								id="productId"
+								name="productId"
+								value={formData?.productId || ''}
+								label={LabelUtils.translateField('productId')}
+								data={productList.map(({ name, id }) => ({
+									text: name,
+									value: id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div className="grid grid-cols-4 gap-2">
+							<Input
+								id="barCode"
+								name="barCode"
+								value={formData?.barCode || ''}
+								label={LabelUtils.translateField('barCode')}
+								onChange={handleInputChange}
+							/>
+							<Select
+								id="color"
+								name="color"
+								value={formData?.color || ''}
+								label={LabelUtils.translateField('color')}
+								data={ColorUtils.colors.map((color) => ({
+									text: color
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+							<Input
+								id="size"
+								name="size"
+								value={formData?.size || ''}
+								label={LabelUtils.translateField('size')}
+								onChange={handleInputChange}
+							/>
+							<div className="flex">
+								<div>
+									<Input
+										type="checkbox"
+										id="paid"
+										name="paid"
+										checked={formData?.paid}
+										label={LabelUtils.translateField('paid')}
+										onChange={handleInputChange}
+									/>
+								</div>
+							</div>
+						</div>
+						<div className="grid grid-cols-4 gap-2">
+							<Select
+								id="paymentMethod"
+								name="paymentMethod"
+								value={formData?.paymentMethod || ''}
+								label={LabelUtils.translateField('paymentMethod')}
+								data={PaymentUtils.getMethods().map((paymentType) => ({
+									text: paymentType
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="date"
+								id="purchaseDate"
+								name="purchaseDate"
+								value={
+									(formData?.purchaseDate && DateUtils.getDate(formData.purchaseDate)) ||
+									''
+								}
+								label={LabelUtils.translateField('purchaseDate')}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="date"
+								id="dueDate"
+								name="dueDate"
+								value={(formData?.dueDate && DateUtils.getDate(formData.dueDate)) || ''}
+								label={LabelUtils.translateField('dueDate')}
+								onChange={handleInputChange}
+							/>
+							<InputPrice
+								id="sellingPriceUnit"
+								name="sellingPriceUnit"
+								value={formData?.sellingPriceUnit || ''}
+								label={LabelUtils.translateField('sellingPriceUnit')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div className="grid grid-cols-4 gap-2">
+							<Input label="Funcionário" value={user.name} disabled />
+						</div>
 					</div>
-					<div className="mt-2">{stockListComponent}</div>
 				</div>
-			</div>
-			<ModalFooter>
-				<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-				<ButtonCancel onClick={onClose} />
-			</ModalFooter>
-		</form>
+				<div className="mt-2 pt-2 border-t">
+					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
+					<ButtonCancel onClick={onClose} text="Limpar" />
+				</div>
+			</form>
+			<div className="mt-2">{stockListComponent}</div>
+		</div>
 	)
 }
-
-const Divisor = ({ label }: { label?: string }) => (
-	<div className="xl:col-span-4 lg:col-span-3 md:col-span-2 uppercase">{label || ''}</div>
-)

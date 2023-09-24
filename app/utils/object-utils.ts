@@ -42,4 +42,15 @@ export class ObjectUtils {
 		}
 		return obj as T
 	}
+
+	static toQueryParams(params: any, url?: string) {
+		const esc = encodeURIComponent
+		const queryParams = Object.keys(params)
+			.map((key) => esc(key) + '=' + esc(params[key]))
+			.join('&')
+
+		const queryMergedWithUrl =
+			(url && url.indexOf('?') < 0 ? url + '?' : '') + queryParams
+		return queryMergedWithUrl
+	}
 }

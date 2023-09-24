@@ -1,8 +1,8 @@
-import { PurchaseRepository } from '@/data/protocols'
+import { PurchaseRepository, QueryParams } from '@/data/protocols'
 import { prismaService } from '@/infra/db'
 import { PurchaseModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaPurchaseMapper } from '@/infra/db/prisma/mappers'
+import { PrismaFilterMapper, PrismaPurchaseMapper } from '@/infra/db/prisma/mappers'
 
 export class PurchasePrismaRepository implements PurchaseRepository {
 	private prisma: PrismaClient
@@ -21,13 +21,19 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		})) as any
 	}
 
-	async loadAll(): Promise<PurchaseModel[]> {
+	async loadAll(queryParams: QueryParams<PurchaseModel>): Promise<PurchaseModel[]> {
+		const filter = queryParams
+			? PrismaFilterMapper.toWhere(queryParams.filter)
+			: undefined
+		console.log({ filter })
+
 		return (await this.prisma.purchase.findMany({
 			include: {
 				category: { select: { name: true } },
 				product: { select: { name: true } },
 				supplier: { select: { name: true } }
-			}
+			},
+			where: filter
 		})) as any
 	}
 

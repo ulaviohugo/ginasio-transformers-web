@@ -2,7 +2,7 @@
 
 import { PurchaseModel } from '@/domain/models'
 import Image from 'next/image'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import {
 	CardActions,
 	IconClose,
@@ -25,6 +25,7 @@ import {
 	usePurchases,
 	useSuppliers
 } from '@/(presentation)/hooks'
+import { QueryParams } from '@/data/protocols'
 
 type StokeListProps = {
 	loadStokes: LoadPurchases
@@ -52,9 +53,14 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 	)
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
 
-	const fetchData = async () => {
+	const hasFilter = useMemo(() => {
+		return !ObjectUtils.isEmpty(filterData)
+	}, [filterData])
+
+	const fetchData = async (queryParams?: QueryParams) => {
+		setIsLoading(true)
 		try {
-			const httpResponse = await loadStokes.load()
+			const httpResponse = await loadStokes.load(queryParams)
 			dispatch(loadPurchaseStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
@@ -79,21 +85,15 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 	}
 
 	const handleRequestFilter = () => {
-		console.log(filterData)
-
 		if (ObjectUtils.isEmpty(filterData)) {
 			return toast.error('Selecione alguns campos para filtrar resultados')
 		}
-		loadStokes
-			.load({ filter: filterData } as any)
-			.then((response) => {
-				dispatch(loadPurchaseStore(response))
-			})
-			.catch(({ message }) => toast.error(message))
+		fetchData({ filter: JSON.stringify(filterData) as any })
 	}
 
 	const clearFilter = () => {
 		setFilterData({} as any)
+		fetchData()
 	}
 
 	const handleOpenFormDelete = (category: PurchaseModel) => {
@@ -126,83 +126,86 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 					onSubmit={handleDelete}
 				/>
 			)}
-			{isLoading ? (
-				<Spinner />
-			) : purchases.length < 1 ? (
-				<NoData />
-			) : (
-				<fieldset>
-					<legend>Lista</legend>
-					<div className="grid grid-cols-9 mb-3 items-en">
-						<div className="col-span-2">
-							<Select
-								name="supplierId"
-								label={LabelUtils.translateField('supplierId')}
-								value={filterData?.supplierId || ''}
-								data={suppliers.map(({ id: value, name: text }) => ({ text, value }))}
-								defaultText="Selecione"
-								onChange={handleChangeFilterInput}
-							/>
-						</div>
-						<div className="col-span-2">
-							<Select
-								name="categoryId"
-								label={LabelUtils.translateField('categoryId')}
-								value={filterData?.categoryId || ''}
-								data={categories.map(({ id: value, name: text }) => ({ text, value }))}
-								defaultText="Selecione"
-								onChange={handleChangeFilterInput}
-							/>
-						</div>
-						<div className="col-span-2">
-							<Select
-								name="productId"
-								label={LabelUtils.translateField('productId')}
-								value={filterData?.productId || ''}
-								data={products.map(({ id: value, name: text }) => ({ text, value }))}
-								defaultText="Selecione"
-								onChange={handleChangeFilterInput}
-							/>
-						</div>
-						<div className="col-span-2">
-							<Input
-								type="date"
-								name="createdAt"
-								label={LabelUtils.translateField('createdAt')}
-								value={filterData?.createdAt?.toString() || ''}
-								onChange={handleChangeFilterInput}
-							/>
-						</div>
-						<div className="flex items-center">
+
+			<fieldset>
+				<legend>Lista</legend>
+				<div className="grid grid-cols-9 mb-3">
+					<div className="col-span-2">
+						<Select
+							name="supplierId"
+							label={LabelUtils.translateField('supplierId')}
+							value={filterData?.supplierId || ''}
+							data={suppliers.map(({ id: value, name: text }) => ({ text, value }))}
+							defaultText="Selecione"
+							onChange={handleChangeFilterInput}
+						/>
+					</div>
+					<div className="col-span-2">
+						<Select
+							name="categoryId"
+							label={LabelUtils.translateField('categoryId')}
+							value={filterData?.categoryId || ''}
+							data={categories.map(({ id: value, name: text }) => ({ text, value }))}
+							defaultText="Selecione"
+							onChange={handleChangeFilterInput}
+						/>
+					</div>
+					<div className="col-span-2">
+						<Select
+							name="productId"
+							label={LabelUtils.translateField('productId')}
+							value={filterData?.productId || ''}
+							data={products.map(({ id: value, name: text }) => ({ text, value }))}
+							defaultText="Selecione"
+							onChange={handleChangeFilterInput}
+						/>
+					</div>
+					<div className="col-span-2">
+						<Input
+							type="date"
+							name="createdAt"
+							label={LabelUtils.translateField('createdAt')}
+							value={filterData?.createdAt?.toString() || ''}
+							onChange={handleChangeFilterInput}
+						/>
+					</div>
+					<div className="flex items-end gap-2 pl-2">
+						<button
+							type="button"
+							className="flex btn-primary h-8"
+							onClick={handleRequestFilter}
+						>
+							{isLoading ? <Spinner /> : <IconSearch />}
+						</button>
+						{hasFilter && (
 							<button
 								type="button"
-								className="flex btn-primary "
-								onClick={handleRequestFilter}
+								className="flex btn-default h-8"
+								onClick={clearFilter}
 							>
-								<IconSearch />
-							</button>
-							<button type="button" className="flex btn-default " onClick={clearFilter}>
 								<IconClose />
 							</button>
-						</div>
+						)}
 					</div>
-					<div className="max-h-64 overflow-auto">
-						<table className="table w-full text-left text-sm border border-gray-100">
-							<thead>
-								<tr>
-									<th className="p-1">Id</th>
-									<th className="p-1">Imagem</th>
-									<th className="p-1">Fornecedor</th>
-									<th className="p-1">Categoria</th>
-									<th className="p-1">Produto</th>
-									<th className="p-1">Preço/unid</th>
-									<th className="p-1">Cor</th>
-									<th className="p-1">Tamanho</th>
-									<th className="p-1">Quantidade</th>
-									<th className="p-1">Data</th>
-									<th className="p-1">Acção</th>
-								</tr>
-							</thead>
+				</div>
+				<div className="max-h-64 overflow-auto">
+					<table className="table w-full text-left text-sm border border-gray-100">
+						<thead>
+							<tr>
+								<th className="p-1">Id</th>
+								<th className="p-1">Imagem</th>
+								<th className="p-1">Fornecedor</th>
+								<th className="p-1">Categoria</th>
+								<th className="p-1">Produto</th>
+								<th className="p-1">Preço/unid</th>
+								<th className="p-1">Cor</th>
+								<th className="p-1">Tamanho</th>
+								<th className="p-1">Quantidade</th>
+								<th className="p-1">Data</th>
+								<th className="p-1">Acção</th>
+							</tr>
+						</thead>
+						{purchases.length > 0 && (
 							<tbody className="h-5">
 								{purchases.map((purchase, i) => (
 									<tr
@@ -244,10 +247,21 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 									</tr>
 								))}
 							</tbody>
-						</table>
-					</div>
-				</fieldset>
-			)}
+						)}
+					</table>
+					{isLoading ? (
+						<Spinner />
+					) : (
+						purchases.length < 1 && (
+							<NoData
+								data={
+									!ObjectUtils.isEmpty(filterData) ? 'Nenhum resultado da pesquisa' : null
+								}
+							/>
+						)
+					)}
+				</div>
+			</fieldset>
 		</>
 	)
 }
