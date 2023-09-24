@@ -2,9 +2,9 @@
 
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useCategories, useProducts } from '@/(presentation)/hooks'
-import { Product, SupplierProduct } from '@prisma/client'
 import { IconClose, InputPrice, Select } from '..'
 import { LabelUtils } from '@/utils'
+import { ProductModel, SupplierProductModel } from '@/domain/models'
 
 export type ProductCardChangeProps = {
 	index: number
@@ -13,7 +13,7 @@ export type ProductCardChangeProps = {
 }
 
 export type SupplierProductEditorProps = {
-	supplierProduct: SupplierProduct
+	supplierProduct: SupplierProductModel
 	itemIndex: number
 	index: number
 	onChange: (data: ProductCardChangeProps) => void
@@ -29,7 +29,7 @@ export function SupplierProductEditor({
 }: SupplierProductEditorProps) {
 	const categories = useCategories()
 	const products = useProducts()
-	const [productList, setProductList] = useState<Product[]>([])
+	const [productList, setProductList] = useState<ProductModel[]>([])
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
@@ -37,7 +37,7 @@ export function SupplierProductEditor({
 		if (name == 'categoryId') {
 			data = { ...data, productId: undefined }
 			setProductList(
-				products.filter((product) => product.categoryId == Number(value)) as Product[]
+				products.filter((product) => product.categoryId == Number(value)) as ProductModel[]
 			)
 		}
 		onChange(data)
@@ -47,8 +47,8 @@ export function SupplierProductEditor({
 		if (supplierProduct?.categoryId) {
 			setProductList(
 				products.filter(
-					(product) => product.categoryId == supplierProduct.categoryId
-				) as Product[]
+					(product) => product.categoryId == supplierProduct?.categoryId
+				) as ProductModel[]
 			)
 		}
 	}, [supplierProduct?.categoryId])
@@ -59,7 +59,7 @@ export function SupplierProductEditor({
 				<Select
 					id={`categoryId${itemIndex}`}
 					name="categoryId"
-					value={supplierProduct.categoryId}
+					value={supplierProduct?.categoryId || ''}
 					label={LabelUtils.translateField('categoryId')}
 					data={categories.map((category) => ({
 						text: category.name,
@@ -73,7 +73,7 @@ export function SupplierProductEditor({
 				<Select
 					id={`productId${itemIndex}`}
 					name="productId"
-					value={supplierProduct.productId || ''}
+					value={supplierProduct?.productId || ''}
 					label={LabelUtils.translateField('productId')}
 					data={productList.map((product) => ({
 						text: product.name,
@@ -87,7 +87,7 @@ export function SupplierProductEditor({
 				<InputPrice
 					id={`unitPrice${itemIndex}`}
 					name="unitPrice"
-					value={supplierProduct.unitPrice}
+					value={supplierProduct?.unitPrice||''}
 					label={LabelUtils.translateField('unitPrice')}
 					onChange={handleInputChange}
 				/>
