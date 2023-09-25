@@ -402,7 +402,7 @@ export function PurchaseEditor({
 						</div>
 					</div>
 				</div>
-				<div className="mt-2 pt-2 border-t">
+				<div className="flex gap-2 mt-2 pt-2 border-t">
 					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
 					<ButtonCancel onClick={onClose} text="Limpar" />
 				</div>
