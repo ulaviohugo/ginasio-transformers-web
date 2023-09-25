@@ -46,7 +46,7 @@ export default function Entradas() {
 				<SubMenu submenus={SubmenuUtils.commercial} />
 				<div className="my-2">
 					<fieldset>
-						<legend>Cadastro de fornecedor</legend>
+						<legend>Cadastro de estoque</legend>
 						<PurchaseEditor
 							data={selectedPurchase}
 							onClose={handleCloseDetail}
