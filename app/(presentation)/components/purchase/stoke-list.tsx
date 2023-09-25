@@ -14,7 +14,7 @@ import {
 	Select,
 	Spinner
 } from '..'
-import { DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
+import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { DeletePurchase, LoadPurchases } from '@/domain/usecases'
 import { loadPurchaseStore, removePurchaseStore } from '@/(presentation)/redux'
 import { useDispatch } from 'react-redux'
@@ -33,9 +33,9 @@ type StokeListProps = {
 }
 
 type FilterDataProps = {
-	supplierId: string
-	categoryId: string
-	productId: string
+	supplierId: number
+	categoryId: number
+	productId: number
 	createdAt: Date
 }
 
@@ -45,6 +45,7 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 	const suppliers = useSuppliers()
 	const categories = useCategories()
 	const products = useProducts()
+
 	const [isLoading, setIsLoading] = useState(true)
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
@@ -52,6 +53,15 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		{} as PurchaseModel
 	)
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
+
+	const productList = useMemo(() => {
+		return ArrayUtils.order({
+			data: filterData?.categoryId
+				? products.filter((product) => product.categoryId == filterData.categoryId)
+				: products,
+			field: 'name'
+		})
+	}, [filterData.categoryId, products])
 
 	const hasFilter = useMemo(() => {
 		return !ObjectUtils.isEmpty(filterData)
@@ -81,7 +91,13 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		setFilterData({ ...filterData, [name]: value })
+		let data = { ...filterData, [name]: value }
+
+		if (name == 'categoryId') {
+			data = { ...data, productId: undefined as any }
+		}
+
+		setFilterData(data)
 	}
 
 	const handleRequestFilter = () => {
@@ -155,7 +171,7 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 							name="productId"
 							label={LabelUtils.translateField('productId')}
 							value={filterData?.productId || ''}
-							data={products.map(({ id: value, name: text }) => ({ text, value }))}
+							data={productList.map(({ id: value, name: text }) => ({ text, value }))}
 							defaultText="Selecione"
 							onChange={handleChangeFilterInput}
 						/>
