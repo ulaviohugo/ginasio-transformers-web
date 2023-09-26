@@ -1,16 +1,10 @@
 'use client'
 
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+import { useEffect, useState } from 'react'
 
-import pdfMake from 'pdfmake/build/pdfmake'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
-import { TDocumentDefinitions } from 'pdfmake/interfaces'
 import { Layout, LayoutBody, LogoBase64, SubMenu } from '@/(presentation)/components'
 import { SubmenuUtils } from '@/utils'
-import { useEffect, useState } from 'react'
-import { table } from 'console'
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 export default function Factura() {
 	const [pdfData, setPdfData] = useState<string | null>(null)
@@ -67,65 +61,6 @@ export default function Factura() {
 		const pdfUrl = URL.createObjectURL(pdfBlob)
 
 		setPdfData(pdfUrl)
-
-		return
-		const documentDefinition: TDocumentDefinitions = {
-			content: [
-				{
-					image: LogoBase64,
-					width: 192
-				},
-				{
-					table: {
-						widths: ['*', '*'],
-						body: [
-							[
-								{
-									text: 'APÓLICE DE ADESÃO DE CO-SEGURO SOCIAL',
-									bold: true,
-									alignment: 'center',
-									colSpan: 2
-									// border: [false, false, false, false]
-								},
-								''
-							]
-						]
-					}
-				},
-
-				{
-					table: {
-						widths: ['*', '*', '*', '*', '*', '*'],
-						body: [
-							[{ text: 'Foto', rowSpan: 6 }, '', '', '', '', ''],
-							[
-								'',
-								{
-									text: 'NOTA: Área de preenchimento exclusivo ao Consultório MedLopes',
-									colSpan: 5,
-									borderColor: 'red'
-								},
-								'',
-								'',
-								'',
-								''
-							],
-							['', 'PROPOSTA Nº', '', 'APÓLICE Nº', '', 'PROPOSTA DE:'],
-							['', 'Ola', 'Ola', 'Ola', 'Ola', 'Ola'],
-							['', 'Ola', 'Ola', 'Ola', 'Ola', 'Ola'],
-							['', 'Ola', 'Ola', 'Ola', 'Ola', 'Ola']
-						]
-					}
-				}
-			]
-		}
-
-		const pdfDocGenerator = pdfMake.createPdf(documentDefinition)
-		// pdfDocGenerator.open()
-
-		pdfDocGenerator.getBase64((dataUrl) => {
-			setPdfData(dataUrl)
-		})
 	}
 
 	return (
