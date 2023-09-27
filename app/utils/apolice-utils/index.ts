@@ -2,6 +2,7 @@ import { PDFDocument, PDFPage, StandardFonts, rgb } from 'pdf-lib'
 
 export * from './apolice-page1-utils'
 export * from './apolice-page2-utils'
+export * from './apolice-page3-utils'
 
 type RectangleProps = {
 	page: PDFPage
@@ -21,6 +22,7 @@ export const ApoliceStyle = {
 	colorRed: rgb(1, 1 / 3, 1 / 3),
 	fontItalic: StandardFonts.HelveticaOblique,
 	fontBold: StandardFonts.HelveticaBold,
+	fontBoldItalic: StandardFonts.HelveticaBoldOblique,
 	cellHeight: 14,
 	defaultPadding: 50
 }
