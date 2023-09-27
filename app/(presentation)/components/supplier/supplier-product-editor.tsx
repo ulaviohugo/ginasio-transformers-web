@@ -37,7 +37,9 @@ export function SupplierProductEditor({
 		if (name == 'categoryId') {
 			data = { ...data, productId: undefined }
 			setProductList(
-				products.filter((product) => product.categoryId == Number(value)) as ProductModel[]
+				products.filter(
+					(product) => product.categoryId == Number(value)
+				) as ProductModel[]
 			)
 		}
 		onChange(data)
@@ -87,7 +89,7 @@ export function SupplierProductEditor({
 				<InputPrice
 					id={`unitPrice${itemIndex}`}
 					name="unitPrice"
-					value={supplierProduct?.unitPrice||''}
+					value={supplierProduct?.unitPrice || ''}
 					label={LabelUtils.translateField('unitPrice')}
 					onChange={handleInputChange}
 				/>
