@@ -97,14 +97,14 @@ export default function Apolice() {
 		const style = {
 			fontSizeTitle: 12,
 			fontSizeSubTitle: 10,
-			fontSizeText: 8,
+			fontSizeText: 7,
 			borderWidth: 0.1,
 			borderColor: rgb(230 / 255, 230 / 255, 230 / 255),
 			colorRectangle: rgb(1, 1, 1),
 			colorRed: rgb(1, 1 / 3, 1 / 3),
 			fontItalic: await pdfDoc.embedFont(StandardFonts.HelveticaOblique),
 			fontBold: await pdfDoc.embedFont(StandardFonts.HelveticaBold),
-			heightCell: 16
+			heightCell: 14
 		}
 
 		const makeRectangle = ({
@@ -135,39 +135,40 @@ export default function Apolice() {
 		const imageLogo = await pdfDoc.embedPng(LogoBase64)
 
 		/* HEADER */
-		page.drawImage(imageLogo, { x: padding, y: pageHeight - 89, width: 89, height: 64 })
+		page.drawImage(imageLogo, { x: padding, y: pageHeight - 80, width: 70, height: 48 })
 
 		makeRectangle({
 			page,
 			height: 25,
 			width: pageWidth - 100,
 			x: padding,
-			y: pageHeight - 125
+			y: pageHeight - 115
 		})
 		page.drawText('APÓLICE DE ADESÃO DO CO-SEGURO SOCIAL', {
 			font: style.fontBold,
 			x: padding + 110,
-			y: pageHeight - 118,
+			y: pageHeight - 108,
 			size: style.fontSizeTitle
 		})
 
+		//FOTO
 		makeRectangle({
 			page,
-			height: 120,
-			width: pageWidth / 5,
+			height: 115,
+			width: 110,
 			x: padding,
-			y: pageHeight - 250
+			y: pageHeight - 235
 		})
 
 		page.drawText('NOTA:', {
 			x: padding + 124,
-			y: pageHeight - 140,
+			y: pageHeight - 130,
 			size: style.fontSizeText,
 			font: style.fontItalic
 		})
 		page.drawText('Área de preenchimento exclusivo ao Consultório MedLopes', {
 			x: padding + 152,
-			y: pageHeight - 140,
+			y: pageHeight - 130,
 			size: style.fontSizeText,
 			color: style.colorRed,
 			font: style.fontItalic
@@ -178,22 +179,22 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding + 124,
-			y: pageHeight - 163
+			y: pageHeight - 153
 		})
 		page.drawText('PROPOSTA Nº', {
 			x: padding + 126,
-			y: pageHeight - 158,
+			y: pageHeight - 149,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 66,
 			x: padding + 188,
-			y: pageHeight - 163
+			y: pageHeight - 153
 		})
 		page.drawText(formData.proposalNumber, {
 			x: padding + 190,
-			y: pageHeight - 158,
+			y: pageHeight - 149,
 			size: style.fontSizeText
 		})
 
@@ -202,22 +203,22 @@ export default function Apolice() {
 			page,
 			width: 64,
 			x: padding + 254,
-			y: pageHeight - 163
+			y: pageHeight - 153
 		})
 		page.drawText('APÓLICE Nº', {
 			x: padding + 256,
-			y: pageHeight - 158,
+			y: pageHeight - 149,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 65,
 			x: padding + 317,
-			y: pageHeight - 163
+			y: pageHeight - 153
 		})
 		page.drawText(formData.policyNumber, {
 			x: padding + 319,
-			y: pageHeight - 158,
+			y: pageHeight - 149,
 			size: style.fontSizeText
 		})
 
@@ -226,11 +227,11 @@ export default function Apolice() {
 			page,
 			width: 120,
 			x: padding + 376,
-			y: pageHeight - 163
+			y: pageHeight - 153
 		})
 		page.drawText('PROPOSTA DE:', {
 			x: padding + 378,
-			y: pageHeight - 158,
+			y: pageHeight - 149,
 			size: style.fontSizeText
 		})
 
@@ -238,7 +239,7 @@ export default function Apolice() {
 			page,
 			width: 120,
 			x: padding + 376,
-			y: pageHeight - 179
+			y: pageHeight - 167
 		})
 		//checkbox
 		makeRectangle({
@@ -246,18 +247,18 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 380,
-			y: pageHeight - 175
+			y: pageHeight - 164
 		})
 		if (formData.proposalType == 'Alteração do Plano') {
 			page.drawText('X', {
 				x: padding + 381.5,
-				y: pageHeight - 174,
+				y: pageHeight - 163,
 				size: style.fontSizeText
 			})
 		}
 		page.drawText('Alteração do Plano', {
 			x: padding + 392,
-			y: pageHeight - 174,
+			y: pageHeight - 163,
 			size: style.fontSizeText
 		})
 
@@ -265,7 +266,7 @@ export default function Apolice() {
 			page,
 			width: 120,
 			x: padding + 376,
-			y: pageHeight - 195
+			y: pageHeight - 181
 		})
 		//checkbox
 		makeRectangle({
@@ -273,18 +274,18 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 380.5,
-			y: pageHeight - 191
+			y: pageHeight - 178
 		})
 		if (formData.proposalType == 'Novo Co-Seguro') {
 			page.drawText('X', {
 				x: padding + 382,
-				y: pageHeight - 190,
+				y: pageHeight - 177,
 				size: style.fontSizeText
 			})
 		}
 		page.drawText('Novo Co-Seguro', {
 			x: padding + 392,
-			y: pageHeight - 190,
+			y: pageHeight - 177,
 			size: style.fontSizeText
 		})
 
@@ -293,22 +294,22 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding + 124,
-			y: pageHeight - 195
+			y: pageHeight - 181
 		})
 		page.drawText('MEDIADOR (A):', {
 			x: padding + 126,
-			y: pageHeight - 190,
+			y: pageHeight - 177,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 188,
 			x: padding + 188,
-			y: pageHeight - 195
+			y: pageHeight - 181
 		})
 		page.drawText(formData.mediator, {
 			x: padding + 190,
-			y: pageHeight - 190,
+			y: pageHeight - 177,
 			size: style.fontSizeText
 		})
 
@@ -317,22 +318,22 @@ export default function Apolice() {
 			page,
 			width: 110,
 			x: padding + 124,
-			y: pageHeight - 222
+			y: pageHeight - 208
 		})
 		page.drawText('ATENDIMENTO FEITO POR:', {
 			x: padding + 126,
-			y: pageHeight - 217,
+			y: pageHeight - 204,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 145,
 			x: padding + 234,
-			y: pageHeight - 222
+			y: pageHeight - 208
 		})
 		page.drawText(formData.assistedBy, {
 			x: padding + 236,
-			y: pageHeight - 217,
+			y: pageHeight - 204,
 			size: style.fontSizeText
 		})
 
@@ -340,11 +341,11 @@ export default function Apolice() {
 			page,
 			width: 94,
 			x: padding + 372,
-			y: pageHeight - 222
+			y: pageHeight - 208
 		})
 		page.drawText('MOEDA DE CONTRATO', {
 			x: padding + 374,
-			y: pageHeight - 217,
+			y: pageHeight - 204,
 			size: style.fontSizeText
 		})
 
@@ -352,11 +353,11 @@ export default function Apolice() {
 			page,
 			width: 30,
 			x: padding + 466,
-			y: pageHeight - 222
+			y: pageHeight - 208
 		})
 		page.drawText(formData.proposalCurrency, {
 			x: padding + 468,
-			y: pageHeight - 217,
+			y: pageHeight - 204,
 			size: style.fontSizeText
 		})
 
@@ -365,22 +366,22 @@ export default function Apolice() {
 			page,
 			width: 110,
 			x: padding + 124,
-			y: pageHeight - 250
+			y: pageHeight - 235
 		})
 		page.drawText('DATA DO ATENDIMENTO:', {
 			x: padding + 126,
-			y: pageHeight - 245,
+			y: pageHeight - 231,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 62,
 			x: padding + 234,
-			y: pageHeight - 250
+			y: pageHeight - 235
 		})
 		page.drawText(String(DateUtils.getDatePt(formData.assistedAt)), {
 			x: padding + 236,
-			y: pageHeight - 245,
+			y: pageHeight - 231,
 			size: style.fontSizeText
 		})
 
@@ -388,18 +389,18 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 284,
-			y: pageHeight - 250
+			y: pageHeight - 235
 		})
 		page.drawText('ASSINATURA:', {
 			x: padding + 286,
-			y: pageHeight - 245,
+			y: pageHeight - 231,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 148,
 			x: padding + 348,
-			y: pageHeight - 250
+			y: pageHeight - 235
 		})
 
 		/* TITULAR DO CO_SEGURO */
@@ -408,12 +409,12 @@ export default function Apolice() {
 			height: 20,
 			width: pageWidth - 100,
 			x: padding,
-			y: pageHeight - 275
+			y: pageHeight - 258
 		})
 		page.drawText('1. TITULAR DO CO-SEGURO SOCIAL', {
 			font: style.fontBold,
 			x: padding + 5,
-			y: pageHeight - 270,
+			y: pageHeight - 252,
 			size: style.fontSizeSubTitle
 		})
 
@@ -421,22 +422,22 @@ export default function Apolice() {
 			page,
 			width: 90,
 			x: padding,
-			y: pageHeight - 295
+			y: pageHeight - 275
 		})
 		page.drawText('NOME COMPLETO', {
 			x: padding + 5,
-			y: pageHeight - 290,
+			y: pageHeight - 270,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 410,
 			x: padding + 85,
-			y: pageHeight - 295
+			y: pageHeight - 275
 		})
 		page.drawText(insured.name, {
 			x: padding + 87,
-			y: pageHeight - 290,
+			y: pageHeight - 270,
 			size: style.fontSizeText
 		})
 
@@ -444,22 +445,22 @@ export default function Apolice() {
 			page,
 			width: 135,
 			x: padding,
-			y: pageHeight - 315
+			y: pageHeight - 292
 		})
 		page.drawText('NOME A CONSTAR NO CARTÃO', {
 			x: padding + 5,
-			y: pageHeight - 310,
+			y: pageHeight - 288,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 150,
 			x: padding + 135,
-			y: pageHeight - 315
+			y: pageHeight - 292
 		})
 		page.drawText(insured.cardName, {
 			x: padding + 137,
-			y: pageHeight - 310,
+			y: pageHeight - 288,
 			size: style.fontSizeText
 		})
 
@@ -467,22 +468,22 @@ export default function Apolice() {
 			page,
 			width: 200,
 			x: padding + 240,
-			y: pageHeight - 315
+			y: pageHeight - 292
 		})
 		page.drawText('DATA NASCIMENTO / CONSTITUIÇÃO EMPRESA', {
 			x: padding + 242,
-			y: pageHeight - 310,
+			y: pageHeight - 288,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 60,
 			x: padding + 435,
-			y: pageHeight - 315
+			y: pageHeight - 292
 		})
 		page.drawText(String(DateUtils.getDatePt(insured.birthday)), {
 			x: padding + 437,
-			y: pageHeight - 310,
+			y: pageHeight - 288,
 			size: style.fontSizeText
 		})
 
@@ -490,22 +491,22 @@ export default function Apolice() {
 			page,
 			width: pageWidth / 8,
 			x: padding,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText('BI/PASSAPORTE', {
 			x: padding + 5,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: pageWidth / 7,
 			x: padding + 75,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText(insured.documentNumber, {
 			x: padding + 77,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 
@@ -513,22 +514,22 @@ export default function Apolice() {
 			page,
 			width: pageWidth / 7,
 			x: padding + 160,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText('DATA DE EMISSÃO', {
 			x: padding + 165,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: pageWidth / 7,
 			x: padding + 244,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText(String(DateUtils.getDatePt(insured.documentIssueDate)), {
 			x: padding + 246,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 
@@ -536,22 +537,22 @@ export default function Apolice() {
 			page,
 			width: pageWidth / 7,
 			x: padding + 330,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText('CONTRIBUINTE Nº', {
 			x: padding + 335,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: pageWidth / 7,
 			x: padding + 410,
-			y: pageHeight - 335
+			y: pageHeight - 309
 		})
 		page.drawText(insured.nif, {
 			x: padding + 412,
-			y: pageHeight - 330,
+			y: pageHeight - 305,
 			size: style.fontSizeText
 		})
 
@@ -559,11 +560,11 @@ export default function Apolice() {
 			page,
 			width: 30,
 			x: padding,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText('SEXO', {
 			x: padding + 5,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 
@@ -571,11 +572,11 @@ export default function Apolice() {
 			page,
 			width: 60,
 			x: padding + 30,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText('Feminino', {
 			x: padding + 48,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -584,12 +585,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 35,
-			y: pageHeight - 350.5
+			y: pageHeight - 322.5
 		})
 		if (insured.gender == 'Feminino') {
 			page.drawText('X', {
 				x: padding + 36.5,
-				y: pageHeight - 350,
+				y: pageHeight - 322,
 				size: style.fontSizeText
 			})
 		}
@@ -598,11 +599,11 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 90,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText('Masculino', {
 			x: padding + 108,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -611,12 +612,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 95,
-			y: pageHeight - 350.5
+			y: pageHeight - 322.5
 		})
 		if (insured.gender == 'Masculino') {
 			page.drawText('X', {
 				x: padding + 96.5,
-				y: pageHeight - 350,
+				y: pageHeight - 322,
 				size: style.fontSizeText
 			})
 		}
@@ -625,22 +626,22 @@ export default function Apolice() {
 			page,
 			width: 115,
 			x: padding + 155,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText('PROFISSÃO / ACTIVIDADE', {
 			x: padding + 157,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 140,
 			x: padding + 265,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText(insured.occupation, {
 			x: padding + 267,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 
@@ -648,22 +649,22 @@ export default function Apolice() {
 			page,
 			width: 90,
 			x: padding + 405,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText('DEPENDENTES', {
 			x: padding + 407,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 20,
 			x: padding + 475,
-			y: pageHeight - 355
+			y: pageHeight - 326
 		})
 		page.drawText(String(insured.dependents), {
 			x: padding + 477,
-			y: pageHeight - 350,
+			y: pageHeight - 322,
 			size: style.fontSizeText
 		})
 
@@ -671,22 +672,22 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding,
-			y: pageHeight - 375
+			y: pageHeight - 343
 		})
 		page.drawText('ESTADO CIVIL', {
 			x: padding + 5,
-			y: pageHeight - 370,
+			y: pageHeight - 339,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 60,
 			x: padding + 65,
-			y: pageHeight - 375
+			y: pageHeight - 343
 		})
 		page.drawText(String(insured.maritalStatus), {
 			x: padding + 67,
-			y: pageHeight - 370,
+			y: pageHeight - 339,
 			size: style.fontSizeText
 		})
 
@@ -694,22 +695,22 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding + 125,
-			y: pageHeight - 375
+			y: pageHeight - 343
 		})
 		page.drawText('ENDEREÇO', {
 			x: padding + 130,
-			y: pageHeight - 370,
+			y: pageHeight - 339,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 310,
 			x: padding + 185,
-			y: pageHeight - 375
+			y: pageHeight - 343
 		})
 		page.drawText(String(insured.address), {
 			x: padding + 187,
-			y: pageHeight - 370,
+			y: pageHeight - 339,
 			size: style.fontSizeText
 		})
 
@@ -717,22 +718,22 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding,
-			y: pageHeight - 395
+			y: pageHeight - 360
 		})
 		page.drawText('BAIRRO', {
 			x: padding + 5,
-			y: pageHeight - 390,
+			y: pageHeight - 356,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 190,
 			x: padding + 65,
-			y: pageHeight - 395
+			y: pageHeight - 360
 		})
 		page.drawText(String(insured.neighborhood), {
 			x: padding + 67,
-			y: pageHeight - 390,
+			y: pageHeight - 356,
 			size: style.fontSizeText
 		})
 
@@ -740,21 +741,90 @@ export default function Apolice() {
 			page,
 			width: 65,
 			x: padding + 245,
-			y: pageHeight - 395
+			y: pageHeight - 360
 		})
 		page.drawText('MUNICÍPIO', {
 			x: padding + 250,
-			y: pageHeight - 390,
+			y: pageHeight - 356,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 190,
 			x: padding + 305,
-			y: pageHeight - 395
+			y: pageHeight - 360
 		})
 		page.drawText(String(insured.municipality), {
 			x: padding + 307,
+			y: pageHeight - 356,
+			size: style.fontSizeText
+		})
+
+		makeRectangle({
+			page,
+			width: 65,
+			x: padding,
+			y: pageHeight - 377
+		})
+		page.drawText('PROVÍNCIA', {
+			x: padding + 5,
+			y: pageHeight - 373,
+			size: style.fontSizeText
+		})
+		makeRectangle({
+			page,
+			width: 190,
+			x: padding + 65,
+			y: pageHeight - 377
+		})
+		page.drawText(String(insured.province), {
+			x: padding + 67,
+			y: pageHeight - 373,
+			size: style.fontSizeText
+		})
+
+		makeRectangle({
+			page,
+			width: 65,
+			x: padding + 245,
+			y: pageHeight - 377
+		})
+		page.drawText('E-MAIL', {
+			x: padding + 250,
+			y: pageHeight - 373,
+			size: style.fontSizeText
+		})
+		makeRectangle({
+			page,
+			width: 190,
+			x: padding + 305,
+			y: pageHeight - 377
+		})
+		page.drawText(String(insured.email), {
+			x: padding + 307,
+			y: pageHeight - 373,
+			size: style.fontSizeText
+		})
+
+		makeRectangle({
+			page,
+			width: 65,
+			x: padding,
+			y: pageHeight - 394
+		})
+		page.drawText('TELEMÓVEL', {
+			x: padding + 5,
+			y: pageHeight - 390,
+			size: style.fontSizeText
+		})
+		makeRectangle({
+			page,
+			width: 190,
+			x: padding + 65,
+			y: pageHeight - 394
+		})
+		page.drawText(String(insured.phone), {
+			x: padding + 67,
 			y: pageHeight - 390,
 			size: style.fontSizeText
 		})
@@ -762,92 +832,23 @@ export default function Apolice() {
 		makeRectangle({
 			page,
 			width: 65,
-			x: padding,
-			y: pageHeight - 415
-		})
-		page.drawText('PROVÍNCIA', {
-			x: padding + 5,
-			y: pageHeight - 410,
-			size: style.fontSizeText
-		})
-		makeRectangle({
-			page,
-			width: 190,
-			x: padding + 65,
-			y: pageHeight - 415
-		})
-		page.drawText(String(insured.province), {
-			x: padding + 67,
-			y: pageHeight - 410,
-			size: style.fontSizeText
-		})
-
-		makeRectangle({
-			page,
-			width: 65,
 			x: padding + 245,
-			y: pageHeight - 415
-		})
-		page.drawText('E-MAIL', {
-			x: padding + 250,
-			y: pageHeight - 410,
-			size: style.fontSizeText
-		})
-		makeRectangle({
-			page,
-			width: 190,
-			x: padding + 305,
-			y: pageHeight - 415
-		})
-		page.drawText(String(insured.email), {
-			x: padding + 307,
-			y: pageHeight - 410,
-			size: style.fontSizeText
-		})
-
-		makeRectangle({
-			page,
-			width: 65,
-			x: padding,
-			y: pageHeight - 435
-		})
-		page.drawText('TELEMÓVEL', {
-			x: padding + 5,
-			y: pageHeight - 430,
-			size: style.fontSizeText
-		})
-		makeRectangle({
-			page,
-			width: 190,
-			x: padding + 65,
-			y: pageHeight - 435
-		})
-		page.drawText(String(insured.phone), {
-			x: padding + 67,
-			y: pageHeight - 430,
-			size: style.fontSizeText
-		})
-
-		makeRectangle({
-			page,
-			width: 65,
-			x: padding + 245,
-			y: pageHeight - 435
+			y: pageHeight - 394
 		})
 		page.drawText('COMERCIAL', {
 			x: padding + 250,
-			y: pageHeight - 430,
+			y: pageHeight - 390,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 190,
 			x: padding + 305,
-			y: pageHeight - 435
+			y: pageHeight - 394
 		})
 		page.drawText(String(insured.comercial), {
 			x: padding + 307,
-			y: pageHeight - 430,
+			y: pageHeight - 390,
 			size: style.fontSizeText
 		})
 
@@ -857,12 +858,12 @@ export default function Apolice() {
 			height: 20,
 			width: pageWidth - 100,
 			x: padding,
-			y: pageHeight - 460
+			y: pageHeight - 417
 		})
 		page.drawText('2. DADOS DA APÓLICE DO CO-SEGURO SOCIAL', {
 			font: style.fontBold,
 			x: padding + 5,
-			y: pageHeight - 455,
+			y: pageHeight - 410,
 			size: style.fontSizeSubTitle
 		})
 
@@ -870,22 +871,22 @@ export default function Apolice() {
 			page,
 			width: 189,
 			x: padding,
-			y: pageHeight - 480
+			y: pageHeight - 434
 		})
 		page.drawText('DATA DE ADESÃO', {
 			x: padding + 5,
-			y: pageHeight - 475,
+			y: pageHeight - 430,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 60,
 			x: padding + 185,
-			y: pageHeight - 480
+			y: pageHeight - 434
 		})
 		page.drawText(String(DateUtils.getDatePt(insured.enrollmentDate)), {
 			x: padding + 197,
-			y: pageHeight - 475,
+			y: pageHeight - 430,
 			size: style.fontSizeText
 		})
 
@@ -893,22 +894,22 @@ export default function Apolice() {
 			page,
 			width: 189,
 			x: padding + 245,
-			y: pageHeight - 480
+			y: pageHeight - 434
 		})
 		page.drawText('ÚLTIMA DATA DA RENOVAÇÃO AUTOMÁTICA', {
 			x: padding + 250,
-			y: pageHeight - 475,
+			y: pageHeight - 430,
 			size: style.fontSizeText
 		})
 		makeRectangle({
 			page,
 			width: 60,
 			x: padding + 435,
-			y: pageHeight - 480
+			y: pageHeight - 434
 		})
 		page.drawText(String(DateUtils.getDatePt(insured.lastAutoRenewDate)), {
 			x: padding + 437,
-			y: pageHeight - 475,
+			y: pageHeight - 430,
 			size: style.fontSizeText
 		})
 
@@ -916,11 +917,11 @@ export default function Apolice() {
 			page,
 			width: 40,
 			x: padding,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('PLANO', {
 			x: padding + 5,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 
@@ -928,11 +929,11 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 40,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Empresarial', {
 			x: padding + 58,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -941,12 +942,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 45,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Empresarial') {
 			page.drawText('X', {
 				x: padding + 46.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
 		}
@@ -955,11 +956,11 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 110,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Familiar', {
 			x: padding + 128,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -968,12 +969,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 115,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Familiar') {
 			page.drawText('X', {
 				x: padding + 116.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
 		}
@@ -982,11 +983,11 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 180,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Individual', {
 			x: padding + 198,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -995,12 +996,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 185,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Individual') {
 			page.drawText('X', {
 				x: padding + 186.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
 		}
@@ -1009,11 +1010,11 @@ export default function Apolice() {
 			page,
 			width: 70,
 			x: padding + 248,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('APÓLICE', {
 			x: padding + 268,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 
@@ -1021,11 +1022,11 @@ export default function Apolice() {
 			page,
 			width: 60,
 			x: padding + 315,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Cobre', {
 			x: padding + 332,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -1034,12 +1035,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 320,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Cobre') {
 			page.drawText('X', {
 				x: padding + 321.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
 		}
@@ -1048,11 +1049,11 @@ export default function Apolice() {
 			page,
 			width: 60,
 			x: padding + 375,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Prata', {
 			x: padding + 391,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -1061,12 +1062,12 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 380,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Prata') {
 			page.drawText('X', {
 				x: padding + 381.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
 		}
@@ -1075,11 +1076,11 @@ export default function Apolice() {
 			page,
 			width: 60,
 			x: padding + 435,
-			y: pageHeight - 500
+			y: pageHeight - 451
 		})
 		page.drawText('Ouro', {
 			x: padding + 452,
-			y: pageHeight - 495,
+			y: pageHeight - 447,
 			size: style.fontSizeText
 		})
 		//checkbox
@@ -1088,14 +1089,449 @@ export default function Apolice() {
 			height: 8,
 			width: 8,
 			x: padding + 439,
-			y: pageHeight - 495.5
+			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Ouro') {
 			page.drawText('X', {
 				x: padding + 440.5,
-				y: pageHeight - 495,
+				y: pageHeight - 447,
 				size: style.fontSizeText
 			})
+		}
+
+		/* PLANO DO CONSULTÓRIO MEDLOPES - CO-SEGURO SOCIAL */
+		makeRectangle({
+			page,
+			height: 20,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 475
+		})
+		page.drawText('3. PLANO DO CONSULTÓRIO MEDLOPES - CO-SEGURO SOCIAL', {
+			font: style.fontBold,
+			x: padding + 5,
+			y: pageHeight - 470,
+			size: style.fontSizeSubTitle
+		})
+
+		makeRectangle({
+			page,
+			height: 20,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 498
+		})
+		page.drawText('3.1 CUSTO DOS SERVIÇOS', {
+			font: style.fontBold,
+			x: padding + 5,
+			y: pageHeight - 488,
+			size: style.fontSizeText
+		})
+
+		const cellHeight = style.heightCell - 1
+
+		const costServices = [
+			['SERVIÇOS', 'PLANO COBRE', 'PLANO PRATA', 'PLANO OURO'],
+			['CONSULTA', '50%', '60%', '70%'],
+			['EXAMES', '30%', '40%', '50%'],
+			['ECOGRAFIAS', '30%', '40%', '50%'],
+			['ACTOS', '30%', '45%', '50%']
+		]
+
+		for (let row = 0; row < costServices.length; row++) {
+			for (let col = 0; col < 4; col++) {
+				const text = costServices[row][col]
+				const width = col == 0 ? (pageWidth - 100) / 2 : (pageWidth - 101.2) / 5
+				const x = padding + col * width + (col == 0 ? 0 : 100)
+				const y = pageHeight - (row + 39) * cellHeight
+
+				makeRectangle({
+					page,
+					width,
+					x,
+					y
+				})
+				page.drawText(text, {
+					font: row == 0 ? style.fontBold : undefined,
+					x: x + 5,
+					y: y + 5,
+					size: style.fontSizeText
+				})
+			}
+		}
+
+		makeRectangle({
+			page,
+			height: 20,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 582
+		})
+		page.drawText('3.2 PLANO DE CO-SEGURO SOCIAL', {
+			font: style.fontBold,
+			x: padding + 5,
+			y: pageHeight - 572,
+			size: style.fontSizeText
+		})
+		const coInsuranceServices = [
+			['SERVIÇOS', 'PLANO COBRE', 'PLANO PRATA', 'PLANO OURO'],
+			['INTERNAMENTO', 'SEM COBERTURA', 'SEM COBERTURA', 'SEM COBERTURA'],
+			['DESCONTOS EM MEDICAMENTOS', '1%', '5%', '10%'],
+			['DESCONTOS NAS CONSULTAS DE URGÊNCIA', '1%', '5%', '10%'],
+			['CO-PARTICIPAÇÃO', '3 500,00', '2 000,00', '1 500,00'],
+			['PRAZO DE CARÊNCIA', '30 DIAS', '15 DIAS', '5 DIAS ÚTEIS'],
+			['IDADE: 0 À 18', '5 000,00', '7 500,00', '10 000,00'],
+			['IDADE: 19 À 29', '7 000,00', '9 500,00', '12 000,00'],
+			['IDADE: 30 À 45', '9 000,00', '11 500,00', '14 000,00'],
+			['IDADE: 46 À 55', '11 000,00', '13 500,00', '16 000,00'],
+			['IDADE: 56 OU +', '13 000,00', '15 500,00', '18 000,00'],
+			['RETORNO PELA NÃO UTILIZAÇÃO ', '1,50%', '5%', '10%']
+		]
+
+		const coInsuranceServicesCount = coInsuranceServices.length
+		for (let row = 0; row < coInsuranceServicesCount; row++) {
+			for (let col = 0; col < 4; col++) {
+				const text = coInsuranceServices[row][col]
+				const width = col == 0 ? (pageWidth - 100) / 2 : (pageWidth - 101.2) / 5
+				const x = padding + col * width + (col == 0 ? 0 : 100)
+				const y = pageHeight - (row + 45.5) * cellHeight
+
+				makeRectangle({
+					page,
+					width,
+					x,
+					y
+				})
+				page.drawText(text, {
+					font:
+						row == 0 || row == coInsuranceServicesCount - 1 ? style.fontBold : undefined,
+					x: x + 5,
+					y: y + 5,
+					size: style.fontSizeText,
+					color: row == 2 ? style.colorRed : undefined
+				})
+			}
+		}
+
+		makeRectangle({
+			page,
+			height: 20,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 758
+		})
+		page.drawText('3.3 FORMAÇÃO DE GRUPO', {
+			font: style.fontBold,
+			x: padding + 5,
+			y: pageHeight - 747,
+			size: style.fontSizeText
+		})
+		const formationOfGroups = [
+			['SERVIÇOS', 'PLANO COBRE', 'PLANO PRATA', 'PLANO OURO'],
+			['PACOTE INDIVIDUAL', 'SEM LIMITES', 'SEM LIMITES', 'SEM LIMITES'],
+			['PACOTE FAMILIAR', 'SEM LIMITES', 'SEM LIMITES', 'SEM LIMITES'],
+			['PACOTE EMPRESARIAL', 'SEM LIMITES', '10 À 25', '26 +']
+		]
+
+		const formationCountOfGroups = formationOfGroups.length
+		for (let row = 0; row < formationCountOfGroups; row++) {
+			for (let col = 0; col < 4; col++) {
+				const text = formationOfGroups[row][col]
+				const width = col == 0 ? (pageWidth - 100) / 2 : (pageWidth - 101.2) / 5
+				const x = padding + col * width + (col == 0 ? 0 : 100)
+				const y = pageHeight - (row + 59.1) * cellHeight
+
+				makeRectangle({
+					page,
+					width,
+					x,
+					y
+				})
+				page.drawText(text, {
+					font: row == 0 ? style.fontBold : undefined,
+					x: x + 5,
+					y: y + 5,
+					size: style.fontSizeText
+				})
+			}
+		}
+
+		/* PAGE 2 */
+		const page2 = pdfDoc.addPage(pageSize)
+
+		/* HEADER */
+		page2.drawImage(imageLogo, { x: padding, y: pageHeight - 80, width: 70, height: 48 })
+
+		const insuredPeople = ({ index, height }: { index: number; height: number }) => {
+			const number = index + 1
+			const y = pageHeight - (index + 39) * cellHeight
+
+			makeRectangle({
+				page: page2,
+				height: 25,
+				width: pageWidth - 100,
+				x: padding,
+				y: height - 115
+			})
+			page2.drawText(`${number}ª PESSOA SEGURA`, {
+				font: style.fontBold,
+				x: padding + 5,
+				y: height - 108,
+				size: style.fontSizeTitle
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 90,
+				x: padding,
+				y: height - 132
+			})
+			page2.drawText('NOME COMPLETO', {
+				x: padding + 5,
+				y: height - 127,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 410,
+				x: padding + 85,
+				y: height - 132
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 130,
+				x: padding,
+				y: height - 149
+			})
+			page2.drawText('NOME A CONSTAR NO CARTÃO', {
+				x: padding + 5,
+				y: height - 144,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 150,
+				x: padding + 130,
+				y: height - 149
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 95,
+				x: padding + 280,
+				y: height - 149
+			})
+			page2.drawText('DATA NASCIMENTO', {
+				x: padding + 282,
+				y: height - 145,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 140,
+				x: padding + 355,
+				y: height - 149
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 60,
+				x: padding,
+				y: height - 166
+			})
+			page2.drawText('BI / CÉDULA', {
+				x: padding + 5,
+				y: height - 162,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 100,
+				x: padding + 60,
+				y: height - 166
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 70,
+				x: padding + 160,
+				y: height - 166
+			})
+			page2.drawText('CONTRIBUINTE Nº', {
+				x: padding + 162,
+				y: height - 162,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 100,
+				x: padding + 230,
+				y: height - 166
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 36,
+				x: padding + 330,
+				y: height - 166
+			})
+			page2.drawText('SEXO', {
+				x: padding + 332,
+				y: height - 162,
+				size: style.fontSizeText
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 60,
+				x: padding + 365,
+				y: height - 166
+			})
+			page2.drawText('Feminino', {
+				x: padding + 379,
+				y: height - 162,
+				size: style.fontSizeText
+			})
+			//checkbox
+			makeRectangle({
+				page: page2,
+				height: 8,
+				width: 8,
+				x: padding + 368,
+				y: height - 162.5
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 70,
+				x: padding + 425,
+				y: height - 166
+			})
+			page2.drawText('Masculino', {
+				x: padding + 438,
+				y: height - 163,
+				size: style.fontSizeText
+			})
+			//checkbox
+			makeRectangle({
+				page: page2,
+				height: 8,
+				width: 8,
+				x: padding + 428,
+				y: height - 162.5
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 60,
+				x: padding,
+				y: height - 183
+			})
+			page2.drawText('ESTUDANTE', {
+				x: padding + 5,
+				y: height - 179,
+				size: style.fontSizeText
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 35,
+				x: padding + 60,
+				y: height - 183
+			})
+			page2.drawText('NÃO', {
+				x: padding + 74,
+				y: height - 179,
+				size: style.fontSizeText
+			})
+			//checkbox
+			makeRectangle({
+				page: page2,
+				height: 8,
+				width: 8,
+				x: padding + 63,
+				y: height - 179.5
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 35,
+				x: padding + 95,
+				y: height - 183
+			})
+			page2.drawText('SIM', {
+				x: padding + 109,
+				y: height - 179,
+				size: style.fontSizeText
+			})
+			//checkbox
+			makeRectangle({
+				page: page2,
+				height: 8,
+				width: 8,
+				x: padding + 98,
+				y: height - 179.5
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 120,
+				x: padding + 130,
+				y: height - 183
+			})
+			page2.drawText('PROFISSÃO / ESCOLARIDADE', {
+				x: padding + 134,
+				y: height - 179,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 250,
+				x: padding + 245,
+				y: height - 183
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 90,
+				x: padding,
+				y: height - 200
+			})
+			page2.drawText('TELEMÓVEL', {
+				x: padding + 5,
+				y: height - 197,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 180,
+				x: padding + 90,
+				y: height - 200
+			})
+
+			makeRectangle({
+				page: page2,
+				width: 135,
+				x: padding + 180,
+				y: height - 200
+			})
+			page2.drawText('PARENTESCO / VÍNCULO LABORAL', {
+				x: padding + 183,
+				y: height - 197,
+				size: style.fontSizeText
+			})
+			makeRectangle({
+				page: page2,
+				width: 180,
+				x: padding + 315,
+				y: height - 200
+			})
+		}
+		let y = pageHeight
+		for (let index = 0; index < 6; index++) {
+			insuredPeople({ index, height: y })
+			y -= 120
 		}
 
 		const pdfBytes = await pdfDoc.save()
