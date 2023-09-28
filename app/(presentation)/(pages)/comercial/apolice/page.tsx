@@ -77,7 +77,7 @@ export default function Apolice() {
 
 		makeRectangle({
 			page: page3,
-			width: 140,
+			width: 125,
 			x: padding,
 			y: pageHeight - 148
 		})
@@ -89,19 +89,19 @@ export default function Apolice() {
 		})
 		makeRectangle({
 			page: page3,
-			width: 355,
-			x: padding + 140,
+			width: 370,
+			x: padding + 125,
 			y: pageHeight - 148
 		})
 		page3.drawText(`3 500,00 POR CONTRATO`, {
-			x: padding + 142,
+			x: padding + 127,
 			y: pageHeight - 144,
 			size: style.fontSizeText
 		})
 
 		makeRectangle({
 			page: page3,
-			width: 140,
+			width: 125,
 			x: padding,
 			y: pageHeight - 166
 		})
@@ -113,19 +113,19 @@ export default function Apolice() {
 		})
 		makeRectangle({
 			page: page3,
-			width: 355,
-			x: padding + 140,
+			width: 370,
+			x: padding + 125,
 			y: pageHeight - 166
 		})
 		// page3.drawText(`3 500,00 POR CONTRATO`, {
-		// 	x: padding + 142,
+		// 	x: padding + 127,
 		// 	y: pageHeight - 162,
 		// 	size: style.fontSizeText
 		// })
 
 		makeRectangle({
 			page: page3,
-			width: 140,
+			width: 125,
 			x: padding,
 			y: pageHeight - 184
 		})
@@ -137,12 +137,12 @@ export default function Apolice() {
 		})
 		makeRectangle({
 			page: page3,
-			width: 355,
-			x: padding + 140,
+			width: 370,
+			x: padding + 125,
 			y: pageHeight - 184
 		})
 		page3.drawText(`ATENDIMENTO DAS 07:30 ÀS 20:00, DE SEGUNDA-FEIRA À SÁBADO`, {
-			x: padding + 142,
+			x: padding + 127,
 			y: pageHeight - 180,
 			size: style.fontSizeText
 		})
@@ -153,14 +153,51 @@ export default function Apolice() {
 			height: 16,
 			width: pageWidth - 100,
 			x: padding,
-			y: pageHeight - 225
+			y: pageHeight - 215
 		})
 		page3.drawText(`DOCUMENTAÇÃO NECESSÁRIA`, {
 			font: await pdfDoc.embedFont(style.fontBold),
 			x: padding + 135,
-			y: pageHeight - 222,
+			y: pageHeight - 212,
 			size: style.fontSizeTitle
 		})
+
+		makeRectangle({
+			page: page3,
+			height: 56,
+			width: 125,
+			x: padding,
+			y: pageHeight - 271
+		})
+		page3.drawText(`PLANO INDIVIDUAL OU FAMILIAR`, {
+			font: await pdfDoc.embedFont(style.fontBold),
+			x: padding + 5,
+			y: pageHeight - 252,
+			size: style.fontSizeText
+		})
+		makeRectangle({
+			page: page3,
+			height: 56,
+			width: 370,
+			x: padding + 125,
+			y: pageHeight - 271
+		})
+		page3.drawText(
+			`DOCUMENTAÇÃO OBRIGATÓRIA PARA OS UTENTES: SEJAM ESTES MAIORES DE IDADE, BILHETE DE`,
+			{
+				x: padding + 127,
+				y: pageHeight - 225,
+				size: style.fontSizeText
+			}
+		)
+		page3.drawText(
+			`IDENTIDADE, CÓPIA DO CARTÃO DE CONTRIBUINTE, 1 (UMA) FOTO TIPO PASSE, CONTACTO TELEFÓNICO.`,
+			{
+				x: padding + 127,
+				y: pageHeight - 235,
+				size: style.fontSizeText
+			}
+		)
 
 		const pdfBytes = await pdfDoc.save()
 		const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' })
