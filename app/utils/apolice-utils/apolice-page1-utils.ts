@@ -383,7 +383,7 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 292
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.birthday)), {
+		page.drawText(String(DateUtils.getDatePt(insured.birthDate)), {
 			x: padding + 437,
 			y: pageHeight - 288,
 			size: style.fontSizeText

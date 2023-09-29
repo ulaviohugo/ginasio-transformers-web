@@ -1,9 +1,9 @@
 'use client'
 
 import { PDFDocument } from 'pdf-lib'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
-import { Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
+import { InsuredEditor, Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
 import {
 	ApolicePage1Utils,
 	ApolicePage2Utils,
@@ -19,6 +19,8 @@ export default function Apolice() {
 		generatePDF()
 	}, [])
 
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {}
+
 	const generatePDF = async () => {
 		const currentDate = new Date()
 
@@ -29,7 +31,7 @@ export default function Apolice() {
 			occupation: 'Engenheiro Informático',
 			dependents: 4,
 			cardName: 'Josué Simões',
-			birthday: currentDate,
+			birthDate: currentDate,
 			documentNumber: '001322548LA035',
 			documentIssueDate: currentDate,
 			nif: '001322548LA035',
@@ -80,6 +82,7 @@ export default function Apolice() {
 		<Layout>
 			<LayoutBody>
 				<SubMenu submenus={SubmenuUtils.commercial} />
+				<InsuredEditor onChange={handleInputChange} />
 				{pdfData && (
 					<>
 						<iframe

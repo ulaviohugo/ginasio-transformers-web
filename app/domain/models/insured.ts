@@ -5,7 +5,7 @@ export type InsuredModel = {
 	gender: 'Masculino' | 'Feminino'
 	maritalStatus: string
 	cardName: string
-	birthday: Date
+	birthDate: Date
 	documentNumber: string
 	documentIssueDate: Date
 	nif: string
