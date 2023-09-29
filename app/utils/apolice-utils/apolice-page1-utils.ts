@@ -1,30 +1,7 @@
 import { LogoBase64 } from '@/(presentation)/components'
 import { ApoliceProps, ApoliceStyle, makeRectangle } from '.'
 import { DateUtils } from '..'
-
-type InsuredProps = {
-	name: string
-	gender: 'Masculino' | 'Feminino'
-	maritalStatus: string
-	cardName: string
-	birthday: Date
-	documentNumber: string
-	documentIssueDate: Date
-	nif: string
-	dependents: number
-	occupation: string
-	address: string
-	neighborhood: string
-	province: string
-	municipality: string
-	email: string
-	phone: string
-	comercial: string
-	enrollmentDate: Date
-	lastAutoRenewDate: Date
-	plan: 'Empresarial' | 'Familiar' | 'Individual'
-	policy: 'Cobre' | 'Prata' | 'Ouro'
-}
+import { InsuredModel } from '@/domain/models'
 
 type FormDataProps = {
 	mediator: string
@@ -50,7 +27,7 @@ export class ApolicePage1Utils {
 			proposalCurrency: 'AOA'
 		}
 
-		const insured: InsuredProps = {
+		const insured: InsuredModel = {
 			name: 'Josué Agostinho Cabral Simões',
 			gender: 'Masculino',
 			maritalStatus: 'Solteiro (a)',

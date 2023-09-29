@@ -9,12 +9,20 @@ import {
 	ApolicePage2Utils,
 	ApolicePage3Utils,
 	ApoliceStyle,
+	DateUtils,
 	SubmenuUtils,
 	makeRectangle
 } from '@/utils'
+import { InsuredModel } from '@/domain/models'
 
 export default function Apolice() {
 	const [pdfData, setPdfData] = useState<string | null>(null)
+	const currentDate = new Date()
+
+	const insured: Partial<InsuredModel> = {
+		paymentMethod: 'TPA',
+		paymentFrequency: 'Semestral'
+	}
 
 	useEffect(() => {
 		generatePDF()
@@ -299,7 +307,6 @@ export default function Apolice() {
 		)
 
 		// COMPOSIÇÃO
-
 		makeRectangle({
 			page: page3,
 			height: 16,
@@ -355,7 +362,7 @@ export default function Apolice() {
 			x: padding + 125,
 			y: pageHeight - 372
 		})
-		page3.drawText(`TODOS SEM EXCEÇÃO;:`, {
+		page3.drawText(`TODOS SEM EXCEÇÃO;`, {
 			x: padding + 129,
 			y: pageHeight - 368,
 			size: style.fontSizeText
@@ -406,16 +413,245 @@ export default function Apolice() {
 			y: pageHeight - 411
 		})
 		page3.drawText(
-			`ACEITAMOS SOMENTE COM DECLARAÇÃO DE FONTE DE RENDA, ACOMPANHADA DOS 3 ÚLTIMOS RECIBOS`,
+			`ACEITAMOS SOMENTE COM DECLARAÇÃO DE FONTE DE RENDA, ACOMPANHADA DOS 3 ÚLTIMOS `,
 			{
 				x: padding + 129,
 				y: pageHeight - 396,
 				size: style.fontSizeText
 			}
 		)
-		page3.drawText(`DE PAGAMENTO OU ADIANTAMENTO DE 3 MESES COMO GARANTIA.`, {
+		page3.drawText(`RECIBOS DE PAGAMENTO OU ADIANTAMENTO DE 3 MESES COMO GARANTIA.`, {
 			x: padding + 129,
 			y: pageHeight - 406,
+			size: style.fontSizeText
+		})
+
+		// TIPO DE CONTRATAÇÃO
+		makeRectangle({
+			page: page3,
+			height: 16,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 439
+		})
+		page3.drawText(`TIPO DE CONTRATAÇÃO`, {
+			font: await pdfDoc.embedFont(style.fontBold),
+			x: padding + 175,
+			y: pageHeight - 436,
+			size: style.fontSizeTitle
+		})
+
+		const typeOfContracts = [
+			'A CONTRATAÇÃO PODERÁ SER TOTAL OU PARCIAL;',
+			'A OPÇÃO DO PLANO É LIVRE. PORÉM OS DEPENDENTES NÃO PODEM OPTAR POR PLANOS DIFERENTE AO DO TITULAR;',
+			[
+				'OBS:',
+				'CASO HAJA INTERESSE, A COMERCIALIZAÇÃO DO CO-SEGURO SOCIAL É FEITA SOMENTE NO CONSULTÓRIO MEDLOPES.'
+			]
+		]
+		for (let i = 0; i < typeOfContracts.length; i++) {
+			const item = typeOfContracts[i]
+			const y = pageHeight - (i + 24) * style.cellHeight - 117
+			makeRectangle({
+				page: page3,
+				width: pageWidth - 100,
+				x: padding,
+				y
+			})
+			if (typeof item == 'string') {
+				page3.drawText(item, {
+					x: padding + 5,
+					y: y + 3,
+					size: style.fontSizeText
+				})
+			} else if (Array.isArray(item)) {
+				const [obs, text] = item
+				page3.drawText(obs, {
+					font: await pdfDoc.embedFont(style.fontBoldItalic),
+					x: padding + 5,
+					y: y + 3,
+					size: style.fontSizeText
+				})
+				page3.drawText(text, {
+					font: await pdfDoc.embedFont(style.fontBoldItalic),
+					x: padding + 25,
+					y: y + 3,
+					size: style.fontSizeText,
+					color: style.colorRed
+				})
+			}
+		}
+
+		// FORMA DE PAGAMENTO
+		makeRectangle({
+			page: page3,
+			height: 16,
+			width: pageWidth - 100,
+			x: padding,
+			y: pageHeight - 509
+		})
+		page3.drawText(`FORMA DE PAGAMENTO`, {
+			font: await pdfDoc.embedFont(style.fontBold),
+			x: padding + 175,
+			y: pageHeight - 506,
+			size: style.fontSizeTitle
+		})
+
+		const paymentMethods = [
+			['PAGAMENTO', 'TRIMESTRAL', 'SEMESTRAL', 'ANUAL'],
+			['DINHEIRO', '', '', ''],
+			['MULTICAIXA', '', '', ''],
+			['TPA', '', '', ''],
+			['TRANSFERÊNCIA EXPRESS', '', '', '']
+		]
+
+		for (let row = 0; row < paymentMethods.length; row++) {
+			const rowElement = paymentMethods[row]
+			for (let col = 0; col < rowElement.length; col++) {
+				const colElement = rowElement[col]
+				const isHeader = row == 0
+				const width = (pageWidth - 100) / 4
+				const x = padding + col * width
+				const y = pageHeight - (row + 29) * style.cellHeight - 117
+				makeRectangle({
+					page: page3,
+					width,
+					x,
+					y
+				})
+				page3.drawText(colElement, {
+					font: isHeader ? await pdfDoc.embedFont(style.fontBold) : undefined,
+					x: x + 5,
+					y: y + 4,
+					size: style.fontSizeText
+				})
+				if (colElement == '') {
+					page3.drawCircle({
+						x: x + 10,
+						y: y + 7,
+						size: 4,
+						borderWidth: style.borderWidth,
+						borderColor: style.borderColorBlack,
+						color: style.colorRectangle,
+						opacity: 0.5,
+						borderOpacity: 0.75
+					})
+					if (
+						insured.paymentMethod?.toLocaleUpperCase() == rowElement[0] &&
+						insured.paymentFrequency?.toLocaleUpperCase() == paymentMethods[0][col]
+					)
+						page3.drawCircle({
+							x: x + 10,
+							y: y + 7,
+							size: 2,
+							borderWidth: style.borderWidth,
+							borderColor: style.borderColorBlack,
+							color: style.borderColorBlack,
+							opacity: 0.5,
+							borderOpacity: 0.75
+						})
+				}
+			}
+		}
+
+		const plans = [
+			[
+				'PLANO INDIVIDUA OU FAMILIAR',
+				['NOTA:', 'O PAGAMENTO PODE SER TRIMESTRAL, SEMESTRAL E ANUAL']
+			],
+			['PLANO EMPRESARIAL', ['NOTA:', 'O PAGAMENTO PODE SER SOMENTE SEMESTRAL E ANUAL.']]
+		]
+
+		for (let i = 0; i < plans.length; i++) {
+			const [title, [note, text]] = plans[i] as any
+			const y = pageHeight - (i + 34.8) * style.cellHeight - 108
+
+			makeRectangle({
+				page: page3,
+				width: 125,
+				x: padding,
+				y
+			})
+			page3.drawText(title, {
+				font: await pdfDoc.embedFont(style.fontBold),
+				x: padding + 5,
+				y: y + 4,
+				size: style.fontSizeText
+			})
+
+			makeRectangle({
+				page: page3,
+				width: 370,
+				x: padding + 125,
+				y
+			})
+			page3.drawText(note, {
+				font: await pdfDoc.embedFont(style.fontBold),
+				x: padding + 130,
+				y: y + 4,
+				size: style.fontSizeText
+			})
+			page3.drawText(text, {
+				x: padding + 155,
+				y: y + 4,
+				size: style.fontSizeText
+			})
+		}
+		page3.drawText(
+			`LUANDA, ${currentDate.getDate()} DE ${DateUtils.getMonthExt(
+				currentDate
+			).toLocaleUpperCase()} DE ${currentDate.getUTCFullYear()}`,
+			{
+				x: padding,
+				y: pageHeight - 650,
+				size: style.fontSizeText
+			}
+		)
+
+		const dash = '_______________________________________________'
+		page3.drawText(`O MEDIADOR`, {
+			x: padding + 65,
+			y: pageHeight - 700,
+			size: style.fontSizeText,
+			font: await pdfDoc.embedFont(style.fontBold)
+		})
+		page3.drawText(dash, {
+			x: padding,
+			y: pageHeight - 720,
+			size: style.fontSizeText
+		})
+
+		page3.drawText(`O TOMADOR DO SEGURO`, {
+			x: padding + 360,
+			y: pageHeight - 700,
+			size: style.fontSizeText,
+			font: await pdfDoc.embedFont(style.fontBold)
+		})
+		page3.drawText(dash, {
+			x: padding + 310,
+			y: pageHeight - 720,
+			size: style.fontSizeText
+		})
+
+		page3.drawText(`DATA:`, {
+			x: padding,
+			y: pageHeight - 740,
+			size: style.fontSizeText
+		})
+		page3.drawText(dash, {
+			x: padding,
+			y: pageHeight - 742,
+			size: style.fontSizeText
+		})
+
+		page3.drawText(`DATA:`, {
+			x: padding + 310,
+			y: pageHeight - 740,
+			size: style.fontSizeText
+		})
+		page3.drawText(dash, {
+			x: padding + 310,
+			y: pageHeight - 742,
 			size: style.fontSizeText
 		})
 

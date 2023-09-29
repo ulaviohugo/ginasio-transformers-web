@@ -18,6 +18,7 @@ export const ApoliceStyle = {
 	fontSizeText: 7,
 	borderWidth: 0.1,
 	borderColor: rgb(230 / 255, 230 / 255, 230 / 255),
+	borderColorBlack: rgb(0, 0, 0),
 	colorRectangle: rgb(1, 1, 1),
 	colorRed: rgb(1, 1 / 3, 1 / 3),
 	fontItalic: StandardFonts.HelveticaOblique,
