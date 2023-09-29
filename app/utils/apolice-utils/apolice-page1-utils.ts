@@ -14,7 +14,7 @@ type FormDataProps = {
 }
 
 export class ApolicePage1Utils {
-	static async build({ page, pdfDoc }: ApoliceProps) {
+	static async build({ page, pdfDoc, insured }: ApoliceProps) {
 		const currentDate = new Date()
 
 		const formData: FormDataProps = {
@@ -25,32 +25,6 @@ export class ApolicePage1Utils {
 			assistedBy: 'Samuel Levítico Francisco Freitas',
 			assistedAt: currentDate,
 			proposalCurrency: 'AOA'
-		}
-
-		const insured: InsuredModel = {
-			name: 'Josué Agostinho Cabral Simões',
-			gender: 'Masculino',
-			maritalStatus: 'Solteiro (a)',
-			occupation: 'Engenheiro Informático',
-			dependents: 4,
-			cardName: 'Josué Simões',
-			birthday: currentDate,
-			documentNumber: '001322548LA035',
-			documentIssueDate: currentDate,
-			nif: '001322548LA035',
-			address: 'Coreia',
-			neighborhood: 'Ingombotas',
-			province: 'Luanda',
-			municipality: 'Luanda',
-			email: 'joel@gmail.com',
-			phone: '923 123 123',
-			comercial: 'Paulo Vieira',
-			enrollmentDate: currentDate,
-			lastAutoRenewDate: currentDate,
-			plan: 'Empresarial',
-			policy: 'Ouro',
-			paymentFrequency: 'Semestral',
-			paymentMethod: 'TPA'
 		}
 
 		const pageWidth = page.getWidth()

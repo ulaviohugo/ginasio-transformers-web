@@ -3,15 +3,13 @@
 import { PDFDocument } from 'pdf-lib'
 import { useEffect, useState } from 'react'
 
-import { Layout, LayoutBody, LogoBase64, SubMenu } from '@/(presentation)/components'
+import { Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
 import {
 	ApolicePage1Utils,
 	ApolicePage2Utils,
 	ApolicePage3Utils,
-	ApoliceStyle,
-	DateUtils,
-	SubmenuUtils,
-	makeRectangle
+	ApolicePage4Utils,
+	SubmenuUtils
 } from '@/utils'
 import { InsuredModel } from '@/domain/models'
 
@@ -22,38 +20,54 @@ export default function Apolice() {
 	}, [])
 
 	const generatePDF = async () => {
+		const currentDate = new Date()
+
+		const insured: InsuredModel = {
+			name: 'Josué Agostinho Cabral Simões',
+			gender: 'Masculino',
+			maritalStatus: 'Solteiro (a)',
+			occupation: 'Engenheiro Informático',
+			dependents: 4,
+			cardName: 'Josué Simões',
+			birthday: currentDate,
+			documentNumber: '001322548LA035',
+			documentIssueDate: currentDate,
+			nif: '001322548LA035',
+			address: 'Coreia',
+			neighborhood: 'Ingombotas',
+			province: 'Luanda',
+			municipality: 'Luanda',
+			email: 'joel@gmail.com',
+			phone: '923 123 123',
+			comercial: 'Paulo Vieira',
+			enrollmentDate: currentDate,
+			lastAutoRenewDate: currentDate,
+			plan: 'Empresarial',
+			policy: 'Ouro',
+			paymentFrequency: 'Semestral',
+			paymentMethod: 'TPA'
+		}
 		const pdfDoc = await PDFDocument.create()
+		pdfDoc.setTitle('Samuel')
 		const pageHeight = 842
 		const pageWidth = 595
 		const pageSize = [pageWidth, pageHeight] as any
 
 		// PAGE 1
 		const page = pdfDoc.addPage(pageSize)
-		await ApolicePage1Utils.build({ page, pdfDoc })
+		await ApolicePage1Utils.build({ page, pdfDoc, insured })
 
 		// PAGE 2
 		const page2 = pdfDoc.addPage(pageSize)
-		await ApolicePage2Utils.build({ page: page2, pdfDoc })
+		await ApolicePage2Utils.build({ page: page2, pdfDoc, insured })
 
-		/* PAGE 3 */
+		// PAGE 3
 		const page3 = pdfDoc.addPage(pageSize)
-		await ApolicePage3Utils.build({ page: page3, pdfDoc })
+		await ApolicePage3Utils.build({ page: page3, pdfDoc, insured })
 
+		// PAGE 4
 		const page4 = pdfDoc.addPage(pageSize)
-
-		// makeRectangle({
-		// 	page: page4,
-		// 	height: 16,
-		// 	width: pageWidth - 100,
-		// 	x: padding,
-		// 	y: pageHeight - 509
-		// })
-		// page4.drawText(`FORMA DE PAGAMENTO`, {
-		// 	font: await pdfDoc.embedFont(style.fontBold),
-		// 	x: padding + 175,
-		// 	y: pageHeight - 506,
-		// 	size: style.fontSizeTitle
-		// })
+		await ApolicePage4Utils.build({ page: page4, pdfDoc })
 
 		const pdfBytes = await pdfDoc.save()
 		const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' })
@@ -66,11 +80,6 @@ export default function Apolice() {
 		<Layout>
 			<LayoutBody>
 				<SubMenu submenus={SubmenuUtils.commercial} />
-				<div className="mt-2">
-					<button className="btn-primary inline-flex" onClick={generatePDF}>
-						Actualizar
-					</button>
-				</div>
 				{pdfData && (
 					<>
 						<iframe

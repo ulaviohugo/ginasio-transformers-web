@@ -3,7 +3,7 @@ import { ApoliceProps, ApoliceStyle, makeRectangle } from '.'
 import { PDFDocument, PDFPage } from 'pdf-lib'
 
 export class ApolicePage2Utils {
-	static async build({ page, pdfDoc }: ApoliceProps) {
+	static async build({ page, pdfDoc, insured }: ApoliceProps) {
 		const pageHeight = page.getHeight()
 		const style = ApoliceStyle
 

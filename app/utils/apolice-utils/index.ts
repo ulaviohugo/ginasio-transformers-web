@@ -1,8 +1,10 @@
-import { PDFDocument, PDFPage, RGB, StandardFonts, rgb } from 'pdf-lib'
-
 export * from './apolice-page1-utils'
 export * from './apolice-page2-utils'
 export * from './apolice-page3-utils'
+export * from './apolice-page4-utils'
+
+import { InsuredModel } from '@/domain/models'
+import { PDFDocument, PDFPage, RGB, StandardFonts, rgb } from 'pdf-lib'
 
 type RectangleProps = {
 	page: PDFPage
@@ -32,6 +34,7 @@ export const ApoliceStyle = {
 export type ApoliceProps = {
 	page: PDFPage
 	pdfDoc: PDFDocument
+	insured: InsuredModel
 }
 
 export const makeRectangle = ({

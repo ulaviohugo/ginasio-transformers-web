@@ -4,18 +4,13 @@ import { InsuredModel } from '@/domain/models'
 import { DateUtils } from '..'
 
 export class ApolicePage3Utils {
-	static async build({ page, pdfDoc }: ApoliceProps) {
-		const insured: Partial<InsuredModel> = {
-			paymentMethod: 'TPA',
-			paymentFrequency: 'Semestral'
-		}
+	static async build({ page, pdfDoc, insured }: ApoliceProps) {
 		const currentDate = new Date()
 
 		const style = ApoliceStyle
 		const padding = style.defaultPadding
 		const pageHeight = 842
 		const pageWidth = 595
-		const pageSize = [pageWidth, pageHeight] as any
 
 		const imageLogo = await pdfDoc.embedPng(LogoBase64)
 		/* HEADER */
@@ -566,6 +561,7 @@ export class ApolicePage3Utils {
 				size: style.fontSizeText
 			})
 		}
+
 		page.drawText(
 			`LUANDA, ${currentDate.getDate()} DE ${DateUtils.getMonthExt(
 				currentDate
@@ -587,7 +583,8 @@ export class ApolicePage3Utils {
 		page.drawText(dash, {
 			x: padding,
 			y: pageHeight - 720,
-			size: style.fontSizeText
+			size: style.fontSizeText,
+			color: style.borderColor
 		})
 
 		page.drawText(`O TOMADOR DO SEGURO`, {
@@ -599,7 +596,8 @@ export class ApolicePage3Utils {
 		page.drawText(dash, {
 			x: padding + 310,
 			y: pageHeight - 720,
-			size: style.fontSizeText
+			size: style.fontSizeText,
+			color: style.borderColor
 		})
 
 		page.drawText(`DATA:`, {
@@ -610,7 +608,8 @@ export class ApolicePage3Utils {
 		page.drawText(dash, {
 			x: padding,
 			y: pageHeight - 742,
-			size: style.fontSizeText
+			size: style.fontSizeText,
+			color: style.borderColor
 		})
 
 		page.drawText(`DATA:`, {
@@ -621,7 +620,8 @@ export class ApolicePage3Utils {
 		page.drawText(dash, {
 			x: padding + 310,
 			y: pageHeight - 742,
-			size: style.fontSizeText
+			size: style.fontSizeText,
+			color: style.borderColor
 		})
 	}
 }
