@@ -1,4 +1,4 @@
-import { PDFDocument, PDFPage, StandardFonts, rgb } from 'pdf-lib'
+import { PDFDocument, PDFPage, RGB, StandardFonts, rgb } from 'pdf-lib'
 
 export * from './apolice-page1-utils'
 export * from './apolice-page2-utils'
@@ -10,6 +10,7 @@ type RectangleProps = {
 	y: number
 	width: number
 	height?: number
+	borderColor?: RGB
 }
 
 export const ApoliceStyle = {
@@ -37,6 +38,7 @@ export const makeRectangle = ({
 	page,
 	height = ApoliceStyle.cellHeight,
 	width,
+	borderColor = ApoliceStyle.borderColor,
 	x,
 	y
 }: RectangleProps) => {
@@ -45,7 +47,7 @@ export const makeRectangle = ({
 		y,
 		width,
 		height,
-		borderColor: ApoliceStyle.borderColor,
+		borderColor,
 		borderWidth: ApoliceStyle.borderWidth,
 		color: ApoliceStyle.colorRectangle
 	})
