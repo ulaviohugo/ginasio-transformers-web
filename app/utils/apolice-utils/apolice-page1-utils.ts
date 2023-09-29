@@ -48,7 +48,9 @@ export class ApolicePage1Utils {
 			enrollmentDate: currentDate,
 			lastAutoRenewDate: currentDate,
 			plan: 'Empresarial',
-			policy: 'Ouro'
+			policy: 'Ouro',
+			paymentFrequency: 'Semestral',
+			paymentMethod: 'TPA'
 		}
 
 		const pageWidth = page.getWidth()
@@ -170,13 +172,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 380,
 			y: pageHeight - 164
 		})
 		if (formData.proposalType == 'Alteração do Plano') {
 			page.drawText('X', {
 				x: padding + 381.5,
-				y: pageHeight - 163,
+				y: pageHeight - 162,
 				size: style.fontSizeText
 			})
 		}
@@ -197,13 +200,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 380.5,
 			y: pageHeight - 178
 		})
 		if (formData.proposalType == 'Novo Co-Seguro') {
 			page.drawText('X', {
 				x: padding + 382,
-				y: pageHeight - 177,
+				y: pageHeight - 176,
 				size: style.fontSizeText
 			})
 		}
@@ -508,13 +512,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 35,
 			y: pageHeight - 322.5
 		})
 		if (insured.gender == 'Feminino') {
 			page.drawText('X', {
 				x: padding + 36.5,
-				y: pageHeight - 322,
+				y: pageHeight - 321,
 				size: style.fontSizeText
 			})
 		}
@@ -535,13 +540,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 95,
 			y: pageHeight - 322.5
 		})
 		if (insured.gender == 'Masculino') {
 			page.drawText('X', {
 				x: padding + 96.5,
-				y: pageHeight - 322,
+				y: pageHeight - 321,
 				size: style.fontSizeText
 			})
 		}
@@ -865,13 +871,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 45,
 			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Empresarial') {
 			page.drawText('X', {
 				x: padding + 46.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
@@ -892,13 +899,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 115,
 			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Familiar') {
 			page.drawText('X', {
 				x: padding + 116.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
@@ -919,13 +927,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 185,
 			y: pageHeight - 447.5
 		})
 		if (insured.plan == 'Individual') {
 			page.drawText('X', {
 				x: padding + 186.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
@@ -958,13 +967,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 320,
 			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Cobre') {
 			page.drawText('X', {
 				x: padding + 321.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
@@ -985,13 +995,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 380,
 			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Prata') {
 			page.drawText('X', {
 				x: padding + 381.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
@@ -1012,13 +1023,14 @@ export class ApolicePage1Utils {
 			page,
 			height: 8,
 			width: 8,
+			borderColor: style.borderColorBlack,
 			x: padding + 439,
 			y: pageHeight - 447.5
 		})
 		if (insured.policy == 'Ouro') {
 			page.drawText('X', {
 				x: padding + 440.5,
-				y: pageHeight - 447,
+				y: pageHeight - 446,
 				size: style.fontSizeText
 			})
 		}
