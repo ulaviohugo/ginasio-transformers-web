@@ -11,7 +11,7 @@ import {
 	ApolicePage4Utils,
 	SubmenuUtils
 } from '@/utils'
-import { InsuredModel } from '@/domain/models'
+import { mockInsured } from '@/test/model/mocks'
 
 export default function Apolice() {
 	const [pdfData, setPdfData] = useState<string | null>(null)
@@ -22,33 +22,8 @@ export default function Apolice() {
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {}
 
 	const generatePDF = async () => {
-		const currentDate = new Date()
+		const insured = mockInsured()
 
-		const insured: InsuredModel = {
-			name: 'Josué Agostinho Cabral Simões',
-			gender: 'Masculino',
-			maritalStatus: 'Solteiro (a)',
-			occupation: 'Engenheiro Informático',
-			dependents: 4,
-			cardName: 'Josué Simões',
-			birthDate: currentDate,
-			documentNumber: '001322548LA035',
-			documentIssueDate: currentDate,
-			nif: '001322548LA035',
-			address: 'Coreia',
-			neighborhood: 'Ingombotas',
-			province: 'Luanda',
-			municipality: 'Luanda',
-			email: 'joel@gmail.com',
-			phone: '923 123 123',
-			comercial: 'Paulo Vieira',
-			enrollmentDate: currentDate,
-			lastAutoRenewDate: currentDate,
-			plan: 'Empresarial',
-			policy: 'Ouro',
-			paymentFrequency: 'Semestral',
-			paymentMethod: 'TPA'
-		}
 		const pdfDoc = await PDFDocument.create()
 		pdfDoc.setTitle('Samuel')
 		const pageHeight = 842

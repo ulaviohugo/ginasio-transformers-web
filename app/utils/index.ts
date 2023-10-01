@@ -1,5 +1,6 @@
 export * from './apolice-utils'
 export * from './array-utils'
+export * from './billing-utils'
 export * from './color-utils'
 export * from './date-utils'
 export * from './file-utils'

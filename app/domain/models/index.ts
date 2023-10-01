@@ -1,4 +1,5 @@
 export * from './account'
+export * from './billing'
 export * from './category'
 export * from './customer'
 export * from './employee'

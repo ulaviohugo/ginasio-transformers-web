@@ -17,6 +17,7 @@ export type InsuredModel = {
 	municipality: string
 	email: string
 	phone: string
+	phone2: string
 	comercial: string
 	enrollmentDate: Date
 	lastAutoRenewDate: Date

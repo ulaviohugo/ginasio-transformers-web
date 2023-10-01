@@ -15,6 +15,7 @@ export class SubmenuUtils {
 		{ link: '/comercial/produtos', text: 'Produtos' },
 		{ link: '/comercial/fornecedores', text: 'Fornecedores' },
 		{ link: '/comercial/clientes', text: 'Clientes' },
-		{ link: '/comercial/apolice', text: 'Apólice' }
+		{ link: '/comercial/apolice', text: 'Apólice' },
+		{ link: '/comercial/factura', text: 'Factura' }
 	]
 }

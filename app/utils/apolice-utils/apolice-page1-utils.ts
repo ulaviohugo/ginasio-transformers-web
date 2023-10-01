@@ -1,7 +1,6 @@
 import { LogoBase64 } from '@/(presentation)/components'
 import { ApoliceProps, ApoliceStyle, makeRectangle } from '.'
 import { DateUtils } from '..'
-import { InsuredModel } from '@/domain/models'
 
 type FormDataProps = {
 	mediator: string
@@ -9,7 +8,7 @@ type FormDataProps = {
 	proposalNumber: string
 	proposalType: 'Novo Co-Seguro' | 'Alteração do Plano'
 	assistedBy: string
-	assistedAt: Date
+	createdAt: Date
 	proposalCurrency: string
 }
 
@@ -23,7 +22,7 @@ export class ApolicePage1Utils {
 			proposalNumber: '234',
 			proposalType: 'Novo Co-Seguro',
 			assistedBy: 'Samuel Levítico Francisco Freitas',
-			assistedAt: currentDate,
+			createdAt: currentDate,
 			proposalCurrency: 'AOA'
 		}
 
@@ -281,7 +280,7 @@ export class ApolicePage1Utils {
 			x: padding + 234,
 			y: pageHeight - 235
 		})
-		page.drawText(String(DateUtils.getDatePt(formData.assistedAt)), {
+		page.drawText(String(DateUtils.getDatePt(formData.createdAt)), {
 			x: padding + 236,
 			y: pageHeight - 231,
 			size: style.fontSizeText
