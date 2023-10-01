@@ -24,8 +24,8 @@ const weekDays = [
 ]
 
 export class DateUtils {
-	static getDate(dateParam: Date | string, separator = '-') {
-		if (!dateParam) return null
+	static getDate(dateParam: Date | string, separator = '-'): string {
+		if (!dateParam) return null as any
 		const date = this.convertToDate(dateParam)
 
 		const year = date.getUTCFullYear(),
@@ -68,6 +68,19 @@ export class DateUtils {
 
 	static getWeekDay(date: Date) {
 		return weekDays[date.getDay()]
+	}
+
+	static getAge(dateParam: Date) {
+		const date = this.convertToDate(dateParam)
+
+		// Data atual
+		var dataAtual = new Date()
+
+		// Calcula a diferença em milissegundos
+		var diferencaEmMilissegundos = (dataAtual as any) - (date as any)
+
+		// Converte a diferença em milissegundos para anos
+		return Math.floor(diferencaEmMilissegundos / 31536000000) // Aproximadamente 31536000000 milissegundos em um ano
 	}
 
 	static convertToDate(date: Date | string | undefined): Date {

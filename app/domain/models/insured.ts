@@ -1,28 +1,42 @@
-import { PaymentUtils } from '@/utils'
-
 export type InsuredModel = {
+	id: number
 	name: string
 	gender: 'Masculino' | 'Feminino'
 	maritalStatus: string
 	cardName: string
-	birthDate: Date
+	dateOfBirth: Date
+	documentType: string
 	documentNumber: string
 	documentIssueDate: Date
 	nif: string
 	dependents: number
 	occupation: string
+	provinceId?: number
+	municipalityId?: number
 	address: string
 	neighborhood: string
-	province: string
-	municipality: string
 	email: string
 	phone: string
 	phone2: string
 	comercial: string
 	enrollmentDate: Date
-	lastAutoRenewDate: Date
+	renewalDate: Date
 	plan: 'Empresarial' | 'Familiar' | 'Individual'
+	proposalType: 'Novo Co-Seguro' | 'Alteração do Plano'
+	proposalNumber: string
+	proposalCurrency: 'AOA'
 	policy: 'Cobre' | 'Prata' | 'Ouro'
+	mediator: string
+	policyNumber: string
+	typeOfInsurance: 'Individual' | 'Familiar' | 'Empresarial'
+	copaymentAmount: number
 	paymentMethod: 'Dinheiro' | 'Multicaixa' | 'TPA' | 'Transferência Express'
 	paymentFrequency: 'Trimestral' | 'Semestral' | 'Anual'
+	student: 'SIM' | 'NÃO'
+	relationship: string
+
+	createdAt?: Date
+	createdById?: number
+	updatedAt?: Date
+	updatedById?: number
 }

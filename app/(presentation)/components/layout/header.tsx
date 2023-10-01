@@ -36,6 +36,12 @@ export function Header() {
 						icon={IconProduct}
 					/>
 					<Item
+						active={path.indexOf('/segurados') >= 0}
+						link={'/segurados'}
+						text="Segurados"
+						icon={IconUser}
+					/>
+					<Item
 						active={path.indexOf('/rh') >= 0}
 						link={'/rh'}
 						text="RH"

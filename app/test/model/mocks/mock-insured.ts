@@ -4,13 +4,14 @@ export const mockInsured = (): InsuredModel => {
 	const currentDate = new Date()
 
 	return {
+		id: 1,
 		name: 'Josué Agostinho Cabral Simões',
 		gender: 'Masculino',
 		maritalStatus: 'Solteiro (a)',
 		occupation: 'Engenheiro Informático',
 		dependents: 4,
 		cardName: 'Josué Simões',
-		birthDate: currentDate,
+		dateOfBirth: currentDate,
 		documentNumber: '001322548LA035',
 		documentIssueDate: currentDate,
 		nif: '001322548LA035',
@@ -23,10 +24,17 @@ export const mockInsured = (): InsuredModel => {
 		phone2: '990690710',
 		comercial: 'Paulo Vieira',
 		enrollmentDate: currentDate,
-		lastAutoRenewDate: currentDate,
+		renewalDate: currentDate,
 		plan: 'Empresarial',
 		policy: 'Ouro',
 		paymentFrequency: 'Semestral',
-		paymentMethod: 'TPA'
+		paymentMethod: 'TPA',
+		mediator: 'Santos Paul',
+		policyNumber: '12123',
+		proposalCurrency: 'AOA',
+		proposalNumber: '1231',
+		proposalType: 'Novo Co-Seguro',
+		typeOfInsurance: 'Individual',
+		copaymentAmount: 2000
 	}
 }

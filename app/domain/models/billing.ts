@@ -4,13 +4,6 @@ export type BillingModel = {
 	id: number
 	number: string
 	createdAt: Date
-	mediator: string
-	policyNumber: string
-	proposalNumber: string
-	proposalType: 'Novo Co-Seguro' | 'Alteração do Plano'
-	typeOfInsurance: 'Individual' | 'Familiar' | 'Empresarial'
-	proposalCurrency: 'AOA'
-	copaymentAmount: number
 	consultationService:
 		| 'Consulta de Ginecologia'
 		| 'Consulta Geral'

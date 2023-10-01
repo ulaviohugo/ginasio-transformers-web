@@ -181,7 +181,7 @@ export class BillingUtils {
 				size: 8
 			}
 		)
-		page.drawText(`${billing.typeOfInsurance}`, {
+		page.drawText(`${billing.insured.typeOfInsurance}`, {
 			x: padding,
 			y: pageHeight - 284,
 			size: style.fontSizeTitle
@@ -202,7 +202,7 @@ export class BillingUtils {
 			}
 		)
 		page.drawText(
-			`${NumberUtils.formatCurrency(billing.copaymentAmount)} ${currencyDesc}`,
+			`${NumberUtils.formatCurrency(billing.insured.copaymentAmount)} ${currencyDesc}`,
 			{
 				x: padding + 195,
 				y: pageHeight - 284,
@@ -387,7 +387,7 @@ export class BillingUtils {
 					size: 8
 				})
 				const subTotal = billing.services.reduce(
-					(prev, { quantity, unitPrice, discount }) => prev + quantity * unitPrice,
+					(prev, { quantity, unitPrice }) => prev + quantity * unitPrice,
 					0
 				)
 

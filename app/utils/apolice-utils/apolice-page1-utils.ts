@@ -382,7 +382,7 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 292
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.birthDate)), {
+		page.drawText(String(DateUtils.getDatePt(insured.dateOfBirth)), {
 			x: padding + 437,
 			y: pageHeight - 288,
 			size: style.fontSizeText
@@ -810,7 +810,7 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 434
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.lastAutoRenewDate)), {
+		page.drawText(String(DateUtils.getDatePt(insured.renewalDate)), {
 			x: padding + 437,
 			y: pageHeight - 430,
 			size: style.fontSizeText

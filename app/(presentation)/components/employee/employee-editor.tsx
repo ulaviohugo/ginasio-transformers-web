@@ -22,7 +22,13 @@ import {
 	Select
 } from '..'
 
-import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
+import {
+	DateUtils,
+	DocumentUtils,
+	LabelUtils,
+	MunicipalityProps,
+	ProvinceProps
+} from '@/utils'
 import { addEmployeeStore, updateEmployeeStore } from '@/(presentation)/redux'
 import { AddEmployee, UpdateEmployee } from '@/domain/usecases'
 import { useLocations } from '@/(presentation)/hooks'
@@ -215,11 +221,7 @@ export function EmployeeEditor({
 										name="documentType"
 										value={formDate?.documentType || ''}
 										label={LabelUtils.translateField('documentType')}
-										data={[
-											{ text: 'Bilhete de identidade' },
-											{ text: 'Passaporte' },
-											{ text: 'Cartão de residência' }
-										]}
+										data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
