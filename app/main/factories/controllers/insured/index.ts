@@ -1,0 +1,7 @@
+export * from './add-insured-controller-factory'
+export * from './add-insured-validation-factory'
+export * from './count-insured-controller-factory'
+export * from './delete-insured-controller-factory'
+export * from './load-insureds-controller-factory'
+export * from './update-insured-controller-factory'
+export * from './update-insured-validation-factory'

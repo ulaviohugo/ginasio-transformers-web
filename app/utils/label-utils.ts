@@ -27,7 +27,7 @@ export class LabelUtils {
 		barCode: 'Código de barra',
 		businessAddress: 'Endereço comercial',
 		categoryId: 'Categoria',
-		cardName: 'Nome cartão',
+		cardName: 'Nome do cartão',
 		cardNumber: 'Cartão co-seguro',
 		color: 'Cor',
 		comercial: 'Comercial',
