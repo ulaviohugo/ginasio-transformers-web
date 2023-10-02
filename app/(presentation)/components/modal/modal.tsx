@@ -28,7 +28,7 @@ export function Modal({ children, onClose, show, size = 'md' }: ModalProps) {
 	return (
 		<div className="fixed top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-50">
 			<div
-				className={`relative flex flex-col bg-white p-5 rounded-lg max-h-[90%] ${w[size]}`}
+				className={`relative flex flex-col bg-white p-5 mx-5 rounded-lg max-h-[90%] ${w[size]}`}
 			>
 				<button
 					className="absolute right-2 top-2 group"
