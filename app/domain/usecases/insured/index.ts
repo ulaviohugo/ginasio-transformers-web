@@ -1,0 +1,5 @@
+export * from './add-insured'
+export * from './count-insured'
+export * from './delete-insured'
+export * from './load-insureds'
+export * from './update-insured'
