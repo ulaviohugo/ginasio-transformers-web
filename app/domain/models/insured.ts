@@ -1,9 +1,11 @@
 export type InsuredModel = {
 	id: number
 	name: string
+	policyholder: string
 	gender: 'Masculino' | 'Feminino'
 	maritalStatus: string
 	cardName: string
+	cardNumber: string
 	dateOfBirth: Date
 	documentType: string
 	documentNumber: string
@@ -34,6 +36,7 @@ export type InsuredModel = {
 	paymentFrequency: 'Trimestral' | 'Semestral' | 'Anual'
 	student: 'SIM' | 'NÃO'
 	relationship: string
+	review: string
 
 	createdAt?: Date
 	createdById?: number
