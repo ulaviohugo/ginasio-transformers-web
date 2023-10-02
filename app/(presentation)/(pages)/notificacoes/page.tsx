@@ -13,13 +13,13 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useNotifications } from '@/(presentation)/hooks'
 import { RemoteLoadNotifications } from '@/data/usecases'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loadNotificationStore } from '@/(presentation)/redux'
 import { makeRemoteLoadNotifications } from '@/main/factories/usecases/remote'
 
 export default function Notifications() {
 	const dispatch = useDispatch()
-	const notifications = useNotifications()
+	const notifications = useSelector(useNotifications())
 	const [isLoading, setIsLoading] = useState(true)
 	useEffect(() => {
 		makeRemoteLoadNotifications()

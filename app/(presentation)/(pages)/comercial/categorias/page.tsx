@@ -25,11 +25,11 @@ import {
 import { SubmenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Categorias() {
 	const dispatch = useDispatch()
-	const categories = useCategories()
+	const categories = useSelector(useCategories())
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedCategory, setSelectedCategory] = useState<CategoryModel>(
 		{} as CategoryModel

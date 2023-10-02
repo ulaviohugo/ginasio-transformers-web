@@ -19,7 +19,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { LabelUtils } from '@/utils'
 import { useCategories } from '@/(presentation)/hooks'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
 import {
 	addProductStore,
@@ -44,7 +44,7 @@ export function ProductEditor({
 	data
 }: ProductEditorProps) {
 	const dispatch = useDispatch()
-	const categories = useCategories()
+	const categories = useSelector(useCategories())
 	const [formDate, setFormData] = useState<ProductModel>(data || ({} as ProductModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')

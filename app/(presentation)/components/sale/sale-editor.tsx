@@ -3,7 +3,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { PurchaseModel, SaleModel } from '@/domain/models'
 import {
@@ -52,10 +52,9 @@ export function SaleEditor({
 	updateSale
 }: SaleEditorProps) {
 	const dispatch = useDispatch()
-	const stocks = usePurchases()
-	const customers = useCustomers()
-
-	const user = useAuth()
+	const stocks = useSelector(usePurchases())
+	const customers = useSelector(useCustomers())
+	const user = useSelector(useAuth())
 
 	const [formData, setFormData] = useState<SaleModel>(data || ({} as SaleModel))
 	const [isLoading, setIsLoading] = useState(false)

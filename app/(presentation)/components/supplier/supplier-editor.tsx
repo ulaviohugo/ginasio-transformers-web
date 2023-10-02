@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { SupplierModel } from '@/domain/models'
 import {
@@ -60,9 +60,9 @@ export function SupplierEditor({
 	updateSupplier
 }: SupplierEditorProps) {
 	const dispatch = useDispatch()
-	const { countries, provinces, municipalities } = useLocations()
-	const categories = useCategories()
-	const products = useProducts()
+	const { countries, provinces, municipalities } = useSelector(useLocations())
+	const categories = useSelector(useCategories())
+	const products = useSelector(useProducts())
 
 	const [productItems, setProductItems] = useState<any>({ 0: {} })
 

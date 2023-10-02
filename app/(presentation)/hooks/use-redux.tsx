@@ -1,16 +1,15 @@
-import { useSelector } from 'react-redux'
 import { RootState } from '@/(presentation)/redux'
 
-export const useRedux = () => useSelector((state: RootState) => state)
-
-export const useAuth = () => useRedux().auth.auth
-export const useCategories = () => useRedux().categories.categories
-export const useCustomers = () => useRedux().customers.customers
-export const useEmployees = () => useRedux().employees.employees
-export const useEmployeePresences = () => useRedux().employeePresences.employeePresences
-export const useLocations = () => useRedux().locations
-export const useNotifications = () => useRedux().notifications.notifications
-export const useProducts = () => useRedux().products.products
-export const usePurchases = () => useRedux().purchases.purchases
-export const useSales = () => useRedux().sales.sales
-export const useSuppliers = () => useRedux().suppliers.suppliers
+export const useAuth = () => (state: RootState) => state.auth.auth
+export const useCategories = () => (state: RootState) => state.categories.categories
+export const useCustomers = () => (state: RootState) => state.customers.customers
+export const useEmployees = () => (state: RootState) => state.employees.employees
+export const useEmployeePresences = () => (state: RootState) =>
+	state.employeePresences.employeePresences
+export const useLocations = () => (state: RootState) => state.locations
+export const useNotifications = () => (state: RootState) =>
+	state.notifications.notifications
+export const useProducts = () => (state: RootState) => state.products.products
+export const usePurchases = () => (state: RootState) => state.purchases.purchases
+export const useSales = () => (state: RootState) => state.sales.sales
+export const useSuppliers = () => (state: RootState) => state.suppliers.suppliers

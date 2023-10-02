@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { CustomerModel } from '@/domain/models'
 import {
@@ -40,7 +40,7 @@ export function CustomerEditor({
 	updateCustomer
 }: CustomerEditorProps) {
 	const dispatch = useDispatch()
-	const { countries, provinces, municipalities } = useLocations()
+	const { countries, provinces, municipalities } = useSelector(useLocations())
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])

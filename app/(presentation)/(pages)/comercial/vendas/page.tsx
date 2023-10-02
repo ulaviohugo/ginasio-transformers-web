@@ -28,11 +28,11 @@ import { DateUtils, NumberUtils, StringUtils, SubmenuUtils } from '@/utils'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Vendas() {
 	const dispatch = useDispatch()
-	const sales = useSales()
+	const sales = useSelector(useSales())
 	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)

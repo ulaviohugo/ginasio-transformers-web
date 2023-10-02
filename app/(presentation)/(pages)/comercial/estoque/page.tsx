@@ -23,11 +23,11 @@ import {
 } from '@/main/factories/usecases/remote'
 import { SubmenuUtils } from '@/utils'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Entradas() {
 	const dispatch = useDispatch()
-	const purchases = usePurchases()
+	const purchases = useSelector(usePurchases())
 	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
 		{} as PurchaseModel
 	)

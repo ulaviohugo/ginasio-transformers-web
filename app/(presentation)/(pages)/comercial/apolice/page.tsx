@@ -62,7 +62,7 @@ export default function Apolice() {
 		<Layout>
 			<LayoutBody>
 				<SubMenu submenus={SubmenuUtils.commercial} />
-				<PolicyholderEditor onChange={handleInputChange} />
+				{/* <PolicyholderEditor onChange={handleInputChange} /> */}
 				{pdfData && (
 					<>
 						<iframe

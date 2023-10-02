@@ -14,9 +14,10 @@ import {
 import { setCurrentAccountAdapter } from '@/main/adapters'
 import { StringUtils } from '@/utils'
 import { useAuth } from '@/(presentation)/hooks'
+import { useSelector } from 'react-redux'
 
 export function Header() {
-	const user = useAuth()
+	const user = useSelector(useAuth())
 	const [isLoading, setIsLoading] = useState(false)
 	const handleSignout = async () => {
 		setIsLoading(true)

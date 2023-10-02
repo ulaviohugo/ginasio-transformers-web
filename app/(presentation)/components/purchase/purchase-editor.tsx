@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
 import {
@@ -50,10 +50,10 @@ export function PurchaseEditor({
 	stockListComponent
 }: PurchaseEditorProps) {
 	const dispatch = useDispatch()
-	const categories = useCategories()
-	const products = useProducts()
-	const suppliers = useSuppliers()
-	const user = useAuth()
+	const categories = useSelector(useCategories())
+	const products = useSelector(useProducts())
+	const suppliers = useSelector(useSuppliers())
+	const user = useSelector(useAuth())
 
 	const [productList, setProductList] = useState<ProductModel[]>([])
 	const [categoryList, setCategoryList] = useState<CategoryModel[]>([])

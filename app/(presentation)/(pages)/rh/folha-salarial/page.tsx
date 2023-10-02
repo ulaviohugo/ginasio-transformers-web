@@ -19,12 +19,12 @@ import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
 import { DateUtils, SubmenuUtils } from '@/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function FolhaSalarial() {
 	const dispatch = useDispatch()
 
-	const employees = useEmployees()
+	const employees = useSelector(useEmployees())
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
 		{} as EmployeeModel
 	)
@@ -80,7 +80,7 @@ export default function FolhaSalarial() {
 }
 
 const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
-	const user = useAuth()
+	const user = useSelector(useAuth())
 	const date = new Date()
 	const years = [
 		date.getUTCFullYear() + 1,

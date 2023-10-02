@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useEffect } from 'react'
 import { useAuth } from '@/(presentation)/hooks'
 import { usePathname } from 'next/navigation'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addAuthStore } from '@/(presentation)/redux'
 import { getCurrentAccountAdapter } from '@/main/adapters'
 
@@ -14,7 +14,7 @@ type AuthProviderProps = {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-	const auth = useAuth()
+	const auth = useSelector(useAuth())
 	const path = usePathname()
 	const dispatch = useDispatch()
 

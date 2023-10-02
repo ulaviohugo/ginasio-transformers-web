@@ -25,6 +25,7 @@ export const makeUpdateInsuredValidation = () => {
 		'documentType',
 		'documentNumber',
 		'documentIssueDate',
+		'nif',
 		'gender',
 		'dependents',
 		'maritalStatus',

@@ -36,10 +36,14 @@ export type InsuredModel = {
 	student?: 'SIM' | 'NÃO'
 	relationship?: string
 	review?: string
+	paymentMethod?: string
 	createdAt?: Date
 	createdById?: number
 	updatedAt?: Date
 	updatedById?: number
+
+	province?: string
+	municipality?: string
 
 	policyholder?: InsuredModel
 	insureds?: InsuredModel[]

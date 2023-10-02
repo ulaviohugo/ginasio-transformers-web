@@ -3,7 +3,7 @@
 import { HttpStatusCode } from '@/data/protocols/http'
 import { makeApiUrl, makeFetchHttpClient } from '@/main/factories/http'
 import { ReactNode, createContext, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loadLocationStore } from '@/(presentation)/redux'
 import { useAuth } from '@/(presentation)/hooks'
 
@@ -15,7 +15,7 @@ type LocationProviderProps = {
 
 export const LocationProvider = ({ children }: LocationProviderProps) => {
 	const dispatch = useDispatch()
-	const auth = useAuth()
+	const auth = useSelector(useAuth())
 
 	useEffect(() => {
 		if (auth) {

@@ -5,6 +5,7 @@ import { useCategories, useProducts } from '@/(presentation)/hooks'
 import { IconClose, InputPrice, Select } from '..'
 import { LabelUtils } from '@/utils'
 import { ProductModel, SupplierProductModel } from '@/domain/models'
+import { useSelector } from 'react-redux'
 
 export type ProductCardChangeProps = {
 	index: number
@@ -27,8 +28,8 @@ export function SupplierProductEditor({
 	onChange,
 	onRemoveItem
 }: SupplierProductEditorProps) {
-	const categories = useCategories()
-	const products = useProducts()
+	const categories = useSelector(useCategories())
+	const products = useSelector(useProducts())
 	const [productList, setProductList] = useState<ProductModel[]>([])
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

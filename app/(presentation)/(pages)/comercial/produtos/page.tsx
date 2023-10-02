@@ -28,11 +28,11 @@ import {
 import { NumberUtils, SubmenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Categorias() {
 	const dispatch = useDispatch()
-	const products = useProducts()
+	const products = useSelector(useProducts())
 	const [selectedProduct, setSelectedProduct] = useState<ProductModel>({} as ProductModel)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)

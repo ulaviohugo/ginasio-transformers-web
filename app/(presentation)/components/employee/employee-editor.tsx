@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { EmployeeModel } from '@/domain/models'
 import {
@@ -49,7 +49,7 @@ export function EmployeeEditor({
 	updateEmployee
 }: EmployeeEditorProps) {
 	const dispatch = useDispatch()
-	const { countries, provinces, municipalities } = useLocations()
+	const { countries, provinces, municipalities } = useSelector(useLocations())
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])

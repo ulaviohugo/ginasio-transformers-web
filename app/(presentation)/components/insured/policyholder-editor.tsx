@@ -23,6 +23,7 @@ import { InsuredModel } from '@/domain/models'
 import { useLocations } from '@/(presentation)/hooks'
 import { AddInsured } from '@/domain/usecases'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 type PolicyholderEditorProps = {
 	policyholder?: InsuredModel
@@ -33,7 +34,7 @@ export function PolicyholderEditor({
 	addInsured,
 	policyholder
 }: PolicyholderEditorProps) {
-	const { provinces, municipalities } = useLocations()
+	const { provinces, municipalities } = useSelector(useLocations())
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
 	const [formData, setFormData] = useState<InsuredModel>({
@@ -220,6 +221,13 @@ export function PolicyholderEditor({
 								value={(formData?.documentIssueDate as any) || ''}
 								label={LabelUtils.translateField('documentIssueDate')}
 								disabled={!formData?.documentType}
+								onChange={handleChange}
+							/>
+							<Input
+								name="nif"
+								id="nif"
+								value={formData?.nif || ''}
+								label={LabelUtils.translateField('nif')}
 								onChange={handleChange}
 							/>
 							<Select

@@ -17,7 +17,7 @@ import {
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { DeletePurchase, LoadPurchases } from '@/domain/usecases'
 import { loadPurchaseStore, removePurchaseStore } from '@/(presentation)/redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import {
 	useCategories,
@@ -41,10 +41,10 @@ type FilterDataProps = {
 
 export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 	const dispatch = useDispatch()
-	const purchases = usePurchases()
-	const suppliers = useSuppliers()
-	const categories = useCategories()
-	const products = useProducts()
+	const purchases = useSelector(usePurchases())
+	const suppliers = useSelector(useSuppliers())
+	const categories = useSelector(useCategories())
+	const products = useSelector(useProducts())
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [showFormDelete, setShowFormDelete] = useState(false)

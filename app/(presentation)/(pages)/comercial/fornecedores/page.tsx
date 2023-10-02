@@ -31,7 +31,7 @@ import {
 	makeRemoteLoadSuppliers
 } from '@/main/factories/usecases/remote'
 import { loadSupplierStore, removeSupplierStore } from '@/(presentation)/redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { useSuppliers } from '@/(presentation)/hooks'
 
@@ -42,7 +42,7 @@ export default function Suppliers() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
-	const suppliers = useSuppliers()
+	const suppliers = useSelector(useSuppliers())
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {

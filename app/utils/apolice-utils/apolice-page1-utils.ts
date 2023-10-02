@@ -16,6 +16,8 @@ export class ApolicePage1Utils {
 	static async build({ page, pdfDoc, insured }: ApoliceProps) {
 		const currentDate = new Date()
 
+		const { province, municipality } = insured
+
 		const formData: FormDataProps = {
 			mediator: 'Samuel Freitas',
 			policyNumber: '25',
@@ -359,7 +361,7 @@ export class ApolicePage1Utils {
 			x: padding + 135,
 			y: pageHeight - 292
 		})
-		page.drawText(insured.cardName, {
+		page.drawText(insured.cardName as any, {
 			x: padding + 137,
 			y: pageHeight - 288,
 			size: style.fontSizeText
@@ -451,7 +453,7 @@ export class ApolicePage1Utils {
 			x: padding + 410,
 			y: pageHeight - 309
 		})
-		page.drawText(insured.nif, {
+		page.drawText(insured.nif as any, {
 			x: padding + 412,
 			y: pageHeight - 305,
 			size: style.fontSizeText
@@ -542,7 +544,7 @@ export class ApolicePage1Utils {
 			x: padding + 265,
 			y: pageHeight - 326
 		})
-		page.drawText(insured.occupation, {
+		page.drawText(insured.occupation as any, {
 			x: padding + 267,
 			y: pageHeight - 322,
 			size: style.fontSizeText
@@ -657,7 +659,7 @@ export class ApolicePage1Utils {
 			x: padding + 305,
 			y: pageHeight - 360
 		})
-		page.drawText(String(insured.municipality), {
+		page.drawText(String(municipality), {
 			x: padding + 307,
 			y: pageHeight - 356,
 			size: style.fontSizeText
@@ -680,7 +682,7 @@ export class ApolicePage1Utils {
 			x: padding + 65,
 			y: pageHeight - 377
 		})
-		page.drawText(String(insured.province), {
+		page.drawText(String(province), {
 			x: padding + 67,
 			y: pageHeight - 373,
 			size: style.fontSizeText

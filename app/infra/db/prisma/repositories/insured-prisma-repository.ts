@@ -23,6 +23,12 @@ export class InsuredPrismaRepository implements InsuredRepository {
 				phone: true,
 				relationship: true
 			}
+		},
+		policyholder: {
+			select: {
+				id: true,
+				name: true
+			}
 		}
 	}
 	constructor() {

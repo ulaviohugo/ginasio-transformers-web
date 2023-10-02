@@ -15,7 +15,7 @@ import { SubmenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import { makeRemoteLoadEmployeePresences } from '@/main/factories/usecases/remote'
 import { loadEmployeeStore } from '@/(presentation)/redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEmployees } from '@/(presentation)/hooks'
 
 export default function Employees() {
@@ -23,7 +23,7 @@ export default function Employees() {
 		{} as EmployeeModel
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const employees = useEmployees()
+	const employees = useSelector(useEmployees())
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {

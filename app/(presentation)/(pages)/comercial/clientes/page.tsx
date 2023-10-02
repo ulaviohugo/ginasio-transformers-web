@@ -27,7 +27,7 @@ import {
 	makeRemoteLoadCustomers
 } from '@/main/factories/usecases/remote'
 import { loadCustomerStore, removeCustomerStore } from '@/(presentation)/redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { useCustomers } from '@/(presentation)/hooks'
 
@@ -38,7 +38,7 @@ export default function Customers() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
-	const customers = useCustomers()
+	const customers = useSelector(useCustomers())
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {

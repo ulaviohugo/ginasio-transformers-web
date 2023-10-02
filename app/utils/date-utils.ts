@@ -34,7 +34,7 @@ export class DateUtils {
 		return `${year}${separator}${month}${separator}${day}`
 	}
 
-	static getDatePt(dateParam: Date | string, separator = '-') {
+	static getDatePt(dateParam: Date | string | undefined, separator = '-') {
 		if (!dateParam) return null
 		const date = this.convertToDate(dateParam)
 

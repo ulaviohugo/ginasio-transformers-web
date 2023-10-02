@@ -361,6 +361,7 @@ model Insured {
   mediator          String?   @db.VarChar(50)
   policyNumber      String?   @map("policy_number") @db.VarChar(50)
   paymentFrequency  String?   @map("payment_frequency") @db.VarChar(15)
+  paymentMethod     String?   @map("payment_method") @db.VarChar(30)
   student           String?
   relationship      String?   @db.VarChar(15)
   review            String?   @db.VarChar(15)

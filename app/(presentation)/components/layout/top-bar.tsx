@@ -4,9 +4,10 @@ import { StringUtils } from '@/utils'
 import { IconNotification, IconUser } from '..'
 import { useAuth } from '@/(presentation)/hooks'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 export function TopBar() {
-	const user = useAuth()
+	const user = useSelector(useAuth())
 	return (
 		<nav className="flex bg-white -mx-4 px-4">
 			<ul className="ml-auto flex items-center gap-2 py-2">
