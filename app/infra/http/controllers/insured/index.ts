@@ -1,0 +1,5 @@
+export * from './add-insured-controller'
+export * from './count-insured-controller'
+export * from './delete-insured-controller'
+export * from './load-insureds-controller'
+export * from './update-insured-controller'
