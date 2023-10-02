@@ -3,7 +3,12 @@
 import { PDFDocument } from 'pdf-lib'
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { InsuredEditor, Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
+import {
+	PolicyholderEditor,
+	Layout,
+	LayoutBody,
+	SubMenu
+} from '@/(presentation)/components'
 import {
 	ApolicePage1Utils,
 	ApolicePage2Utils,
@@ -57,7 +62,7 @@ export default function Apolice() {
 		<Layout>
 			<LayoutBody>
 				<SubMenu submenus={SubmenuUtils.commercial} />
-				<InsuredEditor onChange={handleInputChange} />
+				<PolicyholderEditor onChange={handleInputChange} />
 				{pdfData && (
 					<>
 						<iframe

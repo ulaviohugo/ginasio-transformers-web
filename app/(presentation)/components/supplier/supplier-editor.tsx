@@ -1,7 +1,6 @@
 'use client'
 
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react'
-import Image from 'next/image'
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
@@ -9,7 +8,6 @@ import { SupplierModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
-	IconClose,
 	IconPlus,
 	IconSupplier,
 	ImagePreview,
@@ -20,9 +18,9 @@ import {
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
-	ProductCardChangeProps,
 	Select,
-	SupplierProductEditor
+	SupplierProductEditor,
+	ProductCardChangeProps
 } from '..'
 
 import {
@@ -68,7 +66,7 @@ export function SupplierEditor({
 
 	const [productItems, setProductItems] = useState<any>({ 0: {} })
 
-	const productList = Object.keys(productItems)
+	const productList = useMemo(() => Object.keys(productItems), [productItems])
 
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])

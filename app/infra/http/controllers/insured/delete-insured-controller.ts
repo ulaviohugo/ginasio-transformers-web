@@ -17,10 +17,6 @@ export class DeleteInsuredController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			if (id == accountId) {
-				return badRequest(new Error('Não pode excluir a própria conta.'))
-			}
-
 			const result = await this.deleteInsured.delete(Number(id), new UploadService())
 			if (result === null) {
 				return notFound()

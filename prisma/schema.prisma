@@ -332,10 +332,10 @@ model Insured {
   id                Int       @id @default(autoincrement())
   name              String    @db.VarChar(50)
   policyholderId    Int?
-  gender            String?   @db.VarChar(10)
+  gender            String    @db.VarChar(10)
   maritalStatus     String?   @map("marital_status") @db.VarChar(15)
-  cardName          String    @map("card_name") @db.VarChar(50)
-  cardNumber        String    @map("card_number") @db.VarChar(20)
+  cardName          String?   @map("card_name") @db.VarChar(50)
+  cardNumber        String?   @map("card_number") @db.VarChar(20)
   dateOfBirth       DateTime  @map("date_of_birth")
   documentType      String    @map("document_type")
   documentNumber    String    @map("document_number")
@@ -345,29 +345,48 @@ model Insured {
   occupation        String?   @db.VarChar(50)
   provinceId        Int?      @map("province_id")
   municipalityId    Int?      @map("municipality_id")
-  address           String
-  neighborhood      String
+  address           String?
+  neighborhood      String?
   email             String?   @db.VarChar(100)
   phone             String?   @db.VarChar(15)
   phone2            String?   @db.VarChar(15)
   comercial         String?   @db.VarChar(50)
-  enrollmentDate    DateTime  @map("enrollment_date")
+  enrollmentDate    DateTime? @map("enrollment_date")
   renewalDate       DateTime? @map("renewal_date")
-  plan              String    @db.VarChar(50)
-  proposalType      String    @map("proposal_type") @db.VarChar(20)
-  proposalNumber    String    @map("proposal_number") @db.VarChar(25)
+  plan              String?   @db.VarChar(50)
+  policy            String?   @db.VarChar(50)
+  proposalType      String?   @map("proposal_type") @db.VarChar(20)
+  proposalNumber    String?   @map("proposal_number") @db.VarChar(25)
   proposalCurrency  String?   @map("proposal_currency") @db.VarChar(5)
-  mediator          String    @db.VarChar(50)
-  policyNumber      String    @map("policy_number") @db.VarChar(50)
-  typeOfInsurance   String    @map("type_of_insurance") @db.VarChar(50)
-  copaymentAmount   Float     @map("copayment_amount")
-  paymentMethod     String    @map("payment_method") @db.VarChar(30)
-  paymentFrequency  String    @map("payment_frequency") @db.VarChar(15)
-  student           Boolean
-  relationship      String    @db.VarChar(15)
-  review            String    @db.VarChar(15)
+  mediator          String?   @db.VarChar(50)
+  policyNumber      String?   @map("policy_number") @db.VarChar(50)
+  paymentFrequency  String?   @map("payment_frequency") @db.VarChar(15)
+  student           String?
+  relationship      String?   @db.VarChar(15)
+  review            String?   @db.VarChar(15)
   createdAt         DateTime  @default(now()) @map("created_at")
-  createdById       Int       @map("created_by_id")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
-  updatedById       Int       @map("updated_by_id")
+  createdById       Int?      @map("created_by_id")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+  updatedById       Int?      @map("updated_by_id")
+
+  consultations Consultation[]
+  policyholder  Insured?       @relation("insureds", fields: [policyholderId], references: [id])
+  insureds      Insured[]      @relation("insureds")
+
+  @@map("tb_insureds")
+}
+
+model Consultation {
+  id              Int       @id @default(autoincrement())
+  copaymentAmount Float?    @map("copayment_amount")
+  paymentMethod   String    @map("payment_method") @db.VarChar(30)
+  insuredId       Int       @map("insured_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  createdById     Int?      @map("created_by_id")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+  updatedById     Int?      @map("updated_by_id")
+
+  insured Insured @relation(fields: [insuredId], references: [id])
+
+  @@map("tb_consultations")
 }

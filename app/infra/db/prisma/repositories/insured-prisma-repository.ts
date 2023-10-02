@@ -6,23 +6,55 @@ import { PrismaInsuredMapper } from '@/infra/db/prisma/mappers'
 
 export class InsuredPrismaRepository implements InsuredRepository {
 	private prisma: PrismaClient
+	private include = {
+		insureds: {
+			select: {
+				id: true,
+				name: true,
+				cardName: true,
+				dateOfBirth: true,
+				documentType: true,
+				documentNumber: true,
+				policyholderId: true,
+				nif: true,
+				gender: true,
+				student: true,
+				occupation: true,
+				phone: true,
+				relationship: true
+			}
+		}
+	}
 	constructor() {
 		this.prisma = prismaService
 	}
 
 	async add(param: InsuredModel): Promise<InsuredModel> {
-		return (await this.prisma.insured.create({
-			data: PrismaInsuredMapper.toPrisma(param)
-		})) as any
+		const { insureds, ...policyholder } = param
+		const insured = await this.prisma.insured.create({
+			data: PrismaInsuredMapper.toPrisma(policyholder),
+			include: this.include
+		})
+		if (insureds?.length) {
+			await this.prisma.insured.createMany({
+				data: insureds.map((item) =>
+					PrismaInsuredMapper.toPrisma({ ...item, policyholderId: insured.id })
+				)
+			})
+		}
+		return (await this.findById(insured.id)) as any
 	}
 
 	async loadAll(): Promise<InsuredModel[]> {
-		return (await this.prisma.insured.findMany()) as any
+		return (await this.prisma.insured.findMany({
+			include: this.include
+		})) as any
 	}
 
 	async findById(id: number): Promise<InsuredModel | null> {
 		return (await this.prisma.insured.findUnique({
-			where: { id }
+			where: { id },
+			include: this.include
 		})) as any
 	}
 
@@ -48,7 +80,8 @@ export class InsuredPrismaRepository implements InsuredRepository {
 	async update(param: InsuredModel): Promise<InsuredModel> {
 		return (await this.prisma.insured.update({
 			data: PrismaInsuredMapper.toPrisma(param),
-			where: { id: param.id }
+			where: { id: param.id },
+			include: this.include
 		})) as any
 	}
 

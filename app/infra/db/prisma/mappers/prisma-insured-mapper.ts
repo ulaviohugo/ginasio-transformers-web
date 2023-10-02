@@ -1,6 +1,7 @@
 import { Insured as InsuredRaw } from '@prisma/client'
 
 import { InsuredModel } from '@/domain/models'
+import { DateUtils, NumberUtils } from '@/utils'
 
 export class PrismaInsuredMapper {
 	static toPrisma(insured: InsuredModel): InsuredRaw {
@@ -8,15 +9,15 @@ export class PrismaInsuredMapper {
 		return {
 			id: insured.id,
 			name: insured.name,
-			policyholder: insured.policyholder,
+			policyholderId: NumberUtils.convertToNumber(insured.policyholderId, true),
 			gender: insured.gender,
 			maritalStatus: insured.maritalStatus,
 			cardName: insured.cardName,
 			cardNumber: insured.cardNumber,
-			dateOfBirth: insured.dateOfBirth,
+			dateOfBirth: DateUtils.convertToDate(insured.dateOfBirth),
 			documentType: insured.documentType,
 			documentNumber: insured.documentNumber,
-			documentIssueDate: insured.documentIssueDate,
+			documentIssueDate: DateUtils.convertToDate(insured.documentIssueDate),
 			nif: insured.nif,
 			dependents: insured.dependents,
 			occupation: insured.occupation,
@@ -28,8 +29,8 @@ export class PrismaInsuredMapper {
 			phone: insured.phone,
 			phone2: insured.phone2,
 			comercial: insured.comercial,
-			enrollmentDate: insured.enrollmentDate,
-			renewalDate: insured.renewalDate,
+			enrollmentDate: DateUtils.convertToDate(insured.enrollmentDate),
+			renewalDate: DateUtils.convertToDate(insured.renewalDate),
 			plan: insured.plan,
 			proposalType: insured.proposalType,
 			proposalNumber: insured.proposalNumber,
@@ -37,17 +38,14 @@ export class PrismaInsuredMapper {
 			policy: insured.policy,
 			mediator: insured.mediator,
 			policyNumber: insured.policyNumber,
-			typeOfInsurance: insured.typeOfInsurance,
-			copaymentAmount: insured.copaymentAmount,
-			paymentMethod: insured.paymentMethod,
 			paymentFrequency: insured.paymentFrequency,
 			student: insured.student,
 			relationship: insured.relationship,
 			review: insured.review,
-
+			insureds: insured.insureds,
 			createdAt: insured.createdAt,
 			createdById: insured.createdById,
-			updatedAt: insured.updatedAt,
+			updatedAt: DateUtils.convertToDate(insured.updatedAt),
 			updatedById: insured.updatedById
 		} as any
 	}

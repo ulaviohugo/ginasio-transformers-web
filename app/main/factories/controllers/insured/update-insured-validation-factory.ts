@@ -18,7 +18,6 @@ export const makeUpdateInsuredValidation = () => {
 		'policyNumber',
 		'proposalType',
 		'mediator',
-		'policyholder',
 		'name',
 		'cardName',
 		'cardNumber',
@@ -27,7 +26,6 @@ export const makeUpdateInsuredValidation = () => {
 		'documentNumber',
 		'documentIssueDate',
 		'gender',
-		'occupation',
 		'dependents',
 		'maritalStatus',
 		'neighborhood',
@@ -36,7 +34,6 @@ export const makeUpdateInsuredValidation = () => {
 		'policy',
 		'enrollmentDate',
 		'renewalDate',
-		'relationship',
 		'review'
 	]
 	for (const field of fields) {

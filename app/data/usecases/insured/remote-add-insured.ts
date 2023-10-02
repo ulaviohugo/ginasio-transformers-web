@@ -11,7 +11,8 @@ export class RemoteAddInsured implements AddInsured {
 	) {}
 
 	async add(param: InsuredModel): Promise<InsuredModel> {
-		const body = FormDataUtils.createFormData(param)
+		// const body = FormDataUtils.createFormData(param)
+		const body = JSON.stringify(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

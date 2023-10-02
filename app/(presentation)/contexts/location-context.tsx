@@ -22,6 +22,8 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 			makeFetchHttpClient()
 				.request({ method: 'get', url: makeApiUrl('/locations') })
 				.then((response) => {
+					console.log({ response })
+
 					if (response.statusCode !== HttpStatusCode.ok) return
 					dispatch(loadLocationStore(response.body))
 				})

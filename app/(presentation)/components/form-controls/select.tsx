@@ -29,7 +29,6 @@ export function Select({
 				id={id}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
-				defaultValue={''}
 				{...props}
 			>
 				{defaultText && (
