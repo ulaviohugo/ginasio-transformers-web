@@ -10,7 +10,7 @@ import {
 export class PrintUtils {
 	static async printPolicy(insured: InsuredModel) {
 		const pdfDoc = await PDFDocument.create()
-		pdfDoc.setTitle('Samuel')
+		pdfDoc.setTitle(`Apólice - ${insured.name}`)
 		const pageHeight = 842
 		const pageWidth = 595
 		const pageSize = [pageWidth, pageHeight] as any

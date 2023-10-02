@@ -35,7 +35,7 @@ export class DateUtils {
 	}
 
 	static getDatePt(dateParam: Date | string | undefined, separator = '-') {
-		if (!dateParam) return null
+		if (!dateParam) return null as any
 		const date = this.convertToDate(dateParam)
 
 		const year = date.getUTCFullYear(),

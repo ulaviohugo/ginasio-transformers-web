@@ -55,6 +55,7 @@ model Employee {
   employeePresences EmployeePresence[]
   Transaction       Transaction[]
   CashRegister      CashRegister[]
+  Insured           Insured[]
 
   @@unique([documentType, documentNumber])
   @@unique([bankName, accountNumber])
@@ -370,6 +371,7 @@ model Insured {
   updatedAt         DateTime? @updatedAt @map("updated_at")
   updatedById       Int?      @map("updated_by_id")
 
+  createdBy     Employee?      @relation(fields: [createdById], references: [id])
   consultations Consultation[]
   policyholder  Insured?       @relation("insureds", fields: [policyholderId], references: [id])
   insureds      Insured[]      @relation("insureds")

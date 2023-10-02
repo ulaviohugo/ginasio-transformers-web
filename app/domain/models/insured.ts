@@ -1,3 +1,4 @@
+import { EmployeeModel } from '.'
 import { ConsultationModel } from './consultation'
 
 export type InsuredModel = {
@@ -42,9 +43,9 @@ export type InsuredModel = {
 	updatedAt?: Date
 	updatedById?: number
 
+	createdBy?: EmployeeModel
 	province?: string
 	municipality?: string
-
 	policyholder?: InsuredModel
 	insureds?: InsuredModel[]
 	consultations?: ConsultationModel[]

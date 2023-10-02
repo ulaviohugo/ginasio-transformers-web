@@ -29,6 +29,9 @@ export class InsuredPrismaRepository implements InsuredRepository {
 				id: true,
 				name: true
 			}
+		},
+		createdBy: {
+			select: { id: true, name: true }
 		}
 	}
 	constructor() {
@@ -44,7 +47,11 @@ export class InsuredPrismaRepository implements InsuredRepository {
 		if (insureds?.length) {
 			await this.prisma.insured.createMany({
 				data: insureds.map((item) =>
-					PrismaInsuredMapper.toPrisma({ ...item, policyholderId: insured.id })
+					PrismaInsuredMapper.toPrisma({
+						...item,
+						policyholderId: insured.id,
+						createdById: insured.createdById
+					})
 				)
 			})
 		}

@@ -1,6 +1,8 @@
 import { LogoBase64 } from '@/(presentation)/components'
 import { ApoliceProps, ApoliceStyle, makeRectangle } from '.'
 import { PDFDocument, PDFPage } from 'pdf-lib'
+import { InsuredModel } from '@/domain/models'
+import { DateUtils } from '..'
 
 export class ApolicePage2Utils {
 	static async build({ page, pdfDoc, insured }: ApoliceProps) {
@@ -14,7 +16,7 @@ export class ApolicePage2Utils {
 
 		let y = pageHeight
 		for (let index = 0; index < 6; index++) {
-			insuredPeople({ index, height: y, page, pdfDoc })
+			insuredPeople({ index, height: y, page, pdfDoc, insured: insured.insureds[index] })
 			y -= 120
 		}
 	}
@@ -24,12 +26,14 @@ const insuredPeople = async ({
 	index,
 	height,
 	page,
-	pdfDoc
+	pdfDoc,
+	insured
 }: {
 	index: number
 	height: number
 	page: PDFPage
 	pdfDoc: PDFDocument
+	insured?: InsuredModel
 }) => {
 	const style = ApoliceStyle
 	const pageWidth = page.getWidth()
@@ -58,7 +62,7 @@ const insuredPeople = async ({
 	})
 	page.drawText('NOME COMPLETO', {
 		x: padding + 5,
-		y: height - 127,
+		y: height - 128,
 		size: style.fontSizeText
 	})
 	makeRectangle({
@@ -66,6 +70,11 @@ const insuredPeople = async ({
 		width: 410,
 		x: padding + 85,
 		y: height - 132
+	})
+	page.drawText(insured?.name || '', {
+		x: padding + 88,
+		y: height - 128,
+		size: style.fontSizeText
 	})
 
 	makeRectangle({
@@ -76,14 +85,19 @@ const insuredPeople = async ({
 	})
 	page.drawText('NOME A CONSTAR NO CARTÃO', {
 		x: padding + 5,
-		y: height - 144,
+		y: height - 145,
 		size: style.fontSizeText
 	})
 	makeRectangle({
 		page: page,
 		width: 150,
-		x: padding + 130,
+		x: padding + 148,
 		y: height - 149
+	})
+	page.drawText(insured?.cardName || '', {
+		x: padding + 151,
+		y: height - 145,
+		size: style.fontSizeText
 	})
 
 	makeRectangle({
@@ -94,7 +108,7 @@ const insuredPeople = async ({
 	})
 	page.drawText('DATA NASCIMENTO', {
 		x: padding + 282,
-		y: height - 145,
+		y: height - 146,
 		size: style.fontSizeText
 	})
 	makeRectangle({
@@ -102,6 +116,11 @@ const insuredPeople = async ({
 		width: 140,
 		x: padding + 355,
 		y: height - 149
+	})
+	page.drawText(insured?.dateOfBirth ? DateUtils.getDatePt(insured.dateOfBirth) : '', {
+		x: padding + 358,
+		y: height - 146,
+		size: style.fontSizeText
 	})
 
 	makeRectangle({
@@ -121,6 +140,11 @@ const insuredPeople = async ({
 		x: padding + 60,
 		y: height - 166
 	})
+	page.drawText(insured?.documentNumber || '', {
+		x: padding + 63,
+		y: height - 162,
+		size: style.fontSizeText
+	})
 
 	makeRectangle({
 		page: page,
@@ -138,6 +162,11 @@ const insuredPeople = async ({
 		width: 100,
 		x: padding + 230,
 		y: height - 166
+	})
+	page.drawText(insured?.nif || '', {
+		x: padding + 233,
+		y: height - 162,
+		size: style.fontSizeText
 	})
 
 	makeRectangle({
@@ -171,6 +200,13 @@ const insuredPeople = async ({
 		x: padding + 368,
 		y: height - 162.5
 	})
+	if (insured?.gender == 'Feminino') {
+		page.drawText('X', {
+			x: padding + 369,
+			y: height - 161,
+			size: style.fontSizeText
+		})
+	}
 
 	makeRectangle({
 		page: page,
@@ -191,6 +227,13 @@ const insuredPeople = async ({
 		x: padding + 428,
 		y: height - 162.5
 	})
+	if (insured?.gender == 'Masculino') {
+		page.drawText('X', {
+			x: padding + 429,
+			y: height - 161,
+			size: style.fontSizeText
+		})
+	}
 
 	makeRectangle({
 		page: page,
@@ -223,6 +266,13 @@ const insuredPeople = async ({
 		x: padding + 63,
 		y: height - 179.5
 	})
+	if (insured?.student?.toLocaleLowerCase() == 'não') {
+		page.drawText('X', {
+			x: padding + 64,
+			y: height - 178,
+			size: style.fontSizeText
+		})
+	}
 
 	makeRectangle({
 		page: page,
@@ -243,6 +293,13 @@ const insuredPeople = async ({
 		x: padding + 98,
 		y: height - 179.5
 	})
+	if (insured?.student?.toLocaleLowerCase() == 'sim') {
+		page.drawText('X', {
+			x: padding + 99,
+			y: height - 178,
+			size: style.fontSizeText
+		})
+	}
 
 	makeRectangle({
 		page: page,
@@ -260,6 +317,11 @@ const insuredPeople = async ({
 		width: 250,
 		x: padding + 245,
 		y: height - 183
+	})
+	page.drawText(insured?.occupation || '', {
+		x: padding + 248,
+		y: height - 179,
+		size: style.fontSizeText
 	})
 
 	makeRectangle({
@@ -279,6 +341,11 @@ const insuredPeople = async ({
 		x: padding + 90,
 		y: height - 200
 	})
+	page.drawText(insured?.phone || '', {
+		x: padding + 93,
+		y: height - 197,
+		size: style.fontSizeText
+	})
 
 	makeRectangle({
 		page: page,
@@ -296,5 +363,10 @@ const insuredPeople = async ({
 		width: 180,
 		x: padding + 315,
 		y: height - 200
+	})
+	page.drawText(insured?.relationship || '', {
+		x: padding + 318,
+		y: height - 197,
+		size: style.fontSizeText
 	})
 }

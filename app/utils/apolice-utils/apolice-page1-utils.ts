@@ -14,17 +14,15 @@ type FormDataProps = {
 
 export class ApolicePage1Utils {
 	static async build({ page, pdfDoc, insured }: ApoliceProps) {
-		const currentDate = new Date()
-
 		const { province, municipality } = insured
 
 		const formData: FormDataProps = {
-			mediator: 'Samuel Freitas',
-			policyNumber: '25',
-			proposalNumber: '234',
-			proposalType: 'Novo Co-Seguro',
-			assistedBy: 'Samuel Levítico Francisco Freitas',
-			createdAt: currentDate,
+			mediator: String(insured.mediator),
+			policyNumber: insured.policyNumber,
+			proposalNumber: insured.proposalNumber,
+			proposalType: insured.proposalType,
+			assistedBy: insured.createdBy?.name,
+			createdAt: insured.createdAt,
 			proposalCurrency: 'AOA'
 		}
 
@@ -151,7 +149,7 @@ export class ApolicePage1Utils {
 			x: padding + 380,
 			y: pageHeight - 164
 		})
-		if (formData.proposalType == 'Alteração do Plano') {
+		if (formData.proposalType.toLocaleLowerCase() == 'alteração do plano') {
 			page.drawText('X', {
 				x: padding + 381.5,
 				y: pageHeight - 162,
@@ -179,7 +177,7 @@ export class ApolicePage1Utils {
 			x: padding + 380.5,
 			y: pageHeight - 178
 		})
-		if (formData.proposalType == 'Novo Co-Seguro') {
+		if (formData.proposalType.toLocaleLowerCase() == 'novo co-seguro') {
 			page.drawText('X', {
 				x: padding + 382,
 				y: pageHeight - 176,
@@ -751,7 +749,7 @@ export class ApolicePage1Utils {
 			x: padding + 305,
 			y: pageHeight - 394
 		})
-		page.drawText(String(insured.comercial), {
+		page.drawText(insured.comercial ? String(insured.comercial) : '', {
 			x: padding + 307,
 			y: pageHeight - 390,
 			size: style.fontSizeText
@@ -812,7 +810,7 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 434
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.renewalDate)), {
+		page.drawText(insured?.renewalDate ? DateUtils.getDatePt(insured.renewalDate) : '', {
 			x: padding + 437,
 			y: pageHeight - 430,
 			size: style.fontSizeText
