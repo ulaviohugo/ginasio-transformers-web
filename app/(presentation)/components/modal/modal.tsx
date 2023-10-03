@@ -1,4 +1,5 @@
 'use client'
+
 import { ReactNode, useState } from 'react'
 import { IconClose } from '..'
 
@@ -9,7 +10,7 @@ type ModalProps = {
 	size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
-export function Modal({ children, onClose, show, size = 'md' }: ModalProps) {
+export function Modal({ children, onClose, show, size = 'xl' }: ModalProps) {
 	const [open, setOpen] = useState(show)
 	const handleClose = () => {
 		if (onClose) {

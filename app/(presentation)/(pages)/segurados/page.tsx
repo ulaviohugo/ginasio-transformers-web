@@ -11,9 +11,11 @@ import {
 	Modal,
 	ModalTitle,
 	ModalBody,
-	IconPlus
+	IconPlus,
+	CardActions
 } from '@/(presentation)/components'
-import { useLocations } from '@/(presentation)/hooks'
+import { useInsureds, useLocations } from '@/(presentation)/hooks'
+import { loadInsuredStore } from '@/(presentation)/redux'
 import { InsuredModel } from '@/domain/models'
 import {
 	makeRemoteAddInsured,
@@ -23,19 +25,20 @@ import { mockInsured } from '@/test/model/mocks'
 import { PrintUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Segurados() {
+	const dispatch = useDispatch()
 	const { provinces, municipalities } = useSelector(useLocations())
 
-	const [insureds, setInsureds] = useState<InsuredModel[]>([])
+	const insureds = useSelector(useInsureds())
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
 
 	useEffect(() => {
 		makeRemoteLoadInsureds()
 			.load()
-			.then(setInsureds)
+			.then((response) => dispatch(loadInsuredStore(response)))
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoading(false))
 	}, [])
@@ -66,6 +69,7 @@ export default function Segurados() {
 							<PolicyholderEditor
 								addInsured={makeRemoteAddInsured()}
 								policyholder={mockInsured()}
+								onSubmitSuccess={handleHideEditor}
 							/>
 						</ModalBody>
 					</Modal>
@@ -86,7 +90,7 @@ export default function Segurados() {
 							{insureds.map((insured) => {
 								const isPolicyholder = !insured.policyholderId
 								return (
-									<li key={insured.id} className="shadow p-3">
+									<li key={insured.id} className="flex flex-col shadow p-3">
 										<div className="border-b pb-1 mb-1">
 											<button
 												className="font-semibold hover:underline"
@@ -95,9 +99,21 @@ export default function Segurados() {
 												{insured.name}
 											</button>
 										</div>
-										{isPolicyholder && (
+
+										{isPolicyholder ? (
 											<div className="flex flex-col gap-1 text-sm">
-												<div className="">Segurados: {insured.insureds?.length}</div>
+												<div>
+													<span className="inline-flex px-[6px] py-[2px] bg-green-50 border border-green-200 text-xs rounded-md text-black">
+														Titular de co-seguro
+													</span>
+												</div>
+												<div className="flex gap-1 items-center">
+													<IconInsured />{' '}
+													<div>
+														Segurados:{' '}
+														<span className="font-bold">{insured.insureds?.length}</span>
+													</div>
+												</div>
 												<div>
 													<button
 														className="btn-default"
@@ -107,10 +123,17 @@ export default function Segurados() {
 													</button>
 												</div>
 											</div>
+										) : (
+											<div className="text-sm">
+												<span className="inline-flex px-[6px] py-[2px] bg-orange-50 border border-orange-200 text-xs rounded-md text-black">
+													Dependente
+												</span>
+												<div>Titular: {insured.policyholder?.name}</div>
+											</div>
 										)}
-										{insured.policyholder && (
-											<div className="text-sm">Titular: {insured.policyholder?.name}</div>
-										)}
+										<div className="mt-auto">
+											<CardActions className="mt-2" border />
+										</div>
 									</li>
 								)
 							})}

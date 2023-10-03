@@ -222,7 +222,7 @@ export function SupplierEditor({
 		setProductItems(data)
 	}
 	return (
-		<Modal show={show} onClose={onClose}>
+		<Modal show={show} onClose={onClose} size="lg">
 			<ModalTitle>
 				<IconSupplier />{' '}
 				{supplier?.id ? `Fornecedor - ${supplier.name}` : 'Cadastrar fornecedor'}

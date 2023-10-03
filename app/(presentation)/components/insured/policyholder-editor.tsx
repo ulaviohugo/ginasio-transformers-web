@@ -20,20 +20,26 @@ import {
 	ObjectUtils
 } from '@/utils'
 import { InsuredModel } from '@/domain/models'
-import { useLocations } from '@/(presentation)/hooks'
+import { useInsureds, useLocations } from '@/(presentation)/hooks'
 import { AddInsured } from '@/domain/usecases'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadInsuredStore } from '@/(presentation)/redux'
 
 type PolicyholderEditorProps = {
 	policyholder?: InsuredModel
 	addInsured: AddInsured
+	onSubmitSuccess?: () => void
 }
 
 export function PolicyholderEditor({
 	addInsured,
-	policyholder
+	policyholder,
+	onSubmitSuccess
 }: PolicyholderEditorProps) {
+	const dispatch = useDispatch()
+	const currentInsureds = useSelector(useInsureds())
+
 	const { provinces, municipalities } = useSelector(useLocations())
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
@@ -117,7 +123,20 @@ export function PolicyholderEditor({
 
 		try {
 			const insureds = ArrayUtils.convertToArray(insuredItems)
-			const httpResponse = await addInsured.add({ ...formData, insureds })
+			const httpResponse = (await addInsured.add({
+				...formData,
+				insureds
+			})) as InsuredModel
+
+			const { insureds: insuredList } = httpResponse
+			let data
+			if (insuredList?.length) {
+				data = [httpResponse, ...insuredList, ...currentInsureds]
+			} else {
+				data = [httpResponse, ...currentInsureds]
+			}
+			dispatch(loadInsuredStore(data))
+			if (onSubmitSuccess) onSubmitSuccess()
 			toast.success('Segurado cadastrado com sucesso')
 		} catch (error: any) {
 			toast.error(error.message)

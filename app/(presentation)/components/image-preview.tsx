@@ -44,7 +44,7 @@ export function ImagePreview({
 	}
 
 	return (
-		<div className="flex border-2 border-dashed border-green-200 p-2 min-h-[200px]">
+		<div className="flex border-2 border-dashed border-green-200 p-2 min-h-[200px] w-[200px]">
 			<input
 				type="file"
 				id="photo"
@@ -71,7 +71,7 @@ export function ImagePreview({
 						width={200}
 						height={200}
 						alt="Pre-visualização"
-						className="shadow-md mx-auto"
+						className="shadow-md mx-auto w-full"
 					/>
 					{!disabled && (
 						<IconClose

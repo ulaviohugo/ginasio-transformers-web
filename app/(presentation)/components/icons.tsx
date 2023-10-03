@@ -21,7 +21,7 @@ import { ImSpinner2 } from 'react-icons/im'
 import { GrStorage } from 'react-icons/gr'
 import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import { FaHouseUser, FaSignOutAlt, FaUserShield } from 'react-icons/fa'
+import { FaHouseUser, FaSignOutAlt, FaUserShield, FaCashRegister } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
@@ -74,6 +74,9 @@ export const IconProduct = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconSpinner = (props: IconBaseProps): React.ReactElement => (
 	<ImSpinner2 {...props} />
+)
+export const IconCashRegister = (props: IconBaseProps): React.ReactElement => (
+	<FaCashRegister {...props} />
 )
 export const IconSignout = (props: IconBaseProps): React.ReactElement => (
 	<FaSignOutAlt {...props} />

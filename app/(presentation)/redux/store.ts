@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {
+	InsuredReducer,
 	authReducer,
 	categoryReducer,
 	customerReducer,
@@ -25,7 +26,8 @@ export const store = configureStore({
 		products: productReducer,
 		purchases: purchaseReducer,
 		sales: saleReducer,
-		suppliers: supplierReducer
+		suppliers: supplierReducer,
+		insureds: InsuredReducer
 	}
 })
 
