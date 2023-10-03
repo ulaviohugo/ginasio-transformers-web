@@ -1,4 +1,5 @@
 import {
+	CashRegisterModel,
 	CategoryModel,
 	EmployeeModel,
 	InsuredModel,
@@ -16,6 +17,7 @@ type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof SupplierModel, string>> &
 	Partial<Record<keyof PurchaseModel, string>> &
 	Partial<Record<keyof TransactionModel, string>> &
+	Partial<Record<keyof CashRegisterModel, string>> &
 	Partial<Record<keyof InsuredModel, string>> & {
 		insured?: string
 	}
@@ -25,8 +27,9 @@ export class LabelUtils {
 		accountNumber: 'Nº de conta bancária',
 		address: 'Endereço',
 		amount: 'Valor',
-		baseSalary: 'Salário base',
+		balance: 'Saldo',
 		bankName: 'Nome do banco',
+		baseSalary: 'Salário base',
 		barCode: 'Código de barra',
 		businessAddress: 'Endereço comercial',
 		categoryId: 'Categoria',
@@ -54,6 +57,7 @@ export class LabelUtils {
 		hireDate: 'Data da contratação',
 		iban: 'IBAN',
 		id: 'Identificação',
+		initialBalance: 'Saldo inicial',
 		insured: 'Segurado',
 		lot: 'Lote',
 		maritalStatus: 'Estado civil',

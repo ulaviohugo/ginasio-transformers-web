@@ -1,5 +1,5 @@
 import { TransactionRepository } from '@/data/protocols'
-import { prismaService } from '@/infra/db'
+import { CashRegisterPrismaRepository, prismaService } from '@/infra/db'
 import { TransactionModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaTransactionMapper } from '@/infra/db/prisma/mappers'
@@ -12,8 +12,19 @@ export class TransactionPrismaRepository implements TransactionRepository {
 	}
 
 	async add(param: TransactionModel): Promise<TransactionModel> {
+		let cashRegisterId = param.cashRegisterId
+		const cashRegisterRepository = new CashRegisterPrismaRepository()
+		let cashRegister = await cashRegisterRepository.load()
+		if (!cashRegister) {
+			cashRegister = await cashRegisterRepository.add({
+				balance: 5000,
+				initialBalance: 50001,
+				createdById: param.createdById
+			} as any)
+			cashRegisterId = cashRegister.id
+		}
 		const transaction = (await this.prisma.transaction.create({
-			data: PrismaTransactionMapper.toPrisma(param)
+			data: PrismaTransactionMapper.toPrisma({ ...param, cashRegisterId })
 		})) as any
 		return transaction
 	}
