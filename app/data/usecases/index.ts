@@ -1,4 +1,5 @@
 export * from './auth'
+export * from './cash-register'
 export * from './category'
 export * from './current-user'
 export * from './customer'

@@ -2,6 +2,7 @@ export type QueryParams<T = any> = {
 	filter?: { [key in keyof T]?: T[key] }
 }
 
+export * from './cash-register-repositories'
 export * from './category-repositories'
 export * from './customer-repositories'
 export * from './employee-repositories'
