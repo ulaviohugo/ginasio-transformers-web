@@ -5,7 +5,8 @@ import {
 	ProductModel,
 	PurchaseModel,
 	SaleModel,
-	SupplierModel
+	SupplierModel,
+	TransactionModel
 } from '@/domain/models'
 
 type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
@@ -14,6 +15,7 @@ type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof SaleModel, string>> &
 	Partial<Record<keyof SupplierModel, string>> &
 	Partial<Record<keyof PurchaseModel, string>> &
+	Partial<Record<keyof TransactionModel, string>> &
 	Partial<Record<keyof InsuredModel, string>> & {
 		insured?: string
 	}
@@ -22,6 +24,7 @@ export class LabelUtils {
 	private static labelFields: FieldTypes = {
 		accountNumber: 'Nº de conta bancária',
 		address: 'Endereço',
+		amount: 'Valor',
 		baseSalary: 'Salário base',
 		bankName: 'Nome do banco',
 		barCode: 'Código de barra',
@@ -38,6 +41,7 @@ export class LabelUtils {
 		createdById: 'Criado por',
 		dateOfBirth: 'Data de nascimento',
 		dependents: 'Número de dependentes',
+		description: 'Descrição',
 		documentIssueDate: 'Data de emissão',
 		documentNumber: 'Número do documento',
 		documentType: 'Tipo de documento',
@@ -59,6 +63,7 @@ export class LabelUtils {
 		nif: 'NIF',
 		neighborhood: 'Bairro',
 		occupation: 'Profissão',
+		operationType: 'Tipo de operação',
 		paid: 'Pago',
 		paymentMethod: 'Forma de pagamento',
 		plan: 'Plano',
