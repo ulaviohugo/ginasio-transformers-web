@@ -50,7 +50,7 @@ export class InsuredPrismaRepository implements InsuredRepository {
 					PrismaInsuredMapper.toPrisma({
 						...item,
 						policyholderId: insured.id,
-						createdById: insured.createdById
+						createdById: insured.createdById as any
 					})
 				)
 			})
@@ -65,10 +65,10 @@ export class InsuredPrismaRepository implements InsuredRepository {
 	}
 
 	async findById(id: number): Promise<InsuredModel | null> {
-		return (await this.prisma.insured.findUnique({
+		return this.prisma.insured.findUnique({
 			where: { id },
 			include: this.include
-		})) as any
+		}) as any
 	}
 
 	async findByEmail(email: string): Promise<InsuredModel | null> {

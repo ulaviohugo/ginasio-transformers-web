@@ -3,7 +3,7 @@ import { CashRegisterModel, EmployeeModel } from '.'
 export type TransactionModel = {
 	id: number
 	description: string
-	operationType: string
+	operationType: 'Entrada' | 'Saída'
 	amount: number
 	createdById: number
 	createdAt: Date

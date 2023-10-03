@@ -299,12 +299,13 @@ model Notification {
 }
 
 model CashRegister {
-  id          Int       @id @default(autoincrement())
-  balance     Decimal
-  createdById Int?      @map("created_by_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedById Int?      @map("updated_by_id")
-  updatedAt   DateTime? @map("updated_at")
+  id             Int       @id @default(autoincrement())
+  initialBalance Decimal   @map("initial_balance")
+  balance        Decimal
+  createdById    Int?      @map("created_by_id")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedById    Int?      @map("updated_by_id")
+  updatedAt      DateTime? @map("updated_at")
 
   transactions Transaction[]
   createdBy    Employee?     @relation(fields: [createdById], references: [id])
