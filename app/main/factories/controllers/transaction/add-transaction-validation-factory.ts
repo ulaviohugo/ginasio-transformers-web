@@ -6,7 +6,13 @@ type FieldTypes = keyof TransactionModel
 
 export const makeAddTransactionValidation = () => {
 	const validations: Validation[] = []
-	const fields: FieldTypes[] = ['amount', 'description', 'operationType']
+	const fields: FieldTypes[] = [
+		'date',
+		'operationType',
+		'description',
+		'amount',
+		'paymentMethod'
+	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
 	}

@@ -25,13 +25,12 @@ export class NumberUtils {
 		if (!number) return (nullable ? null : 0) as any
 		if (typeof number === 'number') return number
 		if (number instanceof Date) return number.getTime()
-
-		return Number(number.replaceAll(' ', ''))
+		return Number(String(number)?.replaceAll(' ', ''))
 	}
 
 	static convertToPrice(value: number | string | undefined, nullable = false) {
 		const price = this.convertToNumber(value, nullable)
-		return Number(price.toFixed(2))
+		return price.toFixed(2)
 	}
 
 	static random(min: number, max: number): number {

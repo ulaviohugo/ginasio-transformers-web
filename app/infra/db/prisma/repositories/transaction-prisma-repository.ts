@@ -3,6 +3,7 @@ import { CashRegisterPrismaRepository, prismaService } from '@/infra/db'
 import { TransactionModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaTransactionMapper } from '@/infra/db/prisma/mappers'
+import { NumberUtils } from '@/utils'
 
 export class TransactionPrismaRepository implements TransactionRepository {
 	private prisma: PrismaClient
@@ -12,7 +13,6 @@ export class TransactionPrismaRepository implements TransactionRepository {
 	}
 
 	async add(param: TransactionModel): Promise<TransactionModel> {
-		let cashRegisterId = param.cashRegisterId
 		const cashRegisterRepository = new CashRegisterPrismaRepository()
 		let cashRegister = await cashRegisterRepository.load()
 		if (!cashRegister) {
@@ -21,12 +21,33 @@ export class TransactionPrismaRepository implements TransactionRepository {
 				initialBalance: 50001,
 				createdById: param.createdById
 			} as any)
-			cashRegisterId = cashRegister.id
 		}
+		const dbBalance = NumberUtils.convertToNumber(cashRegister.balance)
+		const amount = NumberUtils.convertToNumber(param.amount)
+
+		const balance =
+			param.operationType == 'Entrada' ? dbBalance + amount : dbBalance - amount
+
 		const transaction = (await this.prisma.transaction.create({
-			data: PrismaTransactionMapper.toPrisma({ ...param, cashRegisterId })
+			data: PrismaTransactionMapper.toPrisma({
+				...param,
+				cashRegisterId: cashRegister.id,
+				postMovementBalance: balance
+			})
 		})) as any
-		return transaction
+
+		await cashRegisterRepository.update({
+			...cashRegister,
+			balance
+		})
+
+		return {
+			...transaction,
+			cashRegister: {
+				balance,
+				initialBalance: NumberUtils.convertToNumber(cashRegister.initialBalance)
+			}
+		}
 	}
 
 	async loadAll(): Promise<TransactionModel[]> {

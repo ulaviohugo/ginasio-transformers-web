@@ -300,8 +300,8 @@ model Notification {
 
 model CashRegister {
   id             Int       @id @default(autoincrement())
-  initialBalance Decimal   @map("initial_balance")
-  balance        Decimal
+  initialBalance Decimal   @map("initial_balance") @db.Decimal(65, 3)
+  balance        Decimal   @db.Decimal(65, 3)
   createdById    Int?      @map("created_by_id")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedById    Int?      @map("updated_by_id")
@@ -314,15 +314,18 @@ model CashRegister {
 }
 
 model Transaction {
-  id             Int       @id @default(autoincrement())
-  description    String
-  operationType  String    @map("operation_type")
-  amount         Decimal
-  createdById    Int?      @map("created_by_id")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedById    Int?      @map("updated_by_id")
-  updatedAt      DateTime? @map("updated_at")
-  cashRegisterId Int       @map("cash_registerId")
+  id                  Int       @id @default(autoincrement())
+  description         String
+  operationType       String    @map("operation_type")
+  amount              Decimal   @db.Decimal(65, 3)
+  paymentMethod       String    @map("payment_method")
+  date                DateTime
+  cashRegisterId      Int       @map("cash_register_id")
+  postMovementBalance Decimal   @default(0) @map("post_movement_balance") @db.Decimal(65, 3)
+  createdById         Int?      @map("created_by_id")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedById         Int?      @map("updated_by_id")
+  updatedAt           DateTime? @map("updated_at")
 
   cashRegister CashRegister @relation(fields: [cashRegisterId], references: [id])
   createdBy    Employee?    @relation(fields: [createdById], references: [id])
