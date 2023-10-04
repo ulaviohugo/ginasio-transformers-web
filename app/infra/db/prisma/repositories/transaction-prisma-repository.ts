@@ -14,7 +14,6 @@ export class TransactionPrismaRepository implements TransactionRepository {
 
 	async add(param: TransactionModel): Promise<TransactionModel> {
 		const cashRegisterRepository = new CashRegisterPrismaRepository()
-
 		let cashRegister = await cashRegisterRepository.load(param.createdById)
 
 		const dbBalance = NumberUtils.convertToNumber(cashRegister.balance)

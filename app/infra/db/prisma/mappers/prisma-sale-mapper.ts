@@ -1,6 +1,7 @@
 import { Sale as SaleRaw } from '@prisma/client'
 
 import { SaleModel } from '@/domain/models'
+import { NumberUtils } from '@/utils'
 
 export class PrismaSaleMapper {
 	static toPrisma(sale: SaleModel): SaleRaw {
@@ -8,16 +9,16 @@ export class PrismaSaleMapper {
 		return {
 			id: sale.id,
 			purchaseId: sale.purchaseId,
-			customerId: sale.customerId,
-			quantity: sale.quantity,
-			totalValue: sale.totalValue,
-			unitPrice: sale.unitPrice,
-			amountPaid: sale.amountPaid,
+			customerId: NumberUtils.convertToNumber(sale.customerId, true),
+			quantity: NumberUtils.convertToNumber(sale.quantity),
+			totalValue: NumberUtils.convertToNumber(sale.totalValue),
+			unitPrice: NumberUtils.convertToNumber(sale.unitPrice),
+			amountPaid: NumberUtils.convertToNumber(sale.amountPaid),
 			size: sale.size,
 			color: sale.color,
-			discount: sale.discount,
+			discount: NumberUtils.convertToNumber(sale.discount),
 			paymentMethod: sale.paymentMethod,
-			employeeId: sale.employeeId,
+			employeeId: NumberUtils.convertToNumber(sale.employeeId),
 			createdAt: sale.createdAt,
 			createdById: sale.createdById,
 			updatedAt: sale.updatedAt,

@@ -1,6 +1,6 @@
 import { PurchaseRepository, QueryParams } from '@/data/protocols'
-import { prismaService } from '@/infra/db'
-import { PurchaseModel } from '@/domain/models'
+import { TransactionPrismaRepository, prismaService } from '@/infra/db'
+import { PurchaseModel, TransactionModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaFilterMapper, PrismaPurchaseMapper } from '@/infra/db/prisma/mappers'
 
@@ -11,14 +11,27 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 	}
 
 	async add(param: PurchaseModel): Promise<PurchaseModel> {
-		return (await this.prisma.purchase.create({
+		const purchase = (await this.prisma.purchase.create({
 			data: PrismaPurchaseMapper.toPrisma(param),
 			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } },
-				supplier: { select: { name: true } }
+				category: { select: { id: true, name: true } },
+				product: { select: { id: true, name: true } },
+				supplier: { select: { id: true, name: true } }
 			}
 		})) as any
+
+		//Perform transaction
+		const transactionRepository = new TransactionPrismaRepository()
+		await transactionRepository.add({
+			date: new Date(),
+			paymentMethod: param.paymentMethod,
+			description: `Compra de ${param.quantity} produto(s) para o estoque: ${purchase.category.name} » ${purchase.product.name}`,
+			amount: param.totalValue,
+			operationType: 'Saída',
+			createdById: param.createdById
+		} as TransactionModel)
+
+		return purchase
 	}
 
 	async loadAll(queryParams: QueryParams<PurchaseModel>): Promise<PurchaseModel[]> {

@@ -1,6 +1,6 @@
 import { QueryParams, SaleRepository } from '@/data/protocols'
-import { prismaService } from '@/infra/db'
-import { SaleModel } from '@/domain/models'
+import { TransactionPrismaRepository, prismaService } from '@/infra/db'
+import { SaleModel, TransactionModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
 import { PrismaFilterMapper, PrismaSaleMapper } from '@/infra/db/prisma/mappers'
 
@@ -34,6 +34,17 @@ export class SalePrismaRepository implements SaleRepository {
 				}
 			}
 		})) as any
+
+		//Perform transaction
+		const transactionRepository = new TransactionPrismaRepository()
+		await transactionRepository.add({
+			date: new Date(),
+			paymentMethod: param.paymentMethod,
+			description: `Venda de ${param.quantity} produto(s): ${createdSale.purchase.category.name} » ${createdSale.purchase.product.name}`,
+			amount: param.amountPaid,
+			operationType: 'Entrada',
+			createdById: param.createdById
+		} as TransactionModel)
 
 		return createdSale
 	}
