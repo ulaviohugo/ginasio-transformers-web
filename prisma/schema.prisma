@@ -53,9 +53,9 @@ model Employee {
   Sale         Sale[]
 
   employeePresences EmployeePresence[]
-  Transaction       Transaction[]
-  CashRegister      CashRegister[]
-  Insured           Insured[]
+  transactions      Transaction[]
+  cashRegisters     CashRegister[]
+  insureds          Insured[]
 
   @@unique([documentType, documentNumber])
   @@unique([bankName, accountNumber])
@@ -86,7 +86,7 @@ model Country {
   provinces Province[]
   employees Employee[]
   suppliers Supplier[]
-  Customer  Customer[]
+  Ccstomers Customer[]
 
   @@map("tb_countries")
 }
@@ -100,7 +100,7 @@ model Province {
   municipalities Municipality[]
   employees      Employee[]
   suppliers      Supplier[]
-  Customer       Customer[]
+  customers      Customer[]
 
   @@unique([name, countryId])
   @@map("tb_provinces")
@@ -113,7 +113,7 @@ model Municipality {
 
   provice   Province   @relation(fields: [provinceId], references: [id])
   employees Employee[]
-  Customer  Customer[]
+  customers Customer[]
 
   @@unique([name, provinceId])
   @@map("tb_municipalities")
@@ -247,14 +247,14 @@ model Purchase {
   updatedById      Int?      @map("updated_by_id")
   updatedAt        DateTime? @map("updated_at")
 
-  supplier     Supplier       @relation(fields: [supplierId], references: [id], onDelete: Cascade)
-  category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  product      Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
-  employee     Employee?      @relation(fields: [employeeId], references: [id], onDelete: SetNull)
-  sales        Sale[]
-  Customer     Customer?      @relation(fields: [customerId], references: [id])
-  customerId   Int?
-  Notification Notification[]
+  supplier      Supplier?      @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  category      Category?      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  product       Product?       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  employee      Employee?      @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  sales         Sale[]
+  customer      Customer?      @relation(fields: [customerId], references: [id])
+  customerId    Int?
+  notifications Notification[]
 
   @@map("tb_purchases")
 }
@@ -277,9 +277,9 @@ model Sale {
   updatedById   Int?      @map("updated_by_id")
   updatedAt     DateTime? @map("updated_at")
 
-  purchase Purchase  @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  purchase Purchase? @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
   customer Customer? @relation(fields: [customerId], references: [id])
-  employee Employee  @relation(fields: [employeeId], references: [id])
+  employee Employee? @relation(fields: [employeeId], references: [id])
 
   @@map("tb_sales")
 }
