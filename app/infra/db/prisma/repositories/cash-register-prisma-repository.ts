@@ -16,8 +16,16 @@ export class CashRegisterPrismaRepository implements CashRegisterRepository {
 		})) as any
 	}
 
-	async load(): Promise<CashRegisterModel> {
-		return (await this.prisma.cashRegister.findFirst()) as any
+	async load(accountId?: number): Promise<CashRegisterModel> {
+		let cashRegister = (await this.prisma.cashRegister.findFirst()) as any
+		if (!cashRegister) {
+			cashRegister = await this.add({
+				balance: 5000,
+				initialBalance: 50001,
+				createdById: accountId
+			} as any)
+		}
+		return cashRegister
 	}
 
 	async update(param: CashRegisterModel): Promise<CashRegisterModel> {

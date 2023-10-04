@@ -14,20 +14,15 @@ export class TransactionPrismaRepository implements TransactionRepository {
 
 	async add(param: TransactionModel): Promise<TransactionModel> {
 		const cashRegisterRepository = new CashRegisterPrismaRepository()
-		let cashRegister = await cashRegisterRepository.load()
-		if (!cashRegister) {
-			cashRegister = await cashRegisterRepository.add({
-				balance: 5000,
-				initialBalance: 50001,
-				createdById: param.createdById
-			} as any)
-		}
+
+		let cashRegister = await cashRegisterRepository.load(param.createdById)
+
 		const dbBalance = NumberUtils.convertToNumber(cashRegister.balance)
 		const amount = NumberUtils.convertToNumber(param.amount)
-
 		const balance =
 			param.operationType == 'Entrada' ? dbBalance + amount : dbBalance - amount
 
+		//Perform transaction
 		const transaction = (await this.prisma.transaction.create({
 			data: PrismaTransactionMapper.toPrisma({
 				...param,
@@ -36,6 +31,7 @@ export class TransactionPrismaRepository implements TransactionRepository {
 			})
 		})) as any
 
+		//Perform decrement/increment on cash register balance
 		await cashRegisterRepository.update({
 			...cashRegister,
 			balance
