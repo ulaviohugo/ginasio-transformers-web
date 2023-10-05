@@ -23,6 +23,7 @@ export class PrismaEmployeeMapper {
 			userName: employee.userName,
 			password: employee.password,
 			canLogin: employee.canLogin,
+			role: employee.role,
 			countryId: employee.countryId,
 			provinceId: employee.provinceId,
 			municipalityId: employee.municipalityId,

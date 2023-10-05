@@ -22,6 +22,7 @@ export class AddEmployeeController implements Controller {
 				return badRequest(error)
 			}
 			const canLogin = request.canLogin === true || (request as any).canLogin == 'true'
+			if (canLogin && !request.role) return badRequest(new Error('Informe o perfil'))
 			if (canLogin && !request.password) return badRequest(new Error('Informe a senha'))
 
 			let uploader: Uploader = null as any

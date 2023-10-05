@@ -465,21 +465,34 @@ export function EmployeeEditor({
 									</div>
 								</div>
 								{formDate.canLogin && (
-									<div className="flex gap-1">
-										<Input
-											type="password"
-											name="password"
-											label="Senha"
-											value={formDate.password || ''}
+									<div className="flex flex-col gap-1">
+										<Select
+											name="role"
+											label="Perfil"
+											value={formDate?.role || ''}
+											defaultText="Selecione"
+											data={[
+												{ text: 'Admin (acesso total)', value: 'Admin' },
+												{ text: 'Normal (Venda)', value: 'Normal' }
+											]}
 											onChange={handleInputChange}
 										/>
-										<Input
-											type="password"
-											name="passwordConfirmation"
-											label="Confirme a senha"
-											value={formDate.passwordConfirmation || ''}
-											onChange={handleInputChange}
-										/>
+										<div className="flex gap-1">
+											<Input
+												type="password"
+												name="password"
+												label="Senha"
+												value={formDate.password || ''}
+												onChange={handleInputChange}
+											/>
+											<Input
+												type="password"
+												name="passwordConfirmation"
+												label="Confirme a senha"
+												value={formDate.passwordConfirmation || ''}
+												onChange={handleInputChange}
+											/>
+										</div>
 									</div>
 								)}
 							</fieldset>

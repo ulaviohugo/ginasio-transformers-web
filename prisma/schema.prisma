@@ -30,7 +30,7 @@ model Employee {
   userName           String?   @map("user_name") @db.VarChar(64)
   password           String?   @db.VarChar(64)
   canLogin           Boolean   @default(false) @map("can_login")
-  role               String    @default("Default")
+  role               String    @default("Normal")
   countryId          Int       @map("country_id")
   provinceId         Int?      @map("province_id")
   municipalityId     Int?      @map("municipality_id")

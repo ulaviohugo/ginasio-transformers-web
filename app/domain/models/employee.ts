@@ -20,7 +20,7 @@ export interface EmployeeModel {
 	password?: string
 	passwordConfirmation?: string
 	canLogin: boolean
-	role: 'Admin' | 'Default'
+	role: 'Admin' | 'Normal'
 	countryId: number
 	provinceId?: number
 	municipalityId?: number
