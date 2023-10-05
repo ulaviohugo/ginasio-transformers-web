@@ -95,15 +95,6 @@ export default function Vendas() {
 
 	return (
 		<Layout>
-			{showEditor && (
-				<SaleEditor
-					data={selectedSale}
-					show={showEditor}
-					onClose={handleCloseDetail}
-					addSale={makeRemoteAddSale()}
-					updateSale={makeRemoteUpdateSale()}
-				/>
-			)}
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
@@ -114,74 +105,90 @@ export default function Vendas() {
 				/>
 			)}
 			<LayoutBody>
-				<div className="flex flex-col gap-2 mb-2">
-					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
-					<Title
-						title={`Vendas ${isLoading ? '' : `(${sales?.length})`}`}
-						icon={IconProduct}
-					/>
-					<div className="flex items-center gap-2">
-						<button
-							className="bg-primary px-2 py-1 rounded-md text-gray-200"
-							title="Nova entrada"
-							onClick={() => handleOpenDetalhe()}
-						>
-							<IconPlus />
-						</button>
-						<div className="w-full max-w-xs">
-							<Input placeholder="Pesquisar por nome" icon={IconSearch} />
-						</div>
-					</div>
-				</div>
-				{isLoading ? (
-					<Spinner />
-				) : sales.length < 1 ? (
-					<NoData />
-				) : (
-					<table className="table text-left text-sm border border-gray-100">
-						<tr>
-							<th className="p-1">Id</th>
-							<th className="p-1">Categoria</th>
-							<th className="p-1">Produto</th>
-							<th className="p-1">Cor</th>
-							<th className="p-1">Tamanho</th>
-							<th className="p-1">Quantidade</th>
-							<th className="p-1">Preço unitário</th>
-							<th className="p-1">Pago</th>
-							<th className="p-1">Funcionário</th>
-							<th className="p-1">Data</th>
-							<th className="p-1">Acção</th>
-						</tr>
-						{sales.map((sale, i) => (
-							<tr
-								key={sale.id}
-								className={` ${
-									i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
-								} `}
-							>
-								<td className="p-1">{sale.id}</td>
+				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<div className="flex flex-col gap-2 mt-2">
+					<fieldset>
+						<legend>Cadastro de venda</legend>
+						<SaleEditor
+							data={selectedSale}
+							show={showEditor}
+							onClose={handleCloseDetail}
+							addSale={makeRemoteAddSale()}
+							updateSale={makeRemoteUpdateSale()}
+						/>
+					</fieldset>
 
-								<td className="p-1">{sale.purchase?.category?.name}</td>
-								<td className="p-1">{sale.purchase?.product?.name}</td>
-								<td className="p-1">{sale.purchase?.color}</td>
-								<td className="p-1">{sale.purchase?.size}</td>
-								<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
-								<td className="p-1">{NumberUtils.formatCurrency(sale.unitPrice)}</td>
-								<td className="p-1">{NumberUtils.formatCurrency(sale.amountPaid)}</td>
-								<td className="p-1">
-									{StringUtils.getFirstWord(sale.purchase?.employee?.name as string)}
-								</td>
-								<td className="p-1">{DateUtils.getDatePt(sale.createdAt)}</td>
-								<td className="p-1">
-									<CardActions
-										onClickDelete={() => handleOpenFormDelete(sale)}
-										onClickEdit={() => handleOpenDetalhe(sale)}
-									/>
-								</td>
-							</tr>
-						))}
-					</table>
-				)}
+					<fieldset>
+						<legend>Lista</legend>
+						<div className="flex flex-col gap-2 mb-2">
+							<Title
+								title={`Vendas ${isLoading ? '' : `(${sales?.length})`}`}
+								icon={IconProduct}
+							/>
+							<div className="flex items-center gap-2">
+								<button
+									className="bg-primary px-2 py-1 rounded-md text-gray-200"
+									title="Nova entrada"
+									onClick={() => handleOpenDetalhe()}
+								>
+									<IconPlus />
+								</button>
+								<div className="w-full max-w-xs">
+									<Input placeholder="Pesquisar por nome" icon={IconSearch} />
+								</div>
+							</div>
+						</div>
+						{isLoading ? (
+							<Spinner />
+						) : sales.length < 1 ? (
+							<NoData />
+						) : (
+							<table className="table text-left text-sm border border-gray-100">
+								<tr>
+									<th className="p-1">Id</th>
+									<th className="p-1">Categoria</th>
+									<th className="p-1">Produto</th>
+									<th className="p-1">Cor</th>
+									<th className="p-1">Tamanho</th>
+									<th className="p-1">Quantidade</th>
+									<th className="p-1">Preço unitário</th>
+									<th className="p-1">Pago</th>
+									<th className="p-1">Funcionário</th>
+									<th className="p-1">Data</th>
+									<th className="p-1">Acção</th>
+								</tr>
+								{sales.map((sale, i) => (
+									<tr
+										key={sale.id}
+										className={` ${
+											i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
+										} `}
+									>
+										<td className="p-1">{sale.id}</td>
+
+										<td className="p-1">{sale.purchase?.category?.name}</td>
+										<td className="p-1">{sale.purchase?.product?.name}</td>
+										<td className="p-1">{sale.purchase?.color}</td>
+										<td className="p-1">{sale.purchase?.size}</td>
+										<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
+										<td className="p-1">{NumberUtils.formatCurrency(sale.unitPrice)}</td>
+										<td className="p-1">{NumberUtils.formatCurrency(sale.amountPaid)}</td>
+										<td className="p-1">
+											{StringUtils.getFirstWord(sale.purchase?.employee?.name as string)}
+										</td>
+										<td className="p-1">{DateUtils.getDatePt(sale.createdAt)}</td>
+										<td className="p-1">
+											<CardActions
+												onClickDelete={() => handleOpenFormDelete(sale)}
+												onClickEdit={() => handleOpenDetalhe(sale)}
+											/>
+										</td>
+									</tr>
+								))}
+							</table>
+						)}
+					</fieldset>
+				</div>
 			</LayoutBody>
 		</Layout>
 	)

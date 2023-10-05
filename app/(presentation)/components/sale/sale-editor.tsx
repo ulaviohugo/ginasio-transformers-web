@@ -15,10 +15,7 @@ import {
 	ImagePreview,
 	Input,
 	InputPrice,
-	Modal,
-	ModalBody,
 	ModalFooter,
-	ModalTitle,
 	Select
 } from '..'
 
@@ -173,170 +170,162 @@ export function SaleEditor({
 		}
 	}
 	return (
-		<Modal show={show} onClose={onClose}>
-			<ModalTitle>
-				{data?.id ? `Venda - ${data?.purchase?.product?.name}` : 'Cadastrar venda'}
-			</ModalTitle>
-			<ModalBody>
-				<form onSubmit={handleSubmit}>
-					<div className="flex gap-2">
-						<div className="flex flex-col gap-2">
-							<ImagePreview photoPreview={photPreview} disabled />
-							<div className="bg-green-50 border border-green-200 p-2">
-								<div>
-									<InputPrice
-										id="unitPrice"
-										name="unitPrice"
-										value={formData?.unitPrice || ''}
-										label={LabelUtils.translateField('unitPrice')}
-										onChange={handleInputChange}
-										disabled
-									/>
-								</div>
-								<div>
-									<Input
-										type="number"
-										id="quantity"
-										name="quantity"
-										value={formData?.quantity || ''}
-										label={LabelUtils.translateField('quantity')}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<InputPrice
-										id="discount"
-										name="discount"
-										value={formData?.discount || ''}
-										label={'Desconto'}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<InputPrice
-										id="amountPaid"
-										name="amountPaid"
-										value={formData?.amountPaid || ''}
-										label={'Total a pagar'}
-										onChange={handleInputChange}
-										disabled
-									/>
-								</div>
-							</div>
+		<form onSubmit={handleSubmit}>
+			<div className="flex gap-2">
+				<div className="flex flex-col gap-2">
+					<ImagePreview photoPreview={photPreview} disabled />
+					<div className="bg-green-50 border border-green-200 p-2">
+						<div>
+							<InputPrice
+								id="unitPrice"
+								name="unitPrice"
+								value={formData?.unitPrice || ''}
+								label={LabelUtils.translateField('unitPrice')}
+								onChange={handleInputChange}
+								disabled
+							/>
 						</div>
 						<div>
-							<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
-								<div>
-									<Select
-										id="customerId"
-										name="customerId"
-										value={formData?.customerId || ''}
-										label={LabelUtils.translateField('customerId')}
-										data={customers.map((customer) => ({
-											text: customer.name,
-											value: customer.id
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<Input
-										id="categoryId"
-										name="categoryId"
-										value={selectedItem.category?.name || ''}
-										label={LabelUtils.translateField('categoryId')}
-										disabled
-									/>
-								</div>
-								<div>
-									<Input
-										id="productId"
-										name="productId"
-										value={selectedItem.product?.name || ''}
-										label={LabelUtils.translateField('productId')}
-										disabled
-									/>
-								</div>
-								<div>
-									<Input
-										id="barCode"
-										name="barCode"
-										value={selectedItem.barCode || ''}
-										label={LabelUtils.translateField('barCode')}
-										disabled
-									/>
-								</div>
-								<div>
-									<Select
-										id="color"
-										name="color"
-										value={formData?.color || ''}
-										label={LabelUtils.translateField('color')}
-										data={ColorUtils.colors.map((color) => ({
-											text: color
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<Input
-										id="size"
-										name="size"
-										value={formData?.size || ''}
-										label={LabelUtils.translateField('size')}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div>
-									<Input
-										id="lot"
-										name="lot"
-										value={selectedItem.lot || ''}
-										label={LabelUtils.translateField('lot')}
-										disabled
-									/>
-								</div>
-								<div>
-									<Input
-										value={selectedItem.unitPrice || ''}
-										label={`Preço compra`}
-										disabled
-									/>
-								</div>
-								<div>
-									<Select
-										id="paymentMethod"
-										name="paymentMethod"
-										value={formData?.paymentMethod || ''}
-										label={LabelUtils.translateField('paymentMethod')}
-										data={PaymentUtils.getMethods().map((paymentType) => ({
-											text: paymentType
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<Input
-									value={data?.employee?.name || user.name}
-									label={`Funcionário`}
-									disabled
-								/>
-							</div>
-							<div className="flex-1 my-5">
-								<ItemList stocks={stocks} onSelect={handleSelectItem} />
-							</div>
+							<Input
+								type="number"
+								id="quantity"
+								name="quantity"
+								value={formData?.quantity || ''}
+								label={LabelUtils.translateField('quantity')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<InputPrice
+								id="discount"
+								name="discount"
+								value={formData?.discount || ''}
+								label={'Desconto'}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<InputPrice
+								id="amountPaid"
+								name="amountPaid"
+								value={formData?.amountPaid || ''}
+								label={'Total a pagar'}
+								onChange={handleInputChange}
+								disabled
+							/>
 						</div>
 					</div>
-
-					<ModalFooter>
-						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-						<ButtonCancel onClick={onClose} />
-					</ModalFooter>
-				</form>
-			</ModalBody>
-		</Modal>
+				</div>
+				<div className="flex-1">
+					<div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+						<div>
+							<Select
+								id="customerId"
+								name="customerId"
+								value={formData?.customerId || ''}
+								label={LabelUtils.translateField('customerId')}
+								data={customers.map((customer) => ({
+									text: customer.name,
+									value: customer.id
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								id="categoryId"
+								name="categoryId"
+								value={selectedItem.category?.name || ''}
+								label={LabelUtils.translateField('categoryId')}
+								disabled
+							/>
+						</div>
+						<div>
+							<Input
+								id="productId"
+								name="productId"
+								value={selectedItem.product?.name || ''}
+								label={LabelUtils.translateField('productId')}
+								disabled
+							/>
+						</div>
+						<div>
+							<Input
+								id="barCode"
+								name="barCode"
+								value={selectedItem.barCode || ''}
+								label={LabelUtils.translateField('barCode')}
+								disabled
+							/>
+						</div>
+						<div>
+							<Select
+								id="color"
+								name="color"
+								value={formData?.color || ''}
+								label={LabelUtils.translateField('color')}
+								data={ColorUtils.colors.map((color) => ({
+									text: color
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								id="size"
+								name="size"
+								value={formData?.size || ''}
+								label={LabelUtils.translateField('size')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
+							<Input
+								id="lot"
+								name="lot"
+								value={selectedItem.lot || ''}
+								label={LabelUtils.translateField('lot')}
+								disabled
+							/>
+						</div>
+						<div>
+							<Input
+								value={selectedItem.unitPrice || ''}
+								label={`Preço compra`}
+								disabled
+							/>
+						</div>
+						<div>
+							<Select
+								id="paymentMethod"
+								name="paymentMethod"
+								value={formData?.paymentMethod || ''}
+								label={LabelUtils.translateField('paymentMethod')}
+								data={PaymentUtils.getMethods().map((paymentType) => ({
+									text: paymentType
+								}))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
+						</div>
+						<Input
+							value={data?.employee?.name || user.name}
+							label={`Funcionário`}
+							disabled
+						/>
+					</div>
+					<div className="flex-1 my-5">
+						<ItemList stocks={stocks} onSelect={handleSelectItem} />
+					</div>
+				</div>
+			</div>
+			<ModalFooter>
+				<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
+				<ButtonCancel onClick={onClose} />
+			</ModalFooter>
+		</form>
 	)
 }
 
