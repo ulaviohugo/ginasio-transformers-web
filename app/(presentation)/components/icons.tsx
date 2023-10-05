@@ -10,7 +10,8 @@ import {
 	HiUser,
 	HiTrash,
 	HiPencilAlt,
-	HiOutlineCurrencyDollar
+	HiOutlineCurrencyDollar,
+	HiMinus
 } from 'react-icons/hi'
 import {
 	AiOutlineClockCircle,
@@ -68,6 +69,9 @@ export const IconPhone = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconPlus = (props: IconBaseProps): React.ReactElement => (
 	<HiPlus {...props} />
+)
+export const IconMinus = (props: IconBaseProps): React.ReactElement => (
+	<HiMinus {...props} />
 )
 export const IconProduct = (props: IconBaseProps): React.ReactElement => (
 	<AiOutlineShoppingCart {...props} />

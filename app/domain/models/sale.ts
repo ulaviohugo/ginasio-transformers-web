@@ -1,18 +1,14 @@
-import { CustomerModel, EmployeeModel, PurchaseModel } from '.'
+import { CustomerModel, EmployeeModel, ProductSaleModel } from '.'
 
 export interface SaleModel {
 	id: number
-	purchaseId: number
 	customerId?: number
-	quantity: number
 	totalValue: number
-	unitPrice: number
 	amountPaid: number
-	color?: string
-	size?: string
 	discount: number
+	employeeId?: number
 	paymentMethod: string
-	employeeId: number
+
 	createdAt: Date
 	createdById?: number
 	updatedAt?: Date
@@ -20,5 +16,5 @@ export interface SaleModel {
 
 	employee?: EmployeeModel
 	customer?: CustomerModel
-	purchase?: PurchaseModel
+	productSales: ProductSaleModel[]
 }

@@ -114,12 +114,18 @@ export default function Segurados() {
 														<span className="font-bold">{insured.insureds?.length}</span>
 													</div>
 												</div>
-												<div>
+												<div className="flex gap-2">
 													<button
 														className="btn-default"
 														onClick={() => handlePrint(insured)}
 													>
 														Imprimir apólice
+													</button>
+													<button
+														className="btn-default"
+														onClick={() => handlePrint(insured)}
+													>
+														Enviar por e-mail
 													</button>
 												</div>
 											</div>

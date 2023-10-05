@@ -17,7 +17,7 @@ import {
 } from '@/(presentation)/components'
 import { useAuth, useSales } from '@/(presentation)/hooks'
 import { loadSaleStore, removeSaleStore } from '@/(presentation)/redux'
-import { SaleModel } from '@/domain/models'
+import { ProductSaleModel, SaleModel } from '@/domain/models'
 import {
 	makeRemoteAddSale,
 	makeRemoteDeleteSale,
@@ -35,7 +35,10 @@ export default function Vendas() {
 	const isAdmin = user?.role == 'Admin'
 
 	const dispatch = useDispatch()
-	const sales = useSelector(useSales())
+
+	// const sales = useSelector(useSales())
+	const [productSales, setProductSales] = useState<ProductSaleModel[]>([])
+
 	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showEditor, setShowEditor] = useState(false)
@@ -110,7 +113,7 @@ export default function Vendas() {
 					<fieldset>
 						<legend>Cadastro de venda</legend>
 						<SaleEditor
-							data={selectedSale}
+							// data={selectedSale}
 							show={showEditor}
 							onClose={handleCloseDetail}
 							addSale={makeRemoteAddSale()}
@@ -122,7 +125,7 @@ export default function Vendas() {
 						<legend>Lista</legend>
 						<div className="flex flex-col gap-2 mb-2">
 							<Title
-								title={`Vendas ${isLoading ? '' : `(${sales?.length})`}`}
+								title={`Vendas ${isLoading ? '' : `(${productSales?.length})`}`}
 								icon={IconProduct}
 							/>
 							<div className="flex items-center gap-2">
@@ -140,7 +143,7 @@ export default function Vendas() {
 						</div>
 						{isLoading ? (
 							<Spinner />
-						) : sales.length < 1 ? (
+						) : productSales.length < 1 ? (
 							<NoData />
 						) : (
 							<table className="table text-left text-sm border border-gray-100">
@@ -157,7 +160,7 @@ export default function Vendas() {
 									<th className="p-1">Data</th>
 									<th className="p-1">Acção</th>
 								</tr>
-								{sales.map((sale, i) => (
+								{productSales.map((sale, i) => (
 									<tr
 										key={sale.id}
 										className={` ${
@@ -166,21 +169,21 @@ export default function Vendas() {
 									>
 										<td className="p-1">{sale.id}</td>
 
-										<td className="p-1">{sale.purchase?.category?.name}</td>
-										<td className="p-1">{sale.purchase?.product?.name}</td>
-										<td className="p-1">{sale.purchase?.color}</td>
-										<td className="p-1">{sale.purchase?.size}</td>
+										<td className="p-1">{sale.product.category?.name}</td>
+										<td className="p-1">{sale.product?.name}</td>
+										<td className="p-1">{sale.color}</td>
+										<td className="p-1">{sale.size}</td>
 										<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
 										<td className="p-1">{NumberUtils.formatCurrency(sale.unitPrice)}</td>
 										<td className="p-1">{NumberUtils.formatCurrency(sale.amountPaid)}</td>
 										<td className="p-1">
-											{StringUtils.getFirstWord(sale.purchase?.employee?.name as string)}
+											{StringUtils.getFirstWord(sale?.sale.employee?.name as string)}
 										</td>
 										<td className="p-1">{DateUtils.getDatePt(sale.createdAt)}</td>
 										<td className="p-1">
 											<CardActions
-												onClickDelete={() => handleOpenFormDelete(sale)}
-												onClickEdit={() => handleOpenDetalhe(sale)}
+											// onClickDelete={() => handleOpenFormDelete(sale)}
+											// onClickEdit={() => handleOpenDetalhe(sale)}
 											/>
 										</td>
 									</tr>
