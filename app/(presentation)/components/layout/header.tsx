@@ -54,7 +54,7 @@ export function Header() {
 					)}
 				</ul>
 				<div className="flex flex-col gap-2 mt-auto px-2">
-					<div className="flex items-center gap-1">
+					<div className="flex items-center gap-1 text-gray-500">
 						<div className="border rounded-full p-1">
 							{user.photo ? (
 								<Image src={user.photo} width={25} height={25} alt="Foto" />
@@ -96,7 +96,11 @@ const Item = ({ active, link, text, icon: Icon }: ItemProps) => {
 			<Link
 				href={link}
 				className={`flex items-center gap-1 px-2 py-1 rounded-l-xl
-				${active ? 'bg-gray-200 text-primary' : 'hover:bg-black hover:bg-opacity-20'}
+				${
+					active
+						? 'bg-gray-200 text-primary'
+						: 'hover:bg-black hover:bg-opacity-20 text-gray-500'
+				}
 				  transition-all duration-200 ease-in-out`}
 			>
 				<Icon /> {text}

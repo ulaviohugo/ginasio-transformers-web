@@ -7,7 +7,8 @@ body {
 }
 
 header {
-	background: linear-gradient(250deg, #04b3e1 0.27%, #0d7a9e 99.39%), #fff;
+	/* background: linear-gradient(250deg, #04b3e1 0.27%, #0d7a9e 99.39%), #fff; */
+	@apply shadow-md border-r
 }
 :disabled {
 	@apply !cursor-not-allowed opacity-80;
@@ -59,4 +60,8 @@ button,
 
 .btn-default {
 	@apply btn bg-gray-200 text-primary border border-gray-200;
+}
+
+.linear-bg{
+	background: linear-gradient(250deg, #04b3e1 0.27%, #0d7a9e 99.39%);
 }
