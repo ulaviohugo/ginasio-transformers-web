@@ -22,7 +22,7 @@ export class NumberUtils {
 		number: number | string | Date | undefined,
 		nullable = false
 	): number {
-		if (!number) return (nullable ? null : 0) as any
+		if (!number) return (nullable ? undefined : 0) as any
 		if (typeof number === 'number') return number
 		if (number instanceof Date) return number.getTime()
 		return Number(String(number)?.replaceAll(' ', ''))

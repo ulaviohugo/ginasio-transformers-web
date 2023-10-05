@@ -6,6 +6,11 @@ import { PrismaFilterMapper, PrismaPurchaseMapper } from '@/infra/db/prisma/mapp
 
 export class PurchasePrismaRepository implements PurchaseRepository {
 	private prisma: PrismaClient
+	private include = {
+		category: { select: { id: true, name: true } },
+		product: { select: { id: true, name: true } },
+		supplier: { select: { id: true, name: true } }
+	}
 	constructor() {
 		this.prisma = prismaService
 	}
@@ -13,11 +18,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 	async add(param: PurchaseModel): Promise<PurchaseModel> {
 		const purchase = (await this.prisma.purchase.create({
 			data: PrismaPurchaseMapper.toPrisma(param),
-			include: {
-				category: { select: { id: true, name: true } },
-				product: { select: { id: true, name: true } },
-				supplier: { select: { id: true, name: true } }
-			}
+			include: this.include
 		})) as any
 
 		//Perform transaction
@@ -40,11 +41,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 			: undefined
 
 		return (await this.prisma.purchase.findMany({
-			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } },
-				supplier: { select: { name: true } }
-			},
+			include: this.include,
 			where: filter
 		})) as any
 	}
@@ -52,22 +49,20 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 	async findById(id: number): Promise<PurchaseModel | null> {
 		return (await this.prisma.purchase.findUnique({
 			where: { id },
-			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } },
-				supplier: { select: { name: true } }
-			}
+			include: this.include
+		})) as any
+	}
+	async find(queryParams: QueryParams<PurchaseModel>): Promise<PurchaseModel | null> {
+		return (await this.prisma.purchase.findFirst({
+			where: queryParams.filter as any,
+			include: this.include
 		})) as any
 	}
 
 	async findLowStock(): Promise<PurchaseModel[]> {
 		return (await this.prisma.purchase.findMany({
 			where: { quantity: { lt: 5 } },
-			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } },
-				supplier: { select: { name: true } }
-			}
+			include: this.include
 		})) as any
 	}
 
@@ -79,11 +74,7 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		return (await this.prisma.purchase.update({
 			data: PrismaPurchaseMapper.toPrisma(param),
 			where: { id: param.id },
-			include: {
-				category: { select: { name: true } },
-				product: { select: { name: true } },
-				supplier: { select: { name: true } }
-			}
+			include: this.include
 		})) as any
 	}
 

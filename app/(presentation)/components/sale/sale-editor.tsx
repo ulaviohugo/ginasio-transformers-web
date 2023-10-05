@@ -266,7 +266,7 @@ export function SaleEditor({
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
-
+		if (!paymentMethod) return toast.error('Selecione o método de pagamento')
 		setIsLoading(true)
 		try {
 			const data = {
@@ -276,16 +276,16 @@ export function SaleEditor({
 				totalValue,
 				discount: totalDiscount,
 				amountPaid: totalValue - totalDiscount
-			}
+			} as any
 			console.log({ data })
 
-			/* const httpResponse = (await addSale.add(data)) as SaleModel
+			const httpResponse = await addSale.add(data)
 
 			if (formData.id) {
-				// dispatch(updateSaleStore(httpResponse))
+				dispatch(updateSaleStore(httpResponse))
 			} else {
-				// dispatch(addSaleStore(httpResponse))
-			} */
+				dispatch(addSaleStore(httpResponse))
+			}
 			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 		} catch (error: any) {
 			toast.error(error.message)

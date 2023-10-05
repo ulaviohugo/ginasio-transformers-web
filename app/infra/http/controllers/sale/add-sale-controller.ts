@@ -1,7 +1,7 @@
 import { AddSale } from '@/domain/usecases'
 import { badRequest, notFound, ok, serverError } from '@/infra/http/helper'
 import { Controller, ControllerParams, Validation } from '@/infra/http/protocols'
-import { SaleModel, Notifiable } from '@/domain/models'
+import { SaleModel, Notifiable, PurchaseModel } from '@/domain/models'
 import { NumberUtils } from '@/utils'
 import { HttpResponse } from '@/data/protocols/http'
 import { dbErrorHandler } from '@/infra/db'
@@ -11,6 +11,7 @@ export class AddSaleController implements Controller {
 	constructor(
 		private readonly addSale: AddSale,
 		private readonly validation: Validation,
+		private readonly productValidation: Validation,
 		private readonly purchaseRepository: PurchaseRepository,
 		private readonly notificationRepository: NotificationRepository
 	) {}
@@ -21,43 +22,70 @@ export class AddSaleController implements Controller {
 				return badRequest(error)
 			}
 
-			const purchaseId = NumberUtils.convertToNumber(request.purchaseId)
-			const quantity = NumberUtils.convertToNumber(request.quantity)
+			console.log({ data: request.productSales })
 
-			const stock = await this.purchaseRepository.findById(purchaseId)
+			const productIds = request.productSales?.map((item) => item.productId)
+			if (productIds.length < 1) {
+				return badRequest(new Error('Informe os produtos para a venda'))
+			}
 
-			if (!stock) return notFound('O produto não está no estoque')
-			if (stock.quantity < quantity) {
-				return badRequest(new Error('Produto não disponível em quantidade suficiente'))
+			const stockList: PurchaseModel[] = []
+
+			for (let i = 0; i < productIds.length; i++) {
+				const product = request.productSales[i]
+				const productError = this.productValidation.validate(product)
+				if (productError) {
+					productError.message = `${productError.message}. ${i + 1}º Produto`
+					return badRequest(productError)
+				}
+				const stock = await this.purchaseRepository.find({
+					filter: { productId: NumberUtils.convertToNumber(product.productId) }
+				})
+				console.log({ stock, id: NumberUtils.convertToNumber(product.productId) })
+
+				if (!stock) return notFound(`O ${i + 1}º produto não foi encontrado no estoque`)
+				if (
+					NumberUtils.convertToNumber(stock.quantity) <
+					NumberUtils.convertToNumber(product.quantity)
+				) {
+					return badRequest(new Error('Produto não disponível em quantidade suficiente'))
+				}
+				stockList.push(stock)
 			}
 
 			const createdById = NumberUtils.convertToNumber(request.accountId)
 
 			const createdSale = await this.addSale.add({
 				...request,
-				purchaseId,
 				customerId: request.customerId && NumberUtils.convertToNumber(request.customerId),
-				quantity,
 				employeeId: NumberUtils.convertToNumber(request.employeeId) || createdById,
 				totalValue: NumberUtils.convertToPrice(request.totalValue),
-				unitPrice: NumberUtils.convertToPrice(request.unitPrice),
 				amountPaid: NumberUtils.convertToPrice(request.amountPaid),
 				discount: NumberUtils.convertToPrice(request.discount),
 				createdById
 			})
 
-			if (stock.quantity <= 6) {
-				await this.notificationRepository.add({
-					notifiable: Notifiable.stock,
-					notifiableId: stock.id,
-					text: `Produto ${stock.product?.name} está com stock baixo`
-				} as any)
-			}
+			for (let i = 0; i < stockList.length; i++) {
+				const stock = stockList[i]
+				const stockQuantity = NumberUtils.convertToNumber(stock.quantity)
+				const productQuantity = NumberUtils.convertToNumber(
+					request.productSales[i].quantity
+				)
+				const currentStock = stockQuantity - productQuantity
 
-			await this.purchaseRepository.update({
-				...stock,
-				quantity: stock.quantity - quantity
-			})
+				if (currentStock <= 6) {
+					await this.notificationRepository.add({
+						notifiable: Notifiable.stock,
+						notifiableId: stock.id,
+						text: `Produto ${stock.product?.name} está com stock baixo, itens restantes: ${currentStock}`
+					} as any)
+				}
+
+				await this.purchaseRepository.update({
+					...stock,
+					quantity: currentStock
+				})
+			}
 
 			return ok(createdSale)
 		} catch (error) {

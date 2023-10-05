@@ -51,13 +51,12 @@ model Employee {
   province     Province?     @relation(fields: [provinceId], references: [id])
   municipality Municipality? @relation(fields: [municipalityId], references: [id])
   purchases    Purchase[]
-  Sale         Sale[]
+  sales         Sale[]
 
   employeePresences EmployeePresence[]
   transactions      Transaction[]
   cashRegisters     CashRegister[]
   insureds          Insured[]
-  productSales      ProductSale[]
 
   @@unique([documentType, documentNumber])
   @@unique([bankName, accountNumber])
@@ -88,7 +87,7 @@ model Country {
   provinces Province[]
   employees Employee[]
   suppliers Supplier[]
-  Ccstomers Customer[]
+  customers Customer[]
 
   @@map("tb_countries")
 }
@@ -293,7 +292,6 @@ model ProductSale {
   color       String?
   size        String?
   discount    Float     @map("discount")
-  employeeId  Int?      @map("employee_id")
   createdById Int?      @map("created_by_id")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedById Int?      @map("updated_by_id")
@@ -301,7 +299,6 @@ model ProductSale {
 
   product  Product?  @relation(fields: [productId], references: [id])
   sale     Sale?     @relation(fields: [saleId], references: [id])
-  employee Employee? @relation(fields: [employeeId], references: [id])
 
   @@map("tb_product_sales")
 }

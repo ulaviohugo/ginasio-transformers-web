@@ -2,45 +2,47 @@ import { QueryParams, SaleRepository } from '@/data/protocols'
 import { TransactionPrismaRepository, prismaService } from '@/infra/db'
 import { SaleModel, TransactionModel } from '@/domain/models'
 import { PrismaClient } from '@prisma/client'
-import { PrismaFilterMapper, PrismaSaleMapper } from '@/infra/db/prisma/mappers'
+import {
+	PrismaFilterMapper,
+	PrismaProductSaleMapper,
+	PrismaSaleMapper
+} from '@/infra/db/prisma/mappers'
 
 export class SalePrismaRepository implements SaleRepository {
 	private prisma: PrismaClient
+	private include = {
+		employee: {
+			select: {
+				id: true,
+				name: true
+			}
+		},
+		productSales: true
+	}
 	constructor() {
 		this.prisma = prismaService
 	}
 
 	async add(param: SaleModel): Promise<SaleModel> {
+		const { productSales, ...sale } = param
+
 		const createdSale = (await this.prisma.sale.create({
-			data: PrismaSaleMapper.toPrisma(param),
-			include: {
-				purchase: {
-					include: {
-						category: true,
-						product: true
-					}
-				},
-				employee: {
-					select: {
-						id: true,
-						name: true
-					}
-				},
-				customer: {
-					select: {
-						id: true,
-						name: true
-					}
-				}
-			}
+			data: PrismaSaleMapper.toPrisma(sale as SaleModel),
+			include: this.include
 		})) as any
+
+		await this.prisma.productSale.createMany({
+			data: productSales.map((item) =>
+				PrismaProductSaleMapper.toPrisma({ ...item, saleId: createdSale.id })
+			)
+		})
 
 		//Perform transaction
 		const transactionRepository = new TransactionPrismaRepository()
 		await transactionRepository.add({
 			date: new Date(),
 			paymentMethod: param.paymentMethod,
-			description: `Venda de ${param.quantity} produto(s): ${createdSale.purchase.category.name} » ${createdSale.purchase.product.name}`,
+			description: `Venda de ${productSales.length} produto(s)`,
 			amount: param.amountPaid,
 			operationType: 'Entrada',
 			createdById: param.createdById
@@ -57,52 +59,20 @@ export class SalePrismaRepository implements SaleRepository {
 
 		return (await this.prisma.sale.findMany({
 			where: filter,
-			include: {
-				purchase: {
-					include: {
-						category: true,
-						product: true
-					}
-				},
-				employee: {
-					select: {
-						id: true,
-						name: true
-					}
-				},
-				customer: {
-					select: {
-						id: true,
-						name: true
-					}
-				}
-			}
+			include: this.include
 		})) as any
 	}
 
+	async find(queryParams: QueryParams<SaleModel>): Promise<SaleModel | null> {
+		return (await this.prisma.sale.findFirst({
+			where: queryParams.filter as any,
+			include: this.include
+		})) as any
+	}
 	async findById(id: number): Promise<SaleModel | null> {
 		return (await this.prisma.sale.findUnique({
 			where: { id },
-			include: {
-				purchase: {
-					include: {
-						category: true,
-						product: true
-					}
-				},
-				employee: {
-					select: {
-						id: true,
-						name: true
-					}
-				},
-				customer: {
-					select: {
-						id: true,
-						name: true
-					}
-				}
-			}
+			include: this.include
 		})) as any
 	}
 
@@ -114,20 +84,7 @@ export class SalePrismaRepository implements SaleRepository {
 		return (await this.prisma.sale.update({
 			data: PrismaSaleMapper.toPrisma(param),
 			where: { id: param.id },
-			include: {
-				purchase: {
-					include: {
-						category: true,
-						product: true
-					}
-				},
-				employee: {
-					select: {
-						id: true,
-						name: true
-					}
-				}
-			}
+			include: this.include
 		})) as any
 	}
 

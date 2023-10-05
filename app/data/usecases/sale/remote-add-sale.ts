@@ -2,7 +2,6 @@ import { SaleModel } from '@/domain/models'
 import { AddSale } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, NumberUtils } from '@/utils'
 
 export class RemoteAddSale implements AddSale {
 	constructor(
@@ -11,16 +10,11 @@ export class RemoteAddSale implements AddSale {
 	) {}
 
 	async add(param: SaleModel): Promise<SaleModel> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const totalValue = NumberUtils.convertToNumber(param.totalValue)
-		const purchaseId = NumberUtils.convertToNumber(param.purchaseId)
-
-		const body = FormDataUtils.createFormData({
-			...param,
-			unitPrice,
-			totalValue,
-			purchaseId
-		})
+		// const body = FormDataUtils.createFormData({
+		// 	...param,
+		// 	totalValue,
+		// })
+		const body = JSON.stringify(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
