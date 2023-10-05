@@ -14,9 +14,6 @@ export class DbUpdateInsured implements UpdateInsured {
 		const foundById = await this.insuredRepository.findById(data.id)
 		if (!foundById) return 'notFound'
 
-		const exists = await this.insuredRepository.findByEmail(data.email)
-		if (exists && exists.id !== data.id) return 'emailInUse'
-
 		const foundByDoc = await this.insuredRepository.findByDocument(
 			data.documentType,
 			data.documentNumber

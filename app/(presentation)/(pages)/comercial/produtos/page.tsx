@@ -16,7 +16,7 @@ import {
 	Title,
 	IconCategory
 } from '@/(presentation)/components'
-import { useProducts } from '@/(presentation)/hooks'
+import { useAuth, useProducts } from '@/(presentation)/hooks'
 import { loadProductStore, removeProductStore } from '@/(presentation)/redux'
 import { ProductModel } from '@/domain/models'
 import {
@@ -31,6 +31,9 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Categorias() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const dispatch = useDispatch()
 	const products = useSelector(useProducts())
 	const [selectedProduct, setSelectedProduct] = useState<ProductModel>({} as ProductModel)
@@ -110,7 +113,7 @@ export default function Categorias() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2 mb-2">
-					<SubMenu submenus={SubmenuUtils.commercial} />
+					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 					<Title
 						title={`Produtos ${isLoading ? '' : `(${products?.length})`}`}
 						icon={IconProduct}

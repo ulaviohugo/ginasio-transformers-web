@@ -30,7 +30,7 @@ export class NumberUtils {
 
 	static convertToPrice(value: number | string | undefined, nullable = false) {
 		const price = this.convertToNumber(value, nullable)
-		return price.toFixed(2)
+		return Number(price.toFixed(2))
 	}
 
 	static random(min: number, max: number): number {

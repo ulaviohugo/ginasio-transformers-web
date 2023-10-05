@@ -29,9 +29,13 @@ import {
 import { loadEmployeeStore, removeEmployeeStore } from '@/(presentation)/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
-import { useEmployees } from '@/(presentation)/hooks'
+import { useAuth, useEmployees } from '@/(presentation)/hooks'
+import NotFound from '@/not-found'
 
 export default function Employees() {
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
 		{} as EmployeeModel
 	)
@@ -42,6 +46,7 @@ export default function Employees() {
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadEmployees().load()
 			dispatch(loadEmployeeStore(httpResponse))
@@ -91,6 +96,7 @@ export default function Employees() {
 		}
 	}
 
+	if (!isAdmin) return <NotFound />
 	return (
 		<Layout>
 			{showEditor && (
@@ -113,7 +119,7 @@ export default function Employees() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr} />
+					<SubMenu submenus={SubmenuUtils.hr()} />
 					<Title
 						title={`Funcionários ${isLoading ? '' : `(${employees?.length})`}`}
 						icon={IconUser}

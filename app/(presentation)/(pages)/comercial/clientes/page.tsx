@@ -29,9 +29,12 @@ import {
 import { loadCustomerStore, removeCustomerStore } from '@/(presentation)/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
-import { useCustomers } from '@/(presentation)/hooks'
+import { useAuth, useCustomers } from '@/(presentation)/hooks'
 
 export default function Customers() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>(
 		{} as CustomerModel
 	)
@@ -113,7 +116,7 @@ export default function Customers() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.commercial} />
+					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 					<Title
 						title={`Clientes ${isLoading ? '' : `(${customers?.length})`}`}
 						icon={IconUser}

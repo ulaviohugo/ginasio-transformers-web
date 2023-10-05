@@ -16,7 +16,11 @@ export class ApolicePage2Utils {
 
 		let y = pageHeight
 		for (let index = 0; index < 6; index++) {
-			insuredPeople({ index, height: y, page, pdfDoc, insured: insured.insureds[index] })
+			const insuredItem = insured?.insureds
+				? insured?.insureds[index]
+				: ({} as InsuredModel)
+
+			insuredPeople({ index, height: y, page, pdfDoc, insured: insuredItem })
 			y -= 120
 		}
 	}

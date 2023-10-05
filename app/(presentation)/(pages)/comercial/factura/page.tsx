@@ -5,8 +5,13 @@ import { useEffect, useState } from 'react'
 import { Layout, LayoutBody, SubMenu } from '@/(presentation)/components'
 import { BillingUtils, SubmenuUtils } from '@/utils'
 import { mockBilling } from '@/test/model/mocks'
+import { useAuth } from '@/(presentation)/hooks'
+import { useSelector } from 'react-redux'
 
 export default function Apolice() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [pdfData, setPdfData] = useState<string | null>(null)
 
 	const billing = mockBilling()
@@ -24,7 +29,7 @@ export default function Apolice() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial} />
+				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 				{pdfData && (
 					<>
 						<iframe

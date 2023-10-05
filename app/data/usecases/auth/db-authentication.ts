@@ -24,11 +24,11 @@ export class DbAuthentication implements Authentication {
 		if (!isValid) return 'invalidCredential'
 
 		const accessToken = await this.encrypter.encrypt(employee.id.toString())
-		const { id, name, email } = employee
+		const { id, name, email, role } = employee
 
 		return {
 			accessToken,
-			user: { id, name, email }
+			user: { id, name, email, role }
 		}
 	}
 }

@@ -11,7 +11,7 @@ export type InsuredCardChangeProps = {
 	value: string
 }
 
-export type SupplierProductEditorProps = {
+export type InsuredEditorProps = {
 	insured: InsuredModel
 	itemIndex: number
 	index: number
@@ -25,7 +25,7 @@ export function PolicyholderInsuredEditor({
 	itemIndex,
 	onChange,
 	onRemoveItem
-}: SupplierProductEditorProps) {
+}: InsuredEditorProps) {
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 		onChange({ index: itemIndex, name, value })

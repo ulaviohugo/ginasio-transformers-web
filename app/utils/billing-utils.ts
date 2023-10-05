@@ -56,12 +56,12 @@ export class BillingUtils {
 			y: pageHeight - 116,
 			size: style.fontSizeTitle
 		})
-		page.drawText(`Telefone: ${NumberUtils.format(billing.insured.phone)}`, {
+		page.drawText(`Telefone: ${NumberUtils.format(billing?.insured?.phone || '')}`, {
 			x: pageWidth - 300,
 			y: pageHeight - 132,
 			size: style.fontSizeTitle
 		})
-		page.drawText(`Telefone 2: ${NumberUtils.format(billing.insured.phone2)}`, {
+		page.drawText(`Telefone 2: ${NumberUtils.format(billing?.insured?.phone2 || '')}`, {
 			x: pageWidth - 300,
 			y: pageHeight - 148,
 			size: style.fontSizeTitle
@@ -181,7 +181,7 @@ export class BillingUtils {
 				size: 8
 			}
 		)
-		page.drawText(`${billing.insured.typeOfInsurance}`, {
+		page.drawText(`${billing?.insured?.policy || ''}`, {
 			x: padding,
 			y: pageHeight - 284,
 			size: style.fontSizeTitle
@@ -202,7 +202,9 @@ export class BillingUtils {
 			}
 		)
 		page.drawText(
-			`${NumberUtils.formatCurrency(billing.insured.copaymentAmount)} ${currencyDesc}`,
+			`${NumberUtils.formatCurrency(
+				billing?.insured?.copaymentAmount || 0
+			)} ${currencyDesc}`,
 			{
 				x: padding + 195,
 				y: pageHeight - 284,

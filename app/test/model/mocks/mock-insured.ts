@@ -3,6 +3,7 @@ import { InsuredModel } from '@/domain/models'
 export const mockInsured = (): InsuredModel => {
 	const currentDate = new Date()
 	return {
+		id: 1,
 		enrollmentDate: new Date('2023-10-02T15:19:02.528Z'),
 		proposalNumber: '1',
 		policyNumber: '123',
@@ -55,6 +56,6 @@ export const mockInsured = (): InsuredModel => {
 				student: 'SIM',
 				relationship: 'Filho (a)'
 			}
-		] as InsuredModel[]
+		] as any
 	}
 }

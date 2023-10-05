@@ -15,7 +15,7 @@ import {
 	Title,
 	IconProduct
 } from '@/(presentation)/components'
-import { useSales } from '@/(presentation)/hooks'
+import { useAuth, useSales } from '@/(presentation)/hooks'
 import { loadSaleStore, removeSaleStore } from '@/(presentation)/redux'
 import { SaleModel } from '@/domain/models'
 import {
@@ -31,6 +31,9 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Vendas() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const dispatch = useDispatch()
 	const sales = useSelector(useSales())
 	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
@@ -112,7 +115,7 @@ export default function Vendas() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2 mb-2">
-					<SubMenu submenus={SubmenuUtils.commercial} />
+					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 					<Title
 						title={`Vendas ${isLoading ? '' : `(${sales?.length})`}`}
 						icon={IconProduct}

@@ -13,7 +13,7 @@ import {
 	IconStock,
 	StokeList
 } from '@/(presentation)/components'
-import { usePurchases } from '@/(presentation)/hooks'
+import { useAuth, usePurchases } from '@/(presentation)/hooks'
 import { PurchaseModel } from '@/domain/models'
 import {
 	makeRemoteAddPurchase,
@@ -26,6 +26,9 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Entradas() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const dispatch = useDispatch()
 	const purchases = useSelector(usePurchases())
 	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
@@ -43,7 +46,7 @@ export default function Entradas() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial} />
+				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 				<div className="my-2">
 					<fieldset>
 						<legend>Cadastro de estoque</legend>

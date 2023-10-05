@@ -23,6 +23,8 @@ import {
 	makeRemoteCountSuppliers
 } from '@/main/factories/usecases/remote'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
 
 type ItemProps = {
 	number: number
@@ -34,6 +36,9 @@ type ItemProps = {
 }
 
 export default function Home() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
 
@@ -71,33 +76,51 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		fetchCount(makeRemoteCountEmployees(), (response) => {
-			setEmployees(response)
-			setIsLoadingEmployees(false)
-		})
-		fetchCount(makeRemoteCountCategories(), (response) => {
-			setCategories(response)
-			setIsLoadingCategories(false)
-		})
-		fetchCount(makeRemoteCountProduct(), (response) => {
-			setProducts(response)
-			setIsLoadingProducts(false)
-		})
-		fetchCount(makeRemoteCountSuppliers(), (response) => {
-			setSuppliers(response)
-			setIsLoadingSuppliers(false)
-		})
-		fetchCount(makeRemoteCountCustomers(), (response) => {
-			setCustomers(response)
-			setIsLoadingCustomers(false)
-		})
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountEmployees(), (response) => {
+					setEmployees(response)
+					setIsLoadingEmployees(false)
+				})
+		}
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountCategories(), (response) => {
+					setCategories(response)
+					setIsLoadingCategories(false)
+				})
+		}
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountProduct(), (response) => {
+					setProducts(response)
+					setIsLoadingProducts(false)
+				})
+		}
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountSuppliers(), (response) => {
+					setSuppliers(response)
+					setIsLoadingSuppliers(false)
+				})
+		}
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountCustomers(), (response) => {
+					setCustomers(response)
+					setIsLoadingCustomers(false)
+				})
+		}
+		{
+			isAdmin &&
+				fetchCount(makeRemoteCountPurchases(), (response) => {
+					setPurchases(response)
+					setIsLoadingPurchases(false)
+				})
+		}
 		fetchCount(makeRemoteCountSales(), (response) => {
 			setSales(response)
 			setIsLoadingSales(false)
-		})
-		fetchCount(makeRemoteCountPurchases(), (response) => {
-			setPurchases(response)
-			setIsLoadingPurchases(false)
 		})
 	}, [])
 
@@ -105,53 +128,65 @@ export default function Home() {
 		<Layout>
 			<LayoutBody>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
-					<Item
-						number={employees}
-						title={'Funcionários'}
-						icon={IconUser}
-						isLoading={isLoadingEmployees}
-						href="/rh/funcionarios"
-					/>
-					<Item
-						number={categories}
-						title={'Categorias'}
-						icon={IconCategory}
-						isLoading={isLoadingCategories}
-						href="/comercial/categorias"
-						className="bg-gray-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
-					<Item
-						number={products}
-						title={'Produtos'}
-						icon={IconProduct}
-						isLoading={isLoadingProducts}
-						href="/comercial/produtos"
-						className="bg-blue-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
-					<Item
-						number={suppliers}
-						title={'Fornecedores'}
-						icon={IconSupplier}
-						isLoading={isLoadingSuppliers}
-						href="/comercial/fornecedores"
-						className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
-					<Item
-						number={customers}
-						title={'Clientes'}
-						icon={IconCustomer}
-						isLoading={isLoadingCustomers}
-						href="/comercial/clientes"
-						className="bg-orange-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
-					<Item
-						number={purchases}
-						title={'Estoque'}
-						icon={IconProduct}
-						isLoading={isLoadingPurchases}
-						href="/comercial/estoque"
-						className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
+					{isAdmin && (
+						<Item
+							number={employees}
+							title={'Funcionários'}
+							icon={IconUser}
+							isLoading={isLoadingEmployees}
+							href="/rh/funcionarios"
+						/>
+					)}
+					{isAdmin && (
+						<Item
+							number={categories}
+							title={'Categorias'}
+							icon={IconCategory}
+							isLoading={isLoadingCategories}
+							href="/comercial/categorias"
+							className="bg-gray-400 bg-opacity-80 hover:bg-opacity-100"
+						/>
+					)}
+					{isAdmin && (
+						<Item
+							number={products}
+							title={'Produtos'}
+							icon={IconProduct}
+							isLoading={isLoadingProducts}
+							href="/comercial/produtos"
+							className="bg-blue-400 bg-opacity-80 hover:bg-opacity-100"
+						/>
+					)}
+					{isAdmin && (
+						<Item
+							number={suppliers}
+							title={'Fornecedores'}
+							icon={IconSupplier}
+							isLoading={isLoadingSuppliers}
+							href="/comercial/fornecedores"
+							className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
+						/>
+					)}
+					{isAdmin && (
+						<Item
+							number={customers}
+							title={'Clientes'}
+							icon={IconCustomer}
+							isLoading={isLoadingCustomers}
+							href="/comercial/clientes"
+							className="bg-orange-400 bg-opacity-80 hover:bg-opacity-100"
+						/>
+					)}
+					{isAdmin && (
+						<Item
+							number={purchases}
+							title={'Estoque'}
+							icon={IconProduct}
+							isLoading={isLoadingPurchases}
+							href="/comercial/estoque"
+							className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
+						/>
+					)}
 					<Item
 						number={sales}
 						title={'Vendas'}

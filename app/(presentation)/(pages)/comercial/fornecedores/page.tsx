@@ -33,9 +33,12 @@ import {
 import { loadSupplierStore, removeSupplierStore } from '@/(presentation)/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
-import { useSuppliers } from '@/(presentation)/hooks'
+import { useAuth, useSuppliers } from '@/(presentation)/hooks'
 
 export default function Suppliers() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [selectedSupplier, setSelectedSupplier] = useState<SupplierModel>(
 		{} as SupplierModel
 	)
@@ -117,7 +120,7 @@ export default function Suppliers() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.commercial} />
+					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 					<Title
 						title={`Fornecedores ${isLoading ? '' : `(${suppliers?.length})`}`}
 						icon={IconSupplier}

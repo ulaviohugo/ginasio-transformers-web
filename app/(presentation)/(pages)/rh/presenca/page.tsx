@@ -16,9 +16,13 @@ import { toast } from 'react-hot-toast'
 import { makeRemoteLoadEmployeePresences } from '@/main/factories/usecases/remote'
 import { loadEmployeeStore } from '@/(presentation)/redux'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEmployees } from '@/(presentation)/hooks'
+import { useAuth, useEmployees } from '@/(presentation)/hooks'
+import NotFound from '@/not-found'
 
 export default function Employees() {
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
 		{} as EmployeeModel
 	)
@@ -27,6 +31,7 @@ export default function Employees() {
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadEmployeePresences().load()
 			dispatch(loadEmployeeStore(httpResponse))
@@ -48,11 +53,13 @@ export default function Employees() {
 		setSelectedEmployee(emp)
 	}
 
+	if (!isAdmin) return <NotFound />
+
 	return (
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr} />
+					<SubMenu submenus={SubmenuUtils.hr()} />
 					<Title title={`Presença`} />
 					<div className="flex flex-col gap-2">
 						<div className="inline-flex">

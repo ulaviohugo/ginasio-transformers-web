@@ -18,11 +18,11 @@ export class ApolicePage1Utils {
 
 		const formData: FormDataProps = {
 			mediator: String(insured.mediator),
-			policyNumber: insured.policyNumber,
-			proposalNumber: insured.proposalNumber,
-			proposalType: insured.proposalType,
-			assistedBy: insured.createdBy?.name,
-			createdAt: insured.createdAt,
+			policyNumber: String(insured.policyNumber),
+			proposalNumber: String(insured.proposalNumber),
+			proposalType: String(insured.proposalType) as any,
+			assistedBy: String(insured.createdBy?.name),
+			createdAt: insured.createdAt as any,
 			proposalCurrency: 'AOA'
 		}
 

@@ -13,7 +13,7 @@ import {
 	SubMenu,
 	Title
 } from '@/(presentation)/components'
-import { useCategories } from '@/(presentation)/hooks'
+import { useAuth, useCategories } from '@/(presentation)/hooks'
 import { loadCategoryStore, removeCategoryStore } from '@/(presentation)/redux'
 import { CategoryModel } from '@/domain/models'
 import {
@@ -28,6 +28,9 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Categorias() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
 	const [isLoading, setIsLoading] = useState(true)
@@ -110,7 +113,7 @@ export default function Categorias() {
 
 			<LayoutBody>
 				<div className="flex flex-col gap-2 mb-2">
-					<SubMenu submenus={SubmenuUtils.commercial} />
+					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 					<Title
 						title={`Categorias ${isLoading ? '' : `(${categories?.length})`}`}
 						icon={IconCategory}

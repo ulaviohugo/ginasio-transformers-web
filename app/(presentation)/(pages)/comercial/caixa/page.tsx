@@ -13,6 +13,7 @@ import {
 	TextArea,
 	Title
 } from '@/(presentation)/components'
+import { useAuth } from '@/(presentation)/hooks'
 import { CashRegisterModel, TransactionModel } from '@/domain/models'
 import {
 	makeRemoteAddCashRegister,
@@ -22,8 +23,12 @@ import {
 import { DateUtils, LabelUtils, NumberUtils, PaymentUtils, SubmenuUtils } from '@/utils'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 export default function Caixa() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [cashRegister, setCashRegister] = useState<CashRegisterModel>({} as any)
 	const [balanceData, setBalanceData] = useState<CashRegisterModel>(cashRegister)
 	const [formData, setFormData] = useState<TransactionModel>({
@@ -97,7 +102,7 @@ export default function Caixa() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial} />
+				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 				<Title title="Caixa" icon={IconCashRegister} />
 				<div className="flex">
 					{isLoading ? (

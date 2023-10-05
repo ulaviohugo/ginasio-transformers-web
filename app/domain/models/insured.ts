@@ -42,6 +42,7 @@ export type InsuredModel = {
 	createdById?: number
 	updatedAt?: Date
 	updatedById?: number
+	copaymentAmount?: number
 
 	createdBy?: EmployeeModel
 	province?: string

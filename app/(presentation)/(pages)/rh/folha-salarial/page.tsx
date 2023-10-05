@@ -16,12 +16,16 @@ import { useAuth, useEmployees } from '@/(presentation)/hooks'
 import { loadEmployeeStore } from '@/(presentation)/redux'
 import { EmployeeModel } from '@/domain/models'
 import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
+import NotFound from '@/not-found'
 import { DateUtils, SubmenuUtils } from '@/utils'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function FolhaSalarial() {
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+
 	const dispatch = useDispatch()
 
 	const employees = useSelector(useEmployees())
@@ -30,6 +34,7 @@ export default function FolhaSalarial() {
 	)
 
 	const fetchData = async () => {
+		if (!isAdmin) return
 		try {
 			const httpResponse = await makeRemoteLoadEmployees().load()
 			dispatch(loadEmployeeStore(httpResponse))
@@ -50,11 +55,12 @@ export default function FolhaSalarial() {
 		const emp = employees.find((employee) => employee.id == id) || ({} as EmployeeModel)
 		setSelectedEmployee(emp)
 	}
+	if (!isAdmin) return <NotFound />
 	return (
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr} />
+					<SubMenu submenus={SubmenuUtils.hr()} />
 					<Title title="Folha salarial" />
 					<div className="flex">
 						<div className="">

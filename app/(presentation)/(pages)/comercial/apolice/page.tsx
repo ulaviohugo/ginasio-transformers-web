@@ -17,8 +17,13 @@ import {
 	SubmenuUtils
 } from '@/utils'
 import { mockInsured } from '@/test/model/mocks'
+import { useSelector } from 'react-redux'
+import { useAuth } from '@/(presentation)/hooks'
 
 export default function Apolice() {
+	const user = useSelector(useAuth())
+	const isAdmin = user?.role == 'Admin'
+
 	const [pdfData, setPdfData] = useState<string | null>(null)
 	useEffect(() => {
 		generatePDF()
@@ -61,7 +66,7 @@ export default function Apolice() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial} />
+				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
 				{/* <PolicyholderEditor onChange={handleInputChange} /> */}
 				{pdfData && (
 					<>

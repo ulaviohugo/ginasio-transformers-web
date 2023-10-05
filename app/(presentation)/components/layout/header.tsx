@@ -18,6 +18,8 @@ import { useSelector } from 'react-redux'
 
 export function Header() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+
 	const [isLoading, setIsLoading] = useState(false)
 	const handleSignout = async () => {
 		setIsLoading(true)
@@ -42,12 +44,14 @@ export function Header() {
 						text="Segurados"
 						icon={IconUser}
 					/>
-					<Item
-						active={path.indexOf('/rh') >= 0}
-						link={'/rh'}
-						text="RH"
-						icon={IconUser}
-					/>
+					{isAdmin && (
+						<Item
+							active={path.indexOf('/rh') >= 0}
+							link={'/rh'}
+							text="RH"
+							icon={IconUser}
+						/>
+					)}
 				</ul>
 				<div className="flex flex-col gap-2 mt-auto px-2">
 					<div className="flex items-center gap-1">
