@@ -1,4 +1,5 @@
 import { DbAddEmployee } from '@/data/usecases'
+import { EmployeeModel } from '@/domain/models'
 import { BcryptAdapter } from '@/infra/cryptography'
 import { EmployeePrismaRepository } from '@/infra/db'
 
@@ -29,6 +30,7 @@ export class EmployeeSeeder {
 				userName: 'samuelfreitas',
 				password: '123456',
 				canLogin: true,
+				role: 'Admin',
 				countryId: 1,
 				provinceId: 1,
 				residentialAddress: 'Rua Principal, 123',
@@ -37,7 +39,7 @@ export class EmployeeSeeder {
 				hireDate: date,
 				contractEndDate: new Date(date.getTime() + 1000 * 86400 * 30 * 12), //1 year
 				createdAt: date
-			} as any)
+			} as EmployeeModel)
 		} catch (error: any) {
 			console.error(error.message)
 		}
