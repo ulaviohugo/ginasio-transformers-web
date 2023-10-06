@@ -1,0 +1,6 @@
+export * from './auth'
+export * from './comercial'
+export * from './home'
+export * from './insureds'
+export * from './notfound'
+export * from './notifications'

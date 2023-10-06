@@ -1,13 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./components/**/*.{js,ts,jsx,tsx,mdx}',
-		'./app/**/*.{js,ts,jsx,tsx,mdx}'
-	],
+	content: ['./resources/**/*.{tsx,blade.php}'],
 	theme: {
 		extend: {
-			colors: { primary: '#525659' }
+			colors: {
+				primary: '#525659',
+				bg: '#F8F9FE'
+			},
+			fontFamily: {
+				exo: ['Exo', 'sans']
+			}
 		}
 	},
 	plugins: []
