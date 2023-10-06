@@ -13,7 +13,7 @@ export interface EmployeeModel {
 	socialSecurity?: string
 	dependents: number
 	educationDegree: string
-	phone1: string
+	phone: string
 	phone2?: string
 	email: string
 	userName?: string

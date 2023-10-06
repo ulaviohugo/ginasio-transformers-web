@@ -13,7 +13,7 @@ export const mockEmployee = (): EmployeeModel => {
 		nif: '001322548LA035',
 		residentialAddress: 'Coreia',
 		email: 'joel@gmail.com',
-		phone1: '930690710',
+		phone: '930690710',
 		phone2: '990690710'
 	} as EmployeeModel
 }

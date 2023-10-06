@@ -22,7 +22,7 @@ export const makeAddEmployeeValidation = () => {
 		'nif',
 		'dependents',
 		'educationDegree',
-		'phone1',
+		'phone',
 		'email',
 		'countryId',
 		'residentialAddress',

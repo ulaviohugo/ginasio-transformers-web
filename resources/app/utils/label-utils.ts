@@ -73,7 +73,7 @@ export class LabelUtils {
 		paymentMethod: 'Forma de pagamento',
 		plan: 'Plano',
 		phone: 'Telefone',
-		phone1: 'Telefone 1',
+		phone: 'Telefone 1',
 		phone2: 'Telefone 2',
 		position: 'Cargo',
 		policy: 'Apólice',

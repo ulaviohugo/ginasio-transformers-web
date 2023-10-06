@@ -94,7 +94,7 @@ export function EmployeeEditor({
 			data = { ...data, [name]: file }
 			handleInputFile(file)
 		}
-		if (name == 'phone1' && !value) {
+		if (name == 'phone' && !value) {
 			data = { ...data, phone2: '' }
 		}
 
@@ -276,19 +276,19 @@ export function EmployeeEditor({
 								</div>
 								<div className="grid grid-cols-3 gap-1">
 									<InputPhone
-										id="phone1"
-										name="phone1"
-										value={formDate?.phone1 || ''}
-										label={LabelUtils.translateField('phone1')}
+										id="phone"
+										name="phone"
+										value={formDate?.phone || ''}
+										label={LabelUtils.translateField('phone')}
 										onChange={handleInputChange}
 									/>
 									<InputPhone
 										id="phone2"
 										name="phone2"
-										value={!formDate?.phone1 ? '' : formDate?.phone2 || ''}
+										value={!formDate?.phone ? '' : formDate?.phone2 || ''}
 										label={LabelUtils.translateField('phone2')}
 										onChange={handleInputChange}
-										disabled={!formDate?.phone1}
+										disabled={!formDate?.phone}
 									/>
 									<InputEmail
 										id="email"

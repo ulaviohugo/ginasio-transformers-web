@@ -17,7 +17,7 @@ export class PrismaEmployeeMapper {
 			socialSecurity: employee.socialSecurity,
 			dependents: employee.dependents,
 			educationDegree: employee.educationDegree,
-			phone1: employee.phone1,
+			phone: employee.phone,
 			phone2: employee.phone2,
 			email: employee.email,
 			userName: employee.userName,

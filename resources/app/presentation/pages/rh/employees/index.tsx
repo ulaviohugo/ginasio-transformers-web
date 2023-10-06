@@ -157,7 +157,7 @@ export function Employees() {
 										<div>
 											<div className="font-semibold">{employee.name}</div>
 											<div className="flex items-center gap-1 text-sm font-normal">
-												<IconPhone /> {NumberUtils.format(employee.phone1)}
+												<IconPhone /> {NumberUtils.format(employee.phone)}
 											</div>
 										</div>
 									</div>
