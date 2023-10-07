@@ -161,121 +161,17 @@ return [
 		'attribute-name' => [
 			'rule-name' => 'custom-message',
 		],
-		// '*' => [
-		//   'required' => 'O campo :attribute é obrigatório.',
-		//   'email' => 'O campo :attribute é deve ser um email válido.',
-		//   'min' => [
-		//     'array' => 'O campo :attribute deve ter pelo menos :min items.',
-		//     'file' => 'O campo :attribute deve ter pelo menos :min kilobytes.',
-		//     'numeric' => 'O campo :attribute deve ser pelo menos :min.',
-		//     'string' => 'O campo :attribute deve ter pelo menos :min caracteres.',
-		//   ],
-		'name' => [
-			'required' => 'O :attribute é obrigatório.',
-			'email' => 'O :attribute é deve ser um email válido.',
-			'unique' => 'O :attribute que informou já está em uso.',
+		'*' => [
+			'required' => 'O campo :attribute é obrigatório.',
+			'email' => 'O campo :attribute deve ser um email válido.',
+			'unique' => 'O valor do campo :attribute já está em uso.',
 			'min' => [
-				'array' => 'O :attribute deve ter pelo menos :min items.',
-				'file' => 'O :attribute deve ter pelo menos :min kilobytes.',
-				'numeric' => 'O :attribute deve ser pelo menos :min.',
-				'string' => 'O :attribute deve ter pelo menos :min caracteres.',
+				'array' => 'O valor do campo :attribute deve ter pelo menos :min items.',
+				'file' => 'O campo :attribute deve ter pelo menos :min kilobytes.',
+				'numeric' => 'O campo :attribute deve ter um valor de pelo menos :min.',
+				'string' => 'O campo :attribute deve ter um valor de pelo menos :min caracteres.',
 			],
 		],
-		'document_type' => [
-			'required' => 'O :attribute é obrigatório.',
-			'unique' => 'O documento que informou já está registado.',
-		],
-		'document_number' => [
-			'required' => 'O :attribute é obrigatório',
-			'unique' => 'O :attribute que informou já está registado.',
-		],
-		'province_id' => [
-			'required' => 'Selecione a província'
-		],
-		'province' => [
-			'required' => 'Selecione a província'
-		],
-		'county_id' => [
-			'required' => 'Selecione o município'
-		],
-		'municipality_id' => [
-			'required' => 'Selecione o município'
-		],
-		'county' => [
-			'required' => 'Selecione o município'
-		],
-		'address' => [
-			'required' => 'Informe um endereço'
-		],
-		'address.province_id' => [
-			'required' => 'Selecione a província'
-		],
-		'address.county_id' => [
-			'required' => 'Selecione o município'
-		],
-		'address.address' => [
-			'required' => 'Informe a morada'
-		],
-		'course_id' => [
-			'required' => 'O curso é obrigatório'
-		],
-		'email' => [
-			'required' => 'O e-mail é obrigatório.',
-			'email' => 'O e-mail é deve ser um email válido.',
-			'unique' => 'O e-mail que informou já está em uso.',
-			'min' => [
-				'array' => 'O e-mail deve ter pelo menos :min items.',
-				'numeric' => 'O e-mail deve ser pelo menos :min.',
-				'string' => 'O e-mail deve ter pelo menos :min caracteres.',
-			],
-		],
-		'password' => [
-			'required' => 'A senha é obrigatória.',
-			'confirmed' => 'A confirmação da senha não combina.',
-			'min' => [
-				'array' => 'A senha deve ter pelo menos :min items.',
-				'numeric' => 'A senha deve ser pelo menos :min.',
-				'string' => 'A senha deve ter pelo menos :min caracteres.',
-			]
-		],
-		'token' => [
-			'required' => 'É necessário informar o token para realizar essa operação'
-		],
-		'role_id' => [
-			'required' => 'O perfil é obrigatório.',
-			'min' => [
-				'array' => 'O perfil deve ter pelo menos :min items.',
-				'numeric' => 'O perfil deve ser pelo menos :min.',
-				'string' => 'O perfil deve ter pelo menos :min caracteres.',
-			]
-		],
-		'phone' => [
-			'required' => 'O telefone é obrigatório.',
-			'min' => [
-				'array' => 'O telefone deve ter pelo menos :min items.',
-				'numeric' => 'O telefone deve ser pelo menos :min.',
-				'string' => 'O telefone deve ter pelo menos :min caracteres.',
-			],
-		],
-		'phone2' => [
-			'required' => 'O telefone alternativo é obrigatório.',
-			'min' => [
-				'array' => 'O telefone alternativo deve ter pelo menos :min items.',
-				'numeric' => 'O telefone alternativo deve ser pelo menos :min.',
-				'string' => 'O telefone alternativo deve ter pelo menos :min caracteres.',
-			],
-		],
-		'status' => [
-			'required' => 'O estado é obrigatório.',
-		],
-		'available_seats' => [
-			'required' => 'Informe o nº de vaga disponível.',
-			'numeric' => 'Informe um valor numérico para :attribute',
-			'min' => [
-				'numeric' => 'Informe um valor numérico para a vaga :min.',
-				'string' => 'O telefone alternativo deve ter pelo menos :min caracteres.',
-			],
-		]
 	],
 
 	/*
