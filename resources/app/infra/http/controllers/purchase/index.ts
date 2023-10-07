@@ -1,5 +1,0 @@
-export * from './add-purchase-controller'
-export * from './count-purchase-controller'
-export * from './delete-purchase-controller'
-export * from './load-purchase-controller'
-export * from './update-purchase-controller'

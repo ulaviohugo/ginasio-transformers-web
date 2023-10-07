@@ -1,7 +1,0 @@
-export * from './add-category-controller-factory'
-export * from './add-category-validation-factory'
-export * from './count-category-controller-factory'
-export * from './delete-category-controller-factory'
-export * from './load-category-controller-factory'
-export * from './update-category-controller-factory'
-export * from './update-category-validation-factory'

@@ -1,7 +1,0 @@
-export * from './add-purchase-controller-factory'
-export * from './add-purchase-validation-factory'
-export * from './count-purchase-controller-factory'
-export * from './delete-purchase-controller-factory'
-export * from './load-purchase-controller-factory'
-export * from './update-purchase-controller-factory'
-export * from './update-purchase-validation-factory'

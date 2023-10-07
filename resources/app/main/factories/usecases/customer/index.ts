@@ -1,5 +1,0 @@
-export * from './add-customer-factory'
-export * from './count-customer-factory'
-export * from './delete-customer-factory'
-export * from './load-customer-factory'
-export * from './update-customer-factory'

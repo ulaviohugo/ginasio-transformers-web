@@ -1,8 +1,7 @@
-import { Uploader } from '@/data/protocols/services'
 import { CustomerModel } from '@/domain/models'
 
 export interface AddCustomer {
-	add(param: CustomerModel, uploader?: Uploader): Promise<AddCustomersResult>
+	add(param: CustomerModel): Promise<AddCustomersResult>
 }
 
-export type AddCustomersResult = CustomerModel | 'emailInUse'
+export type AddCustomersResult = CustomerModel

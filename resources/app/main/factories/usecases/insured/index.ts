@@ -1,5 +1,0 @@
-export * from './add-insured-factory'
-export * from './count-insured-factory'
-export * from './delete-insured-factory'
-export * from './load-insured-factory'
-export * from './update-insured-factory'

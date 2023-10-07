@@ -1,5 +1,0 @@
-export * from './add-customer-controller'
-export * from './count-customer-controller'
-export * from './delete-customer-controller'
-export * from './load-customer-controller'
-export * from './update-customer-controller'

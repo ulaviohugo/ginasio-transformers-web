@@ -1,5 +1,0 @@
-export * from './add-transaction-factory'
-export * from './count-transaction-factory'
-export * from './delete-transaction-factory'
-export * from './load-transaction-factory'
-export * from './update-transaction-factory'

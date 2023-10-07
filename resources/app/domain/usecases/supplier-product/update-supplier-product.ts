@@ -4,4 +4,4 @@ export interface UpdateSupplierProduct {
 	update(param: SupplierProductModel): Promise<UpdateSupplierProductResult>
 }
 
-export type UpdateSupplierProductResult = SupplierProductModel | 'emailInUse'
+export type UpdateSupplierProductResult = SupplierProductModel

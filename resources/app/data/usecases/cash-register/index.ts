@@ -1,6 +1,3 @@
-export * from './db-add-cash-register'
-export * from './db-load-cash-register'
-export * from './db-update-cash-register'
 export * from './remote-add-cash-register'
 export * from './remote-load-cash-register'
 export * from './remote-update-cash-register'
