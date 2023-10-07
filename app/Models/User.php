@@ -20,6 +20,7 @@ class User extends Authenticatable implements JWTSubject
 	public const ROLE_ADMIN = 'Admin',
 		ROLE_USER = 'Normal';
 
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -79,6 +80,17 @@ class User extends Authenticatable implements JWTSubject
 		'email_verified_at' => 'datetime',
 		'password' => 'hashed',
 	];
+
+
+	public static function currentUser()
+	{
+		return auth('api')->user();
+	}
+
+	public static function currentUserId()
+	{
+		return auth('api')->id();
+	}
 
 	/**
 	 * Get the identifier that will be stored in the subject claim of the JWT.
