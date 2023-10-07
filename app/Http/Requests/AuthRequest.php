@@ -2,12 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\HttpResponse;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
-
-class AuthRequest extends FormRequest
+class AuthRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -28,13 +23,5 @@ class AuthRequest extends FormRequest
 			'email' => 'required|email',
 			'password' => 'required|string|min:6',
 		];
-	}
-
-	public function failedValidation(Validator $validator)
-	{
-		throw new ValidationException(
-			$validator,
-			HttpResponse::error(message: $validator->errors()->first())
-		);
 	}
 }
