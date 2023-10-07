@@ -37,12 +37,12 @@ class UserSeeder extends Seeder
 			'role' => 'Admin',
 			'country_id' => 1,
 			'province_id' => 11,
+			'municipality_id' => 97,
 			'address' => 'Rua Principal, 123',
 			'position' => 'Desenvolvedor',
 			'base_salary' => 1980000,
 			'hire_date' => $date,
-			'contract_end_date' => (new DateTime())->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s'), //1 year
-			'created_at' => $date,
+			'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year
 		];
 
 		User::create($data);
