@@ -12,10 +12,10 @@ export class RemoteUpdateCustomer implements UpdateCustomer {
 
 	async update(param: CustomerModel): Promise<CustomerModel> {
 		const handledParam = ObjectUtils.removeProps<CustomerModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

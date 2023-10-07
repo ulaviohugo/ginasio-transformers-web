@@ -14,16 +14,16 @@ export class SupplierPrismaRepository implements SupplierRepository {
 		const createdSupplier = (await this.prisma.supplier.create({
 			data: {
 				...PrismaSupplierMapper.toPrisma(param),
-				supplierProducts: { createMany: { data: param.supplierProducts as any } }
+				supplierProducts: { createMany: { data: param.supplier_products as any } }
 			},
 			include: {
 				supplierProducts: {
 					select: {
 						id: true,
-						supplierId: true,
-						categoryId: true,
-						productId: true,
-						unitPrice: true,
+						supplier_id: true,
+						category_id: true,
+						product_id: true,
+						unit_price: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
@@ -40,10 +40,10 @@ export class SupplierPrismaRepository implements SupplierRepository {
 				supplierProducts: {
 					select: {
 						id: true,
-						supplierId: true,
-						categoryId: true,
-						productId: true,
-						unitPrice: true,
+						supplier_id: true,
+						category_id: true,
+						product_id: true,
+						unit_price: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
@@ -76,10 +76,10 @@ export class SupplierPrismaRepository implements SupplierRepository {
 				supplierProducts: {
 					select: {
 						id: true,
-						supplierId: true,
-						categoryId: true,
-						productId: true,
-						unitPrice: true,
+						supplier_id: true,
+						category_id: true,
+						product_id: true,
+						unit_price: true,
 						category: { select: { name: true } },
 						product: { select: { name: true } }
 					}
@@ -90,9 +90,9 @@ export class SupplierPrismaRepository implements SupplierRepository {
 		return updatedSupplier
 	}
 
-	async delete(supplierId: number): Promise<boolean> {
+	async delete(supplier_id: number): Promise<boolean> {
 		const deletedSupplier = await this.prisma.supplier.delete({
-			where: { id: supplierId }
+			where: { id: supplier_id }
 		})
 		return !!deletedSupplier
 	}

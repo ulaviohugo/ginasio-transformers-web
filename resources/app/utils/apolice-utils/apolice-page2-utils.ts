@@ -98,7 +98,7 @@ const insuredPeople = async ({
 		x: padding + 148,
 		y: height - 149
 	})
-	page.drawText(insured?.cardName || '', {
+	page.drawText(insured?.card_name || '', {
 		x: padding + 151,
 		y: height - 145,
 		size: style.fontSizeText
@@ -121,11 +121,14 @@ const insuredPeople = async ({
 		x: padding + 355,
 		y: height - 149
 	})
-	page.drawText(insured?.dateOfBirth ? DateUtils.getDatePt(insured.dateOfBirth) : '', {
-		x: padding + 358,
-		y: height - 146,
-		size: style.fontSizeText
-	})
+	page.drawText(
+		insured?.date_of_birth ? DateUtils.getDatePt(insured.date_of_birth) : '',
+		{
+			x: padding + 358,
+			y: height - 146,
+			size: style.fontSizeText
+		}
+	)
 
 	makeRectangle({
 		page: page,
@@ -144,7 +147,7 @@ const insuredPeople = async ({
 		x: padding + 60,
 		y: height - 166
 	})
-	page.drawText(insured?.documentNumber || '', {
+	page.drawText(insured?.document_number || '', {
 		x: padding + 63,
 		y: height - 162,
 		size: style.fontSizeText

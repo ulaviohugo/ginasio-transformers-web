@@ -25,15 +25,15 @@ export class AddCashRegisterController implements Controller {
 				const updatedCashRegister = await this.updateCashRegister.update({
 					...request,
 					id: cacheRegister.id,
-					updatedById: request.accountId,
-					updatedAt: new Date()
+					user_id_update: request.accountId,
+					updated_at: new Date()
 				})
 				return ok(updatedCashRegister)
 			}
 
 			const createdCashRegister = await this.addCashRegister.add({
 				...request,
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				user_id: NumberUtils.convertToNumber(request.accountId)
 			})
 			return ok(createdCashRegister)
 		} catch (error) {

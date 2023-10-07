@@ -15,14 +15,14 @@ export class DbUpdateInsured implements UpdateInsured {
 		if (!foundById) return 'notFound'
 
 		const foundByDoc = await this.insuredRepository.findByDocument(
-			data.documentType,
-			data.documentNumber
+			data.document_type,
+			data.document_number
 		)
 		if (foundByDoc && foundByDoc.id !== data.id) return 'documentInUse'
 
 		const updatedInsured = await this.insuredRepository.update({
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 
 		return updatedInsured

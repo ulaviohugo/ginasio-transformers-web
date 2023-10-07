@@ -7,10 +7,10 @@ export class RemoteDeleteTransaction implements DeleteTransaction {
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
-	async delete(employeeId: number): Promise<boolean> {
+	async delete(employee_id: number): Promise<boolean> {
 		const httpResponse = await this.httpClient.request({
 			method: 'delete',
-			url: `${this.url}/${employeeId}`
+			url: `${this.url}/${employee_id}`
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

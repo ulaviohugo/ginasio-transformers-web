@@ -15,21 +15,21 @@ export const makeAddEmployeeValidation = () => {
 	const fields: FieldTypes[] = [
 		'name',
 		'gender',
-		'dateOfBirth',
-		'maritalStatus',
-		'documentType',
-		'documentNumber',
+		'date_of_birth',
+		'marital_status',
+		'document_type',
+		'document_number',
 		'nif',
 		'dependents',
-		'educationDegree',
+		'education_degree',
 		'phone',
 		'email',
-		'countryId',
-		'residentialAddress',
+		'country_id',
+		'address',
 		'position',
-		'baseSalary',
-		'hireDate',
-		'contractEndDate'
+		'base_salary',
+		'hire_date',
+		'contract_end_date'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
@@ -37,7 +37,7 @@ export const makeAddEmployeeValidation = () => {
 	validations.push(
 		new EmailValidation('email'),
 		new NumberValidation('dependents'),
-		new DateGreaterThanValidation('contractEndDate', 'hireDate')
+		new DateGreaterThanValidation('contract_end_date', 'hire_date')
 	)
 	return new ValidationComposite(validations)
 }

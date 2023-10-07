@@ -1,5 +1,5 @@
 export type AccountModel = {
-	accessToken: string
+	access_token: string
 	user: {
 		id: number
 		name: string

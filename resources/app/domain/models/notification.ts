@@ -5,9 +5,9 @@ export interface NotificationModel {
 	notifiable: Notifiable
 	notifiableId: number
 	text: string
-	createdAt: Date
-	updatedAt?: Date
-	updatedById?: number
+	created_at: Date
+	updated_at?: Date
+	user_id_update?: number
 
 	stock?: PurchaseModel
 }

@@ -17,7 +17,7 @@ export class DbUpdateCategory implements UpdateCategory {
 
 		const category: CategoryModel = {
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		}
 		return this.categoryRepository.update(category)
 	}

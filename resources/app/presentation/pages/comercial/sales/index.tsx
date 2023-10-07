@@ -43,7 +43,7 @@ export function Sales() {
 	const fetchData = async () => {
 		try {
 			const httpResponse = await makeRemoteLoadSales().load({
-				filter: { createdAt: new Date() }
+				filter: { created_at: new Date() }
 			})
 			dispatch(loadSaleStore(httpResponse))
 		} catch (error: any) {
@@ -156,12 +156,14 @@ export function Sales() {
 										<td className="p-1">{sale.color}</td>
 										<td className="p-1">{sale.size}</td>
 										<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
-										<td className="p-1">{NumberUtils.formatCurrency(sale.unitPrice)}</td>
-										<td className="p-1">{NumberUtils.formatCurrency(sale.amountPaid)}</td>
+										<td className="p-1">{NumberUtils.formatCurrency(sale.unit_price)}</td>
+										<td className="p-1">
+											{NumberUtils.formatCurrency(sale.amount_paid)}
+										</td>
 										<td className="p-1">
 											{StringUtils.getFirstWord(sale?.sale.employee?.name as string)}
 										</td>
-										<td className="p-1">{DateUtils.getDatePt(sale.createdAt)}</td>
+										<td className="p-1">{DateUtils.getDatePt(sale.created_at)}</td>
 										<td className="p-1">
 											<CardActions
 											// onClickDelete={() => handleOpenFormDelete(sale)}

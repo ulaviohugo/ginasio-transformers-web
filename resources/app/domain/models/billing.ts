@@ -3,8 +3,8 @@ import { EmployeeModel, InsuredModel } from '.'
 export type BillingModel = {
 	id: number
 	number: string
-	createdAt: Date
-	consultationService:
+	created_at: Date
+	consultation_service:
 		| 'Consulta de Ginecologia'
 		| 'Consulta Geral'
 		| 'Consulta de Rotina'
@@ -17,7 +17,7 @@ export type BillingModel = {
 	services: Array<{
 		quantity: number
 		description: string
-		unitPrice: number
+		unit_price: number
 		discount: number
 	}>
 }

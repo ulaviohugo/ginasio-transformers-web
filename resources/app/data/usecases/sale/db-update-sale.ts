@@ -14,7 +14,7 @@ export class DbUpdateSale implements UpdateSale {
 
 		const sale: SaleModel = {
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		}
 		return this.saleRepository.update(sale)
 	}

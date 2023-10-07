@@ -51,7 +51,7 @@ export class BillingUtils {
 			y: pageHeight - 100,
 			size: style.fontSizeTitle
 		})
-		page.drawText(`Nº de documento: ${billing.insured.documentNumber}`, {
+		page.drawText(`Nº de documento: ${billing.insured.document_number}`, {
 			x: pageWidth - 300,
 			y: pageHeight - 116,
 			size: style.fontSizeTitle
@@ -121,7 +121,7 @@ export class BillingUtils {
 			y: pageHeight - 216,
 			size: 8
 		})
-		page.drawText(`${DateUtils.getDatePt(billing.createdAt)}`, {
+		page.drawText(`${DateUtils.getDatePt(billing.created_at)}`, {
 			x: padding + 345,
 			y: pageHeight - 232,
 			size: style.fontSizeTitle
@@ -203,7 +203,7 @@ export class BillingUtils {
 		)
 		page.drawText(
 			`${NumberUtils.formatCurrency(
-				billing?.insured?.copaymentAmount || 0
+				billing?.insured?.copayment_amount || 0
 			)} ${currencyDesc}`,
 			{
 				x: padding + 195,
@@ -226,7 +226,7 @@ export class BillingUtils {
 				size: 8
 			}
 		)
-		page.drawText(`${billing.consultationService}`, {
+		page.drawText(`${billing.consultation_service}`, {
 			x: padding + 390,
 			y: pageHeight - 284,
 			size: style.fontSizeTitle
@@ -336,7 +336,7 @@ export class BillingUtils {
 					color: style.borderColor
 				})
 			}
-			page.drawText(`${NumberUtils.formatCurrency(service.unitPrice)} ${currencyDesc}`, {
+			page.drawText(`${NumberUtils.formatCurrency(service.unit_price)} ${currencyDesc}`, {
 				x: padding + 454,
 				y,
 				size: style.fontSizeTitle
@@ -364,7 +364,7 @@ export class BillingUtils {
 			}
 			page.drawText(
 				`${NumberUtils.formatCurrency(
-					service.unitPrice * service.quantity
+					service.unit_price * service.quantity
 				)} ${currencyDesc}`,
 				{
 					x: padding + 656,
@@ -389,13 +389,13 @@ export class BillingUtils {
 					size: 8
 				})
 				const subTotal = billing.services.reduce(
-					(prev, { quantity, unitPrice }) => prev + quantity * unitPrice,
+					(prev, { quantity, unit_price }) => prev + quantity * unit_price,
 					0
 				)
 
 				const total = billing.services.reduce(
-					(prev, { quantity, unitPrice, discount }) =>
-						prev + (quantity * unitPrice - discount),
+					(prev, { quantity, unit_price, discount }) =>
+						prev + (quantity * unit_price - discount),
 					0
 				)
 

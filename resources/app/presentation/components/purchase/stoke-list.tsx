@@ -30,10 +30,10 @@ type StokeListProps = {
 }
 
 type FilterDataProps = {
-	supplierId: number
-	categoryId: number
-	productId: number
-	createdAt: Date
+	supplier_id: number
+	category_id: number
+	product_id: number
+	created_at: Date
 }
 
 export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
@@ -53,12 +53,12 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 
 	const productList = useMemo(() => {
 		return ArrayUtils.order({
-			data: filterData?.categoryId
-				? products.filter((product) => product.categoryId == filterData.categoryId)
+			data: filterData?.category_id
+				? products.filter((product) => product.category_id == filterData.category_id)
 				: products,
 			field: 'name'
 		})
-	}, [filterData.categoryId, products])
+	}, [filterData.category_id, products])
 
 	const hasFilter = useMemo(() => {
 		return !ObjectUtils.isEmpty(filterData)
@@ -90,8 +90,8 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		const { name, value } = e.target
 		let data = { ...filterData, [name]: value }
 
-		if (name == 'categoryId') {
-			data = { ...data, productId: undefined as any }
+		if (name == 'category_id') {
+			data = { ...data, product_id: undefined as any }
 		}
 
 		setFilterData(data)
@@ -145,9 +145,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 				<div className="grid grid-cols-9 mb-3">
 					<div className="col-span-2">
 						<Select
-							name="supplierId"
-							label={LabelUtils.translateField('supplierId')}
-							value={filterData?.supplierId || ''}
+							name="supplier_id"
+							label={LabelUtils.translateField('supplier_id')}
+							value={filterData?.supplier_id || ''}
 							data={suppliers.map(({ id: value, name: text }) => ({ text, value }))}
 							defaultText="Selecione"
 							onChange={handleChangeFilterInput}
@@ -155,9 +155,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 					</div>
 					<div className="col-span-2">
 						<Select
-							name="categoryId"
-							label={LabelUtils.translateField('categoryId')}
-							value={filterData?.categoryId || ''}
+							name="category_id"
+							label={LabelUtils.translateField('category_id')}
+							value={filterData?.category_id || ''}
 							data={categories.map(({ id: value, name: text }) => ({ text, value }))}
 							defaultText="Selecione"
 							onChange={handleChangeFilterInput}
@@ -165,9 +165,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 					</div>
 					<div className="col-span-2">
 						<Select
-							name="productId"
-							label={LabelUtils.translateField('productId')}
-							value={filterData?.productId || ''}
+							name="product_id"
+							label={LabelUtils.translateField('product_id')}
+							value={filterData?.product_id || ''}
 							data={productList.map(({ id: value, name: text }) => ({ text, value }))}
 							defaultText="Selecione"
 							onChange={handleChangeFilterInput}
@@ -176,9 +176,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 					<div className="col-span-2">
 						<Input
 							type="date"
-							name="createdAt"
-							label={LabelUtils.translateField('createdAt')}
-							value={filterData?.createdAt?.toString() || ''}
+							name="created_at"
+							label={LabelUtils.translateField('created_at')}
+							value={filterData?.created_at?.toString() || ''}
 							onChange={handleChangeFilterInput}
 						/>
 					</div>
@@ -245,12 +245,12 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 										<td className="p-1">{purchase.category?.name}</td>
 										<td className="p-1">{purchase.product?.name}</td>
 										<td className="p-1">
-											{NumberUtils.formatCurrency(purchase.sellingPriceUnit)}
+											{NumberUtils.formatCurrency(purchase.selling_price_unit)}
 										</td>
 										<td className="p-1">{purchase.color}</td>
 										<td className="p-1">{purchase.size}</td>
 										<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
-										<td className="p-1">{DateUtils.getDatePt(purchase.purchaseDate)}</td>
+										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
 										<td className="p-1">
 											<CardActions
 												onClickDelete={() => handleOpenFormDelete(purchase)}

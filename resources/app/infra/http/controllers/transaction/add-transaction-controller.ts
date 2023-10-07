@@ -19,7 +19,7 @@ export class AddTransactionController implements Controller {
 			}
 			const createdTransaction = await this.addTransaction.add({
 				...request,
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				user_id: NumberUtils.convertToNumber(request.accountId)
 			})
 			return ok(createdTransaction)
 		} catch (error) {

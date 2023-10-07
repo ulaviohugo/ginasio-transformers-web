@@ -6,8 +6,8 @@ import { Uploader } from '@/data/protocols/services'
 export class DbDeleteSupplier implements DeleteSupplier {
 	constructor(private readonly supplierRepository: SupplierRepository) {}
 
-	async delete(supplierId: number, uploader?: Uploader): Promise<boolean> {
-		const foundSupplier = await this.supplierRepository.findById(supplierId)
+	async delete(supplier_id: number, uploader?: Uploader): Promise<boolean> {
+		const foundSupplier = await this.supplierRepository.findById(supplier_id)
 
 		if (!foundSupplier) return null as any
 
@@ -15,6 +15,6 @@ export class DbDeleteSupplier implements DeleteSupplier {
 			const path = FileUtils.getUploadAbsolutePath(foundSupplier.photo)
 			await uploader.delete(path)
 		}
-		return this.supplierRepository.delete(supplierId)
+		return this.supplierRepository.delete(supplier_id)
 	}
 }

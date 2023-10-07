@@ -28,8 +28,8 @@ export class AddProductController implements Controller {
 			const createdProduct = await this.addProduct.add(
 				{
 					...request,
-					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					createdById: NumberUtils.convertToNumber(request.accountId)
+					category_id: NumberUtils.convertToNumber(request.category_id),
+					user_id: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

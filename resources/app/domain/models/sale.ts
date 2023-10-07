@@ -2,19 +2,20 @@ import { CustomerModel, EmployeeModel, ProductSaleModel } from '.'
 
 export interface SaleModel {
 	id: number
-	customerId?: number
-	totalValue: number
-	amountPaid: number
+	customer_id?: number
+	total_value: number
+	amount_paid: number
 	discount: number
-	employeeId?: number
-	paymentMethod: string
+	employee_id?: number
+	payment_method: string
 
-	createdAt: Date
-	createdById?: number
-	updatedAt?: Date
-	updatedById?: number
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
 
 	employee?: EmployeeModel
+	user?: EmployeeModel
 	customer?: CustomerModel
-	productSales: ProductSaleModel[]
+	product_sales: ProductSaleModel[]
 }

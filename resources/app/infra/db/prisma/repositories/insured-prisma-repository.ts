@@ -11,11 +11,11 @@ export class InsuredPrismaRepository implements InsuredRepository {
 			select: {
 				id: true,
 				name: true,
-				cardName: true,
-				dateOfBirth: true,
-				documentType: true,
-				documentNumber: true,
-				policyholderId: true,
+				card_name: true,
+				date_of_birth: true,
+				document_type: true,
+				document_number: true,
+				policyholder_id: true,
 				nif: true,
 				gender: true,
 				student: true,
@@ -30,7 +30,7 @@ export class InsuredPrismaRepository implements InsuredRepository {
 				name: true
 			}
 		},
-		createdBy: {
+		user: {
 			select: { id: true, name: true }
 		}
 	}
@@ -49,8 +49,8 @@ export class InsuredPrismaRepository implements InsuredRepository {
 				data: insureds.map((item) =>
 					PrismaInsuredMapper.toPrisma({
 						...item,
-						policyholderId: insured.id,
-						createdById: insured.createdById as any
+						policyholder_id: insured.id,
+						user_id: insured.user_id as any
 					})
 				)
 			})
@@ -78,11 +78,11 @@ export class InsuredPrismaRepository implements InsuredRepository {
 	}
 
 	async findByDocument(
-		documentType: string,
-		documentNumber: string
+		document_type: string,
+		document_number: string
 	): Promise<InsuredModel | null> {
 		return (await this.prisma.insured.findFirst({
-			where: { documentType, documentNumber }
+			where: { document_type, document_number }
 		})) as any
 	}
 

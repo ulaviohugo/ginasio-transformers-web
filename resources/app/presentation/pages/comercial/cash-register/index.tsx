@@ -51,7 +51,7 @@ export function CashRegister() {
 		if (cashRegister?.id) return
 		const { value } = e.target
 		const balance = value as any
-		setBalanceData({ balance, initialBalance: balance } as any)
+		setBalanceData({ balance, initial_balance: balance } as any)
 	}
 
 	const handleInputChange = (
@@ -78,14 +78,14 @@ export function CashRegister() {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault()
 
-		if (!balanceData?.initialBalance)
+		if (!balanceData?.initial_balance)
 			return toast.error('Adicione um saldo inicial antes de registar uma operação')
 
 		setIsLoadingSubmit(true)
 
 		makeRemoteAddTransaction()
 			.add(formData)
-			.then(({ cashRegister }) => {
+			.then(({ cash_register: cashRegister }) => {
 				toast.success('Movimento realizado com sucesso')
 				if (cashRegister) {
 					setBalanceData(cashRegister)
@@ -113,10 +113,10 @@ export function CashRegister() {
 									<div className="flex flex-col gap-2">
 										{!cashRegister?.balance ? (
 											<InputPrice
-												name="initialBalance"
-												id="initialBalance"
-												label={LabelUtils.translateField('initialBalance')}
-												value={balanceData?.initialBalance || ''}
+												name="initial_balance"
+												id="initial_balance"
+												label={LabelUtils.translateField('initial_balance')}
+												value={balanceData?.initial_balance || ''}
 												onChange={handleChangeBalance}
 												disabled={!!cashRegister?.id}
 											/>
@@ -127,7 +127,7 @@ export function CashRegister() {
 														Saldo inicial
 													</label>
 													<div className="border rounded-md font-semibold px-2 py-1">
-														{NumberUtils.formatCurrency(cashRegister.initialBalance)}
+														{NumberUtils.formatCurrency(cashRegister.initial_balance)}
 													</div>
 												</div>
 												<div>
@@ -137,7 +137,7 @@ export function CashRegister() {
 													<div
 														className={`border rounded-md font-semibold px-2 py-1 ${
 															NumberUtils.convertToNumber(cashRegister.balance) <
-															NumberUtils.convertToNumber(cashRegister.initialBalance)
+															NumberUtils.convertToNumber(cashRegister.initial_balance)
 																? 'text-red-500'
 																: 'text-green-500'
 														}`}
@@ -147,7 +147,7 @@ export function CashRegister() {
 												</div>
 											</div>
 										)}
-										{!cashRegister?.initialBalance && (
+										{!cashRegister?.initial_balance && (
 											<div className="flex">
 												<ButtonSubmit
 													isLoading={isLoadingSubmitBalance}
@@ -173,9 +173,9 @@ export function CashRegister() {
 										/>
 										<Select
 											label="Tipo de operação"
-											name="operationType"
-											id="operationType"
-											value={formData?.operationType || ''}
+											name="operation_type"
+											id="operation_type"
+											value={formData?.operation_type || ''}
 											data={[{ text: 'Entrada' }, { text: 'Saída' }]}
 											defaultText="Selecione"
 											onChange={handleInputChange}
@@ -197,10 +197,10 @@ export function CashRegister() {
 											onChange={handleInputChange}
 										/>
 										<Select
-											name="paymentMethod"
-											id="paymentMethod"
+											name="payment_method"
+											id="payment_method"
 											label="Movimento Bancário"
-											value={formData?.paymentMethod || ''}
+											value={formData?.payment_method || ''}
 											data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
 											defaultText="Selecione"
 											onChange={handleInputChange}

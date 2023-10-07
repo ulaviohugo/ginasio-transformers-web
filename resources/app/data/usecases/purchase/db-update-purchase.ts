@@ -28,7 +28,7 @@ export class DbUpdatePurchase implements UpdatePurchase {
 		const purchase: PurchaseModel = {
 			...data,
 			photo,
-			updatedAt: new Date()
+			updated_at: new Date()
 		}
 		return this.purchaseRepository.update(purchase)
 	}

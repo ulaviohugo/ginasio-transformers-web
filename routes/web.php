@@ -25,8 +25,5 @@ Route::view('redefinir-senha', 'admin')->name('password.reset');
 
 
 Route::fallback(function () {
-	if (!Str::contains(url()->full(), '/admin/')) {
-		return view('site.app');
-	}
 	return response()->json(['message' => 'Não encontrado']);
 });

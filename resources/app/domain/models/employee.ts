@@ -5,37 +5,37 @@ export interface EmployeeModel {
 	photo?: string
 	name: string
 	gender: string
-	dateOfBirth: Date
-	maritalStatus: string
-	documentType: string
-	documentNumber: string
+	date_of_birth: Date
+	marital_status: string
+	document_type: string
+	document_number: string
 	nif?: string
-	socialSecurity?: string
+	social_security?: string
 	dependents: number
-	educationDegree: string
+	education_degree: string
 	phone: string
 	phone2?: string
 	email: string
-	userName?: string
+	user_name?: string
 	password?: string
-	passwordConfirmation?: string
-	canLogin: boolean
+	password_confirmation?: string
+	can_login: boolean
 	role: 'Admin' | 'Normal'
-	countryId: number
-	provinceId?: number
-	municipalityId?: number
-	residentialAddress: string
+	country_id: number
+	province_id?: number
+	municipality_id?: number
+	address: string
 	position: string
-	baseSalary: number
-	hireDate: Date
-	contractEndDate?: Date
-	bankName?: string
+	base_salary: number
+	hire_date: Date
+	contract_end_date?: Date
+	bank_name?: string
 	iban?: string
-	accountNumber?: string
-	createdAt: Date
-	createdById?: number
-	updatedAt?: Date
-	updatedById?: number
+	account_number?: string
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
 
-	employeePresences: EmployeePresenceModel[]
+	employee_presences: EmployeePresenceModel[]
 }

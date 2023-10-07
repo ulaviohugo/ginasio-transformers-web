@@ -20,7 +20,7 @@ export class UpdateTransactionController implements Controller {
 			const updatedTransaction = await this.UpdateTransaction.update({
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
-				updatedById: NumberUtils.convertToNumber(request.accountId)
+				user_id_update: NumberUtils.convertToNumber(request.accountId)
 			})
 			if (updatedTransaction == null) {
 				return notFound()

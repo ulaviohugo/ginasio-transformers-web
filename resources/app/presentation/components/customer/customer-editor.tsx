@@ -52,11 +52,11 @@ export function CustomerEditor({
 	useEffect(() => {
 		if (customer) {
 			setProvinceList(
-				provinces.filter((province) => province.countryId == customer.countryId)
+				provinces.filter((province) => province.country_id == customer.country_id)
 			)
 			setMunicipalityList(
 				municipalities.filter(
-					(municipality) => municipality.provinceId == customer.provinceId
+					(municipality) => municipality.province_id == customer.province_id
 				)
 			)
 			if (customer?.photo) setPhotoPreview(customer.photo)
@@ -70,14 +70,16 @@ export function CustomerEditor({
 
 		let data: CustomerModel = { ...formDate, [name]: value }
 
-		if (name == 'countryId') {
-			data = { ...data, provinceId: undefined, municipalityId: undefined }
-			setProvinceList(provinces.filter((province) => province.countryId == Number(value)))
+		if (name == 'country_id') {
+			data = { ...data, province_id: undefined, municipality_id: undefined }
+			setProvinceList(
+				provinces.filter((province) => province.country_id == Number(value))
+			)
 		}
-		if (name == 'provinceId') {
-			data = { ...data, municipalityId: undefined }
+		if (name == 'province_id') {
+			data = { ...data, municipality_id: undefined }
 			setMunicipalityList(
-				municipalities.filter((municipality) => municipality.provinceId == Number(value))
+				municipalities.filter((municipality) => municipality.province_id == Number(value))
 			)
 		}
 		if (name == 'photo') {
@@ -166,13 +168,14 @@ export function CustomerEditor({
 								/>
 								<Input
 									type="date"
-									id="dateOfBirth"
-									name="dateOfBirth"
+									id="date_of_birth"
+									name="date_of_birth"
 									value={
-										(formDate?.dateOfBirth && DateUtils.getDate(formDate?.dateOfBirth)) ||
+										(formDate?.date_of_birth &&
+											DateUtils.getDate(formDate?.date_of_birth)) ||
 										''
 									}
-									label={LabelUtils.translateField('dateOfBirth')}
+									label={LabelUtils.translateField('date_of_birth')}
 									onChange={handleInputChange}
 								/>
 							</div>
@@ -194,10 +197,10 @@ export function CustomerEditor({
 							</div>
 							<div className="grid grid-cols-3 gap-1">
 								<Select
-									id="countryId"
-									name="countryId"
-									value={formDate?.countryId || ''}
-									label={LabelUtils.translateField('countryId')}
+									id="country_id"
+									name="country_id"
+									value={formDate?.country_id || ''}
+									label={LabelUtils.translateField('country_id')}
 									data={countries.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -206,10 +209,10 @@ export function CustomerEditor({
 									onChange={handleInputChange}
 								/>
 								<Select
-									id="provinceId"
-									name="provinceId"
-									value={formDate?.provinceId || ''}
-									label={LabelUtils.translateField('provinceId')}
+									id="province_id"
+									name="province_id"
+									value={formDate?.province_id || ''}
+									label={LabelUtils.translateField('province_id')}
 									data={provinceList.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -218,10 +221,10 @@ export function CustomerEditor({
 									onChange={handleInputChange}
 								/>
 								<Select
-									id="municipalityId"
-									name="municipalityId"
-									value={formDate?.municipalityId || ''}
-									label={LabelUtils.translateField('municipalityId')}
+									id="municipality_id"
+									name="municipality_id"
+									value={formDate?.municipality_id || ''}
+									label={LabelUtils.translateField('municipality_id')}
 									data={municipalityList.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -233,10 +236,10 @@ export function CustomerEditor({
 							<div>
 								<Input
 									type="text"
-									id="residentialAddress"
-									name="residentialAddress"
-									value={formDate?.residentialAddress || ''}
-									label={LabelUtils.translateField('residentialAddress')}
+									id="address"
+									name="address"
+									value={formDate?.address || ''}
+									label={LabelUtils.translateField('address')}
 									onChange={handleInputChange}
 								/>
 							</div>

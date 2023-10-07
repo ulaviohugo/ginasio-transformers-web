@@ -12,7 +12,7 @@ export class RemoteAddSale implements AddSale {
 	async add(param: SaleModel): Promise<SaleModel> {
 		// const body = FormDataUtils.createFormData({
 		// 	...param,
-		// 	totalValue,
+		// 	total_value,
 		// })
 		const body = JSON.stringify(param)
 		const httpResponse = await this.httpClient.request({

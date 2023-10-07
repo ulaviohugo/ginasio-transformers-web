@@ -11,15 +11,15 @@ export class RemoteAddPurchase implements AddPurchase {
 	) {}
 
 	async add(param: PurchaseModel): Promise<PurchaseModel> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const totalValue = NumberUtils.convertToNumber(param.totalValue)
-		const sellingPriceUnit = NumberUtils.convertToNumber(param.sellingPriceUnit)
+		const unit_price = NumberUtils.convertToNumber(param.unit_price)
+		const total_value = NumberUtils.convertToNumber(param.total_value)
+		const selling_price_unit = NumberUtils.convertToNumber(param.selling_price_unit)
 
 		const body = FormDataUtils.createFormData({
 			...param,
-			unitPrice,
-			totalValue,
-			sellingPriceUnit
+			unit_price,
+			total_value,
+			selling_price_unit
 		})
 		const httpResponse = await this.httpClient.request({
 			method: 'post',

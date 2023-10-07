@@ -22,7 +22,7 @@ export class UpdateCategoryController implements Controller {
 			const updatedCategory = await this.UpdateCategory.update({
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
-				updatedById: NumberUtils.convertToNumber(request.accountId)
+				user_id_update: NumberUtils.convertToNumber(request.accountId)
 			})
 			if (updatedCategory == 'notFound') {
 				return notFound()

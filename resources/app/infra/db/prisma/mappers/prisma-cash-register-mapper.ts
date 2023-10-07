@@ -9,11 +9,11 @@ export class PrismaCashRegisterMapper {
 		return {
 			id: cashRegister.id,
 			balance: NumberUtils.convertToNumber(cashRegister.balance),
-			initialBalance: NumberUtils.convertToNumber(cashRegister.initialBalance),
-			createdAt: cashRegister.createdAt,
-			createdById: NumberUtils.convertToNumber(cashRegister.createdById, true),
-			updatedAt: DateUtils.convertToDate(cashRegister.updatedAt),
-			updatedById: NumberUtils.convertToNumber(cashRegister.updatedById, true)
+			initial_balance: NumberUtils.convertToNumber(cashRegister.initial_balance),
+			created_at: cashRegister.created_at,
+			user_id: NumberUtils.convertToNumber(cashRegister.user_id, true),
+			updated_at: DateUtils.convertToDate(cashRegister.updated_at),
+			user_id_update: NumberUtils.convertToNumber(cashRegister.user_id_update, true)
 		} as any
 	}
 }

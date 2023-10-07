@@ -23,9 +23,9 @@ export class UpdateEmployeePresenceController implements Controller {
 			const updatedEmployeePresence = await this.UpdateEmployeePresence.update({
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
-				employeeId: NumberUtils.convertToNumber(request.employeeId),
+				employee_id: NumberUtils.convertToNumber(request.employee_id),
 				date: DateUtils.convertToDate(request.date),
-				updatedById: NumberUtils.convertToNumber(request.accountId)
+				user_id_update: NumberUtils.convertToNumber(request.accountId)
 			})
 			return ok(updatedEmployeePresence)
 		} catch (error) {

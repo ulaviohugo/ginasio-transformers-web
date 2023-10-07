@@ -15,7 +15,7 @@ export class DbUpdateProduct implements UpdateProduct {
 
 		const exists = await this.productRepository.findByNameAndCategoryId(
 			data.name,
-			data.categoryId
+			data.category_id
 		)
 		if (exists && exists.id !== data.id) return null as any
 
@@ -32,7 +32,7 @@ export class DbUpdateProduct implements UpdateProduct {
 			...data,
 			photo: image,
 			price: NumberUtils.convertToNumber(param.price),
-			updatedAt: new Date()
+			updated_at: new Date()
 		}
 		return this.productRepository.update(product)
 	}

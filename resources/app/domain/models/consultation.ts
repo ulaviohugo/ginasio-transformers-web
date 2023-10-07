@@ -2,13 +2,13 @@ import { InsuredModel } from '.'
 
 export type ConsultationModel = {
 	id: number
-	copaymentAmount: number
-	paymentMethod: string
+	copayment_amount: number
+	payment_method: string
 	insuredId: number
-	createdAt: Date
-	createdById: number
-	updatedAt: Date
-	updatedById: number
+	created_at: Date
+	user_id: number
+	updated_at: Date
+	user_id_update: number
 
 	insured?: InsuredModel
 }

@@ -9,16 +9,18 @@ export class PrismaTransactionMapper {
 		return {
 			id: transaction.id,
 			description: transaction.description,
-			operationType: transaction.operationType,
+			operation_type: transaction.operation_type,
 			amount: NumberUtils.convertToNumber(transaction.amount),
-			paymentMethod: transaction.paymentMethod,
+			payment_method: transaction.payment_method,
 			date: DateUtils.convertToDate(transaction.date),
-			cashRegisterId: transaction.cashRegisterId,
-			postMovementBalance: NumberUtils.convertToNumber(transaction.postMovementBalance),
-			createdAt: transaction.createdAt,
-			createdById: transaction.createdById,
-			updatedAt: DateUtils.convertToDate(transaction.updatedAt),
-			updatedById: transaction.updatedById
+			cash_register_id: transaction.cash_register_id,
+			post_movement_balance: NumberUtils.convertToNumber(
+				transaction.post_movement_balance
+			),
+			created_at: transaction.created_at,
+			user_id: transaction.user_id,
+			updated_at: DateUtils.convertToDate(transaction.updated_at),
+			user_id_update: transaction.user_id_update
 		} as any
 	}
 }

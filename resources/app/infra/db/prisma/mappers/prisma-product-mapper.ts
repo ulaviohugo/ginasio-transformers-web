@@ -8,14 +8,14 @@ export class PrismaProductMapper {
 		return {
 			id: product.id,
 			name: product.name,
-			barCode: product.barCode,
+			bar_code: product.bar_code,
 			photo: product.photo,
-			categoryId: product.categoryId,
+			category_id: product.category_id,
 			price: product.price,
-			createdById: product.createdById,
-			createdAt: product.createdAt,
-			updatedById: product.updatedById,
-			updatedAt: product.updatedAt
+			user_id: product.user_id,
+			created_at: product.created_at,
+			user_id_update: product.user_id_update,
+			updated_at: product.updated_at
 		} as any
 	}
 
@@ -24,15 +24,15 @@ export class PrismaProductMapper {
 		return {
 			id: productRaw.id,
 			name: productRaw.name,
-			barCode: productRaw.barCode,
+			bar_code: productRaw.bar_code,
 			photo: productRaw.photo,
-			categoryId: productRaw.categoryId,
+			category_id: productRaw.category_id,
 			category: (productRaw as any)?.category,
 			price: productRaw.price,
-			createdById: productRaw.createdById,
-			createdAt: productRaw.createdAt,
-			updatedById: productRaw.updatedById,
-			updatedAt: productRaw.updatedAt
+			user_id: productRaw.user_id,
+			created_at: productRaw.created_at,
+			user_id_update: productRaw.user_id_update,
+			updated_at: productRaw.updated_at
 		} as any
 	}
 }

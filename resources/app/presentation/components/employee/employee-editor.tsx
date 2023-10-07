@@ -61,11 +61,11 @@ export function EmployeeEditor({
 	useEffect(() => {
 		if (employee) {
 			setProvinceList(
-				provinces.filter((province) => province.countryId == employee.countryId)
+				provinces.filter((province) => province.country_id == employee.country_id)
 			)
 			setMunicipalityList(
 				municipalities.filter(
-					(municipality) => municipality.provinceId == employee.provinceId
+					(municipality) => municipality.province_id == employee.province_id
 				)
 			)
 			if (employee?.photo) setPhotoPreview(employee.photo)
@@ -79,14 +79,16 @@ export function EmployeeEditor({
 
 		let data: EmployeeModel = { ...formDate, [name]: value }
 
-		if (name == 'countryId') {
-			data = { ...data, provinceId: undefined, municipalityId: undefined }
-			setProvinceList(provinces.filter((province) => province.countryId == Number(value)))
+		if (name == 'country_id') {
+			data = { ...data, province_id: undefined, municipality_id: undefined }
+			setProvinceList(
+				provinces.filter((province) => province.country_id == Number(value))
+			)
 		}
-		if (name == 'provinceId') {
-			data = { ...data, municipalityId: undefined }
+		if (name == 'province_id') {
+			data = { ...data, municipality_id: undefined }
 			setMunicipalityList(
-				municipalities.filter((municipality) => municipality.provinceId == Number(value))
+				municipalities.filter((municipality) => municipality.province_id == Number(value))
 			)
 		}
 		if (name == 'photo') {
@@ -98,7 +100,7 @@ export function EmployeeEditor({
 			data = { ...data, phone2: '' }
 		}
 
-		if (name == 'canLogin') {
+		if (name == 'can_login') {
 			const checked = (e.target as any).checked
 			data = { ...data, [name]: checked }
 		}
@@ -190,21 +192,21 @@ export function EmployeeEditor({
 									/>
 									<Input
 										type="date"
-										id="dateOfBirth"
-										name="dateOfBirth"
+										id="date_of_birth"
+										name="date_of_birth"
 										value={
-											(formDate?.dateOfBirth &&
-												DateUtils.getDate(formDate?.dateOfBirth)) ||
+											(formDate?.date_of_birth &&
+												DateUtils.getDate(formDate?.date_of_birth)) ||
 											''
 										}
-										label={LabelUtils.translateField('dateOfBirth')}
+										label={LabelUtils.translateField('date_of_birth')}
 										onChange={handleInputChange}
 									/>
 									<Select
-										id="maritalStatus"
-										name="maritalStatus"
-										value={formDate?.maritalStatus || ''}
-										label={LabelUtils.translateField('maritalStatus')}
+										id="marital_status"
+										name="marital_status"
+										value={formDate?.marital_status || ''}
+										label={LabelUtils.translateField('marital_status')}
 										data={[
 											{ text: 'Solteiro(a)' },
 											{ text: 'Casado(a)' },
@@ -215,24 +217,24 @@ export function EmployeeEditor({
 										onChange={handleInputChange}
 									/>
 									<Select
-										id="documentType"
-										name="documentType"
-										value={formDate?.documentType || ''}
-										label={LabelUtils.translateField('documentType')}
+										id="document_type"
+										name="document_type"
+										value={formDate?.document_type || ''}
+										label={LabelUtils.translateField('document_type')}
 										data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
 									<Input
 										type="text"
-										id="documentNumber"
-										name="documentNumber"
-										value={formDate?.documentNumber || ''}
-										label={LabelUtils.translateField('documentNumber')}
+										id="document_number"
+										name="document_number"
+										value={formDate?.document_number || ''}
+										label={LabelUtils.translateField('document_number')}
 										onChange={handleInputChange}
-										disabled={!formDate?.documentType}
+										disabled={!formDate?.document_type}
 										title={
-											!formDate?.documentType ? 'Selecione 1º o tipo de documento' : ''
+											!formDate?.document_type ? 'Selecione 1º o tipo de documento' : ''
 										}
 									/>
 									<Input
@@ -245,10 +247,10 @@ export function EmployeeEditor({
 									/>
 									<Input
 										type="text"
-										id="socialSecurity"
-										name="socialSecurity"
-										value={formDate?.socialSecurity || ''}
-										label={LabelUtils.translateField('socialSecurity')}
+										id="social_security"
+										name="social_security"
+										value={formDate?.social_security || ''}
+										label={LabelUtils.translateField('social_security')}
 										onChange={handleInputChange}
 									/>
 									<Input
@@ -260,10 +262,10 @@ export function EmployeeEditor({
 										onChange={handleInputChange}
 									/>
 									<Select
-										id="educationDegree"
-										name="educationDegree"
-										value={formDate?.educationDegree || ''}
-										label={LabelUtils.translateField('educationDegree')}
+										id="education_degree"
+										name="education_degree"
+										value={formDate?.education_degree || ''}
+										label={LabelUtils.translateField('education_degree')}
 										data={[
 											{ text: 'Ensino primário' },
 											{ text: 'Ensino secundário' },
@@ -300,10 +302,10 @@ export function EmployeeEditor({
 								</div>
 								<div className="grid grid-cols-3 gap-1">
 									<Select
-										id="countryId"
-										name="countryId"
-										value={formDate?.countryId || ''}
-										label={LabelUtils.translateField('countryId')}
+										id="country_id"
+										name="country_id"
+										value={formDate?.country_id || ''}
+										label={LabelUtils.translateField('country_id')}
 										data={countries.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -312,10 +314,10 @@ export function EmployeeEditor({
 										onChange={handleInputChange}
 									/>
 									<Select
-										id="provinceId"
-										name="provinceId"
-										value={formDate?.provinceId || ''}
-										label={LabelUtils.translateField('provinceId')}
+										id="province_id"
+										name="province_id"
+										value={formDate?.province_id || ''}
+										label={LabelUtils.translateField('province_id')}
 										data={provinceList.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -324,10 +326,10 @@ export function EmployeeEditor({
 										onChange={handleInputChange}
 									/>
 									<Select
-										id="municipalityId"
-										name="municipalityId"
-										value={formDate?.municipalityId || ''}
-										label={LabelUtils.translateField('municipalityId')}
+										id="municipality_id"
+										name="municipality_id"
+										value={formDate?.municipality_id || ''}
+										label={LabelUtils.translateField('municipality_id')}
 										data={municipalityList.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -339,10 +341,10 @@ export function EmployeeEditor({
 								<div>
 									<Input
 										type="text"
-										id="residentialAddress"
-										name="residentialAddress"
-										value={formDate?.residentialAddress || ''}
-										label={LabelUtils.translateField('residentialAddress')}
+										id="address"
+										name="address"
+										value={formDate?.address || ''}
+										label={LabelUtils.translateField('address')}
 										onChange={handleInputChange}
 									/>
 								</div>
@@ -364,10 +366,10 @@ export function EmployeeEditor({
 									onChange={handleInputChange}
 								/>
 								<InputPrice
-									id="baseSalary"
-									name="baseSalary"
-									value={formDate?.baseSalary || ''}
-									label={LabelUtils.translateField('baseSalary')}
+									id="base_salary"
+									name="base_salary"
+									value={formDate?.base_salary || ''}
+									label={LabelUtils.translateField('base_salary')}
 									onChange={handleInputChange}
 									disabled={!formDate?.position}
 									title={`Selecione o ${LabelUtils.translateField(
@@ -376,12 +378,12 @@ export function EmployeeEditor({
 								/>
 								<Input
 									type="date"
-									id="hireDate"
-									name="hireDate"
+									id="hire_date"
+									name="hire_date"
 									value={
-										(formDate?.hireDate && DateUtils.getDate(formDate?.hireDate)) || ''
+										(formDate?.hire_date && DateUtils.getDate(formDate?.hire_date)) || ''
 									}
-									label={LabelUtils.translateField('hireDate')}
+									label={LabelUtils.translateField('hire_date')}
 									onChange={handleInputChange}
 									disabled={!formDate?.position}
 									title={`Selecione o ${LabelUtils.translateField(
@@ -390,14 +392,14 @@ export function EmployeeEditor({
 								/>
 								<Input
 									type="date"
-									id="contractEndDate"
-									name="contractEndDate"
+									id="contract_end_date"
+									name="contract_end_date"
 									value={
-										(formDate?.contractEndDate &&
-											DateUtils.getDate(formDate.contractEndDate)) ||
+										(formDate?.contract_end_date &&
+											DateUtils.getDate(formDate.contract_end_date)) ||
 										''
 									}
-									label={LabelUtils.translateField('contractEndDate')}
+									label={LabelUtils.translateField('contract_end_date')}
 									onChange={handleInputChange}
 									disabled={!formDate?.position}
 									title={`Selecione o ${LabelUtils.translateField(
@@ -409,10 +411,10 @@ export function EmployeeEditor({
 								<legend>Dados bancário</legend>
 								<div className="grid grid-cols-2 gap-1">
 									<Select
-										id="bankName"
-										name="bankName"
-										value={formDate?.bankName || ''}
-										label={LabelUtils.translateField('bankName')}
+										id="bank_name"
+										name="bank_name"
+										value={formDate?.bank_name || ''}
+										label={LabelUtils.translateField('bank_name')}
 										data={[
 											{ text: 'BAI' },
 											{ text: 'BCI' },
@@ -429,13 +431,13 @@ export function EmployeeEditor({
 									/>
 									<Input
 										type="text"
-										id="accountNumber"
-										name="accountNumber"
-										value={formDate?.accountNumber || ''}
-										label={LabelUtils.translateField('accountNumber')}
+										id="account_number"
+										name="account_number"
+										value={formDate?.account_number || ''}
+										label={LabelUtils.translateField('account_number')}
 										onChange={handleInputChange}
-										disabled={!formDate?.bankName}
-										title={!formDate?.documentType ? 'Selecione 1º o nome do banco' : ''}
+										disabled={!formDate?.bank_name}
+										title={!formDate?.document_type ? 'Selecione 1º o nome do banco' : ''}
 									/>
 								</div>
 
@@ -445,8 +447,8 @@ export function EmployeeEditor({
 									value={formDate?.iban || ''}
 									label={LabelUtils.translateField('iban')}
 									onChange={handleInputChange}
-									disabled={!formDate?.bankName}
-									title={!formDate?.documentType ? 'Selecione 1º o nome do banco' : ''}
+									disabled={!formDate?.bank_name}
+									title={!formDate?.document_type ? 'Selecione 1º o nome do banco' : ''}
 								/>
 							</fieldset>
 							<fieldset className="flex flex-col gap-1">
@@ -455,14 +457,14 @@ export function EmployeeEditor({
 									<div className="inline-flex">
 										<Input
 											type="checkbox"
-											name="canLogin"
+											name="can_login"
 											label="Pode iniciar sessão"
-											checked={formDate.canLogin}
+											checked={formDate.can_login}
 											onChange={handleInputChange}
 										/>
 									</div>
 								</div>
-								{formDate.canLogin && (
+								{formDate.can_login && (
 									<div className="flex flex-col gap-1">
 										<Select
 											name="role"
@@ -485,9 +487,9 @@ export function EmployeeEditor({
 											/>
 											<Input
 												type="password"
-												name="passwordConfirmation"
+												name="password_confirmation"
 												label="Confirme a senha"
-												value={formDate.passwordConfirmation || ''}
+												value={formDate.password_confirmation || ''}
 												onChange={handleInputChange}
 											/>
 										</div>

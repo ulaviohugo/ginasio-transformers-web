@@ -11,12 +11,12 @@ export class RemoteUpdatePurchase implements UpdatePurchase {
 	) {}
 
 	async update(param: PurchaseModel): Promise<PurchaseModel> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const totalValue = NumberUtils.convertToNumber(param.totalValue)
-		const sellingPriceUnit = NumberUtils.convertToNumber(param.sellingPriceUnit)
+		const unit_price = NumberUtils.convertToNumber(param.unit_price)
+		const total_value = NumberUtils.convertToNumber(param.total_value)
+		const selling_price_unit = NumberUtils.convertToNumber(param.selling_price_unit)
 		const handledParam = ObjectUtils.removeProps<PurchaseModel>(
-			{ ...param, unitPrice, totalValue, sellingPriceUnit },
-			['createdAt', 'createdById', 'updatedAt', 'updatedById', 'employeeId']
+			{ ...param, unit_price, total_value, selling_price_unit },
+			['created_at', 'user_id', 'updated_at', 'user_id_update', 'employee_id']
 		)
 		const body = FormDataUtils.createFormData(handledParam)
 

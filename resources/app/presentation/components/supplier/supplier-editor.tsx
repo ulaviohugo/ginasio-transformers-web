@@ -99,15 +99,15 @@ export function SupplierEditor({
 	useEffect(() => {
 		if (supplier) {
 			setProvinceList(
-				provinces.filter((province) => province.countryId == supplier.countryId)
+				provinces.filter((province) => province.country_id == supplier.country_id)
 			)
 			setMunicipalityList(
 				municipalities.filter(
-					(municipality) => municipality.provinceId == supplier.provinceId
+					(municipality) => municipality.province_id == supplier.province_id
 				)
 			)
-			if (supplier.supplierProducts?.length) {
-				setProductItems(ObjectUtils.convertToObject(supplier.supplierProducts))
+			if (supplier.supplier_products?.length) {
+				setProductItems(ObjectUtils.convertToObject(supplier.supplier_products))
 			}
 		}
 		if (supplier?.photo) setPhotoPreview(supplier.photo)
@@ -132,14 +132,16 @@ export function SupplierEditor({
 		const { name, value } = e.target
 		let data: SupplierModel = { ...formDate, [name]: value }
 
-		if (name == 'countryId') {
-			data = { ...data, provinceId: undefined, municipalityId: undefined }
-			setProvinceList(provinces.filter((province) => province.countryId == Number(value)))
+		if (name == 'country_id') {
+			data = { ...data, province_id: undefined, municipality_id: undefined }
+			setProvinceList(
+				provinces.filter((province) => province.country_id == Number(value))
+			)
 		}
-		if (name == 'provinceId') {
-			data = { ...data, municipalityId: undefined }
+		if (name == 'province_id') {
+			data = { ...data, municipality_id: undefined }
 			setMunicipalityList(
-				municipalities.filter((municipality) => municipality.provinceId == Number(value))
+				municipalities.filter((municipality) => municipality.province_id == Number(value))
 			)
 		}
 		if (name == 'photo') {
@@ -152,11 +154,11 @@ export function SupplierEditor({
 
 	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
 		let data = productItems[index] || { [index]: { [name]: value } }[index]
-		const supplierId = supplier?.id
-		if (name == 'categoryId') {
-			data = { ...data, [name]: value, productId: undefined, supplierId }
+		const supplier_id = supplier?.id
+		if (name == 'category_id') {
+			data = { ...data, [name]: value, product_id: undefined, supplier_id }
 		} else {
-			data = { ...data, [name]: value, supplierId }
+			data = { ...data, [name]: value, supplier_id }
 		}
 
 		setProductItems({ ...productItems, [index]: data })
@@ -186,7 +188,7 @@ export function SupplierEditor({
 
 		const supplierProducts = ArrayUtils.convertToArray(productItems)
 
-		const data: SupplierModel = { ...formDate, supplierProducts }
+		const data: SupplierModel = { ...formDate, supplier_products: supplierProducts }
 		try {
 			const httpResponse = (
 				formDate.id ? await updateSupplier.update(data) : await addSupplier.add(data)
@@ -282,10 +284,10 @@ export function SupplierEditor({
 							<Divisor label="Endereço" />
 							<div className="flex gap-1">
 								<Select
-									id="countryId"
-									name="countryId"
-									value={formDate?.countryId || ''}
-									label={LabelUtils.translateField('countryId')}
+									id="country_id"
+									name="country_id"
+									value={formDate?.country_id || ''}
+									label={LabelUtils.translateField('country_id')}
 									data={countries.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -294,10 +296,10 @@ export function SupplierEditor({
 									onChange={handleInputChange}
 								/>
 								<Select
-									id="provinceId"
-									name="provinceId"
-									value={formDate?.provinceId || ''}
-									label={LabelUtils.translateField('provinceId')}
+									id="province_id"
+									name="province_id"
+									value={formDate?.province_id || ''}
+									label={LabelUtils.translateField('province_id')}
 									data={provinceList.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -306,10 +308,10 @@ export function SupplierEditor({
 									onChange={handleInputChange}
 								/>
 								<Select
-									id="municipalityId"
-									name="municipalityId"
-									value={formDate?.municipalityId || ''}
-									label={LabelUtils.translateField('municipalityId')}
+									id="municipality_id"
+									name="municipality_id"
+									value={formDate?.municipality_id || ''}
+									label={LabelUtils.translateField('municipality_id')}
 									data={municipalityList.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -320,10 +322,10 @@ export function SupplierEditor({
 							</div>
 							<Input
 								type="text"
-								id="businessAddress"
-								name="businessAddress"
-								value={formDate?.businessAddress || ''}
-								label={LabelUtils.translateField('businessAddress')}
+								id="address"
+								name="address"
+								value={formDate?.address || ''}
+								label={LabelUtils.translateField('address')}
 								onChange={handleInputChange}
 							/>
 							<div>

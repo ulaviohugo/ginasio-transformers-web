@@ -10,7 +10,7 @@ export class DbUpdateCashRegister implements UpdateCashRegister {
 		const data = ObjectUtils.trimValues(param)
 		return this.cashRegisterRepository.update({
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 	}
 }

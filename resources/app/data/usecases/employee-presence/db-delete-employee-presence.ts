@@ -4,11 +4,11 @@ import { EmployeePresenceRepository } from '@/data/protocols'
 export class DbDeleteEmployeePresence implements DeleteEmployeePresence {
 	constructor(private readonly employeePresenceRepository: EmployeePresenceRepository) {}
 
-	async delete(employeeId: number): Promise<boolean> {
+	async delete(employee_id: number): Promise<boolean> {
 		const foundEmployeePresence = await this.employeePresenceRepository.find({
-			employeeId
+			employee_id
 		})
 		if (!foundEmployeePresence) return null as any
-		return this.employeePresenceRepository.delete(employeeId)
+		return this.employeePresenceRepository.delete(employee_id)
 	}
 }

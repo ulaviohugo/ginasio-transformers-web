@@ -12,9 +12,9 @@ export class RemoteUpdateNotification implements UpdateNotification {
 
 	async update(param: NotificationModel): Promise<NotificationModel> {
 		const handledParam = ObjectUtils.removeProps<NotificationModel>(param, [
-			'createdAt',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

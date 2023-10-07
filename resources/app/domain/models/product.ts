@@ -3,13 +3,14 @@ import { CategoryModel } from '.'
 export interface ProductModel {
 	id: number
 	name: string
-	barCode?: string
+	bar_code?: string
 	photo?: string
-	categoryId: number
+	category_id: number
 	price: number
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
+
 	category?: CategoryModel
-	createdAt: Date
-	createdById?: number
-	updatedAt?: Date
-	updatedById?: number
 }

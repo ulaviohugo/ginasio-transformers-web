@@ -34,23 +34,23 @@ export class DbUpdateSupplier implements UpdateSupplier {
 		const supplier: SupplierModel = {
 			...data,
 			photo,
-			updatedAt: new Date()
+			updated_at: new Date()
 		}
 		const updatedSupplier = await this.supplierRepository.update(supplier)
 		let supplierProducts: SupplierProductModel[] = []
-		if (updatedSupplier && param.supplierProducts?.length) {
-			for (let i = 0; i < param.supplierProducts.length; i++) {
-				const element = param.supplierProducts[i]
+		if (updatedSupplier && param.supplier_products?.length) {
+			for (let i = 0; i < param.supplier_products.length; i++) {
+				const element = param.supplier_products[i]
 				const item = await this.supplierProductRepository.addOrUpdate(element)
 				supplierProducts.push(item)
 			}
 		}
 
 		supplierProducts = ArrayUtils.removeDuplicated<SupplierProductModel>(
-			[...supplierProducts, ...(updatedSupplier.supplierProducts || [])],
+			[...supplierProducts, ...(updatedSupplier.supplier_products || [])],
 			'id'
 		)
 
-		return { ...updatedSupplier, supplierProducts }
+		return { ...updatedSupplier, supplier_products: supplierProducts }
 	}
 }

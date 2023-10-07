@@ -7,10 +7,10 @@ export class RemoteDeleteSupplier implements DeleteSupplier {
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
-	async delete(supplierId: number): Promise<boolean> {
+	async delete(supplier_id: number): Promise<boolean> {
 		const httpResponse = await this.httpClient.request({
 			method: 'delete',
-			url: `${this.url}/${supplierId}`
+			url: `${this.url}/${supplier_id}`
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

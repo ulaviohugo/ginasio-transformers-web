@@ -51,9 +51,10 @@ export function Insureds() {
 	}
 
 	const handlePrint = (insured: InsuredModel) => {
-		const province = provinces.find((province) => province.id == insured.provinceId)?.name
+		const province = provinces.find((province) => province.id == insured.province_id)
+			?.name
 		const municipality = municipalities.find(
-			(municipality) => municipality.id == insured.municipalityId
+			(municipality) => municipality.id == insured.municipality_id
 		)?.name
 
 		PrintUtils.printPolicy({ ...insured, province, municipality })
@@ -87,7 +88,7 @@ export function Insureds() {
 					) : (
 						<ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gap-4">
 							{insureds.map((insured) => {
-								const isPolicyholder = !insured.policyholderId
+								const isPolicyholder = !insured.policyholder_id
 								return (
 									<li key={insured.id} className="flex flex-col shadow p-3">
 										<div className="border-b pb-1 mb-1">

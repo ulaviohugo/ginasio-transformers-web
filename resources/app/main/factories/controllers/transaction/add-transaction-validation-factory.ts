@@ -8,10 +8,10 @@ export const makeAddTransactionValidation = () => {
 	const validations: Validation[] = []
 	const fields: FieldTypes[] = [
 		'date',
-		'operationType',
+		'operation_type',
 		'description',
 		'amount',
-		'paymentMethod'
+		'payment_method'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))

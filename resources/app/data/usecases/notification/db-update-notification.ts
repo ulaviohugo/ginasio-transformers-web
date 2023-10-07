@@ -14,7 +14,7 @@ export class DbUpdateNotification implements UpdateNotification {
 
 		const updatedNotification = await this.notificationRepository.update({
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 
 		return updatedNotification

@@ -31,7 +31,7 @@ export class DbUpdateCustomer implements UpdateCustomer {
 		const updatedCustomer = await this.employeeRepository.update({
 			...data,
 			photo: image,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 
 		return updatedCustomer

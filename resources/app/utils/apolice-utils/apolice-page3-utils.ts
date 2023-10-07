@@ -460,7 +460,7 @@ export class ApolicePage3Utils {
 			size: style.fontSizeTitle
 		})
 
-		const paymentMethods = [
+		const payment_methods = [
 			['PAGAMENTO', 'TRIMESTRAL', 'SEMESTRAL', 'ANUAL'],
 			['DINHEIRO', '', '', ''],
 			['MULTICAIXA', '', '', ''],
@@ -468,8 +468,8 @@ export class ApolicePage3Utils {
 			['TRANSFERÊNCIA EXPRESS', '', '', '']
 		]
 
-		for (let row = 0; row < paymentMethods.length; row++) {
-			const rowElement = paymentMethods[row]
+		for (let row = 0; row < payment_methods.length; row++) {
+			const rowElement = payment_methods[row]
 			for (let col = 0; col < rowElement.length; col++) {
 				const colElement = rowElement[col]
 				const isHeader = row == 0
@@ -500,8 +500,8 @@ export class ApolicePage3Utils {
 						borderOpacity: 0.75
 					})
 					if (
-						insured.paymentMethod?.toLocaleUpperCase() == rowElement[0] &&
-						insured.paymentFrequency?.toLocaleUpperCase() == paymentMethods[0][col]
+						insured.payment_method?.toLocaleUpperCase() == rowElement[0] &&
+						insured.payment_frequency?.toLocaleUpperCase() == payment_methods[0][col]
 					)
 						page.drawCircle({
 							x: x + 10,

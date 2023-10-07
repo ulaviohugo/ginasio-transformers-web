@@ -20,7 +20,7 @@ export class AddCategoryController implements Controller {
 			}
 			const createdCategory = await this.addCategory.add({
 				...request,
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				user_id: NumberUtils.convertToNumber(request.accountId)
 			})
 
 			if (createdCategory == null) {

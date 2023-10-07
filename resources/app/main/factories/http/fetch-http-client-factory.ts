@@ -1,3 +1,3 @@
-import { FetchHttpClient } from '@/infra/http'
+import { AxiosHttpClient } from '@/infra/http'
 
-export const makeFetchHttpClient = () => new FetchHttpClient()
+export const makeAxiosHttpClient = () => new AxiosHttpClient()

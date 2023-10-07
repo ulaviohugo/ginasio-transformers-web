@@ -68,14 +68,13 @@ export function Home() {
 			.then((response) => {
 				callback(response)
 			})
-			.catch(() => {
+			.catch(({ message }) => {
 				callback(0)
-				toast.error('Error ao consultar dados')
+				toast.error(message)
 			})
 	}
 
 	useEffect(() => {
-		return
 		{
 			isAdmin &&
 				fetchCount(makeRemoteCountEmployees(), (response) => {

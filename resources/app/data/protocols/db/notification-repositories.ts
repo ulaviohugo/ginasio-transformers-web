@@ -2,9 +2,9 @@ import { NotificationModel } from '@/domain/models'
 
 export interface NotificationRepository {
 	add(param: NotificationModel): Promise<NotificationModel>
-	findById(employeeId: number): Promise<NotificationModel | null>
+	findById(employee_id: number): Promise<NotificationModel | null>
 	loadAll(): Promise<NotificationModel[]>
 	update(param: NotificationModel): Promise<NotificationModel>
-	delete(employeeId: number): Promise<boolean>
+	delete(employee_id: number): Promise<boolean>
 	count(): Promise<number>
 }

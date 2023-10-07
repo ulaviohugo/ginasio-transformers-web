@@ -10,9 +10,9 @@ export class PrismaNotificationMapper {
 			notifiable: notification.notifiable,
 			notifiableId: notification.notifiableId,
 			text: notification.text,
-			createdAt: notification.createdAt,
-			updatedById: notification.updatedById,
-			updatedAt: notification.updatedAt
+			created_at: notification.created_at,
+			user_id_update: notification.user_id_update,
+			updated_at: notification.updated_at
 		} as any
 	}
 
@@ -23,9 +23,9 @@ export class PrismaNotificationMapper {
 			notifiable: notificationRaw.notifiable,
 			notifiableId: notificationRaw.notifiableId,
 			text: notificationRaw.text,
-			createdAt: notificationRaw.createdAt,
-			updatedById: notificationRaw.updatedById,
-			updatedAt: notificationRaw.updatedAt
+			created_at: notificationRaw.created_at,
+			user_id_update: notificationRaw.user_id_update,
+			updated_at: notificationRaw.updated_at
 		} as any
 	}
 }

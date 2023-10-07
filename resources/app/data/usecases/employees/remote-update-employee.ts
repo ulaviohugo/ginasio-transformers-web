@@ -12,10 +12,10 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 
 	async update(param: EmployeeModel): Promise<EmployeeModel> {
 		const handledParam = ObjectUtils.removeProps<EmployeeModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

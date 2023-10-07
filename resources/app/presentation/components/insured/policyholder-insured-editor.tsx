@@ -43,43 +43,43 @@ export function PolicyholderInsuredEditor({
 					onChange={handleInputChange}
 				/>
 				<Input
-					name="cardName"
-					id={`cardName-${itemIndex}`}
-					value={insured?.cardName || ''}
-					label={LabelUtils.translateField('cardName')}
+					name="card_name"
+					id={`card_name-${itemIndex}`}
+					value={insured?.card_name || ''}
+					label={LabelUtils.translateField('card_name')}
 					onChange={handleInputChange}
 				/>
 				<Input
 					type="date"
-					name="dateOfBirth"
-					id={`dateOfBirth-${itemIndex}`}
-					value={insured?.dateOfBirth ? DateUtils.getDate(insured?.dateOfBirth) : ''}
-					label={LabelUtils.translateField('dateOfBirth')}
+					name="date_of_birth"
+					id={`date_of_birth-${itemIndex}`}
+					value={insured?.date_of_birth ? DateUtils.getDate(insured?.date_of_birth) : ''}
+					label={LabelUtils.translateField('date_of_birth')}
 					onChange={handleInputChange}
 				/>
 				<Input
 					name="age"
 					id={`age-${itemIndex}`}
-					value={insured?.dateOfBirth ? DateUtils.getAge(insured?.dateOfBirth) : ''}
+					value={insured?.date_of_birth ? DateUtils.getAge(insured?.date_of_birth) : ''}
 					label={'Idade'}
 					disabled
 					onChange={handleInputChange}
 				/>
 				<Select
-					name="documentType"
-					id={`documentType-${itemIndex}`}
-					value={insured?.documentType || ''}
-					label={LabelUtils.translateField('documentType')}
+					name="document_type"
+					id={`document_type-${itemIndex}`}
+					value={insured?.document_type || ''}
+					label={LabelUtils.translateField('document_type')}
 					data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
 					defaultText="Selecione"
 					onChange={handleInputChange}
 				/>
 				<Input
-					name="documentNumber"
-					id={`documentNumber-${itemIndex}`}
-					value={insured?.documentNumber || ''}
-					label={LabelUtils.translateField('documentNumber')}
-					disabled={!insured?.documentType}
+					name="document_number"
+					id={`document_number-${itemIndex}`}
+					value={insured?.document_number || ''}
+					label={LabelUtils.translateField('document_number')}
+					disabled={!insured?.document_type}
 					onChange={handleInputChange}
 				/>
 				<Input

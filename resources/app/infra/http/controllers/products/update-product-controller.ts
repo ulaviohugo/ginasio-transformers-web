@@ -29,8 +29,8 @@ export class UpdateProductController implements Controller {
 					...request,
 					id: NumberUtils.convertToNumber(request.id),
 					price: NumberUtils.convertToNumber(request.price),
-					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					updatedById: NumberUtils.convertToNumber(request.accountId)
+					category_id: NumberUtils.convertToNumber(request.category_id),
+					user_id_update: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

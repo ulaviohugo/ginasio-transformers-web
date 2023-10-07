@@ -7,7 +7,7 @@ export const adaptMiddleware = async (
 	controller: Controller
 ) => {
 	const request = {
-		accessToken: req.headers?.get('x-access-token'),
+		access_token: req.headers?.get('x-access-token'),
 		...(req.headers || {})
 	}
 

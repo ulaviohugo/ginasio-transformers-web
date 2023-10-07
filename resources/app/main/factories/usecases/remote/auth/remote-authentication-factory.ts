@@ -1,6 +1,6 @@
 import { RemoteAuthentication } from '@/data/usecases'
-import { makeApiUrl, makeFetchHttpClient } from '@/main/factories/http'
+import { makeApiUrl, makeAxiosHttpClient } from '@/main/factories/http'
 
 export const makeRemoteAuthentication = () => {
-	return new RemoteAuthentication(makeApiUrl('/login'), makeFetchHttpClient())
+	return new RemoteAuthentication(makeApiUrl('/login'), makeAxiosHttpClient())
 }

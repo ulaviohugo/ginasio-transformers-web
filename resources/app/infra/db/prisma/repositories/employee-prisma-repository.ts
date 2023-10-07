@@ -33,11 +33,11 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 	}
 
 	async findByDocument(
-		documentType: string,
-		documentNumber: string
+		document_type: string,
+		document_number: string
 	): Promise<EmployeeModel | null> {
 		return (await this.prisma.employee.findFirst({
-			where: { documentType, documentNumber }
+			where: { document_type, document_number }
 		})) as EmployeeModel
 	}
 
@@ -52,9 +52,9 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 		})) as EmployeeModel
 	}
 
-	async delete(employeeId: number): Promise<boolean> {
+	async delete(employee_id: number): Promise<boolean> {
 		const deletedEmployee = await this.prisma.employee.delete({
-			where: { id: employeeId }
+			where: { id: employee_id }
 		})
 		return !!deletedEmployee
 	}

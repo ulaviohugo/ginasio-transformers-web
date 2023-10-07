@@ -9,8 +9,8 @@ export class DbAddInsured implements AddInsured {
 		const data = ObjectUtils.trimValues(param)
 
 		const foundByDoc = await this.insuredRepository.findByDocument(
-			data.documentType,
-			data.documentNumber
+			data.document_type,
+			data.document_number
 		)
 		if (foundByDoc) return 'documentInUse'
 

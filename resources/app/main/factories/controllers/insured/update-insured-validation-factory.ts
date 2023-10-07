@@ -14,27 +14,27 @@ type FieldTypes = keyof InsuredModel
 export const makeUpdateInsuredValidation = () => {
 	const validations: Validation[] = []
 	const fields: FieldTypes[] = [
-		'proposalNumber',
-		'policyNumber',
-		'proposalType',
+		'proposal_number',
+		'policy_number',
+		'proposal_type',
 		'mediator',
 		'name',
-		'cardName',
-		'cardNumber',
-		'dateOfBirth',
-		'documentType',
-		'documentNumber',
+		'card_name',
+		'card_number',
+		'date_of_birth',
+		'document_type',
+		'document_number',
 		'documentIssueDate',
 		'nif',
 		'gender',
 		'dependents',
-		'maritalStatus',
+		'marital_status',
 		'neighborhood',
 		'address',
 		'plan',
 		'policy',
-		'enrollmentDate',
-		'renewalDate',
+		'enrollment_date',
+		'renewal_date',
 		'review'
 	]
 	for (const field of fields) {
@@ -44,7 +44,7 @@ export const makeUpdateInsuredValidation = () => {
 		new NumberGreaterThanValidation('id', 0),
 		new EmailValidation('email'),
 		new NumberValidation('dependents'),
-		new DateGreaterThanValidation('contractEndDate', 'hireDate')
+		new DateGreaterThanValidation('contract_end_date', 'hire_date')
 	)
 	return new ValidationComposite(validations)
 }

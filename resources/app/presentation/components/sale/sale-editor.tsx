@@ -34,18 +34,18 @@ import {
 } from '@/main/factories/usecases/remote'
 
 type ProductSaleProps = {
-	categoryId: number
-	productId: number
-	barCode?: string
+	category_id: number
+	product_id: number
+	bar_code?: string
 	color: string
 	size: string
 	lot?: string
-	unitPrice: number
+	unit_price: number
 	quantity: number
-	totalValue: number
-	amountPaid: number
+	total_value: number
+	amount_paid: number
 	discount: number
-	paymentMethod: string
+	payment_method: string
 
 	product?: ProductModel
 }
@@ -65,11 +65,11 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 
 	const [cart, setCart] = useState<ProductSaleProps[]>([])
 
-	const totalValue = useMemo(() => {
+	const total_value = useMemo(() => {
 		return cart.reduce(
 			(prev, current) =>
 				prev +
-				NumberUtils.convertToNumber(current.unitPrice) *
+				NumberUtils.convertToNumber(current.unit_price) *
 					NumberUtils.convertToNumber(current.quantity),
 			0
 		)
@@ -94,7 +94,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	const categories: CategoryModel[] = useMemo(() => {
 		const dataStocks = stocks.map((stock) => ({
 			...stock.category,
-			id: stock.categoryId
+			id: stock.category_id
 		})) as any
 
 		const data = ArrayUtils.removeDuplicated<CategoryModel>(dataStocks, 'id')
@@ -102,21 +102,21 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	}, [stocks])
 
 	const productList = useMemo(() => {
-		if (!formProduct?.categoryId) return []
+		if (!formProduct?.category_id) return []
 
 		const dataStocks = stocks
-			.filter((stock) => stock.categoryId == formProduct.categoryId)
+			.filter((stock) => stock.category_id == formProduct.category_id)
 			.map((stock) => ({
 				...stock.product,
-				id: stock.productId
+				id: stock.product_id
 			})) as any
 
 		const data = ArrayUtils.removeDuplicated<CategoryModel>(dataStocks, 'id')
 		return data
-	}, [formProduct?.categoryId])
+	}, [formProduct?.category_id])
 
-	const [customerId, setCustomerId] = useState<number>()
-	const [paymentMethod, setPaymentMethod] = useState('')
+	const [customer_id, setCustomerId] = useState<number>()
+	const [payment_method, setpayment_method] = useState('')
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [photPreview] = useState('')
@@ -157,73 +157,74 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 
 		let data: ProductSaleProps = { ...formProduct, [name]: value }
 
-		if (name == 'totalValue') {
-			const totalValue = NumberUtils.convertToNumber(value)
+		if (name == 'total_value') {
+			const total_value = NumberUtils.convertToNumber(value)
 			data = {
 				...data,
-				unitPrice: formProduct.quantity > 0 ? totalValue / formProduct.quantity : 0
+				unit_price: formProduct.quantity > 0 ? total_value / formProduct.quantity : 0
 			}
 		}
 		if (name == 'quantity') {
 			const quantity = NumberUtils.convertToNumber(value)
 			const discount = NumberUtils.convertToNumber(formProduct.discount)
-			const totalValue =
+			const total_value =
 				quantity > 0
-					? NumberUtils.convertToNumber(formProduct.unitPrice) * quantity - discount
+					? NumberUtils.convertToNumber(formProduct.unit_price) * quantity - discount
 					: 0
 			data = {
 				...data,
-				totalValue,
-				amountPaid: totalValue
+				total_value,
+				amount_paid: total_value
 			}
 		}
 		if (name == 'discount') {
 			const discount = NumberUtils.convertToNumber(value)
 			const quantity = NumberUtils.convertToNumber(formProduct.quantity)
-			const unitPrice = NumberUtils.convertToNumber(formProduct.unitPrice)
-			const totalValue = quantity > 0 ? quantity * unitPrice : 0
+			const unit_price = NumberUtils.convertToNumber(formProduct.unit_price)
+			const total_value = quantity > 0 ? quantity * unit_price : 0
 
 			data = {
 				...data,
-				amountPaid: discount > 0 ? totalValue - discount : totalValue
+				amount_paid: discount > 0 ? total_value - discount : total_value
 			}
 		}
 
-		if (name == 'categoryId') {
-			data = { ...data, productId: undefined as any }
+		if (name == 'category_id') {
+			data = { ...data, product_id: undefined as any }
 		}
 
-		if (name == 'productId') {
+		if (name == 'product_id') {
 			const stock: PurchaseModel = stocks.find(
 				(stock) =>
-					stock.categoryId == formProduct.categoryId && stock.productId == Number(value)
+					stock.category_id == formProduct.category_id &&
+					stock.product_id == Number(value)
 			) as any
 
 			data = {
 				...data,
-				barCode: stock?.barCode,
+				bar_code: stock?.bar_code,
 				lot: stock?.lot,
 				size: stock?.size,
 				color: stock?.color,
-				unitPrice: stock?.unitPrice
+				unit_price: stock?.unit_price
 			}
 		}
 		setFormProduct(data)
 	}
 
 	const handleAddToCart = () => {
-		const { amountPaid, categoryId, color, productId, quantity, size, unitPrice } =
+		const { amount_paid, category_id, color, product_id, quantity, size, unit_price } =
 			formProduct
-		if (!categoryId) return toast.error('Selecione a categoria')
-		if (!productId) return toast.error('Selecione o produto')
+		if (!category_id) return toast.error('Selecione a categoria')
+		if (!product_id) return toast.error('Selecione o produto')
 		if (!color) return toast.error('Selecione a cor')
 		if (!size) return toast.error('Informe o tamanho')
-		if (!unitPrice) return toast.error('Informe o preço unitário')
+		if (!unit_price) return toast.error('Informe o preço unitário')
 		if (!quantity) return toast.error('Informe a quantidade')
-		if (!amountPaid) return toast.error('Informe o valor total a pagar')
+		if (!amount_paid) return toast.error('Informe o valor total a pagar')
 
 		const stock: PurchaseModel = stocks.find(
-			(stock) => stock.categoryId == categoryId && stock.productId == productId
+			(stock) => stock.category_id == category_id && stock.product_id == product_id
 		) as any
 
 		setCart([...cart, { ...formProduct, product: { name: stock.product?.name } as any }])
@@ -232,16 +233,16 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
-		if (!paymentMethod) return toast.error('Selecione o método de pagamento')
+		if (!payment_method) return toast.error('Selecione o método de pagamento')
 		setIsLoading(true)
 		try {
 			const data = {
 				productSales: cart,
-				customerId,
-				paymentMethod,
-				totalValue,
+				customer_id,
+				payment_method,
+				total_value,
 				discount: totalDiscount,
-				amountPaid: totalValue - totalDiscount
+				amount_paid: total_value - totalDiscount
 			} as any
 			console.log({ data })
 
@@ -267,10 +268,10 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 					<div className="bg-green-50 border border-green-200 p-2">
 						<div>
 							<InputPrice
-								id="unitPrice"
-								name="unitPrice"
-								value={formProduct?.unitPrice || ''}
-								label={LabelUtils.translateField('unitPrice')}
+								id="unit_price"
+								name="unit_price"
+								value={formProduct?.unit_price || ''}
+								label={LabelUtils.translateField('unit_price')}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -295,9 +296,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 						</div>
 						<div>
 							<InputPrice
-								id="amountPaid"
-								name="amountPaid"
-								value={formProduct?.amountPaid || ''}
+								id="amount_paid"
+								name="amount_paid"
+								value={formProduct?.amount_paid || ''}
 								label={'Total a pagar'}
 								onChange={handleInputChange}
 								disabled
@@ -309,10 +310,10 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 					<div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
 						<div>
 							<Select
-								id="categoryId"
-								name="categoryId"
-								value={formProduct.categoryId || ''}
-								label={LabelUtils.translateField('categoryId')}
+								id="category_id"
+								name="category_id"
+								value={formProduct.category_id || ''}
+								label={LabelUtils.translateField('category_id')}
 								defaultText="Selecione"
 								data={categories.map(({ id, name }) => ({
 									text: name,
@@ -323,10 +324,10 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 						</div>
 						<div>
 							<Select
-								id="productId"
-								name="productId"
-								value={formProduct.productId || ''}
-								label={LabelUtils.translateField('productId')}
+								id="product_id"
+								name="product_id"
+								value={formProduct.product_id || ''}
+								label={LabelUtils.translateField('product_id')}
 								defaultText="Selecione"
 								data={productList.map(({ id, name }) => ({ text: name, value: id }))}
 								onChange={handleInputChange}
@@ -334,10 +335,10 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 						</div>
 						<div>
 							<Input
-								id="barCode"
-								name="barCode"
-								value={formProduct.barCode || ''}
-								label={LabelUtils.translateField('barCode')}
+								id="bar_code"
+								name="bar_code"
+								value={formProduct.bar_code || ''}
+								label={LabelUtils.translateField('bar_code')}
 								onChange={handleInputChange}
 								disabled
 							/>
@@ -419,7 +420,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 														</div>
 													</td>
 													<td className="p-1">
-														{NumberUtils.formatCurrency(item.unitPrice)} kz
+														{NumberUtils.formatCurrency(item.unit_price)} kz
 													</td>
 												</tr>
 											))}
@@ -427,7 +428,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												<td className="p-1">SubTotal</td>
 												<td className="p-1">{qttCart}</td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(totalValue)} kz
+													{NumberUtils.formatCurrency(total_value)} kz
 												</td>
 											</tr>
 											<tr className="font-semibold">
@@ -441,7 +442,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												<td className="p-1">Total a pagar</td>
 												<td className="p-1"></td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(totalValue - totalDiscount)} kz
+													{NumberUtils.formatCurrency(total_value - totalDiscount)} kz
 												</td>
 											</tr>
 										</tbody>
@@ -449,10 +450,10 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 									<div>
 										<div className="flex flex-col gap-2">
 											<Select
-												id="customerId"
-												name="customerId"
-												value={customerId || ''}
-												label={LabelUtils.translateField('customerId')}
+												id="customer_id"
+												name="customer_id"
+												value={customer_id || ''}
+												label={LabelUtils.translateField('customer_id')}
 												data={customers.map((customer) => ({
 													text: customer.name,
 													value: customer.id
@@ -461,15 +462,15 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												onChange={(e) => setCustomerId(e.target.value as any)}
 											/>
 											<Select
-												id="paymentMethod"
-												name="paymentMethod"
-												value={paymentMethod || ''}
-												label={LabelUtils.translateField('paymentMethod')}
+												id="payment_method"
+												name="payment_method"
+												value={payment_method || ''}
+												label={LabelUtils.translateField('payment_method')}
 												data={PaymentUtils.getMethods().map((paymentType) => ({
 													text: paymentType
 												}))}
 												defaultText="Selecione"
-												onChange={(e) => setPaymentMethod(e.target.value)}
+												onChange={(e) => setpayment_method(e.target.value)}
 											/>
 											<ButtonSubmit
 												onClick={handleSubmit}

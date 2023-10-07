@@ -1,12 +1,10 @@
 export * from './http-client'
 
-export type HeaderParams = HeadersInit & { 'Content-Type': 'application/json' }
-
 export type HttpRequestParams<T = any> = {
 	url: string
 	method: 'post' | 'get' | 'put' | 'delete'
 	body?: T
-	headers?: HeaderParams
+	headers?: any
 	params?: object
 }
 
@@ -24,5 +22,6 @@ export enum HttpStatusCode {
 	unauthorized = 401,
 	forbidden = 403,
 	notFound = 404,
+	unprocessable = 422,
 	serverError = 500
 }

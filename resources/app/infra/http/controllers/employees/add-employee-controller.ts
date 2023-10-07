@@ -21,9 +21,9 @@ export class AddEmployeeController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			const canLogin = request.canLogin === true || (request as any).canLogin == 'true'
-			if (canLogin && !request.role) return badRequest(new Error('Informe o perfil'))
-			if (canLogin && !request.password) return badRequest(new Error('Informe a senha'))
+			const can_login = request.can_login === true || (request as any).can_login == 'true'
+			if (can_login && !request.role) return badRequest(new Error('Informe o perfil'))
+			if (can_login && !request.password) return badRequest(new Error('Informe a senha'))
 
 			let uploader: Uploader = null as any
 			if (request.photo && typeof request.photo != 'string') {
@@ -32,16 +32,16 @@ export class AddEmployeeController implements Controller {
 			const createdEmployee = await this.addEmployee.add(
 				{
 					...request,
-					dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
-					countryId: NumberUtils.convertToNumber(request.countryId),
-					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+					date_of_birth: DateUtils.convertToDate(request.date_of_birth),
+					country_id: NumberUtils.convertToNumber(request.country_id),
+					province_id: NumberUtils.convertToNumber(request.province_id, true),
+					municipality_id: NumberUtils.convertToNumber(request.municipality_id, true),
 					dependents: NumberUtils.convertToNumber(request.dependents),
-					baseSalary: NumberUtils.convertToNumber(request.baseSalary),
-					canLogin,
-					hireDate: DateUtils.convertToDate(request.hireDate),
-					contractEndDate: DateUtils.convertToDate(request.contractEndDate),
-					createdById: NumberUtils.convertToNumber(request.accountId)
+					base_salary: NumberUtils.convertToNumber(request.base_salary),
+					can_login,
+					hire_date: DateUtils.convertToDate(request.hire_date),
+					contract_end_date: DateUtils.convertToDate(request.contract_end_date),
+					user_id: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

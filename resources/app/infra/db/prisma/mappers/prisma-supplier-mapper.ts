@@ -12,14 +12,14 @@ export class PrismaSupplierMapper {
 			email: supplier.email,
 			phone: supplier.phone,
 			photo: supplier.photo,
-			countryId: supplier.countryId,
-			provinceId: supplier.provinceId,
-			municipalityId: supplier.municipalityId,
-			businessAddress: supplier.businessAddress,
-			createdAt: supplier.createdAt,
-			createdById: supplier.createdById,
-			updatedAt: supplier.updatedAt,
-			updatedById: supplier.updatedById
+			country_id: supplier.country_id,
+			province_id: supplier.province_id,
+			municipality_id: supplier.municipality_id,
+			address: supplier.address,
+			created_at: supplier.created_at,
+			user_id: supplier.user_id,
+			updated_at: supplier.updated_at,
+			user_id_update: supplier.user_id_update
 		} as any
 	}
 }

@@ -24,7 +24,7 @@ export class EmployeePresencePrismaRepository implements EmployeePresenceReposit
 		return (await this.prisma.employee.findMany({
 			include: {
 				employeePresences: {
-					select: { date: true, presenceStatus: true, description: true }
+					select: { date: true, presence_status: true, description: true }
 				}
 			}
 		})) as any

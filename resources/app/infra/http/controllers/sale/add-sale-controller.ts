@@ -22,26 +22,26 @@ export class AddSaleController implements Controller {
 				return badRequest(error)
 			}
 
-			console.log({ data: request.productSales })
+			console.log({ data: request.product_sales })
 
-			const productIds = request.productSales?.map((item) => item.productId)
-			if (productIds.length < 1) {
+			const product_ids = request.product_sales?.map((item) => item.product_id)
+			if (product_ids.length < 1) {
 				return badRequest(new Error('Informe os produtos para a venda'))
 			}
 
 			const stockList: PurchaseModel[] = []
 
-			for (let i = 0; i < productIds.length; i++) {
-				const product = request.productSales[i]
+			for (let i = 0; i < product_ids.length; i++) {
+				const product = request.product_sales[i]
 				const productError = this.productValidation.validate(product)
 				if (productError) {
 					productError.message = `${productError.message}. ${i + 1}º Produto`
 					return badRequest(productError)
 				}
 				const stock = await this.purchaseRepository.find({
-					filter: { productId: NumberUtils.convertToNumber(product.productId) }
+					filter: { product_id: NumberUtils.convertToNumber(product.product_id) }
 				})
-				console.log({ stock, id: NumberUtils.convertToNumber(product.productId) })
+				console.log({ stock, id: NumberUtils.convertToNumber(product.product_id) })
 
 				if (!stock) return notFound(`O ${i + 1}º produto não foi encontrado no estoque`)
 				if (
@@ -53,23 +53,24 @@ export class AddSaleController implements Controller {
 				stockList.push(stock)
 			}
 
-			const createdById = NumberUtils.convertToNumber(request.accountId)
+			const user_id = NumberUtils.convertToNumber(request.accountId)
 
 			const createdSale = await this.addSale.add({
 				...request,
-				customerId: request.customerId && NumberUtils.convertToNumber(request.customerId),
-				employeeId: NumberUtils.convertToNumber(request.employeeId) || createdById,
-				totalValue: NumberUtils.convertToPrice(request.totalValue),
-				amountPaid: NumberUtils.convertToPrice(request.amountPaid),
+				customer_id:
+					request.customer_id && NumberUtils.convertToNumber(request.customer_id),
+				employee_id: NumberUtils.convertToNumber(request.employee_id) || user_id,
+				total_value: NumberUtils.convertToPrice(request.total_value),
+				amount_paid: NumberUtils.convertToPrice(request.amount_paid),
 				discount: NumberUtils.convertToPrice(request.discount),
-				createdById
+				user_id
 			})
 
 			for (let i = 0; i < stockList.length; i++) {
 				const stock = stockList[i]
 				const stockQuantity = NumberUtils.convertToNumber(stock.quantity)
 				const productQuantity = NumberUtils.convertToNumber(
-					request.productSales[i].quantity
+					request.product_sales[i].quantity
 				)
 				const currentStock = stockQuantity - productQuantity
 

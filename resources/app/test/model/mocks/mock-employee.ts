@@ -6,12 +6,12 @@ export const mockEmployee = (): EmployeeModel => {
 	return {
 		name: 'Samuel Freitas',
 		gender: 'Masculino',
-		maritalStatus: 'Casado (a)',
+		marital_status: 'Casado (a)',
 		dependents: 1,
-		dateOfBirth: currentDate,
-		documentNumber: '001322548LA035',
+		date_of_birth: currentDate,
+		document_number: '001322548LA035',
 		nif: '001322548LA035',
-		residentialAddress: 'Coreia',
+		address: 'Coreia',
 		email: 'joel@gmail.com',
 		phone: '930690710',
 		phone2: '990690710'

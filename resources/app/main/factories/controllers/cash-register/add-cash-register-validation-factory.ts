@@ -6,7 +6,7 @@ type FieldTypes = keyof CashRegisterModel
 
 export const makeAddCashRegisterValidation = () => {
 	const validations: Validation[] = []
-	const fields: FieldTypes[] = ['initialBalance', 'balance']
+	const fields: FieldTypes[] = ['initial_balance', 'balance']
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
 	}

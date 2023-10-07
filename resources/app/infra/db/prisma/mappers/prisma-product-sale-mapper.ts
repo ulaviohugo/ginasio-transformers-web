@@ -8,20 +8,20 @@ export class PrismaProductSaleMapper {
 		if (!productSale) return null as any
 		return {
 			id: NumberUtils.convertToNumber(productSale.id, true),
-			productId: NumberUtils.convertToNumber(productSale.productId, true),
+			product_id: NumberUtils.convertToNumber(productSale.product_id, true),
 			saleId: NumberUtils.convertToNumber(productSale.saleId, true),
 			quantity: NumberUtils.convertToNumber(productSale.quantity),
-			totalValue: NumberUtils.convertToNumber(productSale.totalValue),
-			unitPrice: NumberUtils.convertToNumber(productSale.unitPrice),
-			amountPaid: NumberUtils.convertToNumber(productSale.amountPaid),
+			total_value: NumberUtils.convertToNumber(productSale.total_value),
+			unit_price: NumberUtils.convertToNumber(productSale.unit_price),
+			amount_paid: NumberUtils.convertToNumber(productSale.amount_paid),
 			size: productSale.size,
 			color: productSale.color,
 			discount: NumberUtils.convertToNumber(productSale.discount),
-			employeeId: NumberUtils.convertToNumber(productSale.employeeId, true),
-			createdAt: productSale.createdAt,
-			createdById: productSale.createdById,
-			updatedAt: productSale.updatedAt,
-			updatedById: productSale.updatedById
+			employee_id: NumberUtils.convertToNumber(productSale.employee_id, true),
+			created_at: productSale.created_at,
+			user_id: productSale.user_id,
+			updated_at: productSale.updated_at,
+			user_id_update: productSale.user_id_update
 		} as any
 	}
 }

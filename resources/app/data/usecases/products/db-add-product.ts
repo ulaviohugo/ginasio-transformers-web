@@ -11,7 +11,7 @@ export class DbAddProduct implements AddProduct {
 
 		const exists = await this.productRepository.findByNameAndCategoryId(
 			data.name,
-			data.categoryId
+			data.category_id
 		)
 		if (exists) return null as any
 

@@ -6,7 +6,7 @@ export class DbAddEmployeePresence implements AddEmployeePresence {
 	constructor(private readonly employeePresenceRepository: EmployeePresenceRepository) {}
 	async add(param: EmployeePresenceModel): Promise<EmployeePresenceModel> {
 		const exists = await this.employeePresenceRepository.find({
-			employeeId: param.employeeId,
+			employee_id: param.employee_id,
 			date: param.date
 		})
 		if (exists) return null as any

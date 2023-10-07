@@ -32,15 +32,15 @@ export class SupplierProductPrismaRepository implements SupplierProductRepositor
 	}
 
 	async findDuplicated({
-		supplierId,
-		categoryId,
-		productId
+		supplier_id,
+		category_id,
+		product_id
 	}: SupplierProductFindDuplicatedParam): Promise<SupplierProductModel | null> {
 		return this.prisma.supplierProduct.findFirst({
 			where: {
-				supplierId,
-				categoryId,
-				productId
+				supplier_id,
+				category_id,
+				product_id
 			}
 		}) as any
 	}
@@ -59,12 +59,12 @@ export class SupplierProductPrismaRepository implements SupplierProductRepositor
 	}
 
 	async addOrUpdate(param: SupplierProductModel): Promise<SupplierProductModel> {
-		const { supplierId, productId, categoryId } = param
+		const { supplier_id, product_id, category_id } = param
 
 		const foundSupplierProduct = await this.findDuplicated({
-			supplierId,
-			productId,
-			categoryId
+			supplier_id,
+			product_id,
+			category_id
 		})
 
 		let data
@@ -72,11 +72,11 @@ export class SupplierProductPrismaRepository implements SupplierProductRepositor
 			data = await this.update({
 				...param,
 				id: foundSupplierProduct.id,
-				createdById: undefined,
-				updatedAt: new Date()
+				user_id: undefined,
+				updated_at: new Date()
 			})
 		} else {
-			data = await this.add({ ...param, updatedById: undefined })
+			data = await this.add({ ...param, user_id_update: undefined })
 		}
 		return data
 	}

@@ -3,15 +3,15 @@ export interface CustomerModel {
 	photo?: string
 	name: string
 	gender: string
-	dateOfBirth?: Date
+	date_of_birth?: Date
 	phone?: string
 	email?: string
-	countryId: number
-	provinceId?: number
-	municipalityId?: number
-	residentialAddress: string
-	createdAt: Date
-	createdById?: number
-	updatedAt?: Date
-	updatedById?: number
+	country_id: number
+	province_id?: number
+	municipality_id?: number
+	address: string
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
 }

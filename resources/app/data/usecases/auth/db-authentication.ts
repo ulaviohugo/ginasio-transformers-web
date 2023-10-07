@@ -18,16 +18,16 @@ export class DbAuthentication implements Authentication {
 
 		const employee = await this.employeeRepository.findByEmail(data.email)
 		if (!employee) return null as any
-		if (!employee.canLogin) return 'canNotLogin'
+		if (!employee.can_login) return 'canNotLogin'
 
 		const isValid = await this.hasher.compare(param.password, employee.password as any)
 		if (!isValid) return 'invalidCredential'
 
-		const accessToken = await this.encrypter.encrypt(employee.id.toString())
+		const access_token = await this.encrypter.encrypt(employee.id.toString())
 		const { id, name, email, role } = employee
 
 		return {
-			accessToken,
+			access_token,
 			user: { id, name, email, role }
 		}
 	}

@@ -12,10 +12,10 @@ export class RemoteUpdateSupplier implements UpdateSupplier {
 
 	async update(param: SupplierModel): Promise<SupplierModel> {
 		const handledParam = ObjectUtils.removeProps<SupplierModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

@@ -138,13 +138,13 @@ export function CalendarPresence({ employees }: CalendarPresenceProps) {
 										// date.getMonth() == selfDate.getUTCMonth() &&
 										// date.getDate() == selfDate.getUTCDate()
 
-										const present = employee.employeePresences.find(({ date }) =>
+										const present = employee.employee_presences.find(({ date }) =>
 											compareDates(date, selfDate)
 										)
 										console.log({ present })
 
-										const isAbsent = present?.presenceStatus == PresentStatus.F
-										const isPresent = present?.presenceStatus == PresentStatus.P
+										const isAbsent = present?.presence_status == PresentStatus.F
+										const isPresent = present?.presence_status == PresentStatus.P
 
 										return (
 											<td

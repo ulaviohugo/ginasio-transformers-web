@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { HttpStatusCode } from '@/data/protocols/http'
-import { makeApiUrl, makeFetchHttpClient } from '@/main/factories/http'
+import { makeApiUrl, makeAxiosHttpClient } from '@/main/factories/http'
 import { ReactNode, createContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadLocationStore } from '@/presentation/redux'
@@ -19,7 +19,7 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 
 	useEffect(() => {
 		if (auth) {
-			makeFetchHttpClient()
+			makeAxiosHttpClient()
 				.request({ method: 'get', url: makeApiUrl('/locations') })
 				.then((response) => {
 					console.log({ response })

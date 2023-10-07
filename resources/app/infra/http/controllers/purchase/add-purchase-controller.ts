@@ -23,23 +23,22 @@ export class AddPurchaseController implements Controller {
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/purchases')
 			}
-			const createdById = NumberUtils.convertToNumber(request.accountId)
+			const user_id = NumberUtils.convertToNumber(request.accountId)
 			const createdPurchase = await this.addPurchase.add(
 				{
 					...request,
-					supplierId: NumberUtils.convertToNumber(request.supplierId),
-					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					employeeId:
-						NumberUtils.convertToNumber(request.employeeId, true) || createdById,
-					productId: NumberUtils.convertToNumber(request.productId),
-					unitPrice: NumberUtils.convertToPrice(request.unitPrice),
-					totalValue: NumberUtils.convertToPrice(request.totalValue),
+					supplier_id: NumberUtils.convertToNumber(request.supplier_id),
+					category_id: NumberUtils.convertToNumber(request.category_id),
+					employee_id: NumberUtils.convertToNumber(request.employee_id, true) || user_id,
+					product_id: NumberUtils.convertToNumber(request.product_id),
+					unit_price: NumberUtils.convertToPrice(request.unit_price),
+					total_value: NumberUtils.convertToPrice(request.total_value),
 					quantity: NumberUtils.convertToNumber(request.quantity),
-					sellingPriceUnit: NumberUtils.convertToPrice(request.sellingPriceUnit),
+					selling_price_unit: NumberUtils.convertToPrice(request.selling_price_unit),
 					paid: !!request.paid,
-					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
-					dueDate: DateUtils.convertToDate(request.dueDate),
-					createdById
+					purchase_date: DateUtils.convertToDate(request.purchase_date),
+					due_date: DateUtils.convertToDate(request.due_date),
+					user_id
 				},
 				uploader
 			)

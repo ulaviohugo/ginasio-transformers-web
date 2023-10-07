@@ -12,10 +12,10 @@ export class RemoteUpdateProduct implements UpdateProduct {
 
 	async update(param: ProductModel): Promise<ProductModel> {
 		const handledParam = ObjectUtils.removeProps<ProductModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById',
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update',
 			'category'
 		])
 		const body = FormDataUtils.createFormData(handledParam)

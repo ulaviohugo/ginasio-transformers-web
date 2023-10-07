@@ -4,12 +4,12 @@ import { DateUtils } from '..'
 
 type FormDataProps = {
 	mediator: string
-	policyNumber: string
-	proposalNumber: string
-	proposalType: 'Novo Co-Seguro' | 'Alteração do Plano'
+	policy_number: string
+	proposal_number: string
+	proposal_type: 'Novo Co-Seguro' | 'Alteração do Plano'
 	assistedBy: string
-	createdAt: Date
-	proposalCurrency: string
+	created_at: Date
+	proposal_currency: string
 }
 
 export class ApolicePage1Utils {
@@ -18,12 +18,12 @@ export class ApolicePage1Utils {
 
 		const formData: FormDataProps = {
 			mediator: String(insured.mediator),
-			policyNumber: String(insured.policyNumber),
-			proposalNumber: String(insured.proposalNumber),
-			proposalType: String(insured.proposalType) as any,
-			assistedBy: String(insured.createdBy?.name),
-			createdAt: insured.createdAt as any,
-			proposalCurrency: 'AOA'
+			policy_number: String(insured.policy_number),
+			proposal_number: String(insured.proposal_number),
+			proposal_type: String(insured.proposal_type) as any,
+			assistedBy: String(insured.user?.name),
+			created_at: insured.created_at as any,
+			proposal_currency: 'AOA'
 		}
 
 		const pageWidth = page.getWidth()
@@ -91,7 +91,7 @@ export class ApolicePage1Utils {
 			x: padding + 188,
 			y: pageHeight - 153
 		})
-		page.drawText(formData.proposalNumber, {
+		page.drawText(formData.proposal_number, {
 			x: padding + 190,
 			y: pageHeight - 149,
 			size: style.fontSizeText
@@ -115,7 +115,7 @@ export class ApolicePage1Utils {
 			x: padding + 317,
 			y: pageHeight - 153
 		})
-		page.drawText(formData.policyNumber, {
+		page.drawText(formData.policy_number, {
 			x: padding + 319,
 			y: pageHeight - 149,
 			size: style.fontSizeText
@@ -149,7 +149,7 @@ export class ApolicePage1Utils {
 			x: padding + 380,
 			y: pageHeight - 164
 		})
-		if (formData.proposalType.toLocaleLowerCase() == 'alteração do plano') {
+		if (formData.proposal_type.toLocaleLowerCase() == 'alteração do plano') {
 			page.drawText('X', {
 				x: padding + 381.5,
 				y: pageHeight - 162,
@@ -177,7 +177,7 @@ export class ApolicePage1Utils {
 			x: padding + 380.5,
 			y: pageHeight - 178
 		})
-		if (formData.proposalType.toLocaleLowerCase() == 'novo co-seguro') {
+		if (formData.proposal_type.toLocaleLowerCase() == 'novo co-seguro') {
 			page.drawText('X', {
 				x: padding + 382,
 				y: pageHeight - 176,
@@ -256,7 +256,7 @@ export class ApolicePage1Utils {
 			x: padding + 466,
 			y: pageHeight - 208
 		})
-		page.drawText(formData.proposalCurrency, {
+		page.drawText(formData.proposal_currency, {
 			x: padding + 468,
 			y: pageHeight - 204,
 			size: style.fontSizeText
@@ -280,7 +280,7 @@ export class ApolicePage1Utils {
 			x: padding + 234,
 			y: pageHeight - 235
 		})
-		page.drawText(String(DateUtils.getDatePt(formData.createdAt)), {
+		page.drawText(String(DateUtils.getDatePt(formData.created_at)), {
 			x: padding + 236,
 			y: pageHeight - 231,
 			size: style.fontSizeText
@@ -359,7 +359,7 @@ export class ApolicePage1Utils {
 			x: padding + 135,
 			y: pageHeight - 292
 		})
-		page.drawText(insured.cardName as any, {
+		page.drawText(insured.card_name as any, {
 			x: padding + 137,
 			y: pageHeight - 288,
 			size: style.fontSizeText
@@ -382,7 +382,7 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 292
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.dateOfBirth)), {
+		page.drawText(String(DateUtils.getDatePt(insured.date_of_birth)), {
 			x: padding + 437,
 			y: pageHeight - 288,
 			size: style.fontSizeText
@@ -405,7 +405,7 @@ export class ApolicePage1Utils {
 			x: padding + 75,
 			y: pageHeight - 309
 		})
-		page.drawText(insured.documentNumber, {
+		page.drawText(insured.document_number, {
 			x: padding + 77,
 			y: pageHeight - 305,
 			size: style.fontSizeText
@@ -588,7 +588,7 @@ export class ApolicePage1Utils {
 			x: padding + 65,
 			y: pageHeight - 343
 		})
-		page.drawText(String(insured.maritalStatus), {
+		page.drawText(String(insured.marital_status), {
 			x: padding + 67,
 			y: pageHeight - 339,
 			size: style.fontSizeText
@@ -787,7 +787,7 @@ export class ApolicePage1Utils {
 			x: padding + 185,
 			y: pageHeight - 434
 		})
-		page.drawText(String(DateUtils.getDatePt(insured.enrollmentDate)), {
+		page.drawText(String(DateUtils.getDatePt(insured.enrollment_date)), {
 			x: padding + 197,
 			y: pageHeight - 430,
 			size: style.fontSizeText
@@ -810,11 +810,14 @@ export class ApolicePage1Utils {
 			x: padding + 435,
 			y: pageHeight - 434
 		})
-		page.drawText(insured?.renewalDate ? DateUtils.getDatePt(insured.renewalDate) : '', {
-			x: padding + 437,
-			y: pageHeight - 430,
-			size: style.fontSizeText
-		})
+		page.drawText(
+			insured?.renewal_date ? DateUtils.getDatePt(insured.renewal_date) : '',
+			{
+				x: padding + 437,
+				y: pageHeight - 430,
+				size: style.fontSizeText
+			}
+		)
 
 		makeRectangle({
 			page,

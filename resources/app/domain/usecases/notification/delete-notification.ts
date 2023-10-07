@@ -1,3 +1,3 @@
 export interface DeleteNotification {
-	delete(employeeId: number): Promise<boolean>
+	delete(employee_id: number): Promise<boolean>
 }

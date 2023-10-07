@@ -20,7 +20,7 @@ export class UpdateNotificationController implements Controller {
 			const updatedNotification = await this.UpdateNotification.update({
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
-				updatedById: NumberUtils.convertToNumber(request.accountId)
+				user_id_update: NumberUtils.convertToNumber(request.accountId)
 			})
 			if (updatedNotification == null) {
 				return notFound()

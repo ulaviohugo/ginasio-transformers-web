@@ -33,11 +33,11 @@ export function SupplierProductEditor({
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 		let data: any = { index: itemIndex, name, value }
-		if (name == 'categoryId') {
-			data = { ...data, productId: undefined }
+		if (name == 'category_id') {
+			data = { ...data, product_id: undefined }
 			setProductList(
 				products.filter(
-					(product) => product.categoryId == Number(value)
+					(product) => product.category_id == Number(value)
 				) as ProductModel[]
 			)
 		}
@@ -45,23 +45,23 @@ export function SupplierProductEditor({
 	}
 
 	useEffect(() => {
-		if (supplierProduct?.categoryId) {
+		if (supplierProduct?.category_id) {
 			setProductList(
 				products.filter(
-					(product) => product.categoryId == supplierProduct?.categoryId
+					(product) => product.category_id == supplierProduct?.category_id
 				) as ProductModel[]
 			)
 		}
-	}, [supplierProduct?.categoryId])
+	}, [supplierProduct?.category_id])
 	return (
 		<div className="flex-1 grid lg:grid-cols-3 md:grid-cols-2 gap-4 relative bg-slate-100 p-3">
 			<div className="lg:col-span-3 md:col-span-2 -mb-3">Produto {index + 1}</div>
 			<div>
 				<Select
-					id={`categoryId${itemIndex}`}
-					name="categoryId"
-					value={supplierProduct?.categoryId || ''}
-					label={LabelUtils.translateField('categoryId')}
+					id={`category_id${itemIndex}`}
+					name="category_id"
+					value={supplierProduct?.category_id || ''}
+					label={LabelUtils.translateField('category_id')}
 					data={categories.map((category) => ({
 						text: category.name,
 						value: category.id
@@ -72,10 +72,10 @@ export function SupplierProductEditor({
 			</div>
 			<div>
 				<Select
-					id={`productId${itemIndex}`}
-					name="productId"
-					value={supplierProduct?.productId || ''}
-					label={LabelUtils.translateField('productId')}
+					id={`product_id${itemIndex}`}
+					name="product_id"
+					value={supplierProduct?.product_id || ''}
+					label={LabelUtils.translateField('product_id')}
 					data={productList.map((product) => ({
 						text: product.name,
 						value: product.id
@@ -86,10 +86,10 @@ export function SupplierProductEditor({
 			</div>
 			<div>
 				<InputPrice
-					id={`unitPrice${itemIndex}`}
-					name="unitPrice"
-					value={supplierProduct?.unitPrice || ''}
-					label={LabelUtils.translateField('unitPrice')}
+					id={`unit_price${itemIndex}`}
+					name="unit_price"
+					value={supplierProduct?.unit_price || ''}
+					label={LabelUtils.translateField('unit_price')}
 					onChange={handleInputChange}
 				/>
 			</div>

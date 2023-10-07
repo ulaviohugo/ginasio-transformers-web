@@ -6,7 +6,7 @@ type FieldTypes = keyof CustomerModel
 
 export const makeAddCustomerValidation = () => {
 	const validations: Validation[] = []
-	const fields: FieldTypes[] = ['name', 'gender', 'countryId', 'residentialAddress']
+	const fields: FieldTypes[] = ['name', 'gender', 'country_id', 'address']
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))
 	}

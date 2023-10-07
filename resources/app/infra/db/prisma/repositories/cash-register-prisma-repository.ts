@@ -21,8 +21,8 @@ export class CashRegisterPrismaRepository implements CashRegisterRepository {
 		if (!cashRegister) {
 			cashRegister = await this.add({
 				balance: 5000,
-				initialBalance: 50001,
-				createdById: accountId
+				initial_balance: 50001,
+				user_id: accountId
 			} as any)
 		}
 		return cashRegister

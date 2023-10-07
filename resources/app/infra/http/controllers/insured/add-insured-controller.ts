@@ -21,14 +21,14 @@ export class AddInsuredController implements Controller {
 
 			const createdInsured = await this.addInsured.add({
 				...request,
-				dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
-				provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-				municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+				date_of_birth: DateUtils.convertToDate(request.date_of_birth),
+				province_id: NumberUtils.convertToNumber(request.province_id, true),
+				municipality_id: NumberUtils.convertToNumber(request.municipality_id, true),
 				dependents: NumberUtils.convertToNumber(request.dependents),
-				enrollmentDate: DateUtils.convertToDate(request.enrollmentDate),
-				renewalDate: DateUtils.convertToDate(request.renewalDate),
+				enrollment_date: DateUtils.convertToDate(request.enrollment_date),
+				renewal_date: DateUtils.convertToDate(request.renewal_date),
 				documentIssueDate: DateUtils.convertToDate(request.documentIssueDate),
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				user_id: NumberUtils.convertToNumber(request.accountId)
 			})
 
 			if (createdInsured == 'emailInUse') {

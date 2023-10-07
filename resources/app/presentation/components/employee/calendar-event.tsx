@@ -22,9 +22,9 @@ type CalendarEventProps = {
 }
 
 type FormProps = {
-	presenceStatus: string
+	presence_status: string
 	date: Date
-	employeeId: number
+	employee_id: number
 }
 
 export type EventItemProps = {
@@ -40,11 +40,11 @@ export const CalendarEvent = ({ eventItem, open, onClose }: CalendarEventProps) 
 	}, [open])
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setFormData({ ...formData, presenceStatus: e.target.value })
+		setFormData({ ...formData, presence_status: e.target.value })
 	}
 
 	const handleSubmit = async () => {
-		const data: FormProps = { ...formData, date, employeeId: employee.id }
+		const data: FormProps = { ...formData, date, employee_id: employee.id }
 		makeRemoteAddEmployeePresence()
 			.add(data as any)
 			.then(() => {})
@@ -62,14 +62,14 @@ export const CalendarEvent = ({ eventItem, open, onClose }: CalendarEventProps) 
 				<div className="flex">
 					<Input
 						type="radio"
-						name="presenceStatus"
+						name="presence_status"
 						value={'P'}
 						label="Presente"
 						onChange={handleInputChange}
 					/>
 					<Input
 						type="radio"
-						name="presenceStatus"
+						name="presence_status"
 						value={'F'}
 						label="Faltou"
 						onChange={handleInputChange}

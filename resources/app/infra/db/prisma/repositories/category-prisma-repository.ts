@@ -42,9 +42,9 @@ export class CategoryPrismaRepository implements CategoryRepository {
 		})) as CategoryModel
 	}
 
-	async delete(categoryId: number): Promise<boolean> {
+	async delete(category_id: number): Promise<boolean> {
 		const deletedCategory = await this.prisma.category.delete({
-			where: { id: categoryId }
+			where: { id: category_id }
 		})
 		return !!deletedCategory
 	}

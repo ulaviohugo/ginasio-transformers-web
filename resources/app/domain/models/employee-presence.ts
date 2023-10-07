@@ -2,13 +2,13 @@ import { EmployeeModel } from '.'
 
 export interface EmployeePresenceModel {
 	id: number
-	employeeId: number
+	employee_id: number
 	date: Date
-	presenceStatus: PresentStatus
-	createdAt: Date
-	createdById?: number
-	updatedAt?: Date
-	updatedById?: number
+	presence_status: PresentStatus
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
 
 	employee?: EmployeeModel
 }

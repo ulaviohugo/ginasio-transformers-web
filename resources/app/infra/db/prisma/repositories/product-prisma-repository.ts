@@ -25,10 +25,10 @@ export class ProductPrismaRepository implements ProductRepository {
 
 	async findByNameAndCategoryId(
 		name: string,
-		categoryId: number
+		category_id: number
 	): Promise<ProductModel | null> {
 		return (await prisma.product.findFirst({
-			where: { name, categoryId }
+			where: { name, category_id }
 		})) as ProductModel
 	}
 
@@ -50,9 +50,9 @@ export class ProductPrismaRepository implements ProductRepository {
 		})) as ProductModel
 	}
 
-	async delete(productId: number): Promise<boolean> {
+	async delete(product_id: number): Promise<boolean> {
 		const deletedProduct = await prisma.product.delete({
-			where: { id: productId }
+			where: { id: product_id }
 		})
 		return !!deletedProduct
 	}

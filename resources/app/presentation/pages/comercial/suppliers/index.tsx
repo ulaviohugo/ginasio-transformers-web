@@ -174,8 +174,8 @@ export function Suppliers() {
 											<IconCategory />
 											{
 												ArrayUtils.removeDuplicated(
-													supplier?.supplierProducts?.map((cat) =>
-														cat.categoryId.toString()
+													supplier?.supplier_products?.map((cat) =>
+														cat.category_id.toString()
 													) as any
 												).length
 											}
@@ -188,8 +188,8 @@ export function Suppliers() {
 											<IconProduct />
 											{
 												ArrayUtils.removeDuplicated(
-													supplier?.supplierProducts?.map((cat) =>
-														cat.productId.toString()
+													supplier?.supplier_products?.map((cat) =>
+														cat.product_id.toString()
 													) as any
 												).length
 											}
@@ -198,7 +198,7 @@ export function Suppliers() {
 									{/* <div>
 										Preço unitário:{' '}
 										<span className="font-semibold">
-											{NumberUtils.formatCurrency(supplier.unitPrice)}
+											{NumberUtils.formatCurrency(supplier.unit_price)}
 										</span>{' '}
 										kz
 									</div> */}

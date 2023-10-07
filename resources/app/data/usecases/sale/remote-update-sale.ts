@@ -11,12 +11,12 @@ export class RemoteUpdateSale implements UpdateSale {
 	) {}
 
 	async update(param: SaleModel): Promise<SaleModel> {
-		const unitPrice = NumberUtils.convertToNumber(param.unitPrice)
-		const totalValue = NumberUtils.convertToNumber(param.totalValue)
+		const unit_price = NumberUtils.convertToNumber(param.unit_price)
+		const total_value = NumberUtils.convertToNumber(param.total_value)
 		const purchaseId = NumberUtils.convertToNumber(param.purchaseId)
 		const handledParam = ObjectUtils.removeProps<SaleModel>(
-			{ ...param, unitPrice, totalValue, purchaseId },
-			['createdAt', 'createdById', 'updatedAt', 'updatedById']
+			{ ...param, unit_price, total_value, purchaseId },
+			['created_at', 'user_id', 'updated_at', 'user_id_update']
 		)
 		const body = FormDataUtils.createFormData(handledParam)
 

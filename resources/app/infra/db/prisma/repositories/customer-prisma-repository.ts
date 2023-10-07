@@ -43,9 +43,9 @@ export class CustomerPrismaRepository implements CustomerRepository {
 		})) as CustomerModel
 	}
 
-	async delete(customerId: number): Promise<boolean> {
+	async delete(customer_id: number): Promise<boolean> {
 		const deletedCustomer = await this.prisma.customer.delete({
-			where: { id: customerId }
+			where: { id: customer_id }
 		})
 		return !!deletedCustomer
 	}

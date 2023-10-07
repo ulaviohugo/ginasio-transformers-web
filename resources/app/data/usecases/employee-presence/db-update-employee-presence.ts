@@ -11,7 +11,7 @@ export class DbUpdateEmployeePresence implements UpdateEmployeePresence {
 
 		const updatedEmployeePresence = await this.employeePresenceRepository.update({
 			...param,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 		return updatedEmployeePresence
 	}

@@ -7,11 +7,11 @@ type FieldTypes = keyof ProductSaleModel
 export const makeAddProductSaleValidation = () => {
 	const validations: Validation[] = []
 	const fields: FieldTypes[] = [
-		'productId',
+		'product_id',
 		'quantity',
-		'totalValue',
-		'unitPrice',
-		'amountPaid'
+		'total_value',
+		'unit_price',
+		'amount_paid'
 	]
 	for (const field of fields) {
 		validations.push(new RequiredFieldValidation(field))

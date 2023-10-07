@@ -163,12 +163,12 @@ export function Employees() {
 									</div>
 									<div className="flex items-center gap-1 text-sm">
 										<IconClock /> Início de contrato:{' '}
-										{DateUtils.getDatePt(employee.hireDate, '/')}
+										{DateUtils.getDatePt(employee.hire_date, '/')}
 									</div>
-									{employee.contractEndDate && (
+									{employee.contract_end_date && (
 										<div className="flex items-center gap-1 text-sm">
 											<IconClock /> Fim de contrato:{' '}
-											{DateUtils.getDatePt(employee.contractEndDate, '/')}
+											{DateUtils.getDatePt(employee.contract_end_date, '/')}
 										</div>
 									)}
 									<CardActions

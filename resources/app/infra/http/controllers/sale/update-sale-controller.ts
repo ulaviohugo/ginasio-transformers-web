@@ -22,15 +22,15 @@ export class UpdateSaleController implements Controller {
 				...request,
 				id: NumberUtils.convertToNumber(request.id),
 				purchaseId: NumberUtils.convertToNumber(request.purchaseId),
-				customerId: NumberUtils.convertToNumber(request.customerId),
+				customer_id: NumberUtils.convertToNumber(request.customer_id),
 				quantity: NumberUtils.convertToNumber(request.quantity),
-				employeeId: undefined as any,
-				totalValue: NumberUtils.convertToPrice(request.totalValue),
-				unitPrice: NumberUtils.convertToPrice(request.unitPrice),
+				employee_id: undefined as any,
+				total_value: NumberUtils.convertToPrice(request.total_value),
+				unit_price: NumberUtils.convertToPrice(request.unit_price),
 				discount: NumberUtils.convertToPrice(request.discount),
-				amountPaid: NumberUtils.convertToPrice(request.amountPaid),
-				updatedById: NumberUtils.convertToNumber(request.accountId),
-				updatedAt: new Date()
+				amount_paid: NumberUtils.convertToPrice(request.amount_paid),
+				user_id_update: NumberUtils.convertToNumber(request.accountId),
+				updated_at: new Date()
 			})
 			if (updatedSale == 'notFound') {
 				return notFound()

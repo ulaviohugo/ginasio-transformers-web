@@ -43,7 +43,7 @@ export function PolicyholderEditor({
 
 	const [formData, setFormData] = useState<InsuredModel>({
 		...policyholder,
-		enrollmentDate: new Date()
+		enrollment_date: new Date()
 	} as InsuredModel)
 
 	const [insuredItems, setInsuredItems] = useState<any>({ 0: {} })
@@ -53,14 +53,14 @@ export function PolicyholderEditor({
 	const [isLoading, setIsLoading] = useState(false)
 
 	const provinceList = useMemo(
-		() => provinces.filter((province) => province.countryId == 1),
+		() => provinces.filter((province) => province.country_id == 1),
 		[provinces]
 	)
 
 	useEffect(() => {
 		if (policyholder) {
 			const municipality = municipalities.filter(
-				(municipality) => municipality.provinceId == policyholder?.provinceId
+				(municipality) => municipality.province_id == policyholder?.province_id
 			)
 			setMunicipalityList(municipality)
 
@@ -75,10 +75,10 @@ export function PolicyholderEditor({
 		console.log({ name, value })
 
 		let data = { ...formData, [name]: value }
-		if (name == 'provinceId') {
-			data = { ...data, municipalityId: undefined }
+		if (name == 'province_id') {
+			data = { ...data, municipality_id: undefined }
 			setMunicipalityList(
-				municipalities.filter((municipality) => municipality.provinceId == Number(value))
+				municipalities.filter((municipality) => municipality.province_id == Number(value))
 			)
 		}
 
@@ -99,11 +99,11 @@ export function PolicyholderEditor({
 
 	const handleChangeInsured = ({ index, name, value }: InsuredCardChangeProps) => {
 		let data = insuredItems[index] || { [index]: { [name]: value } }[index]
-		const policyholderId = policyholder?.id
-		if (name == 'categoryId') {
-			data = { ...data, [name]: value, productId: undefined, policyholderId }
+		const policyholder_id = policyholder?.id
+		if (name == 'category_id') {
+			data = { ...data, [name]: value, product_id: undefined, policyholder_id }
 		} else {
-			data = { ...data, [name]: value, policyholderId }
+			data = { ...data, [name]: value, policyholder_id }
 		}
 		setInsuredItems({ ...insuredItems, [index]: data })
 	}
@@ -151,24 +151,24 @@ export function PolicyholderEditor({
 						<legend>Titular do co-seguro</legend>
 						<div className="grid grid-cols-3 gap-2">
 							<Input
-								name="proposalNumber"
-								id="proposalNumber"
-								value={formData?.proposalNumber || ''}
-								label={LabelUtils.translateField('proposalNumber')}
+								name="proposal_number"
+								id="proposal_number"
+								value={formData?.proposal_number || ''}
+								label={LabelUtils.translateField('proposal_number')}
 								onChange={handleChange}
 							/>
 							<Input
-								name="policyNumber"
-								id="policyNumber"
-								value={formData?.policyNumber || ''}
-								label={LabelUtils.translateField('policyNumber')}
+								name="policy_number"
+								id="policy_number"
+								value={formData?.policy_number || ''}
+								label={LabelUtils.translateField('policy_number')}
 								onChange={handleChange}
 							/>
 							<Select
-								name="proposalType"
-								id="proposalType"
-								value={formData?.proposalType || ''}
-								label={LabelUtils.translateField('proposalType')}
+								name="proposal_type"
+								id="proposal_type"
+								value={formData?.proposal_type || ''}
+								label={LabelUtils.translateField('proposal_type')}
 								data={[{ text: 'Novo Co-Seguro' }, { text: 'Alteração do Plano' }]}
 								defaultText="Selecione"
 								onChange={handleChange}
@@ -188,47 +188,49 @@ export function PolicyholderEditor({
 								onChange={handleChange}
 							/>
 							<Input
-								name="cardName"
-								id="cardName"
-								value={formData?.cardName || ''}
-								label={LabelUtils.translateField('cardName')}
+								name="card_name"
+								id="card_name"
+								value={formData?.card_name || ''}
+								label={LabelUtils.translateField('card_name')}
 								onChange={handleChange}
 							/>
 							<Input
 								type="date"
-								name="dateOfBirth"
-								id="dateOfBirth"
+								name="date_of_birth"
+								id="date_of_birth"
 								value={
-									formData?.dateOfBirth ? DateUtils.getDate(formData?.dateOfBirth) : ''
+									formData?.date_of_birth
+										? DateUtils.getDate(formData?.date_of_birth)
+										: ''
 								}
-								label={LabelUtils.translateField('dateOfBirth')}
+								label={LabelUtils.translateField('date_of_birth')}
 								onChange={handleChange}
 							/>
 							<Input
 								name="age"
 								id="age"
 								value={
-									formData?.dateOfBirth ? DateUtils.getAge(formData?.dateOfBirth) : ''
+									formData?.date_of_birth ? DateUtils.getAge(formData?.date_of_birth) : ''
 								}
 								label={'Idade'}
 								disabled
 								onChange={handleChange}
 							/>
 							<Select
-								name="documentType"
-								id="documentType"
-								value={formData?.documentType || ''}
-								label={LabelUtils.translateField('documentType')}
+								name="document_type"
+								id="document_type"
+								value={formData?.document_type || ''}
+								label={LabelUtils.translateField('document_type')}
 								data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
 								defaultText="Selecione"
 								onChange={handleChange}
 							/>
 							<Input
-								name="documentNumber"
-								id="documentNumber"
-								value={formData?.documentNumber || ''}
-								label={LabelUtils.translateField('documentNumber')}
-								disabled={!formData?.documentType}
+								name="document_number"
+								id="document_number"
+								value={formData?.document_number || ''}
+								label={LabelUtils.translateField('document_number')}
+								disabled={!formData?.document_type}
 								onChange={handleChange}
 							/>
 							<Input
@@ -241,7 +243,7 @@ export function PolicyholderEditor({
 										: ''
 								}
 								label={LabelUtils.translateField('documentIssueDate')}
-								disabled={!formData?.documentType}
+								disabled={!formData?.document_type}
 								onChange={handleChange}
 							/>
 							<Input
@@ -285,10 +287,10 @@ export function PolicyholderEditor({
 								onChange={handleChange}
 							/>
 							<Select
-								name="maritalStatus"
-								id="maritalStatus"
-								value={formData?.maritalStatus || ''}
-								label={LabelUtils.translateField('maritalStatus')}
+								name="marital_status"
+								id="marital_status"
+								value={formData?.marital_status || ''}
+								label={LabelUtils.translateField('marital_status')}
 								data={[
 									{ text: 'Solteiro(a)' },
 									{ text: 'Casado(a)' },
@@ -299,19 +301,19 @@ export function PolicyholderEditor({
 								onChange={handleChange}
 							/>
 							<Select
-								name="provinceId"
-								id="provinceId"
-								value={formData?.provinceId || ''}
-								label={LabelUtils.translateField('provinceId')}
+								name="province_id"
+								id="province_id"
+								value={formData?.province_id || ''}
+								label={LabelUtils.translateField('province_id')}
 								data={provinceList.map(({ id, name }) => ({ text: name, value: id }))}
 								defaultText="Selecione"
 								onChange={handleChange}
 							/>
 							<Select
-								name="municipalityId"
-								id="municipalityId"
-								value={formData?.municipalityId || ''}
-								label={LabelUtils.translateField('municipalityId')}
+								name="municipality_id"
+								id="municipality_id"
+								value={formData?.municipality_id || ''}
+								label={LabelUtils.translateField('municipality_id')}
 								data={municipalityList.map(({ id, name }) => ({ text: name, value: id }))}
 								defaultText="Selecione"
 								onChange={handleChange}
@@ -375,31 +377,31 @@ export function PolicyholderEditor({
 							/>
 							<Input
 								type="date"
-								name="enrollmentDate"
-								id="enrollmentDate"
+								name="enrollment_date"
+								id="enrollment_date"
 								value={
-									formData?.enrollmentDate
-										? DateUtils.getDate(formData.enrollmentDate)
+									formData?.enrollment_date
+										? DateUtils.getDate(formData.enrollment_date)
 										: ''
 								}
-								label={LabelUtils.translateField('enrollmentDate')}
+								label={LabelUtils.translateField('enrollment_date')}
 								onChange={handleChange}
 							/>
 							<Input
 								type="date"
-								name="renewalDate"
-								id="renewalDate"
+								name="renewal_date"
+								id="renewal_date"
 								value={
-									formData?.renewalDate ? DateUtils.getDate(formData.renewalDate) : ''
+									formData?.renewal_date ? DateUtils.getDate(formData.renewal_date) : ''
 								}
-								label={LabelUtils.translateField('renewalDate')}
+								label={LabelUtils.translateField('renewal_date')}
 								onChange={handleChange}
 							/>
 							<Input
-								name="cardNumber"
-								id="cardNumber"
-								value={formData?.cardNumber || ''}
-								label={LabelUtils.translateField('cardNumber')}
+								name="card_number"
+								id="card_number"
+								value={formData?.card_number || ''}
+								label={LabelUtils.translateField('card_number')}
 								onChange={handleChange}
 							/>
 							<Select

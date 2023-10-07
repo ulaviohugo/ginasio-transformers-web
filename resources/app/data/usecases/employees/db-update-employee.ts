@@ -25,8 +25,8 @@ export class DbUpdateEmployee implements UpdateEmployee {
 		if (exists && exists.id !== data.id) return 'emailInUse'
 
 		const foundByDoc = await this.employeeRepository.findByDocument(
-			data.documentType,
-			data.documentNumber
+			data.document_type,
+			data.document_number
 		)
 		if (foundByDoc && foundByDoc.id !== data.id) return 'documentInUse'
 
@@ -47,7 +47,7 @@ export class DbUpdateEmployee implements UpdateEmployee {
 			...data,
 			photo: image,
 			password: hashedPassword,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 
 		return updatedEmployee

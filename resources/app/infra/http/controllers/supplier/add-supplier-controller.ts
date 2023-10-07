@@ -20,9 +20,12 @@ export class AddSupplierController implements Controller {
 			if (error) {
 				return badRequest(error)
 			}
-			request.supplierProducts = ArrayUtils.convertToArray(request.supplierProducts)
+			request.supplier_products = ArrayUtils.convertToArray(request.supplier_products)
 
-			if (!request.supplierProducts || ObjectUtils.isEmpty(request.supplierProducts[0])) {
+			if (
+				!request.supplier_products ||
+				ObjectUtils.isEmpty(request.supplier_products[0])
+			) {
 				return badRequest(new UnexpectedError('Adicione pelo menos 1 produto'))
 			}
 
@@ -30,28 +33,28 @@ export class AddSupplierController implements Controller {
 			if (request.photo && typeof request.photo != 'string') {
 				uploader = new UploadService(request.photo, '/suppliers')
 			}
-			const createdById = NumberUtils.convertToNumber(request.accountId)
+			const user_id = NumberUtils.convertToNumber(request.accountId)
 
 			let supplierProducts: SupplierProductModel[] = ArrayUtils.convertToArray(
-				request.supplierProducts
+				request.supplier_products
 			)
 
 			supplierProducts = supplierProducts?.map((sp) => ({
-				categoryId: NumberUtils.convertToNumber(sp.categoryId),
-				productId: NumberUtils.convertToNumber(sp.productId),
-				unitPrice: NumberUtils.convertToNumber(sp.unitPrice),
-				createdById
+				category_id: NumberUtils.convertToNumber(sp.category_id),
+				product_id: NumberUtils.convertToNumber(sp.product_id),
+				unit_price: NumberUtils.convertToNumber(sp.unit_price),
+				user_id
 			})) as any
 
 			const createdSupplier = await this.addSupplier.add(
 				{
 					...request,
-					supplierProducts,
-					countryId: NumberUtils.convertToNumber(request.countryId),
-					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
+					supplier_products: supplierProducts,
+					country_id: NumberUtils.convertToNumber(request.country_id),
+					province_id: NumberUtils.convertToNumber(request.province_id, true),
+					municipality_id: NumberUtils.convertToNumber(request.municipality_id, true),
 					phone: NumberUtils.convertToNumber(request.phone).toString(),
-					createdById
+					user_id
 				},
 				uploader
 			)

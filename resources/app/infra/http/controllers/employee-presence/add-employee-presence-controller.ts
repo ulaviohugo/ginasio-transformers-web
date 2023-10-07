@@ -19,9 +19,9 @@ export class AddEmployeePresenceController implements Controller {
 			}
 			const createdEmployeePresence = await this.addEmployeePresence.add({
 				...request,
-				employeeId: NumberUtils.convertToNumber(request.employeeId),
+				employee_id: NumberUtils.convertToNumber(request.employee_id),
 				date: DateUtils.convertToDate(request.date),
-				createdById: NumberUtils.convertToNumber(request.accountId)
+				user_id: NumberUtils.convertToNumber(request.accountId)
 			})
 
 			if (!createdEmployeePresence) {

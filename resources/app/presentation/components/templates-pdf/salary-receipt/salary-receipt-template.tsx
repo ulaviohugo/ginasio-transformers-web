@@ -36,9 +36,9 @@ export const getSalaryItems = (
 	employee: EmployeeModel,
 	receiptDate: ReceiptDataProps
 ): ItemProps[] => {
-	const { baseSalary = 0 } = employee
+	const { base_salary = 0 } = employee
 	const workedDays = NumberUtils.convertToNumber(receiptDate.workedDays)
-	const currentBaseSalary = SalaryUtils.getSalaryPerDay(baseSalary) * workedDays
+	const currentBaseSalary = SalaryUtils.getSalaryPerDay(base_salary) * workedDays
 	console.log({ workedDays })
 
 	const percent = SalaryUtils.getIRtPercent(currentBaseSalary)
@@ -198,7 +198,7 @@ function Header({ title, employee, receiptData }: Omit<HeaderProps, 'currentUser
 				</View>
 				<View>
 					<Text>SEG. SOCIAL</Text>
-					<Text>{employee.socialSecurity}</Text>
+					<Text>{employee.social_security}</Text>
 				</View>
 			</View>
 		</View>
@@ -267,8 +267,8 @@ function ResumeContent({ employee, receiptData, currentUser }: SalaryReceiptProp
 
 	const netSalary = Number(totalSalary) - Number(totalDiscount)
 
-	const salaryPerDay = SalaryUtils.getSalaryPerDay(employee.baseSalary)
-	const salaryPerHour = SalaryUtils.getSalaryPerHour(employee.baseSalary)
+	const salaryPerDay = SalaryUtils.getSalaryPerDay(employee.base_salary)
+	const salaryPerHour = SalaryUtils.getSalaryPerHour(employee.base_salary)
 
 	return (
 		<View>
@@ -329,7 +329,7 @@ function ResumeContent({ employee, receiptData, currentUser }: SalaryReceiptProp
 			>
 				<View>
 					<Text>Salário base</Text>
-					<Text>{NumberUtils.formatCurrency(employee.baseSalary)}</Text>
+					<Text>{NumberUtils.formatCurrency(employee.base_salary)}</Text>
 				</View>
 				<View>
 					<Text>Salário por dia</Text>

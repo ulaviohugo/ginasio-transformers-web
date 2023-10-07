@@ -21,7 +21,7 @@ class Customer extends Model
 		'country_id',
 		'province_id',
 		'municipality_id',
-		'residential_address',
+		'address',
 		'user_id',
 		'user_id_update',
 	];

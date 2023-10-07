@@ -12,10 +12,10 @@ export class RemoteUpdateInsured implements UpdateInsured {
 
 	async update(param: InsuredModel): Promise<InsuredModel> {
 		const handledParam = ObjectUtils.removeProps<InsuredModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

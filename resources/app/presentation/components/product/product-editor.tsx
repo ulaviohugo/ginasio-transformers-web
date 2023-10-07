@@ -132,10 +132,10 @@ export function ProductEditor({
 								onChange={handleInputChange}
 							/>
 							<Select
-								id="categoryId"
-								name="categoryId"
-								value={formDate?.categoryId || ''}
-								label={LabelUtils.translateField('categoryId')}
+								id="category_id"
+								name="category_id"
+								value={formDate?.category_id || ''}
+								label={LabelUtils.translateField('category_id')}
 								data={categories.map((category) => ({
 									text: category.name,
 									value: category.id

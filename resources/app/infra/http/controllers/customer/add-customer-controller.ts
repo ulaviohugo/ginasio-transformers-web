@@ -28,11 +28,11 @@ export class AddCustomerController implements Controller {
 			const createdCustomer = await this.addCustomer.add(
 				{
 					...request,
-					dateOfBirth: DateUtils.convertToDate(request.dateOfBirth),
-					countryId: NumberUtils.convertToNumber(request.countryId),
-					provinceId: NumberUtils.convertToNumber(request.provinceId, true),
-					municipalityId: NumberUtils.convertToNumber(request.municipalityId, true),
-					createdById: NumberUtils.convertToNumber(request.accountId)
+					date_of_birth: DateUtils.convertToDate(request.date_of_birth),
+					country_id: NumberUtils.convertToNumber(request.country_id),
+					province_id: NumberUtils.convertToNumber(request.province_id, true),
+					municipality_id: NumberUtils.convertToNumber(request.municipality_id, true),
+					user_id: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

@@ -4,8 +4,8 @@ export interface InsuredRepository {
 	add(param: InsuredModel): Promise<InsuredModel>
 	findByEmail(email: string): Promise<InsuredModel | null>
 	findByDocument(
-		documentType: string,
-		documentNumber: string
+		document_type: string,
+		document_number: string
 	): Promise<InsuredModel | null>
 	findById(id: number): Promise<InsuredModel | null>
 	loadAll(): Promise<InsuredModel[]>

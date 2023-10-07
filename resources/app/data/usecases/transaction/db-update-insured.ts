@@ -14,7 +14,7 @@ export class DbUpdateTransaction implements UpdateTransaction {
 
 		const updatedTransaction = await this.TransactionRepository.update({
 			...data,
-			updatedAt: new Date()
+			updated_at: new Date()
 		})
 		return updatedTransaction
 	}

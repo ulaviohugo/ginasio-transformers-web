@@ -24,7 +24,7 @@ export class SalePrismaRepository implements SaleRepository {
 	}
 
 	async add(param: SaleModel): Promise<SaleModel> {
-		const { productSales, ...sale } = param
+		const { product_sales: productSales, ...sale } = param
 
 		const createdSale = (await this.prisma.sale.create({
 			data: PrismaSaleMapper.toPrisma(sale as SaleModel),
@@ -41,11 +41,11 @@ export class SalePrismaRepository implements SaleRepository {
 		const transactionRepository = new TransactionPrismaRepository()
 		await transactionRepository.add({
 			date: new Date(),
-			paymentMethod: param.paymentMethod,
+			payment_method: param.payment_method,
 			description: `Venda de ${productSales.length} produto(s)`,
-			amount: param.amountPaid,
-			operationType: 'Entrada',
-			createdById: param.createdById
+			amount: param.amount_paid,
+			operation_type: 'Entrada',
+			user_id: param.user_id
 		} as TransactionModel)
 
 		return createdSale

@@ -27,17 +27,17 @@ export class UpdatePurchaseController implements Controller {
 				{
 					...request,
 					id: NumberUtils.convertToNumber(request.id),
-					supplierId: NumberUtils.convertToNumber(request.supplierId),
-					categoryId: NumberUtils.convertToNumber(request.categoryId),
-					productId: NumberUtils.convertToNumber(request.productId),
-					unitPrice: NumberUtils.convertToPrice(request.unitPrice),
-					totalValue: NumberUtils.convertToPrice(request.totalValue),
+					supplier_id: NumberUtils.convertToNumber(request.supplier_id),
+					category_id: NumberUtils.convertToNumber(request.category_id),
+					product_id: NumberUtils.convertToNumber(request.product_id),
+					unit_price: NumberUtils.convertToPrice(request.unit_price),
+					total_value: NumberUtils.convertToPrice(request.total_value),
 					quantity: NumberUtils.convertToNumber(request.quantity),
-					sellingPriceUnit: NumberUtils.convertToPrice(request.sellingPriceUnit),
+					selling_price_unit: NumberUtils.convertToPrice(request.selling_price_unit),
 					paid: !!request.paid,
-					purchaseDate: DateUtils.convertToDate(request.purchaseDate),
-					dueDate: DateUtils.convertToDate(request.dueDate),
-					updatedById: NumberUtils.convertToNumber(request.accountId)
+					purchase_date: DateUtils.convertToDate(request.purchase_date),
+					due_date: DateUtils.convertToDate(request.due_date),
+					user_id_update: NumberUtils.convertToNumber(request.accountId)
 				},
 				uploader
 			)

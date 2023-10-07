@@ -25,11 +25,11 @@ export class PurchasePrismaRepository implements PurchaseRepository {
 		const transactionRepository = new TransactionPrismaRepository()
 		await transactionRepository.add({
 			date: new Date(),
-			paymentMethod: param.paymentMethod,
+			payment_method: param.payment_method,
 			description: `Compra de ${param.quantity} produto(s) para o estoque: ${purchase.category.name} » ${purchase.product.name}`,
-			amount: param.totalValue,
-			operationType: 'Saída',
-			createdById: param.createdById
+			amount: param.total_value,
+			operation_type: 'Saída',
+			user_id: param.user_id
 		} as TransactionModel)
 
 		return purchase

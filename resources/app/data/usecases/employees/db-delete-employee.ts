@@ -6,8 +6,8 @@ import { Uploader } from '@/data/protocols/services'
 export class DbDeleteEmployee implements DeleteEmployee {
 	constructor(private readonly employeeRepository: EmployeeRepository) {}
 
-	async delete(employeeId: number, uploader?: Uploader): Promise<boolean> {
-		const foundEmployee = await this.employeeRepository.findById(employeeId)
+	async delete(employee_id: number, uploader?: Uploader): Promise<boolean> {
+		const foundEmployee = await this.employeeRepository.findById(employee_id)
 
 		if (!foundEmployee) return null as any
 
@@ -15,6 +15,6 @@ export class DbDeleteEmployee implements DeleteEmployee {
 			const path = FileUtils.getUploadAbsolutePath(foundEmployee.photo)
 			await uploader.delete(path)
 		}
-		return this.employeeRepository.delete(employeeId)
+		return this.employeeRepository.delete(employee_id)
 	}
 }

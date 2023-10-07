@@ -8,10 +8,10 @@ export class PrismaCategoryMapper {
 		return {
 			id: category.id,
 			name: category.name,
-			createdById: category.createdById,
-			createdAt: category.createdAt,
-			updatedById: category.updatedById,
-			updatedAt: category.updatedAt
+			user_id: category.user_id,
+			created_at: category.created_at,
+			user_id_update: category.user_id_update,
+			updated_at: category.updated_at
 		} as any
 	}
 }

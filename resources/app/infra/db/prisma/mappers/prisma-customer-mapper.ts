@@ -9,17 +9,17 @@ export class PrismaCustomerMapper {
 			name: employee.name,
 			photo: employee.photo,
 			gender: employee.gender,
-			dateOfBirth: employee.dateOfBirth,
+			date_of_birth: employee.date_of_birth,
 			phone: employee.phone,
 			email: employee.email,
-			countryId: employee.countryId,
-			provinceId: employee.provinceId,
-			municipalityId: employee.municipalityId,
-			residentialAddress: employee.residentialAddress,
-			createdById: employee.createdById,
-			createdAt: employee.createdAt,
-			updatedById: employee.updatedById,
-			updatedAt: employee.updatedAt
+			country_id: employee.country_id,
+			province_id: employee.province_id,
+			municipality_id: employee.municipality_id,
+			address: employee.address,
+			user_id: employee.user_id,
+			created_at: employee.created_at,
+			user_id_update: employee.user_id_update,
+			updated_at: employee.updated_at
 		} as any
 	}
 
@@ -29,17 +29,17 @@ export class PrismaCustomerMapper {
 			name: employeeRaw.name,
 			photo: employeeRaw.photo,
 			gender: employeeRaw.gender,
-			dateOfBirth: employeeRaw.dateOfBirth,
+			date_of_birth: employeeRaw.date_of_birth,
 			phone: employeeRaw.phone,
 			email: employeeRaw.email,
-			countryId: employeeRaw.countryId,
-			provinceId: employeeRaw.provinceId,
-			municipalityId: employeeRaw.municipalityId,
-			residentialAddress: employeeRaw.residentialAddress,
-			createdById: employeeRaw.createdById,
-			createdAt: employeeRaw.createdAt,
-			updatedById: employeeRaw.updatedById,
-			updatedAt: employeeRaw.updatedAt
+			country_id: employeeRaw.country_id,
+			province_id: employeeRaw.province_id,
+			municipality_id: employeeRaw.municipality_id,
+			address: employeeRaw.address,
+			user_id: employeeRaw.user_id,
+			created_at: employeeRaw.created_at,
+			user_id_update: employeeRaw.user_id_update,
+			updated_at: employeeRaw.updated_at
 		} as any
 	}
 }

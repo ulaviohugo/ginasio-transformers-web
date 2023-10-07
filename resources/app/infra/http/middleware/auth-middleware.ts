@@ -8,9 +8,9 @@ export class AuthMiddleware implements Middleware {
 
 	async handle(request: AuthMiddlewareRequest): Promise<HttpResponse> {
 		try {
-			const { accessToken } = request
-			if (accessToken) {
-				const token = await this.decrypter.decrypt(accessToken)
+			const { access_token } = request
+			if (access_token) {
+				const token = await this.decrypter.decrypt(access_token)
 				return ok({ accountId: token.id })
 			}
 			return unauthorized('Informe o token')
@@ -31,5 +31,5 @@ export class AuthMiddleware implements Middleware {
 }
 
 export type AuthMiddlewareRequest = {
-	accessToken?: string
+	access_token?: string
 }

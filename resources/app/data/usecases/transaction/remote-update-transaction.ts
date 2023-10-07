@@ -12,10 +12,10 @@ export class RemoteUpdateTransaction implements UpdateTransaction {
 
 	async update(param: TransactionModel): Promise<TransactionModel> {
 		const handledParam = ObjectUtils.removeProps<TransactionModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 

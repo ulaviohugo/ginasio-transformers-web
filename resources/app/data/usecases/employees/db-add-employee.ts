@@ -18,8 +18,8 @@ export class DbAddEmployee implements AddEmployee {
 		if (exists) return 'emailInUse'
 
 		const foundByDoc = await this.employeeRepository.findByDocument(
-			data.documentType,
-			data.documentNumber
+			data.document_type,
+			data.document_number
 		)
 		if (foundByDoc) return 'documentInUse'
 

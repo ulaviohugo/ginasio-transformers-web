@@ -12,10 +12,10 @@ export class RemoteUpdateCashRegister implements UpdateCashRegister {
 
 	async update(param: CashRegisterModel): Promise<CashRegisterModel> {
 		const handledParam = ObjectUtils.removeProps<CashRegisterModel>(param, [
-			'createdAt',
-			'createdById',
-			'updatedAt',
-			'updatedById'
+			'created_at',
+			'user_id',
+			'updated_at',
+			'user_id_update'
 		])
 		const body = FormDataUtils.createFormData(handledParam)
 
