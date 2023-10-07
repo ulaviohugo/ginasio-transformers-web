@@ -17,6 +17,9 @@ class User extends Authenticatable implements JWTSubject
 
 	protected $table = DBHelper::TB_USERS;
 
+	public const ROLE_ADMIN = 'Admin',
+		ROLE_USER = 'Normal';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
