@@ -6,7 +6,6 @@ use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Requests\AuthRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
