@@ -20,7 +20,7 @@ type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof CashRegisterModel, string>> &
 	Partial<Record<keyof InsuredModel, string>> & {
 		insured?: string
-		productSales?: any
+		product_sales?: any
 	}
 
 export class LabelUtils {
@@ -32,7 +32,6 @@ export class LabelUtils {
 		bank_name: 'Nome do banco',
 		base_salary: 'Salário base',
 		bar_code: 'Código de barra',
-		address: 'Endereço comercial',
 		category_id: 'Categoria',
 		card_name: 'Nome do cartão',
 		card_number: 'Cartão co-seguro',
@@ -80,7 +79,7 @@ export class LabelUtils {
 		policy_number: 'Apólice',
 		price: 'Preço',
 		product_id: 'Produto',
-		productSales: 'Produtos',
+		product_sales: 'Produtos',
 		proposal_number: 'Nº proposta',
 		proposal_type: 'Proposta',
 		purchase_date: 'Data de entrada',
