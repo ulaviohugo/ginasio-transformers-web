@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Requests\AuthRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
@@ -17,7 +18,7 @@ class AuthController extends Controller
 			if (!$token = auth('api')->attempt($credentials)) {
 				return HttpResponse::error(message: 'As credencias não conferem', status: HttpStatusCode::UNAUTHORIZED);
 			} else {
-				$user = auth('api')->user();
+				$user = User::currentUser();
 				if (!$user->can_login) {
 					return HttpResponse::error(message: 'Não pode iniciar sessão de momento. Contacte um administrador.', status: HttpStatusCode::UNAUTHORIZED);
 				}
@@ -29,13 +30,13 @@ class AuthController extends Controller
 				);
 			}
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao iniciar sessão. Tente novamente.' . $th->getMessage());
+			return HttpResponse::error(message: 'Erro ao iniciar sessão. Tente novamente. ' . $th->getMessage());
 		}
 	}
 
 	public function me(): JsonResponse
 	{
-		return response()->json(auth('api')->user());
+		return response()->json(User::currentUser());
 	}
 
 	protected function respondWithToken($token)
