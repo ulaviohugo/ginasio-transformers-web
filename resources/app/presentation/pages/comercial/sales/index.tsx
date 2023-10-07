@@ -21,8 +21,8 @@ import {
 	makeRemoteAddSale,
 	makeRemoteDeleteSale,
 	makeRemoteLoadSales
-} from '@/main/factories/usecases/remote'
-import { DateUtils, NumberUtils, StringUtils, SubmenuUtils } from '@/utils'
+} from '@/main/factories/usecases'
+import { DateUtils, NumberUtils, StringUtils, MenuUtils } from '@/utils'
 
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -93,7 +93,7 @@ export function Sales() {
 				/>
 			)}
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<div className="flex flex-col gap-2 mt-2">
 					<fieldset>
 						<legend>Cadastro de venda</legend>

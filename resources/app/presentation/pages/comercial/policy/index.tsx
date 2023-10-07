@@ -8,7 +8,7 @@ import {
 	ApolicePage2Utils,
 	ApolicePage3Utils,
 	ApolicePage4Utils,
-	SubmenuUtils
+	MenuUtils
 } from '@/utils'
 import { mockInsured } from '@/test/model/mocks'
 import { useSelector } from 'react-redux'
@@ -57,7 +57,7 @@ export function Police() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				{/* <PolicyholderEditor onChange={handleInputChange} /> */}
 				{pdfData && (
 					<>

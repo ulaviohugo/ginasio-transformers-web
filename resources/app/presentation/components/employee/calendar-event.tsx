@@ -12,7 +12,7 @@ import {
 } from '..'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { EmployeeModel } from '@/domain/models'
-import { makeRemoteAddEmployeePresence } from '@/main/factories/usecases/remote'
+import { makeRemoteAddEmployeePresence } from '@/main/factories/usecases'
 import toast from 'react-hot-toast'
 
 type CalendarEventProps = {

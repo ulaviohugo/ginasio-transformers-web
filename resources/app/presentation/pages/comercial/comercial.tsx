@@ -7,7 +7,7 @@ import {
 	SubMenu
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
-import { SubmenuUtils } from '@/utils'
+import { MenuUtils } from '@/utils'
 import { useSelector } from 'react-redux'
 
 export function Comercial() {
@@ -16,7 +16,7 @@ export function Comercial() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<IndexPage>
 					<IconProduct /> Área comercial
 				</IndexPage>

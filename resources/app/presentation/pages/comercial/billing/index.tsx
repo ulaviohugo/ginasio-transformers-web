@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Layout, LayoutBody, SubMenu } from '@/presentation/components'
-import { BillingUtils, SubmenuUtils } from '@/utils'
+import { BillingUtils, MenuUtils } from '@/utils'
 import { mockBilling } from '@/test/model/mocks'
 import { useAuth } from '@/presentation/hooks'
 import { useSelector } from 'react-redux'
@@ -26,7 +26,7 @@ export function Billing() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				{pdfData && (
 					<>
 						<iframe

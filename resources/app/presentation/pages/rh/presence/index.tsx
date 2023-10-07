@@ -9,9 +9,9 @@ import {
 	SubMenu,
 	Title
 } from '@/presentation/components'
-import { SubmenuUtils } from '@/utils'
+import { MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
-import { makeRemoteLoadEmployeePresences } from '@/main/factories/usecases/remote'
+import { makeRemoteLoadEmployeePresences } from '@/main/factories/usecases'
 import { loadEmployeeStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuth, useEmployees } from '@/presentation/hooks'
@@ -55,7 +55,7 @@ export function Presence() {
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr()} />
+					<SubMenu submenus={MenuUtils.hrMenuItens()} />
 					<Title title={`Presença`} />
 					<div className="flex flex-col gap-2">
 						<div className="inline-flex">

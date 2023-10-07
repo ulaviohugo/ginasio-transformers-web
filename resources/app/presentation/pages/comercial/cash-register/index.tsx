@@ -18,8 +18,8 @@ import {
 	makeRemoteAddCashRegister,
 	makeRemoteAddTransaction,
 	makeRemoteLoadCashRegister
-} from '@/main/factories/usecases/remote'
-import { DateUtils, LabelUtils, NumberUtils, PaymentUtils, SubmenuUtils } from '@/utils'
+} from '@/main/factories/usecases'
+import { DateUtils, LabelUtils, NumberUtils, PaymentUtils, MenuUtils } from '@/utils'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
@@ -100,7 +100,7 @@ export function CashRegister() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<Title title="Caixa" icon={IconCashRegister} />
 				<div className="flex">
 					{isLoading ? (

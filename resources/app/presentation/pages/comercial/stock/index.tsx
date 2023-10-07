@@ -13,8 +13,8 @@ import {
 	makeRemoteDeletePurchase,
 	makeRemoteLoadPurchases,
 	makeRemoteUpdatePurchase
-} from '@/main/factories/usecases/remote'
-import { SubmenuUtils } from '@/utils'
+} from '@/main/factories/usecases'
+import { MenuUtils } from '@/utils'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -35,7 +35,7 @@ export function Stock() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<div className="my-2">
 					<fieldset>
 						<legend>Cadastro de estoque</legend>

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, FormHTMLAttributes, useState } from 'react'
 
 import { IconEmail, IconKey, Input, Spinner } from '..'
-import { makeRemoteAuthentication } from '@/main/factories/usecases/remote/auth'
+import { makeRemoteAuthentication } from '@/main/factories/usecases'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addAuthStore } from '@/presentation/redux'

@@ -47,7 +47,7 @@ import { useCategories, useLocations, useProducts } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCategories,
 	makeRemoteLoadProduct
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 
 type SupplierEditorProps = {
 	supplier?: SupplierModel

@@ -19,7 +19,7 @@ import {
 	makeRemoteLoadCategories,
 	makeRemoteLoadProduct,
 	makeRemoteLoadSuppliers
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 
 type PurchaseEditorProps = {
 	data?: PurchaseModel

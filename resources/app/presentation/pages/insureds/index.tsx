@@ -16,10 +16,7 @@ import {
 import { useInsureds, useLocations } from '@/presentation/hooks'
 import { loadInsuredStore } from '@/presentation/redux'
 import { InsuredModel } from '@/domain/models'
-import {
-	makeRemoteAddInsured,
-	makeRemoteLoadInsureds
-} from '@/main/factories/usecases/remote'
+import { makeRemoteAddInsured, makeRemoteLoadInsureds } from '@/main/factories/usecases'
 import { mockInsured } from '@/test/model/mocks'
 import { PrintUtils } from '@/utils'
 import { useEffect, useState } from 'react'

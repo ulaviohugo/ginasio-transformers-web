@@ -16,14 +16,14 @@ import {
 	SubMenu,
 	Title
 } from '@/presentation/components'
-import { DateUtils, NumberUtils, SubmenuUtils } from '@/utils'
+import { DateUtils, NumberUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteEmployee,
 	makeRemoteUpdateEmployee,
 	makeRemoteAddEmployee,
 	makeRemoteLoadEmployees
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 import { loadEmployeeStore, removeEmployeeStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -117,7 +117,7 @@ export function Employees() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr()} />
+					<SubMenu submenus={MenuUtils.hrMenuItens()} />
 					<Title
 						title={`Funcionários ${isLoading ? '' : `(${employees?.length})`}`}
 						icon={IconUser}

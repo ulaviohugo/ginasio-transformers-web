@@ -15,7 +15,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { LabelUtils } from '@/utils'
 import { useCategories } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
-import { makeRemoteLoadCategories } from '@/main/factories/usecases/remote'
+import { makeRemoteLoadCategories } from '@/main/factories/usecases'
 import {
 	addCategoryStore,
 	loadCategoryStore,

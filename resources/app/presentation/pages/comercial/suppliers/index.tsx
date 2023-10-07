@@ -18,14 +18,14 @@ import {
 	IconProduct,
 	IconSupplier
 } from '@/presentation/components'
-import { ArrayUtils, NumberUtils, SubmenuUtils } from '@/utils'
+import { ArrayUtils, NumberUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteSupplier,
 	makeRemoteUpdateSupplier,
 	makeRemoteAddSupplier,
 	makeRemoteLoadSuppliers
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 import { loadSupplierStore, removeSupplierStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -115,7 +115,7 @@ export function Suppliers() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<Title
 						title={`Fornecedores ${isLoading ? '' : `(${suppliers?.length})`}`}
 						icon={IconSupplier}

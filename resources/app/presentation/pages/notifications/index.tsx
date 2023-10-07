@@ -13,7 +13,7 @@ import { toast } from 'react-hot-toast'
 import { useNotifications } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadNotificationStore } from '@/presentation/redux'
-import { makeRemoteLoadNotifications } from '@/main/factories/usecases/remote'
+import { makeRemoteLoadNotifications } from '@/main/factories/usecases'
 
 export function Notifications() {
 	const dispatch = useDispatch()

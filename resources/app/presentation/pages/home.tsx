@@ -19,7 +19,7 @@ import {
 	makeRemoteCountPurchases,
 	makeRemoteCountSales,
 	makeRemoteCountSuppliers
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'

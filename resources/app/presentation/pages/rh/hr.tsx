@@ -8,7 +8,7 @@ import {
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { NotFound } from '@/presentation/pages'
-import { SubmenuUtils } from '@/utils'
+import { MenuUtils } from '@/utils'
 import { useSelector } from 'react-redux'
 
 export default function Comercial() {
@@ -19,7 +19,7 @@ export default function Comercial() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={SubmenuUtils.hr()} />
+				<SubMenu submenus={MenuUtils.hrMenuItens()} />
 				<IndexPage>
 					<IconUser /> Área de recursos humanos
 				</IndexPage>

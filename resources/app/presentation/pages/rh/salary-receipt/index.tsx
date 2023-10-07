@@ -14,9 +14,9 @@ import {
 import { useAuth, useEmployees } from '@/presentation/hooks'
 import { loadEmployeeStore } from '@/presentation/redux'
 import { EmployeeModel } from '@/domain/models'
-import { makeRemoteLoadEmployees } from '@/main/factories/usecases/remote'
+import { makeRemoteLoadEmployees } from '@/main/factories/usecases'
 import { NotFound } from '@/presentation/pages'
-import { DateUtils, SubmenuUtils } from '@/utils'
+import { DateUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -58,7 +58,7 @@ export default function SalaryReceipt() {
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.hr()} />
+					<SubMenu submenus={MenuUtils.hrMenuItens()} />
 					<Title title="Folha salarial" />
 					<div className="flex">
 						<div className="">

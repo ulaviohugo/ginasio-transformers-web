@@ -23,8 +23,8 @@ import {
 	makeRemoteDeleteProduct,
 	makeRemoteLoadProduct,
 	makeRemoteUpdateProduct
-} from '@/main/factories/usecases/remote'
-import { NumberUtils, SubmenuUtils } from '@/utils'
+} from '@/main/factories/usecases'
+import { NumberUtils, MenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -111,7 +111,7 @@ export function Products() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2 mb-2">
-					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<Title
 						title={`Produtos ${isLoading ? '' : `(${products?.length})`}`}
 						icon={IconProduct}

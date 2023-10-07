@@ -31,7 +31,7 @@ import { useAuth, useCustomers, usePurchases } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadPurchases
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 
 type ProductSaleProps = {
 	category_id: number

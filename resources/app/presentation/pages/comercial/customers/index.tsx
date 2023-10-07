@@ -16,14 +16,14 @@ import {
 	SubMenu,
 	Title
 } from '@/presentation/components'
-import { NumberUtils, SubmenuUtils } from '@/utils'
+import { NumberUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteCustomer,
 	makeRemoteUpdateCustomer,
 	makeRemoteAddCustomer,
 	makeRemoteLoadCustomers
-} from '@/main/factories/usecases/remote'
+} from '@/main/factories/usecases'
 import { loadCustomerStore, removeCustomerStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -113,7 +113,7 @@ export function Customers() {
 			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={SubmenuUtils.commercial({ role: user.role })} />
+					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<Title
 						title={`Clientes ${isLoading ? '' : `(${customers?.length})`}`}
 						icon={IconUser}
