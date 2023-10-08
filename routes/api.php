@@ -10,6 +10,8 @@ use App\Http\Controllers\EmployeePresenceController;
 use App\Http\Controllers\InsuredController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSaleController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,20 +33,24 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('categories/count', [CategoryController::class, 'count']);
 	Route::apiResource('categories', CategoryController::class);
-	
+
 	Route::prefix('cash-register')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);
 	});
 
 	Route::apiResource('customers', CustomerController::class);
-	
+
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
 
 	Route::apiResource('insureds', InsuredController::class);
-
+	
 	Route::get('products/count', [ProductController::class, 'count']);
 	Route::apiResource('products', ProductController::class);
+
+	Route::get('product-sales', [ProductSaleController::class, 'index']);
+
+	Route::apiResource('sales', SaleController::class);
 
 	Route::get('locations', [LocationController::class, 'index']);
 });
