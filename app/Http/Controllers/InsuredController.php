@@ -7,8 +7,8 @@ use App\Helpers\HttpResponse;
 use App\Http\Requests\InsuredCreateRequest;
 use App\Http\Requests\InsuredUpdateRequest;
 use App\Models\Insured;
-use InsuredCreateService;
-use InsuredUpdateService;
+use App\Services\InsuredCreateService;
+use App\Services\InsuredUpdateService;
 
 class InsuredController extends Controller
 {
