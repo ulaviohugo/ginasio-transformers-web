@@ -191,6 +191,8 @@ return [
 		'address' => 'endereço',
 		'amount_paid' => 'valor pago',
 		'amount_to_pay' => 'valor a pagar',
+		'balance' => 'saldo',
+		'initial_balance' => 'saldo inicial',
 		'birthday' => 'data de nascimento',
 		'county_id' => 'município',
 		'date_of_birth' => 'data de nascimento',
