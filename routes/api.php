@@ -7,7 +7,9 @@ use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeePresenceController;
+use App\Http\Controllers\InsuredController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,15 +31,20 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('categories/count', [CategoryController::class, 'count']);
 	Route::apiResource('categories', CategoryController::class);
-
+	
 	Route::prefix('cash-register')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);
 	});
 
 	Route::apiResource('customers', CustomerController::class);
-
+	
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
+
+	Route::apiResource('insureds', InsuredController::class);
+
+	Route::get('products/count', [ProductController::class, 'count']);
+	Route::apiResource('products', ProductController::class);
 
 	Route::get('locations', [LocationController::class, 'index']);
 });
