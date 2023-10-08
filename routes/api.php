@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeePresenceController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::middleware('auth-jwt')->group(function () {
 	});
 
 	Route::apiResource('customers', CustomerController::class);
+
+	Route::apiResource('employee-presences', EmployeePresenceController::class);
 
 	Route::get('locations', [LocationController::class, 'index']);
 });

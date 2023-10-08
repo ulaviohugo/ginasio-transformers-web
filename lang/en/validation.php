@@ -172,6 +172,12 @@ return [
 				'numeric' => 'O campo :attribute deve ter um valor de pelo menos :min.',
 				'string' => 'O campo :attribute deve ter um valor de pelo menos :min caracteres.',
 			],
+			'gt' => [
+				'array' => 'O valor do campo :attribute deve ter mais de :value itens.',
+				'file' => 'O valor do campo :attribute deve ser maior que :value kilobytes.',
+				'numeric' => 'O valor do campo :attribute deve ser maior que :value.',
+				'string' => 'O valor do campo :attribute deve ser maior que :value caracteres.',
+			],
 		],
 	],
 
@@ -200,6 +206,7 @@ return [
 		'document_number' => 'nº de documento',
 		'document_type' => 'tipo de documento',
 		'email' => 'e-mail',
+		'employee_id' => 'funcionário',
 		'enrollment_price' => 'preço da matrícula',
 		'fine_paid' => 'multa paga',
 		'fine_price' => 'preço da multa',
