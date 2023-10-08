@@ -3,8 +3,8 @@
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +26,11 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('categories/count', [CategoryController::class, 'count']);
 	Route::apiResource('categories', CategoryController::class);
+
+	Route::prefix('cash-register')->group(function () {
+		Route::get('', [CashRegisterController::class, 'show']);
+		Route::post('', [CashRegisterController::class, 'store']);
+	});
 });
 
 
