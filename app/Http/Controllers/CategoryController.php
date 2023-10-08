@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class CategoryController extends Controller
 {
@@ -17,10 +17,7 @@ class CategoryController extends Controller
 			$this->authorize('viewAny', Category::class);
 			return Category::all();
 		} catch (\Throwable $th) {
-			if ($th instanceof AuthorizationException) {
-				return HttpResponse::error(message: 'Não tem permissão para ceder este recurso');
-			}
-			return HttpResponse::error(message: 'Erro ao consultar categoria' . $th->getMessage());
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar categoria');
 		}
 	}
 
@@ -55,10 +52,7 @@ class CategoryController extends Controller
 			$this->authorize('viewAny', Category::class);
 			return HttpResponse::success(data: Category::count());
 		} catch (\Throwable $th) {
-			if ($th instanceof AuthorizationException) {
-				return HttpResponse::error(message: 'Não tem permissão para ceder este recurso');
-			}
-			return HttpResponse::error(message: 'Erro ao consultar categoria');
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar categoria');
 		}
 	}
 
@@ -69,10 +63,11 @@ class CategoryController extends Controller
 			$category->delete();
 			return HttpResponse::success(message: 'Categoria excluída com sucesso');
 		} catch (\Throwable $th) {
-			if ($th instanceof AuthorizationException) {
-				return HttpResponse::error(message: 'Não tem permissão para excluir categoria');
-			}
-			return HttpResponse::error(message: 'Erro ao excluir categoria' . $th->getMessage());
+			return ErrorHandler::handle(
+				exception: $th,
+				message: 'Erro ao excluir categoria',
+				messagePermission: 'Não tem permissão para excluir categoria'
+			);
 		}
 	}
 }
