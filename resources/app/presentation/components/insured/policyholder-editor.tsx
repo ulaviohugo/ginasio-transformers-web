@@ -235,14 +235,14 @@ export function PolicyholderEditor({
 							/>
 							<Input
 								type="date"
-								name="documentIssueDate"
-								id="documentIssueDate"
+								name="document_issue_date"
+								id="document_issue_date"
 								value={
-									formData?.documentIssueDate
-										? DateUtils.getDate(formData?.documentIssueDate)
+									formData?.document_issue_date
+										? DateUtils.getDate(formData?.document_issue_date)
 										: ''
 								}
-								label={LabelUtils.translateField('documentIssueDate')}
+								label={LabelUtils.translateField('document_issue_date')}
 								disabled={!formData?.document_type}
 								onChange={handleChange}
 							/>

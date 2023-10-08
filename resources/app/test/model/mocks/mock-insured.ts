@@ -14,7 +14,7 @@ export const mockInsured = (): InsuredModel => {
 		date_of_birth: new Date('1992-05-08'),
 		document_type: 'Bilhete de identidade',
 		document_number: '001355049LA037',
-		documentIssueDate: new Date('2020-01-01'),
+		document_issue_date: new Date('2020-01-01'),
 		nif: '001355049LA037',
 		gender: 'Masculino',
 		student: 'NÃO',

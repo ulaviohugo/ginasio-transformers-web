@@ -45,7 +45,7 @@ export class LabelUtils {
 		date_of_birth: 'Data de nascimento',
 		dependents: 'Número de dependentes',
 		description: 'Descrição',
-		documentIssueDate: 'Data de emissão',
+		document_issue_date: 'Data de emissão',
 		document_number: 'Número do documento',
 		document_type: 'Tipo de documento',
 		due_date: 'Data de vencimento',

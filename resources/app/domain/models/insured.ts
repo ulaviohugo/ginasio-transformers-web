@@ -12,7 +12,7 @@ export type InsuredModel = {
 	date_of_birth: Date
 	document_type: string
 	document_number: string
-	documentIssueDate?: Date
+	document_issue_date?: Date
 	nif?: string
 	dependents?: number
 	occupation?: string
