@@ -4,10 +4,11 @@ namespace App\Services;
 
 use App\Models\Insured;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class InsuredUpdateService
 {
-	public function execute($request, Insured $employeePresence)
+	public function execute(Request $request, Insured $employeePresence)
 	{
 		$employeePresence->name = $request->name;
 		$employeePresence->policyholder_id = $request->policyholder_id;

@@ -4,10 +4,11 @@ namespace App\Services;
 
 use App\Models\Insured;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class InsuredCreateService
 {
-	public function execute($request)
+	public function execute(Request $request)
 	{
 		return Insured::create([
 			'name' => $request->name,
