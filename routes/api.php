@@ -5,6 +5,7 @@ use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);
 	});
+
+	Route::apiResource('customers', CustomerController::class);
 
 	Route::get('locations', [LocationController::class, 'index']);
 });

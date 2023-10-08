@@ -15,7 +15,7 @@ class Customer extends Model
 		'name',
 		'photo',
 		'gender',
-		'te_of_birth',
+		'date_of_birth',
 		'phone',
 		'email',
 		'country_id',
