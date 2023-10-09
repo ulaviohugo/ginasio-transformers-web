@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\ProductSale;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class ProductSaleCreateService
 		$transactionService = new TransactionCreateService();
 		$transactionService->execute((new Request())->merge([
 			'description' => "Venda de {$request->quantity} produto(s): {$product->name}",
-			'operation_type' => 'Entrada',
+			'operation_type' => Transaction::OPERATION_TYPE_IN,
 			'amount' => $request->amount_paid,
 			'payment_method' => $request->payment_method
 		]));

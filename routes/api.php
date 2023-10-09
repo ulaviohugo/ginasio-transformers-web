@@ -12,6 +12,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,15 +46,19 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
 
 	Route::apiResource('insureds', InsuredController::class);
-	
+
 	Route::get('products/count', [ProductController::class, 'count']);
 	Route::apiResource('products', ProductController::class);
+
+	Route::get('locations', [LocationController::class, 'index']);
 
 	Route::get('product-sales', [ProductSaleController::class, 'index']);
 
 	Route::apiResource('sales', SaleController::class);
 
-	Route::get('locations', [LocationController::class, 'index']);
+	Route::apiResource('stocks', StockController::class);
+
+	Route::apiResource('suppliers', SupplierController::class);
 });
 
 

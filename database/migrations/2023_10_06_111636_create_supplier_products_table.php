@@ -15,7 +15,6 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_SUPPLIER_PRODUCTS, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('supplier_id')->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->cascadeOnDelete();
-			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignId('product_id')->references('id')->on(DBHelper::TB_PRODUCTS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->double('unit_price', 16, 3);
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
