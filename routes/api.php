@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,9 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('customers/count', [CustomerController::class, 'count']);
 	Route::apiResource('customers', CustomerController::class);
+
+	Route::get('employees/count', [UserController::class, 'count']);
+	Route::apiResource('employees', UserController::class);
 
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
 

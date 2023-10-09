@@ -28,4 +28,13 @@ class SupplierController extends Controller
 			return HttpResponse::error(message: 'Erro ao cadastrar fornecedor');
 		}
 	}
+
+	public function count()
+	{
+		try {
+			return HttpResponse::success(data: Supplier::count());
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar fornecedor');
+		}
+	}
 }

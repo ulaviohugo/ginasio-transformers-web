@@ -28,4 +28,13 @@ class StockController extends Controller
 			return HttpResponse::error(message: 'Erro ao cadastrar venda' . $th->getMessage());
 		}
 	}
+
+	public function count()
+	{
+		try {
+			return HttpResponse::success(data: Stock::count());
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar stock');
+		}
+	}
 }

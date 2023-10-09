@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\DBHelper;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -40,7 +41,7 @@ return new class extends Migration
 			$table->string('iban', 30)->nullable()->unique();
 			$table->string('account_number', 30)->nullable();
 			$table->boolean('can_login')->default(false);
-			$table->enum('role', ['Admin', 'Normal'])->default('Normal');
+			$table->enum('role', [User::ROLE_ADMIN, User::ROLE_USER])->nullable()->default(User::ROLE_USER);
 			$table->string('user_name', 64)->nullable();
 			$table->string('password', 64)->nullable();
 			$table->timestamp('email_verified_at')->nullable();

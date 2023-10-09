@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
 			'user_name' => 'samuelfreitas',
 			'password' => '123456',
 			'can_login' => true,
-			'role' => 'Admin',
+			'role' => User::ROLE_ADMIN,
 			'country_id' => 1,
 			'province_id' => 11,
 			'municipality_id' => 97,

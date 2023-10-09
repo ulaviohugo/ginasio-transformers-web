@@ -68,9 +68,9 @@ class ProductController extends Controller
 	public function destroy(Product $product)
 	{
 		try {
-			$this->authorize('delete', Product::class);
+			$this->authorize('delete', $product);
 			$product->delete();
-			return HttpResponse::success(message: 'Categoria excluída com sucesso');
+			return HttpResponse::success(message: 'Produto excluída com sucesso');
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(
 				exception: $th,

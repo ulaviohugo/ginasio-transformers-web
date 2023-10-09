@@ -80,6 +80,15 @@ class CustomerController extends Controller
 		}
 	}
 
+	public function count()
+	{
+		try {
+			return HttpResponse::success(data: Customer::count());
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar cliente');
+		}
+	}
+
 	/**
 	 * Remove the specified resource from storage.
 	 */

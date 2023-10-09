@@ -37,7 +37,7 @@ class InsuredUpdateRequest extends GlobalFormRequest
 			'document_type' => 'required|string',
 			'document_number' => [
 				'required',
-				Rule::unique(Student::class, 'document_number')->ignore($id)->where(function ($query) use ($document_type, $document_number) {
+				Rule::unique(Insured::class, 'document_number')->ignore($id)->where(function ($query) use ($document_type, $document_number) {
 					$query->where('document_type', $document_type)
 						->where('document_number', $document_number);
 				})
