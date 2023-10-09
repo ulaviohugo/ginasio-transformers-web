@@ -167,9 +167,9 @@ return [
 			'unique' => 'O valor do campo :attribute já está em uso.',
 			'exists' => 'O recurso com valor informado no campo :attribute não foi encontrado.',
 			'array' => 'O atributo :attribute deve ser um array.',
-			'required' => [
-				'array' => 'O campo :attribute é obrigatório.'
-			],
+			// 'required' => [
+			// 	'array' => 'O campo :attribute é obrigatório.'
+			// ],
 			'min' => [
 				'array' => 'O valor do campo :attribute deve ter pelo menos :min items.',
 				'file' => 'O campo :attribute deve ter pelo menos :min kilobytes.',

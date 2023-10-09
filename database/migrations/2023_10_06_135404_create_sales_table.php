@@ -17,9 +17,10 @@ return new class extends Migration
 			$table->foreignId('customer_id')->nullable()->references('id')->on(DBHelper::TB_CUSTOMERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->double('total_value', 16, 3);
 			$table->double('amount_paid', 16, 3);
+			$table->integer('quantity');
 			$table->double('discount', 16, 3)->nullable()->default(0);
-			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->string('payment_method', 50);
+			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

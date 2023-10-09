@@ -65,7 +65,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 
 	const [cart, setCart] = useState<ProductSaleProps[]>([])
 
-	const total_value = useMemo(() => {
+	const totalValue = useMemo(() => {
 		return cart.reduce(
 			(prev, current) =>
 				prev +
@@ -240,9 +240,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				productSales: cart,
 				customer_id,
 				payment_method,
-				total_value,
+				total_value: totalValue,
 				discount: totalDiscount,
-				amount_paid: total_value - totalDiscount
+				amount_paid: totalValue - totalDiscount
 			} as any
 			console.log({ data })
 
@@ -428,7 +428,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												<td className="p-1">SubTotal</td>
 												<td className="p-1">{qttCart}</td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(total_value)} kz
+													{NumberUtils.formatCurrency(totalValue)} kz
 												</td>
 											</tr>
 											<tr className="font-semibold">
@@ -442,7 +442,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												<td className="p-1">Total a pagar</td>
 												<td className="p-1"></td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(total_value - totalDiscount)} kz
+													{NumberUtils.formatCurrency(totalValue - totalDiscount)} kz
 												</td>
 											</tr>
 										</tbody>

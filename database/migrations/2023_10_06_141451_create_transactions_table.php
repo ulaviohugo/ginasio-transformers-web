@@ -21,6 +21,7 @@ return new class extends Migration
 			$table->dateTime('date');
 			$table->foreignId('cash_register_id')->nullable()->references('id')->on(DBHelper::TB_CASH_REGISTERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->decimal('post_movement_balance', 65, 3)->default(0);
+			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('update_by_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

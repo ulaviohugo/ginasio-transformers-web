@@ -16,6 +16,7 @@ class Sale extends Model
 		'total_value',
 		'amount_paid',
 		'discount',
+		'quantity',
 		'employee_id',
 		'payment_method',
 		'user_id',

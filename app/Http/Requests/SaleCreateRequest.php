@@ -32,9 +32,6 @@ class SaleCreateRequest extends GlobalFormRequest
 				'gt:0',
 				Rule::exists(Customer::class, 'id'),
 			],
-			'total_value' => 'required|numeric|gt:0',
-			'amount_paid' => 'required|numeric|gt:0',
-			'discount' => 'nullable|numeric',
 			'employee_id' =>  [
 				'required',
 				'numeric',
@@ -45,9 +42,7 @@ class SaleCreateRequest extends GlobalFormRequest
 			'product_sales' => 'required|array',
 			'product_sales.*.product_id' => 'required|numeric|gt:0|exists:' . DBHelper::TB_PRODUCTS . ',id',
 			'product_sales.*.quantity' => 'required|numeric|gt:0',
-			'product_sales.*.total_value' => 'required|numeric|gt:0',
 			'product_sales.*.unit_price' => 'required|numeric|gt:0',
-			'product_sales.*.amount_paid' => 'required|numeric|gt:0',
 		];
 	}
 
@@ -62,9 +57,6 @@ class SaleCreateRequest extends GlobalFormRequest
 			'product_sales.*.quantity.required' => 'Informe cada quantidade do produto na lista .',
 			'product_sales.*.quantity.numeric' => 'A quantidade de cada produto dever ser um valor numérico.',
 			'product_sales.*.quantity.gt' => 'A quantidade de cada produto dever ser um valor maior que 0.',
-			'product_sales.*.total_value.required' => 'Informe o valor total do produto na lista.',
-			'product_sales.*.total_value.numeric' => 'O valor total de cada produto dever ser um valor numérico.',
-			'product_sales.*.total_value.gt' => 'O valor total de cada produto dever ser um valor maior que 0.',
 			'product_sales.*.unit_price.required' => 'Informe a preço unitário de cada produto na lista.',
 			'product_sales.*.unit_price.numeric' => 'O preço unitário de cada produto dever ser um valor numérico.',
 			'product_sales.*.unit_price.gt' => 'O preço unitário de cada produto dever ser um valor maior que 0.',

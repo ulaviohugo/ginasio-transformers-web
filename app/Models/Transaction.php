@@ -19,6 +19,7 @@ class Transaction extends Model
 		'date',
 		'cash_register_id',
 		'post_movement_balance',
+		'employee_id',
 		'user_id',
 		'update_by_id',
 	];

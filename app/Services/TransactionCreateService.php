@@ -11,7 +11,7 @@ class TransactionCreateService
 {
 	public function execute(Request $request)
 	{
-		$cashRegister = CashRegister::first();
+		$cashRegister = CashRegister::getCashRegister();
 
 		$dbBalance = $cashRegister->balance;
 		$amount = $request->amount;
@@ -26,6 +26,7 @@ class TransactionCreateService
 			'date' => now(),
 			'cash_register_id' => $cashRegister->id,
 			'post_movement_balance' => $balance,
+			'employee_id' => $request->employee_id ?? $userId,
 			'user_id' => $userId
 		]);
 
