@@ -4,7 +4,7 @@ import { RemoteUpdatePurchase } from '@/data/usecases'
 
 export const makeRemoteUpdatePurchase = () => {
 	return new RemoteUpdatePurchase(
-		makeApiUrl('/purchases'),
+		makeApiUrl('/stocks'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }

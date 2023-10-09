@@ -4,7 +4,7 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 
 export const makeRemoteLoadPurchases = () => {
 	return new RemoteLoadPurchases(
-		makeApiUrl('/purchases'),
+		makeApiUrl('/stocks'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }

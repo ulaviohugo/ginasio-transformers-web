@@ -4,7 +4,7 @@ import { RemoteDeletePurchase } from '@/data/usecases'
 
 export const makeRemoteDeletePurchase = () => {
 	return new RemoteDeletePurchase(
-		makeApiUrl('/purchases'),
+		makeApiUrl('/stocks'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }

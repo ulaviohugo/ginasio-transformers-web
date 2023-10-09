@@ -41,6 +41,7 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('', [CashRegisterController::class, 'store']);
 	});
 
+	Route::get('customers/count', [CustomerController::class, 'count']);
 	Route::apiResource('customers', CustomerController::class);
 
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
@@ -54,10 +55,13 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('product-sales', [ProductSaleController::class, 'index']);
 
+	Route::get('sales/count', [SaleController::class, 'count']);
 	Route::apiResource('sales', SaleController::class);
 
+	Route::get('stocks/count', [StockController::class, 'count']);
 	Route::apiResource('stocks', StockController::class);
 
+	Route::get('suppliers/count', [SupplierController::class, 'count']);
 	Route::apiResource('suppliers', SupplierController::class);
 });
 
