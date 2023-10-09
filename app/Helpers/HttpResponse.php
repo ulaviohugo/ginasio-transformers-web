@@ -12,7 +12,7 @@ class HttpResponse
 	static function success($data = null, string $message = null,  $status = HttpStatusCode::OK)
 	{
 		return response()->json(
-			$data ? $data : ($message ? ['message' => $message] : null),
+			$data !== null ? $data : ($message ? ['message' => $message] : null),
 			$status
 		);
 	}
