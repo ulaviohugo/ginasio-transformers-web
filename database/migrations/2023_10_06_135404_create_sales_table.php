@@ -15,9 +15,9 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_SALES, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('customer_id')->nullable()->references('id')->on(DBHelper::TB_CUSTOMERS)->cascadeOnUpdate()->nullOnDelete();
-			$table->float('total_value');
-			$table->float('amount_paid')->default(0);
-			$table->float('discount');
+			$table->double('total_value', 16, 3);
+			$table->double('amount_paid', 16, 3);
+			$table->double('discount', 16, 3)->nullable()->default(0);
 			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->string('payment_method', 50);
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();

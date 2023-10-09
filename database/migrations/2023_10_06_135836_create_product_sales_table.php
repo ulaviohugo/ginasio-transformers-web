@@ -22,7 +22,7 @@ return new class extends Migration
 			$table->double('amount_paid', 16, 3)->default(0);
 			$table->string('color')->nullable();
 			$table->string('size')->nullable();
-			$table->double('discount', 16, 3);
+			$table->double('discount', 16, 3)->nullable()->default(0);
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();
