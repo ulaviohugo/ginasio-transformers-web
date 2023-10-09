@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\DBHelper;
+use App\Models\Transaction;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_TRANSACTIONS, function (Blueprint $table) {
 			$table->id();
 			$table->string('description');
-			$table->string('operation_type');
+			$table->enum('operation_type', [Transaction::OPERATION_TYPE_IN, Transaction::OPERATION_TYPE_OUT]);
 			$table->decimal('amount', 65, 3);
 			$table->string('payment_method', 50);
 			$table->dateTime('date');

@@ -11,6 +11,9 @@ class Transaction extends Model
 	use HasFactory;
 	protected $table = DBHelper::TB_TRANSACTIONS;
 
+	const OPERATION_TYPE_IN = 'Entrada',
+		OPERATION_TYPE_OUT = 'Saída';
+
 	protected $fillable = [
 		'description',
 		'operation_type',
