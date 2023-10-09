@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\DBHelper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -16,7 +15,7 @@ class ProductCreateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de criar produto';
-		return auth('api')->user()->role == User::ROLE_ADMIN;
+		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
 	/**

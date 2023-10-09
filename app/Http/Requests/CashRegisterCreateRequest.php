@@ -11,7 +11,7 @@ class CashRegisterCreateRequest extends GlobalFormRequest
 	 */
 	public function authorize(): bool
 	{
-		return auth('api')->user()->role == User::ROLE_ADMIN;
+		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
 	/**

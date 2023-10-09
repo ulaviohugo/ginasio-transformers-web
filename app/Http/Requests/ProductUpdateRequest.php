@@ -15,7 +15,7 @@ class ProductUpdateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de alterar produtos';
-		return auth('api')->user()->role == User::ROLE_ADMIN;
+		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
 	/**

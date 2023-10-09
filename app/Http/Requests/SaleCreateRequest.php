@@ -15,7 +15,7 @@ class SaleCreateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de criar produto';
-		return auth('api')->user()->role == User::ROLE_ADMIN;
+		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
 	/**

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\DBHelper;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -15,7 +14,7 @@ class CategoryUpdateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de alterar categoria';
-		return auth('api')->user()->role == User::ROLE_ADMIN;
+		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
 	/**
