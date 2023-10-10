@@ -11,6 +11,7 @@ export class MenuUtils {
 		CASH_REGISTER: '/comercial/caixa',
 		CATEGORIES: '/comercial/categorias',
 		CUSTOMERS: '/comercial/clientes',
+		PRODUCT_BUDGETS: '/comercial/orcamento-de-producao',
 		COMERCIAL: '/comercial',
 		HR: '/rh',
 		POLICY: '/comercial/apolice',
@@ -26,6 +27,8 @@ export class MenuUtils {
 
 	static readonly hrMenuItens = (param?: RoleProps): SubmenuProps[] => {
 		const { role = 'Normal' } = param || {}
+		if (role == 'Normal') return []
+
 		const data = [
 			{ link: this.FRONT.EMPLOYEES, text: 'Funcionários' },
 			{ link: this.FRONT.EMPLOYEE_PRESENCES, text: 'Presença' },
@@ -47,7 +50,8 @@ export class MenuUtils {
 				{ link: this.FRONT.CATEGORIES, text: 'Categorias' },
 				{ link: this.FRONT.PRODUCTS, text: 'Produtos' },
 				{ link: this.FRONT.SUPPLIERS, text: 'Fornecedores' },
-				{ link: this.FRONT.CUSTOMERS, text: 'Clientes' }
+				{ link: this.FRONT.CUSTOMERS, text: 'Clientes' },
+				{ link: this.FRONT.PRODUCT_BUDGETS, text: 'Orçamento' }
 				// { link: this.FRONT.POLICY, text: 'Apólice' },
 				// { link: this.FRONT.BILLING, text: 'Factura' }
 			)
