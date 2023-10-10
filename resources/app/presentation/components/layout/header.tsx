@@ -36,12 +36,12 @@ export function Header() {
 						text="Comercial"
 						icon={IconProduct}
 					/>
-					<Item
+					{/* <Item
 						active={path.indexOf('/segurados') >= 0}
 						link={'/segurados'}
 						text="Segurados"
 						icon={IconUser}
-					/>
+					/> */}
 					{isAdmin && (
 						<Item
 							active={path.indexOf('/rh') >= 0}

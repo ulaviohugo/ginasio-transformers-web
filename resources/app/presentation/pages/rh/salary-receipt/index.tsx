@@ -20,7 +20,7 @@ import { DateUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
-export default function SalaryReceipt() {
+export function EmployeeSalaryReceipt() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 
@@ -69,6 +69,7 @@ export default function SalaryReceipt() {
 									value: employee.id
 								}))}
 								onChange={handleSelectEmployee}
+								value={''}
 							/>
 						</div>
 					</div>

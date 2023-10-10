@@ -92,6 +92,11 @@ class User extends Authenticatable implements JWTSubject
 		return auth('api')->id();
 	}
 
+	public function employee_presences()
+	{
+		return $this->hasMany(EmployeePresence::class, 'employee_id');
+	}
+
 	/**
 	 * Get the identifier that will be stored in the subject claim of the JWT.
 	 *

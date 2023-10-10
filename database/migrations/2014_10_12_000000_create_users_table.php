@@ -38,7 +38,7 @@ return new class extends Migration
 			$table->date('hire_date');
 			$table->date('contract_end_date')->nullable();
 			$table->string('bank_name', 30)->nullable();
-			$table->string('iban', 30)->nullable()->unique();
+			$table->string('iban', 50)->nullable()->unique();
 			$table->string('account_number', 30)->nullable();
 			$table->boolean('can_login')->default(false);
 			$table->enum('role', [User::ROLE_ADMIN, User::ROLE_USER])->nullable()->default(User::ROLE_USER);

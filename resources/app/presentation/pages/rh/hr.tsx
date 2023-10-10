@@ -11,7 +11,7 @@ import { NotFound } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
 import { useSelector } from 'react-redux'
 
-export default function Comercial() {
+export function HumanResource() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 

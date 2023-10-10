@@ -27,7 +27,7 @@ export function Modal({ children, onClose, show, size = 'xl' }: ModalProps) {
 	return (
 		<div className="fixed top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-50">
 			<div
-				className={`relative flex flex-col bg-white p-5 mx-5 rounded-lg max-h-[90%] ${w[size]}`}
+				className={`relative flex flex-col bg-white p-5 mx-5 rounded-lg max-h-[90%] w-full ${w[size]}`}
 			>
 				<button
 					className="absolute right-2 top-2 group"
@@ -60,7 +60,7 @@ type ModalBodyProps = {
 }
 
 export function ModalBody({ children }: ModalBodyProps) {
-	return <div className="overflow-auto p-1 max-h-[95%]">{children}</div>
+	return <div className="overflow-auto p-1 max-h-[95%] w-full">{children}</div>
 }
 
 export function ModalFooter({ children }: ModalTitleProps) {

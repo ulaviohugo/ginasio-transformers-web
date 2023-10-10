@@ -1,14 +1,43 @@
 import React from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
-import { Categories, Home, Login, NotFound } from '@/presentation/pages'
+import {
+	CashRegister,
+	Categories,
+	Comercial,
+	Customers,
+	Home,
+	Login,
+	NotFound,
+	Products,
+	Sales,
+	Stock,
+	Suppliers,
+	EmployeePresence,
+	HumanResource,
+	Employees,
+	EmployeeSalaryReceipt
+} from '@/presentation/pages'
+import { MenuUtils } from '@/utils'
 
 export function AppRoutes() {
+	const menu = MenuUtils.FRONT
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path={''} element={<Home />} />
-				<Route path={'/login'} element={<Login />} />
-				<Route path={'/comercial/categorias'} element={<Categories />} />
+				<Route path={menu.HOME} element={<Home />} />
+				<Route path={menu.LOGIN} element={<Login />} />
+				<Route path={menu.COMERCIAL} element={<Comercial />} />
+				<Route path={menu.HR} element={<HumanResource />} />
+				<Route path={menu.EMPLOYEES} element={<Employees />} />
+				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
+				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
+				<Route path={menu.STOCK} element={<Stock />} />
+				<Route path={menu.SALES} element={<Sales />} />
+				<Route path={menu.CATEGORIES} element={<Categories />} />
+				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
+				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
+				<Route path={menu.CUSTOMERS} element={<Customers />} />
+				<Route path={menu.PRODUCTS} element={<Products />} />
 				<Route path={'/*'} element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

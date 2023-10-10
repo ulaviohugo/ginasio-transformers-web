@@ -27,7 +27,7 @@ class UserController extends Controller
 			$createdUser = $service->execute($request);
 			return HttpResponse::success(data: $createdUser);
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao cadastrar funcionário');
+			return HttpResponse::error(message: 'Erro ao cadastrar funcionário' . $th->getMessage());
 		}
 	}
 

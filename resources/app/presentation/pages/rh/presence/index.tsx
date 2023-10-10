@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAuth, useEmployees } from '@/presentation/hooks'
 import { NotFound } from '@/presentation/pages'
 
-export function Presence() {
+export function EmployeePresence() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 
@@ -67,6 +67,7 @@ export function Presence() {
 										value: employee.id
 									}))}
 									onChange={handleSelectEmployee}
+									value={''}
 								/>
 							</div>
 						</div>

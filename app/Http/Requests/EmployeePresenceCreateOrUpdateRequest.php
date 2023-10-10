@@ -6,7 +6,7 @@ use App\Models\EmployeePresence;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
-class EmployeePresenceCreateRequest extends GlobalFormRequest
+class EmployeePresenceCreateOrUpdateRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -23,20 +23,26 @@ class EmployeePresenceCreateRequest extends GlobalFormRequest
 	 */
 	public function rules(): array
 	{
-		$date = request('date');
-		$employeeId = request('employee_id');
+		$date = date('Y-m-d');
+		$present = EmployeePresence::PRESENT;
 		return [
 			'employee_id' => [
 				'required',
 				'numeric', 'gt:0',
 				Rule::exists(User::class, 'id'),
-				Rule::unique(EmployeePresence::class)->where(function ($query) use ($date, $employeeId) {
-					$query->where('employee_id', $employeeId)
-						->where('date', $date);
-				})
 			],
-			'date' => 'required|date',
-			'presence_status' => 'required'
+			'presence_status' => 'required',
+			'date' => 'required|date|before_or_equal:' . $date,
+			'entry_time' => "nullable|required_if:presence_status,{$present}|date_format:H:i",
+			'exit_time' => "nullable|required_if:presence_status,{$present}|date_format:H:i|after:entry_time",
+		];
+	}
+
+	public function messages()
+	{
+		return [
+			'entry_time.required_if' => 'Hora de entrada é obrigatória',
+			'exit_time.required_if' => 'Hora de saída é obrigatória',
 		];
 	}
 }
