@@ -19,4 +19,9 @@ class ProductionFabric extends Model
 		'meter',
 		'cost',
 	];
+
+	public function production_budget()
+	{
+		return $this->belongsTo(ProductionBudget::class, 'production_id');
+	}
 }

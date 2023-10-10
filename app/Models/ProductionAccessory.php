@@ -18,4 +18,9 @@ class ProductionAccessory extends Model
 		'quantity',
 		'price',
 	];
+
+	public function production_budget()
+	{
+		return $this->belongsTo(ProductionBudget::class, 'production_id');
+	}
 }

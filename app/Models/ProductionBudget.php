@@ -32,4 +32,14 @@ class ProductionBudget extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function production_accessories()
+	{
+		return $this->hasMany(ProductionAccessory::class, 'production_id');
+	}
+
+	public function production_fabrics()
+	{
+		return $this->hasMany(ProductionFabric::class, 'production_id');
+	}
 }
