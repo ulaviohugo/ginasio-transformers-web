@@ -14,6 +14,7 @@ class SupplierProduct extends Model
 	protected $fillable = [
 		'supplier_id',
 		'product_id',
+		'category_id',
 		'unit_price',
 		'user_id',
 		'user_id_update',

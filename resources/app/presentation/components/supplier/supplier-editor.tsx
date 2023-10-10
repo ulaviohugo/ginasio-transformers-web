@@ -124,7 +124,7 @@ export function SupplierEditor({
 				dispatch(loadProductStore(response))
 			})
 		}
-	})
+	}, [])
 
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

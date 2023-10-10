@@ -2,7 +2,7 @@ import { TransactionModel } from '@/domain/models'
 import { AddTransaction } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils } from '@/utils'
+import { FormDataUtils, NumberUtils } from '@/utils'
 
 export class RemoteAddTransaction implements AddTransaction {
 	constructor(
@@ -11,7 +11,10 @@ export class RemoteAddTransaction implements AddTransaction {
 	) {}
 
 	async add(param: TransactionModel): Promise<TransactionModel> {
-		const body = FormDataUtils.createFormData(param)
+		const body = FormDataUtils.createFormData({
+			...param,
+			amount: NumberUtils.convertToNumber(param.amount)
+		})
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

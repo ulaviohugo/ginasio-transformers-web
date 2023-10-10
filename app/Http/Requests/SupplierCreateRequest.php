@@ -51,9 +51,9 @@ class SupplierCreateRequest extends GlobalFormRequest
 				Rule::exists(Municipality::class, 'id'),
 			],
 			'address' => 'required',
-			'supplier_products' => 'required|array',
-			'supplier_products.*.product_id' => 'required|numeric|gt:0|exists:' . DBHelper::TB_PRODUCTS . ',id',
-			'supplier_products.*.unit_price' => 'required|numeric|gt:0',
+			// 'supplier_products' => 'required|array',
+			// 'supplier_products.*.product_id' => 'required|numeric|gt:0|exists:' . DBHelper::TB_PRODUCTS . ',id',
+			// 'supplier_products.*.unit_price' => 'required|numeric|gt:0',
 		];
 	}
 

@@ -14,7 +14,7 @@ class SupplierCreateService
 	{
 		try {
 			DB::beginTransaction();
-			$supplierProducts = $request->supplier_products;
+			$supplierProducts = is_string($request->supplier_products) ? json_decode($request->supplier_products, 1) : $request->supplier_products;
 			$countProducts = count($supplierProducts);
 
 			$userId = User::currentUserId();

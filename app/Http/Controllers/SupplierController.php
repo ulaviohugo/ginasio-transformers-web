@@ -25,7 +25,7 @@ class SupplierController extends Controller
 			$createdSupplier = $service->execute($request);
 			return HttpResponse::success(data: $createdSupplier);
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao cadastrar fornecedor');
+			return HttpResponse::error(message: 'Erro ao cadastrar fornecedor' . $th->getMessage());
 		}
 	}
 

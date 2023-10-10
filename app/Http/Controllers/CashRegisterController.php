@@ -13,7 +13,7 @@ class CashRegisterController extends Controller
 	{
 		try {
 			$cashRegister = CashRegister::first();
-			if (!$cashRegister) {
+			if (!$cashRegister?->id) {
 				$cashRegister = CashRegister::create([
 					'balance' => $request->balance ?? $request->initial_balance,
 					'initial_balance' => $request->initial_balance,

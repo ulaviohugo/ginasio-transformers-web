@@ -31,4 +31,8 @@ export class FileUtils {
 		const newFilePath = filePath.replace(this.UPLOAD_RELATIVE_PATH, '')
 		return `${this.UPLOAD_ABSOLUTE_PATH}${newFilePath}`
 	}
+
+	static fileToBlob(file: File) {
+		return new Blob([file], { type: file.type })
+	}
 }

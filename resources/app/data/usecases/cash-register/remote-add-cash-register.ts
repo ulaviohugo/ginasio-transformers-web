@@ -2,7 +2,7 @@ import { CashRegisterModel } from '@/domain/models'
 import { AddCashRegister } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils } from '@/utils'
+import { FormDataUtils, NumberUtils } from '@/utils'
 
 export class RemoteAddCashRegister implements AddCashRegister {
 	constructor(
@@ -11,7 +11,11 @@ export class RemoteAddCashRegister implements AddCashRegister {
 	) {}
 
 	async add(param: CashRegisterModel): Promise<CashRegisterModel> {
-		const body = FormDataUtils.createFormData(param)
+		const body = FormDataUtils.createFormData({
+			...param,
+			initial_balance: NumberUtils.convertToNumber(param.initial_balance),
+			balance: NumberUtils.convertToNumber(param.balance)
+		})
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

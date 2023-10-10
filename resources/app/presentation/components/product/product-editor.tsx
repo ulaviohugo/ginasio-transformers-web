@@ -102,7 +102,7 @@ export function ProductEditor({
 		}
 	}
 	return (
-		<Modal show={show} onClose={onClose}>
+		<Modal show={show} onClose={onClose} size="sm">
 			<ModalTitle>
 				<IconProduct /> {data?.id ? `Produto - ${data.name}` : 'Cadastrar produto'}
 			</ModalTitle>

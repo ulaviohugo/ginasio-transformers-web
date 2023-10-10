@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,8 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('suppliers/count', [SupplierController::class, 'count']);
 	Route::apiResource('suppliers', SupplierController::class);
+
+	Route::apiResource('transactions', TransactionController::class);
 });
 
 
