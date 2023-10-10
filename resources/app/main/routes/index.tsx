@@ -15,7 +15,8 @@ import {
 	EmployeePresence,
 	HumanResource,
 	Employees,
-	EmployeeSalaryReceipt
+	EmployeeSalaryReceipt,
+	ProductionBudgets
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
 
@@ -24,20 +25,22 @@ export function AppRoutes() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path={menu.HOME} element={<Home />} />
 				<Route path={menu.LOGIN} element={<Login />} />
+
+				<Route path={menu.HOME} element={<Home />} />
 				<Route path={menu.COMERCIAL} element={<Comercial />} />
 				<Route path={menu.HR} element={<HumanResource />} />
 				<Route path={menu.EMPLOYEES} element={<Employees />} />
 				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
 				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
+				<Route path={menu.CUSTOMERS} element={<Customers />} />
 				<Route path={menu.STOCK} element={<Stock />} />
 				<Route path={menu.SALES} element={<Sales />} />
 				<Route path={menu.CATEGORIES} element={<Categories />} />
 				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
 				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
-				<Route path={menu.CUSTOMERS} element={<Customers />} />
 				<Route path={menu.PRODUCTS} element={<Products />} />
+				<Route path={menu.PRODUCT_BUDGETS} element={<ProductionBudgets />} />
 				<Route path={'/*'} element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

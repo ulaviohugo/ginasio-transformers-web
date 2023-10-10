@@ -19,6 +19,7 @@ import {
 	AiOutlineCheckCircle
 } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
+import { MdOutlineMonetizationOn } from 'react-icons/md'
 import { GrStorage } from 'react-icons/gr'
 import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
@@ -90,6 +91,9 @@ export const IconUser = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconSearch = (props: IconBaseProps): React.ReactElement => (
 	<BiSearch {...props} />
+)
+export const IconBudget = (props: IconBaseProps): React.ReactElement => (
+	<MdOutlineMonetizationOn {...props} />
 )
 
 export const IconEdit = (props: IconBaseProps) => <HiPencilAlt {...props} />
