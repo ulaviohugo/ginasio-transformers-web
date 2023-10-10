@@ -25,7 +25,7 @@ export function Header() {
 	}
 	const path = location.pathname
 	return (
-		<header className=" text-gray-200 h-screen">
+		<header className="bg-primary text-gray-200 h-screen">
 			<nav className="flex flex-col gap-4 py-4 items-center h-full">
 				<Logo />
 				<ul className="flex flex-col">
@@ -52,7 +52,7 @@ export function Header() {
 					)}
 				</ul>
 				<div className="flex flex-col gap-2 mt-auto px-2">
-					<div className="flex items-center gap-1 text-gray-500">
+					<div className="flex items-center gap-1">
 						<div className="border rounded-full p-1">
 							{user.photo ? (
 								<img src={user.photo} width={25} height={25} alt="Foto" />
@@ -94,11 +94,7 @@ const Item = ({ active, link, text, icon: Icon }: ItemProps) => {
 			<Link
 				to={link}
 				className={`flex items-center gap-1 px-2 py-1 rounded-l-xl
-				${
-					active
-						? 'bg-gray-200 text-primary'
-						: 'hover:bg-black hover:bg-opacity-20 text-gray-500'
-				}
+				${active ? 'bg-gray-200 text-primary' : 'hover:bg-black hover:bg-opacity-20'}
 				  transition-all duration-200 ease-in-out`}
 			>
 				<Icon /> {text}

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 export function TopBar() {
 	const user = useSelector(useAuth())
 	return (
-		<nav className="flex linear-bg -mx-4 px-4 text-white">
+		<nav className="flex bg-white -mx-4 px-4">
 			<ul className="ml-auto flex items-center gap-2 py-2">
 				<li className="flex items-center gap-1">
 					<span className="flex items-center border-2 rounded-full p-1">
