@@ -4,17 +4,22 @@ namespace App\Helpers;
 
 class DBHelper
 {
+	const TB_ACCESSORIES = 'tb_accessories';
 	const TB_CASH_REGISTERS = 'tb_cash_registers';
 	const TB_CATEGORIES = 'tb_categories';
 	const TB_COUNTRIES = 'tb_countries';
 	const TB_CUSTOMERS = 'tb_customers';
 	const TB_EMPLOYEE_PRESENCES = 'tb_employee_presences';
+	const TB_FABRICS = 'tb_fabrics';
 	const TB_INSUREDS = 'tb_insureds';
 	const TB_MUNICIPALITIES = 'tb_municipalities';
 	const TB_NOTIFICATIONS = 'tb_notifications';
 	const TB_PROVINCES = 'tb_provinces';
 	const TB_PRODUCTS = 'tb_products';
 	const TB_PRODUCT_SALES = 'tb_product_sales';
+	const TB_PRODUCTION_ACCESSORIES = 'tb_production_accessories';
+	const TB_PRODUCTION_BUDGETS = 'tb_production_budgets';
+	const TB_PRODUCTION_FABRICS = 'tb_production_fabrics';
 	const TB_SALES = 'tb_sales';
 	const TB_STOCK = 'tb_stocks';
 	const TB_SUPPLIERS = 'tb_suppliers';
