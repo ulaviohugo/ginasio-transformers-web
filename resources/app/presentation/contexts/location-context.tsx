@@ -6,6 +6,7 @@ import { ReactNode, createContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadLocationStore } from '@/presentation/redux'
 import { useAuth } from '@/presentation/hooks'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 
 const LocationContext = createContext({})
 
@@ -19,7 +20,7 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 
 	useEffect(() => {
 		if (auth) {
-			makeAxiosHttpClient()
+			makeAuthorizeHttpClientDecorator()
 				.request({ method: 'get', url: makeApiUrl('/locations') })
 				.then((response) => {
 					console.log({ response })

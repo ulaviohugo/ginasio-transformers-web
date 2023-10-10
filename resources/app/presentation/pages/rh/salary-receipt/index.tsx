@@ -58,7 +58,7 @@ export function EmployeeSalaryReceipt() {
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={MenuUtils.hrMenuItens()} />
+					<SubMenu submenus={MenuUtils.hrMenuItens({ role: user.role })} />
 					<Title title="Folha salarial" />
 					<div className="flex">
 						<div className="">

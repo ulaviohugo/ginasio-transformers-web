@@ -55,7 +55,7 @@ export function EmployeePresence() {
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={MenuUtils.hrMenuItens()} />
+					<SubMenu submenus={MenuUtils.hrMenuItens({ role: user.role })} />
 					<Title title={`Presença`} />
 					<div className="flex flex-col gap-2">
 						<div className="inline-flex">

@@ -1,4 +1,11 @@
-import { IconBudget, Layout, LayoutBody, SubMenu, Title } from '@/presentation/components'
+import {
+	IconBudget,
+	Layout,
+	LayoutBody,
+	ProductionBudgetEditor,
+	SubMenu,
+	Title
+} from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { MenuUtils } from '@/utils'
 import React from 'react'
@@ -12,6 +19,7 @@ export function ProductionBudgets() {
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<Title title="Orçamento" icon={IconBudget} />
+					<ProductionBudgetEditor />
 				</div>
 			</LayoutBody>
 		</Layout>

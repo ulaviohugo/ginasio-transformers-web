@@ -35,4 +35,8 @@ export class SalaryUtils {
 	static getSalaryPerHour(base_salary: number, workDays = 26) {
 		return (this.getSalaryPerDay(base_salary, workDays) * 4) / 9
 	}
+
+	static getSalaryPerMinute(base_salary: number, workDays = 26) {
+		return this.getSalaryPerHour(base_salary, workDays) / 60
+	}
 }

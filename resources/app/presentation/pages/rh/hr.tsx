@@ -19,7 +19,7 @@ export function HumanResource() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<SubMenu submenus={MenuUtils.hrMenuItens()} />
+				<SubMenu submenus={MenuUtils.hrMenuItens({ role: user.role })} />
 				<IndexPage>
 					<IconUser /> Área de recursos humanos
 				</IndexPage>
