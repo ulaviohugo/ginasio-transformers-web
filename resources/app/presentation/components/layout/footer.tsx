@@ -7,7 +7,7 @@ export function Footer() {
 			<div>
 				Desenvolvido por{' '}
 				<a
-					href="//samuelfreitas.vercel.app"
+					href="//samuelfreitas-ao.github.io"
 					target="_blank"
 					className="text-sky-600 font-semibold hover:underline"
 					rel="noreferrer"
