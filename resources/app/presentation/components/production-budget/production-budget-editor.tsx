@@ -10,8 +10,6 @@ import { EmployeeModel } from '@/domain/models'
 import { ProductionBudgetFabricEditor } from './production-budget-fabric-editor'
 import { ProductionBudgetAccessoryEditor } from './production-budget-accessory-editor'
 
-type ProductionBudgetEditorProps = {}
-
 type FormDataProps = {
 	date: any
 }
@@ -22,7 +20,7 @@ export type ProductCardChangeProps = {
 	value: string
 }
 
-export function ProductionBudgetEditor(props: ProductionBudgetEditorProps) {
+export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState<FormDataProps>({ date: new Date() })
 

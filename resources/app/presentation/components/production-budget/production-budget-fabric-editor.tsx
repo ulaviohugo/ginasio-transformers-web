@@ -33,7 +33,7 @@ export function ProductionBudgetFabricEditor({
 }: ProductionFabricEditorProps) {
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
-		let data: any = { index: itemIndex, name, value }
+		const data: any = { index: itemIndex, name, value }
 		onChange(data)
 	}
 
