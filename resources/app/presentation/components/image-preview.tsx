@@ -41,7 +41,7 @@ export function ImagePreview({
 	}
 
 	return (
-		<div className="flex border-2 border-dashed border-green-200 p-2 min-h-[200px]">
+		<div className="flex border-2 border-dashed border-green-200 p-2 min-h-[200px] min-w-[200px] max-w-[240px]">
 			<input
 				type="file"
 				id="photo"

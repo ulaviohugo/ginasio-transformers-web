@@ -107,13 +107,13 @@ export function ProductEditor({
 				<IconProduct /> {data?.id ? `Produto - ${data.name}` : 'Cadastrar produto'}
 			</ModalTitle>
 			<ModalBody>
-				<form onSubmit={handleSubmit} className="flex flex-col gap-2">
+				<form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
 					<div className="flex gap-2">
 						<ImagePreview
 							photoPreview={imagePreview}
 							onInputFileChange={handleInputChange}
 						/>
-						<div className="flex flex-col gap-1">
+						<div className="flex flex-col gap-1 w-full">
 							<Input
 								type="text"
 								id="name"
