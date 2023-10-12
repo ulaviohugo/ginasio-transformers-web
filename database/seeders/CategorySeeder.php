@@ -14,9 +14,14 @@ class CategorySeeder extends Seeder
 	public function run(): void
 	{
 		Category::insert([
-			['id' => 1, 'name' => 'Medicamentos Injectáveis'],
-			['id' => 2, 'name' => 'Medicamento oral'],
-			['id' => 3, 'name' => 'Materiais gastáveis']
+			['name' => 'Acessório feminino'],
+			['name' => 'Bijuteria feminina'],
+			['name' => 'Calçado feminino'],
+			['name' => 'Calçado masculino'],
+			['name' => 'Diversos'],
+			['name' => 'Perfumaria'],
+			['name' => 'Roupa feminina'],
+			['name' => 'Roupa masculina']
 		]);
 	}
 }
