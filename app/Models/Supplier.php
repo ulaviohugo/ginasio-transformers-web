@@ -24,4 +24,9 @@ class Supplier extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function supplierProducts()
+	{
+		return $this->hasMany(SupplierProduct::class);
+	}
 }

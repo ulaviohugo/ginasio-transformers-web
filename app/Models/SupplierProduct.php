@@ -19,4 +19,19 @@ class SupplierProduct extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function category()
+	{
+		return $this->belongsTo(Category::class, 'category_id');
+	}
+
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
+
+	public function supplier()
+	{
+		return $this->belongsTo(Supplier::class);
+	}
 }
