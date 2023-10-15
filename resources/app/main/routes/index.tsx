@@ -16,7 +16,8 @@ import {
 	HumanResource,
 	Employees,
 	EmployeeSalaryReceipt,
-	ProductionBudgets
+	ProductionBudgets,
+	Notifications
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
 
@@ -41,6 +42,7 @@ export function AppRoutes() {
 				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
 				<Route path={menu.PRODUCTS} element={<Products />} />
 				<Route path={menu.PRODUCT_BUDGETS} element={<ProductionBudgets />} />
+				<Route path={menu.NOTIFICATION} element={<Notifications />} />
 				<Route path={'/*'} element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

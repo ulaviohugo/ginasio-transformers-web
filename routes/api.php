@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeePresenceController;
 use App\Http\Controllers\InsuredController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
@@ -51,7 +52,9 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
 
-	Route::apiResource('insureds', InsuredController::class);
+	// Route::apiResource('insureds', InsuredController::class);
+
+	Route::apiResource('notifications', NotificationController::class);
 
 	Route::get('products/count', [ProductController::class, 'count']);
 	Route::apiResource('products', ProductController::class);

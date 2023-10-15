@@ -22,7 +22,9 @@ export class MenuUtils {
 
 		EMPLOYEES: '/rh/funcionarios',
 		EMPLOYEE_PRESENCES: '/rh/presenca',
-		EMPLOYEE_SALARY_RECEIPT: '/rh/folha-salarial'
+		EMPLOYEE_SALARY_RECEIPT: '/rh/folha-salarial',
+
+		NOTIFICATION: '/notificacoes'
 	}
 
 	static readonly hrMenuItens = (param?: RoleProps): SubmenuProps[] => {

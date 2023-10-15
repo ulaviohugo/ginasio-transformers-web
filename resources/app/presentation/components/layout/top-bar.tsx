@@ -16,11 +16,11 @@ export function TopBar() {
 					</span>
 					{StringUtils.getFirstAndLastWord(user.name)}
 				</li>
-				<li className="rounded-full hover:bg-gray-200 hover:scale-110 transition-all duration-300">
+				{/* <li className="rounded-full hover:bg-gray-200 hover:scale-110 transition-all duration-300">
 					<Link to={'/notificacoes'} className="flex p-1" title="Notificações">
 						<IconNotification size={24} />
 					</Link>
-				</li>
+				</li> */}
 			</ul>
 		</nav>
 	)
