@@ -32,7 +32,12 @@ export class FileUtils {
 		return `${this.UPLOAD_ABSOLUTE_PATH}${newFilePath}`
 	}
 
-	static fileToBlob(file: File) {
-		return new Blob([file], { type: file.type })
+	static async toBase64(file: File): Promise<string> {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = () => resolve(reader.result as any)
+			reader.onerror = reject
+		})
 	}
 }
