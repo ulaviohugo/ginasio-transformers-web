@@ -23,9 +23,11 @@ import { DateUtils, LabelUtils, NumberUtils, PaymentUtils, MenuUtils } from '@/u
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
+import { NotFound } from '../../notfound'
 
 export function CashRegister() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 
 	const [cashRegister, setCashRegister] = useState<CashRegisterModel>({} as any)
 	const [balanceData, setBalanceData] = useState<CashRegisterModel>(cashRegister)
@@ -37,14 +39,18 @@ export function CashRegister() {
 	const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
 
 	useEffect(() => {
-		makeRemoteLoadCashRegister()
-			.load()
-			.then((response) => {
-				setCashRegister(response)
-				setBalanceData(response)
-			})
-			.catch(({ message }) => toast.error(message))
-			.finally(() => setIsLoading(false))
+		if (!isAdmin) {
+			setIsLoading(false)
+		} else {
+			makeRemoteLoadCashRegister()
+				.load()
+				.then((response) => {
+					setCashRegister(response)
+					setBalanceData(response)
+				})
+				.catch(({ message }) => toast.error(message))
+				.finally(() => setIsLoading(false))
+		}
 	}, [])
 
 	const handleChangeBalance = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -96,6 +102,8 @@ export function CashRegister() {
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoadingSubmit(false))
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>

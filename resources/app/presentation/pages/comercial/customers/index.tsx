@@ -28,9 +28,11 @@ import { loadCustomerStore, removeCustomerStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useAuth, useCustomers } from '@/presentation/hooks'
+import { NotFound } from '../../notfound'
 
 export function Customers() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 
 	const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>(
 		{} as CustomerModel
@@ -42,6 +44,7 @@ export function Customers() {
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadCustomers().load()
 			dispatch(loadCustomerStore(httpResponse))
@@ -90,6 +93,8 @@ export function Customers() {
 			toast.error(error.message)
 		}
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>

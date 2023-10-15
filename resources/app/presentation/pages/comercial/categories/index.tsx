@@ -25,9 +25,11 @@ import { MenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
+import { NotFound } from '../../notfound'
 
 export function Categories() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
@@ -39,6 +41,7 @@ export function Categories() {
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadCategories().load()
 			dispatch(loadCategoryStore(httpResponse))
@@ -87,6 +90,8 @@ export function Categories() {
 			toast.error(error.message)
 		}
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>

@@ -28,9 +28,11 @@ import { NumberUtils, MenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
+import { NotFound } from '../../notfound'
 
 export function Products() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 
 	const dispatch = useDispatch()
 	const products = useSelector(useProducts())
@@ -40,6 +42,7 @@ export function Products() {
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadProduct().load()
 			dispatch(loadProductStore(httpResponse))
@@ -88,6 +91,8 @@ export function Products() {
 			toast.error(error.message)
 		}
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>

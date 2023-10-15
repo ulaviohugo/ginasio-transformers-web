@@ -30,9 +30,11 @@ import { loadSupplierStore, removeSupplierStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useAuth, useSuppliers } from '@/presentation/hooks'
+import { NotFound } from '../../notfound'
 
 export function Suppliers() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 
 	const [selectedSupplier, setSelectedSupplier] = useState<SupplierModel>(
 		{} as SupplierModel
@@ -44,6 +46,7 @@ export function Suppliers() {
 	const dispatch = useDispatch()
 
 	const fetchData = async () => {
+		if (!isAdmin) return setIsLoading(false)
 		try {
 			const httpResponse = await makeRemoteLoadSuppliers().load()
 			dispatch(loadSupplierStore(httpResponse))
@@ -92,6 +95,8 @@ export function Suppliers() {
 			toast.error(error.message)
 		}
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>

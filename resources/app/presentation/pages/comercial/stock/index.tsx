@@ -17,9 +17,12 @@ import {
 import { MenuUtils } from '@/utils'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { NotFound } from '../../notfound'
 
 export function Stock() {
 	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+
 	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
 		{} as PurchaseModel
 	)
@@ -31,6 +34,8 @@ export function Stock() {
 	const handleCloseDetail = () => {
 		clearSelectedPurchase()
 	}
+
+	if (!isAdmin) return <NotFound />
 
 	return (
 		<Layout>
