@@ -2,7 +2,7 @@ import { CategoryModel } from '@/domain/models'
 import { UpdateCategory } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/utils'
+import { ObjectUtils } from '@/utils'
 
 export class RemoteUpdateCategory implements UpdateCategory {
 	constructor(
@@ -17,7 +17,7 @@ export class RemoteUpdateCategory implements UpdateCategory {
 			'updated_at',
 			'user_id_update'
 		])
-		const body = FormDataUtils.createFormData(handledParam)
+		const body = handledParam
 
 		const httpResponse = await this.httpClient.request({
 			method: 'put',

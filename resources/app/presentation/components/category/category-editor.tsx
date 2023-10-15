@@ -92,7 +92,7 @@ export function CategoryEditor({
 		}
 	}
 	return (
-		<Modal show={show} onClose={onClose}>
+		<Modal show={show} onClose={onClose} size="sm">
 			<ModalTitle>
 				{data?.id ? `Categoria - ${data.name}` : 'Cadastrar categoria'}
 			</ModalTitle>

@@ -58,6 +58,7 @@ export function FormLogin({ className, ...props }: FormLoginProps) {
 					label="E-mail"
 					onChange={handleInputChange}
 					value={formData.email}
+					autoFocus
 				/>
 				<Input
 					type="password"

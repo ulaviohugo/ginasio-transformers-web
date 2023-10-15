@@ -37,6 +37,7 @@ class CategoryController extends Controller
 	public function update(CategoryUpdateRequest $request, Category $category)
 	{
 		try {
+			return response()->json(['name' => $request->name, 'id' => $request->id, 'cate' => $category]);
 			$category->name = trim($request->name);
 			$category->user_id_update = User::currentUserId();
 			$category->save();
@@ -59,13 +60,13 @@ class CategoryController extends Controller
 	public function destroy(Category $category)
 	{
 		try {
-			$this->authorize('delete', Category::class);
+			$this->authorize('delete', $category);
 			$category->delete();
 			return HttpResponse::success(message: 'Categoria excluída com sucesso');
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(
 				exception: $th,
-				message: 'Erro ao excluir categoria',
+				message: 'Erro ao excluir categoria' . $th->getMessage(),
 				messagePermission: 'Não tem permissão para excluir categoria'
 			);
 		}

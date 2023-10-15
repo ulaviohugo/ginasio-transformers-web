@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ErrorHandler;
+use App\Helpers\FileHelper;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\CustomerCreateRequest;
 use App\Http\Requests\CustomerUpdateRequest;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +17,7 @@ class CustomerController extends Controller
 	public function index()
 	{
 		try {
-			return Customer::all();
+			return CustomerResource::collection(Customer::all());
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar clientes');
 		}
@@ -25,8 +27,8 @@ class CustomerController extends Controller
 	{
 		try {
 			$photo = null;
-			if ($request->file('photo')) {
-				$photo = $request->file('photo')->store('customers');
+			if ($request->photo) {
+				$photo = FileHelper::uploadBase64($request->photo, 'uploads/customers');
 			}
 			$createdCustomer = Customer::create([
 				'name' => trim($request->name),
@@ -41,7 +43,7 @@ class CustomerController extends Controller
 				'address' => $request->address,
 				'user_id' => User::currentUserId()
 			]);
-			return HttpResponse::success(data: $createdCustomer);
+			return HttpResponse::success(data: new CustomerResource($createdCustomer));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar categoria' . $th->getMessage());
 		}
@@ -54,8 +56,8 @@ class CustomerController extends Controller
 	{
 		try {
 			$photo = null;
-			if ($request->file('photo')) {
-				$photo = $request->file('photo')->store('customers');
+			if ($request->photo) {
+				$photo = FileHelper::uploadBase64($request->photo, 'uploads/customers');
 				if ($customer->photo) {
 					Storage::delete($customer->photo);
 				}
@@ -74,7 +76,7 @@ class CustomerController extends Controller
 				$customer->photo = $photo;
 			}
 			$customer->save();
-			return HttpResponse::success(data: $customer);
+			return HttpResponse::success(data: new CustomerResource($customer));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao actualizar cliente' . $th->getMessage());
 		}
@@ -95,7 +97,12 @@ class CustomerController extends Controller
 	public function destroy(Customer $customer)
 	{
 		try {
+			$photo = $customer->photo;
 			$customer->delete();
+
+			if ($photo) {
+				Storage::delete($photo);
+			}
 			return HttpResponse::success(message: 'Cliente excluída com sucesso');
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(

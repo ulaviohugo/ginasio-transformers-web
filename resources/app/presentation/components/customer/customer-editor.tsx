@@ -17,7 +17,13 @@ import {
 	Select
 } from '..'
 
-import { DateUtils, LabelUtils, MunicipalityProps, ProvinceProps } from '@/utils'
+import {
+	DateUtils,
+	FileUtils,
+	LabelUtils,
+	MunicipalityProps,
+	ProvinceProps
+} from '@/utils'
 import { addCustomerStore, updateCustomerStore } from '@/presentation/redux'
 import { AddCustomer, UpdateCustomer } from '@/domain/usecases'
 import { useLocations } from '@/presentation/hooks'
@@ -83,24 +89,26 @@ export function CustomerEditor({
 			)
 		}
 		if (name == 'photo') {
-			const file = (e.target as any)?.files[0]
+			// const file = (e.target as any)?.files[0]
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-			handleInputFile(file)
+			setPhotoPreview(file)
+			// handleInputFile(file)
 		}
 		setFormData(data)
 	}
 
-	const handleInputFile = (file: File) => {
-		if (file) {
-			const reader = new FileReader()
+	// const handleInputFile = (file: File) => {
+	// 	if (file) {
+	// 		const reader = new FileReader()
 
-			reader.onload = function (e) {
-				setPhotoPreview(String(e.target?.result))
-			}
+	// 		reader.onload = function (e) {
+	// 			setPhotoPreview(String(e.target?.result))
+	// 		}
 
-			reader.readAsDataURL(file)
-		}
-	}
+	// 		reader.readAsDataURL(file)
+	// 	}
+	// }
 
 	const clearInputFile = () => {
 		setFormData((prev) => ({ ...prev, photo: '' }))
