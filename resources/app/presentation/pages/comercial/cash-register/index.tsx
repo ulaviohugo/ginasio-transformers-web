@@ -1,107 +1,71 @@
-import React from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
-	ButtonSubmit,
+	CashRegisterEditor,
 	IconCashRegister,
+	IconSearch,
 	Input,
-	InputPrice,
 	Layout,
 	LayoutBody,
 	Select,
 	Spinner,
 	SubMenu,
-	TextArea,
 	Title
 } from '@/presentation/components'
-import { useAuth } from '@/presentation/hooks'
-import { CashRegisterModel, TransactionModel } from '@/domain/models'
-import {
-	makeRemoteAddCashRegister,
-	makeRemoteAddTransaction,
-	makeRemoteLoadCashRegister
-} from '@/main/factories/usecases'
-import { DateUtils, LabelUtils, NumberUtils, PaymentUtils, MenuUtils } from '@/utils'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useAuth, useTransactions } from '@/presentation/hooks'
+import { useDispatch, useSelector } from 'react-redux'
 import { NotFound } from '../../notfound'
+import { DateUtils, MenuUtils, NumberUtils, PaymentUtils } from '@/utils'
+import { makeRemoteLoadTransactions } from '@/main/factories'
+import toast from 'react-hot-toast'
+import { loadTransactionStore } from '@/presentation/redux'
+
+type FilterProps = {
+	year: number
+	month: number
+	payment_method: number
+}
 
 export function CashRegister() {
+	const dispatch = useDispatch()
+
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 
-	const [cashRegister, setCashRegister] = useState<CashRegisterModel>({} as any)
-	const [balanceData, setBalanceData] = useState<CashRegisterModel>(cashRegister)
-	const [formData, setFormData] = useState<TransactionModel>({
-		date: DateUtils.getDate(new Date()) as any
-	} as TransactionModel)
+	const transactions = useSelector(useTransactions())
+
+	const currentDate = new Date()
+
+	const [filter, setFilter] = useState<FilterProps>({
+		year: currentDate.getFullYear(),
+		month: currentDate.getMonth()
+	} as any)
+
 	const [isLoading, setIsLoading] = useState(true)
-	const [isLoadingSubmitBalance, setIsLoadingSubmitBalance] = useState(false)
-	const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
 
-	useEffect(() => {
-		if (!isAdmin) {
-			setIsLoading(false)
-		} else {
-			makeRemoteLoadCashRegister()
-				.load()
-				.then((response) => {
-					setCashRegister(response)
-					setBalanceData(response)
-				})
-				.catch(({ message }) => toast.error(message))
-				.finally(() => setIsLoading(false))
-		}
-	}, [])
-
-	const handleChangeBalance = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		if (cashRegister?.id) return
-		const { value } = e.target
-		const balance = value as any
-		setBalanceData({ balance, initial_balance: balance } as any)
-	}
-
-	const handleInputChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-	) => {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
-	}
-
-	const handleSubmitBalance = (e: FormEvent) => {
-		e.preventDefault()
-		setIsLoadingSubmitBalance(true)
-
-		makeRemoteAddCashRegister()
-			.add(balanceData)
+	const fetchData = () => {
+		setIsLoading(true)
+		makeRemoteLoadTransactions()
+			.load({
+				filter: JSON.stringify({
+					...filter,
+					year: filter?.year ? NumberUtils.convertToNumber(filter.year) : undefined,
+					month: filter?.month ? NumberUtils.convertToNumber(filter.month) + 1 : undefined
+				}) as any
+			})
 			.then((response) => {
-				toast.success('Caixa actualizado com sucesso')
-				setCashRegister(response)
+				dispatch(loadTransactionStore(response))
 			})
 			.catch(({ message }) => toast.error(message))
-			.finally(() => setIsLoadingSubmitBalance(false))
+			.finally(() => setIsLoading(false))
+	}
+	useEffect(() => fetchData(), [])
+
+	const handleChangeFilter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+		const { name, value } = e.target
+		setFilter({ ...filter, [name]: value })
 	}
 
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault()
-
-		if (!balanceData?.initial_balance)
-			return toast.error('Adicione um saldo inicial antes de registar uma operação')
-
-		setIsLoadingSubmit(true)
-
-		makeRemoteAddTransaction()
-			.add(formData)
-			.then(({ cash_register: cashRegister }) => {
-				toast.success('Movimento realizado com sucesso')
-				if (cashRegister) {
-					setBalanceData(cashRegister)
-					setCashRegister(cashRegister)
-					setFormData({} as any)
-				}
-			})
-			.catch(({ message }) => toast.error(message))
-			.finally(() => setIsLoadingSubmit(false))
-	}
+	const handleFilter = async () => fetchData()
 
 	if (!isAdmin) return <NotFound />
 
@@ -110,121 +74,84 @@ export function CashRegister() {
 			<LayoutBody>
 				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<Title title="Caixa" icon={IconCashRegister} />
-				<div className="flex">
-					{isLoading ? (
-						<Spinner />
-					) : (
-						<div className="flex gap-4">
-							<fieldset>
-								<legend>Informação de Caixa</legend>
-								<form onSubmit={handleSubmitBalance}>
-									<div className="flex flex-col gap-2">
-										{!cashRegister?.balance ? (
-											<InputPrice
-												name="initial_balance"
-												id="initial_balance"
-												label={LabelUtils.translateField('initial_balance')}
-												value={balanceData?.initial_balance || ''}
-												onChange={handleChangeBalance}
-												disabled={!!cashRegister?.id}
-											/>
-										) : (
-											<div className="flex flex-col gap-2 text-sm">
-												<div>
-													<label htmlFor="" className="font-semibold">
-														Saldo inicial
-													</label>
-													<div className="border rounded-md font-semibold px-2 py-1">
-														{NumberUtils.formatCurrency(cashRegister.initial_balance)}
-													</div>
-												</div>
-												<div>
-													<label htmlFor="" className="font-semibold">
-														Saldo actual
-													</label>
-													<div
-														className={`border rounded-md font-semibold px-2 py-1 ${
-															NumberUtils.convertToNumber(cashRegister.balance) <
-															NumberUtils.convertToNumber(cashRegister.initial_balance)
-																? 'text-red-500'
-																: 'text-green-500'
-														}`}
-													>
-														{NumberUtils.formatCurrency(cashRegister.balance)}
-													</div>
-												</div>
-											</div>
-										)}
-										{!cashRegister?.initial_balance && (
-											<div className="flex">
-												<ButtonSubmit
-													isLoading={isLoadingSubmitBalance}
-													disabled={isLoadingSubmitBalance}
-												/>
-											</div>
-										)}
-									</div>
-								</form>
-							</fieldset>
-
-							<fieldset>
-								<legend>Outros movimentos de caixa</legend>
-								<form onSubmit={handleSubmit}>
-									<div className="grid grid-cols-2 gap-1">
-										<Input
-											type="date"
-											name="date"
-											id="date"
-											label="Data"
-											value={(formData?.date as any) || ''}
-											onChange={handleInputChange}
-										/>
-										<Select
-											label="Tipo de operação"
-											name="operation_type"
-											id="operation_type"
-											value={formData?.operation_type || ''}
-											data={[{ text: 'Entrada' }, { text: 'Saída' }]}
-											defaultText="Selecione"
-											onChange={handleInputChange}
-										/>
-										<div className="col-span-2">
-											<TextArea
-												name="description"
-												id="description"
-												label="Descrição da operação"
-												value={formData?.description || ''}
-												onChange={handleInputChange}
-											/>
-										</div>
-										<InputPrice
-											name="amount"
-											id="amount"
-											label="Valor KZ"
-											value={formData?.amount || ''}
-											onChange={handleInputChange}
-										/>
-										<Select
-											name="payment_method"
-											id="payment_method"
-											label="Movimento Bancário"
-											value={formData?.payment_method || ''}
-											data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
-											defaultText="Selecione"
-											onChange={handleInputChange}
-										/>
-										<div className="col-span-2 mt-2">
-											<ButtonSubmit
-												isLoading={isLoadingSubmit}
-												disabled={isLoadingSubmit}
-											/>
-										</div>
-									</div>
-								</form>
-							</fieldset>
+				<CashRegisterEditor />
+				<fieldset>
+					<legend className="flex gap-1">Filtro {isLoading && <Spinner />}</legend>
+					<div className="flex p-2 border">
+						<div className="flex gap-1 ml-auto items-end">
+							<Input
+								type="number"
+								name="year"
+								label="Ano"
+								value={filter?.year || ''}
+								onChange={handleChangeFilter}
+							/>
+							<Select
+								name="month"
+								label="Mês"
+								value={filter?.month || ''}
+								data={DateUtils.getMonthList().map((month) => ({
+									text: DateUtils.getMonthExt(month),
+									value: String(month)
+								}))}
+								defaultText="Todos"
+								onChange={handleChangeFilter}
+							/>
+							<Select
+								name="payment_method"
+								label="Tipo de pagamento"
+								value={filter?.payment_method || ''}
+								data={PaymentUtils.getMethods().map((payment) => ({
+									text: payment
+								}))}
+								defaultText="Todos"
+								onChange={handleChangeFilter}
+							/>
+							<div className="flex">
+								<button
+									className="btn-primary"
+									onClick={handleFilter}
+									disabled={isLoading}
+								>
+									{isLoading ? <Spinner /> : <IconSearch />}
+								</button>
+							</div>
 						</div>
-					)}
-				</div>
+					</div>
+					<table className="w-full text-sm">
+						<thead className="font-semibold uppercase border-b">
+							<tr>
+								<td>Data</td>
+								<td>Descrição de operação</td>
+								<td>Tipo operação</td>
+								<td>Valor</td>
+								<td>Saldo após movimento</td>
+								<td>Movimento bancário</td>
+							</tr>
+						</thead>
+						<tbody>
+							{transactions.map((transaction, i) => {
+								const bg = i % 2 == 0 ? 'bg-gray-50' : 'bg-none'
+								const sinal = transaction.operation_type == 'Entrada' ? '+' : '-'
+								return (
+									<tr key={transaction.id} className={`${bg} hover:bg-gray-100`}>
+										<td>{DateUtils.getDatePt(transaction.date)}</td>
+										<td>{transaction.description}</td>
+										<td>{transaction.operation_type}</td>
+										<td className={`${sinal == '+' ? 'text-green-600' : 'text-red-500'}`}>
+											{sinal}
+											{NumberUtils.formatCurrency(transaction.amount)}
+										</td>
+										<td>
+											{NumberUtils.formatCurrency(transaction.post_movement_balance)}
+										</td>
+										<td>{transaction.payment_method}</td>
+									</tr>
+								)
+							})}
+						</tbody>
+					</table>
+				</fieldset>
 			</LayoutBody>
 		</Layout>
 	)

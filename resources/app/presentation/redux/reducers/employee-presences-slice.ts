@@ -14,7 +14,7 @@ export const employeePresenceSlice = createSlice({
 	initialState,
 	reducers: {
 		addEmployeePresenceStore: (state, action: PayloadAction<EmployeePresenceModel>) => {
-			state.employeePresences.push(action.payload)
+			state.employeePresences.unshift(action.payload)
 		},
 		loadEmployeePresenceStore: (
 			state,

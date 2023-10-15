@@ -14,7 +14,7 @@ export const categorySlice = createSlice({
 	initialState,
 	reducers: {
 		addCategoryStore: (state, action: PayloadAction<CategoryModel>) => {
-			state.categories.push(action.payload)
+			state.categories.unshift(action.payload)
 		},
 		loadCategoryStore: (state, action: PayloadAction<CategoryModel[]>) => {
 			state.categories = action.payload

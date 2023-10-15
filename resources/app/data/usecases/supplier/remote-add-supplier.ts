@@ -2,7 +2,6 @@ import { SupplierModel } from '@/domain/models'
 import { AddSupplier } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils } from '@/utils'
 
 export class RemoteAddSupplier implements AddSupplier {
 	constructor(
@@ -11,11 +10,10 @@ export class RemoteAddSupplier implements AddSupplier {
 	) {}
 
 	async add(param: SupplierModel): Promise<SupplierModel> {
-		const body = FormDataUtils.createFormData({ ...param })
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
-			body
+			body: param
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

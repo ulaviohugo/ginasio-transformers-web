@@ -40,7 +40,7 @@ class ProductUpdateRequest extends GlobalFormRequest
 						->where('category_id', $categoryId);
 				})
 			],
-			'price' => 'required|numeric|gt:0',
+			'price' => 'nullable|numeric|gt:0',
 		];
 	}
 }

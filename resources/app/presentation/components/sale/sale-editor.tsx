@@ -23,13 +23,15 @@ import { ArrayUtils, ColorUtils, LabelUtils, NumberUtils, PaymentUtils } from '@
 import {
 	addSaleStore,
 	loadCustomerStore,
+	loadEmployeeStore,
 	loadPurchaseStore,
 	updateSaleStore
 } from '@/presentation/redux'
 import { AddSale } from '@/domain/usecases'
-import { useAuth, useCustomers, usePurchases } from '@/presentation/hooks'
+import { useAuth, useCustomers, useEmployees, usePurchases } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
+	makeRemoteLoadEmployees,
 	makeRemoteLoadPurchases
 } from '@/main/factories/usecases'
 
@@ -60,8 +62,11 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	const stocks = useSelector(usePurchases())
 	const customers = useSelector(useCustomers())
 	const user = useSelector(useAuth())
+	const employees = useSelector(useEmployees())
 
-	const [formData] = useState<ProductSaleModel>(data || ({} as ProductSaleModel))
+	const [formData] = useState<ProductSaleModel>(
+		data || ({ employee_id: user.id } as ProductSaleModel)
+	)
 
 	const [cart, setCart] = useState<ProductSaleProps[]>([])
 
@@ -116,7 +121,8 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	}, [formProduct?.category_id])
 
 	const [customer_id, setCustomerId] = useState<number>()
-	const [payment_method, setpayment_method] = useState('')
+	const [paymentMethod, setPaymentMethod] = useState('')
+	const [employeeId, setEmployeeId] = useState<number>(user.id)
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [photPreview] = useState('')
@@ -141,6 +147,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 		})
 		fetchData(makeRemoteLoadPurchases(), (response) => {
 			dispatch(loadPurchaseStore(response))
+		})
+		fetchData(makeRemoteLoadEmployees(), (response) => {
+			dispatch(loadEmployeeStore(response))
 		})
 		// if (data?.purchase) {
 		// 	setSelectedItem(data.purchase)
@@ -233,16 +242,17 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
-		if (!payment_method) return toast.error('Selecione o método de pagamento')
+		if (!paymentMethod) return toast.error('Selecione o método de pagamento')
 		setIsLoading(true)
 		try {
 			const data = {
-				productSales: cart,
+				product_sales: cart,
 				customer_id,
-				payment_method,
+				payment_method: paymentMethod,
 				total_value: totalValue,
 				discount: totalDiscount,
-				amount_paid: totalValue - totalDiscount
+				amount_paid: totalValue - totalDiscount,
+				employee_id: employeeId
 			} as any
 			console.log({ data })
 
@@ -375,12 +385,6 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 								onChange={handleInputChange}
 							/>
 						</div>
-						<Input
-							value={data?.sale.employee?.name || user.name}
-							label={`Funcionário`}
-							disabled
-							onChange={handleInputChange}
-						/>
 					</div>
 					<div className="flex gap-2 items-start mt-2 pt-2 border-t">
 						<div className="flex gap-2">
@@ -464,13 +468,23 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 											<Select
 												id="payment_method"
 												name="payment_method"
-												value={payment_method || ''}
+												value={paymentMethod || ''}
 												label={LabelUtils.translateField('payment_method')}
 												data={PaymentUtils.getMethods().map((paymentType) => ({
 													text: paymentType
 												}))}
 												defaultText="Selecione"
-												onChange={(e) => setpayment_method(e.target.value)}
+												onChange={(e) => setPaymentMethod(e.target.value)}
+											/>
+											<Select
+												value={data?.sale.employee?.id || user.id}
+												label={`Funcionário`}
+												data={employees.map(({ id, name }) => ({
+													text: name,
+													value: id
+												}))}
+												defaultText="Selecione"
+												onChange={({ target: { value } }) => setEmployeeId(Number(value))}
 											/>
 											<ButtonSubmit
 												onClick={handleSubmit}

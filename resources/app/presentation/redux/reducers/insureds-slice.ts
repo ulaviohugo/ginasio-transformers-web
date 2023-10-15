@@ -14,7 +14,7 @@ export const InsuredSlice = createSlice({
 	initialState,
 	reducers: {
 		addInsuredStore: (state, action: PayloadAction<InsuredModel>) => {
-			state.insureds.push(action.payload)
+			state.insureds.unshift(action.payload)
 		},
 		loadInsuredStore: (state, action: PayloadAction<InsuredModel[]>) => {
 			state.insureds = action.payload

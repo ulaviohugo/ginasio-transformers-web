@@ -14,7 +14,7 @@ export const notificationSlice = createSlice({
 	initialState,
 	reducers: {
 		addNotificationStore: (state, action: PayloadAction<NotificationModel>) => {
-			state.notifications.push(action.payload)
+			state.notifications.unshift(action.payload)
 		},
 		loadNotificationStore: (state, action: PayloadAction<NotificationModel[]>) => {
 			state.notifications = action.payload

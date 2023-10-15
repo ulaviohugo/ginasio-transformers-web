@@ -14,7 +14,7 @@ export const purchaseSlice = createSlice({
 	initialState,
 	reducers: {
 		addPurchaseStore: (state, action: PayloadAction<PurchaseModel>) => {
-			state.purchases.push(action.payload)
+			state.purchases.unshift(action.payload)
 		},
 		loadPurchaseStore: (state, action: PayloadAction<PurchaseModel[]>) => {
 			state.purchases = action.payload

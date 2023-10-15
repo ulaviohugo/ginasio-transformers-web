@@ -14,7 +14,7 @@ export const employeeSlice = createSlice({
 	initialState,
 	reducers: {
 		addEmployeeStore: (state, action: PayloadAction<EmployeeModel>) => {
-			state.employees.push(action.payload)
+			state.employees.unshift(action.payload)
 		},
 		loadEmployeeStore: (state, action: PayloadAction<EmployeeModel[]>) => {
 			state.employees = action.payload

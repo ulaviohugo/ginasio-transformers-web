@@ -11,7 +11,8 @@ import {
 	productReducer,
 	purchaseReducer,
 	saleReducer,
-	supplierReducer
+	supplierReducer,
+	transactionReducer
 } from './reducers'
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
 		auth: authReducer,
 		categories: categoryReducer,
 		customers: customerReducer,
+		insureds: InsuredReducer,
 		employees: employeeReducer,
 		employeePresences: employeePresenceReducer,
 		locations: locationReducer,
@@ -27,7 +29,7 @@ export const store = configureStore({
 		purchases: purchaseReducer,
 		sales: saleReducer,
 		suppliers: supplierReducer,
-		insureds: InsuredReducer
+		transactions: transactionReducer
 	}
 })
 

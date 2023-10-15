@@ -2,7 +2,7 @@ import { ProductModel } from '@/domain/models'
 import { UpdateProduct } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/utils'
+import { ObjectUtils } from '@/utils'
 
 export class RemoteUpdateProduct implements UpdateProduct {
 	constructor(
@@ -18,12 +18,11 @@ export class RemoteUpdateProduct implements UpdateProduct {
 			'user_id_update',
 			'category'
 		])
-		const body = FormDataUtils.createFormData(handledParam)
 
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,
-			body
+			body: handledParam
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

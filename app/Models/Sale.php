@@ -22,4 +22,9 @@ class Sale extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function productSales()
+	{
+		return $this->hasMany(ProductSale::class);
+	}
 }

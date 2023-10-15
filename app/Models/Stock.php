@@ -32,4 +32,14 @@ class Stock extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function category()
+	{
+		return $this->belongsTo(Category::class);
+	}
+
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
 }

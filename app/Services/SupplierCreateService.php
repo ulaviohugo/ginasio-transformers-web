@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\FileHelper;
 use App\Models\Supplier;
 use App\Models\SupplierProduct;
 use App\Models\User;
@@ -19,12 +20,17 @@ class SupplierCreateService
 
 			$userId = User::currentUserId();
 
+			$photo = null;
+			if ($request->photo) {
+				$photo = FileHelper::uploadBase64($request->photo, 'uploads/suppliers');
+			}
+
 			$supplier =	Supplier::create([
 				'name' => $request->name,
 				'representative' => $request->representative,
 				'email' => $request->email,
 				'phone' => $request->phone,
-				'photo' => $request->photo,
+				'photo' => $photo,
 				'country_id' => $request->country_id,
 				'province_id' => $request->province_id,
 				'municipality_id' => $request->municipality_id,

@@ -16,3 +16,4 @@ export const useProducts = () => (state: RootState) => state.products.products
 export const usePurchases = () => (state: RootState) => state.purchases.purchases
 export const useSales = () => (state: RootState) => state.sales.sales
 export const useSuppliers = () => (state: RootState) => state.suppliers.suppliers
+export const useTransactions = () => (state: RootState) => state.transactions.transactions

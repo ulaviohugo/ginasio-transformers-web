@@ -26,4 +26,9 @@ class Transaction extends Model
 		'user_id',
 		'update_by_id',
 	];
+
+	public function cashRegister()
+	{
+		return $this->belongsTo(CashRegister::class);
+	}
 }

@@ -52,8 +52,8 @@ class SupplierCreateRequest extends GlobalFormRequest
 			],
 			'address' => 'required',
 			'supplier_products' => 'required',
-			// 'supplier_products.*.product_id' => 'required|numeric|gt:0|exists:' . DBHelper::TB_PRODUCTS . ',id',
-			// 'supplier_products.*.unit_price' => 'required|numeric|gt:0',
+			'supplier_products.*.product_id' => 'required|exists:' . DBHelper::TB_PRODUCTS . ',id',
+			'supplier_products.*.unit_price' => 'required|numeric|gt:0',
 		];
 	}
 
@@ -66,8 +66,8 @@ class SupplierCreateRequest extends GlobalFormRequest
 			'supplier_products.*.product_id.gt' => 'Cada identificador do produto dever ser um valor maior que 0.',
 			'supplier_products.*.product_id.exists' => 'Informou um produto inválido.',
 			'supplier_products.*.unit_price.required' => 'Cada produto dever na lista deve ter um identificador.',
-			'supplier_products.*.unit_price.numeric' => 'Cada identificador do produto dever ser um valor numérico.',
-			'supplier_products.*.unit_price.gt' => 'Cada identificador do produto dever ser um valor maior que 0.',
+			'supplier_products.*.unit_price.numeric' => 'O preço de cada produto dever ser um valor numérico.',
+			'supplier_products.*.unit_price.gt' => 'O preço de cada produto dever ser um valor maior que 0.',
 			'supplier_products.*.unit_price.exists' => 'Informou um produto inválido.',
 		];
 	}

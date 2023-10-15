@@ -14,7 +14,7 @@ type FormDataProps = {
 	date: any
 }
 
-export type ProductCardChangeProps = {
+export type SupplierProductCardChangeProps = {
 	index: number
 	name: string
 	value: string
@@ -53,13 +53,17 @@ export function ProductionBudgetEditor() {
 			.catch(({ message }) => toast.error(message))
 	}, [])
 
-	const handleChangeFabric = ({ index, name, value }: ProductCardChangeProps) => {
+	const handleChangeFabric = ({ index, name, value }: SupplierProductCardChangeProps) => {
 		let data = fabricItems[index] || { [index]: { [name]: value } }[index]
 		data = { ...data, [name]: value }
 		setFabricItems({ ...fabricItems, [index]: data })
 	}
 
-	const handleChangeAccessory = ({ index, name, value }: ProductCardChangeProps) => {
+	const handleChangeAccessory = ({
+		index,
+		name,
+		value
+	}: SupplierProductCardChangeProps) => {
 		let data = accessoryItems[index] || { [index]: { [name]: value } }[index]
 		data = { ...data, [name]: value }
 		setAccessoryItems({ ...accessoryItems, [index]: data })

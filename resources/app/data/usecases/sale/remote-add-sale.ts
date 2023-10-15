@@ -14,11 +14,10 @@ export class RemoteAddSale implements AddSale {
 		// 	...param,
 		// 	total_value,
 		// })
-		const body = JSON.stringify(param)
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
-			body
+			body: param
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

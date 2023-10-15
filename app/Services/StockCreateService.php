@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\FileHelper;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Transaction;
@@ -18,8 +19,14 @@ class StockCreateService
 		$quantity = intval($request->quantity);
 		$totalValue = $unitPrice * $quantity;
 
-		$stock =	Stock::create([
-			'photo' => $request->photo,
+		$photo = null;
+		if ($request->photo) {
+			$photo = FileHelper::uploadBase64($request->photo, 'uploads/stocks');
+		}
+
+		$paid = $request->paid == 'true' || $request->paid == true;
+
+		$stock =	Stock::create(['photo' => $photo,
 			'lot' => $request->lot,
 			'bar_code' => $request->bar_code,
 			'supplier_id' => $request->supplier_id,
@@ -32,7 +39,7 @@ class StockCreateService
 			'total_value' => $totalValue,
 			'payment_method' => $request->payment_method,
 			'selling_price_unit' => $request->selling_price_unit,
-			'paid' => $request->paid,
+			'paid' => $paid,
 			'purchase_date' => $request->purchase_date,
 			'due_date' => $request->due_date,
 			'employee_id' => $request->employee_id ?? $userId,

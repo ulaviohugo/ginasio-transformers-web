@@ -32,4 +32,9 @@ class FileHelper
 		$link = $file ? "storage/$file" : "storage";
 		return asset($link);
 	}
+
+	static function delete($file)
+	{
+		Storage::delete($file);
+	}
 }

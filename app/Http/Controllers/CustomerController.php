@@ -10,7 +10,6 @@ use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -59,8 +58,9 @@ class CustomerController extends Controller
 			if ($request->photo) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/customers');
 				if ($customer->photo) {
-					Storage::delete($customer->photo);
+					FileHelper::delete($customer->photo);
 				}
+				$customer->photo = $photo;
 			}
 			$customer->name = trim($request->name);
 			$customer->gender = $request->gender;
@@ -72,9 +72,7 @@ class CustomerController extends Controller
 			$customer->address = $request->address;
 			$customer->municipality_id = $request->municipality_id;
 			$customer->user_id_update = User::currentUserId();
-			if ($photo) {
-				$customer->photo = $photo;
-			}
+
 			$customer->save();
 			return HttpResponse::success(data: new CustomerResource($customer));
 		} catch (\Throwable $th) {
@@ -101,7 +99,7 @@ class CustomerController extends Controller
 			$customer->delete();
 
 			if ($photo) {
-				Storage::delete($photo);
+				FileHelper::delete($photo);
 			}
 			return HttpResponse::success(message: 'Cliente excluída com sucesso');
 		} catch (\Throwable $th) {

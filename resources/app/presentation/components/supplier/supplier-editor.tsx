@@ -25,11 +25,12 @@ import {
 	ModalTitle,
 	Select,
 	SupplierProductEditor,
-	ProductCardChangeProps
+	SupplierProductCardChangeProps
 } from '..'
 
 import {
 	ArrayUtils,
+	FileUtils,
 	LabelUtils,
 	MunicipalityProps,
 	NumberUtils,
@@ -77,7 +78,7 @@ export function SupplierEditor({
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
 	const [formDate, setFormData] = useState<SupplierModel>(
-		supplier || ({} as SupplierModel)
+		(supplier && { ...supplier, photo: undefined }) || ({} as SupplierModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
@@ -145,14 +146,18 @@ export function SupplierEditor({
 			)
 		}
 		if (name == 'photo') {
-			const file = (e.target as any)?.files[0]
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...formDate, [name]: file }
-			handleInputFile(file)
+			setPhotoPreview(file)
 		}
 		setFormData(data)
 	}
 
-	const handleChangeProduct = ({ index, name, value }: ProductCardChangeProps) => {
+	const handleChangeProduct = ({
+		index,
+		name,
+		value
+	}: SupplierProductCardChangeProps) => {
 		let data = productItems[index] || { [index]: { [name]: value } }[index]
 		const supplier_id = supplier?.id
 		if (name == 'category_id') {
@@ -162,18 +167,6 @@ export function SupplierEditor({
 		}
 
 		setProductItems({ ...productItems, [index]: data })
-	}
-
-	const handleInputFile = (file: File) => {
-		if (file) {
-			const reader = new FileReader()
-
-			reader.onload = function (e) {
-				setPhotoPreview(String(e.target?.result))
-			}
-
-			reader.readAsDataURL(file)
-		}
 	}
 
 	const clearInputFile = () => {

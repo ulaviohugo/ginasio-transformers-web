@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useCategories, useProducts } from '@/presentation/hooks'
 import { IconClose, InputPrice, Select } from '..'
-import { LabelUtils } from '@/utils'
+import { LabelUtils, NumberUtils } from '@/utils'
 import { ProductModel, SupplierProductModel } from '@/domain/models'
 import { useSelector } from 'react-redux'
 
@@ -32,7 +32,7 @@ export function SupplierProductEditor({
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
-		let data: any = { index: itemIndex, name, value }
+		let data: any = { index: itemIndex, name, value: NumberUtils.convertToNumber(value) }
 		if (name == 'category_id') {
 			data = { ...data, product_id: undefined }
 			setProductList(

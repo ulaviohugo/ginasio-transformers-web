@@ -1,5 +1,6 @@
+import { QueryParams } from '@/data/protocols'
 import { TransactionModel } from '@/domain/models'
 
 export interface LoadTransactions {
-	load(): Promise<TransactionModel[]>
+	load(queryParams?: QueryParams<TransactionModel>): Promise<TransactionModel[]>
 }

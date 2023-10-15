@@ -14,7 +14,7 @@ import {
 	ModalTitle,
 	Select
 } from '..'
-import { LabelUtils } from '@/utils'
+import { FileUtils, LabelUtils } from '@/utils'
 import { useCategories } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeRemoteLoadCategories } from '@/main/factories/usecases'
@@ -70,9 +70,8 @@ export function ProductEditor({
 		let data: ProductModel = { ...formDate, [name]: value }
 
 		if (name == 'photo') {
-			const file = (e.target as any)?.files[0]
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...formDate, [name]: file }
-			// handleInputFile(file)
 		}
 		setFormData(data)
 	}

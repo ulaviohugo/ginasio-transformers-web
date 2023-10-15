@@ -14,7 +14,7 @@ export const customerSlice = createSlice({
 	initialState,
 	reducers: {
 		addCustomerStore: (state, action: PayloadAction<CustomerModel>) => {
-			state.customers.push(action.payload)
+			state.customers.unshift(action.payload)
 		},
 		loadCustomerStore: (state, action: PayloadAction<CustomerModel[]>) => {
 			state.customers = action.payload

@@ -29,11 +29,7 @@ export function Select({
 				onBlur={() => setFocused(false)}
 				{...props}
 			>
-				{defaultText && (
-					<option disabled value="">
-						{defaultText}
-					</option>
-				)}
+				{defaultText && <option value="">{defaultText}</option>}
 				{data?.map((option) => {
 					const value = option?.value || option.text
 					return (
