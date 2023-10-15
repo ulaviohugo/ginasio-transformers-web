@@ -60,7 +60,7 @@ type ModalBodyProps = {
 }
 
 export function ModalBody({ children }: ModalBodyProps) {
-	return <div className="overflow-auto p-1 max-h-[95%] w-full">{children}</div>
+	return <div className="overflow-auto p-1 max-h-[95%]">{children}</div>
 }
 
 export function ModalFooter({ children }: ModalTitleProps) {

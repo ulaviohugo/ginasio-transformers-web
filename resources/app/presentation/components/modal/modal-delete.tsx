@@ -25,7 +25,7 @@ export function ModalDelete({
 	}
 
 	return (
-		<Modal show={show} onClose={onClose}>
+		<Modal show={show} onClose={onClose} size="sm">
 			<ModalTitle>
 				<IconTrash /> Excluir {entity}
 			</ModalTitle>
