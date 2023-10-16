@@ -31,4 +31,9 @@ class Transaction extends Model
 	{
 		return $this->belongsTo(CashRegister::class);
 	}
+
+	public function lastCashRegister()
+	{
+		return $this->hasOne(CashRegister::class, 'id', 'cash_register_id')->latestOfMany();
+	}
 }

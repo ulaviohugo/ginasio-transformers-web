@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux'
 
 export function ProductionBudgets() {
 	const user = useSelector(useAuth())
+
+	fetch('', { redirect: 'follow' })
 	return (
 		<Layout>
 			<LayoutBody>

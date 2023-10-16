@@ -11,7 +11,21 @@ import { ProductionBudgetFabricEditor } from './production-budget-fabric-editor'
 import { ProductionBudgetAccessoryEditor } from './production-budget-accessory-editor'
 
 type FormDataProps = {
-	date: any
+	date: Date
+
+	cutting_employee_id: number
+	cutting_base_salary: number
+	cutting_day: number
+	cutting_hour: number
+	cutting_minute: number
+	cutting_duration_per_minute: number
+
+	sewing_employee_id: number
+	sewing_base_salary: number
+	sewing_day: number
+	sewing_hour: number
+	sewing_minute: number
+	sewing_duration_per_minute: number
 }
 
 export type SupplierProductCardChangeProps = {
@@ -22,7 +36,7 @@ export type SupplierProductCardChangeProps = {
 
 export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
-	const [formData, setFormData] = useState<FormDataProps>({ date: new Date() })
+	const [formData, setFormData] = useState<FormDataProps>({ date: new Date() } as any)
 
 	const [fabricItems, setFabricItems] = useState<any>({
 		0: {},
@@ -88,144 +102,156 @@ export function ProductionBudgetEditor() {
 	}
 
 	return (
-		<div className="flex flex-col gap-3 p-4 shadow-md">
-			<fieldset>
-				<legend>Cliente</legend>
-				<div className="flex gap-1">
-					<Select label="Nome do cliente" defaultText="Selecione" data={[]} />
-					<Select label="Tipo de peça" defaultText="Selecione" data={[]} />
-					<Input
-						label="Data"
-						type="date"
-						value={DateUtils.getDate(formData.date) || ''}
-						onChange={handleInputChange}
-					/>
-					<Select
-						label="Avaliação"
-						defaultText="Selecione"
-						data={[{ text: 'Bom' }, { text: 'Mau' }, { text: 'Excelente' }]}
-					/>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>Colaborador</legend>
-				<table className="w-full">
-					<thead>
-						<tr>
-							<td>Produção</td>
-							<td>Funcionário</td>
-							<td>Salário</td>
-							<td>Dia</td>
-							<td>Hora</td>
-							<td>Minuto</td>
-							<td>Tempo Min.</td>
-						</tr>
-					</thead>
-					<tbody>
-						<EmployeeBox
-							data={{
-								title: 'Corte',
-								employees,
-								onChange: handleInputChange,
-								prefix: 'cutting',
-								formData
-							}}
-						/>
-						<EmployeeBox
-							data={{
-								title: 'Costura',
-								employees,
-								onChange: handleInputChange,
-								prefix: 'sewing',
-								formData
-							}}
-						/>
-					</tbody>
-				</table>
-			</fieldset>
-
-			<div className="grid grid-cols-7 gap-4">
-				<fieldset className="col-span-4">
-					<legend>Tecidos</legend>
-					<table className="w-full">
-						<thead>
-							<tr>
-								<td className="px-2">Tipo de tecido</td>
-								<td className="px-2">Cor</td>
-								<td className="px-2">Metros</td>
-								<td className="px-2">Custo</td>
-							</tr>
-						</thead>
-						<tbody>
-							{fabricList.map((key, i) => {
-								return (
-									<ProductionBudgetFabricEditor
-										key={key}
-										fabrics={[
-											{ id: 1, name: 'Tecido' } as any,
-											{ id: 2, name: 'Tecido 2' }
-										]}
-										fabricItem={fabricItems[key]}
-										index={i}
-										itemIndex={Number(key)}
-										onChange={handleChangeFabric}
-									/>
-								)
-							})}
-						</tbody>
-					</table>
-				</fieldset>
-				<fieldset className="col-span-3">
-					<legend>Acessórios</legend>
-					<table className="w-full">
-						<thead>
-							<tr>
-								<td className="px-2">Tipo de acessórios</td>
-								<td className="px-2">Quantidade</td>
-								<td className="px-2">Preço</td>
-							</tr>
-						</thead>
-						<tbody>
-							{fabricList.map((key, i) => {
-								return (
-									<ProductionBudgetAccessoryEditor
-										key={key}
-										accessories={[
-											{ id: 1, name: 'Acessório' } as any,
-											{ id: 2, name: 'Acessório 2' }
-										]}
-										accessoryItem={accessoryItems[key]}
-										index={i}
-										itemIndex={Number(key)}
-										onChange={handleChangeAccessory}
-									/>
-								)
-							})}
-						</tbody>
-					</table>
-				</fieldset>
-			</div>
-
-			<fieldset>
-				<legend>Pagamentos</legend>
-				<div className="flex gap-12">
+		<div className="flex gap-4">
+			<div className="flex flex-col gap-3">
+				<fieldset>
+					<legend>Cliente</legend>
 					<div className="flex gap-1">
-						<Input label="Custo corte" />
-						<Input label="Custo costura" />
-						<Input label="Custo variável" />
-						<Input label="Acabamento" />
-						<Input label="Custo Produção" />
+						<Select label="Nome do cliente" defaultText="Selecione" data={[]} />
+						<Select label="Tipo de peça" defaultText="Selecione" data={[]} />
+						<Input
+							label="Data"
+							type="date"
+							value={DateUtils.getDate(formData.date) || ''}
+							onChange={handleInputChange}
+						/>
+						<Select
+							label="Avaliação"
+							defaultText="Selecione"
+							data={[{ text: 'Bom' }, { text: 'Mau' }, { text: 'Excelente' }]}
+							onChange={handleInputChange}
+						/>
 					</div>
-					<div className="flex gap-1 ml-auto">
-						<Input label="Custo venda" />
-						<Input label="Desconto" />
-						<Input label="Total a pagar" />
-					</div>
+				</fieldset>
+				<fieldset>
+					<legend>Colaborador</legend>
+					<table className="w-full">
+						<thead>
+							<tr>
+								<td>Produção</td>
+								<td>Funcionário</td>
+								<td>Salário</td>
+								<td>Dia</td>
+								<td>Hora</td>
+								<td>Minuto</td>
+								<td>Tempo Min.</td>
+							</tr>
+						</thead>
+						<tbody>
+							<EmployeeBox
+								data={{
+									title: 'Corte',
+									employees,
+									onChange: handleInputChange,
+									prefix: 'cutting',
+									formData
+								}}
+							/>
+							<EmployeeBox
+								data={{
+									title: 'Costura',
+									employees,
+									onChange: handleInputChange,
+									prefix: 'sewing',
+									formData
+								}}
+							/>
+						</tbody>
+					</table>
+				</fieldset>
+
+				<div className="grid grid-cols-7 gap-4">
+					<fieldset className="col-span-4">
+						<legend>Tecidos</legend>
+						<table className="w-full">
+							<thead>
+								<tr>
+									<td className="px-2">Tipo de tecido</td>
+									<td className="px-2">Cor</td>
+									<td className="px-2">Metros</td>
+									<td className="px-2">Custo</td>
+								</tr>
+							</thead>
+							<tbody>
+								{fabricList.map((key, i) => {
+									return (
+										<ProductionBudgetFabricEditor
+											key={key}
+											fabrics={[
+												{ id: 1, name: 'Tecido' } as any,
+												{ id: 2, name: 'Tecido 2' }
+											]}
+											fabricItem={fabricItems[key]}
+											index={i}
+											itemIndex={Number(key)}
+											onChange={handleChangeFabric}
+										/>
+									)
+								})}
+							</tbody>
+						</table>
+					</fieldset>
+					<fieldset className="col-span-3">
+						<legend>Acessórios</legend>
+						<table className="w-full">
+							<thead>
+								<tr>
+									<td className="px-2">Tipo de acessórios</td>
+									<td className="px-2">Quantidade</td>
+									<td className="px-2">Preço</td>
+								</tr>
+							</thead>
+							<tbody>
+								{fabricList.map((key, i) => {
+									return (
+										<ProductionBudgetAccessoryEditor
+											key={key}
+											accessories={[
+												{ id: 1, name: 'Acessório' } as any,
+												{ id: 2, name: 'Acessório 2' }
+											]}
+											accessoryItem={accessoryItems[key]}
+											index={i}
+											itemIndex={Number(key)}
+											onChange={handleChangeAccessory}
+										/>
+									)
+								})}
+							</tbody>
+						</table>
+					</fieldset>
+				</div>
+			</div>
+			<fieldset className="w-80">
+				<legend>Pagamentos</legend>
+				<div className="flex gap-1 flex-col ml-auto">
+					<Item label="Custo corte" value={0} />
+					<Item label="Custo costura" value={0} />
+					<Item label="Custo variável" value={0} />
+					{/* Acabamento é uma constante */}
+					<Input label="Acabamento" value={250} />
+
+					<Item label="Custo Produção" value={0} />
+					<Input label="Custo venda" />
+					<Input label="Desconto" />
+					<Item label="Total a pagar" value={0} />
 				</div>
 			</fieldset>
 		</div>
 	)
 }
+
+type ItemProps = {
+	label: string
+	value: string | number
+	className?: string
+}
+const Item = ({ className = '', label, value = 0 }: ItemProps) => (
+	<div className={`${className}`}>
+		<div>{label}</div>
+		<div className="border px-2 py-1 rounded-md">{value}</div>
+	</div>
+)
 
 type EmployeeBoxProps = {
 	title: string

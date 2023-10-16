@@ -112,7 +112,7 @@ export function CashRegisterEditor() {
 											<label htmlFor="" className="font-semibold">
 												Saldo inicial
 											</label>
-											<div className="border rounded-md font-semibold px-2 py-1">
+											<div className="border rounded-md font-semibold px-2 py-1 bg-gray-100">
 												{NumberUtils.formatCurrency(cashRegister.initial_balance)}
 											</div>
 										</div>
@@ -121,9 +121,8 @@ export function CashRegisterEditor() {
 												Saldo actual
 											</label>
 											<div
-												className={`border rounded-md font-semibold px-2 py-1 ${
-													NumberUtils.convertToNumber(cashRegister.balance) <
-													NumberUtils.convertToNumber(cashRegister.initial_balance)
+												className={`border rounded-md font-semibold px-2 py-1 text-2xl bg-gray-100 ${
+													NumberUtils.convertToNumber(cashRegister.balance) < 10000
 														? 'text-red-500'
 														: 'text-green-500'
 												}`}

@@ -23,6 +23,7 @@ type FilterProps = {
 	year: number
 	month: number
 	payment_method: number
+	operation_type: string
 }
 
 export function CashRegister() {
@@ -93,6 +94,16 @@ export function CashRegister() {
 								data={DateUtils.getMonthList().map((month) => ({
 									text: DateUtils.getMonthExt(month),
 									value: String(month)
+								}))}
+								defaultText="Todos"
+								onChange={handleChangeFilter}
+							/>
+							<Select
+								name="operation_type"
+								label="Tipo de operação"
+								value={filter?.operation_type || ''}
+								data={['Entrada', 'Saída'].map((payment) => ({
+									text: payment
 								}))}
 								defaultText="Todos"
 								onChange={handleChangeFilter}

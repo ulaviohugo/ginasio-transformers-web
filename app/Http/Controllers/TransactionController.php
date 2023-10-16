@@ -20,12 +20,14 @@ class TransactionController extends Controller
 			$year = null;
 			$month = null;
 			$paymentMethod = null;
+			$operationType = null;
 
 			if (request()->query('filter')) {
 				$queryParam = json_decode(request()->query('filter'));
 				$year = isset($queryParam->year) ? $queryParam->year : null;
 				$month = isset($queryParam->month) ? $queryParam->month : null;
 				$paymentMethod = isset($queryParam->payment_method) ? $queryParam->payment_method : null;
+				$operationType = isset($queryParam->operation_type) ? $queryParam->operation_type : null;
 			}
 
 			$transactions = Transaction::orderBy('date', 'desc');
@@ -38,9 +40,13 @@ class TransactionController extends Controller
 			if ($paymentMethod) {
 				$transactions = $transactions->where('payment_method', $paymentMethod);
 			}
+			if ($operationType) {
+				$transactions = $transactions->where('operation_type', $operationType);
+			}
 			$transactions = $transactions->get();
 
-			$transactions->load('cashRegister');
+			// $transactions->load('cashRegister');
+			$transactions->load('lastCashRegister');
 			return $transactions;
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar transacções' . $th->getMessage());
@@ -54,7 +60,7 @@ class TransactionController extends Controller
 	{
 		try {
 			$createdSale = $service->execute($request);
-			$createdSale->load('cashRegister');
+			$createdSale->load('lastCashRegister');
 			return HttpResponse::success(data: $createdSale);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar venda' . $th->getMessage());
