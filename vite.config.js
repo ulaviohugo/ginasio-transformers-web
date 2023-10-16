@@ -12,7 +12,7 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			'@': '/resources/app' // Caminho para a pasta de recursos do seu projeto
+			'@': '/resources/app'
 		}
 	}
 })
