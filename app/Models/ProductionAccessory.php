@@ -23,4 +23,9 @@ class ProductionAccessory extends Model
 	{
 		return $this->belongsTo(ProductionBudget::class, 'production_id');
 	}
+
+	public function accessory()
+	{
+		return $this->belongsTo(Accessory::class);
+	}
 }

@@ -2,48 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ErrorHandler;
+use App\Helpers\HttpResponse;
+use App\Http\Requests\ProductionBudgetCreateRequest;
+use App\Http\Resources\ProductionBudgetResource;
 use App\Models\ProductionBudget;
+use App\Services\ProductionBudgetService;
 use Illuminate\Http\Request;
 
 class ProductionBudgetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+	private $relationship = [
+		'customer',
+		'cuttingEmployee',
+		'sewingEmployee',
+		'productionAccessories',
+		'productionFabrics'
+	];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	public function index()
+	{
+		try {
+			$this->authorize('viewAny', ProductionBudget::class);
+			$productionBudget = ProductionBudget::all();
+			$productionBudget->load($this->relationship);
+			return ProductionBudgetResource::collection($productionBudget);
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar orçamento');
+		}
+	}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductionBudget $productionBudget)
-    {
-        //
-    }
+	public function store(ProductionBudgetCreateRequest $request, ProductionBudgetService $service)
+	{
+		try {
+			$createdProduction = $service->execute($request);
+			return HttpResponse::success(data: new ProductionBudgetResource($createdProduction));
+		} catch (\Throwable $th) {
+			return HttpResponse::error(message: 'Erro ao cadastrar orçamento');
+		}
+	}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ProductionBudget $productionBudget)
-    {
-        //
-    }
+	public function show(ProductionBudget $productionBudget)
+	{
+		//
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductionBudget $productionBudget)
-    {
-        //
-    }
+	public function update(Request $request, ProductionBudget $productionBudget)
+	{
+		//
+	}
+
+	public function destroy(ProductionBudget $productionBudget)
+	{
+		//
+	}
 }

@@ -41,7 +41,7 @@ export function ProductionBudgetAccessoryEditor({
 				<Select
 					name="accessory_id"
 					defaultText="Selecione"
-					data={accessories.map(({ id, name }) => ({ text: name, value: id }))}
+					data={accessories?.map(({ id, name }) => ({ text: name, value: id }))}
 					value={accessoryItem.accessory_id || ''}
 					onChange={handleInputChange}
 				/>

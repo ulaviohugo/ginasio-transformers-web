@@ -39,7 +39,6 @@ export const getSalaryItems = (
 	const { base_salary = 0 } = employee
 	const workedDays = NumberUtils.convertToNumber(receiptDate.workedDays)
 	const currentBaseSalary = SalaryUtils.getSalaryPerDay(base_salary) * workedDays
-	console.log({ workedDays })
 
 	const percent = SalaryUtils.getIRtPercent(currentBaseSalary)
 	const irtPercent = percent ? `${percent}%` : 'Isento'

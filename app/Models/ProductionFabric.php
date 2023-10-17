@@ -16,12 +16,17 @@ class ProductionFabric extends Model
 		'production_id',
 		'fabric_id',
 		'color',
-		'meter',
+		'meters',
 		'cost',
 	];
 
 	public function production_budget()
 	{
 		return $this->belongsTo(ProductionBudget::class, 'production_id');
+	}
+
+	public function fabric()
+	{
+		return $this->belongsTo(Fabric::class);
 	}
 }

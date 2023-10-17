@@ -2,15 +2,17 @@
 
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
+use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeePresenceController;
-use App\Http\Controllers\InsuredController;
+use App\Http\Controllers\FabricController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductionBudgetController;
 use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
@@ -36,6 +38,8 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::get('/me', [AuthController::class, 'me']);
 	Route::post('/refresh-token', [AuthController::class, 'refresh']);
 
+	Route::apiResource('accessories', AccessoryController::class);
+
 	Route::get('categories/count', [CategoryController::class, 'count']);
 	Route::apiResource('categories', CategoryController::class);
 
@@ -52,9 +56,13 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::apiResource('employee-presences', EmployeePresenceController::class);
 
+	Route::apiResource('fabrics', FabricController::class);
+
 	// Route::apiResource('insureds', InsuredController::class);
 
 	Route::apiResource('notifications', NotificationController::class);
+
+	Route::apiResource('production-budgets', ProductionBudgetController::class);
 
 	Route::get('products/count', [ProductController::class, 'count']);
 	Route::apiResource('products', ProductController::class);

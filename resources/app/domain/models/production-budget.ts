@@ -3,6 +3,7 @@ import { FabricAccessoryModel } from './accessory'
 export type ProductionBudgetModel = {
 	id: number
 	end_product: number
+	photo: string
 	date: Date
 	customer_id: number
 	customer_rating: string

@@ -17,6 +17,7 @@ return new class extends Migration
 
 			$table->string('end_product');
 			$table->date('date');
+			$table->string('photo')->nullable();
 			$table->foreignId('customer_id')->nullable()->references('id')->on(DBHelper::TB_CUSTOMERS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('customer_rating')->nullable();
 			$table->foreignId('cutting_employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();

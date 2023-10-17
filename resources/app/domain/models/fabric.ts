@@ -13,7 +13,7 @@ export type ProductionFabricModel = {
 	production_id: number
 	fabric_id: number
 	color: number
-	meter: number
+	meters: number
 	cost: number
 
 	fabric: FabricModel

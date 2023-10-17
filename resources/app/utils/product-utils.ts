@@ -1,4 +1,4 @@
-import { CategoryModel, ProductModel } from '@/domain/models'
+import { CategoryModel } from '@/domain/models'
 
 export class ProductUtils {
 	static categories(): CategoryModel[] {

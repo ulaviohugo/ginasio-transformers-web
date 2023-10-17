@@ -12,7 +12,7 @@ export type ProductionFabricCardChangeProps = {
 export type FabricItemProps = {
 	fabric_id: number
 	color: string
-	meter: string
+	meters: string
 	cost: string
 }
 
@@ -43,7 +43,7 @@ export function ProductionBudgetFabricEditor({
 				<Select
 					name="fabric_id"
 					defaultText="Selecione"
-					data={fabrics.map(({ id, name }) => ({ text: name, value: id }))}
+					data={fabrics?.map(({ id, name }) => ({ text: name, value: id }))}
 					value={fabricItem.fabric_id || ''}
 					onChange={handleInputChange}
 				/>
@@ -60,8 +60,8 @@ export function ProductionBudgetFabricEditor({
 			<td className="pb-2 px-2">
 				<Input
 					type="number"
-					name="meter"
-					value={fabricItem.meter || ''}
+					name="meters"
+					value={fabricItem.meters || ''}
 					onChange={handleInputChange}
 				/>
 			</td>

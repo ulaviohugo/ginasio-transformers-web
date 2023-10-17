@@ -15,6 +15,7 @@ class ProductionBudget extends Model
 	protected $fillable = [
 		'end_product',
 		'date',
+		'photo',
 		'customer_id',
 		'customer_rating',
 		'cutting_employee_id',
@@ -33,12 +34,27 @@ class ProductionBudget extends Model
 		'user_id_update',
 	];
 
-	public function production_accessories()
+	public function customer()
+	{
+		return $this->belongsTo(Customer::class);
+	}
+
+	public function cuttingEmployee()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	public function sewingEmployee()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	public function productionAccessories()
 	{
 		return $this->hasMany(ProductionAccessory::class, 'production_id');
 	}
 
-	public function production_fabrics()
+	public function productionFabrics()
 	{
 		return $this->hasMany(ProductionFabric::class, 'production_id');
 	}

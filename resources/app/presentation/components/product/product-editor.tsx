@@ -42,7 +42,7 @@ export function ProductEditor({
 }: ProductEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
-	const [formDate, setFormData] = useState<ProductModel>(data || ({} as ProductModel))
+	const [formData, setFormData] = useState<ProductModel>(data || ({} as ProductModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
 
@@ -67,11 +67,11 @@ export function ProductEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: ProductModel = { ...formDate, [name]: value }
+		let data: ProductModel = { ...formData, [name]: value }
 
 		if (name == 'photo') {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
-			data = { ...formDate, [name]: file }
+			data = { ...formData, [name]: file }
 		}
 		setFormData(data)
 	}
@@ -82,17 +82,17 @@ export function ProductEditor({
 		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formDate.id
-					? await updateProduct.update(formDate)
-					: await addProduct.add(formDate)
+				formData.id
+					? await updateProduct.update(formData)
+					: await addProduct.add(formData)
 			) as ProductModel
 
-			if (formDate.id) {
+			if (formData.id) {
 				dispatch(updateProductStore(httpResponse))
 			} else {
 				dispatch(addProductStore(httpResponse))
 			}
-			toast.success(`Produto ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`)
+			toast.success(`Produto ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
@@ -117,7 +117,7 @@ export function ProductEditor({
 								type="text"
 								id="name"
 								name="name"
-								value={formDate?.name || ''}
+								value={formData?.name || ''}
 								label={LabelUtils.translateField('name')}
 								onChange={handleInputChange}
 								autoFocus
@@ -126,14 +126,14 @@ export function ProductEditor({
 								type="number"
 								id="price"
 								name="price"
-								value={formDate?.price || ''}
+								value={formData?.price || ''}
 								label={LabelUtils.translateField('price')}
 								onChange={handleInputChange}
 							/>
 							<Select
 								id="category_id"
 								name="category_id"
-								value={formDate?.category_id || ''}
+								value={formData?.category_id || ''}
 								label={LabelUtils.translateField('category_id')}
 								data={categories.map((category) => ({
 									text: category.name,

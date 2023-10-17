@@ -17,7 +17,7 @@ return new class extends Migration
 			$table->foreignId('production_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_BUDGETS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignId('fabric_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('color', 16);
-			$table->string('meter', 50);
+			$table->string('meters', 50);
 			$table->double('cost', 16, 3);
 			$table->timestamps();
 		});

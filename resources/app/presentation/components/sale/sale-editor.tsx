@@ -254,7 +254,6 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				amount_paid: totalValue - totalDiscount,
 				employee_id: employeeId
 			} as any
-			console.log({ data })
 
 			const httpResponse = await addSale.add(data)
 

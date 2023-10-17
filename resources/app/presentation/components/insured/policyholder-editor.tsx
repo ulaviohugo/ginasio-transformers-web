@@ -72,8 +72,6 @@ export function PolicyholderEditor({
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 
-		console.log({ name, value })
-
 		let data = { ...formData, [name]: value }
 		if (name == 'province_id') {
 			data = { ...data, municipality_id: undefined }
