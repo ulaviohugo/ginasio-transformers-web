@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Input, InputPrice, Select } from '../form-controls'
-import { DateUtils, FileUtils, SalaryUtils } from '@/utils'
+import { DateUtils, FileUtils, NumberUtils, SalaryUtils } from '@/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCustomers, useEmployees } from '@/presentation/hooks'
 import { loadCustomerStore, loadEmployeeStore } from '@/presentation/redux'
@@ -336,7 +336,7 @@ const EmployeeBox = ({
 					name={`${prefix}_base_salary`}
 					id={`${prefix}_base_salary`}
 					value={formData[`${prefix}_base_salary`] || ''}
-					// onChange={onChange}
+					onChange={onChange}
 					readOnly
 				/>
 			</td>
@@ -345,7 +345,7 @@ const EmployeeBox = ({
 					name={`${prefix}_day`}
 					id={`${prefix}_day`}
 					value={formData[`${prefix}_day`]}
-					// onChange={onChange}
+					onChange={onChange}
 					readOnly
 				/>
 			</td>
@@ -353,13 +353,21 @@ const EmployeeBox = ({
 				<InputPrice
 					name={`${prefix}_hour`}
 					id={`${prefix}_hour`}
+					// value={NumberUtils.format(formData[`${prefix}_hour`]) || ''}
 					value={formData[`${prefix}_hour`] || ''}
-					// onChange={onChange}
+					onChange={onChange}
 					readOnly
 				/>
 			</td>
 			<td className="pb-2">
-				<Item label="" value={formData[`${prefix}_minute`] || '0'} className="" />
+				<InputPrice
+					name={`${prefix}_minute`}
+					id={`${prefix}_minute`}
+					// value={NumberUtils.format(formData[`${prefix}_minute`]) || ''}
+					value={formData[`${prefix}_minute`] || ''}
+					onChange={onChange}
+					readOnly
+				/>
 			</td>
 			<td className="pb-2">
 				<Input
