@@ -1,6 +1,12 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Input, InputPrice, Select } from '../form-controls'
-import { DateUtils, FileUtils, NumberUtils, SalaryUtils } from '@/utils'
+import {
+	DateUtils,
+	FileUtils,
+	NumberUtils,
+	ProductionBudgetUtils,
+	SalaryUtils
+} from '@/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCustomers, useEmployees } from '@/presentation/hooks'
 import { loadCustomerStore, loadEmployeeStore } from '@/presentation/redux'
@@ -18,8 +24,14 @@ import {
 	FabricModel,
 	ProductionBudgetModel
 } from '@/domain/models'
-import { ProductionBudgetFabricEditor } from './production-budget-fabric-editor'
-import { ProductionBudgetAccessoryEditor } from './production-budget-accessory-editor'
+import {
+	FabricItemProps,
+	ProductionBudgetFabricEditor
+} from './production-budget-fabric-editor'
+import {
+	AccessoryItemProps,
+	ProductionBudgetAccessoryEditor
+} from './production-budget-accessory-editor'
 import { ImagePreview } from '../image-preview'
 
 export type SupplierProductCardChangeProps = {
@@ -31,8 +43,10 @@ export type SupplierProductCardChangeProps = {
 export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState<ProductionBudgetModel>({
-		date: new Date()
-	} as any)
+		date: new Date(),
+		finishing_cost: 250
+	} as ProductionBudgetModel)
+
 	const [photoPreview, setPhotoPreview] = useState('')
 	const customers = useSelector(useCustomers())
 
@@ -54,6 +68,33 @@ export function ProductionBudgetEditor() {
 		3: {},
 		4: {}
 	})
+
+	const totalFabricsCost = useMemo(
+		() =>
+			Object.values<FabricItemProps>(fabricItems).reduce(
+				(prev, current) => prev + NumberUtils.convertToNumber(current.cost),
+				0
+			),
+		[fabricItems]
+	)
+	const totalAccessoriesCost = useMemo(
+		() =>
+			Object.values<AccessoryItemProps>(accessoryItems).reduce(
+				(prev, current) => prev + NumberUtils.convertToNumber(current.price),
+				0
+			),
+		[accessoryItems]
+	)
+	const variableCost = totalAccessoriesCost + totalFabricsCost
+	const productionCost =
+		NumberUtils.convertToNumber(formData.cutting_cost) +
+		NumberUtils.convertToNumber(formData.sewing_cost) +
+		NumberUtils.convertToNumber(variableCost) +
+		NumberUtils.convertToNumber(formData.finishing_cost)
+	const totalToPay =
+		productionCost +
+		NumberUtils.convertToNumber(formData.selling_cost) -
+		NumberUtils.convertToNumber(formData.discount)
 
 	const fabricList = useMemo(() => Object.keys(fabricItems), [fabricItems])
 
@@ -120,6 +161,29 @@ export function ProductionBudgetEditor() {
 			data = { ...data, [name]: file }
 			setPhotoPreview(file)
 		}
+		if (name.indexOf('duration_per_minute') >= 0) {
+			const [prefix] = name.split('_')
+			let costValue = NumberUtils.convertToNumber(value)
+			const fieldCost = `${prefix}_cost`
+
+			if (costValue < 1) {
+				costValue = 0
+			}
+
+			const employee = employees.find(
+				({ id }) => id == Number(formData[`${prefix}_employee_id`])
+			) as EmployeeModel
+
+			const sewingOrCuttingCost =
+				SalaryUtils.getSalaryPerMinute(employee.base_salary) * costValue
+
+			data = {
+				...data,
+				[name]: costValue,
+				[fieldCost]: sewingOrCuttingCost
+				// production_cost:
+			}
+		}
 		setFormData(data)
 	}
 
@@ -154,7 +218,16 @@ export function ProductionBudgetEditor() {
 								}))}
 								onChange={handleInputChange}
 							/>
-							<Select label="Produto final" defaultText="Selecione" data={[]} />
+							<Select
+								name="end_product"
+								label="Produto final"
+								defaultText="Selecione"
+								data={ProductionBudgetUtils.endProducts.map((endProduct) => ({
+									text: endProduct
+								}))}
+								value={formData.end_product}
+								onChange={handleInputChange}
+							/>
 							<Input
 								label="Data"
 								type="date"
@@ -236,6 +309,14 @@ export function ProductionBudgetEditor() {
 											/>
 										)
 									})}
+									<tr className="font-bold">
+										<td className="px-2 text-right" colSpan={3}>
+											Total
+										</td>
+										<td className="px-2">
+											{NumberUtils.formatCurrency(totalFabricsCost)}
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</fieldset>
@@ -262,6 +343,13 @@ export function ProductionBudgetEditor() {
 											/>
 										)
 									})}
+									<tr className="font-bold">
+										<td className="px-2"></td>
+										<td className="px-2 text-right">Total</td>
+										<td className="px-2">
+											{NumberUtils.formatCurrency(totalAccessoriesCost)}
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</fieldset>
@@ -269,17 +357,54 @@ export function ProductionBudgetEditor() {
 				</div>
 				<fieldset className="w-80">
 					<legend>Pagamentos</legend>
-					<div className="flex gap-1 flex-col ml-auto">
-						<Item label="Custo corte" value={0} />
-						<Item label="Custo costura" value={0} />
-						<Item label="Custo variável" value={0} />
+					<div className="flex gap-2 flex-col ml-auto">
+						<Item
+							label="Custo corte"
+							value={NumberUtils.formatCurrency(formData.cutting_cost)}
+						/>
+						<Item
+							label="Custo costura"
+							value={NumberUtils.formatCurrency(formData.sewing_cost)}
+						/>
+						{/* <Item label="Custo variável" value={formData.variable_cost} /> */}
+						<Item
+							label="Custo variável"
+							value={NumberUtils.formatCurrency(variableCost)}
+						/>
 						{/* Acabamento é uma constante */}
-						<Input label="Acabamento" value={250} />
-
-						<Item label="Custo Produção" value={0} />
-						<Input label="Custo venda" />
-						<Input label="Desconto" />
-						<Item label="Total a pagar" value={0} />
+						<Item
+							label="Acabamento"
+							value={NumberUtils.formatCurrency(formData.finishing_cost)}
+						/>
+						<div className="">
+							<div className="">Custo Produção</div>
+							<div className="text-xl text-violet-500 font-semibold">
+								{NumberUtils.formatCurrency(productionCost)}
+							</div>
+						</div>
+						{/* <Item
+							label="Custo Produção"
+							value={NumberUtils.formatCurrency(productionCost)}
+						/> */}
+						<InputPrice
+							name="selling_cost"
+							label="Custo venda"
+							value={formData?.selling_cost}
+							onChange={handleInputChange}
+						/>
+						<InputPrice
+							name="discount"
+							label="Desconto"
+							value={formData.discount}
+							onChange={handleInputChange}
+						/>
+						{/* <Item label="Total a pagar" value={NumberUtils.formatCurrency(totalToPay)} /> */}
+						<div className="">
+							<div className="">Total a pagar</div>
+							<div className="text-2xl text-red-500 font-semibold">
+								{NumberUtils.formatCurrency(totalToPay)}
+							</div>
+						</div>
 					</div>
 				</fieldset>
 			</div>

@@ -1,7 +1,7 @@
 import { FabricModel } from '@/domain/models'
 import React, { ChangeEvent } from 'react'
 import { Input, InputPrice, Select } from '../form-controls'
-import { ColorUtils } from '@/utils'
+import { ColorUtils, ProductionBudgetUtils } from '@/utils'
 
 export type ProductionFabricCardChangeProps = {
 	index: number
@@ -52,9 +52,15 @@ export function ProductionBudgetFabricEditor({
 				<Select
 					name="color"
 					defaultText="Selecione"
-					data={ColorUtils.colors.map((color) => ({ text: color }))}
+					data={ProductionBudgetUtils.colors.map((color) => ({ text: color }))}
 					value={fabricItem.color || ''}
 					onChange={handleInputChange}
+					disabled={!fabricItem.fabric_id}
+					title={
+						!fabricItem.fabric_id
+							? 'Tem de selecionar o tipo de tecido para habilitar este campo'
+							: ''
+					}
 				/>
 			</td>
 			<td className="pb-2 px-2">
@@ -63,6 +69,10 @@ export function ProductionBudgetFabricEditor({
 					name="meters"
 					value={fabricItem.meters || ''}
 					onChange={handleInputChange}
+					disabled={!fabricItem.color}
+					title={
+						!fabricItem.color ? 'Tem de selecionar a cor para habilitar este campo' : ''
+					}
 				/>
 			</td>
 			<td className="pb-2 px-2">
@@ -70,6 +80,10 @@ export function ProductionBudgetFabricEditor({
 					name="cost"
 					value={fabricItem.cost || ''}
 					onChange={handleInputChange}
+					disabled={!fabricItem.meters}
+					title={
+						!fabricItem.meters ? 'Tem de informar o metro para habilitar este campo' : ''
+					}
 				/>
 			</td>
 		</tr>

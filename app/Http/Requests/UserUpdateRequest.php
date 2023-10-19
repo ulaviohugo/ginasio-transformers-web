@@ -41,7 +41,7 @@ class UserUpdateRequest extends GlobalFormRequest
 			'document_type' => 'required|string',
 			'document_number' => [
 				'required',
-				Rule::unique(User::class, 'document_number')->ignore($id)->where(function ($query) use ($document_type, $document_number) {
+				Rule::unique(User::class)->ignore($id)->where(function ($query) use ($document_type, $document_number) {
 					$query->where('document_type', $document_type)
 						->where('document_number', $document_number);
 				})

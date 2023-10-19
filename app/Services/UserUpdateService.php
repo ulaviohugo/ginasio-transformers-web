@@ -11,7 +11,6 @@ class UserUpdateService
 	{
 		$userId = User::currentUserId();
 		$canLogin = $request->can_login == true || $request->can_login == "true";
-
 		$user->name = trim($request->name);
 		$user->email = trim(strtolower($request->email));
 		$user->photo = $request->photo;
@@ -48,6 +47,7 @@ class UserUpdateService
 			$user->role =  null;
 		}
 		$user->user_id_update = $userId;
+		$user->update();
 
 		return $user;
 	}

@@ -52,6 +52,7 @@ export function ProductionBudgetAccessoryEditor({
 					name="quantity"
 					value={accessoryItem.quantity || ''}
 					onChange={handleInputChange}
+					disabled={!accessoryItem.accessory_id}
 				/>
 			</td>
 			<td className="pb-2 px-2">
@@ -59,6 +60,7 @@ export function ProductionBudgetAccessoryEditor({
 					name="price"
 					value={accessoryItem.price || ''}
 					onChange={handleInputChange}
+					disabled={!accessoryItem.quantity}
 				/>
 			</td>
 		</tr>

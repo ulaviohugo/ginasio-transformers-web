@@ -2,7 +2,7 @@ import { EmployeeModel } from '@/domain/models'
 import { UpdateEmployee } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, ObjectUtils } from '@/utils'
+import { NumberUtils, ObjectUtils } from '@/utils'
 
 export class RemoteUpdateEmployee implements UpdateEmployee {
 	constructor(
@@ -11,18 +11,15 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 	) {}
 
 	async update(param: EmployeeModel): Promise<EmployeeModel> {
-		const handledParam = ObjectUtils.removeProps<EmployeeModel>(param, [
-			'created_at',
-			'user_id',
-			'updated_at',
-			'user_id_update'
-		])
-		const body = FormDataUtils.createFormData(handledParam)
+		const handledParam = ObjectUtils.removeProps<EmployeeModel>(
+			{ ...param, base_salary: NumberUtils.convertToPrice(param.base_salary) },
+			['created_at', 'user_id', 'updated_at', 'user_id_update']
+		)
 
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,
-			body
+			body: handledParam
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

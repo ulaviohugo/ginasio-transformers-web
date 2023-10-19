@@ -31,13 +31,13 @@ class UserController extends Controller
 		}
 	}
 
-	public function update(UserUpdateRequest $request, UserUpdateService $service, User $user)
+	public function update(UserUpdateRequest $request, UserUpdateService $service, $id)
 	{
 		try {
-			$updatedUser = $service->execute($request, $user);
+			$updatedUser = $service->execute($request, User::find($id));
 			return HttpResponse::success(data: $updatedUser);
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao cadastrar funcionário');
+			return HttpResponse::error(message: 'Erro ao actualizar funcionário' . $th->getMessage());
 		}
 	}
 
