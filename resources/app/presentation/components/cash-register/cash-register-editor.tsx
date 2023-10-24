@@ -92,7 +92,7 @@ export function CashRegisterEditor() {
 			{isLoading ? (
 				<Spinner />
 			) : (
-				<div className="flex gap-4">
+				<div className="flex gap-4 w-full">
 					<fieldset>
 						<legend>Informação de Caixa</legend>
 						<form onSubmit={handleSubmitBalance}>
@@ -144,10 +144,10 @@ export function CashRegisterEditor() {
 						</form>
 					</fieldset>
 
-					<fieldset>
+					<fieldset className="w-full">
 						<legend>Outros movimentos de caixa</legend>
-						<form onSubmit={handleSubmit}>
-							<div className="grid grid-cols-2 gap-1">
+						<form onSubmit={handleSubmit} className="w-full ">
+							<div className="flex items-start gap-1">
 								<Input
 									type="date"
 									name="date"
@@ -172,6 +172,7 @@ export function CashRegisterEditor() {
 										label="Descrição da operação"
 										value={formData?.description || ''}
 										onChange={handleInputChange}
+										rows={1}
 									/>
 								</div>
 								<InputPrice
@@ -190,9 +191,9 @@ export function CashRegisterEditor() {
 									defaultText="Selecione"
 									onChange={handleInputChange}
 								/>
-								<div className="col-span-2 mt-2">
-									<ButtonSubmit isLoading={isLoadingSubmit} disabled={isLoadingSubmit} />
-								</div>
+							</div>
+							<div className="col-span-2 mt-2">
+								<ButtonSubmit isLoading={isLoadingSubmit} disabled={isLoadingSubmit} />
 							</div>
 						</form>
 					</fieldset>

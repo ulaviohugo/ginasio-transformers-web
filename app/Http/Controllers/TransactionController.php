@@ -45,8 +45,7 @@ class TransactionController extends Controller
 			}
 			$transactions = $transactions->get();
 
-			// $transactions->load('cashRegister');
-			$transactions->load('lastCashRegister');
+			$transactions->load('cashRegister');
 			return $transactions;
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar transacções' . $th->getMessage());
@@ -60,7 +59,7 @@ class TransactionController extends Controller
 	{
 		try {
 			$createdSale = $service->execute($request);
-			$createdSale->load('lastCashRegister');
+			$createdSale->load('cashRegister');
 			return HttpResponse::success(data: $createdSale);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar venda' . $th->getMessage());
