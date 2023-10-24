@@ -19,7 +19,7 @@ fieldset {
 }
 
 fieldset legend {
-	@apply px-2 font-semibold uppercase text-gray-400;
+	@apply px-2 font-semibold uppercase text-gray-400 flex gap-1 items-center;
 }
 
 /* width */
