@@ -40,4 +40,20 @@ export class FileUtils {
 			reader.onerror = reject
 		})
 	}
+
+	static async urlToBase64(imageUrl: string): Promise<string> {
+		return new Promise((resolve, reject) => {
+			fetch(imageUrl)
+				.then((response) => {
+					return response.blob()
+				})
+				.then((blob) => {
+					const reader = new FileReader()
+					reader.readAsDataURL(blob)
+					reader.onload = () => resolve(reader.result as any)
+					reader.onerror = reject
+				})
+				.catch(reject)
+		})
+	}
 }
