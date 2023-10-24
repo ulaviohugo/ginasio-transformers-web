@@ -1,4 +1,7 @@
-import { FabricAccessoryModel } from './accessory'
+import { ProductionAccessoryModel } from './accessory'
+import { CustomerModel } from './customer'
+import { EmployeeModel } from './employee'
+import { ProductionFabricModel } from './fabric'
 
 export type ProductionBudgetModel = {
 	id: number
@@ -20,8 +23,11 @@ export type ProductionBudgetModel = {
 	discount: number
 	total_to_pay: number
 
-	production_accessories: FabricAccessoryModel[]
-	production_fabrics: FabricAccessoryModel[]
+	customer: CustomerModel
+	cutting_employee: EmployeeModel
+	sewing_employee: EmployeeModel
+	production_accessories: ProductionAccessoryModel[]
+	production_fabrics: ProductionFabricModel[]
 
 	created_at: Date
 	user_id?: number

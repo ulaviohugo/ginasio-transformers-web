@@ -15,6 +15,5 @@ export type ProductionFabricModel = {
 	color: number
 	meters: number
 	cost: number
-
-	fabric: FabricModel
+	name: string
 }

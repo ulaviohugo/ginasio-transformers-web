@@ -26,6 +26,6 @@ class ProductionAccessory extends Model
 
 	public function accessory()
 	{
-		return $this->belongsTo(Accessory::class);
+		return $this->belongsTo(Accessory::class, 'accessory_id');
 	}
 }

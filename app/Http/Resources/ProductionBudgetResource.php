@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\FileHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class ProductionBudgetResource extends JsonResource
 			'id' => $this->id,
 			'end_product' => $this->end_product,
 			'date' => $this->date,
-			'photo' => $this->photo,
+			'photo' => $this->photo ? FileHelper::storageLink($this->photo) : null,
 			'customer_id' => $this->customer_id,
 			'customer_rating' => $this->customer_rating,
 			'cutting_employee_id' => $this->cutting_employee_id,
@@ -34,8 +35,13 @@ class ProductionBudgetResource extends JsonResource
 			'discount' => $this->discount,
 			'total_to_pay' => $this->total_to_pay,
 			'user_id' => $this->user_id,
+			'created_at' => $this->created_at,
 			'user_id_update' => $this->user_id_update,
+			'updated_at' => $this->updated_at,
 
+			'customer' => $this->whenLoaded('customer'),
+			'cutting_employee' => $this->whenLoaded('cuttingEmployee'),
+			'sewing_employee' => $this->whenLoaded('sewingEmployee'),
 			'production_accessories' => $this->whenLoaded('productionAccessories'),
 			'production_fabrics' => $this->whenLoaded('productionFabrics'),
 		];

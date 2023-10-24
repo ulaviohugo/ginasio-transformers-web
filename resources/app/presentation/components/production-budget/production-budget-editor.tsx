@@ -1,21 +1,15 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Input, InputPrice, Select } from '../form-controls'
-import {
-	DateUtils,
-	FileUtils,
-	NumberUtils,
-	ProductionBudgetUtils,
-	SalaryUtils
-} from '@/utils'
+import { ArrayUtils, FileUtils, NumberUtils, SalaryUtils } from '@/utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { useCustomers, useEmployees } from '@/presentation/hooks'
+import { useEmployees } from '@/presentation/hooks'
 import { loadCustomerStore, loadEmployeeStore } from '@/presentation/redux'
 import {
 	makeRemoteAddProductionBudget,
 	makeRemoteLoadAccessories,
 	makeRemoteLoadCustomers,
 	makeRemoteLoadEmployees,
-	makeRemoteLoadFabrics
+	makeRemoteLoadFabrics,
+	makeRemoteLoadProductionBudgets
 } from '@/main/factories'
 import toast from 'react-hot-toast'
 import {
@@ -32,13 +26,19 @@ import {
 	AccessoryItemProps,
 	ProductionBudgetAccessoryEditor
 } from './production-budget-accessory-editor'
-import { ImagePreview } from '../image-preview'
+import { ProductionCustomerEditor } from './production-customer-editor'
+import { ProductionPaymentEditor } from './production-payment-editor'
+import { ProductionEmployeeRow } from './production-employee-row'
+import { ProductionBudgetList } from './production-budget-list'
 
 export type SupplierProductCardChangeProps = {
 	index: number
 	name: string
 	value: string
 }
+
+type AccessoryRecordProps = Record<number, { [key in keyof AccessoryItemProps]: any }>
+type FabricRecordProps = Record<number, { [key in keyof FabricItemProps]: any }>
 
 export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
@@ -47,26 +47,23 @@ export function ProductionBudgetEditor() {
 		finishing_cost: 250
 	} as ProductionBudgetModel)
 
-	const [photoPreview, setPhotoPreview] = useState('')
-	const customers = useSelector(useCustomers())
-
 	const [accessories, setAccessories] = useState<AccessoryModel[]>([])
 	const [fabrics, setFabrics] = useState<FabricModel[]>([])
 
-	const [fabricItems, setFabricItems] = useState<any>({
-		0: {},
-		1: {},
-		2: {},
-		3: {},
-		4: {}
+	const [fabricItems, setFabricItems] = useState<FabricRecordProps>({
+		0: {} as FabricItemProps,
+		1: {} as FabricItemProps,
+		2: {} as FabricItemProps,
+		3: {} as FabricItemProps,
+		4: {} as FabricItemProps
 	})
 
-	const [accessoryItems, setAccessoryItems] = useState<any>({
-		0: {},
-		1: {},
-		2: {},
-		3: {},
-		4: {}
+	const [accessoryItems, setAccessoryItems] = useState<AccessoryRecordProps>({
+		0: {} as AccessoryItemProps,
+		1: {} as AccessoryItemProps,
+		2: {} as AccessoryItemProps,
+		3: {} as AccessoryItemProps,
+		4: {} as AccessoryItemProps
 	})
 
 	const totalFabricsCost = useMemo(
@@ -126,6 +123,15 @@ export function ProductionBudgetEditor() {
 	const handleChangeFabric = ({ index, name, value }: SupplierProductCardChangeProps) => {
 		let data = fabricItems[index] || { [index]: { [name]: value } }[index]
 		data = { ...data, [name]: value }
+
+		if (
+			name.indexOf('cost') >= 0 ||
+			name.indexOf('_id') >= 0 ||
+			name.indexOf('meter') >= 0
+		) {
+			data = { ...data, [name]: NumberUtils.convertToNumber(value) }
+		}
+
 		setFabricItems({ ...fabricItems, [index]: data })
 	}
 
@@ -136,6 +142,13 @@ export function ProductionBudgetEditor() {
 	}: SupplierProductCardChangeProps) => {
 		let data = accessoryItems[index] || { [index]: { [name]: value } }[index]
 		data = { ...data, [name]: value }
+		if (
+			name.indexOf('price') >= 0 ||
+			name.indexOf('_id') >= 0 ||
+			name.indexOf('quantity') >= 0
+		) {
+			data = { ...data, [name]: NumberUtils.convertToNumber(value) }
+		}
 		setAccessoryItems({ ...accessoryItems, [index]: data })
 	}
 
@@ -159,7 +172,6 @@ export function ProductionBudgetEditor() {
 		if (name == 'photo') {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-			setPhotoPreview(file)
 		}
 		if (name.indexOf('duration_per_minute') >= 0) {
 			const [prefix] = name.split('_')
@@ -171,7 +183,7 @@ export function ProductionBudgetEditor() {
 			}
 
 			const employee = employees.find(
-				({ id }) => id == Number(formData[`${prefix}_employee_id`])
+				({ id }) => id == Number((formData as any)[`${prefix}_employee_id`])
 			) as EmployeeModel
 
 			const sewingOrCuttingCost =
@@ -187,11 +199,58 @@ export function ProductionBudgetEditor() {
 		setFormData(data)
 	}
 
+	const handleSelectBudget = (selectedBudget: ProductionBudgetModel) => {
+		setFormData(selectedBudget)
+
+		let accessory: AccessoryRecordProps = { ...accessoryItems }
+		selectedBudget.production_accessories.forEach(
+			({ accessory_id, price, quantity }, i: number) => {
+				accessory = {
+					...accessory,
+					[i]: { accessory_id, price, quantity }
+				}
+			}
+		)
+		setAccessoryItems(accessory)
+
+		let fabric: FabricRecordProps = { ...fabricItems }
+		selectedBudget.production_fabrics.forEach(
+			({ fabric_id, color, cost, meters }, i: number) => {
+				console.log({ [i]: { fabric_id, color, cost, meters } })
+
+				fabric = {
+					...fabric,
+					[i]: { fabric_id, color, cost, meters }
+				}
+			}
+		)
+		console.log({ fabric })
+
+		setFabricItems(fabric)
+	}
+
 	const handleSubmit = async () => {
-		console.log({ formData })
+		const production_accessories = ArrayUtils.convertToArray(accessoryItems).filter(
+			(item: AccessoryItemProps) => NumberUtils.convertToNumber(item?.accessory_id) > 0
+		)
+		const production_fabrics = ArrayUtils.convertToArray(fabricItems).filter(
+			(item: FabricItemProps) => NumberUtils.convertToNumber(item?.fabric_id) > 0
+		)
+
+		const data: ProductionBudgetModel = {
+			...formData,
+			variable_cost: variableCost,
+			production_cost: productionCost,
+			total_to_pay: totalToPay,
+			production_accessories,
+			production_fabrics,
+			selling_cost: NumberUtils.convertToNumber(formData.selling_cost)
+		}
 
 		try {
-			const httpResponse = await makeRemoteAddProductionBudget().add(formData)
+			await makeRemoteAddProductionBudget().add(data)
+
+			toast.success('Orçamento registado com sucesso')
 		} catch ({ message }) {
 			toast.error(message)
 		}
@@ -201,89 +260,15 @@ export function ProductionBudgetEditor() {
 		<div>
 			<div className="flex gap-4">
 				<div className="flex flex-col gap-3">
-					<fieldset>
-						<legend>Cliente</legend>
-						<div className="flex gap-1 items-start">
-							<ImagePreview
-								photoPreview={photoPreview}
-								onInputFileChange={handleInputChange}
-							/>
-							<Select
-								name="customer_id"
-								label="Nome do cliente"
-								defaultText="Selecione"
-								data={customers.map(({ id: value, name: text }) => ({
-									text,
-									value
-								}))}
-								onChange={handleInputChange}
-							/>
-							<Select
-								name="end_product"
-								label="Produto final"
-								defaultText="Selecione"
-								data={ProductionBudgetUtils.endProducts.map((endProduct) => ({
-									text: endProduct
-								}))}
-								value={formData.end_product}
-								onChange={handleInputChange}
-							/>
-							<Input
-								label="Data"
-								type="date"
-								value={DateUtils.getDate(formData.date) || ''}
-								onChange={handleInputChange}
-							/>
-							<Select
-								label="Avaliação"
-								defaultText="Selecione"
-								data={[
-									{ text: 'Insatisfeito' },
-									{ text: 'Melhor' },
-									{ text: 'Satisfeito' },
-									{ text: 'Muito Satisfeito' }
-								]}
-								onChange={handleInputChange}
-							/>
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Colaborador</legend>
-						<table className="w-full">
-							<thead>
-								<tr>
-									<td>Produção</td>
-									<td>Funcionário</td>
-									<td>Salário</td>
-									<td>Dia</td>
-									<td>Hora</td>
-									<td>Minuto</td>
-									<td>Tempo Min.</td>
-								</tr>
-							</thead>
-							<tbody>
-								<EmployeeBox
-									data={{
-										title: 'Corte',
-										employees,
-										onChange: handleInputChange,
-										prefix: 'cutting',
-										formData
-									}}
-								/>
-								<EmployeeBox
-									data={{
-										title: 'Costura',
-										employees,
-										onChange: handleInputChange,
-										prefix: 'sewing',
-										formData
-									}}
-								/>
-							</tbody>
-						</table>
-					</fieldset>
-
+					<ProductionCustomerEditor
+						formData={formData}
+						handleInputChange={handleInputChange}
+					/>
+					<ProductionEmployeeRow
+						employeeList={employees}
+						formData={formData}
+						handleInputChange={handleInputChange}
+					/>
 					<div className="grid grid-cols-7 gap-4">
 						<fieldset className="col-span-4">
 							<legend>Tecidos</legend>
@@ -297,7 +282,7 @@ export function ProductionBudgetEditor() {
 									</tr>
 								</thead>
 								<tbody>
-									{fabricList.map((key, i) => {
+									{fabricList.map((key: any, i) => {
 										return (
 											<ProductionBudgetFabricEditor
 												key={key}
@@ -331,7 +316,7 @@ export function ProductionBudgetEditor() {
 									</tr>
 								</thead>
 								<tbody>
-									{fabricList.map((key, i) => {
+									{fabricList.map((key: any, i) => {
 										return (
 											<ProductionBudgetAccessoryEditor
 												key={key}
@@ -355,154 +340,23 @@ export function ProductionBudgetEditor() {
 						</fieldset>
 					</div>
 				</div>
-				<fieldset className="w-80">
-					<legend>Pagamentos</legend>
-					<div className="flex gap-2 flex-col ml-auto">
-						<Item
-							label="Custo corte"
-							value={NumberUtils.formatCurrency(formData.cutting_cost)}
-						/>
-						<Item
-							label="Custo costura"
-							value={NumberUtils.formatCurrency(formData.sewing_cost)}
-						/>
-						{/* <Item label="Custo variável" value={formData.variable_cost} /> */}
-						<Item
-							label="Custo variável"
-							value={NumberUtils.formatCurrency(variableCost)}
-						/>
-						{/* Acabamento é uma constante */}
-						<Item
-							label="Acabamento"
-							value={NumberUtils.formatCurrency(formData.finishing_cost)}
-						/>
-						<div className="">
-							<div className="">Custo Produção</div>
-							<div className="text-xl text-violet-500 font-semibold">
-								{NumberUtils.formatCurrency(productionCost)}
-							</div>
-						</div>
-						{/* <Item
-							label="Custo Produção"
-							value={NumberUtils.formatCurrency(productionCost)}
-						/> */}
-						<InputPrice
-							name="selling_cost"
-							label="Custo venda"
-							value={formData?.selling_cost}
-							onChange={handleInputChange}
-						/>
-						<InputPrice
-							name="discount"
-							label="Desconto"
-							value={formData.discount}
-							onChange={handleInputChange}
-						/>
-						{/* <Item label="Total a pagar" value={NumberUtils.formatCurrency(totalToPay)} /> */}
-						<div className="">
-							<div className="">Total a pagar</div>
-							<div className="text-2xl text-red-500 font-semibold">
-								{NumberUtils.formatCurrency(totalToPay)}
-							</div>
-						</div>
-					</div>
-				</fieldset>
+				<ProductionPaymentEditor
+					formData={formData}
+					handleInputChange={handleInputChange}
+					productionCost={productionCost}
+					totalToPay={totalToPay}
+					variableCost={variableCost}
+				/>
 			</div>
 			<div className="flex mt-2">
 				<button className="btn-primary ml-auto" onClick={handleSubmit}>
 					Salvar
 				</button>
 			</div>
+			<ProductionBudgetList
+				loadProductionBudgets={makeRemoteLoadProductionBudgets()}
+				onSelectBudget={handleSelectBudget}
+			/>
 		</div>
-	)
-}
-
-type ItemProps = {
-	label: string
-	value: string | number
-	className?: string
-}
-const Item = ({ className = '', label, value = 0 }: ItemProps) => (
-	<div className={`flex flex-col h-full ${className}`}>
-		<div>{label}</div>
-		<div className="border px-2 py-1 rounded-md flex w-full h-full">{value}</div>
-	</div>
-)
-
-type EmployeeBoxProps = {
-	title: string
-	prefix: 'cutting' | 'sewing'
-	employees: EmployeeModel[]
-	onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
-	formData: any
-}
-const EmployeeBox = ({
-	data: { employees, formData, onChange, prefix, title }
-}: {
-	data: EmployeeBoxProps
-}) => {
-	return (
-		<tr>
-			<td className="pb-2">
-				<Input name="title" value={title || ''} onChange={onChange} />
-			</td>
-			<td className="pb-2">
-				<Select
-					name={`${prefix}_employee_id`}
-					id={`${prefix}_employee_id`}
-					value={formData[`${prefix}_employee_id`] || ''}
-					defaultText="Selecione"
-					data={employees.map(({ id, name }) => ({ text: name, value: id }))}
-					onChange={onChange}
-				/>
-			</td>
-			<td className="pb-2">
-				<InputPrice
-					name={`${prefix}_base_salary`}
-					id={`${prefix}_base_salary`}
-					value={formData[`${prefix}_base_salary`] || ''}
-					onChange={onChange}
-					readOnly
-				/>
-			</td>
-			<td className="pb-2">
-				<InputPrice
-					name={`${prefix}_day`}
-					id={`${prefix}_day`}
-					value={formData[`${prefix}_day`]}
-					onChange={onChange}
-					readOnly
-				/>
-			</td>
-			<td className="pb-2">
-				<InputPrice
-					name={`${prefix}_hour`}
-					id={`${prefix}_hour`}
-					// value={NumberUtils.format(formData[`${prefix}_hour`]) || ''}
-					value={formData[`${prefix}_hour`] || ''}
-					onChange={onChange}
-					readOnly
-				/>
-			</td>
-			<td className="pb-2">
-				<InputPrice
-					name={`${prefix}_minute`}
-					id={`${prefix}_minute`}
-					// value={NumberUtils.format(formData[`${prefix}_minute`]) || ''}
-					value={formData[`${prefix}_minute`] || ''}
-					onChange={onChange}
-					readOnly
-				/>
-			</td>
-			<td className="pb-2">
-				<Input
-					type="number"
-					name={`${prefix}_duration_per_minute`}
-					id={`${prefix}_duration_per_minute`}
-					value={formData[`${prefix}_duration_per_minute`] || ''}
-					onChange={onChange}
-				/>
-			</td>
-		</tr>
 	)
 }

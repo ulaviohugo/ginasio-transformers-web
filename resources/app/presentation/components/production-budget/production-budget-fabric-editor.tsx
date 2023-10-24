@@ -1,7 +1,7 @@
 import { FabricModel } from '@/domain/models'
 import React, { ChangeEvent } from 'react'
 import { Input, InputPrice, Select } from '../form-controls'
-import { ColorUtils, ProductionBudgetUtils } from '@/utils'
+import { ProductionBudgetUtils } from '@/utils'
 
 export type ProductionFabricCardChangeProps = {
 	index: number

@@ -23,7 +23,7 @@ class ProductionBudgetService
 			}
 			$productionBudget =	ProductionBudget::create([
 				'end_product' => $request->end_product,
-				'date' => $request->date,
+				'date' => date('Y-m-d', strtotime($request->date)),
 				'photo' => $photo,
 				'customer_id' => $request->customer_id,
 				'customer_rating' => $request->customer_rating,
@@ -60,9 +60,10 @@ class ProductionBudgetService
 		$accessoryData =	array_map(function ($data) use ($productionId) {
 			return [
 				'production_id' => $productionId,
-				'accessory_id' => $data->accessory_id,
-				'quantity' => $data->quantity,
-				'price' => $data->price
+				'accessory_id' => $data['accessory_id'],
+				'quantity' => $data['quantity'],
+				'price' => $data['price'],
+				'created_at' => now()
 			];
 		}, $productionAccessories);
 		ProductionAccessory::insert($accessoryData);
@@ -73,10 +74,11 @@ class ProductionBudgetService
 		$fabricData =	array_map(function ($data) use ($productionId) {
 			return [
 				'production_id' => $productionId,
-				'fabric_id' => $data->fabric_id,
-				'color' => $data->color,
-				'meters' => $data->meters,
-				'cost' => $data->cost
+				'fabric_id' => $data['fabric_id'],
+				'color' => $data['color'],
+				'meters' => $data['meters'],
+				'cost' => $data['cost'],
+				'created_at' => now()
 			];
 		}, $productionFabrics);
 		ProductionFabric::insert($fabricData);

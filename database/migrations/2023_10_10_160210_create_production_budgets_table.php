@@ -30,7 +30,7 @@ return new class extends Migration
 			$table->double('finishing_cost', 16, 3);
 			$table->double('production_cost', 16, 3)->comment('cutting_cost + sewing_cost + variable_cost + finishing_cost');
 			$table->double('selling_cost', 16, 3);
-			$table->double('discount', 16, 3);
+			$table->double('discount', 16, 3)->nullable();
 			$table->double('total_to_pay', 16, 3)->comment('production_cost + selling_cost + discount');
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();

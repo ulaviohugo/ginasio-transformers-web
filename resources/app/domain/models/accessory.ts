@@ -8,12 +8,11 @@ export type AccessoryModel = {
 	user_id_update?: number
 }
 
-export type FabricAccessoryModel = {
+export type ProductionAccessoryModel = {
 	id: number
 	production_id: number
 	accessory_id: number
 	quantity: number
 	price: number
-
-	accessory: AccessoryModel
+	name: string
 }

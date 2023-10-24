@@ -61,13 +61,13 @@ class SupplierCreateRequest extends GlobalFormRequest
 	{
 		return [
 			'supplier_products.required' => 'Adicione pelo menos um produto na lista de produto.',
-			'supplier_products.*.product_id.required' => 'Cada produto dever na lista deve ter um identificador.',
-			'supplier_products.*.product_id.numeric' => 'Cada identificador do produto dever ser um valor numérico.',
-			'supplier_products.*.product_id.gt' => 'Cada identificador do produto dever ser um valor maior que 0.',
+			'supplier_products.*.product_id.required' => 'Cada produto lista deve ter um identificador.',
+			'supplier_products.*.product_id.numeric' => 'Cada identificador do produto deve ser um valor numérico.',
+			'supplier_products.*.product_id.gt' => 'Cada identificador do produto deve ser um valor maior que 0.',
 			'supplier_products.*.product_id.exists' => 'Informou um produto inválido.',
-			'supplier_products.*.unit_price.required' => 'Cada produto dever na lista deve ter um identificador.',
-			'supplier_products.*.unit_price.numeric' => 'O preço de cada produto dever ser um valor numérico.',
-			'supplier_products.*.unit_price.gt' => 'O preço de cada produto dever ser um valor maior que 0.',
+			'supplier_products.*.unit_price.required' => 'Cada produto lista deve ter um identificador.',
+			'supplier_products.*.unit_price.numeric' => 'O preço de cada produto deve ser um valor numérico.',
+			'supplier_products.*.unit_price.gt' => 'O preço de cada produto deve ser um valor maior que 0.',
 			'supplier_products.*.unit_price.exists' => 'Informou um produto inválido.',
 		];
 	}

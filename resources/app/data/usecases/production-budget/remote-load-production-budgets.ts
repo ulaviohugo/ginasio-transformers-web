@@ -1,4 +1,8 @@
-import { LoadProductionBudgets, LoadProductionBudgetsResult } from '@/domain/usecases'
+import {
+	LoadProductionBudgets,
+	LoadProductionBudgetsParams,
+	LoadProductionBudgetsResult
+} from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
 
@@ -8,10 +12,11 @@ export class RemoteLoadProductionBudgets implements LoadProductionBudgets {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<LoadProductionBudgetsResult> {
+	async load(params?: LoadProductionBudgetsParams): Promise<LoadProductionBudgetsResult> {
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
-			url: this.url
+			url: this.url,
+			params
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

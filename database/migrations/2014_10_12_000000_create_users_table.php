@@ -42,7 +42,7 @@ return new class extends Migration
 			$table->string('account_number', 30)->nullable();
 			$table->boolean('can_login')->default(false);
 			$table->enum('role', [User::ROLE_ADMIN, User::ROLE_USER])->nullable()->default(User::ROLE_USER);
-			$table->string('user_name', 64)->nullable();
+			$table->string('user_name', 64)->nullable()->unique();
 			$table->string('password', 64)->nullable();
 			$table->timestamp('email_verified_at')->nullable();
 			$table->rememberToken();
