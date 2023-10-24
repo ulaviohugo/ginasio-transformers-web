@@ -25,6 +25,7 @@ class ProductionBudgetCreateRequest extends GlobalFormRequest
 	{
 		$db = new DBHelper();
 		return [
+			'photo' => 'required',
 			'customer_id' => 'required|numeric|gt:0|exists:' . $db::TB_CUSTOMERS . ',id',
 			'end_product' => 'required',
 			'date' => 'required|date',

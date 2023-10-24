@@ -36,7 +36,7 @@ class ProductionBudgetController extends Controller
 				$id = isset($queryParam->id) ? $queryParam->id : null;
 			}
 
-			$productionBudgets = ProductionBudget::orderBy('date', 'desc');
+			$productionBudgets = ProductionBudget::orderBy('id', 'desc');
 			if ($date) {
 				$productionBudgets = $productionBudgets->whereDate('date', $date);
 			}

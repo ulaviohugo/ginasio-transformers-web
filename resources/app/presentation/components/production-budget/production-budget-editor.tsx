@@ -30,6 +30,7 @@ import { ProductionCustomerEditor } from './production-customer-editor'
 import { ProductionPaymentEditor } from './production-payment-editor'
 import { ProductionEmployeeRow } from './production-employee-row'
 import { ProductionBudgetList } from './production-budget-list'
+import { ButtonCancel, ButtonSubmit } from '../form-controls'
 
 export type SupplierProductCardChangeProps = {
 	index: number
@@ -40,31 +41,40 @@ export type SupplierProductCardChangeProps = {
 type AccessoryRecordProps = Record<number, { [key in keyof AccessoryItemProps]: any }>
 type FabricRecordProps = Record<number, { [key in keyof FabricItemProps]: any }>
 
+const initialAccessoryItemValues: AccessoryRecordProps = {
+	0: {} as AccessoryItemProps,
+	1: {} as AccessoryItemProps,
+	2: {} as AccessoryItemProps,
+	3: {} as AccessoryItemProps,
+	4: {} as AccessoryItemProps
+}
+const initialFabricItemValues: FabricRecordProps = {
+	0: {} as FabricItemProps,
+	1: {} as FabricItemProps,
+	2: {} as FabricItemProps,
+	3: {} as FabricItemProps,
+	4: {} as FabricItemProps
+}
+
+const initialFormDataValues: ProductionBudgetModel = {
+	date: new Date(),
+	finishing_cost: 250
+} as ProductionBudgetModel
+
 export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
-	const [formData, setFormData] = useState<ProductionBudgetModel>({
-		date: new Date(),
-		finishing_cost: 250
-	} as ProductionBudgetModel)
+	const [formData, setFormData] = useState<ProductionBudgetModel>(initialFormDataValues)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const [accessories, setAccessories] = useState<AccessoryModel[]>([])
 	const [fabrics, setFabrics] = useState<FabricModel[]>([])
 
-	const [fabricItems, setFabricItems] = useState<FabricRecordProps>({
-		0: {} as FabricItemProps,
-		1: {} as FabricItemProps,
-		2: {} as FabricItemProps,
-		3: {} as FabricItemProps,
-		4: {} as FabricItemProps
-	})
-
-	const [accessoryItems, setAccessoryItems] = useState<AccessoryRecordProps>({
-		0: {} as AccessoryItemProps,
-		1: {} as AccessoryItemProps,
-		2: {} as AccessoryItemProps,
-		3: {} as AccessoryItemProps,
-		4: {} as AccessoryItemProps
-	})
+	const [fabricItems, setFabricItems] = useState<FabricRecordProps>(
+		initialFabricItemValues
+	)
+	const [accessoryItems, setAccessoryItems] = useState<AccessoryRecordProps>(
+		initialAccessoryItemValues
+	)
 
 	const totalFabricsCost = useMemo(
 		() =>
@@ -199,10 +209,13 @@ export function ProductionBudgetEditor() {
 		setFormData(data)
 	}
 
-	const handleSelectBudget = (selectedBudget: ProductionBudgetModel) => {
-		setFormData(selectedBudget)
+	const handleSelectBudget = async (selectedBudget: ProductionBudgetModel) => {
+		const photo: any = selectedBudget.photo
+			? await FileUtils.urlToBase64(selectedBudget.photo)
+			: undefined
+		setFormData({ ...selectedBudget, photo })
 
-		let accessory: AccessoryRecordProps = { ...accessoryItems }
+		let accessory: AccessoryRecordProps = { ...initialAccessoryItemValues }
 		selectedBudget.production_accessories.forEach(
 			({ accessory_id, price, quantity }, i: number) => {
 				accessory = {
@@ -213,7 +226,7 @@ export function ProductionBudgetEditor() {
 		)
 		setAccessoryItems(accessory)
 
-		let fabric: FabricRecordProps = { ...fabricItems }
+		let fabric: FabricRecordProps = { ...initialFabricItemValues }
 		selectedBudget.production_fabrics.forEach(
 			({ fabric_id, color, cost, meters }, i: number) => {
 				console.log({ [i]: { fabric_id, color, cost, meters } })
@@ -230,6 +243,10 @@ export function ProductionBudgetEditor() {
 	}
 
 	const handleSubmit = async () => {
+		if (isLoading) return
+
+		setIsLoading(true)
+
 		const production_accessories = ArrayUtils.convertToArray(accessoryItems).filter(
 			(item: AccessoryItemProps) => NumberUtils.convertToNumber(item?.accessory_id) > 0
 		)
@@ -249,11 +266,19 @@ export function ProductionBudgetEditor() {
 
 		try {
 			await makeRemoteAddProductionBudget().add(data)
-
+			handleClearForm()
 			toast.success('Orçamento registado com sucesso')
 		} catch ({ message }) {
 			toast.error(message)
+		} finally {
+			setIsLoading(false)
 		}
+	}
+
+	const handleClearForm = () => {
+		setFormData(initialFormDataValues)
+		setFabricItems(initialFabricItemValues)
+		setAccessoryItems(initialAccessoryItemValues)
 	}
 
 	return (
@@ -262,6 +287,7 @@ export function ProductionBudgetEditor() {
 				<div className="flex flex-col gap-3">
 					<ProductionCustomerEditor
 						formData={formData}
+						setFormData={setFormData}
 						handleInputChange={handleInputChange}
 					/>
 					<ProductionEmployeeRow
@@ -348,10 +374,14 @@ export function ProductionBudgetEditor() {
 					variableCost={variableCost}
 				/>
 			</div>
-			<div className="flex mt-2">
-				<button className="btn-primary ml-auto" onClick={handleSubmit}>
-					Salvar
-				</button>
+			<div className="flex gap-2 my-2">
+				<ButtonSubmit
+					text="Cadastrar"
+					onClick={handleSubmit}
+					disabled={isLoading}
+					isLoading={isLoading}
+				/>
+				<ButtonCancel onClick={handleClearForm} />
 			</div>
 			<ProductionBudgetList
 				loadProductionBudgets={makeRemoteLoadProductionBudgets()}

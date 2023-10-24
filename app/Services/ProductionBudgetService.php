@@ -18,7 +18,7 @@ class ProductionBudgetService
 			DB::beginTransaction();
 
 			$photo = null;
-			if ($request->photo) {
+			if ($request->photo && stripos($request->photo, 'data:') === 0) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/product-budgets');
 			}
 			$productionBudget =	ProductionBudget::create([

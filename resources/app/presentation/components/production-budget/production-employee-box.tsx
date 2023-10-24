@@ -43,7 +43,7 @@ export const ProductionEmployeeBox = ({
 				<InputPrice
 					name={`${prefix}_day`}
 					id={`${prefix}_day`}
-					value={formData[`${prefix}_day`]}
+					value={formData[`${prefix}_day`] || ''}
 					onChange={onChange}
 					readOnly
 				/>

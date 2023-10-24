@@ -27,7 +27,6 @@ type ProductionFabricEditorProps = {
 export function ProductionBudgetFabricEditor({
 	fabricItem,
 	fabrics,
-	index,
 	itemIndex,
 	onChange
 }: ProductionFabricEditorProps) {
