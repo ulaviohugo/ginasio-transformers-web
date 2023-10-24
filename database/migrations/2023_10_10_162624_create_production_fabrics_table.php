@@ -15,7 +15,7 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_PRODUCTION_FABRICS, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('production_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_BUDGETS)->cascadeOnUpdate()->cascadeOnDelete();
-			$table->foreignId('fabric_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
+			$table->foreignId('fabric_id')->nullable()->references('id')->on(DBHelper::TB_FABRICS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('color', 16);
 			$table->string('meters', 50);
 			$table->double('cost', 16, 3);

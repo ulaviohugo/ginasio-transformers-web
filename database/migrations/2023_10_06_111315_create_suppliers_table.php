@@ -16,8 +16,8 @@ return new class extends Migration
 			$table->id();
 			$table->string('name', 50);
 			$table->string('representative', 50);
-			$table->string('email', 50)->unique();
-			$table->string('phone', 15)->unique();
+			$table->string('email', 50)->nullable()->unique();
+			$table->string('phone', 15)->nullable()->unique();
 			$table->string('photo', 100)->nullable();
 			$table->foreignId('country_id')->nullable()->references('id')->on(DBHelper::TB_COUNTRIES)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('province_id')->nullable()->references('id')->on(DBHelper::TB_PROVINCES)->cascadeOnUpdate()->nullOnDelete();

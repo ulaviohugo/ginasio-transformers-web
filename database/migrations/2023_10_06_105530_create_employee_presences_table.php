@@ -21,7 +21,7 @@ return new class extends Migration
 			$table->time('exit_time')->nullable();
 			$table->time('delay_duration')->nullable();
 			$table->enum('presence_status', [EmployeePresence::PRESENT, EmployeePresence::ABSENT]);
-			$table->string('description')->nullable();
+			$table->string('description', 100)->nullable();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

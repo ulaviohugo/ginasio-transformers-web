@@ -15,7 +15,7 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_PROVINCES, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('country_id')->references('id')->on(DBHelper::TB_COUNTRIES)->cascadeOnUpdate()->cascadeOnDelete();
-			$table->string('name');
+			$table->string('name', 30);
 
 			$table->unique(['country_id', 'name']);
 		});

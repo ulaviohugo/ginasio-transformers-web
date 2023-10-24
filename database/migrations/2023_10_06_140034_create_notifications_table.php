@@ -16,7 +16,7 @@ return new class extends Migration
 			$table->id();
 			$table->string('notifiable', 30);
 			$table->unsignedBigInteger('notifiable_id');
-			$table->string('text');
+			$table->string('text', 199);
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

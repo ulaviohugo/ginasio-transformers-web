@@ -14,7 +14,7 @@ return new class extends Migration
 	{
 		Schema::create(DBHelper::TB_COUNTRIES, function (Blueprint $table) {
 			$table->id();
-			$table->string('name')->unique();
+			$table->string('name', 30)->unique();
 		});
 	}
 

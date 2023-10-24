@@ -14,7 +14,7 @@ return new class extends Migration
 	{
 		Schema::create(DBHelper::TB_ACCESSORIES, function (Blueprint $table) {
 			$table->id();
-			$table->string('name');
+			$table->string('name', 50)->unique();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->timestamps();

@@ -12,10 +12,10 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create('production_accessories', function (Blueprint $table) {
+		Schema::create(DBHelper::TB_PRODUCTION_ACCESSORIES, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('production_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_BUDGETS)->cascadeOnUpdate()->cascadeOnDelete();
-			$table->foreignId('accessory_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->cascadeOnDelete();
+			$table->foreignId('accessory_id')->nullable()->references('id')->on(DBHelper::TB_ACCESSORIES)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->integer('quantity');
 			$table->double('price', 16, 3);
 			$table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('production_accessories');
+		Schema::dropIfExists(DBHelper::TB_PRODUCTION_ACCESSORIES);
 	}
 };

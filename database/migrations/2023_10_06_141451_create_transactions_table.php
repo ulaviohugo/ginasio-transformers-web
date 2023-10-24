@@ -15,7 +15,7 @@ return new class extends Migration
 	{
 		Schema::create(DBHelper::TB_TRANSACTIONS, function (Blueprint $table) {
 			$table->id();
-			$table->string('description');
+			$table->string('description', 199);
 			$table->enum('operation_type', [Transaction::OPERATION_TYPE_IN, Transaction::OPERATION_TYPE_OUT]);
 			$table->decimal('amount', 65, 3);
 			$table->string('payment_method', 50);
