@@ -280,7 +280,7 @@ return [
 		'renewal_date' => 'data de renovação',
 		'representative' => 'representante',
 		'review' => 'avaliação do serviço',
-		'selling_cost' => 'custo de costura',
+		'selling_cost' => 'custo de venda',
 		'selling_price_unit' => 'preço de venda/unidade',
 		'size' => 'tamanho',
 		'social_security' => 'segurança social',
