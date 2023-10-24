@@ -13,7 +13,10 @@ class ProductSale extends Model
 
 	protected $fillable = [
 		'product_id',
+		'category_id',
 		'sale_id',
+		'lot',
+		'bar_code',
 		'quantity',
 		'total_value',
 		'unit_price',
@@ -23,5 +26,21 @@ class ProductSale extends Model
 		'discount',
 		'user_id',
 		'user_id_update',
+		'created_at',
 	];
+
+	public function sale()
+	{
+		return $this->belongsTo(Sale::class);
+	}
+
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
+
+	public function category()
+	{
+		return $this->belongsTo(Category::class);
+	}
 }

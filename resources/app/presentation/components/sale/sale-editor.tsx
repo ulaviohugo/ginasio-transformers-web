@@ -125,7 +125,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	const [employeeId, setEmployeeId] = useState<number>(user.id)
 
 	const [isLoading, setIsLoading] = useState(false)
-	const [photPreview] = useState('')
+	const [photPreview, setPhotoPreview] = useState('')
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -217,6 +217,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				color: stock?.color,
 				unit_price: stock?.unit_price
 			}
+			setPhotoPreview(String(stock.photo))
 		}
 		setFormProduct(data)
 	}
@@ -450,8 +451,8 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 											</tr>
 										</tbody>
 									</table>
-									<div>
-										<div className="flex flex-col gap-2">
+									<div className="flex flex-col gap-2">
+										<div className="flex gap-2">
 											<Select
 												id="customer_id"
 												name="customer_id"
@@ -476,7 +477,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												onChange={(e) => setPaymentMethod(e.target.value)}
 											/>
 											<Select
-												value={data?.sale.employee?.id || user.id}
+												value={employeeId || user.id}
 												label={`Funcionário`}
 												data={employees.map(({ id, name }) => ({
 													text: name,
@@ -485,6 +486,8 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												defaultText="Selecione"
 												onChange={({ target: { value } }) => setEmployeeId(Number(value))}
 											/>
+										</div>
+										<div>
 											<ButtonSubmit
 												onClick={handleSubmit}
 												type="submit"

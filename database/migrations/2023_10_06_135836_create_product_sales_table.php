@@ -15,6 +15,9 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_PRODUCT_SALES, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('product_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTS)->cascadeOnUpdate()->nullOnDelete();
+			$table->foreignId('category_id')->nullable()->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->nullOnDelete();
+			$table->string('lot', 70)->nullable();
+			$table->string('bar_code', 70)->nullable();
 			$table->foreignId('sale_id')->nullable()->references('id')->on(DBHelper::TB_SALES)->cascadeOnUpdate()->nullOnDelete();
 			$table->integer('quantity');
 			$table->double('total_value', 16, 3);

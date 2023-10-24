@@ -5,7 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
 import { ButtonCancel, ButtonSubmit, ImagePreview, Input, InputPrice, Select } from '..'
 
-import { ColorUtils, DateUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/utils'
+import {
+	ColorUtils,
+	DateUtils,
+	FileUtils,
+	LabelUtils,
+	NumberUtils,
+	PaymentUtils
+} from '@/utils'
 import {
 	addPurchaseStore,
 	loadCategoryStore,
@@ -145,9 +152,8 @@ export function PurchaseEditor({
 			)
 		}
 		if (name == 'photo') {
-			const file = (e.target as any)?.files[0]
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-			handleInputFile(file)
 		}
 		if (name == 'paid') {
 			const checked = (e.target as any).checked
@@ -181,18 +187,6 @@ export function PurchaseEditor({
 			}
 		}
 		setFormData(data)
-	}
-
-	const handleInputFile = (file: File) => {
-		if (file) {
-			const reader = new FileReader()
-
-			reader.onload = function (e) {
-				setPhotoPreview(String(e.target?.result))
-			}
-
-			reader.readAsDataURL(file)
-		}
 	}
 
 	const handleSubmit = async (e: FormEvent) => {

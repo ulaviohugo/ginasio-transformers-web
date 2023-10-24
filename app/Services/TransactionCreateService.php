@@ -23,7 +23,7 @@ class TransactionCreateService
 			'operation_type' => $request->operation_type,
 			'amount' => $amount,
 			'payment_method' => $request->payment_method,
-			'date' => $request->date,
+			'date' => $request->date ?? now(),
 			'cash_register_id' => $cashRegister->id,
 			'post_movement_balance' => $balance,
 			'employee_id' => $request->employee_id ?? $userId,

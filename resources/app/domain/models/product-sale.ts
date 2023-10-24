@@ -1,4 +1,4 @@
-import { ProductModel, SaleModel } from '.'
+import { CategoryModel, CustomerModel, EmployeeModel, ProductModel, SaleModel } from '.'
 
 export type ProductSaleModel = {
 	id: number
@@ -19,4 +19,7 @@ export type ProductSaleModel = {
 
 	product: ProductModel
 	sale: SaleModel
+	category: CategoryModel
+	customer?: CustomerModel
+	employee: EmployeeModel
 }

@@ -20,4 +20,9 @@ class Product extends Model
 		'user_id',
 		'user_id_update',
 	];
+
+	public function category()
+	{
+		return $this->belongsTo(Category::class);
+	}
 }

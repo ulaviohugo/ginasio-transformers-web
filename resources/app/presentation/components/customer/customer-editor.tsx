@@ -140,7 +140,7 @@ export function CustomerEditor({
 		}
 	}
 	return (
-		<Modal show={show} onClose={onClose}>
+		<Modal show={show} onClose={onClose} size="lg">
 			<ModalTitle>
 				{customer?.id ? `Cliente - ${customer.name}` : 'Cadastrar cliente'}
 			</ModalTitle>
@@ -154,7 +154,7 @@ export function CustomerEditor({
 								clearInputFile={clearInputFile}
 							/>
 						</div>
-						<div className="flex flex-col gap-1">
+						<div className="flex-1 flex flex-col gap-1">
 							<div className="grid grid-cols-3 gap-1">
 								<Input
 									type="text"

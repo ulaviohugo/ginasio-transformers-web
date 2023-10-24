@@ -33,7 +33,7 @@ type FilterDataProps = {
 	supplier_id: number
 	category_id: number
 	product_id: number
-	created_at: Date
+	date: Date
 }
 
 export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
@@ -176,9 +176,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 					<div className="col-span-2">
 						<Input
 							type="date"
-							name="created_at"
-							label={LabelUtils.translateField('created_at')}
-							value={filterData?.created_at?.toString() || ''}
+							name="date"
+							label={LabelUtils.translateField('date')}
+							value={filterData?.date?.toString() || ''}
 							onChange={handleChangeFilterInput}
 						/>
 					</div>

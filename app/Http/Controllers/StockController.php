@@ -16,7 +16,35 @@ class StockController extends Controller
 	public function index()
 	{
 		try {
-			$stocks = Stock::all();
+			$product_id = null;
+			$supplier_id = null;
+			$category_id = null;
+			$date = null;
+
+			if (request()->query('filter')) {
+				$queryParam = json_decode(request()->query('filter'));
+				$product_id = isset($queryParam->product_id) ? $queryParam->product_id : null;
+				$supplier_id = isset($queryParam->supplier_id) ? $queryParam->supplier_id : null;
+				$category_id = isset($queryParam->category_id) ? $queryParam->category_id : null;
+				$date = isset($queryParam->date) ? $queryParam->date : null;
+			}
+
+			$stocks = Stock::orderBy('id', 'desc');
+
+			if ($product_id) {
+				$stocks = $stocks->where('product_id', $product_id);
+			}
+			if ($supplier_id) {
+				$stocks = $stocks->where('supplier_id', $supplier_id);
+			}
+			if ($category_id) {
+				$stocks = $stocks->where('category_id', $category_id);
+			}
+			if ($date) {
+				$stocks = $stocks->whereDate('created_at', $date);
+			}
+			$stocks = $stocks->get();
+
 			$stocks->load($this->relationship);
 			return StockResource::collection($stocks);
 		} catch (\Throwable $th) {
@@ -31,7 +59,7 @@ class StockController extends Controller
 			$createdStock->load($this->relationship);
 			return HttpResponse::success(data: new StockResource($createdStock));
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao cadastrar venda' . $th->getMessage());
+			return HttpResponse::error(message: 'Erro ao cadastrar estoque' . $th->getMessage());
 		}
 	}
 
@@ -40,7 +68,7 @@ class StockController extends Controller
 		try {
 			return HttpResponse::success(data: Stock::count());
 		} catch (\Throwable $th) {
-			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar stock');
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar estoque');
 		}
 	}
 }

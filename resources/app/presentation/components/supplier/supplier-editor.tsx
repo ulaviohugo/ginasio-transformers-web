@@ -237,7 +237,7 @@ export function SupplierEditor({
 								clearInputFile={clearInputFile}
 							/>
 						</div>
-						<div className="flex flex-col gap-1">
+						<div className="flex-1 flex flex-col gap-1">
 							<div className="flex gap-1">
 								<Input
 									type="text"

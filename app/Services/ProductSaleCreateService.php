@@ -14,7 +14,10 @@ class ProductSaleCreateService
 	{
 		$productSale =	ProductSale::create([
 			'product_id' => $request->product_id,
+			'category_id' => $request->category_id,
 			'sale_id' => $request->sale_id,
+			'lot' => $request->lot,
+			'bar_code' => $request->bar_code,
 			'quantity' => $request->quantity,
 			'total_value' => $request->total_value,
 			'unit_price' => $request->unit_price,
