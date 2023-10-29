@@ -17,7 +17,7 @@ return new class extends Migration
 			$table->string('photo', 100)->nullable();
 			$table->string('lot', 70)->nullable();
 			$table->string('bar_code', 70)->nullable();
-			$table->foreignId('supplier_id')->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->noActionOnDelete();
+			$table->foreignId('supplier_id')->nullable()->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->noActionOnDelete();
 			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();
 			$table->foreignId('product_id')->references('id')->on(DBHelper::TB_PRODUCTS)->cascadeOnUpdate()->noActionOnDelete();
 			$table->string('color', 20)->nullable();

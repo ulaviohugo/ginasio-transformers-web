@@ -28,7 +28,7 @@ class StockCreateRequest extends GlobalFormRequest
 	{
 		return [
 			'supplier_id' => [
-				'required',
+				'nullable',
 				'numeric',
 				'gt:0',
 				Rule::exists(Supplier::class, 'id'),

@@ -50,7 +50,7 @@ export function PurchaseEditor({
 	const user = useSelector(useAuth())
 
 	const [productList, setProductList] = useState<ProductModel[]>([])
-	const [categoryList, setCategoryList] = useState<CategoryModel[]>([])
+	const [categoryList, setCategoryList] = useState<CategoryModel[]>(categories)
 
 	const [formData, setFormData] = useState<PurchaseModel>(
 		(data?.id && data) ||
@@ -127,28 +127,34 @@ export function PurchaseEditor({
 		let data: PurchaseModel = { ...formData, [name]: value }
 
 		if (name == 'supplier_id') {
+			const supplierId = NumberUtils.convertToNumber(value)
 			data = { ...data, category_id: undefined as any, product_id: undefined as any }
 			setCategoryList(
-				categories.filter(
-					(category) =>
-						suppliers
-							.find((sup) => sup.id == Number(value))
-							?.supplier_products?.map((sup) => sup.category_id)
-							.includes(category.id)
-				)
+				supplierId > 0
+					? categories.filter(
+							(category) =>
+								suppliers
+									.find((sup) => sup.id == supplierId)
+									?.supplier_products?.map((sup) => sup.category_id)
+									.includes(category.id)
+					  )
+					: categories
 			)
 		}
 		if (name == 'category_id') {
+			const categoryId = NumberUtils.convertToNumber(value)
 			data = { ...data, product_id: undefined as any }
 			setProductList(
-				products.filter(
-					(product) =>
-						product.category_id == Number(value) &&
-						suppliers
-							.find((sup) => sup.id == formData.supplier_id)
-							?.supplier_products?.map((sup) => sup.product_id)
-							.includes(product.id)
-				)
+				formData.supplier_id
+					? products.filter(
+							(product) =>
+								product.category_id == categoryId &&
+								suppliers
+									.find((sup) => sup.id == formData.supplier_id)
+									?.supplier_products?.map((sup) => sup.product_id)
+									.includes(product.id)
+					  )
+					: products.filter((product) => product.category_id == categoryId)
 			)
 		}
 		if (name == 'photo') {
