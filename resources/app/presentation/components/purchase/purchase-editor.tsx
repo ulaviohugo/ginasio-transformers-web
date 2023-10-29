@@ -211,9 +211,7 @@ export function PurchaseEditor({
 			} else {
 				dispatch(addPurchaseStore(httpResponse))
 			}
-			toast.success(
-				`Funcionário ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`
-			)
+			toast.success(`Entrada ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
