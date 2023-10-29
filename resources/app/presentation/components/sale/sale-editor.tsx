@@ -264,6 +264,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				dispatch(addSaleStore(httpResponse))
 			}
 			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+
+			setCart([])
+			setFormProduct({} as any)
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
