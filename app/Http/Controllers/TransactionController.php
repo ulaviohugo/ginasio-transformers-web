@@ -30,7 +30,7 @@ class TransactionController extends Controller
 				$operationType = isset($queryParam->operation_type) ? $queryParam->operation_type : null;
 			}
 
-			$transactions = Transaction::orderBy('date', 'desc');
+			$transactions = Transaction::orderBy('id', 'desc');
 			if ($year) {
 				$transactions = $transactions->whereYear('date', $year);
 			}
