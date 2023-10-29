@@ -1,8 +1,8 @@
 import { QueryParams } from '@/data/protocols'
-import { SaleModel } from '@/domain/models'
+import { ProductSaleModel } from '@/domain/models'
 
 export interface LoadSales {
-	load(queryParams?: QueryParams<SaleModel>): Promise<LoadSalesResult>
+	load(queryParams?: QueryParams<ProductSaleModel>): Promise<LoadSalesResult>
 }
 
-export type LoadSalesResult = SaleModel[]
+export type LoadSalesResult = ProductSaleModel[]

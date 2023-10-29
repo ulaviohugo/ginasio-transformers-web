@@ -14,9 +14,9 @@ import {
 	Title,
 	IconProduct
 } from '@/presentation/components'
-import { useAuth } from '@/presentation/hooks'
-import { loadSaleStore, removeSaleStore } from '@/presentation/redux'
-import { ProductSaleModel, SaleModel } from '@/domain/models'
+import { useAuth, useProductSales } from '@/presentation/hooks'
+import { loadProductSaleStore, removeSaleStore } from '@/presentation/redux'
+import { SaleModel } from '@/domain/models'
 import {
 	makeRemoteAddSale,
 	makeRemoteDeleteSale,
@@ -33,8 +33,7 @@ export function Sales() {
 
 	const dispatch = useDispatch()
 
-	// const sales = useSelector(useSales())
-	const [productSales] = useState<ProductSaleModel[]>([])
+	const productSales = useSelector(useProductSales())
 
 	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
 	const [isLoading, setIsLoading] = useState(true)
@@ -45,7 +44,7 @@ export function Sales() {
 			const httpResponse = await makeRemoteLoadSales().load({
 				filter: { created_at: new Date() }
 			})
-			dispatch(loadSaleStore(httpResponse))
+			dispatch(loadProductSaleStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -128,7 +127,7 @@ export function Sales() {
 						) : productSales.length < 1 ? (
 							<NoData />
 						) : (
-							<table className="table text-left text-sm border border-gray-100">
+							<table className="table w-full text-left text-sm border border-gray-100">
 								<tr>
 									<th className="p-1">Id</th>
 									<th className="p-1">Categoria</th>
@@ -137,6 +136,7 @@ export function Sales() {
 									<th className="p-1">Tamanho</th>
 									<th className="p-1">Quantidade</th>
 									<th className="p-1">Preço unitário</th>
+									<th className="p-1">Desconto</th>
 									<th className="p-1">Pago</th>
 									<th className="p-1">Funcionário</th>
 									<th className="p-1">Data</th>
@@ -151,17 +151,18 @@ export function Sales() {
 									>
 										<td className="p-1">{sale.id}</td>
 
-										<td className="p-1">{sale.product.category?.name}</td>
+										<td className="p-1">{sale.category?.name}</td>
 										<td className="p-1">{sale.product?.name}</td>
 										<td className="p-1">{sale.color}</td>
 										<td className="p-1">{sale.size}</td>
 										<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
 										<td className="p-1">{NumberUtils.formatCurrency(sale.unit_price)}</td>
+										<td className="p-1">{NumberUtils.formatCurrency(sale.discount)}</td>
 										<td className="p-1">
 											{NumberUtils.formatCurrency(sale.amount_paid)}
 										</td>
 										<td className="p-1">
-											{StringUtils.getFirstWord(sale?.sale.employee?.name as string)}
+											{StringUtils.getFirstAndLastWord(sale?.employee?.name as string)}
 										</td>
 										<td className="p-1">{DateUtils.getDatePt(sale.created_at)}</td>
 										<td className="p-1">
