@@ -1,7 +1,7 @@
 import { NumberUtils } from '.'
 
 export class SalaryUtils {
-	static getIRtValue(salary: number): number {
+	static getIRTValue(salary: number): number {
 		return (salary * this.getIRtPercent(salary)) / 100
 	}
 

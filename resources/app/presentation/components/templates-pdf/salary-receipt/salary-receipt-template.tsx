@@ -90,7 +90,7 @@ export const getSalaryItems = (
 				0,
 				0,
 				SalaryUtils.getINSS(currentBaseSalary),
-				SalaryUtils.getIRtValue(currentBaseSalary),
+				SalaryUtils.getIRTValue(currentBaseSalary),
 				0,
 				0,
 				0
