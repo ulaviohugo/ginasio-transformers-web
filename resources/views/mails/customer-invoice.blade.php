@@ -9,10 +9,12 @@
 </head>
 
 <body>
-	Saudações estimado(a) <b>{{$customer->name}}</b>,
+Saudações estimad{{$customer->gender=='Masculino' ? 'o':($customer->gender=='Feminino' ? 'a':'o (a)')}}
+<b>{{$customer->name}}</b>,
 	<br />
 	<br />
-	Segue em anexo a factura de compra efectuada no dia {{date('d/m/Y', strtotime($sale->created_at))}} na WO.
+Segue em anexo a factura da compra efectuada no dia {{date('d/m/Y', strtotime($sale->created_at))}}
+às {{date('H:i', strtotime($sale->created_at))}}H na WO.
 </body>
 
 </html>

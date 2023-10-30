@@ -5,13 +5,11 @@ namespace App\Mail;
 use App\Models\Customer;
 use App\Models\Sale;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
 
 class CustomerInvoiceMail extends Mailable
 {
@@ -30,7 +28,7 @@ class CustomerInvoiceMail extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: "Factura WO #{$this->sale->id}",
+			subject: "Factura #{$this->sale->id} - WO",
 		);
 	}
 
@@ -51,9 +49,9 @@ class CustomerInvoiceMail extends Mailable
 	 */
 	public function attachments(): array
 	{
-		$name = Str::slug($this->customer->name);
+		$name = $this->customer->name;
 		return [
-			Attachment::fromData(fn () => $this->pdf, "factura-{$this->sale->id}-{$name}.pdf")
+			Attachment::fromData(fn () => $this->pdf, "Factura WO-{$this->sale->id} - {$name}.pdf")
 				->withMime('application/pdf'),
 		];
 	}

@@ -15,7 +15,10 @@ class InvoiceController extends Controller
 		try {
 			$customer = $sale->customer;
 			if (!$customer) {
-				return HttpResponse::error(message: 'A compra especificada não tem nenhum cliente especificado');
+				return HttpResponse::error(message: 'A compra especificada não tem nenhum cliente associado');
+			}
+			if (!$customer->email) {
+				return HttpResponse::error(message: 'O cliente não tem um e-mail especificado para enviar a factura.');
 			}
 			$pdf = Pdf::loadView('pdfs.invoices.sale', ['sale' => $sale]);
 			Mail::to($customer)->send(new CustomerInvoiceMail($sale, $customer, $pdf->output()));
