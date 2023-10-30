@@ -21,6 +21,7 @@ Route::view('', 'app');
 Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
 Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
 Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'autorizacaoConducao']);
+Route::match(['get', 'post'], 'recibo-salario/{employee}', [AdminDocsController::class, 'reciboSalario']);
 
 Route::view('/{path}', 'app')->where(
 	'path',
