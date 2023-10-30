@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('', 'app');
 Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
 Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
+Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'autorizacaoConducao']);
 
 Route::view('/{path}', 'app')->where(
 	'path',
