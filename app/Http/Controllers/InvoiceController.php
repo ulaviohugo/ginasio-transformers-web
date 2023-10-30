@@ -12,6 +12,6 @@ class InvoiceController extends Controller
 		// return view('invoices.sale', ['sale' => $sale]);
 		Pdf::setOption(['defaultFont' => 'sans-serif']);
 		$pdf = Pdf::loadView('invoices.sale', ['sale' => $sale]);
-		return $pdf->stream("factura{$sale->id}.pdf");
+		return $pdf->stream("factura-{$sale->id}.pdf");
 	}
 }

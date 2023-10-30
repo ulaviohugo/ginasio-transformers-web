@@ -11,6 +11,6 @@ class AdminDocsController extends Controller
 	{
 		// return view('admin-docs.advertencia', compact('employee'));
 		$pdf = Pdf::loadView('admin-docs.advertencia', compact('employee'));
-		return	$pdf->stream("factura{$employee->id}.pdf");
+		return	$pdf->stream("advertencia-{$employee->id}-{$employee->name}.pdf");
 	}
 }
