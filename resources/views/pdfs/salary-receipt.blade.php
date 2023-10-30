@@ -203,6 +203,7 @@ $netSalary = $totalSalary - $totalDiscount;
 		$html =	ob_get_clean();	
 	?>
 
+	{{-- Original --}}
 	{!!$html!!}
 	<br />
 	<div style="color: #888; border: 0; padding: 0; font-size: 14px">
@@ -210,6 +211,8 @@ $netSalary = $totalSalary - $totalDiscount;
 		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	</div>
 	<br />
+
+	{{-- Duplicado --}}
 	{!!str_replace('Original', 'Duplicado', $html)!!}
 </body>
 
