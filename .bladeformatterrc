@@ -4,7 +4,6 @@
 	"wrapLineLength": 120,
 	"endWithNewLine": true,
 	"noMultipleEmptyLines": false,
-	"useTabs": false,
 	"sortTailwindcssClasses": true,
 	"sortHtmlAttributes": "none",
 	"noPhpSyntaxCheck": false,
