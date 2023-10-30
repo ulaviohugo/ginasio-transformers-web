@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminDocsController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,8 @@ use Illuminate\Support\Str;
 
 Route::view('', 'app');
 Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
+Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
+
 Route::view('/{path}', 'app')->where(
 	'path',
 	'([A-z\d\-\/_.]+)?'
