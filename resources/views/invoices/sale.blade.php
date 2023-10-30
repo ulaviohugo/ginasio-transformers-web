@@ -8,13 +8,13 @@
 	<title>Factura de venda</title>
 	<style>
 		@page {
-/* size: 348px 216px; */
+			/* size: 348px 216px; */
 			padding: 0;
-margin: 0;
-}
+			margin: 0;
+		}
 
-body {
-padding: 8px
+		body {
+			padding: 8px
 		}
 
 		.page {
@@ -46,8 +46,8 @@ padding: 8px
 
 <body>
 	<?php
-ob_start();
-echo '
+	ob_start();
+	echo '
 		<tr>
 			<td colspan="3" style="background: rgb(217,225,242)"></td>
 		</tr>
@@ -58,10 +58,10 @@ echo '
 	<div class="page">
 		<table cellspacing="0">
 			<tr>
-<td colspan="3" style="background: rgb(34,43,53); height:50px"></td>
-</tr>
-{!!$trFeatured!!}
-<tr>
+				<td colspan="3" style="background: rgb(34,43,53); height:50px"></td>
+			</tr>
+			{!!$trFeatured!!}
+			<tr>
 				<td><b>Nº Factura:</b> <u>{{$sale->id}}</u></td>
 				<td style="text-align: right">
 					<b>Data</b> <u>{{date('d/m/Y', strtotime($sale->created_at))}}</u>
@@ -70,7 +70,7 @@ echo '
 					<b>Hora</b> <u>{{date('H:i:s', strtotime($sale->created_at))}}</u>
 				</td>
 			</tr>
-{!!$trFeatured!!}
+			{!!$trFeatured!!}
 			<tr>
 				<td>
 					<b>
@@ -124,11 +124,11 @@ echo '
 				<td class="border">{{$sale->amount_paid}}</td>
 			</tr>
 		</table>
-<div style="font-weight: bold; padding: 8px; text-align: center">
-	<div style="padding-bottom: 5px">Muito obrigado. Volte sempre!</div>
-	<div style="padding-bottom: 5px">A sua preferência nos impulsiona a servir com rigor e qualidade.</div>
-	<div style="padding-bottom: 5px; color: rgb(192,0,0)">IVA 14% - Regime de não sujeição - Regime Simplificado</div>
-	<div style="padding-bottom: 5px">Sistema desenvolvido por Samuel Freitas - +244 930 690 710</div>
+		<div style="font-weight: bold; padding: 8px; text-align: center">
+			<div style="padding-bottom: 5px">Muito obrigado. Volte sempre!</div>
+			<div style="padding-bottom: 5px">A sua preferência nos impulsiona a servir com rigor e qualidade.</div>
+			<div style="padding-bottom: 5px; color: rgb(192,0,0)">IVA 14% - Regime de não sujeição - Regime Simplificado</div>
+			<div style="padding-bottom: 5px">Sistema desenvolvido por Samuel Freitas - +244 930 690 710</div>
 		</div>
 	</div>
 	<?php
