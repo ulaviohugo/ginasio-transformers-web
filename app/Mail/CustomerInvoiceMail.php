@@ -13,7 +13,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 
-class InvoiceMail extends Mailable
+class CustomerInvoiceMail extends Mailable
 {
 	use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class InvoiceMail extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: 'Invoice Mail',
+			subject: "Factura WO #{$this->sale->id}",
 		);
 	}
 
@@ -40,7 +40,7 @@ class InvoiceMail extends Mailable
 	public function content(): Content
 	{
 		return new Content(
-			view: 'pdfs.invoices.sale',
+			view: 'mails.customer-invoice',
 		);
 	}
 
@@ -51,8 +51,10 @@ class InvoiceMail extends Mailable
 	 */
 	public function attachments(): array
 	{
-		$name = $this->customer?->name ? Str::slug($this->customer->name) : '';
-		return [Attachment::fromData(fn () => $this->pdf, "factura-{$this->sale->id}{$name}.pdf")
-			->withMime('application/pdf'),];
+		$name = Str::slug($this->customer->name);
+		return [
+			Attachment::fromData(fn () => $this->pdf, "factura-{$this->sale->id}-{$name}.pdf")
+				->withMime('application/pdf'),
+		];
 	}
 }

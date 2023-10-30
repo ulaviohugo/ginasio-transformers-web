@@ -96,10 +96,12 @@
 			@foreach ($sale->productSales as $productSale)
 			<tr>
 				<td class="border">{{$productSale->product->name}}</td>
-				<td class="border">{{$productSale->unit_price}}</td>
+<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->unit_price)}} Kz</td>
 				<td class="border">{{$productSale->quantity}}</td>
-				<td class="border">{{$productSale->discount ?? '0,00'}}</td>
-				<td class="border">{{$productSale->total_value}}</td>
+<td class="border">{{$productSale->discount ? App\Helpers\NumberHelper::formatCurrency($productSale->discount).'
+					Kz' :
+					'0,00'}}</td>
+				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->total_value)}} Kz</td>
 			</tr>
 			@endforeach
 			<tr style="font-weight: bold">
@@ -107,7 +109,7 @@
 				<td></td>
 				<td></td>
 				<td class="border">SUBTOTAL</td>
-				<td class="border">{{$sale->total_value}}</td>
+<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->total_value)}} Kz</td>
 			</tr>
 			<tr style="font-weight: bold">
 				<td></td>
@@ -121,13 +123,14 @@
 				<td></td>
 				<td></td>
 				<td class="border">TOTAL A PAGAR</td>
-				<td class="border">{{$sale->amount_paid}}</td>
+<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->amount_paid)}} Kz</td>
 			</tr>
 		</table>
 		<div style="font-weight: bold; padding: 8px; text-align: center">
 			<div style="padding-bottom: 5px">Muito obrigado. Volte sempre!</div>
 			<div style="padding-bottom: 5px">A sua preferência nos impulsiona a servir com rigor e qualidade.</div>
 			<div style="padding-bottom: 5px; color: rgb(192,0,0)">IVA 14% - Regime de não sujeição - Regime Simplificado</div>
+<div style="padding-bottom: 5px">Tel. +244 923 465 361 / +244 990 912 842</div>
 			<div style="padding-bottom: 5px">Sistema desenvolvido por Samuel Freitas - +244 930 690 710</div>
 		</div>
 	</div>
