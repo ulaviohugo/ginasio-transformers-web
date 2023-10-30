@@ -38,13 +38,13 @@ class SalaryHelper
 		return $base_salary / self::WORK_DAYS;
 	}
 
-	public static function getSalaryPerHour(float $base_salary, int $workDays = self::WORK_DAYS)
+	public static function getSalaryPerHour(float $base_salary)
 	{
-		return (self::getSalaryPerDay($base_salary, $workDays) * 4) / 9;
+		return (self::getSalaryPerDay($base_salary) * 4) / 9;
 	}
 
-	public static function getSalaryPerMinute(float $base_salary, int $workDays = self::WORK_DAYS)
+	public static function getSalaryPerMinute(float $base_salary)
 	{
-		return self::getSalaryPerHour($base_salary, $workDays) / 60;
+		return self::getSalaryPerHour($base_salary) / 60;
 	}
 }
