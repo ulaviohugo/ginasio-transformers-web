@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\PDFHelper;
 use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class SaleCreateService
 {
-	public function execute(Request $request)
+	public function execute(Request $request, InvoiceGeneratorService $invoiceGenerator)
 	{
 		try {
 			DB::beginTransaction();
@@ -59,10 +60,23 @@ class SaleCreateService
 				$data = (new Request())->merge($productSales[$i] + ['payment_method' => $request->payment_method]);
 				(new ProductSaleCreateService)->execute($data);
 			}
+
+			// Invoice
+			if ($request->send_invoice == 'email') {
+				(new InvoiceSendEmailService)->execute($invoiceGenerator, $sale);
+			} else {
+				$output = $invoiceGenerator->execute($sale)->output();
+				PDFHelper::generatePdfPath(customerName: $sale->customer?->name, saleId: $sale->id, pdfOutPut: $output);
+				$pdfLink = PDFHelper::getPdfLink(customerName: $sale->customer?->name, saleId: $sale->id);
+				$sale->invoice = $pdfLink;
+			}
+
+			info('commit');
 			DB::commit();
 			return $sale;
 		} catch (\Throwable $th) {
 			DB::rollBack();
+			info('rollBack');
 			throw $th;
 		}
 	}

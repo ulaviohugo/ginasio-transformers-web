@@ -25,11 +25,15 @@ class SaleCreateRequest extends GlobalFormRequest
 	 */
 	public function rules(): array
 	{
+		$sendInvoice = request('send_invoice');
 		return [
 			'customer_id' => [
 				'nullable',
 				'numeric',
 				'gt:0',
+				Rule::requiredIf(function () use ($sendInvoice) {
+					return $sendInvoice == 'email';
+				}),
 				Rule::exists(Customer::class, 'id'),
 			],
 			'employee_id' =>  [
@@ -43,12 +47,15 @@ class SaleCreateRequest extends GlobalFormRequest
 			'product_sales.*.product_id' => 'required|numeric|gt:0|exists:' . DBHelper::TB_PRODUCTS . ',id',
 			'product_sales.*.quantity' => 'required|numeric|gt:0',
 			'product_sales.*.unit_price' => 'required|numeric|gt:0',
+			'send_invoice' => 'required',
 		];
 	}
 
 	public function messages()
 	{
 		return [
+			'customer_id.required' => 'Para enviar a factura por e-mail tem de selecionar o cliente.',
+			'send_invoice.required' => 'Informe a opção de factura.',
 			'product_sales.required' => 'Adicione pelo menos um produto na lista de produto.',
 			'product_sales.*.product_id.required' => 'Cada produto dever na lista deve ter um identificador.',
 			'product_sales.*.product_id.numeric' => 'Cada identificador do produto dever ser um valor numérico.',

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\HttpResponse;
-use App\Mail\CustomerInvoiceMail;
 use App\Models\Sale;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Mail;
+use App\Services\InvoiceGeneratorService;
+use App\Services\InvoiceSendEmailService;
 
 class InvoiceController extends Controller
 {
-	public function sale(Sale $sale)
-	{
+	public function sale(
+		InvoiceSendEmailService $invoiceSendEmailService,
+		InvoiceGeneratorService $invoiceGeneratorService,
+		Sale $sale
+	) {
 		try {
 			$customer = $sale->customer;
 			if (!$customer) {
@@ -20,13 +22,10 @@ class InvoiceController extends Controller
 			if (!$customer->email) {
 				return HttpResponse::error(message: 'O cliente não tem um e-mail especificado para enviar a factura.');
 			}
-			$pdf = Pdf::loadView('pdfs.invoices.sale', ['sale' => $sale]);
-			Mail::to($customer)->send(new CustomerInvoiceMail($sale, $customer, $pdf->output()));
-			return response()->json(['message' => 'Factura enviada por e-mail com sucesso']);
-			// return view('pdfs.invoices.sale', ['sale' => $sale]);
-			// return $pdf->stream("factura-{$sale->id}.pdf");
+			$invoiceSendEmailService->execute($invoiceGeneratorService, $sale);
+			return HttpResponse::success(message: 'Factura enviada por e-mail com sucesso');
 		} catch (\Throwable $th) {
-			HttpResponse::error(message: 'Erro ao enviar factura por e-mail');
+			return	HttpResponse::error(message: 'Erro ao enviar factura por e-mail' . $th->getMessage());
 		}
 	}
 }

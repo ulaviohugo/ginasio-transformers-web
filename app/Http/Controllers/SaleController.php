@@ -7,6 +7,7 @@ use App\Helpers\HttpResponse;
 use App\Http\Requests\SaleCreateRequest;
 use App\Models\ProductSale;
 use App\Models\Sale;
+use App\Services\InvoiceGeneratorService;
 use App\Services\SaleCreateService;
 
 class SaleController extends Controller
@@ -34,13 +35,13 @@ class SaleController extends Controller
 		}
 	}
 
-	public function store(SaleCreateRequest $request, SaleCreateService $service)
+	public function store(SaleCreateRequest $request, SaleCreateService $service, InvoiceGeneratorService $invoiceGenerator)
 	{
 		try {
-			$createdSale = $service->execute($request);
+			$createdSale = $service->execute($request, $invoiceGenerator);
 			return HttpResponse::success(data: $createdSale);
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao cadastrar venda' . $th->getMessage());
+			return HttpResponse::error(message: 'Erro ao cadastrar venda. ' . $th->getMessage());
 		}
 	}
 

@@ -14,12 +14,16 @@ use Illuminate\Queue\SerializesModels;
 class CustomerInvoiceMail extends Mailable
 {
 	use Queueable, SerializesModels;
+	public Sale $sale;
+	public Customer $customer;
 
 	/**
 	 * Create a new message instance.
 	 */
-	public function __construct(public Sale $sale, public Customer $customer, public $pdf)
+	public function __construct(Sale $sale, Customer $customer, public $pdf = null)
 	{
+		$this->sale = $sale->withoutRelations();
+		$this->customer = $customer->withoutRelations();
 	}
 
 	/**
@@ -49,10 +53,13 @@ class CustomerInvoiceMail extends Mailable
 	 */
 	public function attachments(): array
 	{
-		$name = $this->customer->name;
+		if (!$this->pdf) return [];
+		$customerName = $this->customer->name;
+		$fileName = "Factura WO-{$this->sale->id} - {$customerName}.pdf";
 		return [
-			Attachment::fromData(fn () => $this->pdf, "Factura WO-{$this->sale->id} - {$name}.pdf")
-				->withMime('application/pdf'),
+			Attachment::fromPath($this->pdf)
+				// ->withMime('application/pdf')
+				->as($fileName),
 		];
 	}
 }

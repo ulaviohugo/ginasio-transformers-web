@@ -130,6 +130,7 @@ export function Sales() {
 							<table className="table w-full text-left text-sm border border-gray-100">
 								<tr>
 									<th className="p-1">Id</th>
+									<th className="p-1">Cliente</th>
 									<th className="p-1">Categoria</th>
 									<th className="p-1">Produto</th>
 									<th className="p-1">Cor</th>
@@ -151,6 +152,7 @@ export function Sales() {
 									>
 										<td className="p-1">{sale.id}</td>
 
+										<td className="p-1">{sale.customer?.name}</td>
 										<td className="p-1">{sale.category?.name}</td>
 										<td className="p-1">{sale.product?.name}</td>
 										<td className="p-1">{sale.color}</td>

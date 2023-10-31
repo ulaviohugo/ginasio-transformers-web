@@ -14,6 +14,8 @@ export interface SaleModel {
 	updated_at?: Date
 	user_id_update?: number
 
+	invoice?: string
+
 	employee?: EmployeeModel
 	user?: EmployeeModel
 	customer?: CustomerModel

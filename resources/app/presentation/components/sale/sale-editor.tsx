@@ -16,6 +16,7 @@ import {
 	ImagePreview,
 	Input,
 	InputPrice,
+	SalePdfViewer,
 	Select
 } from '..'
 
@@ -123,9 +124,11 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	const [customer_id, setCustomerId] = useState<number>()
 	const [paymentMethod, setPaymentMethod] = useState('')
 	const [employeeId, setEmployeeId] = useState<number>(user.id)
+	const [sendInvoice, setSendInvoice] = useState<'print' | 'email'>('print')
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [photPreview, setPhotoPreview] = useState('')
+	const [pdfContent, setPdfContent] = useState('')
 
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
@@ -223,8 +226,16 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	}
 
 	const handleAddToCart = () => {
-		const { amount_paid, category_id, color, product_id, quantity, size, unit_price } =
-			formProduct
+		const {
+			amount_paid,
+			category_id,
+			color,
+			product_id,
+			quantity,
+			size,
+			unit_price,
+			discount
+		} = formProduct
 		if (!category_id) return toast.error('Selecione a categoria')
 		if (!product_id) return toast.error('Selecione o produto')
 		if (!color) return toast.error('Selecione a cor')
@@ -237,7 +248,14 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 			(stock) => stock.category_id == category_id && stock.product_id == product_id
 		) as any
 
-		setCart([...cart, { ...formProduct, product: { name: stock.product?.name } as any }])
+		setCart([
+			...cart,
+			{
+				...formProduct,
+				discount: NumberUtils.convertToNumber(discount),
+				product: { name: stock.product?.name } as any
+			}
+		])
 		setFormProduct({} as any)
 	}
 
@@ -253,7 +271,8 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				total_value: totalValue,
 				discount: totalDiscount,
 				amount_paid: totalValue - totalDiscount,
-				employee_id: employeeId
+				employee_id: employeeId,
+				send_invoice: sendInvoice
 			} as any
 
 			const httpResponse = await addSale.add(data)
@@ -264,7 +283,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				dispatch(addSaleStore(httpResponse))
 			}
 			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
-
+			if (httpResponse.invoice) {
+				setPdfContent(httpResponse.invoice)
+			}
 			setCart([])
 			setFormProduct({} as any)
 		} catch (error: any) {
@@ -273,10 +294,9 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 			setIsLoading(false)
 		}
 	}
-	console.log({ pre: photPreview })
-
 	return (
 		<div>
+			{pdfContent && <SalePdfViewer pdfUrl={pdfContent} />}
 			<div className="flex gap-2">
 				<div className="flex flex-col gap-2">
 					<ImagePreview photoPreview={photPreview} disabled />
@@ -492,14 +512,47 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 												onChange={({ target: { value } }) => setEmployeeId(Number(value))}
 											/>
 										</div>
-										<div>
-											<ButtonSubmit
-												onClick={handleSubmit}
-												type="submit"
-												text="Finalizar compra"
-												disabled={isLoading}
-												isLoading={isLoading}
-											/>
+										<div className="p-2 border rounded-md">
+											<label className="font-semibold uppercase underline">
+												Opção de factura
+											</label>
+											<div className="flex gap-2">
+												<label
+													htmlFor="print_invoice"
+													className="flex items-center gap-1 cursor-pointer"
+												>
+													Imprimir
+													<input
+														type="radio"
+														name="send_invoice"
+														value={'print'}
+														id="print_invoice"
+														onChange={() => setSendInvoice('print')}
+														checked={sendInvoice == 'print'}
+													/>
+												</label>
+												<label
+													htmlFor="send_email"
+													className="flex items-center gap-1 cursor-pointer"
+												>
+													Enviar por e-mail
+													<input
+														type="radio"
+														name="send_invoice"
+														value={'email'}
+														id="send_email"
+														onChange={() => setSendInvoice('email')}
+														checked={sendInvoice == 'email'}
+													/>
+												</label>
+												<ButtonSubmit
+													onClick={handleSubmit}
+													type="submit"
+													text="Finalizar compra"
+													disabled={isLoading}
+													isLoading={isLoading}
+												/>
+											</div>
 										</div>
 									</div>
 								</div>
