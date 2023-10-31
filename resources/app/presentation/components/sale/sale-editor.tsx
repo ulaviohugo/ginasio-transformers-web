@@ -217,7 +217,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				color: stock?.color,
 				unit_price: stock?.unit_price
 			}
-			setPhotoPreview(String(stock.photo))
+			if (stock.photo) setPhotoPreview(stock.photo as string)
 		}
 		setFormProduct(data)
 	}
@@ -273,6 +273,8 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 			setIsLoading(false)
 		}
 	}
+	console.log({ pre: photPreview })
+
 	return (
 		<div>
 			<div className="flex gap-2">
