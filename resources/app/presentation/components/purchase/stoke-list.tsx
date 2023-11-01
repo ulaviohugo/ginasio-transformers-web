@@ -141,7 +141,7 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 			)}
 
 			<fieldset>
-				<legend>Lista</legend>
+				<legend>Filtro ({purchases.length})</legend>
 				<div className="grid grid-cols-9 mb-3">
 					<div className="col-span-2">
 						<Select
