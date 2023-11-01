@@ -7,7 +7,6 @@ import {
 	StringUtils
 } from '@/utils'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { CardActions } from '../cards'
 import { Input, Select } from '../form-controls'
 import { Spinner } from '../spinner'
 import { useDispatch, useSelector } from 'react-redux'
@@ -40,30 +39,32 @@ type SaleListProps = {
 export function SaleList({ loadSales }: SaleListProps) {
 	const dispatch = useDispatch()
 
+	const currentDate = DateUtils.getDate(new Date())
+
 	const productSales = useSelector(useProductSales())
 	const products = useSelector(useProducts())
 	const categories = useSelector(useCategories())
 	const customers = useSelector(useCustomers())
-	const employes = useSelector(useEmployees())
+	const employees = useSelector(useEmployees())
 
 	const [isLoading, setIsLoading] = useState(true)
 
-	const [filterData, setFilterData] = useState<FilterDataProps>({
-		date: new Date()
+	const [filter, setFilter] = useState<FilterDataProps>({
+		date: currentDate as any
 	} as FilterDataProps)
 
 	const productList = useMemo(() => {
 		return ArrayUtils.order({
-			data: filterData?.category_id
-				? products.filter((product) => product.category_id == filterData.category_id)
+			data: filter?.category_id
+				? products.filter((product) => product.category_id == filter.category_id)
 				: products,
 			field: 'name'
 		})
-	}, [filterData.category_id, products])
+	}, [filter.category_id, products])
 
 	const hasFilter = useMemo(() => {
-		return !ObjectUtils.isEmpty(filterData)
-	}, [filterData])
+		return !ObjectUtils.isEmpty(filter)
+	}, [filter])
 
 	const fetchData = async (queryParams?: QueryParams) => {
 		try {
@@ -77,32 +78,33 @@ export function SaleList({ loadSales }: SaleListProps) {
 	}
 
 	useEffect(() => {
-		fetchData()
+		fetchData({ filter })
 	}, [])
 
 	const handleChangeFilterInput = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		let data = { ...filterData, [name]: value }
+		let data = { ...filter, [name]: value }
 
 		if (name == 'category_id') {
 			data = { ...data, product_id: undefined as any }
 		}
 
-		setFilterData(data)
+		setFilter(data)
 	}
 
 	const handleRequestFilter = () => {
-		if (ObjectUtils.isEmpty(filterData)) {
+		if (ObjectUtils.isEmpty(filter)) {
 			return toast.error('Selecione alguns campos para filtrar resultados')
 		}
-		fetchData({ filter: filterData })
+		fetchData({ filter: filter })
 	}
 
 	const clearFilter = () => {
-		setFilterData({} as any)
-		fetchData()
+		const filter = { date: currentDate }
+		setFilter(filter as any)
+		fetchData({ filter })
 	}
 
 	return (
@@ -113,7 +115,7 @@ export function SaleList({ loadSales }: SaleListProps) {
 					<Select
 						name="customer_id"
 						label={LabelUtils.translateField('customer_id')}
-						value={filterData?.customer_id || ''}
+						value={filter?.customer_id || ''}
 						data={customers.map(({ id: value, name: text }) => ({ text, value }))}
 						defaultText="Selecione"
 						onChange={handleChangeFilterInput}
@@ -123,8 +125,8 @@ export function SaleList({ loadSales }: SaleListProps) {
 					<Select
 						name="employee_id"
 						label={LabelUtils.translateField('employee_id')}
-						value={filterData?.employee_id || ''}
-						data={employes.map(({ id: value, name: text }) => ({ text, value }))}
+						value={filter?.employee_id || ''}
+						data={employees.map(({ id: value, name: text }) => ({ text, value }))}
 						defaultText="Selecione"
 						onChange={handleChangeFilterInput}
 					/>
@@ -133,7 +135,7 @@ export function SaleList({ loadSales }: SaleListProps) {
 					<Select
 						name="category_id"
 						label={LabelUtils.translateField('category_id')}
-						value={filterData?.category_id || ''}
+						value={filter?.category_id || ''}
 						data={categories.map(({ id: value, name: text }) => ({ text, value }))}
 						defaultText="Selecione"
 						onChange={handleChangeFilterInput}
@@ -143,7 +145,7 @@ export function SaleList({ loadSales }: SaleListProps) {
 					<Select
 						name="product_id"
 						label={LabelUtils.translateField('product_id')}
-						value={filterData?.product_id || ''}
+						value={filter?.product_id || ''}
 						data={productList.map(({ id: value, name: text }) => ({ text, value }))}
 						defaultText="Selecione"
 						onChange={handleChangeFilterInput}
@@ -154,7 +156,7 @@ export function SaleList({ loadSales }: SaleListProps) {
 						type="date"
 						name="date"
 						label={LabelUtils.translateField('date')}
-						value={filterData?.date?.toString() || ''}
+						value={filter?.date?.toString() || ''}
 						onChange={handleChangeFilterInput}
 					/>
 				</div>
@@ -175,52 +177,49 @@ export function SaleList({ loadSales }: SaleListProps) {
 			</div>
 
 			<table className="table w-full text-left text-sm border border-gray-100">
-				<tr>
-					<th className="p-1">Id</th>
-					<th className="p-1">Cliente</th>
-					<th className="p-1">Categoria</th>
-					<th className="p-1">Produto</th>
-					<th className="p-1">Cor</th>
-					<th className="p-1">Tamanho</th>
-					<th className="p-1">Quantidade</th>
-					<th className="p-1">Preço unitário</th>
-					<th className="p-1">Desconto</th>
-					<th className="p-1">Pago</th>
-					<th className="p-1">Funcionário</th>
-					<th className="p-1">Data</th>
-					<th className="p-1">Acção</th>
-				</tr>
-				{productSales.length > 0 &&
-					productSales.map((sale, i) => (
-						<tr
-							key={sale.id}
-							className={` ${
-								i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
-							} `}
-						>
-							<td className="p-1">{sale.id}</td>
+				<thead>
+					<tr>
+						<th className="p-1">Id</th>
+						<th className="p-1">Cliente</th>
+						<th className="p-1">Categoria</th>
+						<th className="p-1">Produto</th>
+						<th className="p-1">Cor</th>
+						<th className="p-1">Tamanho</th>
+						<th className="p-1">Quantidade</th>
+						<th className="p-1">Preço unitário</th>
+						<th className="p-1">Desconto</th>
+						<th className="p-1">Pago</th>
+						<th className="p-1">Funcionário</th>
+						<th className="p-1">Data</th>
+					</tr>
+				</thead>
+				<tbody>
+					{productSales.length > 0 &&
+						productSales.map((sale, i) => (
+							<tr
+								key={sale.id}
+								className={` ${
+									i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
+								} `}
+							>
+								<td className="p-1">{sale.id}</td>
 
-							<td className="p-1">{sale.customer?.name}</td>
-							<td className="p-1">{sale.category?.name}</td>
-							<td className="p-1">{sale.product?.name}</td>
-							<td className="p-1">{sale.color}</td>
-							<td className="p-1">{sale.size}</td>
-							<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
-							<td className="p-1">{NumberUtils.formatCurrency(sale.unit_price)}</td>
-							<td className="p-1">{NumberUtils.formatCurrency(sale.discount)}</td>
-							<td className="p-1">{NumberUtils.formatCurrency(sale.amount_paid)}</td>
-							<td className="p-1">
-								{StringUtils.getFirstAndLastWord(sale?.employee?.name as string)}
-							</td>
-							<td className="p-1">{DateUtils.getDatePt(sale.created_at)}</td>
-							<td className="p-1">
-								<CardActions
-								// onClickDelete={() => handleOpenFormDelete(sale)}
-								// onClickEdit={() => handleOpenDetalhe(sale)}
-								/>
-							</td>
-						</tr>
-					))}
+								<td className="p-1">{sale.customer?.name}</td>
+								<td className="p-1">{sale.category?.name}</td>
+								<td className="p-1">{sale.product?.name}</td>
+								<td className="p-1">{sale.color}</td>
+								<td className="p-1">{sale.size}</td>
+								<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
+								<td className="p-1">{NumberUtils.formatCurrency(sale.unit_price)}</td>
+								<td className="p-1">{NumberUtils.formatCurrency(sale.discount)}</td>
+								<td className="p-1">{NumberUtils.formatCurrency(sale.amount_paid)}</td>
+								<td className="p-1">
+									{StringUtils.getFirstAndLastWord(sale?.employee?.name as string)}
+								</td>
+								<td className="p-1">{DateUtils.getDatePt(sale.created_at)}</td>
+							</tr>
+						))}
+				</tbody>
 			</table>
 			{isLoading ? <Spinner /> : productSales.length < 1 && <NoData />}
 		</fieldset>

@@ -1,13 +1,14 @@
 import { ProductionBudgetModel } from '@/domain/models'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Spinner } from '../spinner'
-import { DateUtils, NumberUtils } from '@/utils'
+import { DateUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadProductionBudgets } from '@/domain/usecases'
 import toast from 'react-hot-toast'
 import { Input, Select } from '../form-controls'
 import { useSelector } from 'react-redux'
 import { useCustomers } from '@/presentation/hooks'
-import { IconSearch } from '../icons'
+import { IconClose, IconSearch } from '../icons'
+import { QueryParams } from '@/data/protocols'
 
 type ProductionBudgetListProps = {
 	loadProductionBudgets: LoadProductionBudgets
@@ -24,6 +25,7 @@ export function ProductionBudgetList({
 	loadProductionBudgets,
 	onSelectBudget
 }: ProductionBudgetListProps) {
+	const currentDate = DateUtils.getDate(new Date())
 	const customers = useSelector(useCustomers())
 
 	const [budgets, setBudgets] = useState<ProductionBudgetModel[]>([])
@@ -36,33 +38,36 @@ export function ProductionBudgetList({
 	}, [selectedRow])
 
 	const [filter, setFilter] = useState<FilterProps>({
-		date: DateUtils.getDate(new Date())
+		date: currentDate
 	} as FilterProps)
 
-	const fetchData = () => {
+	const hasFilter = useMemo(() => {
+		return !ObjectUtils.isEmpty(filter) && filter.date != currentDate
+	}, [filter])
+
+	const fetchData = (queryParams?: QueryParams) => {
 		setIsLoading(true)
 		loadProductionBudgets
-			.load({
-				filter: JSON.stringify({
-					...filter,
-					date: filter?.date || undefined,
-					customer_id: filter?.customer_id || undefined,
-					id: filter?.id || undefined
-				}) as any
-			})
+			.load(queryParams)
 			.then(setBudgets)
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoading(false))
 	}
 
-	useEffect(() => fetchData(), [])
+	useEffect(() => fetchData({ filter }), [])
 
 	const handleChangeFilter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 		setFilter({ ...filter, [name]: value })
 	}
 
-	const handleFilter = async () => fetchData()
+	const handleFilter = async () => fetchData({ filter })
+
+	const clearFilter = () => {
+		const filter = { date: currentDate }
+		setFilter(filter as any)
+		fetchData({ filter })
+	}
 
 	const handleSelectRow = (id: number) => {
 		setSelectedRow(selectedRow != id ? id : 0)
@@ -104,9 +109,22 @@ export function ProductionBudgetList({
 						/>
 
 						<div className="flex">
-							<button className="btn-primary" onClick={handleFilter} disabled={isLoading}>
+							<button
+								className="btn-primary h-8"
+								onClick={handleFilter}
+								disabled={isLoading}
+							>
 								{isLoading ? <Spinner /> : <IconSearch />}
 							</button>
+							{hasFilter && (
+								<button
+									type="button"
+									className="flex btn-default h-8"
+									onClick={clearFilter}
+								>
+									<IconClose />
+								</button>
+							)}
 						</div>
 					</div>
 				</div>
