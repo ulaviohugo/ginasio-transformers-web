@@ -14,8 +14,44 @@ class SaleController extends Controller
 {
 	public function index()
 	{
+		$product_id = null;
+		$customer_id = null;
+		$employee_id = null;
+		$category_id = null;
+		$date = null;
+
+		if (request()->query('filter')) {
+			$queryParam = json_decode(request()->query('filter'));
+			$product_id = isset($queryParam->product_id) ? $queryParam->product_id : null;
+			$customer_id = isset($queryParam->customer_id) ? $queryParam->customer_id : null;
+			$employee_id = isset($queryParam->employee_id) ? $queryParam->employee_id : null;
+			$category_id = isset($queryParam->category_id) ? $queryParam->category_id : null;
+			$date = isset($queryParam->date) ? $queryParam->date : null;
+		}
+
 		try {
-			$sales = ProductSale::orderBy('id', 'desc')->get();
+			$sales = ProductSale::orderBy('id', 'desc');
+			if ($product_id) {
+				$sales = $sales->where('product_id', $product_id);
+			}
+			if ($customer_id) {
+				$sales = $sales->whereHas('sale', function ($query) use ($customer_id) {
+					$query->where('customer_id', $customer_id);
+				});
+			}
+			if ($employee_id) {
+				$sales = $sales->whereHas('sale', function ($query) use ($employee_id) {
+					$query->where('employee_id', $employee_id);
+				});
+			}
+			if ($category_id) {
+				$sales = $sales->where('category_id', $category_id);
+			}
+			if ($date) {
+				$sales = $sales->whereDate('created_at', $date);
+			}
+			$sales = $sales->get();
+
 			$sales->map(function ($query) {
 				$query->customer = $query->sale->customer?->only('id', 'name');
 				$query->employee = $query->sale->employee?->only('id', 'name');
@@ -31,7 +67,7 @@ class SaleController extends Controller
 			]);
 			return $sales;
 		} catch (\Throwable $th) {
-			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar venda');
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar venda' . $th->getMessage());
 		}
 	}
 
