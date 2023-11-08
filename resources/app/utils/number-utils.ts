@@ -13,8 +13,8 @@ export class NumberUtils {
 		const numStr = this.convertToNumber(number).toFixed(2)
 
 		return Number(numStr).toLocaleString('pt-AO', {
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2
+			style: 'currency',
+			currency: 'AOA'
 		})
 	}
 
