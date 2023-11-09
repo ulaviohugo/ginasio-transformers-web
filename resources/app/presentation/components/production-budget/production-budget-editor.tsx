@@ -98,9 +98,13 @@ export function ProductionBudgetEditor() {
 		NumberUtils.convertToNumber(formData.sewing_cost) +
 		NumberUtils.convertToNumber(variableCost) +
 		NumberUtils.convertToNumber(formData.finishing_cost)
+
 	const totalToPay =
 		productionCost +
-		NumberUtils.convertToNumber(formData.selling_cost) -
+		productionCost *
+			(formData.selling_cost
+				? NumberUtils.convertToNumber(formData.selling_cost) / 100
+				: 0) -
 		NumberUtils.convertToNumber(formData.discount)
 
 	const fabricList = useMemo(() => Object.keys(fabricItems), [fabricItems])
