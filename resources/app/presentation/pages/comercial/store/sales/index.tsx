@@ -1,4 +1,8 @@
 import React from 'react'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
 	Layout,
 	LayoutBody,
@@ -16,10 +20,6 @@ import {
 	makeRemoteLoadSales
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
-
-import { useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
 
 export function Sales() {
 	const user = useSelector(useAuth())

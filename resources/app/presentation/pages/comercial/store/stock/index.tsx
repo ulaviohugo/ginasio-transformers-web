@@ -1,4 +1,7 @@
 import React from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import {
 	Layout,
 	LayoutBody,
@@ -15,9 +18,7 @@ import {
 	makeRemoteUpdatePurchase
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { NotFound } from '../../notfound'
+import { NotFound } from '@/presentation/pages'
 
 export function Stock() {
 	const user = useSelector(useAuth())
