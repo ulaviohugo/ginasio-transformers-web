@@ -30,7 +30,7 @@ import { loadSupplierStore, removeSupplierStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useAuth, useSuppliers } from '@/presentation/hooks'
-import { NotFound } from '../../notfound'
+import { NotFound } from '@/presentation/pages'
 
 export function Suppliers() {
 	const user = useSelector(useAuth())

@@ -13,7 +13,7 @@ import {
 } from '@/presentation/components'
 import { useAuth, useTransactions } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
-import { NotFound } from '../../notfound'
+import { NotFound } from '@/presentation/pages'
 import { DateUtils, MenuUtils, NumberUtils, PaymentUtils } from '@/utils'
 import { makeRemoteLoadTransactions } from '@/main/factories'
 import toast from 'react-hot-toast'

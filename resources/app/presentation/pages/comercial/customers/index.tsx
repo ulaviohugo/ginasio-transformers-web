@@ -28,7 +28,7 @@ import { loadCustomerStore, removeCustomerStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useAuth, useCustomers } from '@/presentation/hooks'
-import { NotFound } from '../../notfound'
+import { NotFound } from '@/presentation/pages'
 
 export function Customers() {
 	const user = useSelector(useAuth())

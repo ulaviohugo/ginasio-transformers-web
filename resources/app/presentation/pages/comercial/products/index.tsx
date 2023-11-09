@@ -28,7 +28,7 @@ import { NumberUtils, MenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { NotFound } from '../../notfound'
+import { NotFound } from '@/presentation/pages'
 
 export function Products() {
 	const user = useSelector(useAuth())
