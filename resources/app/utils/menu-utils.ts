@@ -44,10 +44,10 @@ export class MenuUtils {
 	static readonly commercialMenuItens = (param?: RoleProps): SubmenuProps[] => {
 		const { role = 'Normal' } = param || {}
 		const data = []
-		if (role == 'Admin') {
-			data.push({ link: this.FRONT.STORE_STOCK, text: 'Compra' })
-		}
-		data.push({ link: this.FRONT.STORE_SALES, text: 'Vendas' })
+		// if (role == 'Admin') {
+		// 	data.push({ link: this.FRONT.STORE_STOCK, text: 'Compra' })
+		// }
+		data.push({ link: this.FRONT.STORE_SALES, text: 'Loja' })
 		if (role == 'Admin') {
 			data.push(
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
