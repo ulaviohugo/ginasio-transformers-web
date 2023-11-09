@@ -61,7 +61,15 @@ export function Sales() {
 				/>
 			)}
 			<LayoutBody>
-				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
+				<div className="flex flex-col gap-2">
+					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
+					<SubMenu
+						submenus={[
+							{ text: 'Compra', link: MenuUtils.FRONT.STORE_STOCK },
+							{ text: 'Venda', link: MenuUtils.FRONT.STORE_SALES }
+						]}
+					/>
+				</div>
 				<div className="flex flex-col gap-2 mt-2">
 					<fieldset>
 						<legend>Cadastro de venda</legend>

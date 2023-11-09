@@ -17,7 +17,8 @@ import {
 	Employees,
 	EmployeeSalaryReceipt,
 	ProductionBudgets,
-	Notifications
+	Notifications,
+	Store
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
 
@@ -35,13 +36,14 @@ export function AppRoutes() {
 				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
 				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
 				<Route path={menu.CUSTOMERS} element={<Customers />} />
+				<Route path={menu.STORE} element={<Store />} />
 				<Route path={menu.STORE_STOCK} element={<Stock />} />
 				<Route path={menu.STORE_SALES} element={<Sales />} />
 				<Route path={menu.CATEGORIES} element={<Categories />} />
 				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
 				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
 				<Route path={menu.PRODUCTS} element={<Products />} />
-				<Route path={menu.PRODUCT_BUDGETS} element={<ProductionBudgets />} />
+				<Route path={menu.PRODUCTION_BUDGETS} element={<ProductionBudgets />} />
 				<Route path={menu.NOTIFICATION} element={<Notifications />} />
 				<Route path={'/*'} element={<NotFound />} />
 			</Routes>

@@ -9,18 +9,23 @@ export type SubmenuProps = {
 
 export function SubMenu({ submenus }: { submenus: SubmenuProps[] }) {
 	const path = location.pathname
+
 	return (
 		<nav>
 			<ul className="flex text-sm bg-gray-200 bg-opacity-90 px-1 pt-1">
-				{submenus.map(({ link, text, icon }) => (
-					<MenuItem
-						key={link}
-						link={link}
-						text={text}
-						icon={icon}
-						active={path == link}
-					/>
-				))}
+				{submenus.map(({ link, text, icon }) => {
+					console.log({ link, path })
+
+					return (
+						<MenuItem
+							key={link}
+							link={link}
+							text={text}
+							icon={icon}
+							active={path.includes(link)}
+						/>
+					)
+				})}
 			</ul>
 		</nav>
 	)

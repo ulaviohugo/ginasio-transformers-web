@@ -10,7 +10,7 @@ import {
 	Spinner
 } from '@/presentation/components'
 import { setCurrentAccountAdapter } from '@/main/adapters'
-import { StringUtils } from '@/utils'
+import { MenuUtils, StringUtils } from '@/utils'
 import { useAuth } from '@/presentation/hooks'
 import { useSelector } from 'react-redux'
 
@@ -32,7 +32,7 @@ export function Header() {
 					<Item active={path == '/'} link={'/'} text="Dashboard" icon={IconHome} />
 					<Item
 						active={path.indexOf('/comercial') >= 0}
-						link={'/comercial'}
+						link={MenuUtils.FRONT.STORE_SALES}
 						text="Comercial"
 						icon={IconProduct}
 					/>

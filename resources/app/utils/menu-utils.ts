@@ -11,13 +11,15 @@ export class MenuUtils {
 		CASH_REGISTER: '/comercial/caixa',
 		CATEGORIES: '/comercial/categorias',
 		CUSTOMERS: '/comercial/clientes',
-		PRODUCT_BUDGETS: '/comercial/orcamento-de-producao',
+		PRODUCTION_BUDGETS: '/comercial/orcamento-de-producao',
 		COMERCIAL: '/comercial',
 		HR: '/rh',
 		POLICY: '/comercial/apolice',
 		PRODUCTS: '/comercial/produtos',
+		PRODUCTION: '/comercial/producao',
 		PRODUCTION_STOCK: '/comercial/producao/estoque',
 		PRODUCTION_SALES: '/comercial/producao/vendas',
+		STORE: '/comercial/loja',
 		STORE_STOCK: '/comercial/loja/estoque',
 		STORE_SALES: '/comercial/loja/vendas',
 		SUPPLIERS: '/comercial/fornecedores',
@@ -47,15 +49,16 @@ export class MenuUtils {
 		// if (role == 'Admin') {
 		// 	data.push({ link: this.FRONT.STORE_STOCK, text: 'Compra' })
 		// }
-		data.push({ link: this.FRONT.STORE_SALES, text: 'Loja' })
+		data.push({ link: this.FRONT.STORE, text: 'Loja' })
 		if (role == 'Admin') {
 			data.push(
+				{ link: this.FRONT.PRODUCTION, text: 'Produção' },
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
 				{ link: this.FRONT.CATEGORIES, text: 'Categorias' },
 				{ link: this.FRONT.PRODUCTS, text: 'Produtos' },
 				{ link: this.FRONT.SUPPLIERS, text: 'Fornecedores' },
 				{ link: this.FRONT.CUSTOMERS, text: 'Clientes' },
-				{ link: this.FRONT.PRODUCT_BUDGETS, text: 'Orçamento' }
+				{ link: this.FRONT.PRODUCTION_BUDGETS, text: 'Orçamento' }
 				// { link: this.FRONT.POLICY, text: 'Apólice' },
 				// { link: this.FRONT.BILLING, text: 'Factura' }
 			)
