@@ -24,6 +24,7 @@ import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
 import { Link } from 'react-router-dom'
+import { MenuUtils } from '@/utils'
 
 type ItemProps = {
 	number: number
@@ -133,7 +134,7 @@ export function Home() {
 							title={'Funcionários'}
 							icon={IconUser}
 							isLoading={isLoadingEmployees}
-							href="/rh/funcionarios"
+							href={MenuUtils.FRONT.EMPLOYEES}
 						/>
 					)}
 					{isAdmin && (
@@ -142,7 +143,7 @@ export function Home() {
 							title={'Categorias'}
 							icon={IconCategory}
 							isLoading={isLoadingCategories}
-							href="/comercial/categorias"
+							href={MenuUtils.FRONT.CATEGORIES}
 							className="bg-gray-400 bg-opacity-80 hover:bg-opacity-100"
 						/>
 					)}
@@ -152,7 +153,7 @@ export function Home() {
 							title={'Produtos'}
 							icon={IconProduct}
 							isLoading={isLoadingProducts}
-							href="/comercial/produtos"
+							href={MenuUtils.FRONT.PRODUCTS}
 							className="bg-blue-400 bg-opacity-80 hover:bg-opacity-100"
 						/>
 					)}
@@ -162,7 +163,7 @@ export function Home() {
 							title={'Fornecedores'}
 							icon={IconSupplier}
 							isLoading={isLoadingSuppliers}
-							href="/comercial/fornecedores"
+							href={MenuUtils.FRONT.SUPPLIERS}
 							className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
 						/>
 					)}
@@ -172,7 +173,7 @@ export function Home() {
 							title={'Clientes'}
 							icon={IconCustomer}
 							isLoading={isLoadingCustomers}
-							href="/comercial/clientes"
+							href={MenuUtils.FRONT.CUSTOMERS}
 							className="bg-orange-400 bg-opacity-80 hover:bg-opacity-100"
 						/>
 					)}
@@ -182,7 +183,7 @@ export function Home() {
 							title={'Estoque'}
 							icon={IconProduct}
 							isLoading={isLoadingPurchases}
-							href="/comercial/estoque"
+							href={MenuUtils.FRONT.STORE_STOCK}
 							className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
 						/>
 					)}
@@ -191,7 +192,7 @@ export function Home() {
 						title={'Vendas'}
 						icon={IconCurrency}
 						isLoading={isLoadingSales}
-						href="/comercial/vendas"
+						href={MenuUtils.FRONT.STORE_SALES}
 						className="bg-green-400 bg-opacity-80 hover:bg-opacity-100"
 					/>
 				</div>

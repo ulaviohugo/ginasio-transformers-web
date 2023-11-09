@@ -16,8 +16,10 @@ export class MenuUtils {
 		HR: '/rh',
 		POLICY: '/comercial/apolice',
 		PRODUCTS: '/comercial/produtos',
-		STOCK: '/comercial/estoque',
-		SALES: '/comercial/vendas',
+		PRODUCTION_STOCK: '/comercial/producao/estoque',
+		PRODUCTION_SALES: '/comercial/producao/vendas',
+		STORE_STOCK: '/comercial/loja/estoque',
+		STORE_SALES: '/comercial/loja/vendas',
 		SUPPLIERS: '/comercial/fornecedores',
 
 		EMPLOYEES: '/rh/funcionarios',
@@ -43,9 +45,9 @@ export class MenuUtils {
 		const { role = 'Normal' } = param || {}
 		const data = []
 		if (role == 'Admin') {
-			data.push({ link: this.FRONT.STOCK, text: 'Entrada' })
+			data.push({ link: this.FRONT.STORE_STOCK, text: 'Compra' })
 		}
-		data.push({ link: this.FRONT.SALES, text: 'Saída' })
+		data.push({ link: this.FRONT.STORE_SALES, text: 'Vendas' })
 		if (role == 'Admin') {
 			data.push(
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },

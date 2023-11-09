@@ -35,8 +35,8 @@ export function AppRoutes() {
 				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
 				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
 				<Route path={menu.CUSTOMERS} element={<Customers />} />
-				<Route path={menu.STOCK} element={<Stock />} />
-				<Route path={menu.SALES} element={<Sales />} />
+				<Route path={menu.STORE_STOCK} element={<Stock />} />
+				<Route path={menu.STORE_SALES} element={<Sales />} />
 				<Route path={menu.CATEGORIES} element={<Categories />} />
 				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
 				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
