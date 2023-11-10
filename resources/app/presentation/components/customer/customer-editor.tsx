@@ -165,15 +165,6 @@ export function CustomerEditor({
 									onChange={handleInputChange}
 									autoFocus
 								/>
-								<Select
-									id="gender"
-									name="gender"
-									value={formDate?.gender || ''}
-									label={LabelUtils.translateField('gender')}
-									data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
 								<Input
 									type="date"
 									id="date_of_birth"

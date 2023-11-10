@@ -2,7 +2,6 @@ export interface CustomerModel {
 	id: number
 	photo?: string
 	name: string
-	gender: string
 	date_of_birth?: Date
 	phone?: string
 	email?: string

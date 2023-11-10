@@ -14,11 +14,11 @@ class CustomerSeeder extends Seeder
 	public function run(): void
 	{
 		Customer::insert([
-			['name' => 'Berta Felipe', 'gender' => 'Feminino'],
-			['name' => 'Carla Mateus', 'gender' => 'Feminino'],
-			['name' => 'Pedro Xavier', 'gender' => 'Masculino'],
-			['name' => 'Rosa dos Santos', 'gender' => 'Feminino'],
-			['name' => 'Sandro Joaquim', 'gender' => 'Masculino']
+			['name' => 'Berta Felipe'],
+			['name' => 'Carla Mateus'],
+			['name' => 'Pedro Xavier'],
+			['name' => 'Rosa dos Santos'],
+			['name' => 'Sandro Joaquim']
 		]);
 	}
 }

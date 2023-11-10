@@ -19,7 +19,6 @@ class CustomerResource extends JsonResource
 			'id' => $this->id,
 			'name' => $this->name,
 			'photo' => $this->photo ? FileHelper::storageLink($this->photo) : null,
-			'gender' => $this->gender,
 			'date_of_birth' => $this->date_of_birth,
 			'phone' => $this->phone,
 			'email' => $this->email,

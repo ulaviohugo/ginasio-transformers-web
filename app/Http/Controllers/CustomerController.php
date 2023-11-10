@@ -32,7 +32,6 @@ class CustomerController extends Controller
 			$createdCustomer = Customer::create([
 				'name' => trim($request->name),
 				'photo' => $photo,
-				'gender' => $request->gender,
 				'date_of_birth' => $request->date_of_birth,
 				'phone' => $request->phone,
 				'email' => $request->email,
@@ -63,7 +62,6 @@ class CustomerController extends Controller
 				$customer->photo = $photo;
 			}
 			$customer->name = trim($request->name);
-			$customer->gender = $request->gender;
 			$customer->date_of_birth = $request->date_of_birth;
 			$customer->phone = $request->phone;
 			$customer->email = $request->email;
