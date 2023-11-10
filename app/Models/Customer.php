@@ -10,6 +10,8 @@ class Customer extends Model
 {
 	use HasFactory;
 	protected $table = DBHelper::TB_CUSTOMERS;
+	const TYPE_DEFAULT = 'Padrão',
+		TYPE_VIP = 'VIP';
 
 	protected $fillable = [
 		'name',
@@ -21,6 +23,7 @@ class Customer extends Model
 		'province_id',
 		'municipality_id',
 		'address',
+		'customer_type',
 		'user_id',
 		'user_id_update',
 	];

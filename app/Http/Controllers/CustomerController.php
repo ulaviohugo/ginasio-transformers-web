@@ -39,6 +39,7 @@ class CustomerController extends Controller
 				'province_id' => $request->province_id,
 				'municipality_id' => $request->municipality_id,
 				'address' => $request->address,
+				'customer_type' => $request->customer_type,
 				'user_id' => User::currentUserId()
 			]);
 			return HttpResponse::success(data: new CustomerResource($createdCustomer));
@@ -68,6 +69,7 @@ class CustomerController extends Controller
 			$customer->country_id = $request->country_id;
 			$customer->province_id = $request->province_id;
 			$customer->address = $request->address;
+			$customer->customer_type = $request->customer_type;
 			$customer->municipality_id = $request->municipality_id;
 			$customer->user_id_update = User::currentUserId();
 

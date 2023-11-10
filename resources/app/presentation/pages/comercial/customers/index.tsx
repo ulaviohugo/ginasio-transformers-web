@@ -5,16 +5,12 @@ import {
 	CustomerEditor,
 	IconEmail,
 	IconPhone,
-	IconPlus,
-	IconSearch,
 	IconUser,
-	Input,
 	Layout,
 	LayoutBody,
 	ModalDelete,
 	Spinner,
-	SubMenu,
-	Title
+	SubMenu
 } from '@/presentation/components'
 import { NumberUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
@@ -38,7 +34,6 @@ export function Customers() {
 		{} as CustomerModel
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const [showEditor, setShowEditor] = useState(false)
 	const [showFormDelete, setShowFormDelete] = useState(false)
 	const customers = useSelector(useCustomers())
 	const dispatch = useDispatch()
@@ -61,16 +56,6 @@ export function Customers() {
 
 	const clearSelectedCustomer = () => {
 		setSelectedCustomer({} as CustomerModel)
-	}
-
-	const handleCloseDetail = () => {
-		clearSelectedCustomer()
-		setShowEditor(false)
-	}
-
-	const handleOpenDetalhe = (customer?: CustomerModel) => {
-		if (customer) setSelectedCustomer(customer)
-		setShowEditor(true)
 	}
 
 	const handleOpenFormDelete = (customer: CustomerModel) => {
@@ -98,15 +83,6 @@ export function Customers() {
 
 	return (
 		<Layout>
-			{showEditor && (
-				<CustomerEditor
-					customer={selectedCustomer}
-					show={showEditor}
-					onClose={handleCloseDetail}
-					addCustomer={makeRemoteAddCustomer()}
-					updateCustomer={makeRemoteUpdateCustomer()}
-				/>
-			)}
 			{showFormDelete && (
 				<ModalDelete
 					entity="cliente"
@@ -119,70 +95,83 @@ export function Customers() {
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
 					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
-					<Title
-						title={`Clientes ${isLoading ? '' : `(${customers?.length})`}`}
-						icon={IconUser}
+
+					<CustomerEditor
+						customer={selectedCustomer}
+						addCustomer={makeRemoteAddCustomer()}
+						updateCustomer={makeRemoteUpdateCustomer()}
 					/>
-					<div className="flex items-center gap-2">
-						<button
-							className="bg-primary px-2 py-1 rounded-md text-gray-200"
-							title="Novo cliente"
-							onClick={() => handleOpenDetalhe()}
-						>
-							<IconPlus />
-						</button>
-						<div className="w-full max-w-xs">
-							<Input placeholder="Pesquisar por ID, nome e e-mail" icon={IconSearch} />
-						</div>
-					</div>
-					{isLoading ? (
-						<Spinner data="Carregando clientes..." />
-					) : customers?.length < 1 ? (
-						<div>Nenhum cliente de momento.</div>
-					) : (
-						<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-							{customers.map((customer) => (
-								<li key={customer.id} className="flex flex-col p-4 shadow">
-									<div className="flex items-center gap-1">
-										{customer.photo ? (
-											<img
-												src={customer.photo}
-												alt={`Foto de perfil`}
-												width={50}
-												height={50}
-												className="rounded-full object-cover aspect-square"
-											/>
-										) : (
-											<IconUser size={50} />
-										)}
-										<div>
-											<div className="font-semibold">{customer.name}</div>
-											{customer.phone && (
-												<div className="flex items-center gap-1 text-sm font-normal">
-													<IconPhone />
-													{NumberUtils.format(customer.phone)}
-												</div>
+
+					<fieldset>
+						<legend>Filtro</legend>
+						<table className="w-full text-sm">
+							<thead>
+								<tr className="border-b font-semibold">
+									<td className="px-1">Código</td>
+									<td className="px-1">Nome</td>
+									<td className="px-1">Data de nascimento</td>
+									<td className="px-1">Mês aniversário</td>
+									<td className="px-1">Telefone</td>
+									<td className="px-1">Custo corte</td>
+									<td className="px-1">Custo costura</td>
+									<td className="px-1">Custo variável</td>
+									<td className="px-1">Acabamento</td>
+									<td className="px-1">Custo produção</td>
+									<td className="px-1">Custo venda</td>
+									<td className="px-1">Desconto</td>
+									<td className="px-1">Total pago</td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						{isLoading ? (
+							<Spinner data="Carregando clientes..." />
+						) : customers?.length < 1 ? (
+							<div>Nenhum cliente de momento.</div>
+						) : (
+							<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+								{customers.map((customer) => (
+									<li key={customer.id} className="flex flex-col p-4 shadow">
+										<div className="flex items-center gap-1">
+											{customer.photo ? (
+												<img
+													src={customer.photo}
+													alt={`Foto de perfil`}
+													width={50}
+													height={50}
+													className="rounded-full object-cover aspect-square"
+												/>
+											) : (
+												<IconUser size={50} />
 											)}
+											<div>
+												<div className="font-semibold">{customer.name}</div>
+												{customer.phone && (
+													<div className="flex items-center gap-1 text-sm font-normal">
+														<IconPhone />
+														{NumberUtils.format(customer.phone)}
+													</div>
+												)}
+											</div>
 										</div>
-									</div>
-									{customer.email && (
-										<div className="flex items-center gap-1 text-sm font-normal">
-											<IconEmail />
-											<a href={`mailto:${customer.email}`} className="link">
-												{customer.email}
-											</a>
-										</div>
-									)}
-									<CardActions
-										onClickDelete={() => handleOpenFormDelete(customer)}
-										onClickEdit={() => handleOpenDetalhe(customer)}
-										border
-										className="mt-auto"
-									/>
-								</li>
-							))}
-						</ul>
-					)}
+										{customer.email && (
+											<div className="flex items-center gap-1 text-sm font-normal">
+												<IconEmail />
+												<a href={`mailto:${customer.email}`} className="link">
+													{customer.email}
+												</a>
+											</div>
+										)}
+										<CardActions
+											onClickDelete={() => handleOpenFormDelete(customer)}
+											border
+											className="mt-auto"
+										/>
+									</li>
+								))}
+							</ul>
+						)}
+					</fieldset>
 				</div>
 			</LayoutBody>
 		</Layout>

@@ -9,6 +9,7 @@ export interface CustomerModel {
 	province_id?: number
 	municipality_id?: number
 	address: string
+	customer_type: 'Padrão' | 'VIP'
 	created_at: Date
 	user_id?: number
 	updated_at?: Date

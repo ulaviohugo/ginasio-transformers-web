@@ -25,7 +25,8 @@ class CustomerUpdateRequest extends GlobalFormRequest
 		$id = request('customer');
 		return [
 			'name' => 'required',
-			'email' => ['nullable', 'email', Rule::unique(Customer::class)->ignore($id)]
+			'email' => ['nullable', 'email', Rule::unique(Customer::class)->ignore($id)],
+			'customer_type' => 'required'
 		];
 	}
 }

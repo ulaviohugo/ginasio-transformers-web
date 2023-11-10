@@ -1,6 +1,7 @@
 import {
 	CashRegisterModel,
 	CategoryModel,
+	CustomerModel,
 	EmployeeModel,
 	InsuredModel,
 	ProductModel,
@@ -11,6 +12,7 @@ import {
 } from '@/domain/models'
 
 type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
+	Partial<Record<keyof CustomerModel, string>> &
 	Partial<Record<keyof EmployeeModel, string>> &
 	Partial<Record<keyof ProductModel, string>> &
 	Partial<Record<keyof SaleModel, string>> &
@@ -40,6 +42,7 @@ export class LabelUtils {
 		contract_end_date: 'Data de fim de contrato',
 		country_id: 'País',
 		customer_id: 'Cliente',
+		customer_type: 'Tipo de cliente',
 		created_at: 'Data de criação',
 		user_id: 'Criado por',
 		date_of_birth: 'Data de nascimento',

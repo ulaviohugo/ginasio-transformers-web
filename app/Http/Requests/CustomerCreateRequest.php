@@ -23,7 +23,8 @@ class CustomerCreateRequest extends GlobalFormRequest
 	{
 		return [
 			'name' => 'required|string',
-			'email' => 'nullable|email|unique:' . DBHelper::TB_CUSTOMERS
+			'email' => 'nullable|email|unique:' . DBHelper::TB_CUSTOMERS,
+			'customer_type' => 'required'
 		];
 	}
 }

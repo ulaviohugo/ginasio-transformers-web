@@ -218,6 +218,7 @@ return [
 		'contract_end_date' => 'data de fim de contrato',
 		'country_id' => 'país',
 		'customer_id' => 'cliente',
+		'customer_type' => 'tipo de cliente',
 		'created_at' => 'data de criação',
 		'cutting_employee_id' => 'funcionário de corte',
 		'cutting_cost' => 'custo de corte',
