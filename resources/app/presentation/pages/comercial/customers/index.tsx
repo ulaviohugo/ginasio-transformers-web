@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { CustomerModel } from '@/domain/models'
 import {
-	CardActions,
 	CustomerEditor,
-	IconEmail,
-	IconPhone,
-	IconUser,
+	CustomerFilterProps,
+	CustomerList,
 	Layout,
 	LayoutBody,
 	ModalDelete,
-	Spinner,
 	SubMenu
 } from '@/presentation/components'
-import { NumberUtils, MenuUtils } from '@/utils'
+import { MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import {
 	makeRemoteDeleteCustomer,
@@ -23,10 +20,12 @@ import {
 import { loadCustomerStore, removeCustomerStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useAuth, useCustomers } from '@/presentation/hooks'
+import { useAuth } from '@/presentation/hooks'
 import { NotFound } from '@/presentation/pages'
+import { QueryParams } from '@/data/protocols'
 
 export function Customers() {
+	const dispatch = useDispatch()
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 
@@ -35,14 +34,15 @@ export function Customers() {
 	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [showFormDelete, setShowFormDelete] = useState(false)
-	const customers = useSelector(useCustomers())
-	const dispatch = useDispatch()
 
-	const fetchData = async () => {
+	const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>([])
+
+	const fetchData = async (queryParams?: QueryParams) => {
 		if (!isAdmin) return setIsLoading(false)
 		try {
-			const httpResponse = await makeRemoteLoadCustomers().load()
-			dispatch(loadCustomerStore(httpResponse))
+			const httpResponse = await makeRemoteLoadCustomers().load(queryParams)
+			if (!queryParams) dispatch(loadCustomerStore(httpResponse))
+			setFilteredCustomers(httpResponse)
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -59,12 +59,12 @@ export function Customers() {
 	}
 
 	const handleOpenFormDelete = (customer: CustomerModel) => {
+		if (!customer?.id) return toast.error('Selecione um registo para excluir')
 		setSelectedCustomer(customer)
 		setShowFormDelete(true)
 	}
 
 	const handleCloseFormDelete = () => {
-		clearSelectedCustomer()
 		setShowFormDelete(false)
 	}
 
@@ -74,10 +74,13 @@ export function Customers() {
 			dispatch(removeCustomerStore(selectedCustomer.id))
 			toast.success(`Cliente ${selectedCustomer.name} foi excluído`)
 			handleCloseFormDelete()
+			clearSelectedCustomer()
 		} catch (error: any) {
 			toast.error(error.message)
 		}
 	}
+
+	const handleFilter = async (filter: CustomerFilterProps) => fetchData(filter)
 
 	if (!isAdmin) return <NotFound />
 
@@ -100,78 +103,15 @@ export function Customers() {
 						customer={selectedCustomer}
 						addCustomer={makeRemoteAddCustomer()}
 						updateCustomer={makeRemoteUpdateCustomer()}
+						onDelete={() => handleOpenFormDelete(selectedCustomer)}
 					/>
-
-					<fieldset>
-						<legend>Filtro</legend>
-						<table className="w-full text-sm">
-							<thead>
-								<tr className="border-b font-semibold">
-									<td className="px-1">Código</td>
-									<td className="px-1">Nome</td>
-									<td className="px-1">Data de nascimento</td>
-									<td className="px-1">Mês aniversário</td>
-									<td className="px-1">Telefone</td>
-									<td className="px-1">Custo corte</td>
-									<td className="px-1">Custo costura</td>
-									<td className="px-1">Custo variável</td>
-									<td className="px-1">Acabamento</td>
-									<td className="px-1">Custo produção</td>
-									<td className="px-1">Custo venda</td>
-									<td className="px-1">Desconto</td>
-									<td className="px-1">Total pago</td>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-						{isLoading ? (
-							<Spinner data="Carregando clientes..." />
-						) : customers?.length < 1 ? (
-							<div>Nenhum cliente de momento.</div>
-						) : (
-							<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-								{customers.map((customer) => (
-									<li key={customer.id} className="flex flex-col p-4 shadow">
-										<div className="flex items-center gap-1">
-											{customer.photo ? (
-												<img
-													src={customer.photo}
-													alt={`Foto de perfil`}
-													width={50}
-													height={50}
-													className="rounded-full object-cover aspect-square"
-												/>
-											) : (
-												<IconUser size={50} />
-											)}
-											<div>
-												<div className="font-semibold">{customer.name}</div>
-												{customer.phone && (
-													<div className="flex items-center gap-1 text-sm font-normal">
-														<IconPhone />
-														{NumberUtils.format(customer.phone)}
-													</div>
-												)}
-											</div>
-										</div>
-										{customer.email && (
-											<div className="flex items-center gap-1 text-sm font-normal">
-												<IconEmail />
-												<a href={`mailto:${customer.email}`} className="link">
-													{customer.email}
-												</a>
-											</div>
-										)}
-										<CardActions
-											onClickDelete={() => handleOpenFormDelete(customer)}
-											border
-											className="mt-auto"
-										/>
-									</li>
-								))}
-							</ul>
-						)}
-					</fieldset>
+					<CustomerList
+						isLoading={isLoading}
+						onSelectCustomer={setSelectedCustomer}
+						onFilter={handleFilter}
+						onClearFilter={fetchData}
+						filteredCustomers={filteredCustomers}
+					/>
 				</div>
 			</LayoutBody>
 		</Layout>

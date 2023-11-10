@@ -29,15 +29,25 @@ export class ObjectUtils {
 		return newObject
 	}
 
-	static convertToObject<T extends object = any>(data: T[]): T {
+	static convertToObject<T extends object = any>(
+		data: T[],
+		keyIndex?: keyof T,
+		keyValue?: keyof T
+	): T {
 		if (!data) return {} as T
 		let obj = data
 		if (typeof data == 'string') {
 			obj = JSON.parse(data)
 		}
 		if (Array.isArray(obj)) {
-			return obj.reduce((prev: any, current, index) => {
-				return { ...prev, [index]: current }
+			return obj.reduce((prev: any, current: any) => {
+				if (typeof current == 'object' && keyIndex && keyIndex in current) {
+					return {
+						...prev,
+						[current[keyIndex]]: keyValue ? current[keyValue] : current
+					}
+				}
+				return { ...prev, [current as any]: current }
 			}, {})
 		}
 		return obj as T

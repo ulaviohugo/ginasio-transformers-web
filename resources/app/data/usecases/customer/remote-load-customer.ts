@@ -1,6 +1,11 @@
-import { LoadCustomers, LoadCustomersResult } from '@/domain/usecases'
+import {
+	LoadCustomers,
+	LoadCustomersParams,
+	LoadCustomersResult
+} from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
+import { ObjectUtils } from '@/utils'
 
 export class RemoteLoadCustomers implements LoadCustomers {
 	constructor(
@@ -8,10 +13,11 @@ export class RemoteLoadCustomers implements LoadCustomers {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<LoadCustomersResult> {
+	async load(params?: LoadCustomersParams): Promise<LoadCustomersResult> {
+		const url = params ? ObjectUtils.toQueryParams(params, this.url) : this.url
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
-			url: this.url
+			url
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

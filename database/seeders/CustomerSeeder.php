@@ -13,12 +13,13 @@ class CustomerSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		$date = now();
 		Customer::insert([
-			['name' => 'Berta Felipe'],
-			['name' => 'Carla Mateus'],
-			['name' => 'Pedro Xavier'],
-			['name' => 'Rosa dos Santos'],
-			['name' => 'Sandro Joaquim']
+			['name' => 'Berta Felipe', 'created_at' => $date],
+			['name' => 'Carla Mateus', 'created_at' => $date],
+			['name' => 'Pedro Xavier', 'created_at' => $date],
+			['name' => 'Rosa dos Santos', 'created_at' => $date],
+			['name' => 'Sandro Joaquim', 'created_at' => $date]
 		]);
 	}
 }

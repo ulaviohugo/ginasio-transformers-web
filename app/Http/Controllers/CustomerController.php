@@ -10,13 +10,44 @@ use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
 	public function index()
 	{
 		try {
-			return CustomerResource::collection(Customer::all());
+			$id = null;
+			$start_month_of_birth = null;
+			$end_month_of_birth = null;
+			$province_id = null;
+			$municipality_id = null;
+
+			if (request()->query('filter')) {
+				$queryParam = json_decode(request()->query('filter'));
+				$id = isset($queryParam->id) ? $queryParam->id : null;
+				$start_month_of_birth = isset($queryParam->start_month_of_birth) ? $queryParam->start_month_of_birth : null;
+				$end_month_of_birth = isset($queryParam->end_month_of_birth) ? $queryParam->end_month_of_birth : $start_month_of_birth;
+				$province_id = isset($queryParam->province_id) ? $queryParam->province_id : null;
+				$municipality_id = isset($queryParam->municipality_id) ? $queryParam->municipality_id : null;
+			}
+
+			$customers = Customer::orderBy('id', 'desc');
+			if ($id) {
+				$customers = $customers->where('id', $id);
+			}
+			if ($start_month_of_birth || $end_month_of_birth) {
+				$customers = $customers->whereBetween(DB::raw("MONTH(date_of_birth)"), [$start_month_of_birth, $end_month_of_birth]);
+			}
+			if ($province_id) {
+				$customers = $customers->where('province_id', $province_id);
+			}
+			if ($municipality_id) {
+				$customers = $customers->where('municipality_id', $municipality_id);
+			}
+			$customers = $customers->get();
+
+			return CustomerResource::collection($customers);
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar clientes');
 		}

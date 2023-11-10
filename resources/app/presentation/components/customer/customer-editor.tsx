@@ -6,6 +6,7 @@ import { CustomerModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
+	IconTrash,
 	ImagePreview,
 	Input,
 	InputEmail,
@@ -13,13 +14,7 @@ import {
 	Select
 } from '..'
 
-import {
-	DateUtils,
-	FileUtils,
-	LabelUtils,
-	MunicipalityProps,
-	ProvinceProps
-} from '@/utils'
+import { DateUtils, FileUtils, LabelUtils, MunicipalityProps } from '@/utils'
 import { addCustomerStore, updateCustomerStore } from '@/presentation/redux'
 import { AddCustomer, UpdateCustomer } from '@/domain/usecases'
 import { useLocations } from '@/presentation/hooks'
@@ -28,17 +23,18 @@ type CustomerEditorProps = {
 	customer?: CustomerModel
 	addCustomer: AddCustomer
 	updateCustomer: UpdateCustomer
+	onDelete: () => void
 }
 
 export function CustomerEditor({
 	customer,
 	addCustomer,
-	updateCustomer
+	updateCustomer,
+	onDelete
 }: CustomerEditorProps) {
 	const dispatch = useDispatch()
 	const { provinces, municipalities } = useSelector(useLocations())
 
-	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
 	const [formDate, setFormData] = useState<CustomerModel>(
@@ -49,17 +45,15 @@ export function CustomerEditor({
 
 	useEffect(() => {
 		if (customer) {
-			setProvinceList(
-				provinces.filter((province) => province.country_id == customer.country_id)
-			)
 			setMunicipalityList(
 				municipalities.filter(
 					(municipality) => municipality.province_id == customer.province_id
 				)
 			)
 			if (customer?.photo) setPhotoPreview(customer.photo)
+			setFormData(customer)
 		}
-	}, [])
+	}, [customer, municipalities, provinces])
 
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -68,12 +62,6 @@ export function CustomerEditor({
 
 		let data: CustomerModel = { ...formDate, [name]: value }
 
-		if (name == 'country_id') {
-			data = { ...data, province_id: undefined, municipality_id: undefined }
-			setProvinceList(
-				provinces.filter((province) => province.country_id == Number(value))
-			)
-		}
 		if (name == 'province_id') {
 			data = { ...data, municipality_id: undefined }
 			setMunicipalityList(
@@ -122,11 +110,16 @@ export function CustomerEditor({
 		setFormData({} as any)
 	}
 
+	const handleOpenDelete = () => {
+		if (!formDate.id) return toast.error('Selecione um registo para excluir')
+		onDelete()
+	}
+
 	return (
 		<fieldset>
 			<legend>Cadastro de clientes</legend>
-			<form onSubmit={handleSubmit}>
-				<div className="flex gap-1">
+			<form onSubmit={handleSubmit} className="flex gap-2">
+				<div className="flex-1 flex gap-1">
 					<div className="">
 						<ImagePreview
 							photoPreview={photoPreview}
@@ -180,7 +173,7 @@ export function CustomerEditor({
 								name="province_id"
 								value={formDate?.province_id || ''}
 								label={LabelUtils.translateField('province_id')}
-								data={provinceList.map(({ name, id }) => ({
+								data={provinces.map(({ name, id }) => ({
 									text: name,
 									value: id
 								}))}
@@ -213,7 +206,7 @@ export function CustomerEditor({
 								id="email"
 								name="email"
 								value={formDate?.email || ''}
-								label={'Correio electrónico'}
+								label={'Correio eletrónico'}
 								onChange={handleInputChange}
 							/>
 							<Select
@@ -228,9 +221,10 @@ export function CustomerEditor({
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-2 mt-2">
+				<div className="flex flex-col gap-2">
 					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-					<ButtonCancel onClick={handleClear} />
+					<ButtonCancel onClick={handleClear} text="Limpar" />
+					<ButtonCancel onClick={handleOpenDelete} text="Excluir" icon={IconTrash} />
 				</div>
 			</form>
 		</fieldset>
