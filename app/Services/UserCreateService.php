@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\FileHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,14 @@ class UserCreateService
 	{
 		$userId = User::currentUserId();
 		$canLogin = $request->can_login == true || $request->can_login == "true";
-
+		$photo = null;
+		if (FileHelper::isUploadable($request->photo)) {
+			$photo = FileHelper::uploadBase64($request->photo, 'uploads/employees');
+		}
 		$user =	User::create([
 			'name' => trim($request->name),
 			'email' => trim(strtolower($request->email)),
-			'photo' => $request->photo,
+			'photo' => $photo,
 			'gender' => $request->gender,
 			'date_of_birth' => $request->date_of_birth,
 			'marital_status' => $request->marital_status,

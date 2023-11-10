@@ -23,6 +23,7 @@ import {
 import {
 	DateUtils,
 	DocumentUtils,
+	FileUtils,
 	LabelUtils,
 	MunicipalityProps,
 	ProvinceProps
@@ -91,11 +92,12 @@ export function EmployeeEditor({
 				municipalities.filter((municipality) => municipality.province_id == Number(value))
 			)
 		}
+
 		if (name == 'photo') {
-			const file = (e.target as any)?.files[0]
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-			handleInputFile(file)
 		}
+
 		if (name == 'phone' && !value) {
 			data = { ...data, phone2: '' }
 		}
@@ -105,18 +107,6 @@ export function EmployeeEditor({
 			data = { ...data, [name]: checked }
 		}
 		setFormData(data)
-	}
-
-	const handleInputFile = (file: File) => {
-		if (file) {
-			const reader = new FileReader()
-
-			reader.onload = function (e) {
-				setPhotoPreview(String(e.target?.result))
-			}
-
-			reader.readAsDataURL(file)
-		}
 	}
 
 	const clearInputFile = () => {

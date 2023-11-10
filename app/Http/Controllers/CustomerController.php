@@ -57,7 +57,7 @@ class CustomerController extends Controller
 	{
 		try {
 			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/customers');
 			}
 			$createdCustomer = Customer::create([
@@ -85,8 +85,7 @@ class CustomerController extends Controller
 	public function update(CustomerUpdateRequest $request, Customer $customer)
 	{
 		try {
-			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/customers');
 				if ($customer->photo) {
 					FileHelper::delete($customer->photo);

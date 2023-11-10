@@ -23,7 +23,7 @@ class StockCreateService
 			$totalValue = $unitPrice * $quantity;
 
 			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/stocks');
 			}
 

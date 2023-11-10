@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\FileHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,18 @@ class UserUpdateService
 	public function execute(Request $request, User $user)
 	{
 		$userId = User::currentUserId();
+
+		if (FileHelper::isUploadable($request->photo)) {
+			$photo = FileHelper::uploadBase64($request->photo, 'uploads/employees');
+			if ($user->photo) {
+				FileHelper::delete($user->photo);
+			}
+			$user->photo = $photo;
+		}
+
 		$canLogin = $request->can_login == true || $request->can_login == "true";
 		$user->name = trim($request->name);
 		$user->email = trim(strtolower($request->email));
-		$user->photo = $request->photo;
 		$user->gender = $request->gender;
 		$user->date_of_birth = $request->date_of_birth;
 		$user->marital_status = $request->marital_status;

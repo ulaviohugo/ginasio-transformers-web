@@ -19,7 +19,7 @@ class SupplierUpdateService
 			$supplierProducts = is_string($request->supplier_products) ? json_decode($request->supplier_products, 1) : $request->supplier_products;
 			$countProducts = count($supplierProducts);
 
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/suppliers');
 				if ($supplier->photo) {
 					FileHelper::delete($supplier->photo);
@@ -56,7 +56,7 @@ class SupplierUpdateService
 
 		//Retrieve supplier products
 		$productsInDB = SupplierProduct::where('supplier_id', $supplierId)
-		->whereIn('product_id', $productsId)
+			->whereIn('product_id', $productsId)
 			->get();
 		$productsIdInDB =  collect($productsInDB)->pluck('product_id')->toArray();
 

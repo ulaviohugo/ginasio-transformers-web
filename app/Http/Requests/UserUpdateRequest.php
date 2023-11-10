@@ -92,8 +92,9 @@ class UserUpdateRequest extends GlobalFormRequest
 			],
 			'password' => [
 				'nullable',
-				Rule::requiredIf(function () use ($canLogin) {
-					return $canLogin;
+				Rule::requiredIf(function () use ($canLogin, $id) {
+					$password = User::select('password')->where('id', $id)->first()?->password;
+					return $canLogin && !$password;
 				})
 			],
 		];

@@ -21,7 +21,6 @@ class StockUpdateService
 			$totalValue = $unitPrice * $quantity;
 
 			$stockData = [];
-			$photo = null;
 			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/stocks');
 				if ($stock->photo) {

@@ -21,7 +21,7 @@ class SupplierCreateService
 			$userId = User::currentUserId();
 
 			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/suppliers');
 			}
 

@@ -27,7 +27,7 @@ class ProductController extends Controller
 	{
 		try {
 			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/products');
 			}
 			$createdProduct = Product::create([
@@ -48,7 +48,7 @@ class ProductController extends Controller
 	public function update(ProductUpdateRequest $request, Product $product)
 	{
 		try {
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/products');
 				if ($product->photo) {
 					FileHelper::delete($product->photo);

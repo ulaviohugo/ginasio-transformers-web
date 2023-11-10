@@ -6,6 +6,7 @@ use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserCreateService;
 use App\Services\UserUpdateService;
@@ -15,7 +16,7 @@ class UserController extends Controller
 	public function index()
 	{
 		try {
-			return User::all();
+			return UserResource::collection(User::all());
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionarios');
 		}
@@ -25,7 +26,7 @@ class UserController extends Controller
 	{
 		try {
 			$createdUser = $service->execute($request);
-			return HttpResponse::success(data: $createdUser);
+			return new UserResource($createdUser);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar funcionário' . $th->getMessage());
 		}
@@ -35,7 +36,7 @@ class UserController extends Controller
 	{
 		try {
 			$updatedUser = $service->execute($request, User::find($id));
-			return HttpResponse::success(data: $updatedUser);
+			return new UserResource($updatedUser);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao actualizar funcionário' . $th->getMessage());
 		}
