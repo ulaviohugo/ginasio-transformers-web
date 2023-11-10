@@ -3,16 +3,14 @@
 namespace App\Services;
 
 use App\Helpers\FileHelper;
-use App\Models\Product;
 use App\Models\Stock;
-use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class StockCreateService
+class StockUpdateService
 {
-	public function execute(Request $request)
+	public function execute(Request $request, Stock $stock)
 	{
 		try {
 			DB::beginTransaction();
@@ -22,15 +20,17 @@ class StockCreateService
 			$quantity = intval($request->quantity);
 			$totalValue = $unitPrice * $quantity;
 
+			$stockData = [];
 			$photo = null;
-			if ($request->photo) {
+			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/stocks');
+				if ($stock->photo) {
+					FileHelper::delete($stock->photo);
+				}
+				$stockData['photo'] = $photo;
 			}
-
 			$paid = $request->paid == 'true' || $request->paid == true;
-
-			$stock =	Stock::create([
-				'photo' => $photo,
+			$stockData = [...$stockData, ...[
 				'lot' => $request->lot,
 				'bar_code' => $request->bar_code,
 				'supplier_id' => $request->supplier_id,
@@ -45,20 +45,10 @@ class StockCreateService
 				'paid' => $paid,
 				'purchase_date' => $request->purchase_date,
 				'due_date' => $request->due_date,
-				'employee_id' => $request->employee_id ?? $userId,
-				'user_id' => $userId,
-			]);
+				'user_id_update' => $userId,
+			]];
+			$stock->update($stockData);
 
-			$product = Product::find($request->product_id);
-
-			$transactionService = new TransactionCreateService();
-			$transactionService->execute((new Request())->merge([
-				'description' => "Compra de {$quantity} produto(s): {$product->name}",
-				'operation_type' => Transaction::OPERATION_TYPE_OUT,
-				'amount' => $totalValue,
-				'payment_method' => $request->payment_method,
-				'employee_id' => $request->employee_id,
-			]));
 			DB::commit();
 			return $stock;
 		} catch (\Throwable $th) {

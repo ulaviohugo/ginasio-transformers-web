@@ -29,7 +29,6 @@ class StockResource extends JsonResource
 			'quantity' => $this->quantity,
 			'total_value' => $this->total_value,
 			'payment_method' => $this->payment_method,
-			'selling_price_unit' => $this->selling_price_unit,
 			'paid' => $this->paid,
 			'purchase_date' => $this->purchase_date,
 			'due_date' => $this->due_date,

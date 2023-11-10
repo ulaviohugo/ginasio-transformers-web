@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { HttpStatusCode } from '@/data/protocols/http'
-import { makeApiUrl, makeAxiosHttpClient } from '@/main/factories/http'
+import { makeApiUrl } from '@/main/factories/http'
 import { ReactNode, createContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadLocationStore } from '@/presentation/redux'
@@ -30,7 +30,7 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 					console.log('Error', error.message)
 				})
 		}
-	}, [auth])
+	}, [auth, dispatch])
 
 	return <LocationContext.Provider value={{}}>{children}</LocationContext.Provider>
 }

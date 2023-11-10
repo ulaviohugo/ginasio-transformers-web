@@ -8,7 +8,7 @@ use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
-class StockCreateRequest extends GlobalFormRequest
+class StockUpdateRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -45,12 +45,6 @@ class StockCreateRequest extends GlobalFormRequest
 				'gt:0',
 				Rule::exists(Product::class, 'id'),
 			],
-			// 'employee_id' =>  [
-			// 	'required',
-			// 	'numeric',
-			// 	'gt:0',
-			// 	Rule::exists(User::class, 'id'),
-			// ],
 			'payment_method' => 'required',
 			'purchase_date' => 'required|date',
 			'due_date' => 'nullable|date',

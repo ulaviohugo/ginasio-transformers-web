@@ -26,7 +26,6 @@ return new class extends Migration
 			$table->integer('quantity');
 			$table->double('total_value', 16, 3);
 			$table->string('payment_method', 30);
-			$table->double('selling_price_unit', 16, 3)->default(0);
 			$table->boolean('paid');
 			$table->date('purchase_date');
 			$table->date('due_date')->nullable();

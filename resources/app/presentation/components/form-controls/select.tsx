@@ -1,9 +1,9 @@
-import React, { ElementType, SelectHTMLAttributes, useState } from 'react'
+import React, { ElementType, ReactNode, SelectHTMLAttributes, useState } from 'react'
 import { StringUtils } from '@/utils'
 import { FormControlWrapper } from '.'
 
 type InputProps = SelectHTMLAttributes<HTMLSelectElement> & {
-	label?: string
+	label?: ReactNode
 	icon?: ElementType
 	data: Array<{ text: string; value?: string | number }>
 	defaultText?: string

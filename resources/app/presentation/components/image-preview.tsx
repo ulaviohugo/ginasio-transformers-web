@@ -18,6 +18,7 @@ export function ImagePreview({
 	useEffect(() => {
 		setPreview(photoPreview)
 	}, [photoPreview])
+	console.log({ photoPreview })
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = (e.target as any)?.files[0]

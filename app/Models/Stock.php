@@ -24,7 +24,6 @@ class Stock extends Model
 		'quantity',
 		'total_value',
 		'payment_method',
-		'selling_price_unit',
 		'paid',
 		'purchase_date',
 		'due_date',

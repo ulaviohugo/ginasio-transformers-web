@@ -13,7 +13,6 @@ export interface PurchaseModel {
 	unit_price: number
 	quantity: number
 	total_value: number
-	selling_price_unit: number
 	payment_method: string
 	paid: boolean
 	purchase_date: Date

@@ -1,9 +1,18 @@
-import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
-import { ButtonCancel, ButtonSubmit, ImagePreview, Input, InputPrice, Select } from '..'
+import {
+	ButtonCancel,
+	ButtonSubmit,
+	IconPlus,
+	IconTrash,
+	ImagePreview,
+	Input,
+	InputPrice,
+	Select
+} from '..'
 
 import {
 	ColorUtils,
@@ -15,6 +24,8 @@ import {
 } from '@/utils'
 import {
 	addPurchaseStore,
+	formCategoryStore,
+	formProductStore,
 	loadCategoryStore,
 	loadProductStore,
 	loadSupplierStore,
@@ -33,7 +44,7 @@ type PurchaseEditorProps = {
 	onClose: () => void
 	addPurchase: AddPurchase
 	updatePurchase: UpdatePurchase
-	stockListComponent: ReactNode
+	onDelete: () => void
 }
 
 export function PurchaseEditor({
@@ -41,7 +52,7 @@ export function PurchaseEditor({
 	onClose,
 	addPurchase,
 	updatePurchase,
-	stockListComponent
+	onDelete
 }: PurchaseEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
@@ -76,30 +87,45 @@ export function PurchaseEditor({
 			})
 	}
 
+	const clearFields = () => {
+		onClose()
+		setFormData({
+			paid: true,
+			purchase_date: DateUtils.getDate(new Date()) as any
+		} as PurchaseModel)
+	}
+
 	useEffect(() => {
 		if (data?.id) {
 			setCategoryList(
-				categories.filter(
+				/* categories.filter(
 					(category) =>
 						suppliers
 							.find((sup) => sup.id == Number(data.supplier_id))
 							?.supplier_products?.map((sup) => sup.category_id)
 							.includes(category.id)
-				)
+				) */
+				categories
 			)
 			setProductList(
-				products.filter(
+				/* products.filter(
 					(product) =>
 						product.category_id == Number(data.category_id) &&
 						suppliers
 							.find((sup) => sup.id == data.supplier_id)
 							?.supplier_products?.map((sup) => sup.product_id)
 							.includes(product.id)
-				)
+				) */
+				products.filter((product) => product.category_id == Number(data.category_id))
 			)
 			if (data?.photo) setPhotoPreview(data?.photo)
+			setFormData(data)
+		} else {
+			setCategoryList(categories)
+			setProductList(products)
 		}
-	}, [categories, data, products])
+		setPhotoPreview(data?.photo || '')
+	}, [categories, data, products, suppliers])
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -144,8 +170,9 @@ export function PurchaseEditor({
 		if (name == 'category_id') {
 			const categoryId = NumberUtils.convertToNumber(value)
 			data = { ...data, product_id: undefined as any }
+
 			setProductList(
-				formData.supplier_id
+				formData.supplier_id && categoryId
 					? products.filter(
 							(product) =>
 								product.category_id == categoryId &&
@@ -154,7 +181,9 @@ export function PurchaseEditor({
 									?.supplier_products?.map((sup) => sup.product_id)
 									.includes(product.id)
 					  )
-					: products.filter((product) => product.category_id == categoryId)
+					: categoryId
+					? products.filter((product) => product.category_id == categoryId)
+					: products
 			)
 		}
 		if (name == 'photo') {
@@ -211,18 +240,55 @@ export function PurchaseEditor({
 			} else {
 				dispatch(addPurchaseStore(httpResponse))
 			}
-			toast.success(`Entrada ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+			toast.success(`Compra ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
+			clearFields()
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
 			setIsLoading(false)
 		}
 	}
+
+	const handleDelete = () => {
+		onDelete()
+	}
+
+	const categoryLabel = (
+		<div className="flex items-center gap-2">
+			{LabelUtils.translateField('category_id')}{' '}
+			<span
+				className="bg-primary text-white hover:scale-110"
+				title="Adicionar categoria"
+				onClick={() => {
+					dispatch(formCategoryStore(true))
+				}}
+			>
+				<IconPlus />
+			</span>
+		</div>
+	)
+
+	const productLabel = (
+		<div className="flex items-center gap-2">
+			{LabelUtils.translateField('product_id')}{' '}
+			<span
+				className="bg-primary text-white hover:scale-110"
+				title="Adicionar produto"
+				onClick={() => {
+					console.log('Clique')
+
+					dispatch(formProductStore(true))
+				}}
+			>
+				<IconPlus />
+			</span>
+		</div>
+	)
 	return (
 		<div className="">
-			<form onSubmit={handleSubmit} className="">
-				<div className="grid grid-cols-12 gap-4">
+			<form onSubmit={handleSubmit} className="flex gap-1">
+				<div className="flex-1 grid grid-cols-12 gap-4">
 					<div className="col-span-3">
 						<ImagePreview
 							photoPreview={photoPreview}
@@ -278,7 +344,7 @@ export function PurchaseEditor({
 								id="category_id"
 								name="category_id"
 								value={formData?.category_id || ''}
-								label={LabelUtils.translateField('category_id')}
+								label={categoryLabel}
 								data={categoryList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -290,7 +356,7 @@ export function PurchaseEditor({
 								id="product_id"
 								name="product_id"
 								value={formData?.product_id || ''}
-								label={LabelUtils.translateField('product_id')}
+								label={productLabel}
 								data={productList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -370,25 +436,16 @@ export function PurchaseEditor({
 								label={LabelUtils.translateField('due_date')}
 								onChange={handleInputChange}
 							/>
-							<InputPrice
-								id="selling_price_unit"
-								name="selling_price_unit"
-								value={formData?.selling_price_unit || ''}
-								label={LabelUtils.translateField('selling_price_unit')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className="grid grid-cols-4 gap-2">
 							<Input label="Funcionário" value={user.name} disabled />
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-2 mt-2 pt-2 border-t">
+				<div className="flex flex-col gap-2">
 					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-					<ButtonCancel onClick={onClose} text="Limpar" />
+					<ButtonCancel onClick={clearFields} text="Limpar" />
+					<ButtonCancel onClick={handleDelete} text="Excluir" icon={IconTrash} />
 				</div>
 			</form>
-			<div className="mt-2">{stockListComponent}</div>
 		</div>
 	)
 }

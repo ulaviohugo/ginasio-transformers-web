@@ -37,4 +37,15 @@ class FileHelper
 	{
 		Storage::delete($file);
 	}
+
+	public static function isUploadable($data)
+	{
+		if (!$data) return false;
+		try {
+			$extension = explode('/', explode(':', substr($data, 0, strpos($data, ';')))[1])[1];
+			return true;
+		} catch (\Throwable $th) {
+			return false;
+		}
+	}
 }

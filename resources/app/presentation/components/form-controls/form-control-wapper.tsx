@@ -3,7 +3,7 @@ import { StringUtils } from '@/utils'
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {
 	children: ReactNode
-	label?: string
+	label?: ReactNode
 	icon?: ElementType
 	focused?: boolean
 }

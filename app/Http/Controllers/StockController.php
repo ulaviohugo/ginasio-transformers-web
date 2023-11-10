@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\StockCreateRequest;
+use App\Http\Requests\StockUpdateRequest;
 use App\Http\Resources\StockResource;
 use App\Models\Stock;
 use App\Services\StockCreateService;
+use App\Services\StockUpdateService;
 
 class StockController extends Controller
 {
@@ -60,6 +62,18 @@ class StockController extends Controller
 			return HttpResponse::success(data: new StockResource($createdStock));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar estoque' . $th->getMessage());
+		}
+	}
+
+
+	public function update(StockUpdateRequest $request, StockUpdateService $service, Stock $stock)
+	{
+		try {
+			$createdStock = $service->execute($request, $stock);
+			$createdStock->load($this->relationship);
+			return HttpResponse::success(data: new StockResource($createdStock));
+		} catch (\Throwable $th) {
+			return HttpResponse::error(message: 'Erro ao actualizar estoque' . $th->getMessage());
 		}
 	}
 

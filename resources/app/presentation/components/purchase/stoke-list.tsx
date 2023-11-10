@@ -1,19 +1,8 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { PurchaseModel } from '@/domain/models'
-import {
-	CardActions,
-	IconClose,
-	IconSearch,
-	IconStock,
-	Input,
-	ModalDelete,
-	NoData,
-	Select,
-	Spinner
-} from '..'
+import { IconClose, IconSearch, IconStock, Input, NoData, Select, Spinner } from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
-import { DeletePurchase, LoadPurchases } from '@/domain/usecases'
-import { loadPurchaseStore, removePurchaseStore } from '@/presentation/redux'
+import { LoadPurchases } from '@/domain/usecases'
+import { loadPurchaseStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import {
@@ -23,10 +12,11 @@ import {
 	useSuppliers
 } from '@/presentation/hooks'
 import { QueryParams } from '@/data/protocols'
+import { PurchaseModel } from '@/domain/models'
 
 type StokeListProps = {
 	loadStokes: LoadPurchases
-	deleteStokes: DeletePurchase
+	onSelectStock: (selectedStock: PurchaseModel) => void
 }
 
 type FilterDataProps = {
@@ -36,7 +26,7 @@ type FilterDataProps = {
 	date: Date
 }
 
-export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
+export function StokeList({ loadStokes, onSelectStock }: StokeListProps) {
 	const dispatch = useDispatch()
 	const purchases = useSelector(usePurchases())
 	const suppliers = useSelector(useSuppliers())
@@ -44,12 +34,9 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 	const products = useSelector(useProducts())
 
 	const [isLoading, setIsLoading] = useState(true)
-	const [showFormDelete, setShowFormDelete] = useState(false)
 
-	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
-		{} as PurchaseModel
-	)
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
+	const [selectedRow, setSelectedRow] = useState(0)
 
 	const productList = useMemo(() => {
 		return ArrayUtils.order({
@@ -80,10 +67,6 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		fetchData()
 	}, [])
 
-	const handleOpenDetalhe = (purchase?: PurchaseModel) => {
-		if (purchase) setSelectedPurchase(purchase)
-	}
-
 	const handleChangeFilterInput = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -109,37 +92,16 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 		fetchData()
 	}
 
-	const handleOpenFormDelete = (category: PurchaseModel) => {
-		setSelectedPurchase(category)
-		setShowFormDelete(true)
+	const handleSelectRow = (id: number) => {
+		setSelectedRow(selectedRow != id ? id : 0)
 	}
-
-	const handleCloseFormDelete = () => {
-		setShowFormDelete(false)
-	}
-	const handleDelete = async () => {
-		try {
-			await deleteStokes.delete(selectedPurchase.id)
-			dispatch(removePurchaseStore(selectedPurchase.id))
-			toast.success(`O entrada foi excluída`)
-			handleCloseFormDelete()
-		} catch (error: any) {
-			toast.error(error.message)
-		}
+	const handleSelectStock = (customer: PurchaseModel) => {
+		handleSelectRow(customer.id)
+		onSelectStock(selectedRow != customer.id ? customer : ({} as any))
 	}
 
 	return (
 		<>
-			{showFormDelete && (
-				<ModalDelete
-					entity="entrada"
-					description={`Deseja realmente excluir o registo?`}
-					show={showFormDelete}
-					onClose={handleCloseFormDelete}
-					onSubmit={handleDelete}
-				/>
-			)}
-
 			<fieldset>
 				<legend>Filtro ({purchases.length})</legend>
 				<div className="grid grid-cols-9 mb-3">
@@ -215,7 +177,6 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 								<th className="p-1">Tamanho</th>
 								<th className="p-1">Quantidade</th>
 								<th className="p-1">Data</th>
-								<th className="p-1">Acção</th>
 							</tr>
 						</thead>
 						{purchases.length > 0 && (
@@ -223,9 +184,14 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 								{purchases.map((purchase, i) => (
 									<tr
 										key={purchase.id}
-										className={` ${
-											i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
-										} `}
+										className={`cursor-pointer transition-all duration-150 ${
+											i % 2 !== 0 && 'bg-gray-100'
+										} ${
+											selectedRow == purchase.id
+												? 'bg-primary text-white'
+												: 'hover:bg-gray-200'
+										}`}
+										onClick={() => handleSelectStock(purchase)}
 									>
 										<td className="p-1">{purchase.id}</td>
 										<td className="p-1">
@@ -245,18 +211,12 @@ export function StokeList({ deleteStokes, loadStokes }: StokeListProps) {
 										<td className="p-1">{purchase.category?.name}</td>
 										<td className="p-1">{purchase.product?.name}</td>
 										<td className="p-1">
-											{NumberUtils.formatCurrency(purchase.selling_price_unit)}
+											{NumberUtils.formatCurrency(purchase.product?.price as any)}
 										</td>
 										<td className="p-1">{purchase.color}</td>
 										<td className="p-1">{purchase.size}</td>
 										<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
 										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
-										<td className="p-1">
-											<CardActions
-												onClickDelete={() => handleOpenFormDelete(purchase)}
-												onClickEdit={() => handleOpenDetalhe(purchase)}
-											/>
-										</td>
 									</tr>
 								))}
 							</tbody>
