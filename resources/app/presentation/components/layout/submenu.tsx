@@ -14,8 +14,6 @@ export function SubMenu({ submenus }: { submenus: SubmenuProps[] }) {
 		<nav>
 			<ul className="flex text-sm bg-gray-200 bg-opacity-90 px-1 pt-1">
 				{submenus.map(({ link, text, icon }) => {
-					console.log({ link, path })
-
 					return (
 						<MenuItem
 							key={link}
