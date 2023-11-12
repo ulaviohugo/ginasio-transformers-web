@@ -8,14 +8,15 @@ import {
 	IconProduct,
 	ImagePreview,
 	Input,
+	InputPrice,
 	Modal,
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
 	Select
 } from '..'
-import { FileUtils, LabelUtils } from '@/utils'
-import { useCategories } from '@/presentation/hooks'
+import { ColorUtils, FileUtils, LabelUtils } from '@/utils'
+import { useCategories, useSuppliers } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeRemoteLoadCategories } from '@/main/factories/usecases'
 import {
@@ -42,6 +43,7 @@ export function ProductEditor({
 }: ProductEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
+	const suppliers = useSelector(useSuppliers())
 	const [formData, setFormData] = useState<ProductModel>(data || ({} as ProductModel))
 	const [isLoading, setIsLoading] = useState(false)
 	const [imagePreview, setImagePreview] = useState('')
@@ -101,7 +103,7 @@ export function ProductEditor({
 		}
 	}
 	return (
-		<Modal show={show} onClose={onClose} size="sm">
+		<Modal show={show} onClose={onClose} size="lg">
 			<ModalTitle>
 				<IconProduct /> {data?.id ? `Produto - ${data.name}` : 'Cadastrar produto'}
 			</ModalTitle>
@@ -113,35 +115,103 @@ export function ProductEditor({
 							onInputFileChange={handleInputChange}
 						/>
 						<div className="flex flex-col gap-1 w-full">
-							<Input
-								type="text"
-								id="name"
-								name="name"
-								value={formData?.name || ''}
-								label={LabelUtils.translateField('name')}
-								onChange={handleInputChange}
-								autoFocus
-							/>
-							<Input
-								type="number"
-								id="price"
-								name="price"
-								value={formData?.price || ''}
-								label={LabelUtils.translateField('price')}
-								onChange={handleInputChange}
-							/>
-							<Select
-								id="category_id"
-								name="category_id"
-								value={formData?.category_id || ''}
-								label={LabelUtils.translateField('category_id')}
-								data={categories.map((category) => ({
-									text: category.name,
-									value: category.id
-								}))}
-								defaultText="Selecione"
-								onChange={handleInputChange}
-							/>
+							<div className="flex gap-2">
+								<Input
+									type="number"
+									id="bar_code"
+									name="bar_code"
+									value={formData?.bar_code || ''}
+									label={LabelUtils.translateField('bar_code')}
+									onChange={handleInputChange}
+								/>
+								<Select
+									id="supplier_id"
+									name="supplier_id"
+									value={formData?.supplier_id || ''}
+									label={LabelUtils.translateField('supplier_id')}
+									data={suppliers.map(({ name, id }) => ({
+										text: name,
+										value: id
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+							</div>
+							<div className="flex gap-2">
+								<Select
+									id="category_id"
+									name="category_id"
+									value={formData?.category_id || ''}
+									label={LabelUtils.translateField('category_id')}
+									data={categories.map((category) => ({
+										text: category.name,
+										value: category.id
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+								<Input
+									type="text"
+									id="name"
+									name="name"
+									value={formData?.name || ''}
+									label={LabelUtils.translateField('name')}
+									onChange={handleInputChange}
+									autoFocus
+								/>
+							</div>
+							<div className="flex gap-2">
+								<Select
+									id="color"
+									name="color"
+									value={formData?.color || ''}
+									label={LabelUtils.translateField('color')}
+									data={ColorUtils.colors.map((color) => ({
+										text: color
+									}))}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+								<Input
+									id="size"
+									name="size"
+									value={formData?.size || ''}
+									label={LabelUtils.translateField('size')}
+									onChange={handleInputChange}
+								/>
+								<Input
+									type="number"
+									id="min_stock"
+									name="min_stock"
+									value={formData?.min_stock || ''}
+									label={LabelUtils.translateField('min_stock')}
+									onChange={handleInputChange}
+								/>
+								<Input
+									type="number"
+									id="max_stock"
+									name="max_stock"
+									value={formData?.max_stock || ''}
+									label={LabelUtils.translateField('max_stock')}
+									onChange={handleInputChange}
+								/>
+							</div>
+							<div className="flex gap-2 ml-auto">
+								<InputPrice
+									id="purchase_price"
+									name="purchase_price"
+									value={formData?.purchase_price || ''}
+									label={LabelUtils.translateField('purchase_price')}
+									onChange={handleInputChange}
+								/>
+								<InputPrice
+									id="selling_price"
+									name="selling_price"
+									value={formData?.selling_price || ''}
+									label={LabelUtils.translateField('selling_price')}
+									onChange={handleInputChange}
+								/>
+							</div>
 						</div>
 					</div>
 					<ModalFooter>

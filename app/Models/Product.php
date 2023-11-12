@@ -19,6 +19,13 @@ class Product extends Model
 		'price',
 		'user_id',
 		'user_id_update',
+		'supplier_id',
+		'color',
+		'size',
+		'min_stock',
+		'max_stock',
+		'purchase_price',
+		'selling_price',
 	];
 
 	public function category()
