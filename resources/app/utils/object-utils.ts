@@ -40,14 +40,17 @@ export class ObjectUtils {
 			obj = JSON.parse(data)
 		}
 		if (Array.isArray(obj)) {
-			return obj.reduce((prev: any, current: any) => {
+			return obj.reduce((prev: any, current: any, index) => {
 				if (typeof current == 'object' && keyIndex && keyIndex in current) {
 					return {
 						...prev,
 						[current[keyIndex]]: keyValue ? current[keyValue] : current
 					}
 				}
-				return { ...prev, [current as any]: current }
+				if (typeof current == 'string' || typeof current == 'number') {
+					return { ...prev, [current as any]: current }
+				}
+				return { ...prev, [index]: current }
 			}, {})
 		}
 		return obj as T

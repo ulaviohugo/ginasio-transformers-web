@@ -18,6 +18,7 @@ type CustomerListProps = {
 }
 
 export type CustomerFilterProps = LoadCustomersParams
+
 export function CustomerList({
 	isLoading,
 	onSelectCustomer,

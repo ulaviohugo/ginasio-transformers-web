@@ -9,14 +9,14 @@ use App\Models\Province;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
-class SupplierCreateRequest extends GlobalFormRequest
+class SupplierUpdateRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
 	 */
 	public function authorize(): bool
 	{
-		$this->failedAuthMessage = 'Não tem permissão de criar fornecedor';
+		$this->failedAuthMessage = 'Não tem permissão de actualizar fornecedor';
 		return User::currentUser()->role == User::ROLE_ADMIN;
 	}
 
@@ -27,11 +27,12 @@ class SupplierCreateRequest extends GlobalFormRequest
 	 */
 	public function rules(): array
 	{
+		$id = request('supplier');
 		return [
 			'name' => 'required',
 			'representative' => 'required',
-			'email' => 'required|email|unique:' . DBHelper::TB_SUPPLIERS,
-			'phone' => 'required|unique:' . DBHelper::TB_SUPPLIERS,
+			'email' => ['required', 'email', Rule::unique(DBHelper::TB_SUPPLIERS)->ignore($id)],
+			'phone' => ['required', Rule::unique(DBHelper::TB_SUPPLIERS)->ignore($id)],
 			'country_id' => [
 				'nullable',
 				'numeric',

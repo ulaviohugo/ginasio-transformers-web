@@ -1,6 +1,11 @@
-import { LoadSuppliers, LoadSuppliersResult } from '@/domain/usecases'
+import {
+	LoadSuppliers,
+	LoadSuppliersParams,
+	LoadSuppliersResult
+} from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
+import { ObjectUtils } from '@/utils'
 
 export class RemoteLoadSuppliers implements LoadSuppliers {
 	constructor(
@@ -8,10 +13,11 @@ export class RemoteLoadSuppliers implements LoadSuppliers {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(): Promise<LoadSuppliersResult> {
+	async load(params?: LoadSuppliersParams): Promise<LoadSuppliersResult> {
+		const url = params ? ObjectUtils.toQueryParams(params, this.url) : this.url
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
-			url: this.url
+			url
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

@@ -1,11 +1,4 @@
-import React, {
-	ChangeEvent,
-	FormEvent,
-	ReactNode,
-	useEffect,
-	useMemo,
-	useState
-} from 'react'
+import React, { ChangeEvent, ReactNode, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,18 +7,15 @@ import {
 	ButtonCancel,
 	ButtonSubmit,
 	IconPlus,
-	IconSupplier,
 	ImagePreview,
 	Input,
 	InputEmail,
 	InputPhone,
-	Modal,
-	ModalBody,
-	ModalFooter,
-	ModalTitle,
 	Select,
 	SupplierProductEditor,
-	SupplierProductCardChangeProps
+	SupplierProductCardChangeProps,
+	IconTrash,
+	IconEdit
 } from '..'
 
 import {
@@ -52,25 +42,25 @@ import {
 
 type SupplierEditorProps = {
 	supplier?: SupplierModel
-	show: boolean
-	onClose: () => void
 	addSupplier: AddSupplier
 	updateSupplier: UpdateSupplier
+	onDelete: () => void
 }
+
+const initialProductItem = { 0: {} }
 
 export function SupplierEditor({
 	supplier,
-	show,
-	onClose,
 	addSupplier,
-	updateSupplier
+	updateSupplier,
+	onDelete
 }: SupplierEditorProps) {
 	const dispatch = useDispatch()
 	const { countries, provinces, municipalities } = useSelector(useLocations())
 	const categories = useSelector(useCategories())
 	const products = useSelector(useProducts())
 
-	const [productItems, setProductItems] = useState<any>({ 0: {} })
+	const [productItems, setProductItems] = useState<any>(initialProductItem)
 
 	const productList = useMemo(() => Object.keys(productItems), [productItems])
 
@@ -78,7 +68,7 @@ export function SupplierEditor({
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
 	const [formDate, setFormData] = useState<SupplierModel>(
-		(supplier && { ...supplier, photo: undefined }) || ({} as SupplierModel)
+		supplier || ({} as SupplierModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
@@ -108,11 +98,13 @@ export function SupplierEditor({
 				)
 			)
 			if (supplier.supplier_products?.length) {
-				setProductItems(ObjectUtils.convertToObject(supplier.supplier_products))
+				const prods = ObjectUtils.convertToObject(supplier.supplier_products)
+				setProductItems(prods)
 			}
+			setFormData(supplier)
 		}
-		if (supplier?.photo) setPhotoPreview(supplier.photo)
-	}, [supplier])
+		setPhotoPreview(supplier?.photo || '')
+	}, [municipalities, provinces, supplier])
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -174,28 +166,28 @@ export function SupplierEditor({
 		setPhotoPreview('')
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-
-		setIsLoading(true)
-
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
+		const update = type == 'update'
+		if (update && !formDate.id) {
+			setIsLoading(false)
+			return toast.error('Selecione um registo para editar')
+		}
 		const supplierProducts = ArrayUtils.convertToArray(productItems)
 
 		const data: SupplierModel = { ...formDate, supplier_products: supplierProducts }
+		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formDate.id ? await updateSupplier.update(data) : await addSupplier.add(data)
+				update ? await updateSupplier.update(data) : await addSupplier.add(data)
 			) as SupplierModel
 
-			if (formDate.id) {
+			if (update) {
 				dispatch(updateSupplierStore(httpResponse))
 			} else {
 				dispatch(addSupplierStore(httpResponse))
 			}
-			toast.success(
-				`Fornecedor ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
-			)
-			onClose()
+			toast.success(`Fornecedor ${update ? 'actualizado' : 'cadastrado'} com sucesso`)
+			handleClear()
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -221,141 +213,155 @@ export function SupplierEditor({
 
 		setProductItems(data)
 	}
+
+	const handleClear = () => {
+		setFormData({} as any)
+		clearInputFile()
+		setProductItems(initialProductItem)
+	}
+
+	const handleOpenDelete = () => {
+		if (!formDate.id) return toast.error('Selecione um registo para excluir')
+		onDelete()
+	}
 	return (
-		<Modal show={show} onClose={onClose} size="lg">
-			<ModalTitle>
-				<IconSupplier />{' '}
-				{supplier?.id ? `Fornecedor - ${supplier.name}` : 'Cadastrar fornecedor'}
-			</ModalTitle>
-			<ModalBody>
-				<form onSubmit={handleSubmit}>
+		<fieldset className="flex gap-2">
+			<legend>Cadastro de fornecedor</legend>
+			<div className="flex-1 flex gap-1">
+				<div>
+					<ImagePreview
+						photoPreview={photoPreview}
+						onInputFileChange={handleInputChange}
+						clearInputFile={clearInputFile}
+					/>
+				</div>
+				<div className="flex-1 flex flex-col gap-1">
 					<div className="flex gap-1">
-						<div>
-							<ImagePreview
-								photoPreview={photoPreview}
-								onInputFileChange={handleInputChange}
-								clearInputFile={clearInputFile}
-							/>
-						</div>
-						<div className="flex-1 flex flex-col gap-1">
-							<div className="flex gap-1">
-								<Input
-									type="text"
-									id="name"
-									name="name"
-									value={formDate?.name || ''}
-									label={LabelUtils.translateField('name')}
-									onChange={handleInputChange}
-									autoFocus
-								/>
-								<Input
-									type="text"
-									id="representative"
-									name="representative"
-									value={formDate?.representative || ''}
-									label={LabelUtils.translateField('representative')}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<Divisor label="Contactos" />
-							<div className="flex gap-1">
-								<InputPhone
-									id="phone"
-									name="phone"
-									value={formDate?.phone || ''}
-									label={LabelUtils.translateField('phone')}
-									onChange={handleInputChange}
-								/>
-								<InputEmail
-									id="email"
-									name="email"
-									value={formDate?.email || ''}
-									label={LabelUtils.translateField('email')}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<Divisor label="Endereço" />
-							<div className="flex gap-1">
-								<Select
-									id="country_id"
-									name="country_id"
-									value={formDate?.country_id || ''}
-									label={LabelUtils.translateField('country_id')}
-									data={countries.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="province_id"
-									name="province_id"
-									value={formDate?.province_id || ''}
-									label={LabelUtils.translateField('province_id')}
-									data={provinceList.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="municipality_id"
-									name="municipality_id"
-									value={formDate?.municipality_id || ''}
-									label={LabelUtils.translateField('municipality_id')}
-									data={municipalityList.map(({ name, id }) => ({
-										text: name,
-										value: id
-									}))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-							</div>
-							<Input
-								type="text"
-								id="address"
-								name="address"
-								value={formDate?.address || ''}
-								label={LabelUtils.translateField('address')}
-								onChange={handleInputChange}
-							/>
+						<Input
+							type="text"
+							id="name"
+							name="name"
+							value={formDate?.name || ''}
+							label={LabelUtils.translateField('name')}
+							onChange={handleInputChange}
+							autoFocus
+						/>
+						<Input
+							type="text"
+							id="representative"
+							name="representative"
+							value={formDate?.representative || ''}
+							label={LabelUtils.translateField('representative')}
+							onChange={handleInputChange}
+						/>
+					</div>
+					<div className="flex gap-1">
+						<InputPhone
+							id="phone"
+							name="phone"
+							value={formDate?.phone || ''}
+							label={LabelUtils.translateField('phone')}
+							onChange={handleInputChange}
+						/>
+						<InputEmail
+							id="email"
+							name="email"
+							value={formDate?.email || ''}
+							label={LabelUtils.translateField('email')}
+							onChange={handleInputChange}
+						/>
+					</div>
+					<div className="flex gap-1">
+						<Select
+							id="country_id"
+							name="country_id"
+							value={formDate?.country_id || ''}
+							label={LabelUtils.translateField('country_id')}
+							data={countries.map(({ name, id }) => ({
+								text: name,
+								value: id
+							}))}
+							defaultText="Selecione"
+							onChange={handleInputChange}
+						/>
+						<Select
+							id="province_id"
+							name="province_id"
+							value={formDate?.province_id || ''}
+							label={LabelUtils.translateField('province_id')}
+							data={provinceList.map(({ name, id }) => ({
+								text: name,
+								value: id
+							}))}
+							defaultText="Selecione"
+							onChange={handleInputChange}
+						/>
+						<Select
+							id="municipality_id"
+							name="municipality_id"
+							value={formDate?.municipality_id || ''}
+							label={LabelUtils.translateField('municipality_id')}
+							data={municipalityList.map(({ name, id }) => ({
+								text: name,
+								value: id
+							}))}
+							defaultText="Selecione"
+							onChange={handleInputChange}
+						/>
+					</div>
+					<Input
+						type="text"
+						id="address"
+						name="address"
+						value={formDate?.address || ''}
+						label={LabelUtils.translateField('address')}
+						onChange={handleInputChange}
+					/>
+					<div>
+						<Divisor label={`Produtos fornecidos (${productList?.length})`}>
 							<div>
-								<Divisor label={`Produtos fornecidos (${productList?.length})`}>
-									<div>
-										<span
-											className="btn-primary"
-											onClick={handleAddProductItem}
-											title="Adicionar producto"
-										>
-											<IconPlus />
-										</span>
-									</div>
-								</Divisor>
-								<div className="max-h-[250px] overflow-auto">
-									{productList?.map((key, i) => (
-										<div key={key}>
-											<SupplierProductEditor
-												itemIndex={Number(key)}
-												index={i}
-												supplierProduct={productItems[key]}
-												onChange={handleChangeProduct}
-												onRemoveItem={handleRemoveProductItem}
-											/>
-										</div>
-									))}
-								</div>
+								<span
+									className="btn-primary"
+									onClick={handleAddProductItem}
+									title="Adicionar producto"
+								>
+									<IconPlus />
+								</span>
 							</div>
+						</Divisor>
+						<div className="max-h-[250px] overflow-auto">
+							{productList?.map((key, i) => (
+								<div key={key}>
+									<SupplierProductEditor
+										itemIndex={Number(key)}
+										index={i}
+										supplierProduct={productItems[key]}
+										onChange={handleChangeProduct}
+										onRemoveItem={handleRemoveProductItem}
+									/>
+								</div>
+							))}
 						</div>
 					</div>
-					<ModalFooter>
-						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-						<ButtonCancel onClick={onClose} />
-					</ModalFooter>
-				</form>
-			</ModalBody>
-		</Modal>
+				</div>
+			</div>
+			<div className="flex flex-col gap-2">
+				<ButtonSubmit
+					disabled={isLoading}
+					isLoading={isLoading}
+					onClick={() => handleSubmit('save')}
+				/>
+				<ButtonSubmit
+					text="Editar"
+					icon={IconEdit}
+					disabled={isLoading}
+					isLoading={isLoading}
+					onClick={() => handleSubmit('update')}
+				/>
+				<ButtonCancel text="Limpar" onClick={handleClear} />
+				<ButtonCancel text="Excluir" icon={IconTrash} onClick={handleOpenDelete} />
+			</div>
+		</fieldset>
 	)
 }
 

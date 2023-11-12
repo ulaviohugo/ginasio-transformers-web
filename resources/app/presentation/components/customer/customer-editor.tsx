@@ -83,12 +83,13 @@ export function CustomerEditor({
 	}
 
 	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
-		setIsLoading(true)
 		const update = type == 'update'
+
 		if (update && !formDate.id) {
 			setIsLoading(false)
 			return toast.error('Selecione um registo para editar')
 		}
+		setIsLoading(true)
 		try {
 			const httpResponse = (
 				update
@@ -101,7 +102,7 @@ export function CustomerEditor({
 			} else {
 				dispatch(addCustomerStore(httpResponse))
 			}
-			toast.success(`Cliente ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`)
+			toast.success(`Cliente ${update ? 'actualizado' : 'cadastrado'} com sucesso`)
 			handleClear()
 		} catch (error: any) {
 			toast.error(error.message)

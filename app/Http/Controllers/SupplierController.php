@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\SupplierCreateRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use App\Services\SupplierCreateService;
 use App\Services\SupplierUpdateService;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -42,14 +42,14 @@ class SupplierController extends Controller
 		}
 	}
 
-	public function update(Request $request, SupplierUpdateService $service, Supplier $supplier)
+	public function update(SupplierUpdateRequest $request, SupplierUpdateService $service, Supplier $supplier)
 	{
 		try {
 			$updatedSupplier = $service->execute($request, $supplier);
 			$updatedSupplier->load($this->load);
 			return HttpResponse::success(data: new SupplierResource($updatedSupplier));
 		} catch (\Throwable $th) {
-			return HttpResponse::error(message: 'Erro ao actualizar fornecedor' . $th->getMessage());
+			return HttpResponse::error(message: 'Erro ao actualizar fornecedor. ' . $th->getMessage());
 		}
 	}
 
@@ -59,6 +59,20 @@ class SupplierController extends Controller
 			return HttpResponse::success(data: Supplier::count());
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar fornecedor');
+		}
+	}
+
+	public function destroy(Supplier $supplier)
+	{
+		try {
+			$supplier->delete();
+			return HttpResponse::success(message: 'Fornecedor excluído com sucesso');
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(
+				exception: $th,
+				message: 'Erro ao excluir fornecedor' . $th->getMessage(),
+				messagePermission: 'Não tem permissão para excluir este recurso',
+			);
 		}
 	}
 }

@@ -63,7 +63,7 @@ class SupplierUpdateService
 		//Filter product to insert
 		$filteredProductsToInsert =  collect($supplierProducts)->filter(function ($item, $i) use ($productsIdInDB) {
 			return !in_array($item['product_id'], $productsIdInDB);
-		})->to();
+		})->toArray();
 		$countProductsToInsert = count($filteredProductsToInsert);
 
 		//Delete supplier products from data base
