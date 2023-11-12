@@ -1,8 +1,12 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { ArrayUtils, FileUtils, NumberUtils, SalaryUtils } from '@/utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEmployees } from '@/presentation/hooks'
-import { loadCustomerStore, loadEmployeeStore } from '@/presentation/redux'
+import { useCustomers, useEmployees } from '@/presentation/hooks'
+import {
+	addProductionBudgetStore,
+	loadCustomerStore,
+	loadEmployeeStore
+} from '@/presentation/redux'
 import {
 	makeRemoteAddProductionBudget,
 	makeRemoteLoadAccessories,
@@ -63,6 +67,10 @@ const initialFormDataValues: ProductionBudgetModel = {
 
 export function ProductionBudgetEditor() {
 	const dispatch = useDispatch()
+
+	const employees = useSelector(useEmployees())
+	const customers = useSelector(useCustomers())
+
 	const [formData, setFormData] = useState<ProductionBudgetModel>(initialFormDataValues)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -108,8 +116,6 @@ export function ProductionBudgetEditor() {
 		NumberUtils.convertToNumber(formData.discount)
 
 	const fabricList = useMemo(() => Object.keys(fabricItems), [fabricItems])
-
-	const employees = useSelector(useEmployees())
 
 	const fetchLoad = (
 		fetcher: { load: () => Promise<any> },
@@ -166,6 +172,15 @@ export function ProductionBudgetEditor() {
 		setAccessoryItems({ ...accessoryItems, [index]: data })
 	}
 
+	const handleVIPCustomerDiscount = (sellingPrice: number) => {
+		const vipDiscount = 0.05 //5%
+		const sellingPercent = sellingPrice
+			? NumberUtils.convertToNumber(sellingPrice) / 100
+			: 0
+
+		return (productionCost + productionCost * sellingPercent) * vipDiscount
+	}
+
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -187,6 +202,13 @@ export function ProductionBudgetEditor() {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
 		}
+		if (name == 'selling_cost') {
+			const customer = customers.find(({ id }) => id == Number(formData.customer_id))
+			if (customer?.customer_type == 'VIP') {
+				const discount = handleVIPCustomerDiscount(value as any)
+				data = { ...data, discount }
+			}
+		}
 		if (name.indexOf('duration_per_minute') >= 0) {
 			const [prefix] = name.split('_')
 			let costValue = NumberUtils.convertToNumber(value)
@@ -207,7 +229,6 @@ export function ProductionBudgetEditor() {
 				...data,
 				[name]: costValue,
 				[fieldCost]: sewingOrCuttingCost
-				// production_cost:
 			}
 		}
 		setFormData(data)
@@ -241,7 +262,6 @@ export function ProductionBudgetEditor() {
 				}
 			}
 		)
-		console.log({ fabric })
 
 		setFabricItems(fabric)
 	}
@@ -269,7 +289,8 @@ export function ProductionBudgetEditor() {
 		}
 
 		try {
-			await makeRemoteAddProductionBudget().add(data)
+			const httpResponse = await makeRemoteAddProductionBudget().add(data)
+			dispatch(addProductionBudgetStore(httpResponse))
 			handleClearForm()
 			toast.success('Orçamento registado com sucesso')
 		} catch ({ message }) {

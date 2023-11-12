@@ -63,6 +63,7 @@ class ProductionBudgetController extends Controller
 	{
 		try {
 			$createdProduction = $service->execute($request);
+			$createdProduction->load($this->relationship);
 			return HttpResponse::success(data: new ProductionBudgetResource($createdProduction));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar orçamento');

@@ -5,10 +5,11 @@ import { DateUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadProductionBudgets } from '@/domain/usecases'
 import toast from 'react-hot-toast'
 import { Input, Select } from '../form-controls'
-import { useSelector } from 'react-redux'
-import { useCustomers } from '@/presentation/hooks'
+import { useDispatch, useSelector } from 'react-redux'
+import { useCustomers, useProductionBudgets } from '@/presentation/hooks'
 import { IconClose, IconSearch } from '../icons'
 import { QueryParams } from '@/data/protocols'
+import { loadProductionBudgetStore } from '@/presentation/redux'
 
 type ProductionBudgetListProps = {
 	loadProductionBudgets: LoadProductionBudgets
@@ -25,10 +26,12 @@ export function ProductionBudgetList({
 	loadProductionBudgets,
 	onSelectBudget
 }: ProductionBudgetListProps) {
+	const dispatch = useDispatch()
 	const currentDate = DateUtils.getDate(new Date())
 	const customers = useSelector(useCustomers())
+	const productionBudgets = useSelector(useProductionBudgets())
 
-	const [budgets, setBudgets] = useState<ProductionBudgetModel[]>([])
+	const [budgets, setBudgets] = useState<ProductionBudgetModel[]>(productionBudgets)
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedRow, setSelectedRow] = useState(0)
 
@@ -37,19 +40,26 @@ export function ProductionBudgetList({
 		onSelectBudget(budgets.find((budget) => budget.id == selectedRow) as any)
 	}, [selectedRow])
 
+	useEffect(() => {
+		setBudgets(productionBudgets)
+	}, [productionBudgets])
+
 	const [filter, setFilter] = useState<FilterProps>({
 		date: currentDate
 	} as FilterProps)
 
 	const hasFilter = useMemo(() => {
-		return !ObjectUtils.isEmpty(filter) && filter.date != currentDate
+		return !ObjectUtils.isEmpty(filter) || filter?.date != currentDate
 	}, [filter])
 
 	const fetchData = (queryParams?: QueryParams) => {
 		setIsLoading(true)
 		loadProductionBudgets
 			.load(queryParams)
-			.then(setBudgets)
+			.then((response) => {
+				setBudgets(response)
+				dispatch(loadProductionBudgetStore(response))
+			})
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoading(false))
 	}
@@ -154,10 +164,7 @@ export function ProductionBudgetList({
 									i % 2 !== 0 && 'bg-gray-100'
 								} 
 									${selectedRow == budget.id ? 'bg-primary text-white' : 'hover:bg-gray-200'} `}
-								onDoubleClick={() => handleSelectBudget(budget)}
-								onClick={() => {
-									if (selectedRow == budget.id) handleSelectRow(0)
-								}}
+								onClick={() => handleSelectBudget(budget)}
 							>
 								<td className="px-1">{budget.id}</td>
 								<td className="px-1">{budget.customer.name}</td>
