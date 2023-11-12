@@ -53,7 +53,7 @@ export function EmployeeEditor({
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<EmployeeModel>(
+	const [formData, setFormData] = useState<EmployeeModel>(
 		employee || ({} as EmployeeModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
@@ -78,7 +78,7 @@ export function EmployeeEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: EmployeeModel = { ...formDate, [name]: value }
+		let data: EmployeeModel = { ...formData, [name]: value }
 
 		if (name == 'country_id') {
 			data = { ...data, province_id: undefined, municipality_id: undefined }
@@ -120,18 +120,18 @@ export function EmployeeEditor({
 		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formDate.id
-					? await updateEmployee.update(formDate)
-					: await addEmployee.add(formDate)
+				formData.id
+					? await updateEmployee.update(formData)
+					: await addEmployee.add(formData)
 			) as EmployeeModel
 
-			if (formDate.id) {
+			if (formData.id) {
 				dispatch(updateEmployeeStore(httpResponse))
 			} else {
 				dispatch(addEmployeeStore(httpResponse))
 			}
 			toast.success(
-				`Funcionário ${formDate.id ? 'actualizado' : 'cadastrado'} com sucesso`
+				`Funcionário ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`
 			)
 			onClose()
 		} catch (error: any) {
@@ -164,7 +164,7 @@ export function EmployeeEditor({
 										type="text"
 										id="name"
 										name="name"
-										value={formDate?.name || ''}
+										value={formData?.name || ''}
 										label={LabelUtils.translateField('name')}
 										onChange={handleInputChange}
 										autoFocus
@@ -174,7 +174,7 @@ export function EmployeeEditor({
 									<Select
 										id="gender"
 										name="gender"
-										value={formDate?.gender || ''}
+										value={formData?.gender || ''}
 										label={LabelUtils.translateField('gender')}
 										data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
 										defaultText="Selecione"
@@ -185,8 +185,8 @@ export function EmployeeEditor({
 										id="date_of_birth"
 										name="date_of_birth"
 										value={
-											(formDate?.date_of_birth &&
-												DateUtils.getDate(formDate?.date_of_birth)) ||
+											(formData?.date_of_birth &&
+												DateUtils.getDate(formData?.date_of_birth)) ||
 											''
 										}
 										label={LabelUtils.translateField('date_of_birth')}
@@ -195,7 +195,7 @@ export function EmployeeEditor({
 									<Select
 										id="marital_status"
 										name="marital_status"
-										value={formDate?.marital_status || ''}
+										value={formData?.marital_status || ''}
 										label={LabelUtils.translateField('marital_status')}
 										data={[
 											{ text: 'Solteiro(a)' },
@@ -209,7 +209,7 @@ export function EmployeeEditor({
 									<Select
 										id="document_type"
 										name="document_type"
-										value={formDate?.document_type || ''}
+										value={formData?.document_type || ''}
 										label={LabelUtils.translateField('document_type')}
 										data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
 										defaultText="Selecione"
@@ -219,19 +219,19 @@ export function EmployeeEditor({
 										type="text"
 										id="document_number"
 										name="document_number"
-										value={formDate?.document_number || ''}
+										value={formData?.document_number || ''}
 										label={LabelUtils.translateField('document_number')}
 										onChange={handleInputChange}
-										disabled={!formDate?.document_type}
+										disabled={!formData?.document_type}
 										title={
-											!formDate?.document_type ? 'Selecione 1º o tipo de documento' : ''
+											!formData?.document_type ? 'Selecione 1º o tipo de documento' : ''
 										}
 									/>
 									<Input
 										type="text"
 										id="nif"
 										name="nif"
-										value={formDate?.nif || ''}
+										value={formData?.nif || ''}
 										label={LabelUtils.translateField('nif')}
 										onChange={handleInputChange}
 									/>
@@ -239,7 +239,7 @@ export function EmployeeEditor({
 										type="text"
 										id="social_security"
 										name="social_security"
-										value={formDate?.social_security || ''}
+										value={formData?.social_security || ''}
 										label={LabelUtils.translateField('social_security')}
 										onChange={handleInputChange}
 									/>
@@ -247,14 +247,14 @@ export function EmployeeEditor({
 										type="number"
 										id="dependents"
 										name="dependents"
-										value={formDate?.dependents || ''}
+										value={formData?.dependents || ''}
 										label={LabelUtils.translateField('dependents')}
 										onChange={handleInputChange}
 									/>
 									<Select
 										id="education_degree"
 										name="education_degree"
-										value={formDate?.education_degree || ''}
+										value={formData?.education_degree || ''}
 										label={LabelUtils.translateField('education_degree')}
 										data={[
 											{ text: 'Ensino primário' },
@@ -270,22 +270,22 @@ export function EmployeeEditor({
 									<InputPhone
 										id="phone"
 										name="phone"
-										value={formDate?.phone || ''}
+										value={formData?.phone || ''}
 										label={LabelUtils.translateField('phone')}
 										onChange={handleInputChange}
 									/>
 									<InputPhone
 										id="phone2"
 										name="phone2"
-										value={!formDate?.phone ? '' : formDate?.phone2 || ''}
+										value={!formData?.phone ? '' : formData?.phone2 || ''}
 										label={LabelUtils.translateField('phone2')}
 										onChange={handleInputChange}
-										disabled={!formDate?.phone}
+										disabled={!formData?.phone}
 									/>
 									<InputEmail
 										id="email"
 										name="email"
-										value={formDate?.email || ''}
+										value={formData?.email || ''}
 										label={LabelUtils.translateField('email')}
 										onChange={handleInputChange}
 									/>
@@ -294,7 +294,7 @@ export function EmployeeEditor({
 									<Select
 										id="country_id"
 										name="country_id"
-										value={formDate?.country_id || ''}
+										value={formData?.country_id || ''}
 										label={LabelUtils.translateField('country_id')}
 										data={countries.map(({ name, id }) => ({
 											text: name,
@@ -306,7 +306,7 @@ export function EmployeeEditor({
 									<Select
 										id="province_id"
 										name="province_id"
-										value={formDate?.province_id || ''}
+										value={formData?.province_id || ''}
 										label={LabelUtils.translateField('province_id')}
 										data={provinceList.map(({ name, id }) => ({
 											text: name,
@@ -318,7 +318,7 @@ export function EmployeeEditor({
 									<Select
 										id="municipality_id"
 										name="municipality_id"
-										value={formDate?.municipality_id || ''}
+										value={formData?.municipality_id || ''}
 										label={LabelUtils.translateField('municipality_id')}
 										data={municipalityList.map(({ name, id }) => ({
 											text: name,
@@ -333,7 +333,7 @@ export function EmployeeEditor({
 										type="text"
 										id="address"
 										name="address"
-										value={formDate?.address || ''}
+										value={formData?.address || ''}
 										label={LabelUtils.translateField('address')}
 										onChange={handleInputChange}
 									/>
@@ -344,7 +344,7 @@ export function EmployeeEditor({
 								<Select
 									id="position"
 									name="position"
-									value={formDate?.position || ''}
+									value={formData?.position || ''}
 									label={LabelUtils.translateField('position')}
 									data={[
 										{ text: 'Assistente administrativo' },
@@ -358,10 +358,10 @@ export function EmployeeEditor({
 								<InputPrice
 									id="base_salary"
 									name="base_salary"
-									value={formDate?.base_salary || ''}
+									value={formData?.base_salary || ''}
 									label={LabelUtils.translateField('base_salary')}
 									onChange={handleInputChange}
-									disabled={!formDate?.position}
+									disabled={!formData?.position}
 									title={`Selecione o ${LabelUtils.translateField(
 										'position'
 									)} para habilitar este campo`}
@@ -371,11 +371,11 @@ export function EmployeeEditor({
 									id="hire_date"
 									name="hire_date"
 									value={
-										(formDate?.hire_date && DateUtils.getDate(formDate?.hire_date)) || ''
+										(formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
 									}
 									label={LabelUtils.translateField('hire_date')}
 									onChange={handleInputChange}
-									disabled={!formDate?.position}
+									disabled={!formData?.position}
 									title={`Selecione o ${LabelUtils.translateField(
 										'position'
 									)} para habilitar este campo`}
@@ -385,13 +385,13 @@ export function EmployeeEditor({
 									id="contract_end_date"
 									name="contract_end_date"
 									value={
-										(formDate?.contract_end_date &&
-											DateUtils.getDate(formDate.contract_end_date)) ||
+										(formData?.contract_end_date &&
+											DateUtils.getDate(formData.contract_end_date)) ||
 										''
 									}
 									label={LabelUtils.translateField('contract_end_date')}
 									onChange={handleInputChange}
-									disabled={!formDate?.position}
+									disabled={!formData?.position}
 									title={`Selecione o ${LabelUtils.translateField(
 										'position'
 									)} para habilitar este campo`}
@@ -403,7 +403,7 @@ export function EmployeeEditor({
 									<Select
 										id="bank_name"
 										name="bank_name"
-										value={formDate?.bank_name || ''}
+										value={formData?.bank_name || ''}
 										label={LabelUtils.translateField('bank_name')}
 										data={[
 											{ text: 'BAI' },
@@ -423,22 +423,22 @@ export function EmployeeEditor({
 										type="text"
 										id="account_number"
 										name="account_number"
-										value={formDate?.account_number || ''}
+										value={formData?.account_number || ''}
 										label={LabelUtils.translateField('account_number')}
 										onChange={handleInputChange}
-										disabled={!formDate?.bank_name}
-										title={!formDate?.document_type ? 'Selecione 1º o nome do banco' : ''}
+										disabled={!formData?.bank_name}
+										title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}
 									/>
 								</div>
 
 								<InputIBAN
 									id="iban"
 									name="iban"
-									value={formDate?.iban || ''}
+									value={formData?.iban || ''}
 									label={LabelUtils.translateField('iban')}
 									onChange={handleInputChange}
-									disabled={!formDate?.bank_name}
-									title={!formDate?.document_type ? 'Selecione 1º o nome do banco' : ''}
+									disabled={!formData?.bank_name}
+									title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}
 								/>
 							</fieldset>
 							<fieldset className="flex flex-col gap-1">
@@ -449,17 +449,17 @@ export function EmployeeEditor({
 											type="checkbox"
 											name="can_login"
 											label="Pode iniciar sessão"
-											checked={formDate.can_login}
+											checked={formData.can_login}
 											onChange={handleInputChange}
 										/>
 									</div>
 								</div>
-								{formDate.can_login && (
+								{formData.can_login && (
 									<div className="flex flex-col gap-1">
 										<Select
 											name="role"
 											label="Perfil"
-											value={formDate?.role || ''}
+											value={formData?.role || ''}
 											defaultText="Selecione"
 											data={[
 												{ text: 'Admin (acesso total)', value: 'Admin' },
@@ -472,14 +472,14 @@ export function EmployeeEditor({
 												type="password"
 												name="password"
 												label="Senha"
-												value={formDate.password || ''}
+												value={formData.password || ''}
 												onChange={handleInputChange}
 											/>
 											<Input
 												type="password"
 												name="password_confirmation"
 												label="Confirme a senha"
-												value={formDate.password_confirmation || ''}
+												value={formData.password_confirmation || ''}
 												onChange={handleInputChange}
 											/>
 										</div>

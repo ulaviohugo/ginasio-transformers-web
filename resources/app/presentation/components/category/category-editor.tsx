@@ -40,7 +40,7 @@ export function CategoryEditor({
 }: CategoryEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
-	const [formDate, setFormData] = useState<CategoryModel>(data || ({} as CategoryModel))
+	const [formData, setFormData] = useState<CategoryModel>(data || ({} as CategoryModel))
 	const [isLoading, setIsLoading] = useState(false)
 
 	const fetchCategories = async () => {
@@ -63,7 +63,7 @@ export function CategoryEditor({
 	) => {
 		const { name, value } = e.target
 
-		const data: CategoryModel = { ...formDate, [name]: value }
+		const data: CategoryModel = { ...formData, [name]: value }
 		setFormData(data)
 	}
 
@@ -73,17 +73,17 @@ export function CategoryEditor({
 		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formDate.id
-					? await updateCategory.update(formDate)
-					: await addCategory.add(formDate)
+				formData.id
+					? await updateCategory.update(formData)
+					: await addCategory.add(formData)
 			) as CategoryModel
 
-			if (formDate.id) {
+			if (formData.id) {
 				dispatch(updateCategoryStore(httpResponse))
 			} else {
 				dispatch(addCategoryStore(httpResponse))
 			}
-			toast.success(`Categoria ${formDate.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+			toast.success(`Categoria ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
@@ -102,7 +102,7 @@ export function CategoryEditor({
 						type="text"
 						id="name"
 						name="name"
-						value={formDate?.name || ''}
+						value={formData?.name || ''}
 						label={LabelUtils.translateField('name')}
 						onChange={handleInputChange}
 						autoFocus

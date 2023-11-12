@@ -38,7 +38,7 @@ export function CustomerEditor({
 
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<CustomerModel>(
+	const [formData, setFormData] = useState<CustomerModel>(
 		customer || ({} as CustomerModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
@@ -61,7 +61,7 @@ export function CustomerEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: CustomerModel = { ...formDate, [name]: value }
+		let data: CustomerModel = { ...formData, [name]: value }
 
 		if (name == 'province_id') {
 			data = { ...data, municipality_id: undefined }
@@ -85,7 +85,7 @@ export function CustomerEditor({
 	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
 		const update = type == 'update'
 
-		if (update && !formDate.id) {
+		if (update && !formData.id) {
 			setIsLoading(false)
 			return toast.error('Selecione um registo para editar')
 		}
@@ -93,8 +93,8 @@ export function CustomerEditor({
 		try {
 			const httpResponse = (
 				update
-					? await updateCustomer.update(formDate)
-					: await addCustomer.add({ ...formDate, id: undefined as any })
+					? await updateCustomer.update(formData)
+					: await addCustomer.add({ ...formData, id: undefined as any })
 			) as CustomerModel
 
 			if (update) {
@@ -117,7 +117,7 @@ export function CustomerEditor({
 	}
 
 	const handleOpenDelete = () => {
-		if (!formDate.id) return toast.error('Selecione um registo para excluir')
+		if (!formData.id) return toast.error('Selecione um registo para excluir')
 		onDelete()
 	}
 
@@ -139,7 +139,7 @@ export function CustomerEditor({
 								type="text"
 								id="name"
 								name="name"
-								value={formDate?.name || ''}
+								value={formData?.name || ''}
 								label={LabelUtils.translateField('name')}
 								onChange={handleInputChange}
 								autoFocus
@@ -149,8 +149,8 @@ export function CustomerEditor({
 								id="date_of_birth"
 								name="date_of_birth"
 								value={
-									(formDate?.date_of_birth &&
-										DateUtils.getDate(formDate?.date_of_birth)) ||
+									(formData?.date_of_birth &&
+										DateUtils.getDate(formData?.date_of_birth)) ||
 									''
 								}
 								label={LabelUtils.translateField('date_of_birth')}
@@ -158,8 +158,8 @@ export function CustomerEditor({
 							/>
 							<Input
 								value={
-									formDate?.date_of_birth
-										? DateUtils.getMonthExt(formDate?.date_of_birth)
+									formData?.date_of_birth
+										? DateUtils.getMonthExt(formData?.date_of_birth)
 										: ''
 								}
 								label={'Mês aniversário'}
@@ -168,7 +168,7 @@ export function CustomerEditor({
 							<InputPhone
 								id="phone"
 								name="phone"
-								value={formDate?.phone || ''}
+								value={formData?.phone || ''}
 								label={LabelUtils.translateField('phone')}
 								onChange={handleInputChange}
 							/>
@@ -177,7 +177,7 @@ export function CustomerEditor({
 							<Select
 								id="province_id"
 								name="province_id"
-								value={formDate?.province_id || ''}
+								value={formData?.province_id || ''}
 								label={LabelUtils.translateField('province_id')}
 								data={provinces.map(({ name, id }) => ({
 									text: name,
@@ -189,7 +189,7 @@ export function CustomerEditor({
 							<Select
 								id="municipality_id"
 								name="municipality_id"
-								value={formDate?.municipality_id || ''}
+								value={formData?.municipality_id || ''}
 								label={LabelUtils.translateField('municipality_id')}
 								data={municipalityList.map(({ name, id }) => ({
 									text: name,
@@ -202,7 +202,7 @@ export function CustomerEditor({
 								type="text"
 								id="address"
 								name="address"
-								value={formDate?.address || ''}
+								value={formData?.address || ''}
 								label={'Endereço residencial'}
 								onChange={handleInputChange}
 							/>
@@ -211,14 +211,14 @@ export function CustomerEditor({
 							<InputEmail
 								id="email"
 								name="email"
-								value={formDate?.email || ''}
+								value={formData?.email || ''}
 								label={'Correio eletrónico'}
 								onChange={handleInputChange}
 							/>
 							<Select
 								id="customer_type"
 								name="customer_type"
-								value={formDate?.customer_type || ''}
+								value={formData?.customer_type || ''}
 								label={LabelUtils.translateField('customer_type')}
 								data={[{ text: 'Padrão' }, { text: 'VIP' }]}
 								defaultText="Selecione"

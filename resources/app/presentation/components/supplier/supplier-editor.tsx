@@ -67,7 +67,7 @@ export function SupplierEditor({
 	const [provinceList, setProvinceList] = useState<ProvinceProps[]>([])
 	const [municipalityList, setMunicipalityList] = useState<MunicipalityProps[]>([])
 
-	const [formDate, setFormData] = useState<SupplierModel>(
+	const [formData, setFormData] = useState<SupplierModel>(
 		supplier || ({} as SupplierModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
@@ -123,7 +123,7 @@ export function SupplierEditor({
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
-		let data: SupplierModel = { ...formDate, [name]: value }
+		let data: SupplierModel = { ...formData, [name]: value }
 
 		if (name == 'country_id') {
 			data = { ...data, province_id: undefined, municipality_id: undefined }
@@ -139,7 +139,7 @@ export function SupplierEditor({
 		}
 		if (name == 'photo') {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
-			data = { ...formDate, [name]: file }
+			data = { ...formData, [name]: file }
 			setPhotoPreview(file)
 		}
 		setFormData(data)
@@ -168,13 +168,13 @@ export function SupplierEditor({
 
 	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
 		const update = type == 'update'
-		if (update && !formDate.id) {
+		if (update && !formData.id) {
 			setIsLoading(false)
 			return toast.error('Selecione um registo para editar')
 		}
 		const supplierProducts = ArrayUtils.convertToArray(productItems)
 
-		const data: SupplierModel = { ...formDate, supplier_products: supplierProducts }
+		const data: SupplierModel = { ...formData, supplier_products: supplierProducts }
 		setIsLoading(true)
 		try {
 			const httpResponse = (
@@ -221,7 +221,7 @@ export function SupplierEditor({
 	}
 
 	const handleOpenDelete = () => {
-		if (!formDate.id) return toast.error('Selecione um registo para excluir')
+		if (!formData.id) return toast.error('Selecione um registo para excluir')
 		if (onDelete) onDelete()
 	}
 	return (
@@ -241,7 +241,7 @@ export function SupplierEditor({
 							type="text"
 							id="name"
 							name="name"
-							value={formDate?.name || ''}
+							value={formData?.name || ''}
 							label={LabelUtils.translateField('name')}
 							onChange={handleInputChange}
 							autoFocus
@@ -250,7 +250,7 @@ export function SupplierEditor({
 							type="text"
 							id="representative"
 							name="representative"
-							value={formDate?.representative || ''}
+							value={formData?.representative || ''}
 							label={LabelUtils.translateField('representative')}
 							onChange={handleInputChange}
 						/>
@@ -259,14 +259,14 @@ export function SupplierEditor({
 						<InputPhone
 							id="phone"
 							name="phone"
-							value={formDate?.phone || ''}
+							value={formData?.phone || ''}
 							label={LabelUtils.translateField('phone')}
 							onChange={handleInputChange}
 						/>
 						<InputEmail
 							id="email"
 							name="email"
-							value={formDate?.email || ''}
+							value={formData?.email || ''}
 							label={LabelUtils.translateField('email')}
 							onChange={handleInputChange}
 						/>
@@ -275,7 +275,7 @@ export function SupplierEditor({
 						<Select
 							id="country_id"
 							name="country_id"
-							value={formDate?.country_id || ''}
+							value={formData?.country_id || ''}
 							label={LabelUtils.translateField('country_id')}
 							data={countries.map(({ name, id }) => ({
 								text: name,
@@ -287,7 +287,7 @@ export function SupplierEditor({
 						<Select
 							id="province_id"
 							name="province_id"
-							value={formDate?.province_id || ''}
+							value={formData?.province_id || ''}
 							label={LabelUtils.translateField('province_id')}
 							data={provinceList.map(({ name, id }) => ({
 								text: name,
@@ -299,7 +299,7 @@ export function SupplierEditor({
 						<Select
 							id="municipality_id"
 							name="municipality_id"
-							value={formDate?.municipality_id || ''}
+							value={formData?.municipality_id || ''}
 							label={LabelUtils.translateField('municipality_id')}
 							data={municipalityList.map(({ name, id }) => ({
 								text: name,
@@ -313,7 +313,7 @@ export function SupplierEditor({
 						type="text"
 						id="address"
 						name="address"
-						value={formDate?.address || ''}
+						value={formData?.address || ''}
 						label={LabelUtils.translateField('address')}
 						onChange={handleInputChange}
 					/>
