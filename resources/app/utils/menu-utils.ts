@@ -54,8 +54,8 @@ export class MenuUtils {
 			data.push(
 				{ link: this.FRONT.PRODUCTION, text: 'Produção' },
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
-				{ link: this.FRONT.CATEGORIES, text: 'Categorias' },
-				{ link: this.FRONT.PRODUCTS, text: 'Produtos' },
+				// { link: this.FRONT.CATEGORIES, text: 'Categorias' },
+				// { link: this.FRONT.PRODUCTS, text: 'Produtos' },
 				{ link: this.FRONT.SUPPLIERS, text: 'Fornecedores' },
 				{ link: this.FRONT.CUSTOMERS, text: 'Clientes' },
 				{ link: this.FRONT.PRODUCTION_BUDGETS, text: 'Orçamento' }
