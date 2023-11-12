@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -6,6 +6,7 @@ import { CustomerModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
+	IconEdit,
 	IconTrash,
 	ImagePreview,
 	Input,
@@ -50,9 +51,9 @@ export function CustomerEditor({
 					(municipality) => municipality.province_id == customer.province_id
 				)
 			)
-			if (customer?.photo) setPhotoPreview(customer.photo)
 			setFormData(customer)
 		}
+		setPhotoPreview(customer?.photo || '')
 	}, [customer, municipalities, provinces])
 
 	const handleInputChange = async (
@@ -81,18 +82,21 @@ export function CustomerEditor({
 		setPhotoPreview('')
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
 		setIsLoading(true)
+		const update = type == 'update'
+		if (update && !formDate.id) {
+			setIsLoading(false)
+			return toast.error('Selecione um registo para editar')
+		}
 		try {
 			const httpResponse = (
-				formDate.id
+				update
 					? await updateCustomer.update(formDate)
-					: await addCustomer.add(formDate)
+					: await addCustomer.add({ ...formDate, id: undefined as any })
 			) as CustomerModel
 
-			if (formDate.id) {
+			if (update) {
 				dispatch(updateCustomerStore(httpResponse))
 			} else {
 				dispatch(addCustomerStore(httpResponse))
@@ -108,6 +112,7 @@ export function CustomerEditor({
 
 	const handleClear = () => {
 		setFormData({} as any)
+		clearInputFile()
 	}
 
 	const handleOpenDelete = () => {
@@ -118,7 +123,7 @@ export function CustomerEditor({
 	return (
 		<fieldset>
 			<legend>Cadastro de clientes</legend>
-			<form onSubmit={handleSubmit} className="flex gap-2">
+			<div className="flex gap-2">
 				<div className="flex-1 flex gap-1">
 					<div className="">
 						<ImagePreview
@@ -222,11 +227,22 @@ export function CustomerEditor({
 					</div>
 				</div>
 				<div className="flex flex-col gap-2">
-					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
+					<ButtonSubmit
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('save')}
+					/>
+					<ButtonSubmit
+						text="Editar"
+						icon={IconEdit}
+						onClick={() => handleSubmit('update')}
+						disabled={isLoading}
+						isLoading={isLoading}
+					/>
 					<ButtonCancel onClick={handleClear} text="Limpar" />
 					<ButtonCancel onClick={handleOpenDelete} text="Excluir" icon={IconTrash} />
 				</div>
-			</form>
+			</div>
 		</fieldset>
 	)
 }

@@ -20,7 +20,7 @@ import {
 import { loadCustomerStore, removeCustomerStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useAuth } from '@/presentation/hooks'
+import { useAuth, useCustomers } from '@/presentation/hooks'
 import { NotFound } from '@/presentation/pages'
 import { QueryParams } from '@/data/protocols'
 
@@ -28,6 +28,7 @@ export function Customers() {
 	const dispatch = useDispatch()
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const customers = useSelector(useCustomers())
 
 	const [selectedCustomer, setSelectedCustomer] = useState<CustomerModel>(
 		{} as CustomerModel
@@ -39,6 +40,7 @@ export function Customers() {
 
 	const fetchData = async (queryParams?: QueryParams) => {
 		if (!isAdmin) return setIsLoading(false)
+		setIsLoading(true)
 		try {
 			const httpResponse = await makeRemoteLoadCustomers().load(queryParams)
 			if (!queryParams) dispatch(loadCustomerStore(httpResponse))
@@ -53,6 +55,10 @@ export function Customers() {
 	useEffect(() => {
 		fetchData()
 	}, [])
+
+	useEffect(() => {
+		setFilteredCustomers(customers)
+	}, [customers])
 
 	const clearSelectedCustomer = () => {
 		setSelectedCustomer({} as CustomerModel)
