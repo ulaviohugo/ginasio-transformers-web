@@ -12,11 +12,11 @@ export const formCategorySlice = createSlice({
 	name: 'formCategory',
 	initialState,
 	reducers: {
-		formCategoryStore: (state, action: PayloadAction<boolean>) => {
+		formCategoryOpen: (state, action: PayloadAction<boolean>) => {
 			state.formCategory.open = !!action.payload
 		}
 	}
 })
 
-export const { formCategoryStore } = formCategorySlice.actions
+export const { formCategoryOpen } = formCategorySlice.actions
 export const formCategoryReducer = formCategorySlice.reducer

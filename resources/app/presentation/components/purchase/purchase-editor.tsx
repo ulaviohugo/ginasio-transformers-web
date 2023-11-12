@@ -24,8 +24,8 @@ import {
 } from '@/utils'
 import {
 	addPurchaseStore,
-	formCategoryStore,
-	formProductStore,
+	formCategoryOpen,
+	formProductOpen,
 	loadCategoryStore,
 	loadProductStore,
 	loadSupplierStore,
@@ -261,7 +261,7 @@ export function PurchaseEditor({
 				className="bg-primary text-white hover:scale-110"
 				title="Adicionar categoria"
 				onClick={() => {
-					dispatch(formCategoryStore(true))
+					dispatch(formCategoryOpen(true))
 				}}
 			>
 				<IconPlus />
@@ -276,9 +276,7 @@ export function PurchaseEditor({
 				className="bg-primary text-white hover:scale-110"
 				title="Adicionar produto"
 				onClick={() => {
-					console.log('Clique')
-
-					dispatch(formProductStore(true))
+					dispatch(formProductOpen(true))
 				}}
 			>
 				<IconPlus />

@@ -12,11 +12,11 @@ export const formProductSlice = createSlice({
 	name: 'formProduct',
 	initialState,
 	reducers: {
-		formProductStore: (state, action: PayloadAction<boolean>) => {
+		formProductOpen: (state, action: PayloadAction<boolean>) => {
 			state.formProduct.open = action.payload
 		}
 	}
 })
 
-export const { formProductStore } = formProductSlice.actions
+export const { formProductOpen } = formProductSlice.actions
 export const formProductReducer = formProductSlice.reducer
