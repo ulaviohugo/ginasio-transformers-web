@@ -9,6 +9,7 @@ export const useEmployeePresences = () => (state: RootState) => {
 }
 export const useFormCategory = () => (state: RootState) => state.formCategory.formCategory
 export const useFormProduct = () => (state: RootState) => state.formProduct.formProduct
+export const useFormSupplier = () => (state: RootState) => state.formSupplier.formSupplier
 export const useInsureds = () => (state: RootState) => state.insureds.insureds
 export const useLocations = () => (state: RootState) => state.locations
 export const useNotifications = () => (state: RootState) => {

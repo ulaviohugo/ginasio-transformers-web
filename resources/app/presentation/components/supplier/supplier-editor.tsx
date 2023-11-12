@@ -44,7 +44,7 @@ type SupplierEditorProps = {
 	supplier?: SupplierModel
 	addSupplier: AddSupplier
 	updateSupplier: UpdateSupplier
-	onDelete: () => void
+	onDelete?: () => void
 }
 
 const initialProductItem = { 0: {} }
@@ -222,7 +222,7 @@ export function SupplierEditor({
 
 	const handleOpenDelete = () => {
 		if (!formDate.id) return toast.error('Selecione um registo para excluir')
-		onDelete()
+		if (onDelete) onDelete()
 	}
 	return (
 		<fieldset className="flex gap-2">
@@ -359,7 +359,9 @@ export function SupplierEditor({
 					onClick={() => handleSubmit('update')}
 				/>
 				<ButtonCancel text="Limpar" onClick={handleClear} />
-				<ButtonCancel text="Excluir" icon={IconTrash} onClick={handleOpenDelete} />
+				{onDelete && (
+					<ButtonCancel text="Excluir" icon={IconTrash} onClick={handleOpenDelete} />
+				)}
 			</div>
 		</fieldset>
 	)

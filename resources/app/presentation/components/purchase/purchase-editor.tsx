@@ -26,6 +26,7 @@ import {
 	addPurchaseStore,
 	formCategoryOpen,
 	formProductOpen,
+	formSupplierOpen,
 	loadCategoryStore,
 	loadProductStore,
 	loadSupplierStore,
@@ -122,7 +123,13 @@ export function PurchaseEditor({
 			setFormData(data)
 		} else {
 			setCategoryList(categories)
-			setProductList(products)
+			setProductList(
+				formData?.category_id
+					? products.filter(
+							(product) => product.category_id == Number(formData.category_id)
+					  )
+					: products
+			)
 		}
 		setPhotoPreview(data?.photo || '')
 	}, [categories, data, products, suppliers])
@@ -152,36 +159,27 @@ export function PurchaseEditor({
 
 		let data: PurchaseModel = { ...formData, [name]: value }
 
-		if (name == 'supplier_id') {
-			const supplierId = NumberUtils.convertToNumber(value)
-			data = { ...data, category_id: undefined as any, product_id: undefined as any }
-			setCategoryList(
-				supplierId > 0
-					? categories.filter(
-							(category) =>
-								suppliers
-									.find((sup) => sup.id == supplierId)
-									?.supplier_products?.map((sup) => sup.category_id)
-									.includes(category.id)
-					  )
-					: categories
-			)
-		}
+		// if (name == 'supplier_id') {
+		// 	const supplierId = NumberUtils.convertToNumber(value)
+		// 	data = { ...data, category_id: undefined as any, product_id: undefined as any }
+		// 	setCategoryList(
+		// 		supplierId > 0
+		// 			? categories.filter(
+		// 					(category) =>
+		// 						suppliers
+		// 							.find((sup) => sup.id == supplierId)
+		// 							?.supplier_products?.map((sup) => sup.category_id)
+		// 							.includes(category.id)
+		// 			  )
+		// 			: categories
+		// 	)
+		// }
 		if (name == 'category_id') {
 			const categoryId = NumberUtils.convertToNumber(value)
 			data = { ...data, product_id: undefined as any }
 
 			setProductList(
-				formData.supplier_id && categoryId
-					? products.filter(
-							(product) =>
-								product.category_id == categoryId &&
-								suppliers
-									.find((sup) => sup.id == formData.supplier_id)
-									?.supplier_products?.map((sup) => sup.product_id)
-									.includes(product.id)
-					  )
-					: categoryId
+				categoryId
 					? products.filter((product) => product.category_id == categoryId)
 					: products
 			)
@@ -256,7 +254,7 @@ export function PurchaseEditor({
 
 	const categoryLabel = (
 		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('category_id')}{' '}
+			{LabelUtils.translateField('category_id')}
 			<span
 				className="bg-primary text-white hover:scale-110"
 				title="Adicionar categoria"
@@ -271,12 +269,27 @@ export function PurchaseEditor({
 
 	const productLabel = (
 		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('product_id')}{' '}
+			{LabelUtils.translateField('product_id')}
 			<span
 				className="bg-primary text-white hover:scale-110"
 				title="Adicionar produto"
 				onClick={() => {
 					dispatch(formProductOpen(true))
+				}}
+			>
+				<IconPlus />
+			</span>
+		</div>
+	)
+
+	const supplierLabel = (
+		<div className="flex items-center gap-2">
+			{LabelUtils.translateField('supplier_id')}
+			<span
+				className="bg-primary text-white hover:scale-110"
+				title="Adicionar produto"
+				onClick={() => {
+					dispatch(formSupplierOpen(true))
 				}}
 			>
 				<IconPlus />
@@ -330,7 +343,7 @@ export function PurchaseEditor({
 								id="supplier_id"
 								name="supplier_id"
 								value={formData?.supplier_id || ''}
-								label={LabelUtils.translateField('supplier_id')}
+								label={supplierLabel}
 								data={suppliers.map(({ name, id }) => ({
 									text: name,
 									value: id

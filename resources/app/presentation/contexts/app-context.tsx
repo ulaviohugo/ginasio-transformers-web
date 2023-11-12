@@ -3,7 +3,11 @@ import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'
 import { store } from '@/presentation/redux'
 import { AuthProvider, LocationProvider } from '.'
-import { MakeCategoryEditor, MakeProductEditor } from '@/main/factories/components'
+import {
+	MakeCategoryEditor,
+	MakeProductEditor,
+	MakeSupplierEditor
+} from '@/main/factories/components'
 
 type Props = {
 	children: ReactNode
@@ -16,6 +20,7 @@ export function AppProvider({ children }: Props) {
 			<Provider store={store}>
 				<MakeCategoryEditor />
 				<MakeProductEditor />
+				<MakeSupplierEditor />
 				<AuthProvider>
 					<LocationProvider>{children}</LocationProvider>
 				</AuthProvider>
