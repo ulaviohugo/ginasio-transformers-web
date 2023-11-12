@@ -41,8 +41,8 @@ export function Stock() {
 		clearSelectedPurchase()
 	}
 
-	const handleOpenDetalhe = (purchase?: PurchaseModel) => {
-		if (purchase) setSelectedPurchase(purchase)
+	const handleOpenFormDelete = () => {
+		setShowFormDelete(true)
 	}
 
 	const handleCloseFormDelete = () => {
@@ -67,7 +67,7 @@ export function Stock() {
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
-					description={`Deseja realmente excluir o registo?`}
+					description={`Deseja realmente excluir o estoque de ${selectedPurchase.product?.name}`}
 					show={showFormDelete}
 					onClose={handleCloseFormDelete}
 					onSubmit={handleDelete}
@@ -91,7 +91,7 @@ export function Stock() {
 							onClose={handleCloseDetail}
 							addPurchase={makeRemoteAddPurchase()}
 							updatePurchase={makeRemoteUpdatePurchase()}
-							onDelete={handleOpenDetalhe}
+							onDelete={handleOpenFormDelete}
 						/>
 					</fieldset>
 					<StokeList

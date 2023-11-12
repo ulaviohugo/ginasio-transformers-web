@@ -249,6 +249,7 @@ export function PurchaseEditor({
 	}
 
 	const handleDelete = () => {
+		if (!formData.id) return toast.error('Selecione um registo para excluir')
 		onDelete()
 	}
 

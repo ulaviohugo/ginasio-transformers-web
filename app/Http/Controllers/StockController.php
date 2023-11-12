@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ErrorHandler;
+use App\Helpers\FileHelper;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\StockCreateRequest;
 use App\Http\Requests\StockUpdateRequest;
@@ -83,6 +84,24 @@ class StockController extends Controller
 			return HttpResponse::success(data: Stock::count());
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar estoque');
+		}
+	}
+
+	public function destroy(Stock $stock)
+	{
+		try {
+			$photo = $stock->photo;
+			$stock->delete();
+
+			if ($photo) {
+				FileHelper::delete($photo);
+			}
+			return HttpResponse::success(message: 'Entrada excluída com sucesso');
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(
+				exception: $th,
+				message: 'Erro ao excluir entrada',
+			);
 		}
 	}
 }
