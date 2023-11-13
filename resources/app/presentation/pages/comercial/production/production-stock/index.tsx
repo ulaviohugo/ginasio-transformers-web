@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
 	Layout,
 	LayoutBody,
-	PurchaseEditor,
 	SubMenu,
-	StockList,
-	ModalDelete
+	ModalDelete,
+	ProductionStockEditor,
+	ProductionStockList
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { PurchaseModel } from '@/domain/models'
@@ -23,7 +23,7 @@ import { NotFound } from '@/presentation/pages'
 import { removePurchaseStore } from '@/presentation/redux'
 import toast from 'react-hot-toast'
 
-export function Stock() {
+export function ProductionStock() {
 	const dispatch = useDispatch()
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
@@ -78,15 +78,15 @@ export function Stock() {
 					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<SubMenu
 						submenus={[
-							{ text: 'Compra', link: MenuUtils.FRONT.STORE_STOCK },
-							{ text: 'Venda', link: MenuUtils.FRONT.STORE_SALES }
+							{ text: 'Entrada', link: MenuUtils.FRONT.PRODUCTION_STOCK },
+							{ text: 'Saída', link: MenuUtils.FRONT.PRODUCTION_SALES }
 						]}
 					/>
 				</div>
 				<div className="flex flex-col gap-2 my-2">
 					<fieldset>
 						<legend>Cadastro de estoque</legend>
-						<PurchaseEditor
+						<ProductionStockEditor
 							data={selectedPurchase}
 							onClose={handleCloseDetail}
 							addPurchase={makeRemoteAddPurchase()}
@@ -94,7 +94,7 @@ export function Stock() {
 							onDelete={handleOpenFormDelete}
 						/>
 					</fieldset>
-					<StockList
+					<ProductionStockList
 						loadStokes={makeRemoteLoadPurchases()}
 						onSelectStock={setSelectedPurchase}
 					/>

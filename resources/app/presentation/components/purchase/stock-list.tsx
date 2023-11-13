@@ -26,7 +26,7 @@ type FilterDataProps = {
 	date: Date
 }
 
-export function StokeList({ loadStokes, onSelectStock }: StokeListProps) {
+export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const dispatch = useDispatch()
 	const purchases = useSelector(usePurchases())
 	const suppliers = useSelector(useSuppliers())
