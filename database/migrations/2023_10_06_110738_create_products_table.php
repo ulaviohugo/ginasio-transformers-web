@@ -18,7 +18,6 @@ return new class extends Migration
 			$table->string('bar_code', 70)->unique()->nullable();
 			$table->string('photo', 100)->nullable();
 			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();
-			$table->double('price', 16, 3)->nullable();
 			$table->foreignId('supplier_id')->nullable()->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->noActionOnDelete();
 			$table->string('color')->nullable();
 			$table->string('size')->nullable();

@@ -16,7 +16,6 @@ class Product extends Model
 		'bar_code',
 		'photo',
 		'category_id',
-		'price',
 		'user_id',
 		'user_id_update',
 		'supplier_id',

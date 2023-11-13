@@ -30,7 +30,6 @@ class StockUpdateService
 			}
 			$paid = $request->paid == 'true' || $request->paid == true;
 			$stockData = [...$stockData, ...[
-				'lot' => $request->lot,
 				'bar_code' => $request->bar_code,
 				'supplier_id' => $request->supplier_id,
 				'category_id' => $request->category_id,

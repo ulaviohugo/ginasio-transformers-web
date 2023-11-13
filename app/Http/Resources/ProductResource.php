@@ -22,6 +22,13 @@ class ProductResource extends JsonResource
 			'photo' => $this->photo ? FileHelper::storageLink($this->photo) : null,
 			'category_id' => $this->category_id,
 			'price' => $this->price,
+			'supplier_id' => $this->supplier_id,
+			'color' => $this->color,
+			'size' => $this->size,
+			'min_stock' => $this->min_stock,
+			'max_stock' => $this->max_stock,
+			'purchase_price' => $this->purchase_price,
+			'selling_price' => $this->selling_price,
 			'user_id' => $this->user_id,
 			'user_id_update' => $this->user_id_update,
 		];

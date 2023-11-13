@@ -2,28 +2,22 @@ import React from 'react'
 import {
 	CardActions,
 	IconProduct,
-	IconPlus,
 	IconSearch,
 	Input,
 	Layout,
 	LayoutBody,
 	ModalDelete,
 	NoData,
-	ProductEditor,
 	Spinner,
 	SubMenu,
 	Title,
-	IconCategory
+	IconCategory,
+	ProductLabel
 } from '@/presentation/components'
 import { useAuth, useProducts } from '@/presentation/hooks'
 import { loadProductStore, removeProductStore } from '@/presentation/redux'
 import { ProductModel } from '@/domain/models'
-import {
-	makeRemoteAddProduct,
-	makeRemoteDeleteProduct,
-	makeRemoteLoadProduct,
-	makeRemoteUpdateProduct
-} from '@/main/factories/usecases'
+import { makeRemoteDeleteProduct, makeRemoteLoadProduct } from '@/main/factories/usecases'
 import { NumberUtils, MenuUtils } from '@/utils'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -96,15 +90,6 @@ export function Products() {
 
 	return (
 		<Layout>
-			{showEditor && (
-				<ProductEditor
-					data={selectedProduct}
-					show={showEditor}
-					onClose={handleCloseDetail}
-					addProduct={makeRemoteAddProduct()}
-					updateProduct={makeRemoteUpdateProduct()}
-				/>
-			)}
 			{showFormDelete && (
 				<ModalDelete
 					entity="produto"
@@ -122,13 +107,7 @@ export function Products() {
 						icon={IconProduct}
 					/>
 					<div className="flex items-center gap-2">
-						<button
-							className="bg-primary px-2 py-1 rounded-md text-gray-200"
-							title="Novo funcionário"
-							onClick={() => handleOpenDetalhe()}
-						>
-							<IconPlus />
-						</button>
+						<ProductLabel text="Adicionar" />
 						<div className="w-full max-w-xs">
 							<Input placeholder="Pesquisar por nome" icon={IconSearch} />
 						</div>
@@ -143,8 +122,15 @@ export function Products() {
 						{products.map((product) => (
 							<li key={product.id} className="p-4 shadow">
 								<div className="font-semibold">{product.name}</div>
-								<div className="text-xs font-semibold">
-									Preço: {NumberUtils.formatCurrency(product.price)}
+								<div className="flex flex-col gap-1 text-xs font-semibold">
+									<span>
+										Preço compra:{' '}
+										{NumberUtils.formatCurrency(product?.purchase_price as any)}
+									</span>
+									<span>
+										Preço venda:{' '}
+										{NumberUtils.formatCurrency(product?.selling_price as any)}
+									</span>
 								</div>
 								<div className="inline-flex items-center gap-1 bg-gray-100 text-xs px-2 py-[2px] rounded-md">
 									<IconCategory /> {product.category?.name}

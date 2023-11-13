@@ -4,19 +4,22 @@ import { LabelUtils } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { formCategoryOpen } from '@/presentation/redux'
 
-export function CategoryLabel() {
+type CategoryLabelProps = {
+	text?: string
+}
+export function CategoryLabel({ text }: CategoryLabelProps) {
 	const dispatch = useDispatch()
 	return (
 		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('category_id')}
+			{!text && LabelUtils.translateField('category_id')}
 			<span
-				className="bg-primary text-white hover:scale-110"
+				className="flex gap-1 items-center bg-primary text-white hover:scale-110 cursor-pointer px-1 py-1"
 				title="Adicionar categoria"
 				onClick={() => {
 					dispatch(formCategoryOpen(true))
 				}}
 			>
-				<IconPlus />
+				{text} <IconPlus />
 			</span>
 		</div>
 	)

@@ -76,6 +76,7 @@ export function Sales() {
 						<SaleEditor
 							// data={selectedSale}
 							addSale={makeRemoteAddSale()}
+							loadSales={makeRemoteLoadSales()}
 						/>
 					</fieldset>
 

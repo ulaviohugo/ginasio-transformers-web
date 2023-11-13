@@ -18,8 +18,8 @@ export function AppProvider({ children }: Props) {
 		<>
 			<Toaster position="top-center" toastOptions={{ duration: 6000 }} />
 			<Provider store={store}>
-				<MakeCategoryEditor />
 				<MakeProductEditor />
+				<MakeCategoryEditor />
 				<MakeSupplierEditor />
 				<AuthProvider>
 					<LocationProvider>{children}</LocationProvider>

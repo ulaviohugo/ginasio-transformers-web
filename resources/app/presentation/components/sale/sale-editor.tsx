@@ -25,10 +25,11 @@ import {
 	addSaleStore,
 	loadCustomerStore,
 	loadEmployeeStore,
+	loadProductSaleStore,
 	loadPurchaseStore,
 	updateSaleStore
 } from '@/presentation/redux'
-import { AddSale } from '@/domain/usecases'
+import { AddSale, LoadSales } from '@/domain/usecases'
 import { useAuth, useCustomers, useEmployees, usePurchases } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
@@ -42,7 +43,7 @@ type ProductSaleProps = {
 	bar_code?: string
 	color: string
 	size: string
-	lot?: string
+	lot?: number
 	unit_price: number
 	quantity: number
 	total_value: number
@@ -56,9 +57,10 @@ type ProductSaleProps = {
 type SaleEditorProps = {
 	data?: ProductSaleModel
 	addSale: AddSale
+	loadSales: LoadSales
 }
 
-export function SaleEditor({ data, addSale }: SaleEditorProps) {
+export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 	const dispatch = useDispatch()
 	const stocks = useSelector(usePurchases())
 	const customers = useSelector(useCustomers())
@@ -130,6 +132,17 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 	const [photPreview, setPhotoPreview] = useState('')
 	const [pdfContent, setPdfContent] = useState('')
 
+	const fetchProductSales = async () => {
+		try {
+			const httpResponse = await loadSales.load()
+			dispatch(loadProductSaleStore(httpResponse))
+		} catch (error: any) {
+			toast.error(error.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	const fetchData = (
 		remoteResource: { load: () => Promise<any> },
 		callback: (response: any) => void
@@ -176,8 +189,26 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				unit_price: formProduct.quantity > 0 ? total_value / formProduct.quantity : 0
 			}
 		}
+		if (name == 'unit_price') {
+			const unit_price = NumberUtils.convertToNumber(value)
+			data = {
+				...data,
+				unit_price
+			}
+		}
 		if (name == 'quantity') {
-			const quantity = NumberUtils.convertToNumber(value)
+			let quantity = NumberUtils.convertToNumber(value)
+			const stock: PurchaseModel = stocks.find(
+				(stock) =>
+					stock.category_id == formProduct.category_id &&
+					stock.product_id == Number(formProduct.product_id) &&
+					stock.quantity > 0
+			) as any
+
+			if (!stock || stock.quantity < quantity) {
+				toast.error('Saída de estoque maior que o saldo')
+				quantity = 0
+			}
 			const discount = NumberUtils.convertToNumber(formProduct.discount)
 			const total_value =
 				quantity > 0
@@ -185,6 +216,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 					: 0
 			data = {
 				...data,
+				quantity,
 				total_value,
 				amount_paid: total_value
 			}
@@ -209,13 +241,16 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 			const stock: PurchaseModel = stocks.find(
 				(stock) =>
 					stock.category_id == formProduct.category_id &&
-					stock.product_id == Number(value)
+					stock.product_id == Number(value) &&
+					stock.quantity > 0
 			) as any
-
+			if (!stock || stock.quantity < 1) {
+				toast.error('Não tem mais saldo em estoque')
+			}
 			data = {
 				...data,
 				bar_code: stock?.bar_code,
-				lot: stock?.lot,
+				lot: stock?.id,
 				size: stock?.size,
 				color: stock?.color,
 				unit_price: stock?.unit_price
@@ -282,6 +317,7 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 			} else {
 				dispatch(addSaleStore(httpResponse))
 			}
+			fetchProductSales()
 			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
 			if (httpResponse.invoice) {
 				setPdfContent(httpResponse.invoice)
@@ -344,6 +380,15 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 				<div className="flex-1">
 					<div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
 						<div>
+							<Input
+								id="bar_code"
+								name="bar_code"
+								value={formProduct.bar_code || ''}
+								label={LabelUtils.translateField('bar_code')}
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
 							<Select
 								id="category_id"
 								name="category_id"
@@ -366,16 +411,6 @@ export function SaleEditor({ data, addSale }: SaleEditorProps) {
 								defaultText="Selecione"
 								data={productList.map(({ id, name }) => ({ text: name, value: id }))}
 								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<Input
-								id="bar_code"
-								name="bar_code"
-								value={formProduct.bar_code || ''}
-								label={LabelUtils.translateField('bar_code')}
-								onChange={handleInputChange}
-								disabled
 							/>
 						</div>
 						<div>

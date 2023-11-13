@@ -52,7 +52,7 @@ export class MenuUtils {
 		data.push({ link: this.FRONT.STORE, text: 'Estoque Loja' })
 		if (role == 'Admin') {
 			data.push(
-				{ link: this.FRONT.PRODUCTION, text: 'Estoque Produção' },
+				{ link: this.FRONT.PRODUCTION, text: 'Produção de roupa' },
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
 				// { link: this.FRONT.CATEGORIES, text: 'Categorias' },
 				// { link: this.FRONT.PRODUCTS, text: 'Produtos' },

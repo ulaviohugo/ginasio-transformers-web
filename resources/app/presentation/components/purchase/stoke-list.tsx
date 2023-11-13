@@ -167,7 +167,7 @@ export function StokeList({ loadStokes, onSelectStock }: StokeListProps) {
 					<table className="table w-full text-left text-sm border border-gray-100">
 						<thead>
 							<tr>
-								<th className="p-1">Id</th>
+								<th className="p-1">Lote</th>
 								<th className="p-1">Imagem</th>
 								<th className="p-1">Fornecedor</th>
 								<th className="p-1">Categoria</th>
@@ -211,7 +211,7 @@ export function StokeList({ loadStokes, onSelectStock }: StokeListProps) {
 										<td className="p-1">{purchase.category?.name}</td>
 										<td className="p-1">{purchase.product?.name}</td>
 										<td className="p-1">
-											{NumberUtils.formatCurrency(purchase.product?.price as any)}
+											{NumberUtils.formatCurrency(purchase.product?.selling_price as any)}
 										</td>
 										<td className="p-1">{purchase.color}</td>
 										<td className="p-1">{purchase.size}</td>

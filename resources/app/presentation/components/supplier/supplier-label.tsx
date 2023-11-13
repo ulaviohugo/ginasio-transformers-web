@@ -4,19 +4,22 @@ import { LabelUtils } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { formSupplierOpen } from '@/presentation/redux'
 
-export function SupplierLabel() {
+type SupplierLabelProps = {
+	text?: string
+}
+export function SupplierLabel({ text }: SupplierLabelProps) {
 	const dispatch = useDispatch()
 	return (
 		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('supplier_id')}
+			{!text && LabelUtils.translateField('supplier_id')}
 			<span
-				className="bg-primary text-white hover:scale-110"
+				className="flex gap-1 items-center bg-primary text-white hover:scale-110 cursor-pointer px-1 py-1"
 				title="Adicionar fornecedor"
 				onClick={() => {
 					dispatch(formSupplierOpen(true))
 				}}
 			>
-				<IconPlus />
+				{text} <IconPlus />
 			</span>
 		</div>
 	)

@@ -31,7 +31,6 @@ class StockCreateService
 
 			$stock =	Stock::create([
 				'photo' => $photo,
-				'lot' => $request->lot,
 				'bar_code' => $request->bar_code,
 				'supplier_id' => $request->supplier_id,
 				'category_id' => $request->category_id,

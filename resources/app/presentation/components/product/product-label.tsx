@@ -4,19 +4,22 @@ import { LabelUtils } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { formProductOpen } from '@/presentation/redux'
 
-export function ProductLabel() {
+type ProductLabelProps = {
+	text?: string
+}
+export function ProductLabel({ text }: ProductLabelProps) {
 	const dispatch = useDispatch()
 	return (
 		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('product_id')}
+			{!text && LabelUtils.translateField('product_id')}
 			<span
-				className="bg-primary text-white hover:scale-110"
+				className="flex gap-1 items-center bg-primary text-white hover:scale-110 cursor-pointer px-1 py-1"
 				title="Adicionar produto"
 				onClick={() => {
 					dispatch(formProductOpen(true))
 				}}
 			>
-				<IconPlus />
+				{text} <IconPlus />
 			</span>
 		</div>
 	)

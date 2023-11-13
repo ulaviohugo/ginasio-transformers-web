@@ -15,7 +15,6 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_STOCK, function (Blueprint $table) {
 			$table->id();
 			$table->string('photo', 100)->nullable();
-			$table->string('lot', 70)->nullable();
 			$table->string('bar_code', 70)->nullable();
 			$table->foreignId('supplier_id')->nullable()->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->noActionOnDelete();
 			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();

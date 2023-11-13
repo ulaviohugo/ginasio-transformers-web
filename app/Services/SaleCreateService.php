@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\PDFHelper;
 use App\Models\Sale;
+use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +60,10 @@ class SaleCreateService
 
 				$data = (new Request())->merge($productSales[$i] + ['payment_method' => $request->payment_method]);
 				(new ProductSaleCreateService)->execute($data);
+
+				$stock = Stock::find($data['lot']);
+				$stock->quantity -= intval($data['quantity']);
+				$stock->save();
 			}
 
 			// Invoice

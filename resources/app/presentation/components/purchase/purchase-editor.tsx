@@ -6,12 +6,15 @@ import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
-	IconPlus,
+	CategoryLabel,
+	IconEdit,
 	IconTrash,
 	ImagePreview,
 	Input,
 	InputPrice,
-	Select
+	ProductLabel,
+	Select,
+	SupplierLabel
 } from '..'
 
 import {
@@ -24,9 +27,6 @@ import {
 } from '@/utils'
 import {
 	addPurchaseStore,
-	formCategoryOpen,
-	formProductOpen,
-	formSupplierOpen,
 	loadCategoryStore,
 	loadProductStore,
 	loadSupplierStore,
@@ -222,23 +222,20 @@ export function PurchaseEditor({
 		setFormData(data)
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
 		setIsLoading(true)
 		try {
+			const update = type == 'update'
 			const httpResponse = (
-				formData.id
-					? await updatePurchase.update(formData)
-					: await addPurchase.add(formData)
+				update ? await updatePurchase.update(formData) : await addPurchase.add(formData)
 			) as PurchaseModel
 
-			if (formData.id) {
+			if (update) {
 				dispatch(updatePurchaseStore(httpResponse))
 			} else {
 				dispatch(addPurchaseStore(httpResponse))
 			}
-			toast.success(`Compra ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+			toast.success(`Compra ${update ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
 			clearFields()
 		} catch (error: any) {
@@ -253,53 +250,9 @@ export function PurchaseEditor({
 		onDelete()
 	}
 
-	const categoryLabel = (
-		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('category_id')}
-			<span
-				className="bg-primary text-white hover:scale-110"
-				title="Adicionar categoria"
-				onClick={() => {
-					dispatch(formCategoryOpen(true))
-				}}
-			>
-				<IconPlus />
-			</span>
-		</div>
-	)
-
-	const productLabel = (
-		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('product_id')}
-			<span
-				className="bg-primary text-white hover:scale-110"
-				title="Adicionar produto"
-				onClick={() => {
-					dispatch(formProductOpen(true))
-				}}
-			>
-				<IconPlus />
-			</span>
-		</div>
-	)
-
-	const supplierLabel = (
-		<div className="flex items-center gap-2">
-			{LabelUtils.translateField('supplier_id')}
-			<span
-				className="bg-primary text-white hover:scale-110"
-				title="Adicionar produto"
-				onClick={() => {
-					dispatch(formSupplierOpen(true))
-				}}
-			>
-				<IconPlus />
-			</span>
-		</div>
-	)
 	return (
 		<div className="">
-			<form onSubmit={handleSubmit} className="flex gap-1">
+			<div className="flex gap-1">
 				<div className="flex-1 grid grid-cols-12 gap-4">
 					<div className="col-span-3">
 						<ImagePreview
@@ -336,15 +289,16 @@ export function PurchaseEditor({
 							<Input
 								id="lot"
 								name="lot"
-								value={formData?.lot || ''}
+								value={formData?.id || ''}
 								label={LabelUtils.translateField('lot')}
 								onChange={handleInputChange}
+								disabled
 							/>
 							<Select
 								id="supplier_id"
 								name="supplier_id"
 								value={formData?.supplier_id || ''}
-								label={supplierLabel}
+								label={<SupplierLabel />}
 								data={suppliers.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -356,7 +310,7 @@ export function PurchaseEditor({
 								id="category_id"
 								name="category_id"
 								value={formData?.category_id || ''}
-								label={categoryLabel}
+								label={<CategoryLabel />}
 								data={categoryList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -368,7 +322,7 @@ export function PurchaseEditor({
 								id="product_id"
 								name="product_id"
 								value={formData?.product_id || ''}
-								label={productLabel}
+								label={<ProductLabel />}
 								data={productList.map(({ name, id }) => ({
 									text: name,
 									value: id
@@ -453,11 +407,22 @@ export function PurchaseEditor({
 					</div>
 				</div>
 				<div className="flex flex-col gap-2">
-					<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
+					<ButtonSubmit
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('save')}
+					/>
+					<ButtonSubmit
+						text="Editar"
+						icon={IconEdit}
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('update')}
+					/>
 					<ButtonCancel onClick={clearFields} text="Limpar" />
 					<ButtonCancel onClick={handleDelete} text="Excluir" icon={IconTrash} />
 				</div>
-			</form>
+			</div>
 		</div>
 	)
 }

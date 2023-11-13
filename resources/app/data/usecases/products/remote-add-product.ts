@@ -2,7 +2,7 @@ import { ProductModel } from '@/domain/models'
 import { AddProduct } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils } from '@/utils'
+import { NumberUtils } from '@/utils'
 
 export class RemoteAddProduct implements AddProduct {
 	constructor(
@@ -11,7 +11,11 @@ export class RemoteAddProduct implements AddProduct {
 	) {}
 
 	async add(param: ProductModel): Promise<ProductModel> {
-		const body = FormDataUtils.createFormData(param)
+		const body: ProductModel = {
+			...param,
+			purchase_price: NumberUtils.convertToNumber(param.purchase_price),
+			selling_price: NumberUtils.convertToNumber(param.selling_price)
+		}
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,

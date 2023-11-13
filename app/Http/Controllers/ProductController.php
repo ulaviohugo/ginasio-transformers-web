@@ -37,6 +37,13 @@ class ProductController extends Controller
 				'product_id' => $request->product_id,
 				'category_id' => $request->category_id,
 				'price' => $request->price,
+				'supplier_id' => $request->supplier_id,
+				'color' => $request->color,
+				'size' => $request->size,
+				'min_stock' => $request->min_stock,
+				'max_stock' => $request->max_stock,
+				'purchase_price' => $request->purchase_price,
+				'selling_price' => $request->selling_price,
 				'user_id' => User::currentUserId()
 			]);
 			return HttpResponse::success(data: new ProductResource($createdProduct));
@@ -59,6 +66,13 @@ class ProductController extends Controller
 			$product->bar_code = $request->bar_code;
 			$product->price = $request->price;
 			$product->category_id = $request->category_id;
+			$product->supplier_id = $request->supplier_id;
+			$product->color = $request->color;
+			$product->size = $request->size;
+			$product->min_stock = $request->min_stock;
+			$product->max_stock = $request->max_stock;
+			$product->purchase_price = $request->purchase_price;
+			$product->selling_price = $request->selling_price;
 			$product->user_id_update = User::currentUserId();
 			$product->save();
 			return HttpResponse::success(data: new ProductResource($product));

@@ -5,6 +5,7 @@ import { AddProduct, UpdateProduct } from '@/domain/usecases'
 import {
 	ButtonCancel,
 	ButtonSubmit,
+	CategoryLabel,
 	IconProduct,
 	ImagePreview,
 	Input,
@@ -13,7 +14,8 @@ import {
 	ModalBody,
 	ModalFooter,
 	ModalTitle,
-	Select
+	Select,
+	SupplierLabel
 } from '..'
 import { ColorUtils, FileUtils, LabelUtils } from '@/utils'
 import { useCategories, useSuppliers } from '@/presentation/hooks'
@@ -128,7 +130,7 @@ export function ProductEditor({
 									id="supplier_id"
 									name="supplier_id"
 									value={formData?.supplier_id || ''}
-									label={LabelUtils.translateField('supplier_id')}
+									label={<SupplierLabel />}
 									data={suppliers.map(({ name, id }) => ({
 										text: name,
 										value: id
@@ -142,7 +144,7 @@ export function ProductEditor({
 									id="category_id"
 									name="category_id"
 									value={formData?.category_id || ''}
-									label={LabelUtils.translateField('category_id')}
+									label={<CategoryLabel />}
 									data={categories.map((category) => ({
 										text: category.name,
 										value: category.id

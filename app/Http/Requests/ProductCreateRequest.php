@@ -39,7 +39,6 @@ class ProductCreateRequest extends GlobalFormRequest
 						->where('category_id', $categoryId);
 				})
 			],
-			'price' => 'required|numeric|gt:0',
 		];
 	}
 }

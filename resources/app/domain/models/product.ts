@@ -6,7 +6,6 @@ export interface ProductModel {
 	name: string
 	bar_code?: string
 	photo?: string
-	price?: number
 	supplier_id?: string
 	color?: string
 	size?: string
