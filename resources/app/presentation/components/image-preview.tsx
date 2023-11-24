@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { IconClose } from '.'
+import { StringUtils } from '@/utils'
 
 type ImagePreviewProps = {
 	photoPreview: string
@@ -40,26 +41,26 @@ export function ImagePreview({
 		}
 	}
 
+	const id = StringUtils.generate({ length: 3 })
 	return (
-		<div className="flex border-2 border-dashed border-green-200 p-2 min-h-[200px] min-w-[200px] max-w-[240px]">
+		<div className="flex border-2 border-dashed border-primary border-opacity-25 p-2 min-h-[200px] min-w-[200px] max-w-[240px]">
 			<input
 				type="file"
-				id="photo"
+				id={id}
 				name="photo"
 				onChange={handleInput}
 				accept="image/*"
 				className="hidden"
+				disabled={disabled}
 			/>
 			{!preview ? (
 				<div className="mr-auto flex w-full">
-					{!disabled && (
-						<label
-							htmlFor="photo"
-							className="flex-1 flex flex-col justify-center cursor-pointer text-sm text-gray-400 text-center hover:text-green-500 hover:bg-green-50 px-2"
-						>
-							Selecionar imagem
-						</label>
-					)}
+					<label
+						htmlFor={id}
+						className="flex-1 flex flex-col justify-center cursor-pointer text-sm text-gray-400 text-center hover:text-primary hover:bg-primary hover:bg-opacity-5 px-2"
+					>
+						{!disabled ? 'Selecionar imagem' : 'Fotografia'}
+					</label>
 				</div>
 			) : (
 				<div className="relative flex">
