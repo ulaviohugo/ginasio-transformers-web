@@ -38,7 +38,7 @@ export class MenuUtils {
 		const data = [
 			{ link: this.FRONT.EMPLOYEES, text: 'Funcionários' },
 			{ link: this.FRONT.EMPLOYEE_PRESENCES, text: 'Presença' },
-			{ link: this.FRONT.EMPLOYEE_SALARY_RECEIPT, text: 'Folha salarial' }
+			{ link: this.FRONT.EMPLOYEE_SALARY_RECEIPT, text: 'Folha Salarial' }
 		]
 		return data
 	}
@@ -46,21 +46,18 @@ export class MenuUtils {
 	static readonly commercialMenuItens = (param?: RoleProps): SubmenuProps[] => {
 		const { role = 'Normal' } = param || {}
 		const data = []
-		// if (role == 'Admin') {
-		// 	data.push({ link: this.FRONT.STORE_STOCK, text: 'Compra' })
-		// }
+		if (role == 'Admin') {
+			data.push(
+				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
+				{ link: this.FRONT.SUPPLIERS, text: 'Fornecedores' }
+			)
+		}
 		data.push({ link: this.FRONT.STORE, text: 'Estoque Loja' })
 		if (role == 'Admin') {
 			data.push(
-				{ link: this.FRONT.PRODUCTION, text: 'Produção de roupa' },
-				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
-				// { link: this.FRONT.CATEGORIES, text: 'Categorias' },
-				// { link: this.FRONT.PRODUCTS, text: 'Produtos' },
-				{ link: this.FRONT.SUPPLIERS, text: 'Fornecedores' },
 				{ link: this.FRONT.CUSTOMERS, text: 'Clientes' },
-				{ link: this.FRONT.PRODUCTION_BUDGETS, text: 'Orçamento' }
-				// { link: this.FRONT.POLICY, text: 'Apólice' },
-				// { link: this.FRONT.BILLING, text: 'Factura' }
+				{ link: this.FRONT.PRODUCTION_BUDGETS, text: 'Orçamento' },
+				{ link: this.FRONT.PRODUCTION, text: 'Produção de Roupa' }
 			)
 		}
 		return data
