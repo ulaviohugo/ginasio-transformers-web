@@ -8,6 +8,7 @@ import { Spinner } from '../spinner'
 import { DateUtils, GraphUtils, GraphValueProps } from '@/utils'
 import { ButtonSubmit, Input, Select } from '../form-controls'
 import { IconSearch } from '../icons'
+import { HttpStatusCode } from '@/data/protocols/http'
 
 type FilterDataProps = {
 	year: number
@@ -57,7 +58,10 @@ export function StockGraph({ onClose }: StockGraphProps) {
 				url: makeApiUrl('/graphs/stock-store'),
 				body: { month, year }
 			})
-			.then(({ body }) => setGraphData(body))
+			.then(({ body, statusCode }) => {
+				if (statusCode != HttpStatusCode.ok) return toast.error(body)
+				setGraphData(body)
+			})
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setLoading(false))
 	}
