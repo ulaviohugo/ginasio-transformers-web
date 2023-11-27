@@ -1,5 +1,15 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { IconClose, IconSearch, IconStock, Input, NoData, Select, Spinner } from '..'
+import {
+	ButtonSubmit,
+	IconClose,
+	IconSearch,
+	IconStock,
+	Input,
+	NoData,
+	Select,
+	Spinner,
+	StockGraph
+} from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadPurchases } from '@/domain/usecases'
 import { loadPurchaseStore } from '@/presentation/redux'
@@ -34,6 +44,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const products = useSelector(useProducts())
 
 	const [isLoading, setIsLoading] = useState(true)
+	const [showGraph, setShowGraph] = useState(false)
 
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
 	const [selectedRow, setSelectedRow] = useState(0)
@@ -102,8 +113,16 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 
 	return (
 		<>
+			{showGraph && <StockGraph onClose={() => setShowGraph(false)} />}
 			<fieldset>
-				<legend>Filtro ({purchases.length})</legend>
+				<legend>
+					Filtro ({purchases.length})
+					<ButtonSubmit
+						text="Ver gráfico"
+						showIcon={false}
+						onClick={() => setShowGraph(true)}
+					/>
+				</legend>
 				<div className="grid grid-cols-9 mb-3">
 					<div className="col-span-2">
 						<Select
