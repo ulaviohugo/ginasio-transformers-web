@@ -3,14 +3,15 @@
 namespace App\Services;
 
 use App\Helpers\DBHelper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GraphStockStoreService
 {
-	public function execute()
+	public function execute(Request $request)
 	{
-		$month = request('month');
-		$year = request('year');
+		$month = $request->month;
+		$year = $request->year;
 
 		$products = DB::table(DBHelper::TB_STOCK . ' AS a')
 			->select('b.name AS field', DB::raw('COUNT(a.id) as value'))

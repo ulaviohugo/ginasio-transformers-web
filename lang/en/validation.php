@@ -177,15 +177,29 @@ return [
 				'numeric' => 'O campo :attribute deve ter um valor de pelo menos :min.',
 				'string' => 'O campo :attribute deve ter um valor de pelo menos :min caracteres.',
 			],
+			'max' => [
+				'array' => 'O valor do campo :attribute deve ter pelo menos :min items.',
+				'file' => 'O campo :attribute deve ter pelo menos :min kilobytes.',
+				'numeric' => 'O campo :attribute deve ter um valor de pelo menos :min.',
+				'string' => 'O campo :attribute deve ter um valor de pelo menos :min caracteres.',
+			],
 			'gt' => [
 				'array' => 'O valor do campo :attribute deve ter mais de :value itens.',
 				'file' => 'O valor do campo :attribute deve ser maior que :value kilobytes.',
 				'numeric' => 'O valor do campo :attribute deve ser maior que :value.',
 				'string' => 'O valor do campo :attribute deve ser maior que :value caracteres.',
 			],
+			'lt' => [
+				'array' => 'O valor do campo :attribute deve ter menos de :value itens.',
+				'file' => 'O valor do campo :attribute deve ser menor que :value kilobytes.',
+				'numeric' => 'O valor do campo :attribute deve ser menor que :value.',
+				'string' => 'O valor do campo :attribute deve ser menor que :value caracteres.',
+			],
 			'date_format' => 'o valor do campo :attribute não corresponde ao formato :format.',
 			'after' => 'O valor do campo :attribute deve ser maior que :date.',
 			'before_or_equal' => 'O valor do campo :attribute deve ser antes ou igual a :date.',
+			'digits' => 'O valor do campo :attribute deve :digits dígitos.',
+			'numeric' => 'O valor do campo :attribute deve ser numérico.',
 		],
 	],
 
@@ -250,6 +264,7 @@ return [
 		'lot' => 'lote',
 		'marital_status' => 'estado civil',
 		'mediator' => 'mediador',
+		'month' => 'mês',
 		'municipality_id' => 'município',
 		'name' => 'nome',
 		'nif' => 'nif',
@@ -297,6 +312,7 @@ return [
 		'user_id_update' => 'atualizado por',
 		'user_name' => 'nome de usuário',
 		'variable_cost' => 'custo variável',
+		'year' => 'ano',
 	],
 
 ];
