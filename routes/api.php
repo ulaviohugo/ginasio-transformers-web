@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeePresenceController;
 use App\Http\Controllers\FabricController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
@@ -81,8 +82,11 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::apiResource('suppliers', SupplierController::class);
 
 	Route::apiResource('transactions', TransactionController::class);
-});
 
+	Route::prefix('graphs')->group(function () {
+		Route::post('stock-store', [GraphController::class, 'stockStore']);
+	});
+});
 
 Route::any('/{path}', function () {
 	$url = url()->full();
