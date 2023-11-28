@@ -1,7 +1,6 @@
 import { InsuredModel } from '@/domain/models'
 
 export const mockInsured = (): InsuredModel => {
-	const currentDate = new Date()
 	return {
 		id: 1,
 		enrollment_date: new Date('2023-10-02T15:19:02.528Z'),
