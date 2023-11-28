@@ -14,7 +14,7 @@ class GraphStockStoreService
 		$year = $request->year;
 
 		$products = DB::table(DBHelper::TB_STOCK . ' AS a')
-			->select('b.name AS field', DB::raw('COUNT(a.id) as value'))
+			->select('b.name AS field', DB::raw('SUM(a.initial_quantity) as value'))
 			->join(DBHelper::TB_PRODUCTS . ' AS b', 'b.id', 'a.product_id')
 			->whereMonth('a.created_at', $month)
 			->whereYear('a.created_at', $year)
@@ -22,7 +22,7 @@ class GraphStockStoreService
 			->get();
 
 		$categories = DB::table(DBHelper::TB_STOCK . ' AS a')
-			->select('b.name AS field', DB::raw('COUNT(a.id) as value'))
+			->select('b.name AS field', DB::raw('SUM(a.initial_quantity) as value'))
 			->join(DBHelper::TB_CATEGORIES . ' AS b', 'b.id', 'a.category_id')
 			->whereMonth('a.created_at', $month)
 			->whereYear('a.created_at', $year)
@@ -30,7 +30,7 @@ class GraphStockStoreService
 			->get();
 
 		$paymentMethods = DB::table(DBHelper::TB_STOCK)
-			->select('payment_method AS field', DB::raw('COUNT(id) as value'))
+			->select('payment_method AS field', DB::raw('SUM(initial_quantity) as value'))
 			->whereMonth('created_at', $month)
 			->whereYear('created_at', $year)
 			->groupBy('payment_method')

@@ -22,6 +22,7 @@ class Stock extends Model
 		'size',
 		'unit_price',
 		'quantity',
+		'initial_quantity',
 		'total_value',
 		'payment_method',
 		'paid',

@@ -23,6 +23,7 @@ return new class extends Migration
 			$table->string('size', 20)->nullable();
 			$table->double('unit_price', 16, 3);
 			$table->integer('quantity');
+			$table->integer('initial_quantity')->default(0);
 			$table->double('total_value', 16, 3);
 			$table->string('payment_method', 30);
 			$table->boolean('paid');
