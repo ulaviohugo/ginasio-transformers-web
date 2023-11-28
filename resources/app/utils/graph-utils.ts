@@ -1,4 +1,4 @@
-import { Chart } from 'chart.js'
+import { Chart, ChartType } from 'chart.js'
 import { ArrayUtils } from './array-utils'
 import { RefObject } from 'react'
 import { NumberUtils } from './number-utils'
@@ -8,11 +8,13 @@ export type GraphValueProps = {
 	value: number
 }
 
+export type GraphType = ChartType
+
 type GraphBuilderProps = {
 	title: string
 	data: GraphValueProps[]
 	htmlRef: RefObject<HTMLCanvasElement & { myChart: any }>
-	graphType: 'bar'
+	graphType: GraphType
 }
 
 export class GraphUtils {
@@ -50,7 +52,16 @@ export class GraphUtils {
 							{
 								label: title.toLocaleUpperCase(),
 								data: values,
-								backgroundColor: ['#047857', '#0891b2', '#d97706', '#b91c1c']
+								backgroundColor: [
+									'#047857',
+									'#0891b2',
+									'#2563eb',
+									'#1e40af',
+									'#eab308',
+									'#d97706',
+									'#b91c1c',
+									'#7f1d1d'
+								]
 							}
 						]
 					}
