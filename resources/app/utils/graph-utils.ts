@@ -1,6 +1,7 @@
 import { Chart } from 'chart.js'
 import { ArrayUtils } from './array-utils'
 import { RefObject } from 'react'
+import { NumberUtils } from './number-utils'
 
 export type GraphValueProps = {
 	field: string
@@ -17,12 +18,22 @@ type GraphBuilderProps = {
 export class GraphUtils {
 	static buildGraph({ data, htmlRef, title, graphType }: GraphBuilderProps) {
 		const graphData = ArrayUtils.order({
-			data: data,
+			data: data.map(({ field, value }) => ({
+				field,
+				value: NumberUtils.convertToNumber(value)
+			})),
 			field: 'value',
 			orderOption: 'desc'
 		})
-		const labels = graphData.map(({ field }) => field)
-		const values = graphData.map(({ value }) => value)
+		const labels = []
+		const values = []
+
+		for (let i = 0; i < graphData.length; i++) {
+			const { field, value } = graphData[i]
+			labels.push(field)
+			values.push(value)
+		}
+
 		if (htmlRef.current) {
 			const ctx = htmlRef.current?.getContext('2d') as CanvasRenderingContext2D
 
@@ -37,7 +48,7 @@ export class GraphUtils {
 						labels,
 						datasets: [
 							{
-								label: title,
+								label: title.toLocaleUpperCase(),
 								data: values,
 								backgroundColor: ['#047857', '#0891b2', '#d97706', '#b91c1c']
 							}
