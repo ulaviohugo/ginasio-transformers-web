@@ -26,6 +26,7 @@ return new class extends Migration
 			$table->string('color', 20)->nullable();
 			$table->string('size', 30)->nullable();
 			$table->double('discount', 16, 3)->nullable()->default(0);
+			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

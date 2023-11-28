@@ -12,6 +12,7 @@ class ProductSaleCreateService
 {
 	public function execute(Request $request)
 	{
+		$userId = User::currentUserId();
 		$productSale =	ProductSale::create([
 			'product_id' => $request->product_id,
 			'category_id' => $request->category_id,
@@ -25,7 +26,8 @@ class ProductSaleCreateService
 			'color' => $request->color,
 			'size' => $request->size,
 			'discount' => $request->discount,
-			'user_id' => User::currentUserId(),
+			'employee_id' => $request->employee_id ?? $userId,
+			'user_id' => $userId,
 		]);
 
 		$product = Product::find($request->product_id);

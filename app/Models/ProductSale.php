@@ -24,6 +24,7 @@ class ProductSale extends Model
 		'color',
 		'size',
 		'discount',
+		'employee_id',
 		'user_id',
 		'user_id_update',
 		'created_at',

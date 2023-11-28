@@ -1,4 +1,4 @@
-import { Chart, ChartType } from 'chart.js'
+import { Chart, ChartType } from 'chart.js/auto'
 import { ArrayUtils } from './array-utils'
 import { RefObject } from 'react'
 import { NumberUtils } from './number-utils'

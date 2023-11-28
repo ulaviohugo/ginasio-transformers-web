@@ -58,7 +58,11 @@ class SaleCreateService
 			for ($i = 0; $i < $countProducts; $i++) {
 				$productSales[$i]['sale_id'] = $sale->id;
 
-				$data = (new Request())->merge($productSales[$i] + ['payment_method' => $request->payment_method]);
+				$data = (new Request())->merge(
+					$productSales[$i] +
+						['payment_method' => $request->payment_method] +
+						['employee_id' => $request->employee_id]
+				);
 				(new ProductSaleCreateService)->execute($data);
 
 				$stock = Stock::find($data['lot']);
