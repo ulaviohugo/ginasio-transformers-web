@@ -126,10 +126,10 @@ export function StockGraph({ onClose }: StockGraphProps) {
 				</fieldset>
 				<div className="grid grid-cols-2 gap-4">
 					<div className="p-4 border">
-						<canvas ref={productChartRef} />
+						<canvas ref={categoryChartRef} />
 					</div>
 					<div className="p-4 border">
-						<canvas ref={categoryChartRef} />
+						<canvas ref={productChartRef} />
 					</div>
 					<div className="p-4 border">
 						<canvas ref={paymentMethodChartRef} />
