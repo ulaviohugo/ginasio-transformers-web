@@ -10,15 +10,24 @@ export type GraphValueProps = {
 
 export type GraphType = ChartType
 
+export type GraphHtmlRefProps = HTMLCanvasElement & { myChart: any }
+
 type GraphBuilderProps = {
 	title: string
 	data: GraphValueProps[]
-	htmlRef: RefObject<HTMLCanvasElement & { myChart: any }>
+	htmlRef: RefObject<GraphHtmlRefProps>
 	graphType: GraphType
+	barWidth?: number
 }
 
 export class GraphUtils {
-	static buildGraph({ data, htmlRef, title, graphType }: GraphBuilderProps) {
+	static buildGraph({
+		data,
+		htmlRef,
+		title,
+		graphType,
+		barWidth = 32
+	}: GraphBuilderProps) {
 		const graphData = ArrayUtils.order({
 			data: data.map(({ field, value }) => ({
 				field,
@@ -52,6 +61,7 @@ export class GraphUtils {
 							{
 								label: title.toLocaleUpperCase(),
 								data: values,
+								barThickness: barWidth,
 								backgroundColor: [
 									'#047857',
 									'#0891b2',

@@ -39,6 +39,7 @@ class StockCreateService
 				'size' => $request->size,
 				'unit_price' => $unitPrice,
 				'quantity' => $quantity,
+				'initial_quantity' => $quantity,
 				'total_value' => $totalValue,
 				'payment_method' => $request->payment_method,
 				'paid' => $paid,

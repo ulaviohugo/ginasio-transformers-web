@@ -25,7 +25,7 @@ class SaleCreateService
 			for ($i = 0; $i < $countProducts; $i++) {
 				$productSale = $productSales[$i];
 				//ProductSale data
-				$quantity = floatval($productSale['quantity']);
+				$quantity = intval($productSale['quantity']);
 				$unitPrice = floatval($productSale['unit_price']);
 				$discount = isset($productSale['discount']) ? floatval($productSale['discount']) : 0;
 				$prdTotalValue = $unitPrice * $quantity;
@@ -76,12 +76,10 @@ class SaleCreateService
 				$sale->invoice = $pdfLink;
 			}
 
-			info('commit');
 			DB::commit();
 			return $sale;
 		} catch (\Throwable $th) {
 			DB::rollBack();
-			info('rollBack');
 			throw $th;
 		}
 	}

@@ -7,7 +7,7 @@ import {
 	StringUtils
 } from '@/utils'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Input, Select } from '../form-controls'
+import { ButtonSubmit, Input, Select } from '../form-controls'
 import { Spinner } from '../spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -23,6 +23,7 @@ import { loadProductSaleStore } from '@/presentation/redux'
 import toast from 'react-hot-toast'
 import { IconClose, IconSearch } from '../icons'
 import { QueryParams } from '@/data/protocols'
+import { SaleGraph } from './sale-graph'
 
 type FilterDataProps = {
 	customer_id: number
@@ -48,6 +49,7 @@ export function SaleList({ loadSales }: SaleListProps) {
 	const employees = useSelector(useEmployees())
 
 	const [isLoading, setIsLoading] = useState(true)
+	const [showGraph, setShowGraph] = useState(false)
 
 	const [filter, setFilter] = useState<FilterDataProps>({
 		date: currentDate as any
@@ -109,7 +111,15 @@ export function SaleList({ loadSales }: SaleListProps) {
 
 	return (
 		<fieldset>
-			<legend>Filtro ({productSales.length})</legend>
+			{showGraph && <SaleGraph onClose={() => setShowGraph(false)} />}
+			<legend>
+				Filtro ({productSales.length})
+				<ButtonSubmit
+					text="Ver gráfico"
+					showIcon={false}
+					onClick={() => setShowGraph(true)}
+				/>
+			</legend>
 			<div className="grid grid-cols-11 mb-3">
 				<div className="col-span-2">
 					<Select
