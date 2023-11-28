@@ -85,9 +85,8 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::prefix('graphs')->group(function () {
 		Route::post('stock-store', [GraphController::class, 'stockStore']);
-	});
-	Route::prefix('graphs')->group(function () {
 		Route::post('sale-store', [GraphController::class, 'saleStore']);
+		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
 });
 

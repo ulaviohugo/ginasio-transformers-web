@@ -1,7 +1,8 @@
-import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { Chart } from 'chart.js/auto'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
+	ButtonSubmit,
 	CashRegisterEditor,
+	CashRegisterGraph,
 	IconCashRegister,
 	IconSearch,
 	Input,
@@ -15,7 +16,7 @@ import {
 import { useAuth, useTransactions } from '@/presentation/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { NotFound } from '@/presentation/pages'
-import { ArrayUtils, DateUtils, MenuUtils, NumberUtils, PaymentUtils } from '@/utils'
+import { DateUtils, MenuUtils, NumberUtils, PaymentUtils } from '@/utils'
 import { makeRemoteLoadTransactions } from '@/main/factories'
 import toast from 'react-hot-toast'
 import { loadTransactionStore } from '@/presentation/redux'
@@ -43,106 +44,7 @@ export function CashRegister() {
 	} as any)
 
 	const [isLoading, setIsLoading] = useState(true)
-
-	const operationChartLabels = useMemo(
-		() =>
-			ArrayUtils.removeDuplicated(transactions.map((item) => item.operation_type)).sort(),
-		[transactions]
-	)
-	const operationChartData = useMemo(
-		() =>
-			operationChartLabels.map(
-				(item) => transactions.filter((tr) => tr.operation_type == item).length
-			),
-		[operationChartLabels, transactions]
-	)
-
-	const movementChart = useMemo(() => {
-		const obj: any = {}
-		transactions.forEach(({ payment_method }) => {
-			if (obj[payment_method]) {
-				obj[payment_method]++
-			} else {
-				obj[payment_method] = 1
-			}
-		})
-		return ArrayUtils.order({
-			data: Object.entries(obj).map(([label, value]) => ({ label, value })),
-			field: 'value',
-			orderOption: 'desc'
-		})
-	}, [transactions])
-
-	const operationChartRef = useRef<HTMLCanvasElement & { myChart: any }>(null)
-	const movementChartRef = useRef<HTMLCanvasElement & { myChart: any }>(null)
-
-	useEffect(() => {
-		let myChart: any
-		if (operationChartRef.current) {
-			const ctx = operationChartRef.current?.getContext('2d') as CanvasRenderingContext2D
-
-			if (operationChartRef.current?.myChart) {
-				operationChartRef.current.myChart.data.labels = operationChartLabels
-				operationChartRef.current.myChart.data.datasets[0].data = operationChartData
-				operationChartRef.current.myChart.update()
-			} else {
-				operationChartRef.current.myChart = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: operationChartLabels,
-						datasets: [
-							{
-								label: 'Operação',
-								data: operationChartData
-							}
-						]
-					},
-					options: { layout: {} }
-				})
-			}
-		}
-
-		return () => {
-			if (myChart) {
-				myChart.destroy()
-			}
-		}
-	}, [operationChartData, operationChartLabels])
-
-	useEffect(() => {
-		let myChart: any
-		const labels = movementChart.map(({ label }) => label)
-		const data = movementChart.map(({ value }) => value)
-		if (movementChartRef.current) {
-			const ctx = movementChartRef.current?.getContext('2d') as CanvasRenderingContext2D
-
-			if (movementChartRef.current?.myChart) {
-				movementChartRef.current.myChart.data.labels = labels
-				movementChartRef.current.myChart.data.datasets[0].data = data
-				movementChartRef.current.myChart.update()
-			} else {
-				movementChartRef.current.myChart = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels,
-						datasets: [
-							{
-								label: 'Movimento bancário',
-								data,
-								backgroundColor: ['#047857', '#0891b2', '#d97706', '#b91c1c']
-							}
-						]
-					}
-				})
-			}
-		}
-
-		return () => {
-			if (myChart) {
-				myChart.destroy()
-			}
-		}
-	}, [movementChart])
+	const [showGraph, setShowGraph] = useState(false)
 
 	const fetchData = () => {
 		setIsLoading(true)
@@ -173,12 +75,20 @@ export function CashRegister() {
 
 	return (
 		<Layout>
+			{showGraph && <CashRegisterGraph onClose={() => setShowGraph(false)} />}
 			<LayoutBody>
 				<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 				<Title title="Caixa" icon={IconCashRegister} />
 				<CashRegisterEditor />
 				<fieldset>
-					<legend className="flex gap-1">Filtro {isLoading && <Spinner />}</legend>
+					<legend className="flex gap-1">
+						Filtro {isLoading && <Spinner />}
+						<ButtonSubmit
+							text="Ver gráfico"
+							showIcon={false}
+							onClick={() => setShowGraph(true)}
+						/>
+					</legend>
 					<div className="flex p-2 border">
 						<div className="flex gap-1 ml-auto items-end">
 							<Input
@@ -263,17 +173,6 @@ export function CashRegister() {
 							})}
 						</tbody>
 					</table>
-				</fieldset>
-				<fieldset>
-					<legend>Gráfico</legend>
-					<div className="grid grid-cols-2 gap-4">
-						<div className="p-4 border">
-							<canvas ref={operationChartRef} />
-						</div>
-						<div className="p-4 border">
-							<canvas ref={movementChartRef} />
-						</div>
-					</div>
 				</fieldset>
 			</LayoutBody>
 		</Layout>
