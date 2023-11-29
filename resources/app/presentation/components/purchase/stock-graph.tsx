@@ -5,7 +5,7 @@ import { Modal, ModalBody, ModalTitle } from '../modal'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import { Spinner } from '../spinner'
-import { DateUtils, GraphUtils, GraphValueProps } from '@/utils'
+import { DateUtils, GraphHtmlRefProps, GraphUtils, GraphValueProps } from '@/utils'
 import { ButtonSubmit, Input, Select } from '../form-controls'
 import { IconSearch } from '../icons'
 import { HttpStatusCode } from '@/data/protocols/http'
@@ -16,9 +16,11 @@ type FilterDataProps = {
 }
 
 type GraphDataProps = {
-	products: GraphValueProps[]
-	categories: GraphValueProps[]
-	payment_methods: GraphValueProps[]
+	products_amount: GraphValueProps[]
+	products_quantity: GraphValueProps[]
+	categories_amount: GraphValueProps[]
+	categories_quantity: GraphValueProps[]
+	payment_methods_amount: GraphValueProps[]
 }
 
 type StockGraphProps = {
@@ -28,9 +30,11 @@ type StockGraphProps = {
 export function StockGraph({ onClose }: StockGraphProps) {
 	const [loading, setLoading] = useState(true)
 	const [graphData, setGraphData] = useState<GraphDataProps>({
-		categories: [],
-		products: [],
-		payment_methods: []
+		categories_amount: [],
+		categories_quantity: [],
+		products_amount: [],
+		products_quantity: [],
+		payment_methods_amount: []
 	})
 
 	const currentDate = new Date()
@@ -46,9 +50,11 @@ export function StockGraph({ onClose }: StockGraphProps) {
 		setFilterData({ ...filterData, [name]: value })
 	}
 
-	const productChartRef = useRef<HTMLCanvasElement & { myChart: any }>(null)
-	const categoryChartRef = useRef<HTMLCanvasElement & { myChart: any }>(null)
-	const paymentMethodChartRef = useRef<HTMLCanvasElement & { myChart: any }>(null)
+	const productQuantityChartRef = useRef<GraphHtmlRefProps>(null)
+	const productAmountChartRef = useRef<GraphHtmlRefProps>(null)
+	const categoryQuantityChartRef = useRef<GraphHtmlRefProps>(null)
+	const categoryAmountChartRef = useRef<GraphHtmlRefProps>(null)
+	const paymentMethodAmountChartRef = useRef<GraphHtmlRefProps>(null)
 
 	const fetchData = () => {
 		const { month, year } = filterData
@@ -72,21 +78,35 @@ export function StockGraph({ onClose }: StockGraphProps) {
 
 	useEffect(() => {
 		GraphUtils.buildGraph({
-			title: 'Produtos',
-			data: graphData.products,
-			htmlRef: productChartRef,
+			title: 'Quantidade',
+			data: graphData.products_quantity,
+			htmlRef: productQuantityChartRef,
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Categorias',
-			data: graphData.categories,
-			htmlRef: categoryChartRef,
+			title: 'Venda',
+			data: graphData.products_amount,
+			htmlRef: productAmountChartRef,
+			graphType: 'bar'
+		})
+
+		GraphUtils.buildGraph({
+			title: 'Quantidade',
+			data: graphData.categories_quantity,
+			htmlRef: categoryQuantityChartRef,
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Métodos de pagamento',
-			data: graphData.payment_methods,
-			htmlRef: paymentMethodChartRef,
+			title: 'Venda',
+			data: graphData.categories_amount,
+			htmlRef: categoryAmountChartRef,
+			graphType: 'bar'
+		})
+
+		GraphUtils.buildGraph({
+			title: 'Venda',
+			data: graphData.payment_methods_amount,
+			htmlRef: paymentMethodAmountChartRef,
 			graphType: 'bar'
 		})
 	}, [graphData])
@@ -124,16 +144,31 @@ export function StockGraph({ onClose }: StockGraphProps) {
 						/>
 					</div>
 				</fieldset>
-				<div className="grid grid-cols-2 gap-4">
-					<div className="p-4 border">
-						<canvas ref={categoryChartRef} />
-					</div>
-					<div className="p-4 border">
-						<canvas ref={productChartRef} />
-					</div>
-					<div className="p-4 border">
-						<canvas ref={paymentMethodChartRef} />
-					</div>
+				<div className="grid gap-4">
+					<fieldset className="grid grid-cols-2">
+						<legend>Categorias</legend>
+						<div className="shadow-lg m-2">
+							<canvas ref={categoryQuantityChartRef} />
+						</div>
+						<div className="shadow-lg m-2">
+							<canvas ref={categoryAmountChartRef} />
+						</div>
+					</fieldset>
+					<fieldset className="grid grid-cols-2">
+						<legend>Produtos</legend>
+						<div className="shadow-lg m-2">
+							<canvas ref={productQuantityChartRef} />
+						</div>
+						<div className="shadow-lg m-2">
+							<canvas ref={productAmountChartRef} />
+						</div>
+					</fieldset>
+					<fieldset className="grid grid-cols-2">
+						<legend>Métodos de pagamento</legend>
+						<div className="shadow-lg m-2">
+							<canvas ref={paymentMethodAmountChartRef} />
+						</div>
+					</fieldset>
 				</div>
 			</ModalBody>
 		</Modal>

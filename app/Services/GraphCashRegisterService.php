@@ -14,14 +14,14 @@ class GraphCashRegisterService
 		$year = $request->year;
 
 		$paymentMethods = DB::table(DBHelper::TB_TRANSACTIONS)
-			->select('payment_method AS field', DB::raw('COUNT(id) as value'))
+			->select('payment_method AS field', DB::raw('CAST(SUM(amount) AS DOUBLE) AS value'))
 			->whereMonth('created_at', $month)
 			->whereYear('created_at', $year)
 			->groupBy('payment_method')
 			->get();
 
 		$operations = DB::table(DBHelper::TB_TRANSACTIONS)
-			->select('operation_type AS field', DB::raw('COUNT(id) as value'))
+			->select('operation_type AS field', DB::raw('CAST(SUM(amount) AS DOUBLE) AS value'))
 			->whereMonth('created_at', $month)
 			->whereYear('created_at', $year)
 			->groupBy('operation_type')
@@ -29,8 +29,8 @@ class GraphCashRegisterService
 
 
 		return [
-			'operations' => $operations,
-			'payment_methods' => $paymentMethods,
+			'operations_amount' => $operations,
+			'payment_methods_amount' => $paymentMethods,
 		];
 	}
 }

@@ -1,7 +1,10 @@
 import { Chart, ChartType } from 'chart.js/auto'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { ArrayUtils } from './array-utils'
 import { RefObject } from 'react'
 import { NumberUtils } from './number-utils'
+
+Chart.register(ChartDataLabels)
 
 export type GraphValueProps = {
 	field: string
@@ -26,12 +29,12 @@ export class GraphUtils {
 		htmlRef,
 		title,
 		graphType,
-		barWidth = 32
+		barWidth = 48
 	}: GraphBuilderProps) {
 		const graphData = ArrayUtils.order({
 			data: data.map(({ field, value }) => ({
 				field,
-				value: NumberUtils.convertToNumber(value)
+				value
 			})),
 			field: 'value',
 			orderOption: 'desc'
@@ -61,7 +64,7 @@ export class GraphUtils {
 							{
 								label: title.toLocaleUpperCase(),
 								data: values,
-								barThickness: barWidth,
+								// barThickness: barWidth,
 								backgroundColor: [
 									'#047857',
 									'#0891b2',
@@ -74,6 +77,17 @@ export class GraphUtils {
 								]
 							}
 						]
+					},
+					options: {
+						plugins: {
+							datalabels: {
+								color: 'white',
+								font: {
+									weight: 'bold'
+								},
+								formatter: (value) => NumberUtils.format(value)
+							}
+						}
 					}
 				})
 			}

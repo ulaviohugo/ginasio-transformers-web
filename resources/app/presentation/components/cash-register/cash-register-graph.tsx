@@ -16,8 +16,8 @@ type FilterDataProps = {
 }
 
 type GraphDataProps = {
-	operations: GraphValueProps[]
-	payment_methods: GraphValueProps[]
+	operations_amount: GraphValueProps[]
+	payment_methods_amount: GraphValueProps[]
 }
 
 type CashRegisterGraphProps = {
@@ -27,8 +27,8 @@ type CashRegisterGraphProps = {
 export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 	const [loading, setLoading] = useState(true)
 	const [graphData, setGraphData] = useState<GraphDataProps>({
-		operations: [],
-		payment_methods: []
+		operations_amount: [],
+		payment_methods_amount: []
 	})
 
 	const currentDate = new Date()
@@ -70,13 +70,13 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 	useEffect(() => {
 		GraphUtils.buildGraph({
 			title: 'Operações',
-			data: graphData.operations,
+			data: graphData.operations_amount,
 			htmlRef: operationChartRef,
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
 			title: 'Métodos de pagamento',
-			data: graphData.payment_methods,
+			data: graphData.payment_methods_amount,
 			htmlRef: paymentMethodChartRef,
 			graphType: 'bar'
 		})

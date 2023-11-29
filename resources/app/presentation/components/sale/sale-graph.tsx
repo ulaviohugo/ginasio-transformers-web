@@ -60,7 +60,6 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 	const productAmountChartRef = useRef<GraphHtmlRefProps>(null)
 	const categoryQuantityChartRef = useRef<GraphHtmlRefProps>(null)
 	const categoryAmountChartRef = useRef<GraphHtmlRefProps>(null)
-	const paymentMethodQuantityChartRef = useRef<GraphHtmlRefProps>(null)
 	const paymentMethodAmountChartRef = useRef<GraphHtmlRefProps>(null)
 	const employeesQuantityChartRef = useRef<GraphHtmlRefProps>(null)
 	const employeesAmountChartRef = useRef<GraphHtmlRefProps>(null)
@@ -112,12 +111,6 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 			graphType: 'bar'
 		})
 
-		GraphUtils.buildGraph({
-			title: 'Quantidade',
-			data: graphData.payment_methods_quantity,
-			htmlRef: paymentMethodQuantityChartRef,
-			graphType: 'bar'
-		})
 		GraphUtils.buildGraph({
 			title: 'Venda',
 			data: graphData.payment_methods_amount,
@@ -173,7 +166,7 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 					</div>
 				</fieldset>
 				<div className="grid gap-4">
-					<fieldset className="grid grid-cols-2 ">
+					<fieldset className="grid grid-cols-2">
 						<legend>Categorias</legend>
 						<div className="shadow-lg m-2">
 							<canvas ref={categoryQuantityChartRef} />
@@ -182,7 +175,7 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 							<canvas ref={categoryAmountChartRef} />
 						</div>
 					</fieldset>
-					<fieldset className="grid grid-cols-2 ">
+					<fieldset className="grid grid-cols-2">
 						<legend>Produtos</legend>
 						<div className="shadow-lg m-2">
 							<canvas ref={productQuantityChartRef} />
@@ -191,16 +184,13 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 							<canvas ref={productAmountChartRef} />
 						</div>
 					</fieldset>
-					<fieldset className="grid grid-cols-2 ">
+					<fieldset className="grid grid-cols-2">
 						<legend>Métodos de pagamento</legend>
-						<div className="shadow-lg m-2">
-							<canvas ref={paymentMethodQuantityChartRef} />
-						</div>
 						<div className="shadow-lg m-2">
 							<canvas ref={paymentMethodAmountChartRef} />
 						</div>
 					</fieldset>
-					<fieldset className="grid grid-cols-2 ">
+					<fieldset className="grid grid-cols-2">
 						<legend>Funcionário</legend>
 						<div className="shadow-lg m-2">
 							<canvas ref={employeesQuantityChartRef} />
