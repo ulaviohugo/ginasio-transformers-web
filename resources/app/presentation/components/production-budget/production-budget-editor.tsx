@@ -391,23 +391,27 @@ export function ProductionBudgetEditor() {
 						</fieldset>
 					</div>
 				</div>
-				<ProductionPaymentEditor
-					formData={formData}
-					handleInputChange={handleInputChange}
-					productionCost={productionCost}
-					totalToPay={totalToPay}
-					variableCost={variableCost}
-				/>
+				<div>
+					<ProductionPaymentEditor
+						formData={formData}
+						handleInputChange={handleInputChange}
+						productionCost={productionCost}
+						totalToPay={totalToPay}
+						variableCost={variableCost}
+					/>
+					<div className="flex gap-2 mt-14 justify-center">
+						<ButtonSubmit
+							text="Cadastrar"
+							onClick={handleSubmit}
+							disabled={isLoading}
+							isLoading={isLoading}
+							className="!bg-green-700"
+						/>
+						<ButtonCancel onClick={handleClearForm} />
+					</div>
+				</div>
 			</div>
-			<div className="flex gap-2 my-2">
-				<ButtonSubmit
-					text="Cadastrar"
-					onClick={handleSubmit}
-					disabled={isLoading}
-					isLoading={isLoading}
-				/>
-				<ButtonCancel onClick={handleClearForm} />
-			</div>
+
 			<ProductionBudgetList
 				loadProductionBudgets={makeRemoteLoadProductionBudgets()}
 				onSelectBudget={handleSelectBudget}

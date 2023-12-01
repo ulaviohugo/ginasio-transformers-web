@@ -259,7 +259,7 @@ export function PurchaseEditor({
 							photoPreview={photoPreview}
 							onInputFileChange={handleInputChange}
 						/>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 bg-green-50 border border-green-200 p-2 mt-2">
 							<InputPrice
 								id="unit_price"
 								name="unit_price"
@@ -411,6 +411,7 @@ export function PurchaseEditor({
 						disabled={isLoading}
 						isLoading={isLoading}
 						onClick={() => handleSubmit('save')}
+						className="!bg-green-700"
 					/>
 					<ButtonSubmit
 						text="Editar"
@@ -418,9 +419,15 @@ export function PurchaseEditor({
 						disabled={isLoading}
 						isLoading={isLoading}
 						onClick={() => handleSubmit('update')}
+						className="!opacity-70"
 					/>
 					<ButtonCancel onClick={clearFields} text="Limpar" />
-					<ButtonCancel onClick={handleDelete} text="Excluir" icon={IconTrash} />
+					<ButtonCancel
+						onClick={handleDelete}
+						text="Excluir"
+						icon={IconTrash}
+						className="!bg-red-700 !text-white"
+					/>
 				</div>
 			</div>
 		</div>

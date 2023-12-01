@@ -586,6 +586,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 													text="Finalizar compra"
 													disabled={isLoading}
 													isLoading={isLoading}
+													className="!bg-green-600"
 												/>
 											</div>
 										</div>

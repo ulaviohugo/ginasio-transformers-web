@@ -104,7 +104,7 @@ export const CalendarEvent = ({ eventItem, open, onClose }: CalendarEventProps) 
 
 	return (
 		<Modal show={show} onClose={onClose} size="sm">
-			<ModalTitle>Registo de presença</ModalTitle>
+			<ModalTitle>Registo de Presença</ModalTitle>
 			<ModalBody>
 				<div className="text-sm mb-2">
 					<label className="font-semibold">
@@ -178,7 +178,7 @@ export const CalendarEvent = ({ eventItem, open, onClose }: CalendarEventProps) 
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<ButtonSubmit onClick={handleSubmit} />
+				<ButtonSubmit onClick={handleSubmit} className="!bg-green-700" />
 				<ButtonCancel onClick={onClose} />
 			</ModalFooter>
 		</Modal>

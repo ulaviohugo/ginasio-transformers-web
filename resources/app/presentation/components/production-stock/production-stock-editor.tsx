@@ -13,6 +13,7 @@ import {
 	Input,
 	InputPrice,
 	ProductLabel,
+	PurchaseEditor,
 	Select,
 	SupplierLabel
 } from '..'
@@ -249,6 +250,14 @@ export function ProductionStockEditor({
 		if (!formData.id) return toast.error('Selecione um registo para excluir')
 		onDelete()
 	}
+
+	return (
+		<PurchaseEditor
+			addPurchase={addPurchase}
+			updatePurchase={updatePurchase}
+			onDelete={onDelete}
+		/>
+	)
 
 	return (
 		<div className="">

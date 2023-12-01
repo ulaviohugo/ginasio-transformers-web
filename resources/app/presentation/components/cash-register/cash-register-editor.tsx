@@ -193,7 +193,11 @@ export function CashRegisterEditor() {
 								/>
 							</div>
 							<div className="col-span-2 mt-2">
-								<ButtonSubmit isLoading={isLoadingSubmit} disabled={isLoadingSubmit} />
+								<ButtonSubmit
+									isLoading={isLoadingSubmit}
+									disabled={isLoadingSubmit}
+									className="!bg-green-700 !text-white"
+								/>
 							</div>
 						</form>
 					</fieldset>

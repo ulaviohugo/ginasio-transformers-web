@@ -121,6 +121,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 						text="Ver gráfico"
 						showIcon={false}
 						onClick={() => setShowGraph(true)}
+						className="!opacity-70"
 					/>
 				</legend>
 				<div className="grid grid-cols-9 mb-3">

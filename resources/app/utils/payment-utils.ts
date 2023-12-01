@@ -1,5 +1,11 @@
 export class PaymentUtils {
 	static getMethods() {
-		return ['Dinheiro', 'Multicaixa', 'TPA', 'Transferência Express']
+		return [
+			'Dinheiro',
+			'TPA',
+			'Levantamento sem Cartão',
+			'Transferência Express',
+			'Multicaixa'
+		]
 	}
 }

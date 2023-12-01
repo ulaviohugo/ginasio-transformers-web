@@ -38,4 +38,16 @@ class AdminDocsController extends Controller
 		$name = Str::slug($employee->name);
 		return	$pdf->stream("recibo-salario-{$employee->id}-{$name}.pdf");
 	}
+
+	public function justificativoFalta(Request $request, User $employee)
+	{
+		$pdf = Pdf::loadView('pdfs.admin-docs.justificativo-falta', compact('employee'));
+		return	$pdf->stream("justificativo-falta-{$employee->id}-{$employee->name}.pdf");
+	}
+
+	public function requisicaoFeria(Request $request, User $employee)
+	{
+		$pdf = Pdf::loadView('pdfs.admin-docs.requisicao-feria', compact('employee'));
+		return	$pdf->stream("justificativo-falta-{$employee->id}-{$employee->name}.pdf");
+	}
 }

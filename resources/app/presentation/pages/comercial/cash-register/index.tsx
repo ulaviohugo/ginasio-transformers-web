@@ -88,6 +88,7 @@ export function CashRegister() {
 								text="Ver gráfico"
 								showIcon={false}
 								onClick={() => setShowGraph(true)}
+								className="!bg-opacity-70"
 							/>
 						</legend>
 						<div className="flex p-2 border">

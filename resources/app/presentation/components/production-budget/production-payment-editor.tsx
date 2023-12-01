@@ -19,7 +19,7 @@ export function ProductionPaymentEditor({
 	variableCost
 }: ProductionPaymentEditorProps) {
 	return (
-		<fieldset className="w-80">
+		<fieldset className="w-80 bg-green-50 border border-green-200 p-2 pb-8">
 			<legend>Pagamentos</legend>
 			<div className="flex gap-2 flex-col ml-auto">
 				<Item
@@ -73,6 +73,6 @@ type ItemProps = {
 const Item = ({ className = '', label, value = 0 }: ItemProps) => (
 	<div className={`flex flex-col h-full ${className}`}>
 		<div>{label}</div>
-		<div className="border px-2 py-1 rounded-md flex w-full h-full">{value}</div>
+		<div className="border px-2 py-1 rounded-md flex w-full h-full bg-white">{value}</div>
 	</div>
 )

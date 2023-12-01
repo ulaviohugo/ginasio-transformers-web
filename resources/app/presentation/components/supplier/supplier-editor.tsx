@@ -350,6 +350,7 @@ export function SupplierEditor({
 					disabled={isLoading}
 					isLoading={isLoading}
 					onClick={() => handleSubmit('save')}
+					className="!bg-green-700 !text-white"
 				/>
 				<ButtonSubmit
 					text="Editar"
@@ -357,10 +358,16 @@ export function SupplierEditor({
 					disabled={isLoading}
 					isLoading={isLoading}
 					onClick={() => handleSubmit('update')}
+					className="!bg-opacity-60 !text-white"
 				/>
 				<ButtonCancel text="Limpar" onClick={handleClear} />
 				{onDelete && (
-					<ButtonCancel text="Excluir" icon={IconTrash} onClick={handleOpenDelete} />
+					<ButtonCancel
+						text="Excluir"
+						icon={IconTrash}
+						onClick={handleOpenDelete}
+						className="!bg-red-700 !text-white"
+					/>
 				)}
 			</div>
 		</fieldset>

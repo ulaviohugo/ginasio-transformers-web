@@ -6,6 +6,8 @@ import { EmployeeModel } from '@/domain/models'
 import {
 	ButtonCancel,
 	ButtonSubmit,
+	IconEdit,
+	IconTrash,
 	IconUser,
 	ImagePreview,
 	Input,
@@ -147,8 +149,8 @@ export function EmployeeEditor({
 				{employee?.id ? `Funcionário - ${employee.name}` : 'Cadastrar funcionário'}
 			</ModalTitle>
 			<ModalBody>
-				<form onSubmit={handleSubmit}>
-					<div className="flex gap-1">
+				<form onSubmit={handleSubmit} className="flex flex-col w-full">
+					<div className="flex gap-1 ">
 						<div className="">
 							<ImagePreview
 								photoPreview={photoPreview}
@@ -156,8 +158,8 @@ export function EmployeeEditor({
 								clearInputFile={clearInputFile}
 							/>
 						</div>
-						<div className="flex flex-col gap-2">
-							<fieldset>
+						<div className="flex-1 flex flex-col gap-2">
+							<fieldset className="w-full">
 								<legend>Dados pessoais</legend>
 								<div className="flex gap-1">
 									<Input
@@ -489,8 +491,25 @@ export function EmployeeEditor({
 						</div>
 					</div>
 					<ModalFooter>
-						<ButtonSubmit type="submit" disabled={isLoading} isLoading={isLoading} />
-						<ButtonCancel onClick={onClose} />
+						<ButtonSubmit
+							type="submit"
+							disabled={isLoading}
+							isLoading={isLoading}
+							className="!bg-green-700"
+						/>
+						<ButtonCancel
+							text="Editar"
+							icon={IconEdit}
+							onClick={onClose}
+							className="!bg-primary !bg-opacity-70 !text-white"
+						/>
+						<ButtonCancel
+							text="Excluir"
+							icon={IconTrash}
+							onClick={onClose}
+							className="!bg-red-700 !text-white"
+						/>
+						<ButtonCancel text="Limpar" onClick={onClose} />
 					</ModalFooter>
 				</form>
 			</ModalBody>

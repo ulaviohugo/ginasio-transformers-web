@@ -164,7 +164,7 @@ function Header({ title, employee, receiptData }: Omit<HeaderProps, 'currentUser
 					fontSize: fontSize_title
 				}}
 			>
-				<Text>Recibo de pagamento de salário</Text>
+				<Text>Recibo de Pagamento de Salário</Text>
 				<Text
 					style={{ fontSize: fontSize_sm }}
 				>{`${receiptData.month} ${receiptData.year}`}</Text>
@@ -192,11 +192,11 @@ function Header({ title, employee, receiptData }: Omit<HeaderProps, 'currentUser
 					<Text>{employee.position}</Text>
 				</View>
 				<View>
-					<Text>Nº CONTRIB.</Text>
+					<Text>NIF</Text>
 					<Text>{employee.nif}</Text>
 				</View>
 				<View>
-					<Text>SEG. SOCIAL</Text>
+					<Text>Nº INSS</Text>
 					<Text>{employee.social_security}</Text>
 				</View>
 			</View>
