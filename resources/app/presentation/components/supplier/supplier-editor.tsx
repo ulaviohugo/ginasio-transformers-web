@@ -15,7 +15,8 @@ import {
 	SupplierProductEditor,
 	SupplierProductCardChangeProps,
 	IconTrash,
-	IconEdit
+	IconEdit,
+	Button
 } from '..'
 
 import {
@@ -320,13 +321,13 @@ export function SupplierEditor({
 					<div>
 						<Divisor label={`Produtos fornecidos (${productList?.length})`}>
 							<div>
-								<span
-									className="btn-primary"
+								<Button
+									className="btn-primary normal-case mb-2"
+									variant="gray-light"
+									text="Adicionar"
+									icon={IconPlus}
 									onClick={handleAddProductItem}
-									title="Adicionar producto"
-								>
-									<IconPlus />
-								</span>
+								/>
 							</div>
 						</Divisor>
 						<div className="max-h-[250px] overflow-auto">
@@ -351,7 +352,8 @@ export function SupplierEditor({
 					isLoading={isLoading}
 					onClick={() => handleSubmit('save')}
 				/>
-				<ButtonSubmit
+				<Button
+					variant="gray-light"
 					text="Editar"
 					icon={IconEdit}
 					disabled={isLoading}
@@ -360,7 +362,12 @@ export function SupplierEditor({
 				/>
 				<ButtonCancel text="Limpar" onClick={handleClear} />
 				{onDelete && (
-					<ButtonCancel text="Excluir" icon={IconTrash} onClick={handleOpenDelete} />
+					<Button
+						variant="red"
+						text="Excluir"
+						icon={IconTrash}
+						onClick={handleOpenDelete}
+					/>
 				)}
 			</div>
 		</fieldset>

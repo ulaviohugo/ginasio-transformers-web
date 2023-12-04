@@ -8,9 +8,10 @@ import {
 	makeRemoteLoadCashRegister
 } from '@/main/factories'
 import toast from 'react-hot-toast'
-import { ButtonSubmit, Input, InputPrice, Select, TextArea } from '../form-controls'
+import { Button, Input, InputPrice, Select, TextArea } from '../form-controls'
 import { useDispatch } from 'react-redux'
 import { addTransactionStore } from '@/presentation/redux'
+import { IconCheck } from '../icons'
 
 export function CashRegisterEditor() {
 	const dispatch = useDispatch()
@@ -134,7 +135,10 @@ export function CashRegisterEditor() {
 								)}
 								{!cashRegister?.initial_balance && (
 									<div className="flex">
-										<ButtonSubmit
+										<Button
+											variant="green"
+											text="Salvar"
+											rightIcon={IconCheck}
 											isLoading={isLoadingSubmitBalance}
 											disabled={isLoadingSubmitBalance}
 										/>
@@ -193,7 +197,13 @@ export function CashRegisterEditor() {
 								/>
 							</div>
 							<div className="col-span-2 mt-2">
-								<ButtonSubmit isLoading={isLoadingSubmit} disabled={isLoadingSubmit} />
+								<Button
+									variant="green"
+									text="Salvar"
+									rightIcon={IconCheck}
+									disabled={isLoading}
+									isLoading={isLoadingSubmit}
+								/>
 							</div>
 						</form>
 					</fieldset>

@@ -34,7 +34,8 @@ import { ProductionCustomerEditor } from './production-customer-editor'
 import { ProductionPaymentEditor } from './production-payment-editor'
 import { ProductionEmployeeRow } from './production-employee-row'
 import { ProductionBudgetList } from './production-budget-list'
-import { ButtonCancel, ButtonSubmit } from '../form-controls'
+import { Button } from '../form-controls'
+import { IconCheck, IconClose } from '../icons'
 
 export type SupplierProductCardChangeProps = {
 	index: number
@@ -400,13 +401,15 @@ export function ProductionBudgetEditor() {
 				/>
 			</div>
 			<div className="flex gap-2 my-2">
-				<ButtonSubmit
+				<Button
+					variant="green"
 					text="Cadastrar"
+					icon={IconCheck}
 					onClick={handleSubmit}
 					disabled={isLoading}
 					isLoading={isLoading}
 				/>
-				<ButtonCancel onClick={handleClearForm} />
+				<Button text="Limpar" icon={IconClose} onClick={handleClearForm} />
 			</div>
 			<ProductionBudgetList
 				loadProductionBudgets={makeRemoteLoadProductionBudgets()}

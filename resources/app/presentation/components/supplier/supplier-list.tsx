@@ -11,7 +11,7 @@ import { Spinner } from '../spinner'
 import { SupplierModel } from '@/domain/models'
 import { QueryParams } from '@/data/protocols'
 import { SupplierFilterFields, LoadSuppliersParams } from '@/domain/usecases'
-import { Select } from '../form-controls'
+import { Button, Select } from '../form-controls'
 import { IconClose, IconSearch } from '../icons'
 
 type SupplierListProps = {
@@ -79,16 +79,11 @@ export function SupplierList({
 
 	const handleChangeFilter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
-		let data = { ...filter, [name]: value }
-		if (name == 'province_id') {
-			data = { ...data, municipality_id: undefined }
-		}
-		setFilter(data)
+		setFilter({ ...filter, [name]: value })
 	}
 
 	const clearFilter = () => {
-		const filter = {}
-		setFilter(filter as any)
+		setFilter({} as any)
 		onClearFilter()
 	}
 
@@ -205,21 +200,15 @@ export function SupplierList({
 							/>
 						</div>
 						<div className="flex gap-1">
-							<button
-								className="btn-primary h-8"
+							<Button
+								variant="gray-light"
+								text="Filtrar"
 								onClick={() => onFilter({ filter })}
-								disabled={isLoading}
-							>
-								Filtrar {isLoading ? <Spinner /> : <IconSearch />}
-							</button>
+								icon={IconSearch}
+								isLoading={isLoading}
+							/>
 							{hasFilter && (
-								<button
-									type="button"
-									className="flex btn-default h-8"
-									onClick={clearFilter}
-								>
-									Limpar <IconClose />
-								</button>
+								<Button text="Limpar" icon={IconClose} onClick={clearFilter} />
 							)}
 						</div>
 					</div>

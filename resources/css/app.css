@@ -47,7 +47,7 @@ a.link {
 
 button,
 .btn {
-	@apply hover:bg-opacity-90 transition-all duration-200 cursor-pointer;
+	@apply hover:bg-opacity-80 transition-all duration-200 cursor-pointer;
 }
 
 .btn-primary {

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '.'
-import { ButtonCancel, ButtonSubmit, IconTrash } from '..'
+import { Button, ButtonCancel, ButtonSubmit, IconClose, IconTrash } from '..'
 
 type ModalDeleteProps = {
 	entity: ReactNode
@@ -35,14 +35,15 @@ export function ModalDelete({
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<ButtonSubmit
+				<Button
+					variant="red"
 					text="Excluir"
 					icon={IconTrash}
 					disabled={isLoading}
 					isLoading={isLoading}
 					onClick={handleSubmit}
 				/>
-				<ButtonCancel onClick={onClose} />
+				<Button text="Cancelar" icon={IconClose} onClick={onClose} />
 			</ModalFooter>
 		</Modal>
 	)

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import {
-	ButtonSubmit,
+	Button,
 	IconClose,
 	IconSearch,
 	IconStock,
@@ -117,9 +117,9 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 			<fieldset>
 				<legend>
 					Filtro ({purchases.length})
-					<ButtonSubmit
+					<Button
+						variant="gray-light"
 						text="Ver gráfico"
-						showIcon={false}
 						onClick={() => setShowGraph(true)}
 					/>
 				</legend>

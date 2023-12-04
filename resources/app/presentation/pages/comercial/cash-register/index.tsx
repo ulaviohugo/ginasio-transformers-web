@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
-	ButtonSubmit,
+	Button,
 	CashRegisterEditor,
 	CashRegisterGraph,
 	IconCashRegister,
@@ -84,9 +84,9 @@ export function CashRegister() {
 					<fieldset>
 						<legend className="flex gap-1">
 							Filtro {isLoading && <Spinner />}
-							<ButtonSubmit
+							<Button
+								variant="gray-light"
 								text="Ver gráfico"
-								showIcon={false}
 								onClick={() => setShowGraph(true)}
 							/>
 						</legend>
@@ -131,13 +131,13 @@ export function CashRegister() {
 									onChange={handleChangeFilter}
 								/>
 								<div className="flex">
-									<button
-										className="btn-primary"
+									<Button
+										variant="gray-light"
+										icon={IconSearch}
+										isLoading={isLoading}
 										onClick={handleFilter}
-										disabled={isLoading}
-									>
-										{isLoading ? <Spinner /> : <IconSearch />}
-									</button>
+										className="h-7"
+									/>
 								</div>
 							</div>
 						</div>

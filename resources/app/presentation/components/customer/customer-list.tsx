@@ -6,7 +6,7 @@ import { Spinner } from '../spinner'
 import { CustomerModel } from '@/domain/models'
 import { QueryParams } from '@/data/protocols'
 import { CustomerFilterFields, LoadCustomersParams } from '@/domain/usecases'
-import { Select } from '../form-controls'
+import { Button, Select } from '../form-controls'
 import { IconClose, IconSearch } from '../icons'
 
 type CustomerListProps = {
@@ -203,21 +203,15 @@ export function CustomerList({
 							</div>
 						</div>
 						<div className="flex gap-1">
-							<button
-								className="btn-primary h-8"
+							<Button
+								variant="gray-light"
+								text="Filtrar"
 								onClick={() => onFilter({ filter })}
-								disabled={isLoading}
-							>
-								Filtrar {isLoading ? <Spinner /> : <IconSearch />}
-							</button>
+								icon={IconSearch}
+								isLoading={isLoading}
+							/>
 							{hasFilter && (
-								<button
-									type="button"
-									className="flex btn-default h-8"
-									onClick={clearFilter}
-								>
-									Limpar <IconClose />
-								</button>
+								<Button text="Limpar" icon={IconClose} onClick={clearFilter} />
 							)}
 						</div>
 					</div>

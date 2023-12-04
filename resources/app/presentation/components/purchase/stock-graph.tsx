@@ -6,7 +6,7 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import { Spinner } from '../spinner'
 import { DateUtils, GraphHtmlRefProps, GraphUtils, GraphValueProps } from '@/utils'
-import { ButtonSubmit, Input, Select } from '../form-controls'
+import { Button, Input, Select } from '../form-controls'
 import { IconSearch } from '../icons'
 import { HttpStatusCode } from '@/data/protocols/http'
 
@@ -136,7 +136,8 @@ export function StockGraph({ onClose }: StockGraphProps) {
 						onChange={handleFilterInputChange}
 					/>
 					<div className="flex items-end">
-						<ButtonSubmit
+						<Button
+							variant="gray-light"
 							text="Filtrar"
 							icon={IconSearch}
 							className="h-7"

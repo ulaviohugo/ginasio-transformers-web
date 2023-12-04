@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { CustomerModel } from '@/domain/models'
 import {
-	ButtonCancel,
-	ButtonSubmit,
+	Button,
+	IconCheck,
+	IconClose,
 	IconEdit,
 	IconTrash,
 	ImagePreview,
@@ -228,20 +229,32 @@ export function CustomerEditor({
 					</div>
 				</div>
 				<div className="flex flex-col gap-2">
-					<ButtonSubmit
+					<Button
+						variant="green"
+						text="Salvar"
+						rightIcon={IconCheck}
 						disabled={isLoading}
-						isLoading={isLoading}
 						onClick={() => handleSubmit('save')}
 					/>
-					<ButtonSubmit
+					<Button
+						variant="gray-light"
 						text="Editar"
-						icon={IconEdit}
+						rightIcon={IconEdit}
 						onClick={() => handleSubmit('update')}
 						disabled={isLoading}
-						isLoading={isLoading}
 					/>
-					<ButtonCancel onClick={handleClear} text="Limpar" />
-					<ButtonCancel onClick={handleOpenDelete} text="Excluir" icon={IconTrash} />
+					<Button
+						variant="default"
+						text="Limpar"
+						rightIcon={IconClose}
+						onClick={handleClear}
+					/>
+					<Button
+						variant="red"
+						text="Excluir"
+						rightIcon={IconTrash}
+						onClick={handleOpenDelete}
+					/>
 				</div>
 			</div>
 		</fieldset>

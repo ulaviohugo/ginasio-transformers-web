@@ -4,7 +4,7 @@ import { Spinner } from '../spinner'
 import { DateUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadProductionBudgets } from '@/domain/usecases'
 import toast from 'react-hot-toast'
-import { Input, Select } from '../form-controls'
+import { Button, Input, Select } from '../form-controls'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCustomers, useProductionBudgets } from '@/presentation/hooks'
 import { IconClose, IconSearch } from '../icons'
@@ -118,22 +118,16 @@ export function ProductionBudgetList({
 							onChange={handleChangeFilter}
 						/>
 
-						<div className="flex">
-							<button
-								className="btn-primary h-8"
+						<div className="flex gap-1">
+							<Button
+								variant="gray-light"
+								icon={IconSearch}
+								className=" h-8"
 								onClick={handleFilter}
 								disabled={isLoading}
-							>
-								{isLoading ? <Spinner /> : <IconSearch />}
-							</button>
+							/>
 							{hasFilter && (
-								<button
-									type="button"
-									className="flex btn-default h-8"
-									onClick={clearFilter}
-								>
-									<IconClose />
-								</button>
+								<Button icon={IconClose} className=" h-8" onClick={clearFilter} />
 							)}
 						</div>
 					</div>

@@ -1,12 +1,13 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
 import {
-	ButtonCancel,
+	Button,
 	ButtonSubmit,
 	CategoryLabel,
+	IconClose,
 	IconEdit,
 	IconTrash,
 	ImagePreview,
@@ -412,15 +413,21 @@ export function PurchaseEditor({
 						isLoading={isLoading}
 						onClick={() => handleSubmit('save')}
 					/>
-					<ButtonSubmit
+					<Button
+						variant="gray-light"
 						text="Editar"
 						icon={IconEdit}
 						disabled={isLoading}
 						isLoading={isLoading}
 						onClick={() => handleSubmit('update')}
 					/>
-					<ButtonCancel onClick={clearFields} text="Limpar" />
-					<ButtonCancel onClick={handleDelete} text="Excluir" icon={IconTrash} />
+					<Button
+						variant="default"
+						text="Limpar"
+						onClick={clearFields}
+						icon={IconClose}
+					/>
+					<Button variant="red" text="Excluir" icon={IconTrash} onClick={handleDelete} />
 				</div>
 			</div>
 		</div>

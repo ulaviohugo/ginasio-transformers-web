@@ -1,22 +1,10 @@
-import React, { ElementType, HTMLAttributes } from 'react'
-import { IconClose } from '..'
-
-type ButtonCancelProps = HTMLAttributes<HTMLSpanElement> & {
-	text?: string
-	showIcon?: boolean
-	icon?: ElementType
-}
+import React from 'react'
+import { Button, ButtonProps, IconClose } from '..'
 
 export function ButtonCancel({
-	text = 'Cancelar',
-	showIcon = true,
-	className,
-	icon: Icon = IconClose,
+	icon = IconClose,
+	variant = 'default',
 	...props
-}: ButtonCancelProps) {
-	return (
-		<span className={`btn-default ${className || ''}`} {...props}>
-			{text} {showIcon && <Icon />}
-		</span>
-	)
+}: Partial<ButtonProps>) {
+	return <Button variant={variant} icon={icon} {...props} />
 }

@@ -7,7 +7,7 @@ import {
 	StringUtils
 } from '@/utils'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { ButtonSubmit, Input, Select } from '../form-controls'
+import { Button, Input, Select } from '../form-controls'
 import { Spinner } from '../spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -114,9 +114,9 @@ export function SaleList({ loadSales }: SaleListProps) {
 			{showGraph && <SaleGraph onClose={() => setShowGraph(false)} />}
 			<legend>
 				Filtro ({productSales.length})
-				<ButtonSubmit
+				<Button
+					variant="gray-light"
 					text="Ver gráfico"
-					showIcon={false}
 					onClick={() => setShowGraph(true)}
 				/>
 			</legend>
@@ -171,18 +171,14 @@ export function SaleList({ loadSales }: SaleListProps) {
 					/>
 				</div>
 				<div className="flex items-end gap-2 pl-2">
-					<button
-						type="button"
-						className="flex btn-primary h-8"
+					<Button
+						variant="gray-light"
+						icon={IconSearch}
 						onClick={handleRequestFilter}
-					>
-						{isLoading ? <Spinner /> : <IconSearch />}
-					</button>
-					{hasFilter && (
-						<button type="button" className="flex btn-default h-8" onClick={clearFilter}>
-							<IconClose />
-						</button>
-					)}
+						className="h-8"
+						isLoading={isLoading}
+					/>
+					{hasFilter && <Button icon={IconClose} onClick={clearFilter} className="h-8" />}
 				</div>
 			</div>
 

@@ -6,7 +6,7 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import { Spinner } from '../spinner'
 import { DateUtils, GraphHtmlRefProps, GraphUtils, GraphValueProps } from '@/utils'
-import { ButtonSubmit, Input, Select } from '../form-controls'
+import { Button, Input, Select } from '../form-controls'
 import { IconSearch } from '../icons'
 import { HttpStatusCode } from '@/data/protocols/http'
 
@@ -49,6 +49,7 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 
 	const fetchData = () => {
 		const { month, year } = filterData
+		setLoading(true)
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
@@ -86,9 +87,8 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		<Modal show onClose={onClose}>
 			<ModalTitle>Gráfico de caixa</ModalTitle>
 			<ModalBody>
-				{loading && <Spinner data="Carregando dados..." />}
 				<fieldset className="inline-flex gap-2 mb-3">
-					<legend>Filtro</legend>
+					<legend>Filtro {loading && <Spinner />}</legend>
 					<Input
 						type="number"
 						name="year"
@@ -107,9 +107,11 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 						onChange={handleFilterInputChange}
 					/>
 					<div className="flex items-end">
-						<ButtonSubmit
+						<Button
+							variant="gray-light"
 							text="Filtrar"
-							icon={IconSearch}
+							rightIcon={IconSearch}
+							isLoading={loading}
 							className="h-7"
 							onClick={fetchData}
 						/>
