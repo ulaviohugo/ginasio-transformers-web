@@ -392,24 +392,26 @@ export function ProductionBudgetEditor() {
 						</fieldset>
 					</div>
 				</div>
-				<ProductionPaymentEditor
-					formData={formData}
-					handleInputChange={handleInputChange}
-					productionCost={productionCost}
-					totalToPay={totalToPay}
-					variableCost={variableCost}
-				/>
-			</div>
-			<div className="flex gap-2 my-2">
-				<Button
-					variant="green"
-					text="Cadastrar"
-					icon={IconCheck}
-					onClick={handleSubmit}
-					disabled={isLoading}
-					isLoading={isLoading}
-				/>
-				<Button text="Limpar" icon={IconClose} onClick={handleClearForm} />
+				<div className="flex flex-col justify-between">
+					<ProductionPaymentEditor
+						formData={formData}
+						handleInputChange={handleInputChange}
+						productionCost={productionCost}
+						totalToPay={totalToPay}
+						variableCost={variableCost}
+					/>
+					<div className="flex gap-2 my-2">
+						<Button
+							variant="green"
+							text="Cadastrar"
+							icon={IconCheck}
+							onClick={handleSubmit}
+							disabled={isLoading}
+							isLoading={isLoading}
+						/>
+						<Button text="Limpar" icon={IconClose} onClick={handleClearForm} />
+					</div>
+				</div>
 			</div>
 			<ProductionBudgetList
 				loadProductionBudgets={makeRemoteLoadProductionBudgets()}
