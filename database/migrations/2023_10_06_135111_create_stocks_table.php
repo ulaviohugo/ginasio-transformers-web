@@ -26,7 +26,7 @@ return new class extends Migration
 			$table->integer('initial_quantity')->default(0);
 			$table->double('total_value', 16, 3);
 			$table->string('payment_method', 30);
-			$table->boolean('paid');
+			$table->enum('paid', ['SIM', 'NÃO']);
 			$table->date('purchase_date');
 			$table->date('due_date')->nullable();
 			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();

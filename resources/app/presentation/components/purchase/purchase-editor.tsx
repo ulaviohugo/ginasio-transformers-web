@@ -68,7 +68,7 @@ export function PurchaseEditor({
 	const [formData, setFormData] = useState<PurchaseModel>(
 		(data?.id && data) ||
 			({
-				paid: true,
+				paid: 'SIM',
 				purchase_date: DateUtils.getDate(new Date()) as any
 			} as PurchaseModel)
 	)
@@ -92,7 +92,7 @@ export function PurchaseEditor({
 	const clearFields = () => {
 		onClose()
 		setFormData({
-			paid: true,
+			paid: 'SIM',
 			purchase_date: DateUtils.getDate(new Date()) as any
 		} as PurchaseModel)
 	}
@@ -188,10 +188,6 @@ export function PurchaseEditor({
 		if (name == 'photo') {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-		}
-		if (name == 'paid') {
-			const checked = (e.target as any).checked
-			data = { ...data, [name]: checked }
 		}
 		if (name == 'total_value') {
 			const total_value = NumberUtils.convertToNumber(value)
@@ -358,18 +354,15 @@ export function PurchaseEditor({
 								label={LabelUtils.translateField('size')}
 								onChange={handleInputChange}
 							/>
-							<div className="flex">
-								<div>
-									<Input
-										type="checkbox"
-										id="paid"
-										name="paid"
-										checked={formData?.paid}
-										label={LabelUtils.translateField('paid')}
-										onChange={handleInputChange}
-									/>
-								</div>
-							</div>
+							<Select
+								id="paid"
+								name="paid"
+								value={formData?.paid || ''}
+								label={LabelUtils.translateField('paid')}
+								data={['SIM', 'NÃO'].map((text) => ({ text }))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
 						</div>
 						<div className="grid grid-cols-4 gap-2">
 							<Select

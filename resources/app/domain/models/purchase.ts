@@ -14,7 +14,7 @@ export interface PurchaseModel {
 	quantity: number
 	total_value: number
 	payment_method: string
-	paid: boolean
+	paid: 'SIM' | 'Não'
 	purchase_date: Date
 	due_date?: Date
 	employee_id: number
