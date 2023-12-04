@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DBHelper;
 use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\SupplierCreateRequest;
@@ -23,7 +24,49 @@ class SupplierController extends Controller
 	public function index()
 	{
 		try {
-			$suppliers = Supplier::all();
+			$id = null;
+			$municipality_id = null;
+			$category_id = null;
+			$product_id = null;
+
+			if (request()->query('filter')) {
+				$queryParam = json_decode(request()->query('filter'));
+				$id = isset($queryParam->id) ? $queryParam->id : null;
+				$municipality_id = isset($queryParam->municipality_id) ? $queryParam->municipality_id : null;
+				$category_id = isset($queryParam->category_id) ? $queryParam->category_id : null;
+				$product_id = isset($queryParam->product_id) ? $queryParam->product_id : null;
+			}
+
+			$suppliers = Supplier::orderBy('id', 'desc');
+			if ($id) {
+				$suppliers = $suppliers->where('id', $id);
+			}
+			if ($municipality_id) {
+				$suppliers = $suppliers->where('municipality_id', $municipality_id);
+			}
+			if ($category_id) {
+				$suppliers = $suppliers->whereIn('id', function ($query) use ($category_id) {
+					$query->select('supplier_id')
+						->from(DBHelper::TB_SUPPLIER_PRODUCTS)
+						->where('category_id', $category_id);
+				});
+			}
+			if ($category_id) {
+				$suppliers = $suppliers->whereIn('id', function ($query) use ($category_id) {
+					$query->select('supplier_id')
+						->from(DBHelper::TB_SUPPLIER_PRODUCTS)
+						->where('category_id', $category_id);
+				});
+			}
+			if ($product_id) {
+				$suppliers = $suppliers->whereIn('id', function ($query) use ($product_id) {
+					$query->select('supplier_id')
+						->from(DBHelper::TB_SUPPLIER_PRODUCTS)
+						->where('product_id', $product_id);
+				});
+			}
+
+			$suppliers = $suppliers->get();
 			$suppliers->load($this->load);
 			return SupplierResource::collection($suppliers);
 		} catch (\Throwable $th) {
