@@ -50,7 +50,7 @@ export function Sales() {
 	}
 
 	return (
-		<Layout>
+		<Layout title="Venda de produtos">
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"

@@ -400,7 +400,7 @@ export function ProductionBudgetEditor() {
 						totalToPay={totalToPay}
 						variableCost={variableCost}
 					/>
-					<div className="flex gap-2 my-2">
+					<div className="flex-1 flex items-center justify-center gap-2 my-2">
 						<Button
 							variant="green"
 							text="Cadastrar"

@@ -1,11 +1,15 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { Footer, Header, TopBar } from '.'
 
 type LayoutProps = {
 	children: ReactNode
+	title?: string
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, title = 'Sistema WO' }: LayoutProps) {
+	useEffect(() => {
+		document.title = `${title !== 'Sistema WO' ? `${title} - ` : ''}Sistema WO`
+	}, [title])
 	return (
 		<div className="flex">
 			<Header />

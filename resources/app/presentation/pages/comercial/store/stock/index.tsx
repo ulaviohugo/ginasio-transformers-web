@@ -63,7 +63,7 @@ export function Stock() {
 	if (!isAdmin) return <NotFound />
 
 	return (
-		<Layout>
+		<Layout title="Compra de produtos">
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
