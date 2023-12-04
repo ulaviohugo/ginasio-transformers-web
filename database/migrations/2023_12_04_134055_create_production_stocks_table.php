@@ -12,14 +12,13 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create(DBHelper::TB_STOCK, function (Blueprint $table) {
+		Schema::create(DBHelper::TB_PRODUCTION_STOCKS, function (Blueprint $table) {
 			$table->id();
 			$table->string('photo', 100)->nullable();
-			$table->string('bar_code', 70)->nullable();
 			$table->string('lot', 70)->nullable();
-			$table->foreignId('supplier_id')->nullable()->references('id')->on(DBHelper::TB_SUPPLIERS)->cascadeOnUpdate()->noActionOnDelete();
-			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();
-			$table->foreignId('product_id')->references('id')->on(DBHelper::TB_PRODUCTS)->cascadeOnUpdate()->noActionOnDelete();
+			$table->foreignId('category_id')->references('id')->on(DBHelper::TB_PRODUCTION_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();
+			$table->foreignId('supplier_id')->references('id')->on(DBHelper::TB_PRODUCTION_CATEGORIES)->cascadeOnUpdate()->noActionOnDelete();
+			$table->foreignId('product_id')->references('id')->on(DBHelper::TB_PRODUCTION_PRODUCTS)->cascadeOnUpdate()->noActionOnDelete();
 			$table->string('color', 20)->nullable();
 			$table->string('size', 20)->nullable();
 			$table->double('unit_price', 16, 3);
@@ -42,6 +41,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists(DBHelper::TB_STOCK);
+		Schema::dropIfExists(DBHelper::TB_PRODUCTION_STOCKS);
 	}
 };
