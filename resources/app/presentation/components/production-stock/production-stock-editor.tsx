@@ -67,7 +67,7 @@ export function ProductionStockEditor({
 	const [formData, setFormData] = useState<PurchaseModel>(
 		(data?.id && data) ||
 			({
-				paid: true,
+				paid: 'SIM',
 				purchase_date: DateUtils.getDate(new Date()) as any
 			} as PurchaseModel)
 	)
@@ -91,7 +91,7 @@ export function ProductionStockEditor({
 	const clearFields = () => {
 		onClose()
 		setFormData({
-			paid: true,
+			paid: 'SIM',
 			purchase_date: DateUtils.getDate(new Date()) as any
 		} as PurchaseModel)
 	}
