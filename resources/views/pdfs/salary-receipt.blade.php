@@ -1,4 +1,9 @@
 <?php 
+$fileHelper =App\Helpers\FileHelper::class; 
+
+$logoPath = $fileHelper::logoPath();
+$logo = $fileHelper::convertToBase64($logoPath);
+
 $totalSalary = 0;
 $totalDiscount = 0;
 
@@ -72,6 +77,7 @@ $netSalary = $totalSalary - $totalDiscount;
 		ob_start();	
 	?>
 	<div class="page">
+		<img src="{{$logo}}" style="width: 50px; margin-bottom: 10px" alt="">
 		<div class="border">
 			<table>
 				<tr>
@@ -89,8 +95,8 @@ $netSalary = $totalSalary - $totalDiscount;
 					<td>ID</td>
 					<td>NOME</td>
 					<td>FUNÇÃO</td>
-					<td>Nº CONTRIBUINTE</td>
-					<td>SEGURANÇA SOCIAL</td>
+					<td>NIF</td>
+					<td>Nº INSS</td>
 				</tr>
 				<tr>
 					<td>{{$employee->id}}</td>
