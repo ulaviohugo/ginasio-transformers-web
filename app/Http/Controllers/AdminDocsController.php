@@ -50,4 +50,10 @@ class AdminDocsController extends Controller
 		$pdf = Pdf::loadView('pdfs.admin-docs.requisicao-feria', compact('employee'));
 		return	$pdf->stream("justificativo-falta-{$employee->id}-{$employee->name}.pdf");
 	}
+
+	public function formularioAdmissao(Request $request, User $employee)
+	{
+		$pdf = Pdf::loadView('pdfs.admin-docs.formulario-admissao', compact('employee'));
+		return	$pdf->stream("justificativo-falta-{$employee->id}-{$employee->name}.pdf");
+	}
 }
