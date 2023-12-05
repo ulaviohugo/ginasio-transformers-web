@@ -14,6 +14,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductionBudgetController;
+use App\Http\Controllers\ProductionCategoryController;
+use App\Http\Controllers\ProductionProductController;
 use App\Http\Controllers\ProductSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
@@ -64,6 +66,8 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::apiResource('notifications', NotificationController::class);
 
 	Route::apiResource('production-budgets', ProductionBudgetController::class);
+	Route::apiResource('production-categories', ProductionCategoryController::class);
+	Route::apiResource('production-products', ProductionProductController::class);
 
 	Route::get('products/count', [ProductController::class, 'count']);
 	Route::apiResource('products', ProductController::class);

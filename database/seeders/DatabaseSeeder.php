@@ -27,8 +27,12 @@ class DatabaseSeeder extends Seeder
 			ProductSeeder::class,
 			CustomerSeeder::class,
 			UserSeeder::class,
+
+			//Production
 			AccessorySeeder::class,
 			FabricSeeder::class,
+			ProductionCategorySeeder::class,
+			ProductionProductSeeder::class,
 		]);
 	}
 }

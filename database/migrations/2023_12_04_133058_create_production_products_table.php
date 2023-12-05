@@ -26,6 +26,8 @@ return new class extends Migration
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();
+
+			$table->unique(['name', 'category_id']);
 		});
 	}
 

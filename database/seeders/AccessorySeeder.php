@@ -12,14 +12,15 @@ class AccessorySeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		$now = now();
 		Accessory::insert([
-			['name' => 'Bojo'],
-			['name' => 'Bordado'],
-			['name' => 'Botão'],
-			['name' => 'Botão Casal'],
-			['name' => 'Colchete'],
-			['name' => 'Fecho'],
-			['name' => 'Tik Tak'],
+			['name' => 'Bojo', 'created_at' => $now],
+			['name' => 'Bordado', 'created_at' => $now],
+			['name' => 'Botão', 'created_at' => $now],
+			['name' => 'Botão Casal', 'created_at' => $now],
+			['name' => 'Colchete', 'created_at' => $now],
+			['name' => 'Fecho', 'created_at' => $now],
+			['name' => 'Tik Tak', 'created_at' => $now],
 		]);
 	}
 }

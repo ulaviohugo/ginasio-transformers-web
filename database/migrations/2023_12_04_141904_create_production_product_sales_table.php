@@ -14,18 +14,18 @@ return new class extends Migration
 	{
 		Schema::create(DBHelper::TB_PRODUCTION_PRODUCT_SALES, function (Blueprint $table) {
 			$table->id();
+			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('category_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_CATEGORIES)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('product_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_PRODUCTS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('sale_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTION_SALES)->cascadeOnUpdate()->nullOnDelete();
+			$table->string('color', 20)->nullable();
+			$table->string('size', 30)->nullable();
 			$table->string('lot', 70)->nullable();
 			$table->integer('quantity');
 			$table->double('unit_price', 16, 3)->default(0);
 			$table->double('total_value', 16, 3);
 			$table->double('amount_paid', 16, 3)->default(0);
 			$table->double('discount', 16, 3)->nullable()->default(0);
-			$table->string('color', 20)->nullable();
-			$table->string('size', 30)->nullable();
-			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();

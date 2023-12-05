@@ -12,29 +12,31 @@ class FabricSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		$now = now();
+
 		Fabric::insert([
-			['name' => 'Algodão'],
-			['name' => 'Cetim'],
-			['name' => 'Chifon'],
-			['name' => 'Forro'],
-			['name' => 'Jeans'],
-			['name' => 'Lã'],
-			['name' => 'Linho'],
-			['name' => 'Malha'],
-			['name' => 'Minimate'],
-			['name' => 'Organza'],
-			['name' => 'Pano Cru'],
-			['name' => 'Penas'],
-			['name' => 'Poliester'],
-			['name' => 'Renda'],
-			['name' => 'Sablé'],
-			['name' => 'Sarja'],
-			['name' => 'Tecido Masculino'],
-			['name' => 'Tuli'],
-			['name' => 'Viscose'],
-			['name' => 'Viscose Dupion'],
-			['name' => 'Viscose Printed'],
-			['name' => 'Viscose Satin']
+			['name' => 'Algodão', 'created_at' => $now],
+			['name' => 'Cetim', 'created_at' => $now],
+			['name' => 'Chifon', 'created_at' => $now],
+			['name' => 'Forro', 'created_at' => $now],
+			['name' => 'Jeans', 'created_at' => $now],
+			['name' => 'Lã', 'created_at' => $now],
+			['name' => 'Linho', 'created_at' => $now],
+			['name' => 'Malha', 'created_at' => $now],
+			['name' => 'Minimate', 'created_at' => $now],
+			['name' => 'Organza', 'created_at' => $now],
+			['name' => 'Pano Cru', 'created_at' => $now],
+			['name' => 'Penas', 'created_at' => $now],
+			['name' => 'Poliester', 'created_at' => $now],
+			['name' => 'Renda', 'created_at' => $now],
+			['name' => 'Sablé', 'created_at' => $now],
+			['name' => 'Sarja', 'created_at' => $now],
+			['name' => 'Tecido Masculino', 'created_at' => $now],
+			['name' => 'Tuli', 'created_at' => $now],
+			['name' => 'Viscose', 'created_at' => $now],
+			['name' => 'Viscose Dupion', 'created_at' => $now],
+			['name' => 'Viscose Printed', 'created_at' => $now],
+			['name' => 'Viscose Satin', 'created_at' => $now],
 		]);
 	}
 }

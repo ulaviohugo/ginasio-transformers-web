@@ -25,7 +25,6 @@ class DBHelper
 	const TB_PRODUCTION_PRODUCT_SALES = 'tb_production_product_sales';
 	const TB_PRODUCTION_SALES = 'tb_production_sales';
 	const TB_PRODUCTION_STOCKS = 'tb_production_stocks';
-	const TB_PRODUCTION_SUPPLIERS = 'tb_production_suppliers';
 	const TB_SALES = 'tb_sales';
 	const TB_STOCK = 'tb_stocks';
 	const TB_SUPPLIERS = 'tb_suppliers';
