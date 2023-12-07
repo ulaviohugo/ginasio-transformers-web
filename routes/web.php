@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Route;
 Route::view('', 'app');
 Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
 Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
-Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'autorizacaoConducao']);
-Route::match(['get', 'post'], 'declaracao-trabalho/{employee}', [AdminDocsController::class, 'declaracaoTrabalho']);
-Route::match(['get', 'post'], 'formulario-admissao/{employee}', [AdminDocsController::class, 'formularioAdmissao']);
-Route::match(['get', 'post'], 'formulario-reembolso', [AdminDocsController::class, 'formularioReembolso']);
-Route::match(['get', 'post'], 'justificativo-falta/{employee}', [AdminDocsController::class, 'justificativoFalta']);
-Route::match(['get', 'post'], 'recibo-salario/{employee}', [AdminDocsController::class, 'reciboSalario']);
-Route::match(['get', 'post'], 'requisicao-feria/{employee}', [AdminDocsController::class, 'requisicaoFeria']);
+Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'drivingPermission']);
+Route::match(['get', 'post'], 'declaracao-trabalho/{employee}', [AdminDocsController::class, 'employeeStatement']);
+Route::match(['get', 'post'], 'formulario-admissao/{employee}', [AdminDocsController::class, 'employeeAdmission']);
+Route::match(['get', 'post'], 'formulario-reembolso', [AdminDocsController::class, 'refundForm']);
+Route::match(['get', 'post'], 'justificativo-falta/{employee}', [AdminDocsController::class, 'absenceJustification']);
+Route::match(['get', 'post'], 'recibo-salario/{employee}', [AdminDocsController::class, 'salaryReceipt']);
+Route::match(['get', 'post'], 'requisicao-feria/{employee}', [AdminDocsController::class, 'vacationRequest']);
 
 Route::view('/{path}', 'app')->where(
 	'path',

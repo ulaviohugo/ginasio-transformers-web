@@ -31,9 +31,13 @@ $netSalary = $totalSalary - $totalDiscount;
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Recibo de salário - {{$employee->name}}</title>
 	<style>
+		* {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+		}
+
 		body {
 			/* padding: 8px */
-			font-size: 12px;
+			font-size: 11px;
 		}
 
 		@page {
@@ -45,8 +49,8 @@ $netSalary = $totalSalary - $totalDiscount;
 		.page {
 			max-width: 800px;
 			margin: auto;
-			padding: 8px;
-			border: 1px solid #666
+			padding: 0 48px;
+			/* border: 1px solid #666 */
 		}
 
 		table {
@@ -67,7 +71,7 @@ $netSalary = $totalSalary - $totalDiscount;
 		}
 
 		.border {
-			border: 1px solid #000
+			border: 1px solid #ddd
 		}
 	</style>
 </head>
@@ -77,12 +81,13 @@ $netSalary = $totalSalary - $totalDiscount;
 		ob_start();	
 	?>
 	<div class="page">
-		<img src="{{$logo}}" style="width: 50px; margin-bottom: 10px" alt="">
+
 		<div class="border">
 			<table>
 				<tr>
-					<td><b>RECIBO DE PAGAMENTO DE SALÁRIO</b></td>
-					<td>
+					<td><img src="{{$logo}}" style="width: 50px; margin: 4px 0" alt=""></td>
+					<td style="width: 100%"><b>RECIBO DE PAGAMENTO DE SALÁRIO</b></td>
+					<td style="width: 100px">
 						<div>Original</div>
 						<div><b>Nº 00001</b></div>
 					</td>
@@ -188,18 +193,19 @@ $netSalary = $totalSalary - $totalDiscount;
 			</table>
 		</div>
 		<div class="border">
+			<br>
 			<center><b>DECLARO TER RECEBIDO A I MPOTÂNCIA LÍQUIDA DISCRIMINADA NESTE RECIBO</b></center>
 			<table style="text-align: center">
 				<tr>
 					<td style="text-align: right">
 						____/____/________
 						<br />
-						<b>DATA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b>
+						DATA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 					</td>
 					<td>
 						______________________________________
 						<br />
-						<b>ASSINATURA DO FUNCIONÁRIO</b>
+						ASSINATURA DO FUNCIONÁRIO
 					</td>
 				</tr>
 			</table>
@@ -210,16 +216,23 @@ $netSalary = $totalSalary - $totalDiscount;
 	?>
 
 	{{-- Original --}}
+	<br />
+	<br />
+	<br />
 	{!!$html!!}
 	<br />
-	<div style="color: #888; border: 0; padding: 0; font-size: 14px">
-		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - corte aqui
-		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	<div style="color: #888; border: 0; padding: 0; font-size: 9px; text-align: center">
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		- - - - - - - - - -
+		corte aqui
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		- - - - - - - - - -
 	</div>
+	<br />
 	<br />
 
 	{{-- Duplicado --}}
-	{!!str_replace('Original', 'Duplicado', $html)!!}
+	{!!str_replace('Original', 'Cópia', $html)!!}
 </body>
 
 </html>
