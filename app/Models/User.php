@@ -97,6 +97,21 @@ class User extends Authenticatable implements JWTSubject
 		return $this->hasMany(EmployeePresence::class, 'employee_id');
 	}
 
+	public function country()
+	{
+		return $this->belongsTo(Country::class);
+	}
+
+	public function province()
+	{
+		return $this->belongsTo(Province::class);
+	}
+
+	public function municipality()
+	{
+		return $this->belongsTo(Municipality::class);
+	}
+
 	/**
 	 * Get the identifier that will be stored in the subject claim of the JWT.
 	 *

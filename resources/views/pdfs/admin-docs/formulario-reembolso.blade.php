@@ -1,8 +1,6 @@
 <?php
 $fileHelper =App\Helpers\FileHelper::class; 
 
-$logoPath = $fileHelper::logoPath();
-$logo = $fileHelper::convertToBase64($logoPath);
 $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 ?>
 <!DOCTYPE html>
@@ -182,7 +180,7 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 		</div>
 
 		<div style="position: absolute; bottom: 48px; right: 48px;  opacity: .5; text-align: center; font-size:14px">
-			<img src="{{$logo}}" style="width: 100px" alt="">
+			@include('pdfs.admin-docs.header')
 		</div>
 	</div>
 </body>

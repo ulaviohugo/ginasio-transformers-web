@@ -1,9 +1,6 @@
 <?php
 $fileHelper =App\Helpers\FileHelper::class; 
 
-$logoPath = $fileHelper::logoPath();
-$logo = $fileHelper::convertToBase64($logoPath);
-
 $radioChecked = '<div class="radio"><div class="radio-checked"></div></div>';
 $radioUnchecked = '<div class="radio"></div>';
 
@@ -126,7 +123,7 @@ $competences = [
 
 <body>
 	<div class="page">
-		<img src="{{$logo}}" style="width: 100px" alt="">
+		@include('pdfs.admin-docs.header')
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u></div>
 		<br />
 

@@ -1,9 +1,3 @@
-<?php
-$fileHelper =App\Helpers\FileHelper::class; 
-
-$logoPath = $fileHelper::logoPath();
-$logo = $fileHelper::convertToBase64($logoPath);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,7 +60,7 @@ $logo = $fileHelper::convertToBase64($logoPath);
 
 <body>
 	<div class="page">
-		<img src="{{$logo}}" style="width: 100px" alt="">
+		@include('pdfs.admin-docs.header')
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>JUSTIFICATIVO DE FALTAS</u></div>
 
 		<br />

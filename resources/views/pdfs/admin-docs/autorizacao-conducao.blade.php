@@ -1,9 +1,3 @@
-<?php
-$fileHelper =App\Helpers\FileHelper::class; 
-
-$logoPath = $fileHelper::logoPath();
-$logo = $fileHelper::convertToBase64($logoPath);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +32,7 @@ $logo = $fileHelper::convertToBase64($logoPath);
 
 <body>
 	<div class="page">
-		<img src="{{$logo}}" style="width: 200px" alt="">
+		@include('pdfs.admin-docs.header')
 		<div style="font-size: 24px; text-align: center; font-weight: bold"><u>AUTORIZAÇÃO DE CONDUÇÃO</u></div>
 		<br />
 		<div>
@@ -49,9 +43,20 @@ $logo = $fileHelper::convertToBase64($logoPath);
 			de marca Yamang, número de quadro nº LZ BB 15125CB227013, com o número de motor nº156FMI71201222, com 50cc
 			Cilindrada, 2 (dois) lugares de lotação, cor vermelha, com o livrete nº 186–309, registrada aos 27 de Julho de
 			2017.
+		</div>
+		<br>
+
+		<div>
 			Venho por meio desta autorizar o senhor <b>{{$employee->name}}</b>, titular do {{$employee->document_type}} nº
 			<b>{{$employee->document_number}}</b>, emitido aos
-			12/06/2015, nascido aos 25/07/1996, natural de Calulo, a conduzir o referido velocípede.
+			12/06/2015, nascido aos {{date('d/m/Y', strtotime($employee->date_of_birth))}},
+			natural de {{$employee->municipality?->name ?? $employee->province?->name ?? $employee->country?->name}}, a
+			conduzir o
+			referido velocípede.
+		</div>
+		<br>
+
+		<div>
 			Para que não se imponha qualquer impedimento, mandei passar a presente declaração, que vai por mim assinada
 			conforme
 			o Bilhete de Identidade.
