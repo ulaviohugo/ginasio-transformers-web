@@ -28,6 +28,13 @@ export class MenuUtils {
 		EMPLOYEE_PRESENCES: '/rh/presenca',
 		EMPLOYEE_SALARY_RECEIPT: '/rh/folha-salarial',
 
+		ADMIN_DOCS: '/rh/documentos',
+		ADMIN_DOC_DECLARACAO: '/rh/documentos/declaracao',
+		ADMIN_DOC_ADMISSAO: '/rh/documentos/admissao',
+		ADMIN_DOC_REQUISICAO_FERIA: '/rh/documentos/requisicao-de-feria',
+		ADMIN_DOC_JUSTIFICATIVO: '/rh/documentos/justificativo-de-falta',
+		ADMIN_DOC_REEMBOLSO: '/rh/documentos/reembolso',
+
 		NOTIFICATION: '/notificacoes'
 	}
 
@@ -38,7 +45,8 @@ export class MenuUtils {
 		const data = [
 			{ link: this.FRONT.EMPLOYEES, text: 'Funcionários' },
 			{ link: this.FRONT.EMPLOYEE_PRESENCES, text: 'Presença' },
-			{ link: this.FRONT.EMPLOYEE_SALARY_RECEIPT, text: 'Folha Salarial' }
+			{ link: this.FRONT.EMPLOYEE_SALARY_RECEIPT, text: 'Folha Salarial' },
+			{ link: this.FRONT.ADMIN_DOCS, text: 'Documentos' }
 		]
 		return data
 	}

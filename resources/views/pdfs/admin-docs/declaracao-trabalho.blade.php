@@ -11,7 +11,7 @@ $logo = $fileHelper::convertToBase64($logoPath);
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Justificativo de falta - {{$employee->name}}</title>
+	<title>Declaração de trabalho - {{$employee->name}}</title>
 
 	<style>
 		* {
@@ -68,116 +68,42 @@ $logo = $fileHelper::convertToBase64($logoPath);
 <body>
 	<div class="page">
 		<img src="{{$logo}}" style="width: 100px" alt="">
-		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>REQUISIÇÃO DE FÉRIAS</u></div>
-		<br />
+		<br> <br> <br> <br>
+		<div style="font-size: 24px" class="center"><b>DECLARAÇÃO</b></div>
+		<br> <br>
 
 		<div>
-			<table cellspacing="0">
-				<tr>
-					<td class="no-border" style="width: 150">Requisição nº <b>01</b></td>
-					<td class="no-border" style="width: 100%">Data ___/____/_____</td>
-				</tr>
-			</table>
-
-			<table cellspacing="0">
-				<tr>
-					<td class="no-border" style="width: 240px">Nome Completo do Requerente: </td>
-					<td class="no-border border-b" style="width: 100%">{{$employee->name}}</td>
-				</tr>
-			</table>
-
-			<table cellspacing="0">
-				<tr>
-					<td style="width: 135px" class="no-border">Nº do Funcionário: </td>
-					<td style="width: 50px;" class="no-border border-b">
-						{{$employee->id}}
-					</td>
-					<td class="no-border">Área/Departamento: </td>
-					<td style="width: 100%;" class="no-border border-b">
-						Administrativo
-					</td>
-				</tr>
-			</table>
-
-
-			<table cellspacing="0">
-				<tr>
-					<td class="no-border">Função: </td>
-					<td style="width: 100%;" class="no-border border-b">
-						{{$employee->position}}
-					</td>
-				</tr>
-			</table>
-		</div>
-		<br />
-
-		<table cellspacing="0" class="center">
-			<tr>
-				<td class="no-border bold" rowspan="3" style="width: 100px; text-align:left">Balanço de férias anuais</td>
-			</tr>
-			<tr>
-				<td class="no-border bold">Dias já Gozados</td>
-				<td class="no-border bold">Dias Pretendidos</td>
-				<td class="no-border bold">Dias em Falta</td>
-			</tr>
-			<tr>
-				<td class="no-border">
-					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
-				</td>
-				<td class="no-border">
-					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
-				</td>
-				<td class="no-border">
-					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
-				</td>
-			</tr>
-		</table>
-		<br>
-		<table cellspacing="0" style="font-size: 14px">
-			<tr>
-				<td class="no-border">Data de início de férias: </td>
-				<td class="no-border">___/____/_____</td>
-				<td class="no-border">Data de início de trabalho: </td>
-				<td class="no-border">___/____/_____</td>
-			</tr>
-		</table>
-		<br>
-		<br>
-		<table cellspacing="0">
-			<tr>
-				<td class="no-border">Férias paga [x]</td>
-				<td class="no-border">Férias não paga [ ]</td>
-			</tr>
-		</table>
-		<br>
-		<br>
-
-		<div class="border-b">
-			Assinatura do colaborador (Nome legível):
-			<br>
-			<br>
+			Para todos efeitos legais, declara-se que <b><u>{{$employee->name}}</u></b>, de nacionalidade Angolana, portadora
+			do
+			B.I nº {{$employee->document_number}} é funcionária da empresa por tempo indeterminado, admitida no dia
+			{{date('d', strtotime($employee->hire_date))}} de
+			{{App\Helpers\DateHelper::months[date('m', strtotime($employee->hire_date))]}}
+			de {{date('Y', strtotime($employee->hire_date))}},
+			exercendo a função de Gestora Comercial, auferindo mensalmente
+			o salário base de {{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}} Akz e subsídio de
+			transporte e alimentação no valor de 30.000,00 Akz
+			(Trinta Mil Kwanzas).
 		</div>
 		<br>
-		<br>
-		<br>
 
-		<table cellspacing="0">
-			<tr>
-				<td class="no-border">Processado pelo RH.</td>
-				<td class="no-border">Data: ___/____/_____</td>
-			</tr>
-		</table>
-		<br>
-		<br>
+		<div>
+			Por ser verdade mandou-se passar a presente declaração, que vai devidamente assinada e autenticada com carimbo a
+			óleo, em uso nesta empresa, para efeito de VISTO.
+		</div>
+		<br><br><br>
 
+		<div>
+			Luanda, {{date('d')}} de {{App\Helpers\DateHelper::months[date('m')]}} de {{date('Y')}}.
+		</div>
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br><br><br>
 
-		<div class="border-b">
-			Assinatura da Diretora Geral ou (Responsável de Área).
+		<div class="center">
+			Direcção Geral
 			<br>
 			<br>
+			<div style="display: inline-block; width: 200px" class="border-b"></div>
 		</div>
 
 		@include('pdfs.admin-docs.footer')
