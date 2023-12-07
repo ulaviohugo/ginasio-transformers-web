@@ -62,4 +62,10 @@ class AdminDocsController extends Controller
 		$pdf = Pdf::loadView('pdfs.admin-docs.formulario-admissao', compact('employee'));
 		return	$pdf->stream("formulario-admissao-{$employee->id}-{$employee->name}.pdf");
 	}
+
+	public function formularioReembolso(Request $request)
+	{
+		$pdf = Pdf::loadView('pdfs.admin-docs.formulario-reembolso');
+		return	$pdf->stream("formulario-reembolso.pdf");
+	}
 }

@@ -23,6 +23,7 @@ Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::cl
 Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'autorizacaoConducao']);
 Route::match(['get', 'post'], 'declaracao-trabalho/{employee}', [AdminDocsController::class, 'declaracaoTrabalho']);
 Route::match(['get', 'post'], 'formulario-admissao/{employee}', [AdminDocsController::class, 'formularioAdmissao']);
+Route::match(['get', 'post'], 'formulario-reembolso', [AdminDocsController::class, 'formularioReembolso']);
 Route::match(['get', 'post'], 'justificativo-falta/{employee}', [AdminDocsController::class, 'justificativoFalta']);
 Route::match(['get', 'post'], 'recibo-salario/{employee}', [AdminDocsController::class, 'reciboSalario']);
 Route::match(['get', 'post'], 'requisicao-feria/{employee}', [AdminDocsController::class, 'requisicaoFeria']);
