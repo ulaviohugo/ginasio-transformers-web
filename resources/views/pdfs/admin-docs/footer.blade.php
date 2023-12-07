@@ -3,6 +3,6 @@
 	<div style="color: #000"><b>WO - Gente Chick Gente Fina</b></div>
 	<div>Rua: Francisco Sande Lemos, Lote 14, 3º Entrepiso</div>
 	<div>Tel. +244 923 824 204</div>
-	<div>E-mail - gentechikgentefina@gmail.com</div>
+	<div>E-mail - {{env('APP_MAIL')}}</div>
 	<div>Luanda - Angola</div>
 </div>
