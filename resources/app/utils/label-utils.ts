@@ -5,7 +5,7 @@ import {
 	EmployeeModel,
 	InsuredModel,
 	ProductModel,
-	PurchaseModel,
+	StockModel,
 	SaleModel,
 	SupplierModel,
 	TransactionModel
@@ -17,7 +17,7 @@ type FieldTypes = Partial<Record<keyof CategoryModel, string>> &
 	Partial<Record<keyof ProductModel, string>> &
 	Partial<Record<keyof SaleModel, string>> &
 	Partial<Record<keyof SupplierModel, string>> &
-	Partial<Record<keyof PurchaseModel, string>> &
+	Partial<Record<keyof StockModel, string>> &
 	Partial<Record<keyof TransactionModel, string>> &
 	Partial<Record<keyof CashRegisterModel, string>> &
 	Partial<Record<keyof InsuredModel, string>> & {

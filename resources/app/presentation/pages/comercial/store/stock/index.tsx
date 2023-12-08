@@ -11,7 +11,7 @@ import {
 	ModalDelete
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 import {
 	makeRemoteAddPurchase,
 	makeRemoteDeletePurchase,
@@ -30,11 +30,9 @@ export function Stock() {
 
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
-	const [selectedPurchase, setSelectedPurchase] = useState<PurchaseModel>(
-		{} as PurchaseModel
-	)
+	const [selectedPurchase, setSelectedPurchase] = useState<StockModel>({} as StockModel)
 	const clearSelectedPurchase = () => {
-		setSelectedPurchase({} as PurchaseModel)
+		setSelectedPurchase({} as StockModel)
 	}
 
 	const handleCloseDetail = () => {

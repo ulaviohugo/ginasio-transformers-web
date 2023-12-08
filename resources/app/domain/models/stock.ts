@@ -1,6 +1,6 @@
 import { CategoryModel, EmployeeModel, ProductModel, SupplierModel } from '.'
 
-export interface PurchaseModel {
+export interface StockModel {
 	id: number
 	photo?: string
 	lot?: string

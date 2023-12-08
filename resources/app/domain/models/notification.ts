@@ -1,4 +1,4 @@
-import { PurchaseModel } from '.'
+import { StockModel } from '.'
 
 export interface NotificationModel {
 	id: number
@@ -9,7 +9,7 @@ export interface NotificationModel {
 	updated_at?: Date
 	user_id_update?: number
 
-	stock?: PurchaseModel
+	stock?: StockModel
 }
 
 export enum Notifiable {

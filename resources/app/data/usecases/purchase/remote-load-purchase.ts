@@ -2,7 +2,7 @@ import { LoadPurchases, LoadPurchasesResult } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
 import { QueryParams } from '@/data/protocols'
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 import { ObjectUtils } from '@/utils'
 
 export class RemoteLoadPurchases implements LoadPurchases {
@@ -11,7 +11,7 @@ export class RemoteLoadPurchases implements LoadPurchases {
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(queryParams?: QueryParams<PurchaseModel>): Promise<LoadPurchasesResult> {
+	async load(queryParams?: QueryParams<StockModel>): Promise<LoadPurchasesResult> {
 		const url = queryParams ? ObjectUtils.toQueryParams(queryParams, this.url) : this.url
 
 		const httpResponse = await this.httpClient.request({

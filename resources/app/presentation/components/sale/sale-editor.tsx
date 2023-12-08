@@ -7,7 +7,7 @@ import {
 	CategoryModel,
 	ProductModel,
 	ProductSaleModel,
-	PurchaseModel
+	StockModel
 } from '@/domain/models'
 import {
 	ButtonCancel,
@@ -198,7 +198,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		}
 		if (name == 'quantity') {
 			let quantity = NumberUtils.convertToNumber(value)
-			const stock: PurchaseModel = stocks.find(
+			const stock: StockModel = stocks.find(
 				(stock) =>
 					stock.category_id == formProduct.category_id &&
 					stock.product_id == Number(formProduct.product_id) &&
@@ -238,7 +238,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		}
 
 		if (name == 'product_id') {
-			const stock: PurchaseModel = stocks.find(
+			const stock: StockModel = stocks.find(
 				(stock) =>
 					stock.category_id == formProduct.category_id &&
 					stock.product_id == Number(value) &&
@@ -279,7 +279,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		if (!quantity) return toast.error('Informe a quantidade')
 		if (!amount_paid) return toast.error('Informe o valor total a pagar')
 
-		const stock: PurchaseModel = stocks.find(
+		const stock: StockModel = stocks.find(
 			(stock) => stock.category_id == category_id && stock.product_id == product_id
 		) as any
 

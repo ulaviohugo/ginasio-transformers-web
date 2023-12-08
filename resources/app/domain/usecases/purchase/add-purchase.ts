@@ -1,7 +1,7 @@
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 
 export interface AddPurchase {
-	add(param: PurchaseModel): Promise<AddPurchasesResult>
+	add(param: StockModel): Promise<AddPurchasesResult>
 }
 
-export type AddPurchasesResult = PurchaseModel
+export type AddPurchasesResult = StockModel

@@ -1,3 +1,3 @@
-import { PurchaseModel } from '.'
+import { StockModel } from '.'
 
-export interface ProductionStockModel extends PurchaseModel {}
+export interface ProductionStockModel extends StockModel {}

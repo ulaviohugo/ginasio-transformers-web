@@ -1,8 +1,8 @@
 import { QueryParams } from '@/data/protocols'
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 
 export interface LoadPurchases {
-	load(queryParams?: QueryParams<PurchaseModel>): Promise<LoadPurchasesResult>
+	load(queryParams?: QueryParams<StockModel>): Promise<LoadPurchasesResult>
 }
 
-export type LoadPurchasesResult = PurchaseModel[]
+export type LoadPurchasesResult = StockModel[]

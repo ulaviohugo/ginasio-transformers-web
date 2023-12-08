@@ -22,11 +22,11 @@ import {
 	useSuppliers
 } from '@/presentation/hooks'
 import { QueryParams } from '@/data/protocols'
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 
 type StokeListProps = {
 	loadStokes: LoadPurchases
-	onSelectStock: (selectedStock: PurchaseModel) => void
+	onSelectStock: (selectedStock: StockModel) => void
 }
 
 type FilterDataProps = {
@@ -106,7 +106,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const handleSelectRow = (id: number) => {
 		setSelectedRow(selectedRow != id ? id : 0)
 	}
-	const handleSelectStock = (customer: PurchaseModel) => {
+	const handleSelectStock = (customer: StockModel) => {
 		handleSelectRow(customer.id)
 		onSelectStock(selectedRow != customer.id ? customer : ({} as any))
 	}

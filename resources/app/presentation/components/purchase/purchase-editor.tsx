@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { CategoryModel, ProductModel, PurchaseModel } from '@/domain/models'
+import { CategoryModel, ProductModel, StockModel } from '@/domain/models'
 import {
 	Button,
 	ButtonSubmit,
@@ -42,7 +42,7 @@ import {
 } from '@/main/factories/usecases'
 
 type PurchaseEditorProps = {
-	data?: PurchaseModel
+	data?: StockModel
 	onClose: () => void
 	addPurchase: AddPurchase
 	updatePurchase: UpdatePurchase
@@ -65,12 +65,12 @@ export function PurchaseEditor({
 	const [productList, setProductList] = useState<ProductModel[]>([])
 	const [categoryList, setCategoryList] = useState<CategoryModel[]>(categories)
 
-	const [formData, setFormData] = useState<PurchaseModel>(
+	const [formData, setFormData] = useState<StockModel>(
 		(data?.id && data) ||
 			({
 				paid: 'SIM',
 				purchase_date: DateUtils.getDate(new Date()) as any
-			} as PurchaseModel)
+			} as StockModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
@@ -94,7 +94,7 @@ export function PurchaseEditor({
 		setFormData({
 			paid: 'SIM',
 			purchase_date: DateUtils.getDate(new Date()) as any
-		} as PurchaseModel)
+		} as StockModel)
 	}
 
 	useEffect(() => {
@@ -158,7 +158,7 @@ export function PurchaseEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: PurchaseModel = { ...formData, [name]: value }
+		let data: StockModel = { ...formData, [name]: value }
 
 		// if (name == 'supplier_id') {
 		// 	const supplierId = NumberUtils.convertToNumber(value)
@@ -225,7 +225,7 @@ export function PurchaseEditor({
 			const update = type == 'update'
 			const httpResponse = (
 				update ? await updatePurchase.update(formData) : await addPurchase.add(formData)
-			) as PurchaseModel
+			) as StockModel
 
 			if (update) {
 				dispatch(updatePurchaseStore(httpResponse))

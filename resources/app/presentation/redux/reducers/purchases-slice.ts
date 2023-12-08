@@ -1,8 +1,8 @@
-import { PurchaseModel } from '@/domain/models'
+import { StockModel } from '@/domain/models'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface PurchaseState {
-	purchases: PurchaseModel[]
+	purchases: StockModel[]
 }
 
 const initialState: PurchaseState = {
@@ -13,10 +13,10 @@ export const purchaseSlice = createSlice({
 	name: 'purchases',
 	initialState,
 	reducers: {
-		addPurchaseStore: (state, action: PayloadAction<PurchaseModel>) => {
+		addPurchaseStore: (state, action: PayloadAction<StockModel>) => {
 			state.purchases.unshift(action.payload)
 		},
-		loadPurchaseStore: (state, action: PayloadAction<PurchaseModel[]>) => {
+		loadPurchaseStore: (state, action: PayloadAction<StockModel[]>) => {
 			state.purchases = action.payload
 		},
 		removePurchaseStore: (state, action: PayloadAction<number>) => {
@@ -24,7 +24,7 @@ export const purchaseSlice = createSlice({
 				(purchase) => purchase.id !== action.payload
 			)
 		},
-		updatePurchaseStore: (state, action: PayloadAction<PurchaseModel>) => {
+		updatePurchaseStore: (state, action: PayloadAction<StockModel>) => {
 			state.purchases = state.purchases.map((purchase) => {
 				if (purchase.id == action.payload.id) {
 					return action.payload
