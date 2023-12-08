@@ -32,7 +32,7 @@ import {
 	loadSupplierStore,
 	updatePurchaseStore
 } from '@/presentation/redux'
-import { AddPurchase, UpdatePurchase } from '@/domain/usecases'
+import { AddStock, UpdateStock } from '@/domain/usecases'
 import { useAuth, useCategories, useProducts, useSuppliers } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCategories,
@@ -43,8 +43,8 @@ import {
 type PurchaseEditorProps = {
 	data?: StockModel
 	onClose: () => void
-	addPurchase: AddPurchase
-	updatePurchase: UpdatePurchase
+	addPurchase: AddStock
+	updatePurchase: UpdateStock
 	onDelete: () => void
 }
 

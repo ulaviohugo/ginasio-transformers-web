@@ -1,26 +1,27 @@
 import { StockModel } from '@/domain/models'
-import { UpdatePurchase } from '@/domain/usecases'
+import { AddStock } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { NumberUtils, ObjectUtils } from '@/utils'
+import { FormDataUtils, NumberUtils } from '@/utils'
 
-export class RemoteUpdatePurchase implements UpdatePurchase {
+export class RemoteAddStock implements AddStock {
 	constructor(
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: StockModel): Promise<StockModel> {
+	async add(param: StockModel): Promise<StockModel> {
 		const unit_price = NumberUtils.convertToNumber(param.unit_price)
 		const total_value = NumberUtils.convertToNumber(param.total_value)
-		const body = ObjectUtils.removeProps<StockModel>(
-			{ ...param, unit_price, total_value },
-			['created_at', 'user_id', 'updated_at', 'user_id_update', 'employee_id']
-		)
 
+		const body = FormDataUtils.createFormData({
+			...param,
+			unit_price,
+			total_value
+		})
 		const httpResponse = await this.httpClient.request({
-			method: 'put',
-			url: `${this.url}/${param.id}`,
+			method: 'post',
+			url: this.url,
 			body
 		})
 		switch (httpResponse.statusCode) {

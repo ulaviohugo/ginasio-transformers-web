@@ -1,22 +1,17 @@
-import { LoadPurchases, LoadPurchasesResult } from '@/domain/usecases'
+import { CountStocks } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { QueryParams } from '@/data/protocols'
-import { StockModel } from '@/domain/models'
-import { ObjectUtils } from '@/utils'
 
-export class RemoteLoadPurchases implements LoadPurchases {
+export class RemoteCountStock implements CountStocks {
 	constructor(
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
 
-	async load(queryParams?: QueryParams<StockModel>): Promise<LoadPurchasesResult> {
-		const url = queryParams ? ObjectUtils.toQueryParams(queryParams, this.url) : this.url
-
+	async count(): Promise<number> {
 		const httpResponse = await this.httpClient.request({
 			method: 'get',
-			url
+			url: this.url
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

@@ -1,5 +1,5 @@
 import { StockModel } from '@/domain/models'
 
-export interface UpdatePurchase {
+export interface UpdateStock {
 	update(param: StockModel): Promise<StockModel>
 }

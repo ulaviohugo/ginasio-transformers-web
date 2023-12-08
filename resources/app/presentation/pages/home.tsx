@@ -16,7 +16,7 @@ import {
 	makeRemoteCountCustomers,
 	makeRemoteCountEmployees,
 	makeRemoteCountProduct,
-	makeRemoteCountPurchases,
+	makeRemoteCountStocks,
 	makeRemoteCountSales,
 	makeRemoteCountSuppliers
 } from '@/main/factories/usecases'
@@ -113,7 +113,7 @@ export function Home() {
 		}
 		{
 			isAdmin &&
-				fetchCount(makeRemoteCountPurchases(), (response) => {
+				fetchCount(makeRemoteCountStocks(), (response) => {
 					setPurchases(response)
 					setIsLoadingPurchases(false)
 				})

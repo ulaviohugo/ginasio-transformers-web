@@ -13,10 +13,10 @@ import {
 import { useAuth } from '@/presentation/hooks'
 import { StockModel } from '@/domain/models'
 import {
-	makeRemoteAddPurchase,
-	makeRemoteDeletePurchase,
-	makeRemoteLoadPurchases,
-	makeRemoteUpdatePurchase
+	makeRemoteAddStock,
+	makeRemoteDeleteStock,
+	makeRemoteLoadStocks,
+	makeRemoteUpdateStock
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 import { NotFound } from '@/presentation/pages'
@@ -49,7 +49,7 @@ export function Stock() {
 
 	const handleDelete = async () => {
 		try {
-			await makeRemoteDeletePurchase().delete(selectedPurchase.id)
+			await makeRemoteDeleteStock().delete(selectedPurchase.id)
 			dispatch(removePurchaseStore(selectedPurchase.id))
 			toast.success(`O entrada foi excluída`)
 			handleCloseFormDelete()
@@ -87,13 +87,13 @@ export function Stock() {
 						<PurchaseEditor
 							data={selectedPurchase}
 							onClose={handleCloseDetail}
-							addPurchase={makeRemoteAddPurchase()}
-							updatePurchase={makeRemoteUpdatePurchase()}
+							addPurchase={makeRemoteAddStock()}
+							updatePurchase={makeRemoteUpdateStock()}
 							onDelete={handleOpenFormDelete}
 						/>
 					</fieldset>
 					<StockList
-						loadStokes={makeRemoteLoadPurchases()}
+						loadStokes={makeRemoteLoadStocks()}
 						onSelectStock={setSelectedPurchase}
 					/>
 				</div>

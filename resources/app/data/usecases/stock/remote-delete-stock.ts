@@ -1,23 +1,22 @@
-import { CountPurchase } from '@/domain/usecases'
+import { DeleteStock } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
 
-export class RemoteCountPurchase implements CountPurchase {
+export class RemoteDeleteStock implements DeleteStock {
 	constructor(
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
-
-	async count(): Promise<number> {
+	async delete(id: number): Promise<boolean> {
 		const httpResponse = await this.httpClient.request({
-			method: 'get',
-			url: this.url
+			method: 'delete',
+			url: `${this.url}/${id}`
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:
 				return httpResponse.body
 			default:
-				throw new UnexpectedError(httpResponse.body as any)
+				throw new UnexpectedError(httpResponse.body)
 		}
 	}
 }

@@ -34,7 +34,7 @@ import { useAuth, useCustomers, useEmployees, usePurchases } from '@/presentatio
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadEmployees,
-	makeRemoteLoadPurchases
+	makeRemoteLoadStocks
 } from '@/main/factories/usecases'
 
 type ProductSaleProps = {
@@ -161,7 +161,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		fetchData(makeRemoteLoadCustomers(), (response) => {
 			dispatch(loadCustomerStore(response))
 		})
-		fetchData(makeRemoteLoadPurchases(), (response) => {
+		fetchData(makeRemoteLoadStocks(), (response) => {
 			dispatch(loadPurchaseStore(response))
 		})
 		fetchData(makeRemoteLoadEmployees(), (response) => {

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { IconClose, IconSearch, IconStock, Input, NoData, Select, Spinner } from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
-import { LoadPurchases } from '@/domain/usecases'
+import { LoadStocks } from '@/domain/usecases'
 import { loadPurchaseStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
@@ -15,7 +15,7 @@ import { QueryParams } from '@/data/protocols'
 import { StockModel } from '@/domain/models'
 
 type StokeListProps = {
-	loadStokes: LoadPurchases
+	loadStokes: LoadStocks
 	onSelectStock: (selectedStock: StockModel) => void
 }
 

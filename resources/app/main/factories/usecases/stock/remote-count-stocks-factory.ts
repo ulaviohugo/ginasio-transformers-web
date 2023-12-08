@@ -1,10 +1,10 @@
-import { RemoteLoadPurchases } from '@/data/usecases'
+import { RemoteCountStock } from '@/data/usecases'
 import { makeApiUrl } from '@/main/factories/http'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 
-export const makeRemoteLoadPurchases = () => {
-	return new RemoteLoadPurchases(
-		makeApiUrl('/stocks'),
+export const makeRemoteCountStocks = () => {
+	return new RemoteCountStock(
+		makeApiUrl('/stocks/count'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }
