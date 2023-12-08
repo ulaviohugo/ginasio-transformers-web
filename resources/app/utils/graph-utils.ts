@@ -20,17 +20,10 @@ type GraphBuilderProps = {
 	data: GraphValueProps[]
 	htmlRef: RefObject<GraphHtmlRefProps>
 	graphType: GraphType
-	barWidth?: number
 }
 
 export class GraphUtils {
-	static buildGraph({
-		data,
-		htmlRef,
-		title,
-		graphType,
-		barWidth = 48
-	}: GraphBuilderProps) {
+	static buildGraph({ data, htmlRef, title, graphType }: GraphBuilderProps) {
 		const graphData = ArrayUtils.order({
 			data: data.map(({ field, value }) => ({
 				field,

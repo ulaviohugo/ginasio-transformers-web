@@ -8,16 +8,16 @@ import {
 	LayoutBody,
 	ModalDelete,
 	SaleEditor,
-	SubMenu,
-	SaleList
+	SaleList,
+	SubMenu
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { removeSaleStore } from '@/presentation/redux'
 import { SaleModel } from '@/domain/models'
 import {
-	makeRemoteAddSale,
-	makeRemoteDeleteSale,
-	makeRemoteLoadSales
+	makeRemoteAddProductionSale,
+	makeRemoteDeleteProductionSale,
+	makeRemoteLoadProductionSales
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 
@@ -40,7 +40,7 @@ export function ProductionSales() {
 
 	const handleDelete = async () => {
 		try {
-			await makeRemoteDeleteSale().delete(selectedSale.id)
+			await makeRemoteDeleteProductionSale().delete(selectedSale.id)
 			dispatch(removeSaleStore(selectedSale.id))
 			toast.success(`A venda foi excluída`)
 			handleCloseFormDelete()
@@ -50,7 +50,7 @@ export function ProductionSales() {
 	}
 
 	return (
-		<Layout>
+		<Layout title="Saída de produtos - Produção">
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
@@ -75,12 +75,12 @@ export function ProductionSales() {
 						<legend>Cadastro de venda</legend>
 						<SaleEditor
 							// data={selectedSale}
-							addSale={makeRemoteAddSale()}
-							loadSales={makeRemoteLoadSales()}
+							addSale={makeRemoteAddProductionSale()}
+							loadSales={makeRemoteLoadProductionSales()}
 						/>
 					</fieldset>
 
-					<SaleList loadSales={makeRemoteLoadSales()} />
+					<SaleList loadSales={makeRemoteLoadProductionSales()} />
 				</div>
 			</LayoutBody>
 		</Layout>

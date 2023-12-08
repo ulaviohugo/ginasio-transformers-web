@@ -26,11 +26,11 @@ type GraphDataProps = {
 	employees_amount: GraphValueProps[]
 }
 
-type SaleGraphProps = {
+type ProductionSaleGraphProps = {
 	onClose: () => void
 }
 
-export function SaleGraph({ onClose }: SaleGraphProps) {
+export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 	const [loading, setLoading] = useState(true)
 	const [graphData, setGraphData] = useState<GraphDataProps>({
 		categories_quantity: [],

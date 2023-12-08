@@ -6,41 +6,33 @@ use App\Helpers\DBHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductionStock extends Model
+class ProductionSupplierProduct extends Model
 {
 	use HasFactory;
 
-	protected $table = DBHelper::TB_PRODUCTION_STOCKS;
+	protected $table = DBHelper::TB_PRODUCTION_SUPPLIER_PRODUCTS;
 
 	protected $fillable = [
-		'photo',
-		'lot',
-		'bar_code',
 		'supplier_id',
-		'category_id',
 		'product_id',
-		'color',
-		'size',
+		'category_id',
 		'unit_price',
-		'quantity',
-		'initial_quantity',
-		'total_value',
-		'payment_method',
-		'paid',
-		'purchase_date',
-		'due_date',
-		'employee_id',
 		'user_id',
 		'user_id_update',
 	];
 
 	public function category()
 	{
-		return $this->belongsTo(ProductionCategory::class);
+		return $this->belongsTo(ProductionCategory::class, 'category_id');
 	}
 
 	public function product()
 	{
 		return $this->belongsTo(ProductionProduct::class);
+	}
+
+	public function supplier()
+	{
+		return $this->belongsTo(ProductionSupplier::class);
 	}
 }

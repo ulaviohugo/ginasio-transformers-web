@@ -27,11 +27,11 @@ import {
 	PaymentUtils
 } from '@/utils'
 import {
-	addPurchaseStore,
+	addStockStore,
 	loadCategoryStore,
 	loadProductStore,
 	loadSupplierStore,
-	updatePurchaseStore
+	updateStockStore
 } from '@/presentation/redux'
 import { AddStock, UpdateStock } from '@/domain/usecases'
 import { useAuth, useCategories, useProducts, useSuppliers } from '@/presentation/hooks'
@@ -41,21 +41,21 @@ import {
 	makeRemoteLoadSuppliers
 } from '@/main/factories/usecases'
 
-type PurchaseEditorProps = {
+type StockEditorProps = {
 	data?: StockModel
 	onClose: () => void
-	addPurchase: AddStock
-	updatePurchase: UpdateStock
+	addStock: AddStock
+	updateStock: UpdateStock
 	onDelete: () => void
 }
 
-export function PurchaseEditor({
+export function StockEditor({
 	data,
 	onClose,
-	addPurchase,
-	updatePurchase,
+	addStock,
+	updateStock,
 	onDelete
-}: PurchaseEditorProps) {
+}: StockEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useCategories())
 	const products = useSelector(useProducts())
@@ -224,13 +224,13 @@ export function PurchaseEditor({
 		try {
 			const update = type == 'update'
 			const httpResponse = (
-				update ? await updatePurchase.update(formData) : await addPurchase.add(formData)
+				update ? await updateStock.update(formData) : await addStock.add(formData)
 			) as StockModel
 
 			if (update) {
-				dispatch(updatePurchaseStore(httpResponse))
+				dispatch(updateStockStore(httpResponse))
 			} else {
-				dispatch(addPurchaseStore(httpResponse))
+				dispatch(addStockStore(httpResponse))
 			}
 			toast.success(`Compra ${update ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()

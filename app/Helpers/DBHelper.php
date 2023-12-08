@@ -19,12 +19,14 @@ class DBHelper
 	const TB_PRODUCT_SALES = 'tb_product_sales';
 	const TB_PRODUCTION_ACCESSORIES = 'tb_production_accessories';
 	const TB_PRODUCTION_BUDGETS = 'tb_production_budgets';
-	const TB_PRODUCTION_FABRICS = 'tb_production_fabrics';
 	const TB_PRODUCTION_CATEGORIES = 'tb_production_categories';
+	const TB_PRODUCTION_FABRICS = 'tb_production_fabrics';
 	const TB_PRODUCTION_PRODUCTS = 'tb_production_products';
 	const TB_PRODUCTION_PRODUCT_SALES = 'tb_production_product_sales';
 	const TB_PRODUCTION_SALES = 'tb_production_sales';
 	const TB_PRODUCTION_STOCKS = 'tb_production_stocks';
+	const TB_PRODUCTION_SUPPLIERS = 'tb_production_suppliers';
+	const TB_PRODUCTION_SUPPLIER_PRODUCTS = 'tb_production_supplier_products';
 	const TB_SALES = 'tb_sales';
 	const TB_STOCK = 'tb_stocks';
 	const TB_SUPPLIERS = 'tb_suppliers';

@@ -2,21 +2,21 @@ import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { IconClose, IconSearch, IconStock, Input, NoData, Select, Spinner } from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadStocks } from '@/domain/usecases'
-import { loadPurchaseStore } from '@/presentation/redux'
+import { loadProductionStockStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import {
-	useCategories,
-	useProducts,
-	usePurchases,
-	useSuppliers
+	useProductionCategories,
+	useProductionProducts,
+	useProductionStocks,
+	useProductionSuppliers
 } from '@/presentation/hooks'
 import { QueryParams } from '@/data/protocols'
-import { StockModel } from '@/domain/models'
+import { ProductionStockModel } from '@/domain/models'
 
 type StokeListProps = {
 	loadStokes: LoadStocks
-	onSelectStock: (selectedStock: StockModel) => void
+	onSelectStock: (selectedStock: ProductionStockModel) => void
 }
 
 type FilterDataProps = {
@@ -28,10 +28,10 @@ type FilterDataProps = {
 
 export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const dispatch = useDispatch()
-	const purchases = useSelector(usePurchases())
-	const suppliers = useSelector(useSuppliers())
-	const categories = useSelector(useCategories())
-	const products = useSelector(useProducts())
+	const purchases = useSelector(useProductionStocks())
+	const suppliers = useSelector(useProductionSuppliers())
+	const categories = useSelector(useProductionCategories())
+	const products = useSelector(useProductionProducts())
 
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -55,7 +55,7 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 		setIsLoading(true)
 		try {
 			const httpResponse = await loadStokes.load(queryParams)
-			dispatch(loadPurchaseStore(httpResponse))
+			dispatch(loadProductionStockStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -95,7 +95,7 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 	const handleSelectRow = (id: number) => {
 		setSelectedRow(selectedRow != id ? id : 0)
 	}
-	const handleSelectStock = (customer: StockModel) => {
+	const handleSelectStock = (customer: ProductionStockModel) => {
 		handleSelectRow(customer.id)
 		onSelectStock(selectedRow != customer.id ? customer : ({} as any))
 	}

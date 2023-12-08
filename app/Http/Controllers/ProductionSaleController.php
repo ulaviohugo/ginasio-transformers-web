@@ -2,48 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductionSale;
-use Illuminate\Http\Request;
+use App\Helpers\ErrorHandler;
+use App\Helpers\HttpResponse;
+use App\Http\Requests\SaleCreateRequest;
+use App\Models\ProductionProductSale;
+use App\Services\InvoiceGeneratorService;
+use App\Services\ProductionSaleCreateService;
 
 class ProductionSaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+	public function index()
+	{
+		$product_id = null;
+		$customer_id = null;
+		$employee_id = null;
+		$category_id = null;
+		$date = null;
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		if (request()->query('filter')) {
+			$queryParam = json_decode(request()->query('filter'));
+			$product_id = isset($queryParam->product_id) ? $queryParam->product_id : null;
+			$customer_id = isset($queryParam->customer_id) ? $queryParam->customer_id : null;
+			$employee_id = isset($queryParam->employee_id) ? $queryParam->employee_id : null;
+			$category_id = isset($queryParam->category_id) ? $queryParam->category_id : null;
+			$date = isset($queryParam->date) ? $queryParam->date : null;
+		}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductionSale $productionSale)
-    {
-        //
-    }
+		try {
+			$sales = ProductionProductSale::orderBy('id', 'desc');
+			if ($product_id) {
+				$sales = $sales->where('product_id', $product_id);
+			}
+			if ($customer_id) {
+				$sales = $sales->whereHas('sale', function ($query) use ($customer_id) {
+					$query->where('customer_id', $customer_id);
+				});
+			}
+			if ($employee_id) {
+				$sales = $sales->whereHas('sale', function ($query) use ($employee_id) {
+					$query->where('employee_id', $employee_id);
+				});
+			}
+			if ($category_id) {
+				$sales = $sales->where('category_id', $category_id);
+			}
+			if ($date) {
+				$sales = $sales->whereDate('created_at', $date);
+			}
+			$sales = $sales->get();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ProductionSale $productionSale)
-    {
-        //
-    }
+			$sales->map(function ($query) {
+				$query->customer = $query->sale->customer?->only('id', 'name');
+				$query->employee = $query->sale->employee?->only('id', 'name');
+			});
+			$sales->load([
+				'product' => function ($query) {
+					$query->select('id', 'name');
+				},
+				'category' => function ($query) {
+					$query->select('id', 'name');
+				},
+				'sale'
+			]);
+			return $sales;
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar venda' . $th->getMessage());
+		}
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductionSale $productionSale)
-    {
-        //
-    }
+	public function store(SaleCreateRequest $request, ProductionSaleCreateService $service, InvoiceGeneratorService $invoiceGenerator)
+	{
+		try {
+			$createdSale = $service->execute($request, $invoiceGenerator);
+			return HttpResponse::success(data: $createdSale);
+		} catch (\Throwable $th) {
+			return HttpResponse::error(message: 'Erro ao cadastrar venda. ' . $th->getMessage());
+		}
+	}
+
+	public function count()
+	{
+		try {
+			return HttpResponse::success(data: ProductionProductSale::count());
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar venda');
+		}
+	}
 }

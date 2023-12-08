@@ -19,7 +19,17 @@ export const useProducts = () => (state: RootState) => state.products.products
 export const useProductSales = () => (state: RootState) => state.productSales.productSales
 export const useProductionBudgets = () => (state: RootState) =>
 	state.productionBudgets.productionBudgets
-export const usePurchases = () => (state: RootState) => state.purchases.purchases
+export const useProductionCategories = () => (state: RootState) =>
+	state.productionCategories.productionCategories
+export const useProductionProductSales = () => (state: RootState) =>
+	state.productionProductSales.productionProductSales
+export const useProductionProducts = () => (state: RootState) =>
+	state.productionProducts.productionProducts
+export const useProductionStocks = () => (state: RootState) =>
+	state.productionStocks.productionStocks
+export const useProductionSuppliers = () => (state: RootState) =>
+	state.productionSuppliers.productionSuppliers
+export const useStocks = () => (state: RootState) => state.stocks.stocks
 export const useSales = () => (state: RootState) => state.sales.sales
 export const useSuppliers = () => (state: RootState) => state.suppliers.suppliers
 export const useTransactions = () => (state: RootState) => state.transactions.transactions

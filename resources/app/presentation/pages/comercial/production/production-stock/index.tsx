@@ -5,22 +5,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
 	Layout,
 	LayoutBody,
-	SubMenu,
 	ModalDelete,
 	ProductionStockEditor,
-	ProductionStockList
+	ProductionStockList,
+	SubMenu
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { StockModel } from '@/domain/models'
 import {
-	makeRemoteAddStock,
-	makeRemoteDeleteStock,
-	makeRemoteLoadStocks,
-	makeRemoteUpdateStock
+	makeRemoteAddProductionStock,
+	makeRemoteDeleteProductionStock,
+	makeRemoteLoadProductionStocks,
+	makeRemoteUpdateProductionStock
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 import { NotFound } from '@/presentation/pages'
-import { removePurchaseStore } from '@/presentation/redux'
+import { removeStockStore } from '@/presentation/redux'
 import toast from 'react-hot-toast'
 
 export function ProductionStock() {
@@ -30,13 +30,13 @@ export function ProductionStock() {
 
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
-	const [selectedPurchase, setSelectedPurchase] = useState<StockModel>({} as StockModel)
-	const clearSelectedPurchase = () => {
-		setSelectedPurchase({} as StockModel)
+	const [selectedStock, setSelectedStock] = useState<StockModel>({} as StockModel)
+	const clearSelectedStock = () => {
+		setSelectedStock({} as StockModel)
 	}
 
 	const handleCloseDetail = () => {
-		clearSelectedPurchase()
+		clearSelectedStock()
 	}
 
 	const handleOpenFormDelete = () => {
@@ -49,8 +49,8 @@ export function ProductionStock() {
 
 	const handleDelete = async () => {
 		try {
-			await makeRemoteDeleteStock().delete(selectedPurchase.id)
-			dispatch(removePurchaseStore(selectedPurchase.id))
+			await makeRemoteDeleteProductionStock().delete(selectedStock.id)
+			dispatch(removeStockStore(selectedStock.id))
 			toast.success(`O entrada foi excluída`)
 			handleCloseFormDelete()
 		} catch (error: any) {
@@ -61,11 +61,11 @@ export function ProductionStock() {
 	if (!isAdmin) return <NotFound />
 
 	return (
-		<Layout>
+		<Layout title="Entrada de produtos - Produção">
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
-					description={`Deseja realmente excluir o estoque de ${selectedPurchase.product?.name}`}
+					description={`Deseja realmente excluir o estoque de ${selectedStock.product?.name}`}
 					show={showFormDelete}
 					onClose={handleCloseFormDelete}
 					onSubmit={handleDelete}
@@ -85,16 +85,16 @@ export function ProductionStock() {
 					<fieldset>
 						<legend>Cadastro de estoque</legend>
 						<ProductionStockEditor
-							data={selectedPurchase}
+							data={selectedStock}
 							onClose={handleCloseDetail}
-							addPurchase={makeRemoteAddStock()}
-							updatePurchase={makeRemoteUpdateStock()}
+							addStock={makeRemoteAddProductionStock()}
+							updateStock={makeRemoteUpdateProductionStock()}
 							onDelete={handleOpenFormDelete}
 						/>
 					</fieldset>
 					<ProductionStockList
-						loadStokes={makeRemoteLoadStocks()}
-						onSelectStock={setSelectedPurchase}
+						loadStokes={makeRemoteLoadProductionStocks()}
+						onSelectStock={setSelectedStock}
 					/>
 				</div>
 			</LayoutBody>

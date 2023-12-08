@@ -54,8 +54,8 @@ export function Home() {
 	const [customers, setCustomers] = useState(0)
 	const [isLoadingCustomers, setIsLoadingCustomers] = useState(true)
 
-	const [purchases, setPurchases] = useState(0)
-	const [isLoadingPurchases, setIsLoadingPurchases] = useState(true)
+	const [purchases, setStocks] = useState(0)
+	const [isLoadingStocks, setIsLoadingStocks] = useState(true)
 
 	const [sales, setSales] = useState(0)
 	const [isLoadingSales, setIsLoadingSales] = useState(true)
@@ -114,8 +114,8 @@ export function Home() {
 		{
 			isAdmin &&
 				fetchCount(makeRemoteCountStocks(), (response) => {
-					setPurchases(response)
-					setIsLoadingPurchases(false)
+					setStocks(response)
+					setIsLoadingStocks(false)
 				})
 		}
 		fetchCount(makeRemoteCountSales(), (response) => {
@@ -182,7 +182,7 @@ export function Home() {
 							number={purchases}
 							title={'Estoque'}
 							icon={IconProduct}
-							isLoading={isLoadingPurchases}
+							isLoading={isLoadingStocks}
 							href={MenuUtils.FRONT.STORE_STOCK}
 							className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
 						/>

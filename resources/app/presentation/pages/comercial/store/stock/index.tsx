@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
 	Layout,
 	LayoutBody,
-	PurchaseEditor,
+	StockEditor,
 	SubMenu,
 	StockList,
 	ModalDelete
@@ -20,7 +20,7 @@ import {
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 import { NotFound } from '@/presentation/pages'
-import { removePurchaseStore } from '@/presentation/redux'
+import { removeStockStore } from '@/presentation/redux'
 import toast from 'react-hot-toast'
 
 export function Stock() {
@@ -30,13 +30,13 @@ export function Stock() {
 
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
-	const [selectedPurchase, setSelectedPurchase] = useState<StockModel>({} as StockModel)
-	const clearSelectedPurchase = () => {
-		setSelectedPurchase({} as StockModel)
+	const [selectedStock, setSelectedStock] = useState<StockModel>({} as StockModel)
+	const clearSelectedStock = () => {
+		setSelectedStock({} as StockModel)
 	}
 
 	const handleCloseDetail = () => {
-		clearSelectedPurchase()
+		clearSelectedStock()
 	}
 
 	const handleOpenFormDelete = () => {
@@ -49,8 +49,8 @@ export function Stock() {
 
 	const handleDelete = async () => {
 		try {
-			await makeRemoteDeleteStock().delete(selectedPurchase.id)
-			dispatch(removePurchaseStore(selectedPurchase.id))
+			await makeRemoteDeleteStock().delete(selectedStock.id)
+			dispatch(removeStockStore(selectedStock.id))
 			toast.success(`O entrada foi excluída`)
 			handleCloseFormDelete()
 		} catch (error: any) {
@@ -65,7 +65,7 @@ export function Stock() {
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
-					description={`Deseja realmente excluir o estoque de ${selectedPurchase.product?.name}`}
+					description={`Deseja realmente excluir o estoque de ${selectedStock.product?.name}`}
 					show={showFormDelete}
 					onClose={handleCloseFormDelete}
 					onSubmit={handleDelete}
@@ -84,17 +84,17 @@ export function Stock() {
 				<div className="flex flex-col gap-2 my-2">
 					<fieldset>
 						<legend>Cadastro de estoque</legend>
-						<PurchaseEditor
-							data={selectedPurchase}
+						<StockEditor
+							data={selectedStock}
 							onClose={handleCloseDetail}
-							addPurchase={makeRemoteAddStock()}
-							updatePurchase={makeRemoteUpdateStock()}
+							addStock={makeRemoteAddStock()}
+							updateStock={makeRemoteUpdateStock()}
 							onDelete={handleOpenFormDelete}
 						/>
 					</fieldset>
 					<StockList
 						loadStokes={makeRemoteLoadStocks()}
-						onSelectStock={setSelectedPurchase}
+						onSelectStock={setSelectedStock}
 					/>
 				</div>
 			</LayoutBody>

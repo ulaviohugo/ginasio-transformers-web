@@ -12,15 +12,10 @@ import {
 } from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadStocks } from '@/domain/usecases'
-import { loadPurchaseStore } from '@/presentation/redux'
+import { loadStockStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
-import {
-	useCategories,
-	useProducts,
-	usePurchases,
-	useSuppliers
-} from '@/presentation/hooks'
+import { useCategories, useProducts, useStocks, useSuppliers } from '@/presentation/hooks'
 import { QueryParams } from '@/data/protocols'
 import { StockModel } from '@/domain/models'
 
@@ -38,7 +33,7 @@ type FilterDataProps = {
 
 export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const dispatch = useDispatch()
-	const purchases = useSelector(usePurchases())
+	const purchases = useSelector(useStocks())
 	const suppliers = useSelector(useSuppliers())
 	const categories = useSelector(useCategories())
 	const products = useSelector(useProducts())
@@ -66,7 +61,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 		setIsLoading(true)
 		try {
 			const httpResponse = await loadStokes.load(queryParams)
-			dispatch(loadPurchaseStore(httpResponse))
+			dispatch(loadStockStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {

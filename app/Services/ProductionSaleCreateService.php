@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Helpers\PDFHelper;
-use App\Models\Sale;
+use App\Models\ProductSale;
 use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SaleCreateService
+class ProductionSaleCreateService
 {
 	public function execute(Request $request, InvoiceGeneratorService $invoiceGenerator)
 	{
@@ -43,7 +43,7 @@ class SaleCreateService
 
 			//Store Sale
 			$userId = User::currentUserId();
-			$sale = Sale::create([
+			$sale = ProductSale::create([
 				'customer_id' => $request->customer_id,
 				'total_value' => $totalValue,
 				'amount_paid' => $amountPaid,
@@ -71,14 +71,14 @@ class SaleCreateService
 			}
 
 			// Invoice
-			if ($request->send_invoice == 'email') {
+			/* 		if ($request->send_invoice == 'email') {
 				(new InvoiceSendEmailService)->execute($invoiceGenerator, $sale);
 			} else {
 				$output = $invoiceGenerator->execute($sale)->output();
 				PDFHelper::generatePdfPath(customerName: $sale->customer?->name, saleId: $sale->id, pdfOutPut: $output);
 				$pdfLink = PDFHelper::getPdfLink(customerName: $sale->customer?->name, saleId: $sale->id);
 				$sale->invoice = $pdfLink;
-			}
+			} */
 
 			DB::commit();
 			return $sale;

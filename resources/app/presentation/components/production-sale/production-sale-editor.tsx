@@ -4,10 +4,10 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-	CategoryModel,
-	ProductModel,
-	ProductSaleModel,
-	StockModel
+	ProductionCategoryModel,
+	ProductionProductModel,
+	ProductionProductSaleModel,
+	ProductionStockModel
 } from '@/domain/models'
 import {
 	ButtonCancel,
@@ -16,7 +16,7 @@ import {
 	ImagePreview,
 	Input,
 	InputPrice,
-	SalePdfViewer,
+	ProductionSalePdfViewer,
 	Select
 } from '..'
 
@@ -37,7 +37,7 @@ import {
 	makeRemoteLoadStocks
 } from '@/main/factories/usecases'
 
-type ProductSaleProps = {
+type ProductionProductSaleProps = {
 	category_id: number
 	product_id: number
 	bar_code?: string
@@ -51,27 +51,31 @@ type ProductSaleProps = {
 	discount: number
 	payment_method: string
 
-	product?: ProductModel
+	product?: ProductionProductModel
 }
 
-type SaleEditorProps = {
-	data?: ProductSaleModel
+type ProductionSaleEditorProps = {
+	data?: ProductionProductSaleModel
 	addSale: AddSale
 	loadSales: LoadSales
 }
 
-export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
+export function ProductionSaleEditor({
+	data,
+	addSale,
+	loadSales
+}: ProductionSaleEditorProps) {
 	const dispatch = useDispatch()
 	const stocks = useSelector(useStocks())
 	const customers = useSelector(useCustomers())
 	const user = useSelector(useAuth())
 	const employees = useSelector(useEmployees())
 
-	const [formData] = useState<ProductSaleModel>(
-		data || ({ employee_id: user.id } as ProductSaleModel)
+	const [formData] = useState<ProductionProductSaleModel>(
+		data || ({ employee_id: user.id } as ProductionProductSaleModel)
 	)
 
-	const [cart, setCart] = useState<ProductSaleProps[]>([])
+	const [cart, setCart] = useState<ProductionProductSaleProps[]>([])
 
 	const totalValue = useMemo(() => {
 		return cart.reduce(
@@ -97,15 +101,17 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		)
 	}, [cart])
 
-	const [formProduct, setFormProduct] = useState<ProductSaleProps>(data || ({} as any))
+	const [formProduct, setFormProduct] = useState<ProductionProductSaleProps>(
+		data || ({} as any)
+	)
 
-	const categories: CategoryModel[] = useMemo(() => {
+	const categories: ProductionCategoryModel[] = useMemo(() => {
 		const dataStocks = stocks.map((stock) => ({
 			...stock.category,
 			id: stock.category_id
 		})) as any
 
-		const data = ArrayUtils.removeDuplicated<CategoryModel>(dataStocks, 'id')
+		const data = ArrayUtils.removeDuplicated<ProductionCategoryModel>(dataStocks, 'id')
 		return data
 	}, [stocks])
 
@@ -119,7 +125,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 				id: stock.product_id
 			})) as any
 
-		const data = ArrayUtils.removeDuplicated<CategoryModel>(dataStocks, 'id')
+		const data = ArrayUtils.removeDuplicated<ProductionCategoryModel>(dataStocks, 'id')
 		return data
 	}, [formProduct?.category_id])
 
@@ -180,7 +186,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 	) => {
 		const { name, value } = e.target
 
-		let data: ProductSaleProps = { ...formProduct, [name]: value }
+		let data: ProductionProductSaleProps = { ...formProduct, [name]: value }
 
 		if (name == 'total_value') {
 			const total_value = NumberUtils.convertToNumber(value)
@@ -198,7 +204,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		}
 		if (name == 'quantity') {
 			let quantity = NumberUtils.convertToNumber(value)
-			const stock: StockModel = stocks.find(
+			const stock: ProductionStockModel = stocks.find(
 				(stock) =>
 					stock.category_id == formProduct.category_id &&
 					stock.product_id == Number(formProduct.product_id) &&
@@ -238,7 +244,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		}
 
 		if (name == 'product_id') {
-			const stock: StockModel = stocks.find(
+			const stock: ProductionStockModel = stocks.find(
 				(stock) =>
 					stock.category_id == formProduct.category_id &&
 					stock.product_id == Number(value) &&
@@ -279,7 +285,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		if (!quantity) return toast.error('Informe a quantidade')
 		if (!amount_paid) return toast.error('Informe o valor total a pagar')
 
-		const stock: StockModel = stocks.find(
+		const stock: ProductionStockModel = stocks.find(
 			(stock) => stock.category_id == category_id && stock.product_id == product_id
 		) as any
 
@@ -332,7 +338,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 	}
 	return (
 		<div>
-			{pdfContent && <SalePdfViewer pdfUrl={pdfContent} />}
+			{pdfContent && <ProductionSalePdfViewer pdfUrl={pdfContent} />}
 			<div className="flex gap-2">
 				<div className="flex flex-col gap-2">
 					<ImagePreview photoPreview={photPreview} disabled />

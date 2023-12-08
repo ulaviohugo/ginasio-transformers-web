@@ -2,11 +2,16 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { CategoryModel, ProductModel, StockModel } from '@/domain/models'
 import {
-	ButtonCancel,
+	ProductionCategoryModel,
+	ProductionProductModel,
+	ProductionStockModel
+} from '@/domain/models'
+import {
+	Button,
 	ButtonSubmit,
 	CategoryLabel,
+	IconClose,
 	IconEdit,
 	IconTrash,
 	ImagePreview,
@@ -26,50 +31,55 @@ import {
 	PaymentUtils
 } from '@/utils'
 import {
-	addPurchaseStore,
-	loadCategoryStore,
-	loadProductStore,
-	loadSupplierStore,
-	updatePurchaseStore
+	addProductionStockStore,
+	loadProductionCategoryStore,
+	loadProductionProductStore,
+	loadProductionSupplierStore,
+	updateProductionStockStore
 } from '@/presentation/redux'
 import { AddStock, UpdateStock } from '@/domain/usecases'
-import { useAuth, useCategories, useProducts, useSuppliers } from '@/presentation/hooks'
 import {
-	makeRemoteLoadCategories,
-	makeRemoteLoadProduct,
-	makeRemoteLoadSuppliers
+	useAuth,
+	useProductionCategories,
+	useProductionProducts,
+	useProductionSuppliers
+} from '@/presentation/hooks'
+import {
+	makeRemoteLoadProductionCategories,
+	makeRemoteLoadProductionProduct,
+	makeRemoteLoadProductionSuppliers
 } from '@/main/factories/usecases'
 
-type PurchaseEditorProps = {
-	data?: StockModel
+type StockEditorProps = {
+	data?: ProductionStockModel
 	onClose: () => void
-	addPurchase: AddStock
-	updatePurchase: UpdateStock
+	addStock: AddStock
+	updateStock: UpdateStock
 	onDelete: () => void
 }
 
 export function ProductionStockEditor({
 	data,
 	onClose,
-	addPurchase,
-	updatePurchase,
+	addStock,
+	updateStock,
 	onDelete
-}: PurchaseEditorProps) {
+}: StockEditorProps) {
 	const dispatch = useDispatch()
-	const categories = useSelector(useCategories())
-	const products = useSelector(useProducts())
-	const suppliers = useSelector(useSuppliers())
+	const categories = useSelector(useProductionCategories())
+	const products = useSelector(useProductionProducts())
+	const suppliers = useSelector(useProductionSuppliers())
 	const user = useSelector(useAuth())
 
-	const [productList, setProductList] = useState<ProductModel[]>([])
-	const [categoryList, setCategoryList] = useState<CategoryModel[]>(categories)
+	const [productList, setProductList] = useState<ProductionProductModel[]>([])
+	const [categoryList, setCategoryList] = useState<ProductionCategoryModel[]>(categories)
 
-	const [formData, setFormData] = useState<StockModel>(
+	const [formData, setFormData] = useState<ProductionStockModel>(
 		(data?.id && data) ||
 			({
 				paid: 'SIM',
 				purchase_date: DateUtils.getDate(new Date()) as any
-			} as StockModel)
+			} as ProductionStockModel)
 	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
@@ -93,7 +103,7 @@ export function ProductionStockEditor({
 		setFormData({
 			paid: 'SIM',
 			purchase_date: DateUtils.getDate(new Date()) as any
-		} as StockModel)
+		} as ProductionStockModel)
 	}
 
 	useEffect(() => {
@@ -136,18 +146,18 @@ export function ProductionStockEditor({
 
 	useEffect(() => {
 		if (categories.length < 1) {
-			fetchData(makeRemoteLoadCategories(), (response) => {
-				dispatch(loadCategoryStore(response))
+			fetchData(makeRemoteLoadProductionCategories(), (response) => {
+				dispatch(loadProductionCategoryStore(response))
 			})
 		}
 		if (products.length < 1) {
-			fetchData(makeRemoteLoadProduct(), (response) => {
-				dispatch(loadProductStore(response))
+			fetchData(makeRemoteLoadProductionProduct(), (response) => {
+				dispatch(loadProductionProductStore(response))
 			})
 		}
 		if (suppliers.length < 1) {
-			fetchData(makeRemoteLoadSuppliers(), (response) => {
-				dispatch(loadSupplierStore(response))
+			fetchData(makeRemoteLoadProductionSuppliers(), (response) => {
+				dispatch(loadProductionSupplierStore(response))
 			})
 		}
 	}, [])
@@ -157,7 +167,7 @@ export function ProductionStockEditor({
 	) => {
 		const { name, value } = e.target
 
-		let data: StockModel = { ...formData, [name]: value }
+		let data: ProductionStockModel = { ...formData, [name]: value }
 
 		// if (name == 'supplier_id') {
 		// 	const supplierId = NumberUtils.convertToNumber(value)
@@ -187,10 +197,6 @@ export function ProductionStockEditor({
 		if (name == 'photo') {
 			const file = await FileUtils.toBase64((e.target as any)?.files[0])
 			data = { ...data, [name]: file }
-		}
-		if (name == 'paid') {
-			const checked = (e.target as any).checked
-			data = { ...data, [name]: checked }
 		}
 		if (name == 'total_value') {
 			const total_value = NumberUtils.convertToNumber(value)
@@ -227,13 +233,13 @@ export function ProductionStockEditor({
 		try {
 			const update = type == 'update'
 			const httpResponse = (
-				update ? await updatePurchase.update(formData) : await addPurchase.add(formData)
-			) as StockModel
+				update ? await updateStock.update(formData) : await addStock.add(formData)
+			) as ProductionStockModel
 
 			if (update) {
-				dispatch(updatePurchaseStore(httpResponse))
+				dispatch(updateProductionStockStore(httpResponse))
 			} else {
-				dispatch(addPurchaseStore(httpResponse))
+				dispatch(addProductionStockStore(httpResponse))
 			}
 			toast.success(`Compra ${update ? 'actualizada' : 'cadastrada'} com sucesso`)
 			onClose()
@@ -259,7 +265,7 @@ export function ProductionStockEditor({
 							photoPreview={photoPreview}
 							onInputFileChange={handleInputChange}
 						/>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 bg-green-50 border border-green-200 p-2 mt-2">
 							<InputPrice
 								id="unit_price"
 								name="unit_price"
@@ -357,18 +363,15 @@ export function ProductionStockEditor({
 								label={LabelUtils.translateField('size')}
 								onChange={handleInputChange}
 							/>
-							<div className="flex">
-								<div>
-									<Input
-										type="checkbox"
-										id="paid"
-										name="paid"
-										checked={formData?.paid}
-										label={LabelUtils.translateField('paid')}
-										onChange={handleInputChange}
-									/>
-								</div>
-							</div>
+							<Select
+								id="paid"
+								name="paid"
+								value={formData?.paid || ''}
+								label={LabelUtils.translateField('paid')}
+								data={['SIM', 'NÃO'].map((text) => ({ text }))}
+								defaultText="Selecione"
+								onChange={handleInputChange}
+							/>
 						</div>
 						<div className="grid grid-cols-4 gap-2">
 							<Select
@@ -411,16 +414,24 @@ export function ProductionStockEditor({
 						disabled={isLoading}
 						isLoading={isLoading}
 						onClick={() => handleSubmit('save')}
+						className="!bg-green-700"
 					/>
-					<ButtonSubmit
+					<Button
+						variant="gray-light"
 						text="Editar"
 						icon={IconEdit}
 						disabled={isLoading}
 						isLoading={isLoading}
 						onClick={() => handleSubmit('update')}
+						className="!opacity-70"
 					/>
-					<ButtonCancel onClick={clearFields} text="Limpar" />
-					<ButtonCancel onClick={handleDelete} text="Excluir" icon={IconTrash} />
+					<Button
+						variant="default"
+						text="Limpar"
+						onClick={clearFields}
+						icon={IconClose}
+					/>
+					<Button variant="red" text="Excluir" icon={IconTrash} onClick={handleDelete} />
 				</div>
 			</div>
 		</div>
