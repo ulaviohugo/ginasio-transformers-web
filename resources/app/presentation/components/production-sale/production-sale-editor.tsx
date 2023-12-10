@@ -22,19 +22,24 @@ import {
 
 import { ArrayUtils, ColorUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/utils'
 import {
-	addSaleStore,
+	addProductionSaleStore,
 	loadCustomerStore,
 	loadEmployeeStore,
-	loadProductSaleStore,
-	loadStockStore,
-	updateSaleStore
+	loadProductionProductSaleStore,
+	loadProductionStockStore,
+	updateProductionSaleStore
 } from '@/presentation/redux'
 import { AddSale, LoadSales } from '@/domain/usecases'
-import { useAuth, useCustomers, useEmployees, useStocks } from '@/presentation/hooks'
+import {
+	useAuth,
+	useCustomers,
+	useEmployees,
+	useProductionStocks
+} from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadEmployees,
-	makeRemoteLoadStocks
+	makeRemoteLoadProductionStocks
 } from '@/main/factories/usecases'
 
 type ProductionProductSaleProps = {
@@ -66,7 +71,7 @@ export function ProductionSaleEditor({
 	loadSales
 }: ProductionSaleEditorProps) {
 	const dispatch = useDispatch()
-	const stocks = useSelector(useStocks())
+	const stocks = useSelector(useProductionStocks())
 	const customers = useSelector(useCustomers())
 	const user = useSelector(useAuth())
 	const employees = useSelector(useEmployees())
@@ -141,7 +146,7 @@ export function ProductionSaleEditor({
 	const fetchProductSales = async () => {
 		try {
 			const httpResponse = await loadSales.load()
-			dispatch(loadProductSaleStore(httpResponse))
+			dispatch(loadProductionProductSaleStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -167,8 +172,8 @@ export function ProductionSaleEditor({
 		fetchData(makeRemoteLoadCustomers(), (response) => {
 			dispatch(loadCustomerStore(response))
 		})
-		fetchData(makeRemoteLoadStocks(), (response) => {
-			dispatch(loadStockStore(response))
+		fetchData(makeRemoteLoadProductionStocks(), (response) => {
+			dispatch(loadProductionStockStore(response))
 		})
 		fetchData(makeRemoteLoadEmployees(), (response) => {
 			dispatch(loadEmployeeStore(response))
@@ -319,9 +324,9 @@ export function ProductionSaleEditor({
 			const httpResponse = await addSale.add(data)
 
 			if (formData.id) {
-				dispatch(updateSaleStore(httpResponse))
+				dispatch(updateProductionSaleStore(httpResponse))
 			} else {
-				dispatch(addSaleStore(httpResponse))
+				dispatch(addProductionSaleStore(httpResponse))
 			}
 			fetchProductSales()
 			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)

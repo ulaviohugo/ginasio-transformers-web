@@ -394,15 +394,7 @@ export function ProductionStockEditor({
 										DateUtils.getDate(formData.purchase_date)) ||
 									''
 								}
-								label={LabelUtils.translateField('purchase_date')}
-								onChange={handleInputChange}
-							/>
-							<Input
-								type="date"
-								id="due_date"
-								name="due_date"
-								value={(formData?.due_date && DateUtils.getDate(formData.due_date)) || ''}
-								label={LabelUtils.translateField('due_date')}
+								label={'Data de compra'}
 								onChange={handleInputChange}
 							/>
 							<Input label="Funcionário" value={user.name} disabled />

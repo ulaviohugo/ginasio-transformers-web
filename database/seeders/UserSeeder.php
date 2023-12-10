@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use DateInterval;
 use DateTime;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,7 +42,8 @@ class UserSeeder extends Seeder
 				'position' => 'Desenvolvedor',
 				'base_salary' => 100_000,
 				'hire_date' => $date,
-				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year
+				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year,
+				'created_at' => now()
 			],
 
 			[
@@ -71,7 +71,8 @@ class UserSeeder extends Seeder
 				'position' => 'Assiste operacional',
 				'base_salary' => 60_000,
 				'hire_date' => $date,
-				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year
+				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year,
+				'created_at' => now()
 			]
 		];
 

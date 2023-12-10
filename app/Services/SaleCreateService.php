@@ -63,7 +63,7 @@ class SaleCreateService
 						['payment_method' => $request->payment_method] +
 						['employee_id' => $request->employee_id]
 				);
-				(new ProductionProductSaleCreateService)->execute($data);
+				(new ProductSaleCreateService)->execute($data);
 
 				$stock = Stock::find($data['lot']);
 				$stock->quantity -= intval($data['quantity']);

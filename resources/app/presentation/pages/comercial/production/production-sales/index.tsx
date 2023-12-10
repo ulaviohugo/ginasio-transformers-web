@@ -7,8 +7,8 @@ import {
 	Layout,
 	LayoutBody,
 	ModalDelete,
-	SaleEditor,
-	SaleList,
+	ProductionSaleEditor,
+	ProductionSaleList,
 	SubMenu
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
@@ -73,14 +73,14 @@ export function ProductionSales() {
 				<div className="flex flex-col gap-2 mt-2">
 					<fieldset>
 						<legend>Cadastro de venda</legend>
-						<SaleEditor
+						<ProductionSaleEditor
 							// data={selectedSale}
 							addSale={makeRemoteAddProductionSale()}
 							loadSales={makeRemoteLoadProductionSales()}
 						/>
 					</fieldset>
 
-					<SaleList loadSales={makeRemoteLoadProductionSales()} />
+					<ProductionSaleList loadSales={makeRemoteLoadProductionSales()} />
 				</div>
 			</LayoutBody>
 		</Layout>

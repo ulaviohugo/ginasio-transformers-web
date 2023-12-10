@@ -46,7 +46,7 @@ class GraphProductionStockStoreService
 			->groupBy('b.name')
 			->get();
 
-		$paymentMethodsAmount = DB::table(DBHelper::TB_PRODUCTION_SALES)
+		$paymentMethodsAmount = DB::table(DBHelper::TB_PRODUCTION_STOCKS)
 			->select('payment_method AS field', DB::raw('CAST(SUM(total_value) AS DOUBLE) AS value'))
 			->whereMonth('created_at', $month)
 			->whereYear('created_at', $year)

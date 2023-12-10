@@ -4,7 +4,7 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 
 export const makeRemoteCountProductionProduct = () => {
 	return new RemoteCountProduct(
-		makeApiUrl('/products/count'),
+		makeApiUrl('/production-products/count'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }

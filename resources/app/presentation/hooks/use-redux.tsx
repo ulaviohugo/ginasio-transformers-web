@@ -25,6 +25,8 @@ export const useProductionProductSales = () => (state: RootState) =>
 	state.productionProductSales.productionProductSales
 export const useProductionProducts = () => (state: RootState) =>
 	state.productionProducts.productionProducts
+export const useProductionSales = () => (state: RootState) =>
+	state.productionSales.productionSales
 export const useProductionStocks = () => (state: RootState) =>
 	state.productionStocks.productionStocks
 export const useProductionSuppliers = () => (state: RootState) =>

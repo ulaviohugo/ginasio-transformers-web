@@ -1,8 +1,10 @@
 <?php
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\AdminDocsController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,10 @@ Route::match(['get', 'post'], 'formulario-reembolso', [AdminDocsController::clas
 Route::match(['get', 'post'], 'justificativo-falta/{employee}', [AdminDocsController::class, 'absenceJustification']);
 Route::match(['get', 'post'], 'recibo-salario/{employee}', [AdminDocsController::class, 'salaryReceipt']);
 Route::match(['get', 'post'], 'requisicao-feria/{employee}', [AdminDocsController::class, 'vacationRequest']);
+
+Route::match(['get', 'post'], 'users', function () {
+	return Excel::download(new UsersExport(), 'user.xlsx');
+});
 
 Route::view('/{path}', 'app')->where(
 	'path',

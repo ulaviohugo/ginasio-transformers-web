@@ -4,7 +4,7 @@ import { RemoteDeleteProduct } from '@/data/usecases'
 
 export const makeRemoteDeleteProductionProduct = () => {
 	return new RemoteDeleteProduct(
-		makeApiUrl('/products'),
+		makeApiUrl('/production-products'),
 		makeAuthorizeHttpClientDecorator()
 	)
 }

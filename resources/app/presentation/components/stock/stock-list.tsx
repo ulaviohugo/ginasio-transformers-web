@@ -183,14 +183,12 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 							<tr>
 								<th className="p-1">Lote</th>
 								<th className="p-1">Imagem</th>
+								<th className="p-1">Data</th>
 								<th className="p-1">Fornecedor</th>
 								<th className="p-1">Categoria</th>
 								<th className="p-1">Produto</th>
-								<th className="p-1">Preço/unid</th>
-								<th className="p-1">Cor</th>
 								<th className="p-1">Tamanho</th>
 								<th className="p-1">Quantidade</th>
-								<th className="p-1">Data</th>
 							</tr>
 						</thead>
 						{purchases.length > 0 && (
@@ -221,16 +219,12 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 												<IconStock size={25} />
 											)}
 										</td>
+										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
 										<td className="p-1">{purchase.supplier?.name}</td>
 										<td className="p-1">{purchase.category?.name}</td>
 										<td className="p-1">{purchase.product?.name}</td>
-										<td className="p-1">
-											{NumberUtils.formatCurrency(purchase.product?.selling_price as any)}
-										</td>
-										<td className="p-1">{purchase.color}</td>
 										<td className="p-1">{purchase.size}</td>
 										<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
-										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
 									</tr>
 								))}
 							</tbody>

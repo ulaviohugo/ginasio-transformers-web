@@ -3,5 +3,8 @@ import { makeApiUrl } from '@/main/factories/http'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 
 export const makeRemoteAddProductionProduct = () => {
-	return new RemoteAddProduct(makeApiUrl('/products'), makeAuthorizeHttpClientDecorator())
+	return new RemoteAddProduct(
+		makeApiUrl('/production-products'),
+		makeAuthorizeHttpClientDecorator()
+	)
 }

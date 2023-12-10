@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Helpers\PDFHelper;
+use App\Models\ProductionStock;
 use App\Models\ProductSale;
-use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +64,7 @@ class ProductionSaleCreateService
 				);
 				(new ProductionProductSaleCreateService)->execute($data);
 
-				$stock = Stock::find($data['lot']);
+				$stock = ProductionStock::find($data['lot']);
 				$stock->quantity -= intval($data['quantity']);
 				$stock->save();
 			}

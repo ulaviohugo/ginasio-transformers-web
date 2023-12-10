@@ -11,15 +11,15 @@ import { Button, Input, Select } from '../form-controls'
 import { Spinner } from '../spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-	useCategories,
 	useCustomers,
 	useEmployees,
-	useProductSales,
-	useProducts
+	useProductionCategories,
+	useProductionProductSales,
+	useProductionProducts
 } from '@/presentation/hooks'
 import { NoData } from '../no-data'
 import { LoadSales } from '@/domain/usecases'
-import { loadProductSaleStore } from '@/presentation/redux'
+import { loadProductionProductSaleStore } from '@/presentation/redux'
 import toast from 'react-hot-toast'
 import { IconClose, IconSearch } from '../icons'
 import { QueryParams } from '@/data/protocols'
@@ -42,9 +42,9 @@ export function ProductionSaleList({ loadSales }: SaleListProps) {
 
 	const currentDate = DateUtils.getDate(new Date())
 
-	const productSales = useSelector(useProductSales())
-	const products = useSelector(useProducts())
-	const categories = useSelector(useCategories())
+	const productSales = useSelector(useProductionProductSales())
+	const products = useSelector(useProductionProducts())
+	const categories = useSelector(useProductionCategories())
 	const customers = useSelector(useCustomers())
 	const employees = useSelector(useEmployees())
 
@@ -71,7 +71,7 @@ export function ProductionSaleList({ loadSales }: SaleListProps) {
 	const fetchData = async (queryParams?: QueryParams) => {
 		try {
 			const httpResponse = await loadSales.load(queryParams)
-			dispatch(loadProductSaleStore(httpResponse))
+			dispatch(loadProductionProductSaleStore(httpResponse))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
