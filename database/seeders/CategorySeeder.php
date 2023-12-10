@@ -13,15 +13,16 @@ class CategorySeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		$now = now();
 		Category::insert([
-			['name' => 'Acessório feminino'],
-			['name' => 'Bijuteria feminina'],
-			['name' => 'Calçado feminino'],
-			['name' => 'Calçado masculino'],
-			['name' => 'Diversos'],
-			['name' => 'Perfumaria'],
-			['name' => 'Roupa feminina'],
-			['name' => 'Roupa masculina']
+			['name' => 'Acessório feminino', 'created_at' => $now],
+			['name' => 'Bijuteria feminina', 'created_at' => $now],
+			['name' => 'Calçado feminino', 'created_at' => $now],
+			['name' => 'Calçado masculino', 'created_at' => $now],
+			['name' => 'Diversos', 'created_at' => $now],
+			['name' => 'Perfumaria', 'created_at' => $now],
+			['name' => 'Roupa feminina', 'created_at' => $now],
+			['name' => 'Roupa masculina', 'created_at' => $now],
 		]);
 	}
 }
