@@ -133,7 +133,7 @@ export function StockEditor({
 			)
 		}
 		setPhotoPreview(data?.photo || '')
-	}, [categories, data, products, suppliers])
+	}, [categories, data, formData.category_id, products, suppliers])
 
 	useEffect(() => {
 		if (categories.length < 1) {
