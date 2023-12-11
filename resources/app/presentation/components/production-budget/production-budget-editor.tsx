@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { ArrayUtils, FileUtils, NumberUtils, SalaryUtils } from '@/utils'
+import { ArrayUtils, FileUtils, NumberUtils, ObjectUtils, SalaryUtils } from '@/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCustomers, useEmployees } from '@/presentation/hooks'
 import {
@@ -12,8 +12,7 @@ import {
 	makeRemoteLoadAccessories,
 	makeRemoteLoadCustomers,
 	makeRemoteLoadEmployees,
-	makeRemoteLoadFabrics,
-	makeRemoteLoadProductionBudgets
+	makeRemoteLoadFabrics
 } from '@/main/factories'
 import toast from 'react-hot-toast'
 import {
@@ -33,7 +32,6 @@ import {
 import { ProductionCustomerEditor } from './production-customer-editor'
 import { ProductionPaymentEditor } from './production-payment-editor'
 import { ProductionEmployeeRow } from './production-employee-row'
-import { ProductionBudgetList } from './production-budget-list'
 import { Button } from '../form-controls'
 import { IconCheck, IconClose } from '../icons'
 
@@ -61,18 +59,33 @@ const initialFabricItemValues: FabricRecordProps = {
 	4: {} as FabricItemProps
 }
 
-const initialFormDataValues: ProductionBudgetModel = {
+const initialFormDataValues: ProductionBudgetProps = {
 	date: new Date(),
 	finishing_cost: 250
-} as ProductionBudgetModel
+} as ProductionBudgetProps
 
-export function ProductionBudgetEditor() {
+type ProductionBudgetProps = ProductionBudgetModel & {
+	cutting_employee_id?: number
+	cutting_base_salary?: number
+	cutting_day?: number
+	cutting_hour?: number
+	cutting_minute?: number
+
+	sewing_employee_id?: number
+	sewing_base_salary?: number
+	sewing_day?: number
+	sewing_hour?: number
+	sewing_minute?: number
+}
+
+type ProductionBudgetEditorProps = { selectedBudget: ProductionBudgetModel }
+export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEditorProps) {
 	const dispatch = useDispatch()
 
 	const employees = useSelector(useEmployees())
 	const customers = useSelector(useCustomers())
 
-	const [formData, setFormData] = useState<ProductionBudgetModel>(initialFormDataValues)
+	const [formData, setFormData] = useState<ProductionBudgetProps>(initialFormDataValues)
 	const [isLoading, setIsLoading] = useState(false)
 
 	const [accessories, setAccessories] = useState<AccessoryModel[]>([])
@@ -140,6 +153,59 @@ export function ProductionBudgetEditor() {
 			fetchLoad(makeRemoteLoadAccessories(), setAccessories)
 		])
 	}, [])
+
+	useEffect(() => {
+		;(async () => {
+			if (selectedBudget.id) {
+				const employeesObject = ObjectUtils.convertToObject(employees, 'id')
+
+				const cuttingEmployee = employeesObject[selectedBudget.cutting_employee_id]
+				const sewingEmployee = employeesObject[selectedBudget.sewing_employee_id]
+
+				const photo: any = selectedBudget.photo
+					? await FileUtils.urlToBase64(selectedBudget.photo)
+					: undefined
+				setFormData({
+					...initialFormDataValues,
+					...selectedBudget,
+					photo,
+					cutting_base_salary: SalaryUtils.getSalaryPerDay(cuttingEmployee.base_salary),
+					cutting_day: SalaryUtils.getSalaryPerDay(cuttingEmployee.base_salary),
+					cutting_hour: SalaryUtils.getSalaryPerHour(cuttingEmployee.base_salary),
+					cutting_minute: SalaryUtils.getSalaryPerMinute(cuttingEmployee.base_salary),
+
+					sewing_base_salary: SalaryUtils.getSalaryPerDay(sewingEmployee.base_salary),
+					sewing_day: SalaryUtils.getSalaryPerDay(sewingEmployee.base_salary),
+					sewing_hour: SalaryUtils.getSalaryPerHour(sewingEmployee.base_salary),
+					sewing_minute: SalaryUtils.getSalaryPerMinute(sewingEmployee.base_salary)
+				})
+
+				let accessory: AccessoryRecordProps = { ...initialAccessoryItemValues }
+				selectedBudget.production_accessories.forEach(
+					({ accessory_id, price, quantity }, i: number) => {
+						accessory = {
+							...accessory,
+							[i]: { accessory_id, price, quantity }
+						}
+					}
+				)
+				setAccessoryItems(accessory)
+
+				let fabric: FabricRecordProps = { ...initialFabricItemValues }
+				selectedBudget.production_fabrics.forEach(
+					({ fabric_id, color, cost, meters }, i: number) => {
+						console.log({ [i]: { fabric_id, color, cost, meters } })
+
+						fabric = {
+							...fabric,
+							[i]: { fabric_id, color, cost, meters }
+						}
+					}
+				)
+				setFabricItems(fabric)
+			}
+		})()
+	}, [selectedBudget])
 
 	const handleChangeFabric = ({ index, name, value }: SupplierProductCardChangeProps) => {
 		let data = fabricItems[index] || { [index]: { [name]: value } }[index]
@@ -233,38 +299,6 @@ export function ProductionBudgetEditor() {
 			}
 		}
 		setFormData(data)
-	}
-
-	const handleSelectBudget = async (selectedBudget: ProductionBudgetModel) => {
-		const photo: any = selectedBudget.photo
-			? await FileUtils.urlToBase64(selectedBudget.photo)
-			: undefined
-		setFormData({ ...selectedBudget, photo })
-
-		let accessory: AccessoryRecordProps = { ...initialAccessoryItemValues }
-		selectedBudget.production_accessories.forEach(
-			({ accessory_id, price, quantity }, i: number) => {
-				accessory = {
-					...accessory,
-					[i]: { accessory_id, price, quantity }
-				}
-			}
-		)
-		setAccessoryItems(accessory)
-
-		let fabric: FabricRecordProps = { ...initialFabricItemValues }
-		selectedBudget.production_fabrics.forEach(
-			({ fabric_id, color, cost, meters }, i: number) => {
-				console.log({ [i]: { fabric_id, color, cost, meters } })
-
-				fabric = {
-					...fabric,
-					[i]: { fabric_id, color, cost, meters }
-				}
-			}
-		)
-
-		setFabricItems(fabric)
 	}
 
 	const handleSubmit = async () => {
@@ -413,11 +447,6 @@ export function ProductionBudgetEditor() {
 					</div>
 				</div>
 			</div>
-
-			<ProductionBudgetList
-				loadProductionBudgets={makeRemoteLoadProductionBudgets()}
-				onSelectBudget={handleSelectBudget}
-			/>
 		</div>
 	)
 }

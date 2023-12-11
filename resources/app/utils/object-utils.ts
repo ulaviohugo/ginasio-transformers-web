@@ -1,3 +1,8 @@
+type KeyTypeProps = string | number
+
+type ConvertToObjectProps<T, KEY_TYPE extends KeyTypeProps> = {
+	[key in KEY_TYPE]: T
+}
 export class ObjectUtils {
 	static isEmpty(param: any) {
 		return !param || JSON.stringify(param) == '{}' || param == '{}'
@@ -29,12 +34,12 @@ export class ObjectUtils {
 		return newObject
 	}
 
-	static convertToObject<T extends object = any>(
+	static convertToObject<T extends object = any, KEY_TYPE extends KeyTypeProps = number>(
 		data: T[],
 		keyIndex?: keyof T,
 		keyValue?: keyof T
-	): T {
-		if (!data) return {} as T
+	): ConvertToObjectProps<T, KEY_TYPE> {
+		if (!data) return {} as any
 		let obj = data
 		if (typeof data == 'string') {
 			obj = JSON.parse(data)
@@ -53,7 +58,7 @@ export class ObjectUtils {
 				return { ...prev, [index]: current }
 			}, {})
 		}
-		return obj as T
+		return obj as any
 	}
 
 	static toQueryParams(params: any, url?: string) {
