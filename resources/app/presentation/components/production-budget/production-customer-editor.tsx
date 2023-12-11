@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useCustomers } from '@/presentation/hooks'
 import { DateUtils, ProductionBudgetUtils } from '@/utils'
 import { CustomerModel, ProductionBudgetModel } from '@/domain/models'
-import { Modal, ModalBody } from '../modal'
+import { Modal, ModalBody, ModalTitle } from '../modal'
 import { CustomerMeasurements } from '../customer'
 import toast from 'react-hot-toast'
 
@@ -44,8 +44,12 @@ export function ProductionCustomerEditor({
 			<legend>Cliente</legend>
 			{showCustomerMeasurement && (
 				<Modal onClose={() => setShowCustomerMeasurement(false)} show>
+					<ModalTitle>Medidas do cliente</ModalTitle>
 					<ModalBody>
-						<CustomerMeasurements customer={selectedCustomer} />
+						<CustomerMeasurements
+							customer={selectedCustomer}
+							endProduct={formData.end_product}
+						/>
 					</ModalBody>
 				</Modal>
 			)}

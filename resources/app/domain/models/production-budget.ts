@@ -5,7 +5,7 @@ import { ProductionFabricModel } from './fabric'
 
 export type ProductionBudgetModel = {
 	id: number
-	end_product: number
+	end_product: string
 	photo: string
 	date: Date
 	customer_id: number
