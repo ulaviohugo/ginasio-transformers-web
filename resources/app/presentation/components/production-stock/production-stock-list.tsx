@@ -1,22 +1,32 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { IconClose, IconSearch, IconStock, Input, NoData, Select, Spinner } from '..'
+import {
+	Button,
+	IconClose,
+	IconSearch,
+	IconStock,
+	Input,
+	NoData,
+	Select,
+	Spinner,
+	ProductionStockGraph
+} from '..'
 import { ArrayUtils, DateUtils, LabelUtils, NumberUtils, ObjectUtils } from '@/utils'
 import { LoadStocks } from '@/domain/usecases'
 import { loadProductionStockStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import {
-	useProductionCategories,
-	useProductionProducts,
+	useCategories,
+	useProducts,
 	useProductionStocks,
-	useProductionSuppliers
+	useSuppliers
 } from '@/presentation/hooks'
 import { QueryParams } from '@/data/protocols'
 import { ProductionStockModel } from '@/domain/models'
 
 type StokeListProps = {
 	loadStokes: LoadStocks
-	onSelectStock: (selectedStock: ProductionStockModel) => void
+	onSelectProductionStock: (selectedProductionStock: ProductionStockModel) => void
 }
 
 type FilterDataProps = {
@@ -26,14 +36,18 @@ type FilterDataProps = {
 	date: Date
 }
 
-export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProps) {
+export function ProductionStockList({
+	loadStokes,
+	onSelectProductionStock
+}: StokeListProps) {
 	const dispatch = useDispatch()
-	const purchases = useSelector(useProductionStocks())
-	const suppliers = useSelector(useProductionSuppliers())
-	const categories = useSelector(useProductionCategories())
-	const products = useSelector(useProductionProducts())
+	const stocks = useSelector(useProductionStocks())
+	const suppliers = useSelector(useSuppliers())
+	const categories = useSelector(useCategories())
+	const products = useSelector(useProducts())
 
 	const [isLoading, setIsLoading] = useState(true)
+	const [showGraph, setShowGraph] = useState(false)
 
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
 	const [selectedRow, setSelectedRow] = useState(0)
@@ -95,15 +109,24 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 	const handleSelectRow = (id: number) => {
 		setSelectedRow(selectedRow != id ? id : 0)
 	}
-	const handleSelectStock = (customer: ProductionStockModel) => {
+
+	const handleSelectProductionStock = (customer: ProductionStockModel) => {
 		handleSelectRow(customer.id)
-		onSelectStock(selectedRow != customer.id ? customer : ({} as any))
+		onSelectProductionStock(selectedRow != customer.id ? customer : ({} as any))
 	}
 
 	return (
 		<>
+			{showGraph && <ProductionStockGraph onClose={() => setShowGraph(false)} />}
 			<fieldset>
-				<legend>Filtro ({purchases.length})</legend>
+				<legend>
+					Filtro ({stocks.length})
+					<Button
+						variant="gray-light"
+						text="Ver gráfico"
+						onClick={() => setShowGraph(true)}
+					/>
+				</legend>
 				<div className="grid grid-cols-9 mb-3">
 					<div className="col-span-2">
 						<Select
@@ -169,35 +192,33 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 							<tr>
 								<th className="p-1">Lote</th>
 								<th className="p-1">Imagem</th>
+								<th className="p-1">Data</th>
 								<th className="p-1">Fornecedor</th>
 								<th className="p-1">Categoria</th>
 								<th className="p-1">Produto</th>
-								<th className="p-1">Preço/unid</th>
-								<th className="p-1">Cor</th>
 								<th className="p-1">Tamanho</th>
 								<th className="p-1">Quantidade</th>
-								<th className="p-1">Data</th>
 							</tr>
 						</thead>
-						{purchases.length > 0 && (
+						{stocks.length > 0 && (
 							<tbody className="h-5">
-								{purchases.map((purchase, i) => (
+								{stocks.map((stock, i) => (
 									<tr
-										key={purchase.id}
+										key={stock.id}
 										className={`cursor-pointer transition-all duration-150 ${
 											i % 2 !== 0 && 'bg-gray-100'
 										} ${
-											selectedRow == purchase.id
+											selectedRow == stock.id
 												? 'bg-primary text-white'
 												: 'hover:bg-gray-200'
 										}`}
-										onClick={() => handleSelectStock(purchase)}
+										onClick={() => handleSelectProductionStock(stock)}
 									>
-										<td className="p-1">{purchase.id}</td>
+										<td className="p-1">{stock.id}</td>
 										<td className="p-1">
-											{purchase.photo ? (
+											{stock.photo ? (
 												<img
-													src={purchase.photo}
+													src={stock.photo}
 													alt="Imagem"
 													width={30}
 													height={30}
@@ -207,16 +228,12 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 												<IconStock size={25} />
 											)}
 										</td>
-										<td className="p-1">{purchase.supplier?.name}</td>
-										<td className="p-1">{purchase.category?.name}</td>
-										<td className="p-1">{purchase.product?.name}</td>
-										<td className="p-1">
-											{NumberUtils.formatCurrency(purchase.product?.selling_price as any)}
-										</td>
-										<td className="p-1">{purchase.color}</td>
-										<td className="p-1">{purchase.size}</td>
-										<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
-										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
+										<td className="p-1">{DateUtils.getDatePt(stock.purchase_date)}</td>
+										<td className="p-1">{stock.supplier?.name}</td>
+										<td className="p-1">{stock.category?.name}</td>
+										<td className="p-1">{stock.product?.name}</td>
+										<td className="p-1">{stock.size}</td>
+										<td className="p-1">{NumberUtils.format(stock.quantity)}</td>
 									</tr>
 								))}
 							</tbody>
@@ -225,7 +242,7 @@ export function ProductionStockList({ loadStokes, onSelectStock }: StokeListProp
 					{isLoading ? (
 						<Spinner />
 					) : (
-						purchases.length < 1 && (
+						stocks.length < 1 && (
 							<NoData
 								data={
 									!ObjectUtils.isEmpty(filterData) ? 'Nenhum resultado da pesquisa' : null

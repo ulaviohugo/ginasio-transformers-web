@@ -6,7 +6,7 @@ use App\Helpers\DBHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class GraphStockStoreService
+class GraphStockService
 {
 	public function execute(Request $request)
 	{

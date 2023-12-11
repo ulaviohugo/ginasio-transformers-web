@@ -16,31 +16,25 @@ type FilterDataProps = {
 }
 
 type GraphDataProps = {
-	products_quantity: GraphValueProps[]
 	products_amount: GraphValueProps[]
-	categories_quantity: GraphValueProps[]
+	products_quantity: GraphValueProps[]
 	categories_amount: GraphValueProps[]
-	payment_methods_quantity: GraphValueProps[]
+	categories_quantity: GraphValueProps[]
 	payment_methods_amount: GraphValueProps[]
-	employees_quantity: GraphValueProps[]
-	employees_amount: GraphValueProps[]
 }
 
-type ProductionSaleGraphProps = {
+type ProductionStockGraphProps = {
 	onClose: () => void
 }
 
-export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
+export function ProductionStockGraph({ onClose }: ProductionStockGraphProps) {
 	const [loading, setLoading] = useState(true)
 	const [graphData, setGraphData] = useState<GraphDataProps>({
-		categories_quantity: [],
 		categories_amount: [],
-		products_quantity: [],
+		categories_quantity: [],
 		products_amount: [],
-		payment_methods_quantity: [],
-		payment_methods_amount: [],
-		employees_quantity: [],
-		employees_amount: []
+		products_quantity: [],
+		payment_methods_amount: []
 	})
 
 	const currentDate = new Date()
@@ -61,15 +55,13 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 	const categoryQuantityChartRef = useRef<GraphHtmlRefProps>(null)
 	const categoryAmountChartRef = useRef<GraphHtmlRefProps>(null)
 	const paymentMethodAmountChartRef = useRef<GraphHtmlRefProps>(null)
-	const employeesQuantityChartRef = useRef<GraphHtmlRefProps>(null)
-	const employeesAmountChartRef = useRef<GraphHtmlRefProps>(null)
 
 	const fetchData = () => {
 		const { month, year } = filterData
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
-				url: makeApiUrl('/graphs/sale'),
+				url: makeApiUrl('/graphs/production-stock'),
 				body: { month, year }
 			})
 			.then(({ body, statusCode }) => {
@@ -117,24 +109,11 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 			htmlRef: paymentMethodAmountChartRef,
 			graphType: 'bar'
 		})
-
-		GraphUtils.buildGraph({
-			title: 'Quantidade',
-			data: graphData.employees_quantity,
-			htmlRef: employeesQuantityChartRef,
-			graphType: 'bar'
-		})
-		GraphUtils.buildGraph({
-			title: 'Venda',
-			data: graphData.employees_amount,
-			htmlRef: employeesAmountChartRef,
-			graphType: 'bar'
-		})
 	}, [graphData])
 
 	return (
 		<Modal show onClose={onClose}>
-			<ModalTitle>Gráfico de saídas (Loja)</ModalTitle>
+			<ModalTitle>Gráfico de entradas (Loja)</ModalTitle>
 			<ModalBody>
 				{loading && <Spinner data="Carregando dados..." />}
 				<fieldset className="inline-flex gap-2 mb-3">
@@ -189,15 +168,6 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 						<legend>Métodos de pagamento</legend>
 						<div className="shadow-lg m-2">
 							<canvas ref={paymentMethodAmountChartRef} />
-						</div>
-					</fieldset>
-					<fieldset className="grid grid-cols-2">
-						<legend>Funcionário</legend>
-						<div className="shadow-lg m-2">
-							<canvas ref={employeesQuantityChartRef} />
-						</div>
-						<div className="shadow-lg m-2">
-							<canvas ref={employeesAmountChartRef} />
 						</div>
 					</fieldset>
 				</div>

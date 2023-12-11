@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Helpers\HttpResponse;
 use App\Http\Requests\GraphCashRegisterRequest;
-use App\Http\Requests\GraphProductionSaleStoreRequest;
-use App\Http\Requests\GraphProductionStockStoreRequest;
-use App\Http\Requests\GraphSaleStoreRequest;
-use App\Http\Requests\GraphStockStoreRequest;
+use App\Http\Requests\GraphProductionSaleRequest;
+use App\Http\Requests\GraphProductionStockRequest;
+use App\Http\Requests\GraphSaleRequest;
+use App\Http\Requests\GraphStockRequest;
 use App\Services\GraphCashRegisterService;
-use App\Services\GraphProductionSaleStoreService;
-use App\Services\GraphProductionStockStoreService;
-use App\Services\GraphSaleStoreService;
-use App\Services\GraphStockStoreService;
+use App\Services\GraphProductionSaleService;
+use App\Services\GraphProductionStockService;
+use App\Services\GraphSaleService;
+use App\Services\GraphStockService;
 
 class GraphController extends Controller
 {
@@ -25,7 +25,7 @@ class GraphController extends Controller
 		}
 	}
 
-	public function stockStore(GraphStockStoreRequest $request, GraphStockStoreService $service)
+	public function stock(GraphStockRequest $request, GraphStockService $service)
 	{
 		try {
 			return HttpResponse::success(data: $service->execute($request));
@@ -34,7 +34,7 @@ class GraphController extends Controller
 		}
 	}
 
-	public function saleStore(GraphSaleStoreRequest $request, GraphSaleStoreService $service)
+	public function sale(GraphSaleRequest $request, GraphSaleService $service)
 	{
 		try {
 			return HttpResponse::success(data: $service->execute($request));
@@ -43,7 +43,7 @@ class GraphController extends Controller
 		}
 	}
 
-	public function productionStockStore(GraphProductionStockStoreRequest $request, GraphProductionStockStoreService $service)
+	public function productionStock(GraphProductionStockRequest $request, GraphProductionStockService $service)
 	{
 		try {
 			return HttpResponse::success(data: $service->execute($request));
@@ -52,7 +52,7 @@ class GraphController extends Controller
 		}
 	}
 
-	public function productionSaleStore(GraphProductionSaleStoreRequest $request, GraphProductionSaleStoreService $service)
+	public function productionSale(GraphProductionSaleRequest $request, GraphProductionSaleService $service)
 	{
 		try {
 			return HttpResponse::success(data: $service->execute($request));

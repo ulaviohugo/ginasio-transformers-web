@@ -69,7 +69,7 @@ export function SaleGraph({ onClose }: SaleGraphProps) {
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
-				url: makeApiUrl('/graphs/sale-store'),
+				url: makeApiUrl('/graphs/sale'),
 				body: { month, year }
 			})
 			.then(({ body, statusCode }) => {

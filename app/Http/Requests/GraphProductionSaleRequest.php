@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 
-class GraphStockStoreRequest extends GlobalFormRequest
+class GraphProductionSaleRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.

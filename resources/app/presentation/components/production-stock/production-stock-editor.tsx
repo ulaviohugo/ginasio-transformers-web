@@ -47,24 +47,24 @@ import {
 import {
 	makeRemoteLoadProductionCategories,
 	makeRemoteLoadProductionProduct,
-	makeRemoteLoadProductionSuppliers
+	makeRemoteLoadSuppliers
 } from '@/main/factories/usecases'
 
-type StockEditorProps = {
+type ProductionStockEditorProps = {
 	data?: ProductionStockModel
 	onClose: () => void
-	addStock: AddStock
-	updateStock: UpdateStock
+	addProductionStock: AddStock
+	updateProductionStock: UpdateStock
 	onDelete: () => void
 }
 
 export function ProductionStockEditor({
 	data,
 	onClose,
-	addStock,
-	updateStock,
+	addProductionStock,
+	updateProductionStock,
 	onDelete
-}: StockEditorProps) {
+}: ProductionStockEditorProps) {
 	const dispatch = useDispatch()
 	const categories = useSelector(useProductionCategories())
 	const products = useSelector(useProductionProducts())
@@ -142,7 +142,7 @@ export function ProductionStockEditor({
 			)
 		}
 		setPhotoPreview(data?.photo || '')
-	}, [categories, data, products, suppliers])
+	}, [categories, data, formData.category_id, products, suppliers])
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -156,7 +156,7 @@ export function ProductionStockEditor({
 			})
 		}
 		if (suppliers.length < 1) {
-			fetchData(makeRemoteLoadProductionSuppliers(), (response) => {
+			fetchData(makeRemoteLoadSuppliers(), (response) => {
 				dispatch(loadProductionSupplierStore(response))
 			})
 		}
@@ -233,7 +233,9 @@ export function ProductionStockEditor({
 		try {
 			const update = type == 'update'
 			const httpResponse = (
-				update ? await updateStock.update(formData) : await addStock.add(formData)
+				update
+					? await updateProductionStock.update(formData)
+					: await addProductionStock.add(formData)
 			) as ProductionStockModel
 
 			if (update) {
@@ -394,7 +396,15 @@ export function ProductionStockEditor({
 										DateUtils.getDate(formData.purchase_date)) ||
 									''
 								}
-								label={'Data de compra'}
+								label={LabelUtils.translateField('purchase_date')}
+								onChange={handleInputChange}
+							/>
+							<Input
+								type="date"
+								id="due_date"
+								name="due_date"
+								value={(formData?.due_date && DateUtils.getDate(formData.due_date)) || ''}
+								label={LabelUtils.translateField('due_date')}
 								onChange={handleInputChange}
 							/>
 							<Input label="Funcionário" value={user.name} disabled />

@@ -61,7 +61,7 @@ export function StockGraph({ onClose }: StockGraphProps) {
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
-				url: makeApiUrl('/graphs/stock-store'),
+				url: makeApiUrl('/graphs/stock'),
 				body: { month, year }
 			})
 			.then(({ body, statusCode }) => {
