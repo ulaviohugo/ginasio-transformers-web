@@ -350,6 +350,7 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 						setFormData={setFormData}
 						handleInputChange={handleInputChange}
 					/>
+
 					<ProductionEmployeeRow
 						employeeList={employees}
 						formData={formData}
