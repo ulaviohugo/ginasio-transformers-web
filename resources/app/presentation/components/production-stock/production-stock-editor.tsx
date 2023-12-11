@@ -339,14 +339,7 @@ export function ProductionStockEditor({
 								onChange={handleInputChange}
 							/>
 						</div>
-						<div className="grid grid-cols-4 gap-2">
-							<Input
-								id="bar_code"
-								name="bar_code"
-								value={formData?.bar_code || ''}
-								label={LabelUtils.translateField('bar_code')}
-								onChange={handleInputChange}
-							/>
+						<div className="grid grid-cols-5 gap-2">
 							<Select
 								id="color"
 								name="color"
@@ -374,8 +367,6 @@ export function ProductionStockEditor({
 								defaultText="Selecione"
 								onChange={handleInputChange}
 							/>
-						</div>
-						<div className="grid grid-cols-4 gap-2">
 							<Select
 								id="payment_method"
 								name="payment_method"
@@ -396,17 +387,11 @@ export function ProductionStockEditor({
 										DateUtils.getDate(formData.purchase_date)) ||
 									''
 								}
-								label={LabelUtils.translateField('purchase_date')}
+								label={'Data'}
 								onChange={handleInputChange}
 							/>
-							<Input
-								type="date"
-								id="due_date"
-								name="due_date"
-								value={(formData?.due_date && DateUtils.getDate(formData.due_date)) || ''}
-								label={LabelUtils.translateField('due_date')}
-								onChange={handleInputChange}
-							/>
+						</div>
+						<div className="grid grid-cols-4 gap-2">
 							<Input label="Funcionário" value={user.name} disabled />
 						</div>
 					</div>

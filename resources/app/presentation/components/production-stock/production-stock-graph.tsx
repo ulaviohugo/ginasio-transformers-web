@@ -113,7 +113,7 @@ export function ProductionStockGraph({ onClose }: ProductionStockGraphProps) {
 
 	return (
 		<Modal show onClose={onClose}>
-			<ModalTitle>Gráfico de entradas (Loja)</ModalTitle>
+			<ModalTitle>Gráfico de entradas (Produção)</ModalTitle>
 			<ModalBody>
 				{loading && <Spinner data="Carregando dados..." />}
 				<fieldset className="inline-flex gap-2 mb-3">

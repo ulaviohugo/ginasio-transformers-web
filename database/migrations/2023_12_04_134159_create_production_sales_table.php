@@ -18,7 +18,8 @@ return new class extends Migration
 			$table->double('total_value', 16, 3);
 			$table->double('amount_paid', 16, 3);
 			$table->integer('quantity');
-			$table->double('discount', 16, 3)->nullable()->default(0);
+			$table->double('balance', 16, 3)->nullable()->default(0);
+			$table->string('payment_method', 50);
 			$table->enum('paid', ['SIM', 'NÃO']);
 			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();

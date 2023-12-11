@@ -95,6 +95,7 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::prefix('graphs')->group(function () {
 		Route::post('production-stock', [GraphController::class, 'productionStock']);
+		Route::post('production-sale', [GraphController::class, 'productionSale']);
 
 		Route::post('stock', [GraphController::class, 'stock']);
 		Route::post('sale', [GraphController::class, 'sale']);

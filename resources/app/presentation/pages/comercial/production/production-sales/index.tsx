@@ -8,16 +8,17 @@ import {
 	LayoutBody,
 	ModalDelete,
 	ProductionSaleEditor,
-	ProductionSaleList,
-	SubMenu
+	SubMenu,
+	ProductionSaleList
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
-import { removeSaleStore } from '@/presentation/redux'
-import { SaleModel } from '@/domain/models'
+import { removeProductionSaleStore } from '@/presentation/redux'
+import { ProductionProductSaleModel, ProductionSaleModel } from '@/domain/models'
 import {
 	makeRemoteAddProductionSale,
-	makeRemoteDeleteProductionSale,
-	makeRemoteLoadProductionSales
+	makeRemoteDeleteProductionProductSale,
+	makeRemoteLoadProductionSales,
+	makeRemoteUpdateProductionProductSale
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 
@@ -26,11 +27,18 @@ export function ProductionSales() {
 
 	const dispatch = useDispatch()
 
-	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
+	const [selectedProductSale, setSelectedProductSale] = useState<ProductionSaleModel>(
+		{} as ProductionSaleModel
+	)
+
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const clearSelectedSale = () => {
-		setSelectedSale({} as SaleModel)
+		setSelectedProductSale({} as any)
+	}
+
+	const handleOpenFormDelete = () => {
+		setShowFormDelete(true)
 	}
 
 	const handleCloseFormDelete = () => {
@@ -38,10 +46,10 @@ export function ProductionSales() {
 		setShowFormDelete(false)
 	}
 
-	const handleDelete = async () => {
+	const handleDeleteProductSale = async () => {
 		try {
-			await makeRemoteDeleteProductionSale().delete(selectedSale.id)
-			dispatch(removeSaleStore(selectedSale.id))
+			await makeRemoteDeleteProductionProductSale().delete(selectedProductSale.id)
+			dispatch(removeProductionSaleStore(selectedProductSale.id))
 			toast.success(`A venda foi excluída`)
 			handleCloseFormDelete()
 		} catch (error: any) {
@@ -49,15 +57,19 @@ export function ProductionSales() {
 		}
 	}
 
+	const handleSelectProductionSale = (saleProduct: ProductionSaleModel) => {
+		setSelectedProductSale(saleProduct)
+	}
+
 	return (
-		<Layout title="Saída de produtos - Produção">
+		<Layout title="Venda de produtos">
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
-					description={`Deseja realmente excluir o registo?`}
+					description={`Deseja realmente excluir a produção de ${selectedProductSale?.end_product}?`}
 					show={showFormDelete}
 					onClose={handleCloseFormDelete}
-					onSubmit={handleDelete}
+					onSubmit={handleDeleteProductSale}
 				/>
 			)}
 			<LayoutBody>
@@ -71,16 +83,19 @@ export function ProductionSales() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2 mt-2">
-					<fieldset>
-						<legend>Cadastro de venda</legend>
-						<ProductionSaleEditor
-							// data={selectedSale}
-							addSale={makeRemoteAddProductionSale()}
-							loadSales={makeRemoteLoadProductionSales()}
-						/>
-					</fieldset>
+					<ProductionSaleEditor
+						data={selectedProductSale}
+						addSale={makeRemoteAddProductionSale()}
+						updateProductSale={makeRemoteUpdateProductionProductSale()}
+						loadSales={makeRemoteLoadProductionSales()}
+						onClose={clearSelectedSale}
+						onDelete={handleOpenFormDelete}
+					/>
 
-					<ProductionSaleList loadSales={makeRemoteLoadProductionSales()} />
+					<ProductionSaleList
+						loadSales={makeRemoteLoadProductionSales()}
+						onSelectProductSale={handleSelectProductionSale}
+					/>
 				</div>
 			</LayoutBody>
 		</Layout>

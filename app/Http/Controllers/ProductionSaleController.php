@@ -6,6 +6,7 @@ use App\Helpers\ErrorHandler;
 use App\Helpers\HttpResponse;
 use App\Http\Requests\SaleCreateRequest;
 use App\Models\ProductionProductSale;
+use App\Models\ProductionSale;
 use App\Services\InvoiceGeneratorService;
 use App\Services\ProductionSaleCreateService;
 
@@ -13,38 +14,43 @@ class ProductionSaleController extends Controller
 {
 	public function index()
 	{
+		$id = null;
 		$product_id = null;
-		$customer_id = null;
+		$end_product = null;
 		$employee_id = null;
 		$category_id = null;
 		$date = null;
 
 		if (request()->query('filter')) {
 			$queryParam = json_decode(request()->query('filter'));
+			$id = isset($queryParam->id) ? $queryParam->id : null;
+			$end_product = isset($queryParam->end_product) ? $queryParam->end_product : null;
 			$product_id = isset($queryParam->product_id) ? $queryParam->product_id : null;
-			$customer_id = isset($queryParam->customer_id) ? $queryParam->customer_id : null;
 			$employee_id = isset($queryParam->employee_id) ? $queryParam->employee_id : null;
 			$category_id = isset($queryParam->category_id) ? $queryParam->category_id : null;
 			$date = isset($queryParam->date) ? $queryParam->date : null;
 		}
 
 		try {
-			$sales = ProductionProductSale::orderBy('id', 'desc');
-			if ($product_id) {
-				$sales = $sales->where('product_id', $product_id);
+			$sales = ProductionSale::orderBy('id', 'desc');
+			if ($id) {
+				$sales = $sales->where('id', $id);
 			}
-			if ($customer_id) {
-				$sales = $sales->whereHas('sale', function ($query) use ($customer_id) {
-					$query->where('customer_id', $customer_id);
+			if ($end_product) {
+				$sales = $sales->where('end_product', $end_product);
+			}
+			if ($category_id) {
+				$sales = $sales->whereHas('productSales', function ($query) use ($category_id) {
+					$query->where('category_id', $category_id);
+				});
+			}
+			if ($product_id) {
+				$sales = $sales->whereHas('productSales', function ($query) use ($product_id) {
+					$query->where('product_id', $product_id);
 				});
 			}
 			if ($employee_id) {
-				$sales = $sales->whereHas('sale', function ($query) use ($employee_id) {
-					$query->where('employee_id', $employee_id);
-				});
-			}
-			if ($category_id) {
-				$sales = $sales->where('category_id', $category_id);
+				$sales = $sales->where('employee_id', $employee_id);
 			}
 			if ($date) {
 				$sales = $sales->whereDate('created_at', $date);
@@ -52,17 +58,12 @@ class ProductionSaleController extends Controller
 			$sales = $sales->get();
 
 			$sales->map(function ($query) {
-				$query->customer = $query->sale->customer?->only('id', 'name');
-				$query->employee = $query->sale->employee?->only('id', 'name');
+				$query->employee = $query->employee?->only('id', 'name');
 			});
 			$sales->load([
-				'product' => function ($query) {
-					$query->select('id', 'name');
-				},
-				'category' => function ($query) {
-					$query->select('id', 'name');
-				},
-				'sale'
+				'productSales',
+				'productSales.category',
+				'productSales.product',
 			]);
 			return $sales;
 		} catch (\Throwable $th) {

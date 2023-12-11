@@ -15,7 +15,6 @@ class ProductionStock extends Model
 	protected $fillable = [
 		'photo',
 		'lot',
-		'bar_code',
 		'supplier_id',
 		'category_id',
 		'product_id',

@@ -1,18 +1,22 @@
-import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
 	ProductionCategoryModel,
-	ProductionProductModel,
 	ProductionProductSaleModel,
+	ProductionSaleModel,
 	ProductionStockModel
 } from '@/domain/models'
 import {
+	Button,
 	ButtonCancel,
 	ButtonSubmit,
+	IconClose,
+	IconEdit,
 	IconPlus,
+	IconTrash,
 	ImagePreview,
 	Input,
 	InputPrice,
@@ -20,67 +24,52 @@ import {
 	Select
 } from '..'
 
-import { ArrayUtils, ColorUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/utils'
 import {
-	addProductionSaleStore,
+	ArrayUtils,
+	ColorUtils,
+	LabelUtils,
+	NumberUtils,
+	PaymentUtils,
+	ProductionBudgetUtils
+} from '@/utils'
+import {
 	loadCustomerStore,
 	loadEmployeeStore,
 	loadProductionProductSaleStore,
-	loadProductionStockStore,
-	updateProductionSaleStore
+	loadProductionStockStore
 } from '@/presentation/redux'
-import { AddSale, LoadSales } from '@/domain/usecases'
-import {
-	useAuth,
-	useCustomers,
-	useEmployees,
-	useProductionStocks
-} from '@/presentation/hooks'
+import { AddSale, LoadProductionSales, UpdateProductSale } from '@/domain/usecases'
+import { useAuth, useEmployees, useProductionStocks } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
 	makeRemoteLoadEmployees,
 	makeRemoteLoadProductionStocks
 } from '@/main/factories/usecases'
 
-type ProductionProductSaleProps = {
-	category_id: number
-	product_id: number
-	bar_code?: string
-	color: string
-	size: string
-	lot?: number
-	unit_price: number
-	quantity: number
-	total_value: number
-	amount_paid: number
-	discount: number
-	payment_method: string
-
-	product?: ProductionProductModel
-}
-
-type ProductionSaleEditorProps = {
-	data?: ProductionProductSaleModel
+type SaleEditorProps = {
+	data?: ProductionSaleModel
 	addSale: AddSale
-	loadSales: LoadSales
+	updateProductSale: UpdateProductSale
+	loadSales: LoadProductionSales
+	onDelete: () => void
+	onClose: () => void
 }
 
 export function ProductionSaleEditor({
 	data,
 	addSale,
-	loadSales
-}: ProductionSaleEditorProps) {
+	loadSales,
+	updateProductSale,
+	onDelete,
+	onClose
+}: SaleEditorProps) {
 	const dispatch = useDispatch()
 	const stocks = useSelector(useProductionStocks())
-	const customers = useSelector(useCustomers())
 	const user = useSelector(useAuth())
 	const employees = useSelector(useEmployees())
 
-	const [formData] = useState<ProductionProductSaleModel>(
-		data || ({ employee_id: user.id } as ProductionProductSaleModel)
-	)
-
-	const [cart, setCart] = useState<ProductionProductSaleProps[]>([])
+	const [cart, setCart] = useState<ProductionProductSaleModel[]>([])
+	const [endProduct, setEndProduct] = useState('')
 
 	const totalValue = useMemo(() => {
 		return cart.reduce(
@@ -92,9 +81,9 @@ export function ProductionSaleEditor({
 		)
 	}, [cart])
 
-	const totalDiscount = useMemo(() => {
+	const totalBalance = useMemo(() => {
 		return cart.reduce(
-			(prev, current) => prev + NumberUtils.convertToNumber(current.discount),
+			(prev, current) => prev + NumberUtils.convertToNumber(current.balance),
 			0
 		)
 	}, [cart])
@@ -106,7 +95,7 @@ export function ProductionSaleEditor({
 		)
 	}, [cart])
 
-	const [formProduct, setFormProduct] = useState<ProductionProductSaleProps>(
+	const [formProduct, setFormProduct] = useState<ProductionProductSaleModel>(
 		data || ({} as any)
 	)
 
@@ -134,7 +123,6 @@ export function ProductionSaleEditor({
 		return data
 	}, [formProduct?.category_id])
 
-	const [customer_id, setCustomerId] = useState<number>()
 	const [paymentMethod, setPaymentMethod] = useState('')
 	const [employeeId, setEmployeeId] = useState<number>(user.id)
 	const [sendInvoice, setSendInvoice] = useState<'print' | 'email'>('print')
@@ -146,7 +134,7 @@ export function ProductionSaleEditor({
 	const fetchProductSales = async () => {
 		try {
 			const httpResponse = await loadSales.load()
-			dispatch(loadProductionProductSaleStore(httpResponse))
+			dispatch(loadProductionProductSaleStore(httpResponse as any))
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
@@ -186,12 +174,22 @@ export function ProductionSaleEditor({
 		// }
 	}, [])
 
+	useEffect(() => {
+		if (data?.id) {
+			setEndProduct(data.end_product)
+			setCart(data.product_sales)
+			setPaymentMethod(data.payment_method)
+			setEmployeeId(data.employee_id)
+			setFormProduct({ id: data.id } as any)
+		}
+	}, [data])
+
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
 
-		let data: ProductionProductSaleProps = { ...formProduct, [name]: value }
+		let data: ProductionProductSaleModel = { ...formProduct, [name]: value }
 
 		if (name == 'total_value') {
 			const total_value = NumberUtils.convertToNumber(value)
@@ -220,10 +218,10 @@ export function ProductionSaleEditor({
 				toast.error('Saída de estoque maior que o saldo')
 				quantity = 0
 			}
-			const discount = NumberUtils.convertToNumber(formProduct.discount)
+			const balance = NumberUtils.convertToNumber(formProduct.balance)
 			const total_value =
 				quantity > 0
-					? NumberUtils.convertToNumber(formProduct.unit_price) * quantity - discount
+					? NumberUtils.convertToNumber(formProduct.unit_price) * quantity - balance
 					: 0
 			data = {
 				...data,
@@ -232,15 +230,15 @@ export function ProductionSaleEditor({
 				amount_paid: total_value
 			}
 		}
-		if (name == 'discount') {
-			const discount = NumberUtils.convertToNumber(value)
+		if (name == 'balance') {
+			const balance = NumberUtils.convertToNumber(value)
 			const quantity = NumberUtils.convertToNumber(formProduct.quantity)
 			const unit_price = NumberUtils.convertToNumber(formProduct.unit_price)
 			const total_value = quantity > 0 ? quantity * unit_price : 0
 
 			data = {
 				...data,
-				amount_paid: discount > 0 ? total_value - discount : total_value
+				amount_paid: balance > 0 ? total_value - balance : total_value
 			}
 		}
 
@@ -260,7 +258,6 @@ export function ProductionSaleEditor({
 			}
 			data = {
 				...data,
-				bar_code: stock?.bar_code,
 				lot: stock?.id,
 				size: stock?.size,
 				color: stock?.color,
@@ -272,16 +269,8 @@ export function ProductionSaleEditor({
 	}
 
 	const handleAddToCart = () => {
-		const {
-			amount_paid,
-			category_id,
-			color,
-			product_id,
-			quantity,
-			size,
-			unit_price,
-			discount
-		} = formProduct
+		const { amount_paid, category_id, color, product_id, quantity, size, unit_price } =
+			formProduct
 		if (!category_id) return toast.error('Selecione a categoria')
 		if (!product_id) return toast.error('Selecione o produto')
 		if (!color) return toast.error('Selecione a cor')
@@ -298,62 +287,73 @@ export function ProductionSaleEditor({
 			...cart,
 			{
 				...formProduct,
-				discount: NumberUtils.convertToNumber(discount),
 				product: { name: stock.product?.name } as any
 			}
 		])
 		setFormProduct({} as any)
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-		if (!paymentMethod) return toast.error('Selecione o método de pagamento')
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
+		const update = type == 'update'
+		if (!paymentMethod && !update) return toast.error('Selecione o método de pagamento')
 		setIsLoading(true)
+
 		try {
 			const data = {
 				product_sales: cart,
-				customer_id,
 				payment_method: paymentMethod,
 				total_value: totalValue,
-				discount: totalDiscount,
-				amount_paid: totalValue - totalDiscount,
+				balance: totalBalance,
+				amount_paid: totalValue - totalBalance,
 				employee_id: employeeId,
-				send_invoice: sendInvoice
+				send_invoice: sendInvoice,
+				end_product: endProduct
 			} as any
 
-			const httpResponse = await addSale.add(data)
+			const httpResponse: any = update
+				? await updateProductSale.update(formProduct as any)
+				: await addSale.add(data)
 
-			if (formData.id) {
-				dispatch(updateProductionSaleStore(httpResponse))
-			} else {
-				dispatch(addProductionSaleStore(httpResponse))
-			}
 			fetchProductSales()
-			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+			toast.success(`Venda ${update ? 'actualizada' : 'cadastrada'} com sucesso`)
 			if (httpResponse.invoice) {
 				setPdfContent(httpResponse.invoice)
 			}
 			setCart([])
 			setFormProduct({} as any)
+			setEndProduct('')
 		} catch (error: any) {
 			toast.error(error.message)
 		} finally {
 			setIsLoading(false)
 		}
 	}
+
+	const clearFields = () => {
+		onClose()
+		setFormProduct({} as ProductionProductSaleModel)
+	}
+
+	const handleDelete = () => {
+		if (!formProduct.id) return toast.error('Selecione um registo para excluir')
+		onDelete()
+	}
+
 	return (
-		<div>
+		<fieldset>
+			<legend>Cadastro de saída</legend>
 			{pdfContent && <ProductionSalePdfViewer pdfUrl={pdfContent} />}
 			<div className="flex gap-2">
 				<div className="flex flex-col gap-2">
-					<ImagePreview photoPreview={photPreview} disabled />
+					<ImagePreview photoPreview={photPreview} />
 					<div className="bg-green-50 border border-green-200 p-2">
 						<div>
-							<InputPrice
-								id="unit_price"
-								name="unit_price"
-								value={formProduct?.unit_price || ''}
-								label={LabelUtils.translateField('unit_price')}
+							<Input
+								id="lot"
+								name="lot"
+								value={formProduct.lot || ''}
+								label={'Cód. Lote'}
+								disabled
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -369,21 +369,11 @@ export function ProductionSaleEditor({
 						</div>
 						<div>
 							<InputPrice
-								id="discount"
-								name="discount"
-								value={formProduct?.discount || ''}
-								label={'Desconto'}
+								id="balance"
+								name="balance"
+								value={formProduct?.balance || ''}
+								label={'Saldo'}
 								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<InputPrice
-								id="amount_paid"
-								name="amount_paid"
-								value={formProduct?.amount_paid || ''}
-								label={'Total a pagar'}
-								onChange={handleInputChange}
-								disabled
 							/>
 						</div>
 					</div>
@@ -392,11 +382,12 @@ export function ProductionSaleEditor({
 					<div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
 						<div>
 							<Input
-								id="bar_code"
-								name="bar_code"
-								value={formProduct.bar_code || ''}
-								label={LabelUtils.translateField('bar_code')}
+								id="id"
+								name="id"
+								value={formProduct.id || ''}
+								label={'Código'}
 								onChange={handleInputChange}
+								disabled
 							/>
 						</div>
 						<div>
@@ -447,13 +438,16 @@ export function ProductionSaleEditor({
 							/>
 						</div>
 						<div>
-							<Input
-								id="lot"
-								name="lot"
-								value={formProduct.lot || ''}
-								label={LabelUtils.translateField('lot')}
-								disabled
-								onChange={handleInputChange}
+							<Select
+								id="end_product"
+								name="end_product"
+								value={endProduct || ''}
+								label={'Peça final'}
+								data={ProductionBudgetUtils.endProducts.map((endProduct) => ({
+									text: endProduct
+								}))}
+								defaultText="Selecione"
+								onChange={({ target: { value } }) => setEndProduct(value)}
 							/>
 						</div>
 					</div>
@@ -507,35 +501,23 @@ export function ProductionSaleEditor({
 												</td>
 											</tr>
 											<tr className="font-semibold">
-												<td className="p-1">Descontos</td>
+												<td className="p-1">Saldo</td>
 												<td className="p-1"></td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(totalDiscount)} kz
+													{NumberUtils.formatCurrency(totalBalance)} kz
 												</td>
 											</tr>
 											<tr className="font-semibold">
 												<td className="p-1">Total a pagar</td>
 												<td className="p-1"></td>
 												<td className="p-1">
-													{NumberUtils.formatCurrency(totalValue - totalDiscount)} kz
+													{NumberUtils.formatCurrency(totalValue - totalBalance)} kz
 												</td>
 											</tr>
 										</tbody>
 									</table>
 									<div className="flex flex-col gap-2">
 										<div className="flex gap-2">
-											<Select
-												id="customer_id"
-												name="customer_id"
-												value={customer_id || ''}
-												label={LabelUtils.translateField('customer_id')}
-												data={customers.map((customer) => ({
-													text: customer.name,
-													value: customer.id
-												}))}
-												defaultText="Selecione"
-												onChange={(e) => setCustomerId(e.target.value as any)}
-											/>
 											<Select
 												id="payment_method"
 												name="payment_method"
@@ -591,13 +573,6 @@ export function ProductionSaleEditor({
 														checked={sendInvoice == 'email'}
 													/>
 												</label>
-												<ButtonSubmit
-													onClick={handleSubmit}
-													type="submit"
-													text="Finalizar compra"
-													disabled={isLoading}
-													isLoading={isLoading}
-												/>
 											</div>
 										</div>
 									</div>
@@ -606,7 +581,31 @@ export function ProductionSaleEditor({
 						</div>
 					</div>
 				</div>
+				<div className="flex flex-col gap-2">
+					<ButtonSubmit
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('save')}
+						className="!bg-green-700"
+					/>
+					<Button
+						variant="gray-light"
+						text="Editar"
+						icon={IconEdit}
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('update')}
+						className="!opacity-70"
+					/>
+					<Button
+						variant="default"
+						text="Limpar"
+						onClick={clearFields}
+						icon={IconClose}
+					/>
+					<Button variant="red" text="Excluir" icon={IconTrash} onClick={handleDelete} />
+				</div>
 			</div>
-		</div>
+		</fieldset>
 	)
 }

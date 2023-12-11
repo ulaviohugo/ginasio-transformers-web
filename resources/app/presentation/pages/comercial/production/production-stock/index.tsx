@@ -77,8 +77,8 @@ export function ProductionStock() {
 					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
 					<SubMenu
 						submenus={[
-							{ text: 'Compra', link: MenuUtils.FRONT.PRODUCTION_STOCK },
-							{ text: 'Venda', link: MenuUtils.FRONT.PRODUCTION_SALES }
+							{ text: 'Entrada', link: MenuUtils.FRONT.PRODUCTION_STOCK },
+							{ text: 'Saída', link: MenuUtils.FRONT.PRODUCTION_SALES }
 						]}
 					/>
 				</div>

@@ -69,7 +69,7 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
-				url: makeApiUrl('/graphs/sale'),
+				url: makeApiUrl('/graphs/production-sale'),
 				body: { month, year }
 			})
 			.then(({ body, statusCode }) => {
@@ -92,7 +92,7 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Saída',
 			data: graphData.products_amount,
 			htmlRef: productAmountChartRef,
 			graphType: 'bar'
@@ -105,14 +105,14 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Saída',
 			data: graphData.categories_amount,
 			htmlRef: categoryAmountChartRef,
 			graphType: 'bar'
 		})
 
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Saída',
 			data: graphData.payment_methods_amount,
 			htmlRef: paymentMethodAmountChartRef,
 			graphType: 'bar'
@@ -125,7 +125,7 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Saída',
 			data: graphData.employees_amount,
 			htmlRef: employeesAmountChartRef,
 			graphType: 'bar'
@@ -134,7 +134,7 @@ export function ProductionSaleGraph({ onClose }: ProductionSaleGraphProps) {
 
 	return (
 		<Modal show onClose={onClose}>
-			<ModalTitle>Gráfico de saídas (Loja)</ModalTitle>
+			<ModalTitle>Gráfico de saídas (Produção)</ModalTitle>
 			<ModalBody>
 				{loading && <Spinner data="Carregando dados..." />}
 				<fieldset className="inline-flex gap-2 mb-3">

@@ -13,10 +13,10 @@ class ProductionSale extends Model
 	protected $table = DBHelper::TB_PRODUCTION_SALES;
 
 	protected $fillable = [
-		'customer_id',
+		'end_product',
 		'total_value',
 		'amount_paid',
-		'discount',
+		'balance',
 		'quantity',
 		'employee_id',
 		'payment_method',
@@ -26,12 +26,7 @@ class ProductionSale extends Model
 
 	public function productSales()
 	{
-		return $this->hasMany(ProductionProductSale::class);
-	}
-
-	public function customer()
-	{
-		return $this->belongsTo(Customer::class);
+		return $this->hasMany(ProductionProductSale::class, 'sale_id');
 	}
 
 	public function user()
@@ -41,6 +36,6 @@ class ProductionSale extends Model
 
 	public function employee()
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(User::class, 'employee_id');
 	}
 }

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import { Modal, ModalBody, ModalFooter, ModalTitle } from '.'
-import { Button, ButtonCancel, ButtonSubmit, IconClose, IconTrash } from '..'
+import { Button, IconClose, IconTrash } from '..'
 
 type ModalDeleteProps = {
 	entity: ReactNode

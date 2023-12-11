@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\ProductionStock;
-use App\Models\ProductSale;
+use App\Models\ProductionSale;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,16 +19,16 @@ class ProductionSaleCreateService
 
 			//Handle data to calculate values
 			$totalValue = 0;
-			$totalDiscount = 0;
+			$totalBalance = 0;
 			$totalQuantity = 0;
 			for ($i = 0; $i < $countProducts; $i++) {
 				$productSale = $productSales[$i];
 				//ProductSale data
 				$quantity = intval($productSale['quantity']);
 				$unitPrice = floatval($productSale['unit_price']);
-				$discount = isset($productSale['discount']) ? floatval($productSale['discount']) : 0;
+				$balance = isset($productSale['balance']) ? floatval($productSale['balance']) : 0;
 				$prdTotalValue = $unitPrice * $quantity;
-				$prdTotalPaid = $prdTotalValue - $discount;
+				$prdTotalPaid = $prdTotalValue - $balance;
 
 				$productSales[$i]['total_value'] = $prdTotalValue;
 				$productSales[$i]['amount_paid'] = $prdTotalPaid;
@@ -36,18 +36,18 @@ class ProductionSaleCreateService
 				//Sale data
 				$totalQuantity += $quantity;
 				$totalValue += $unitPrice * $quantity;
-				$totalDiscount += $discount;
+				$totalBalance += $balance;
 			}
-			$amountPaid = $totalValue - $totalDiscount;
+			$amountPaid = $totalValue - $totalBalance;
 
 			//Store Sale
 			$userId = User::currentUserId();
-			$sale = ProductSale::create([
-				'customer_id' => $request->customer_id,
+			$sale = ProductionSale::create([
+				'end_product' => $request->end_product,
 				'total_value' => $totalValue,
 				'amount_paid' => $amountPaid,
 				'quantity' => $totalQuantity,
-				'discount' => $totalDiscount,
+				'balance' => $totalBalance,
 				'payment_method' => $request->payment_method,
 				'employee_id' => $request->employee_id ?? $userId,
 				'user_id' => $userId

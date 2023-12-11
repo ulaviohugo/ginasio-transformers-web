@@ -40,6 +40,6 @@ class Sale extends Model
 
 	public function employee()
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(User::class, 'employee_id');
 	}
 }
