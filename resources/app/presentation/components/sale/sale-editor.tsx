@@ -1,18 +1,17 @@
-import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { CategoryModel, ProductSaleModel, StockModel } from '@/domain/models'
 import {
-	CategoryModel,
-	ProductModel,
-	ProductSaleModel,
-	StockModel
-} from '@/domain/models'
-import {
+	Button,
 	ButtonCancel,
 	ButtonSubmit,
+	IconClose,
+	IconEdit,
 	IconPlus,
+	IconTrash,
 	ImagePreview,
 	Input,
 	InputPrice,
@@ -22,14 +21,12 @@ import {
 
 import { ArrayUtils, ColorUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/utils'
 import {
-	addSaleStore,
 	loadCustomerStore,
 	loadEmployeeStore,
 	loadProductSaleStore,
-	loadStockStore,
-	updateSaleStore
+	loadStockStore
 } from '@/presentation/redux'
-import { AddSale, LoadSales } from '@/domain/usecases'
+import { AddSale, LoadSales, UpdateProductSale } from '@/domain/usecases'
 import { useAuth, useCustomers, useEmployees, useStocks } from '@/presentation/hooks'
 import {
 	makeRemoteLoadCustomers,
@@ -37,41 +34,30 @@ import {
 	makeRemoteLoadStocks
 } from '@/main/factories/usecases'
 
-type ProductSaleProps = {
-	category_id: number
-	product_id: number
-	bar_code?: string
-	color: string
-	size: string
-	lot?: number
-	unit_price: number
-	quantity: number
-	total_value: number
-	amount_paid: number
-	discount: number
-	payment_method: string
-
-	product?: ProductModel
-}
-
 type SaleEditorProps = {
 	data?: ProductSaleModel
 	addSale: AddSale
+	updateProductSale: UpdateProductSale
 	loadSales: LoadSales
+	onDelete: () => void
+	onClose: () => void
 }
 
-export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
+export function SaleEditor({
+	data,
+	addSale,
+	loadSales,
+	updateProductSale,
+	onDelete,
+	onClose
+}: SaleEditorProps) {
 	const dispatch = useDispatch()
 	const stocks = useSelector(useStocks())
 	const customers = useSelector(useCustomers())
 	const user = useSelector(useAuth())
 	const employees = useSelector(useEmployees())
 
-	const [formData] = useState<ProductSaleModel>(
-		data || ({ employee_id: user.id } as ProductSaleModel)
-	)
-
-	const [cart, setCart] = useState<ProductSaleProps[]>([])
+	const [cart, setCart] = useState<ProductSaleModel[]>([])
 
 	const totalValue = useMemo(() => {
 		return cart.reduce(
@@ -97,7 +83,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		)
 	}, [cart])
 
-	const [formProduct, setFormProduct] = useState<ProductSaleProps>(data || ({} as any))
+	const [formProduct, setFormProduct] = useState<ProductSaleModel>(data || ({} as any))
 
 	const categories: CategoryModel[] = useMemo(() => {
 		const dataStocks = stocks.map((stock) => ({
@@ -175,12 +161,16 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		// }
 	}, [])
 
+	useEffect(() => {
+		if (data?.id) setFormProduct(data)
+	}, [data])
+
 	const handleInputChange = async (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
 
-		let data: ProductSaleProps = { ...formProduct, [name]: value }
+		let data: ProductSaleModel = { ...formProduct, [name]: value }
 
 		if (name == 'total_value') {
 			const total_value = NumberUtils.convertToNumber(value)
@@ -249,7 +239,7 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 			}
 			data = {
 				...data,
-				bar_code: stock?.bar_code,
+				bar_code: stock?.bar_code as any,
 				lot: stock?.id,
 				size: stock?.size,
 				color: stock?.color,
@@ -294,10 +284,11 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 		setFormProduct({} as any)
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-		if (!paymentMethod) return toast.error('Selecione o método de pagamento')
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
+		const update = type == 'update'
+		if (!paymentMethod && !update) return toast.error('Selecione o método de pagamento')
 		setIsLoading(true)
+
 		try {
 			const data = {
 				product_sales: cart,
@@ -310,15 +301,12 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 				send_invoice: sendInvoice
 			} as any
 
-			const httpResponse = await addSale.add(data)
+			const httpResponse: any = update
+				? await updateProductSale.update(formProduct)
+				: await addSale.add(data)
 
-			if (formData.id) {
-				dispatch(updateSaleStore(httpResponse))
-			} else {
-				dispatch(addSaleStore(httpResponse))
-			}
 			fetchProductSales()
-			toast.success(`Venda ${formData.id ? 'actualizada' : 'cadastrada'} com sucesso`)
+			toast.success(`Venda ${update ? 'actualizada' : 'cadastrada'} com sucesso`)
 			if (httpResponse.invoice) {
 				setPdfContent(httpResponse.invoice)
 			}
@@ -330,8 +318,20 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 			setIsLoading(false)
 		}
 	}
+
+	const clearFields = () => {
+		onClose()
+		setFormProduct({} as ProductSaleModel)
+	}
+
+	const handleDelete = () => {
+		if (!formProduct.id) return toast.error('Selecione um registo para excluir')
+		onDelete()
+	}
+
 	return (
-		<div>
+		<fieldset>
+			<legend>Cadastro de venda</legend>
 			{pdfContent && <SalePdfViewer pdfUrl={pdfContent} />}
 			<div className="flex gap-2">
 				<div className="flex flex-col gap-2">
@@ -580,13 +580,13 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 														checked={sendInvoice == 'email'}
 													/>
 												</label>
-												<ButtonSubmit
+												{/* <ButtonSubmit
 													onClick={handleSubmit}
 													type="submit"
 													text="Finalizar compra"
 													disabled={isLoading}
 													isLoading={isLoading}
-												/>
+												/> */}
 											</div>
 										</div>
 									</div>
@@ -595,7 +595,31 @@ export function SaleEditor({ data, addSale, loadSales }: SaleEditorProps) {
 						</div>
 					</div>
 				</div>
+				<div className="flex flex-col gap-2">
+					<ButtonSubmit
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('save')}
+						className="!bg-green-700"
+					/>
+					<Button
+						variant="gray-light"
+						text="Editar"
+						icon={IconEdit}
+						disabled={isLoading}
+						isLoading={isLoading}
+						onClick={() => handleSubmit('update')}
+						className="!opacity-70"
+					/>
+					<Button
+						variant="default"
+						text="Limpar"
+						onClick={clearFields}
+						icon={IconClose}
+					/>
+					<Button variant="red" text="Excluir" icon={IconTrash} onClick={handleDelete} />
+				</div>
 			</div>
-		</div>
+		</fieldset>
 	)
 }

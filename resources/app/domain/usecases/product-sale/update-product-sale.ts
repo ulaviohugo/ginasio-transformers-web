@@ -1,5 +1,5 @@
-import { SaleModel } from '@/domain/models'
+import { ProductSaleModel } from '@/domain/models'
 
-export interface UpdateSale {
-	update(param: SaleModel): Promise<SaleModel>
+export interface UpdateProductSale {
+	update(param: ProductSaleModel): Promise<ProductSaleModel>
 }

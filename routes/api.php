@@ -80,7 +80,7 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('locations', [LocationController::class, 'index']);
 
-	Route::get('product-sales', [ProductSaleController::class, 'index']);
+	Route::apiResource('product-sales', ProductSaleController::class);
 
 	Route::get('sales/count', [SaleController::class, 'count']);
 	Route::apiResource('sales', SaleController::class);

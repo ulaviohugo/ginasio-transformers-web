@@ -1,3 +1,3 @@
-export interface CountSale {
+export interface CountProductSale {
 	count(): Promise<number>
 }

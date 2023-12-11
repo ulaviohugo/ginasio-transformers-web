@@ -1,4 +1,3 @@
-export * from './add-product-sale'
 export * from './count-product-sale'
 export * from './delete-product-sale'
 export * from './load-product-sales'

@@ -66,7 +66,6 @@ class StockController extends Controller
 		}
 	}
 
-
 	public function update(StockUpdateRequest $request, StockUpdateService $service, Stock $stock)
 	{
 		try {

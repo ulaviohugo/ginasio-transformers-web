@@ -13,11 +13,12 @@ import {
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { removeSaleStore } from '@/presentation/redux'
-import { SaleModel } from '@/domain/models'
+import { ProductSaleModel } from '@/domain/models'
 import {
 	makeRemoteAddSale,
-	makeRemoteDeleteSale,
-	makeRemoteLoadSales
+	makeRemoteDeleteProductSale,
+	makeRemoteLoadSales,
+	makeRemoteUpdateProductSale
 } from '@/main/factories/usecases'
 import { MenuUtils } from '@/utils'
 
@@ -26,11 +27,17 @@ export function Sales() {
 
 	const dispatch = useDispatch()
 
-	const [selectedSale, setSelectedSale] = useState<SaleModel>({} as SaleModel)
+	const [selectedProductSale, setSelectedProductSale] = useState<ProductSaleModel>(
+		{} as ProductSaleModel
+	)
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const clearSelectedSale = () => {
-		setSelectedSale({} as SaleModel)
+		setSelectedProductSale({} as any)
+	}
+
+	const handleOpenFormDelete = () => {
+		setShowFormDelete(true)
 	}
 
 	const handleCloseFormDelete = () => {
@@ -38,10 +45,10 @@ export function Sales() {
 		setShowFormDelete(false)
 	}
 
-	const handleDelete = async () => {
+	const handleDeleteProductSale = async () => {
 		try {
-			await makeRemoteDeleteSale().delete(selectedSale.id)
-			dispatch(removeSaleStore(selectedSale.id))
+			await makeRemoteDeleteProductSale().delete(selectedProductSale.id)
+			dispatch(removeSaleStore(selectedProductSale.id))
 			toast.success(`A venda foi excluída`)
 			handleCloseFormDelete()
 		} catch (error: any) {
@@ -54,10 +61,10 @@ export function Sales() {
 			{showFormDelete && (
 				<ModalDelete
 					entity="entrada"
-					description={`Deseja realmente excluir o registo?`}
+					description={`Deseja realmente excluir o produto ${selectedProductSale?.product?.name} da venda?`}
 					show={showFormDelete}
 					onClose={handleCloseFormDelete}
-					onSubmit={handleDelete}
+					onSubmit={handleDeleteProductSale}
 				/>
 			)}
 			<LayoutBody>
@@ -71,16 +78,19 @@ export function Sales() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2 mt-2">
-					<fieldset>
-						<legend>Cadastro de venda</legend>
-						<SaleEditor
-							// data={selectedSale}
-							addSale={makeRemoteAddSale()}
-							loadSales={makeRemoteLoadSales()}
-						/>
-					</fieldset>
+					<SaleEditor
+						data={selectedProductSale}
+						addSale={makeRemoteAddSale()}
+						updateProductSale={makeRemoteUpdateProductSale()}
+						loadSales={makeRemoteLoadSales()}
+						onClose={clearSelectedSale}
+						onDelete={handleOpenFormDelete}
+					/>
 
-					<SaleList loadSales={makeRemoteLoadSales()} />
+					<SaleList
+						loadSales={makeRemoteLoadSales()}
+						onSelectProductSale={setSelectedProductSale}
+					/>
 				</div>
 			</LayoutBody>
 		</Layout>

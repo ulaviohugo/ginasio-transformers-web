@@ -2,7 +2,10 @@ import { CategoryModel, CustomerModel, EmployeeModel, ProductModel, SaleModel } 
 
 export type ProductSaleModel = {
 	id: number
+	category_id: number
 	product_id: number
+	bar_code: string
+	lot: string | number
 	saleId: number
 	quantity: number
 	total_value: number

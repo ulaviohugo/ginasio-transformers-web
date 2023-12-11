@@ -24,6 +24,7 @@ import toast from 'react-hot-toast'
 import { IconClose, IconSearch } from '../icons'
 import { QueryParams } from '@/data/protocols'
 import { SaleGraph } from './sale-graph'
+import { ProductSaleModel } from '@/domain/models'
 
 type FilterDataProps = {
 	customer_id: number
@@ -35,9 +36,10 @@ type FilterDataProps = {
 
 type SaleListProps = {
 	loadSales: LoadSales
+	onSelectProductSale: (selectedProductSale: ProductSaleModel) => void
 }
 
-export function SaleList({ loadSales }: SaleListProps) {
+export function SaleList({ loadSales, onSelectProductSale }: SaleListProps) {
 	const dispatch = useDispatch()
 
 	const currentDate = DateUtils.getDate(new Date())
@@ -54,6 +56,8 @@ export function SaleList({ loadSales }: SaleListProps) {
 	const [filter, setFilter] = useState<FilterDataProps>({
 		date: currentDate as any
 	} as FilterDataProps)
+
+	const [selectedRow, setSelectedRow] = useState(0)
 
 	const productList = useMemo(() => {
 		return ArrayUtils.order({
@@ -107,6 +111,15 @@ export function SaleList({ loadSales }: SaleListProps) {
 		const filter = { date: currentDate }
 		setFilter(filter as any)
 		fetchData({ filter })
+	}
+
+	const handleSelectRow = (id: number) => {
+		setSelectedRow(selectedRow != id ? id : 0)
+	}
+
+	const handleSelectStock = (productSale: ProductSaleModel) => {
+		handleSelectRow(productSale.id)
+		onSelectProductSale(selectedRow != productSale.id ? productSale : ({} as any))
 	}
 
 	return (
@@ -201,28 +214,39 @@ export function SaleList({ loadSales }: SaleListProps) {
 				</thead>
 				<tbody>
 					{productSales.length > 0 &&
-						productSales.map((sale, i) => (
+						productSales.map((productSale, i) => (
 							<tr
-								key={sale.id}
-								className={` ${
-									i % 2 == 0 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-50'
-								} `}
+								key={productSale.id}
+								className={`cursor-pointer transition-all duration-150 ${
+									i % 2 !== 0 && 'bg-gray-100'
+								} ${
+									selectedRow == productSale.id
+										? 'bg-primary text-white'
+										: 'hover:bg-gray-200'
+								}`}
+								onClick={() => handleSelectStock(productSale)}
 							>
-								<td className="p-1">{sale.id}</td>
+								<td className="p-1">{productSale.id}</td>
 
-								<td className="p-1">{sale.customer?.name}</td>
-								<td className="p-1">{sale.category?.name}</td>
-								<td className="p-1">{sale.product?.name}</td>
-								<td className="p-1">{sale.color}</td>
-								<td className="p-1">{sale.size}</td>
-								<td className="p-1">{NumberUtils.format(sale.quantity)}</td>
-								<td className="p-1">{NumberUtils.formatCurrency(sale.unit_price)}</td>
-								<td className="p-1">{NumberUtils.formatCurrency(sale.discount)}</td>
-								<td className="p-1">{NumberUtils.formatCurrency(sale.amount_paid)}</td>
+								<td className="p-1">{productSale.customer?.name}</td>
+								<td className="p-1">{productSale.category?.name}</td>
+								<td className="p-1">{productSale.product?.name}</td>
+								<td className="p-1">{productSale.color}</td>
+								<td className="p-1">{productSale.size}</td>
+								<td className="p-1">{NumberUtils.format(productSale.quantity)}</td>
 								<td className="p-1">
-									{StringUtils.getFirstAndLastWord(sale?.employee?.name as string)}
+									{NumberUtils.formatCurrency(productSale.unit_price)}
 								</td>
-								<td className="p-1">{DateUtils.getDatePt(sale.created_at)}</td>
+								<td className="p-1">
+									{NumberUtils.formatCurrency(productSale.discount)}
+								</td>
+								<td className="p-1">
+									{NumberUtils.formatCurrency(productSale.amount_paid)}
+								</td>
+								<td className="p-1">
+									{StringUtils.getFirstAndLastWord(productSale?.employee?.name as string)}
+								</td>
+								<td className="p-1">{DateUtils.getDatePt(productSale.created_at)}</td>
 							</tr>
 						))}
 				</tbody>

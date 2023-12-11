@@ -1,29 +1,27 @@
-import { SaleModel } from '@/domain/models'
-import { UpdateSale } from '@/domain/usecases'
+import { ProductSaleModel } from '@/domain/models'
+import { UpdateProductSale } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { UnexpectedError } from '@/infra/http/errors'
-import { FormDataUtils, NumberUtils, ObjectUtils } from '@/utils'
+import { NumberUtils, ObjectUtils } from '@/utils'
 
-export class RemoteUpdateSale implements UpdateSale {
+export class RemoteUpdateProductSale implements UpdateProductSale {
 	constructor(
 		private readonly url: string,
 		private readonly httpClient: HttpClient
 	) {}
 
-	async update(param: SaleModel): Promise<SaleModel> {
+	async update(param: ProductSaleModel): Promise<ProductSaleModel> {
+		const unit_price = NumberUtils.convertToNumber(param.unit_price)
 		const total_value = NumberUtils.convertToNumber(param.total_value)
-		const handledParam = ObjectUtils.removeProps<SaleModel>({ ...param, total_value }, [
-			'created_at',
-			'user_id',
-			'updated_at',
-			'user_id_update'
-		])
-		const body = FormDataUtils.createFormData(handledParam)
+		const handledParam = ObjectUtils.removeProps<ProductSaleModel>(
+			{ ...param, unit_price, total_value },
+			['created_at', 'user_id', 'updated_at', 'user_id_update']
+		)
 
 		const httpResponse = await this.httpClient.request({
 			method: 'put',
 			url: `${this.url}/${param.id}`,
-			body
+			body: handledParam
 		})
 		switch (httpResponse.statusCode) {
 			case HttpStatusCode.ok:

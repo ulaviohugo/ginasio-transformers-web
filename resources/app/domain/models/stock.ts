@@ -4,7 +4,7 @@ export interface StockModel {
 	id: number
 	photo?: string
 	lot?: string
-	bar_code?: string
+	bar_code?: string | number
 	supplier_id: number
 	category_id: number
 	product_id: number

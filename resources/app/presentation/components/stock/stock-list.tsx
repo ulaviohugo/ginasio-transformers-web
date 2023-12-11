@@ -33,7 +33,7 @@ type FilterDataProps = {
 
 export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const dispatch = useDispatch()
-	const purchases = useSelector(useStocks())
+	const stocks = useSelector(useStocks())
 	const suppliers = useSelector(useSuppliers())
 	const categories = useSelector(useCategories())
 	const products = useSelector(useProducts())
@@ -101,6 +101,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 	const handleSelectRow = (id: number) => {
 		setSelectedRow(selectedRow != id ? id : 0)
 	}
+
 	const handleSelectStock = (customer: StockModel) => {
 		handleSelectRow(customer.id)
 		onSelectStock(selectedRow != customer.id ? customer : ({} as any))
@@ -111,7 +112,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 			{showGraph && <StockGraph onClose={() => setShowGraph(false)} />}
 			<fieldset>
 				<legend>
-					Filtro ({purchases.length})
+					Filtro ({stocks.length})
 					<Button
 						variant="gray-light"
 						text="Ver gráfico"
@@ -191,25 +192,25 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 								<th className="p-1">Quantidade</th>
 							</tr>
 						</thead>
-						{purchases.length > 0 && (
+						{stocks.length > 0 && (
 							<tbody className="h-5">
-								{purchases.map((purchase, i) => (
+								{stocks.map((stock, i) => (
 									<tr
-										key={purchase.id}
+										key={stock.id}
 										className={`cursor-pointer transition-all duration-150 ${
 											i % 2 !== 0 && 'bg-gray-100'
 										} ${
-											selectedRow == purchase.id
+											selectedRow == stock.id
 												? 'bg-primary text-white'
 												: 'hover:bg-gray-200'
 										}`}
-										onClick={() => handleSelectStock(purchase)}
+										onClick={() => handleSelectStock(stock)}
 									>
-										<td className="p-1">{purchase.id}</td>
+										<td className="p-1">{stock.id}</td>
 										<td className="p-1">
-											{purchase.photo ? (
+											{stock.photo ? (
 												<img
-													src={purchase.photo}
+													src={stock.photo}
 													alt="Imagem"
 													width={30}
 													height={30}
@@ -219,12 +220,12 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 												<IconStock size={25} />
 											)}
 										</td>
-										<td className="p-1">{DateUtils.getDatePt(purchase.purchase_date)}</td>
-										<td className="p-1">{purchase.supplier?.name}</td>
-										<td className="p-1">{purchase.category?.name}</td>
-										<td className="p-1">{purchase.product?.name}</td>
-										<td className="p-1">{purchase.size}</td>
-										<td className="p-1">{NumberUtils.format(purchase.quantity)}</td>
+										<td className="p-1">{DateUtils.getDatePt(stock.purchase_date)}</td>
+										<td className="p-1">{stock.supplier?.name}</td>
+										<td className="p-1">{stock.category?.name}</td>
+										<td className="p-1">{stock.product?.name}</td>
+										<td className="p-1">{stock.size}</td>
+										<td className="p-1">{NumberUtils.format(stock.quantity)}</td>
 									</tr>
 								))}
 							</tbody>
@@ -233,7 +234,7 @@ export function StockList({ loadStokes, onSelectStock }: StokeListProps) {
 					{isLoading ? (
 						<Spinner />
 					) : (
-						purchases.length < 1 && (
+						stocks.length < 1 && (
 							<NoData
 								data={
 									!ObjectUtils.isEmpty(filterData) ? 'Nenhum resultado da pesquisa' : null
