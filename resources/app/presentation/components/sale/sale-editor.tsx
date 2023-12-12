@@ -389,6 +389,16 @@ export function SaleEditor({
 							/>
 						</div>
 						<div>
+							<Input
+								id="lot"
+								name="lot"
+								value={formProduct.lot || ''}
+								label="Código Lote"
+								disabled
+								onChange={handleInputChange}
+							/>
+						</div>
+						<div>
 							<Select
 								id="category_id"
 								name="category_id"
@@ -432,16 +442,6 @@ export function SaleEditor({
 								name="size"
 								value={formProduct?.size || ''}
 								label={LabelUtils.translateField('size')}
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div>
-							<Input
-								id="lot"
-								name="lot"
-								value={formProduct.lot || ''}
-								label={LabelUtils.translateField('lot')}
-								disabled
 								onChange={handleInputChange}
 							/>
 						</div>

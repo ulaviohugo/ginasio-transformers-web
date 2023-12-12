@@ -24,6 +24,7 @@ import {
 	ProductionSales
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
+import { AdminDocuments } from '@/presentation/pages/rh/admin-docs/admin-documents'
 
 export function AppRoutes() {
 	const menu = MenuUtils.FRONT
@@ -39,6 +40,7 @@ export function AppRoutes() {
 				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
 				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
 				<Route path={menu.CUSTOMERS} element={<Customers />} />
+				<Route path={menu.ADMIN_DOCS} element={<AdminDocuments />} />
 				<Route path={menu.STORE} element={<Store />} />
 				<Route path={menu.STORE_STOCK} element={<Stock />} />
 				<Route path={menu.STORE_SALES} element={<Sales />} />

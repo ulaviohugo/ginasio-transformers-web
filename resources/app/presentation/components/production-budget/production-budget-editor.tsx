@@ -304,6 +304,9 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 	const handleSubmit = async () => {
 		if (isLoading) return
 
+		if (!formData.measurement?.lowerLimbs || !formData.measurement?.upperLimbs) {
+			return toast.error('Adicione medidas do cliente')
+		}
 		setIsLoading(true)
 
 		const production_accessories = ArrayUtils.convertToArray(accessoryItems).filter(

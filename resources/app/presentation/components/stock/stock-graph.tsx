@@ -84,7 +84,7 @@ export function StockGraph({ onClose }: StockGraphProps) {
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Compra',
 			data: graphData.products_amount,
 			htmlRef: productAmountChartRef,
 			graphType: 'bar'
@@ -97,14 +97,14 @@ export function StockGraph({ onClose }: StockGraphProps) {
 			graphType: 'bar'
 		})
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Compra',
 			data: graphData.categories_amount,
 			htmlRef: categoryAmountChartRef,
 			graphType: 'bar'
 		})
 
 		GraphUtils.buildGraph({
-			title: 'Venda',
+			title: 'Compra',
 			data: graphData.payment_methods_amount,
 			htmlRef: paymentMethodAmountChartRef,
 			graphType: 'bar'

@@ -89,6 +89,7 @@ export function ProductionBudgetList({
 	return (
 		<fieldset>
 			<legend>Filtro {isLoading && <Spinner />}</legend>
+			<Button variant="gray-light" text="Exportar Excel" className="mb-2" />
 			<>
 				<div className="flex p-2 border">
 					<div className="flex gap-1 ml-auto items-end">

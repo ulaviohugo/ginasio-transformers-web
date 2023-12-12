@@ -1,5 +1,5 @@
 import { ProductionAccessoryModel } from './accessory'
-import { CustomerModel } from './customer'
+import { CustomerMeasurementProps, CustomerModel } from './customer'
 import { EmployeeModel } from './employee'
 import { ProductionFabricModel } from './fabric'
 
@@ -22,7 +22,7 @@ export type ProductionBudgetModel = {
 	selling_cost: number
 	discount: number
 	total_to_pay: number
-
+	measurement?: CustomerMeasurementProps
 	customer: CustomerModel
 	cutting_employee: EmployeeModel
 	sewing_employee: EmployeeModel

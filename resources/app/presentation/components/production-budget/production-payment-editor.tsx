@@ -23,39 +23,47 @@ export function ProductionPaymentEditor({
 			<legend>Pagamentos</legend>
 			<div className="flex gap-2 flex-col ml-auto">
 				<Item
-					label="Custo corte"
+					label="Custo Corte"
 					value={NumberUtils.formatCurrency(formData.cutting_cost)}
 				/>
 				<Item
-					label="Custo costura"
+					label="Custo Costura"
 					value={NumberUtils.formatCurrency(formData.sewing_cost)}
 				/>
-				<Item label="Custo variável" value={NumberUtils.formatCurrency(variableCost)} />
+				<Item label="Custo Variável" value={NumberUtils.formatCurrency(variableCost)} />
 				{/* Acabamento é uma constante */}
 				<Item
 					label="Acabamento"
 					value={NumberUtils.formatCurrency(formData.finishing_cost)}
 				/>
 				<div className="">
-					<div className="">Custo Produção</div>
+					<div className="">
+						<b>Custo Produção</b>
+					</div>
 					<div className="text-xl text-violet-500 font-semibold">
 						{NumberUtils.formatCurrency(productionCost)}
 					</div>
 				</div>
-				<InputPrice
-					name="selling_cost"
-					label="Custo venda"
-					value={formData?.selling_cost}
-					onChange={handleInputChange}
-				/>
-				<InputPrice
-					name="discount"
-					label="Desconto"
-					value={formData.discount}
-					onChange={handleInputChange}
-				/>
+				<div>
+					Custo Venda
+					<InputPrice
+						name="selling_cost"
+						value={formData?.selling_cost}
+						onChange={handleInputChange}
+					/>
+				</div>
+				<div>
+					Desconto
+					<InputPrice
+						name="discount"
+						value={formData.discount}
+						onChange={handleInputChange}
+					/>
+				</div>
 				<div className="">
-					<div className="">Total a pagar</div>
+					<div className="">
+						<b>Total a Pagar</b>
+					</div>
 					<div className="text-2xl text-red-500 font-semibold">
 						{NumberUtils.formatCurrency(totalToPay)}
 					</div>

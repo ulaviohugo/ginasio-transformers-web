@@ -15,14 +15,14 @@ class CategorySeeder extends Seeder
 	{
 		$now = now();
 		Category::insert([
-			['name' => 'Acessório feminino', 'created_at' => $now],
-			['name' => 'Bijuteria feminina', 'created_at' => $now],
-			['name' => 'Calçado feminino', 'created_at' => $now],
-			['name' => 'Calçado masculino', 'created_at' => $now],
+			['name' => 'Acessório Feminino', 'created_at' => $now],
+			['name' => 'Bijuteria Feminina', 'created_at' => $now],
+			['name' => 'Calçado Feminino', 'created_at' => $now],
+			['name' => 'Calçado Masculino', 'created_at' => $now],
 			['name' => 'Diversos', 'created_at' => $now],
 			['name' => 'Perfumaria', 'created_at' => $now],
-			['name' => 'Roupa feminina', 'created_at' => $now],
-			['name' => 'Roupa masculina', 'created_at' => $now],
+			['name' => 'Roupa Feminina', 'created_at' => $now],
+			['name' => 'Roupa Masculina', 'created_at' => $now],
 		]);
 	}
 }

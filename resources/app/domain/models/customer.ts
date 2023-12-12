@@ -15,3 +15,14 @@ export interface CustomerModel {
 	updated_at?: Date
 	user_id_update?: number
 }
+
+export type CustomerMeasurementItemProps = {
+	description: string
+	measurement: number
+}
+export type CustomerMeasurementProps = {
+	lowerLimbs: CustomerMeasurementItemProps[]
+	upperLimbs: CustomerMeasurementItemProps[]
+	customer_id?: number
+	production_budget_id?: number
+}

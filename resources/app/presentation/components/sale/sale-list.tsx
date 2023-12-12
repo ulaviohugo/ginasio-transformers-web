@@ -133,6 +133,7 @@ export function SaleList({ loadSales, onSelectProductSale }: SaleListProps) {
 					onClick={() => setShowGraph(true)}
 				/>
 			</legend>
+			<Button variant="gray-light" text="Exportar Excel" className="mb-2" />
 			<div className="grid grid-cols-11 mb-3">
 				<div className="col-span-2">
 					<Select

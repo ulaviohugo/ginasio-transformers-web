@@ -4,7 +4,11 @@ import { Button, Input, Select } from '../form-controls'
 import { useSelector } from 'react-redux'
 import { useCustomers } from '@/presentation/hooks'
 import { DateUtils, ProductionBudgetUtils } from '@/utils'
-import { CustomerModel, ProductionBudgetModel } from '@/domain/models'
+import {
+	CustomerMeasurementProps,
+	CustomerModel,
+	ProductionBudgetModel
+} from '@/domain/models'
 import { Modal, ModalBody, ModalTitle } from '../modal'
 import { CustomerMeasurements } from '../customer'
 import toast from 'react-hot-toast'
@@ -34,21 +38,28 @@ export function ProductionCustomerEditor({
 
 	const handleOpenCustomerMeasurement = () => {
 		if (!formData.customer_id) return toast.error('Selecione um cliente')
+		if (!formData.end_product) return toast.error('Selecione o produto final')
 
 		setSelectedCustomer(customers.find(({ id }) => id == formData.customer_id) as any)
 		setShowCustomerMeasurement(true)
+	}
+
+	const handleGetMeasurements = (measurement: CustomerMeasurementProps) => {
+		setFormData({ ...formData, measurement })
 	}
 
 	return (
 		<fieldset>
 			<legend>Cliente</legend>
 			{showCustomerMeasurement && (
-				<Modal onClose={() => setShowCustomerMeasurement(false)} show>
+				<Modal onClose={() => setShowCustomerMeasurement(false)} show size="lg">
 					<ModalTitle>Medidas do cliente</ModalTitle>
 					<ModalBody>
 						<CustomerMeasurements
 							customer={selectedCustomer}
 							endProduct={formData.end_product}
+							onSave={handleGetMeasurements}
+							onClose={() => setShowCustomerMeasurement(false)}
 						/>
 					</ModalBody>
 				</Modal>
@@ -107,7 +118,7 @@ export function ProductionCustomerEditor({
 					<div>
 						<Button
 							variant="gray-light"
-							text="Medida do cliente"
+							text="Adicionar medida do cliente"
 							onClick={handleOpenCustomerMeasurement}
 						/>
 					</div>

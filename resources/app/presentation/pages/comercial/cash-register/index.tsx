@@ -90,6 +90,7 @@ export function CashRegister() {
 								onClick={() => setShowGraph(true)}
 							/>
 						</legend>
+						<Button variant="gray-light" text="Exportar Excel" className="mb-2" />
 						<div className="flex p-2 border">
 							<div className="flex gap-1 ml-auto items-end">
 								<Input

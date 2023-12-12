@@ -1,6 +1,12 @@
-import { CustomerModel } from '@/domain/models'
+import {
+	CustomerMeasurementItemProps,
+	CustomerMeasurementProps,
+	CustomerModel
+} from '@/domain/models'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Input } from '../form-controls'
+import { Button, Input, InputNumber } from '../form-controls'
+import { IconCheck, IconPlus } from '../icons'
+import { MeasurementUtils } from '@/utils'
 
 type FormDataProps = {
 	customer_id: number
@@ -12,11 +18,8 @@ type FormDataProps = {
 type CustomerMeasurementsProps = {
 	customer: CustomerModel
 	endProduct: string
-}
-
-type MeasurementItemDataProps = {
-	description: string
-	measurement: number
+	onSave: (measurement: CustomerMeasurementProps) => void
+	onClose: () => void
 }
 
 type ChangeInputProps = {
@@ -25,47 +28,23 @@ type ChangeInputProps = {
 	value: string
 }
 
-const initialData = {
-	0: { description: 'Contorno Acima do Peito (Frente/Costas)', measurement: 10 },
-	1: { description: 'Contorno Abaixo do Peito', measurement: 10 },
-	2: { description: 'Largura de Frente (Zona do Peito)', measurement: 10 },
-	3: { description: 'Largura de Costas (Lateral a Lateral)', measurement: 10 },
-	4: { description: 'Largura das Costas', measurement: 10 },
-	5: { description: 'Contorno da Cintura', measurement: 10 },
-	6: { description: 'Altura de Frente do Ombro à Cintura', measurement: 10 },
-	7: { description: 'Altura das Costas', measurement: 10 },
-	8: { description: 'Altura da Cava à Cintura', measurement: 10 },
-	9: { description: 'Altura do Peito', measurement: 10 },
-	10: { description: 'Ombro', measurement: 10 },
-	11: { description: 'Distância entre Vértices', measurement: 10 },
-	12: { description: 'Contorno do Pescoço', measurement: 10 },
-	13: { description: 'Comprimento Total da Manga', measurement: 10 },
-	14: { description: 'Comprimento Meia Manga/Cotovelo', measurement: 10 },
-	15: { description: 'Contorno do Braço', measurement: 10 },
-	16: { description: 'Contorno do Pulso', measurement: 10 },
-	17: { description: 'Altura do Vestido', measurement: 10 },
-	18: { description: 'Altura da Blusa/Casaco', measurement: 10 }
-}
-
 export function CustomerMeasurements({
 	customer,
-	endProduct
+	endProduct,
+	onSave,
+	onClose
 }: CustomerMeasurementsProps) {
 	const [formData, setFormData] = useState<FormDataProps>({} as any)
 
-	const [highMembersObject, setHighMembersObject] = useState<any>(initialData)
+	const [upperLimbsObject, setUpperLimbsObject] = useState<any>(
+		MeasurementUtils.initialUpperLimbsData
+	)
+	const upperLimbsList = useMemo(() => Object.keys(upperLimbsObject), [upperLimbsObject])
 
-	const highMembers = useMemo(() => Object.keys(highMembersObject), [highMembersObject])
-
-	const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = target
-		setFormData({ ...formData, [name]: value })
-	}
-
-	const handleItemInputChange = ({ index, name, value }: ChangeInputProps) => {
-		const newDta = highMembersObject[index] || { [index]: { [name]: value } }[index]
-		setHighMembersObject({ ...highMembersObject, [index]: { ...newDta, [name]: value } })
-	}
+	const [lowerLimbsObject, setLowerLimbsObject] = useState<any>(
+		MeasurementUtils.initialLowerLimbsData
+	)
+	const lowerLimbsList = useMemo(() => Object.keys(lowerLimbsObject), [lowerLimbsObject])
 
 	useEffect(() => {
 		setFormData({
@@ -75,6 +54,37 @@ export function CustomerMeasurements({
 			phone: customer.phone
 		})
 	}, [customer, endProduct])
+
+	const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = target
+		setFormData({ ...formData, [name]: value })
+	}
+
+	const handleChangeUpperLimbsInput = ({ index, name, value }: ChangeInputProps) => {
+		const newDta = upperLimbsObject[index] || { [index]: { [name]: value } }[index]
+		setUpperLimbsObject({ ...upperLimbsObject, [index]: { ...newDta, [name]: value } })
+	}
+
+	const handleChangeLowerLimbsInput = ({ index, name, value }: ChangeInputProps) => {
+		const newDta = lowerLimbsObject[index] || { [index]: { [name]: value } }[index]
+		setLowerLimbsObject({ ...lowerLimbsObject, [index]: { ...newDta, [name]: value } })
+	}
+
+	const handleAddUpperLimbsItem = () => {
+		setUpperLimbsObject({ ...upperLimbsObject, [upperLimbsList.length]: {} })
+	}
+
+	const handleAddLowerLimbsItem = () => {
+		setLowerLimbsObject({ ...lowerLimbsObject, [lowerLimbsList.length]: {} })
+	}
+
+	const handleSave = () => {
+		onSave({
+			lowerLimbs: Object.values(lowerLimbsObject),
+			upperLimbs: Object.values(upperLimbsObject)
+		})
+		onClose()
+	}
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -107,23 +117,54 @@ export function CustomerMeasurements({
 			<fieldset>
 				<legend>Membros superiores</legend>
 				<div className="grid grid-cols-2 gap-x-4">
-					{highMembers.map((key, i) => (
+					{upperLimbsList.map((key, i) => (
 						<MeasurementItem
 							key={i}
 							itemIndex={Number(key)}
 							index={i}
-							measurement={highMembersObject[key]}
-							onInputChange={handleItemInputChange}
+							measurement={upperLimbsObject[key]}
+							onInputChange={handleChangeUpperLimbsInput}
 						/>
 					))}
 				</div>
+				<Button
+					variant="gray-light"
+					text="Adicionar"
+					className="mt-2"
+					icon={IconPlus}
+					onClick={handleAddUpperLimbsItem}
+				/>
 			</fieldset>
+			<fieldset>
+				<legend>Membros inferiores</legend>
+				<div className="grid grid-cols-2 gap-x-4">
+					{lowerLimbsList.map((key, i) => (
+						<MeasurementItem
+							key={i}
+							itemIndex={Number(key)}
+							index={i}
+							measurement={lowerLimbsObject[key]}
+							onInputChange={handleChangeLowerLimbsInput}
+						/>
+					))}
+				</div>
+				<Button
+					variant="gray-light"
+					text="Adicionar"
+					className="mt-2"
+					icon={IconPlus}
+					onClick={handleAddLowerLimbsItem}
+				/>
+			</fieldset>
+			<div>
+				<Button variant="green" text="Salvar" icon={IconCheck} onClick={handleSave} />
+			</div>
 		</div>
 	)
 }
 
 type MeasurementItemProps = {
-	measurement: MeasurementItemDataProps
+	measurement: CustomerMeasurementItemProps
 	index: number
 	itemIndex: number
 	onInputChange: (data: ChangeInputProps) => void
@@ -134,7 +175,7 @@ const MeasurementItem = ({
 	itemIndex,
 	onInputChange
 }: MeasurementItemProps) => {
-	const [formData, setFormData] = useState<MeasurementItemDataProps>()
+	const [formData, setFormData] = useState<CustomerMeasurementItemProps>()
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -145,16 +186,26 @@ const MeasurementItem = ({
 
 	useEffect(() => {
 		setFormData(measurement)
-	}, [])
+	}, [measurement])
 
 	return (
-		<div className="flex border-b p-1 hover:bg-gray-50">
-			<div className="flex-1">{formData?.description}</div>
-			<Input
-				name={`measurement`}
-				value={formData?.measurement}
-				onChange={handleInputChange}
-			/>
+		<div className="flex border-b p-1 hover:bg-gray-50 text-sm">
+			<div className="flex-1">
+				<Input
+					name="description"
+					placeholder="Descrição"
+					value={formData?.description}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div className="inline-flex w-20">
+				<InputNumber
+					name={`measurement`}
+					placeholder="Medida"
+					value={formData?.measurement}
+					onChange={handleInputChange}
+				/>
+			</div>
 		</div>
 	)
 }

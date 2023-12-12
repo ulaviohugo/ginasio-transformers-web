@@ -287,7 +287,7 @@ export function StockEditor({
 								id="lot"
 								name="lot"
 								value={formData?.id || ''}
-								label={LabelUtils.translateField('lot')}
+								label={'Código Lote'}
 								onChange={handleInputChange}
 								disabled
 							/>

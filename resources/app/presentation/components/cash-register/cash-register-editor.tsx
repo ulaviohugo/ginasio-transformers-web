@@ -152,24 +152,28 @@ export function CashRegisterEditor() {
 						<legend>Outros movimentos de caixa</legend>
 						<form onSubmit={handleSubmit} className="w-full ">
 							<div className="flex items-start gap-1">
-								<Input
-									type="date"
-									name="date"
-									id="date"
-									label="Data"
-									value={(formData?.date as any) || ''}
-									onChange={handleInputChange}
-								/>
-								<Select
-									label="Tipo de operação"
-									name="operation_type"
-									id="operation_type"
-									value={formData?.operation_type || ''}
-									data={[{ text: 'Entrada' }, { text: 'Saída' }]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<div className="col-span-2">
+								<div className="w-32">
+									<Input
+										type="date"
+										name="date"
+										id="date"
+										label="Data"
+										value={(formData?.date as any) || ''}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div className="w-36">
+									<Select
+										label="Tipo de operação"
+										name="operation_type"
+										id="operation_type"
+										value={formData?.operation_type || ''}
+										data={[{ text: 'Entrada' }, { text: 'Saída' }]}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div className="col-span-2 flex-1">
 									<TextArea
 										name="description"
 										id="description"
@@ -179,22 +183,26 @@ export function CashRegisterEditor() {
 										rows={1}
 									/>
 								</div>
-								<InputPrice
-									name="amount"
-									id="amount"
-									label="Valor KZ"
-									value={formData?.amount || ''}
-									onChange={handleInputChange}
-								/>
-								<Select
-									name="payment_method"
-									id="payment_method"
-									label="Movimento Bancário"
-									value={formData?.payment_method || ''}
-									data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
+								<div className="w-32">
+									<InputPrice
+										name="amount"
+										id="amount"
+										label="Valor KZ"
+										value={formData?.amount || ''}
+										onChange={handleInputChange}
+									/>
+								</div>
+								<div className="w-56">
+									<Select
+										name="payment_method"
+										id="payment_method"
+										label="Movimento Bancário"
+										value={formData?.payment_method || ''}
+										data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
+										defaultText="Selecione"
+										onChange={handleInputChange}
+									/>
+								</div>
 							</div>
 							<div className="col-span-2 mt-2">
 								<Button

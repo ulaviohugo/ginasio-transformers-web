@@ -26,31 +26,31 @@ class ProductSeeder extends Seeder
 			['name' => 'Tornozeleira', 'category_id' => 2, 'created_at' => $date],
 
 			['name' => 'Havaiana', 'category_id' => 3, 'created_at' => $date],
-			['name' => 'Sandália alta', 'category_id' => 3, 'created_at' => $date],
-			['name' => 'Sandália rasa', 'category_id' => 3, 'created_at' => $date],
+			['name' => 'Sandália Alta', 'category_id' => 3, 'created_at' => $date],
+			['name' => 'Sandália Rasa', 'category_id' => 3, 'created_at' => $date],
 			['name' => 'Sapato', 'category_id' => 3, 'created_at' => $date],
-			['name' => 'Ténis feminino', 'category_id' => 3, 'created_at' => $date],
+			['name' => 'Ténis Feminino', 'category_id' => 3, 'created_at' => $date],
 
-			['name' => 'Havaiana masculina', 'category_id' => 4, 'created_at' => $date],
-			['name' => 'Ténis masculino', 'category_id' => 4, 'created_at' => $date],
+			['name' => 'Havaiana Masculina', 'category_id' => 4, 'created_at' => $date],
+			['name' => 'Ténis Masculino', 'category_id' => 4, 'created_at' => $date],
 
-			['name' => 'Etiqueta cetim', 'category_id' => 5, 'created_at' => $date],
-			['name' => 'Etiqueta papel', 'category_id' => 5, 'created_at' => $date],
+			['name' => 'Etiqueta Cetim', 'category_id' => 5, 'created_at' => $date],
+			['name' => 'Etiqueta Papel', 'category_id' => 5, 'created_at' => $date],
 
-			['name' => 'Creme desodorizante', 'category_id' => 6, 'created_at' => $date],
-			['name' => 'Desodorizante corporal', 'category_id' => 6, 'created_at' => $date],
-			['name' => 'Sabonete em barra', 'category_id' => 6, 'created_at' => $date],
+			['name' => 'Creme Desodorizante', 'category_id' => 6, 'created_at' => $date],
+			['name' => 'Desodorizante Corporal', 'category_id' => 6, 'created_at' => $date],
+			['name' => 'Sabonete em Barra', 'category_id' => 6, 'created_at' => $date],
 
-			['name' => 'Blazer feminino', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Blusa feminina', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Calça jeans', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Calça social', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Camisa feminina', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Camiseta feminina', 'category_id' => 7, 'created_at' => $date],
-			['name' => 'Fato social feminino', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Blazer Feminino', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Blusa Feminina', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Calça Jeans', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Calça Social', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Camisa Feminina', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Camiseta Feminina', 'category_id' => 7, 'created_at' => $date],
+			['name' => 'Fato Social Feminino', 'category_id' => 7, 'created_at' => $date],
 
-			['name' => 'Camisa masculina ', 'category_id' => 8, 'created_at' => $date],
-			['name' => 'Camiseta masculina', 'category_id' => 8, 'created_at' => $date]
+			['name' => 'Camisa Masculina ', 'category_id' => 8, 'created_at' => $date],
+			['name' => 'Camiseta Masculina', 'category_id' => 8, 'created_at' => $date]
 		]);
 	}
 }

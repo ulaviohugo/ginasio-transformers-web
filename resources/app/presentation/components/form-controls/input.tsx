@@ -45,6 +45,25 @@ const maskIBAN = [
 	/\d/
 ]
 
+const handleKeyDown = (
+	e: KeyboardEvent<HTMLInputElement>,
+	props: InputHTMLAttributes<HTMLInputElement>
+) => {
+	const inputEl = e.target as HTMLInputElement
+	if (inputEl.readOnly || inputEl.disabled) return
+	if (['ArrowUp', 'ArrowDown'].includes(e.code)) {
+		let currentValue: any = NumberUtils.convertToNumber((e.target as any).value)
+		if (e.code === 'ArrowUp') {
+			currentValue++
+		} else if (e.key === 'ArrowDown') {
+			currentValue--
+		}
+		if (props.onChange) {
+			props.onChange({ target: { name: props.name, value: currentValue } } as any)
+		}
+	}
+}
+
 export function Input({ label, icon: Icon, className, ...props }: InputProps) {
 	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
@@ -73,22 +92,6 @@ export function InputYear(props: InputProps) {
 }
 
 export function InputPrice(props: InputProps) {
-	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-		const inputEl = e.target as HTMLInputElement
-		if (inputEl.readOnly || inputEl.disabled) return
-		if (['ArrowUp', 'ArrowDown'].includes(e.code)) {
-			let currentValue: any = NumberUtils.convertToNumber((e.target as any).value)
-			if (e.code === 'ArrowUp') {
-				currentValue++
-			} else if (e.key === 'ArrowDown') {
-				currentValue--
-			}
-			if (props.onChange) {
-				props.onChange({ target: { name: props.name, value: currentValue } } as any)
-			}
-		}
-	}
-
 	const priceMask = createNumberMask({
 		prefix: '',
 		// suffix: ' Kz',
@@ -98,7 +101,24 @@ export function InputPrice(props: InputProps) {
 		decimalLimit: 2,
 		allowNegative: true
 	})
-	return <InputMask mask={priceMask} {...props} onKeyDown={handleKeyDown} />
+	return (
+		<InputMask mask={priceMask} {...props} onKeyDown={(e) => handleKeyDown(e, props)} />
+	)
+}
+
+export function InputNumber(props: InputProps) {
+	const priceMask = createNumberMask({
+		prefix: '',
+		// suffix: ' Kz',
+		thousandsSeparatorSymbol: ' ',
+		allowDecimal: true,
+		decimalSymbol: '.',
+		decimalLimit: 2,
+		allowNegative: true
+	})
+	return (
+		<InputMask mask={priceMask} {...props} onKeyDown={(e) => handleKeyDown(e, props)} />
+	)
 }
 
 export function InputEmail(props: InputProps) {
