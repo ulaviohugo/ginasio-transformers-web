@@ -1,10 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
+	Button,
+	IconCheck,
+	IconClose,
 	Input,
 	Layout,
 	LayoutBody,
 	Select,
 	SubMenu,
+	TextArea,
 	Title
 } from '@/presentation/components'
 import {
@@ -19,6 +23,8 @@ import { NotFound } from '@/presentation/pages'
 import { DateUtils, MenuUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
 
 export function EmployeeSalaryReceipt() {
 	const user = useSelector(useAuth())
@@ -27,6 +33,7 @@ export function EmployeeSalaryReceipt() {
 	const dispatch = useDispatch()
 
 	const employees = useSelector(useEmployees())
+
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
 		{} as EmployeeModel
 	)
@@ -69,12 +76,16 @@ export function EmployeeSalaryReceipt() {
 									value: employee.id
 								}))}
 								onChange={handleSelectEmployee}
-								value={''}
+								value={selectedEmployee?.id || ''}
 							/>
 						</div>
 					</div>
 					{selectedEmployee?.id ? (
-						<FolhaSalarialCard key={selectedEmployee.id} employee={selectedEmployee} />
+						<FolhaSalarialCard
+							key={selectedEmployee.id}
+							employee={selectedEmployee}
+							onClear={() => setSelectedEmployee({} as any)}
+						/>
 					) : (
 						<div>Selecione um funcionário</div>
 					)}
@@ -84,45 +95,75 @@ export function EmployeeSalaryReceipt() {
 	)
 }
 
-const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
+const date = new Date()
+const initialData = {
+	month: date.getUTCMonth(),
+	year: date.getFullYear(),
+	workedDays: 26
+}
+
+const FolhaSalarialCard = ({
+	employee,
+	onClear
+}: {
+	employee: EmployeeModel
+	onClear: () => void
+}) => {
 	const user = useSelector(useAuth())
-	const date = new Date()
 	const years = [
 		date.getUTCFullYear() + 1,
 		date.getUTCFullYear(),
 		date.getUTCFullYear() - 1
 	]
-	const currentMonth = date.getUTCMonth()
 
 	const [receiptData, setReceiptDate] = useState<ReceiptDataProps>({} as any)
 
 	useEffect(() => {
-		setReceiptDate({
-			month: DateUtils.getMonthExt(currentMonth),
-			year: years[1],
-			workedDays: 22
-		})
+		setReceiptDate(initialData)
 	}, [])
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+	) => {
 		const { name, value } = e.target
 		setReceiptDate((prev) => ({ ...prev, [name]: value }))
 	}
 
+	const handleSave = async () => {
+		const { month, workedDays, year, observation } = receiptData
+		const httpResponse = makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl(`/admin-docs/salary-receipt/${employee.id}`),
+			method: 'post',
+			body: {
+				work_days: workedDays,
+				month,
+				year,
+				observation
+			}
+		})
+
+		console.log({ httpResponse })
+	}
+
+	const handleClear = () => {
+		setReceiptDate({} as any)
+		onClear()
+	}
+
 	return (
-		<div>
-			<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 mb-5">
+		<div className="flex flex-col gap-3">
+			<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
 				<Input
 					type="number"
 					name="workedDays"
 					label="Dias trabalhado"
-					value={receiptData.workedDays}
+					value={receiptData.workedDays || ''}
 					onChange={handleChange}
 				/>
 				<Select
 					name="year"
 					label="Ano"
-					value={receiptData.year}
+					value={receiptData.year || ''}
 					data={years.map((year) => ({
 						text: year.toString()
 					}))}
@@ -132,12 +173,30 @@ const FolhaSalarialCard = ({ employee }: { employee: EmployeeModel }) => {
 				<Select
 					name="month"
 					label="Mês"
-					value={receiptData.month}
-					data={DateUtils.getMonthListExt().map((month) => ({
-						text: month
+					value={receiptData.month || ''}
+					data={DateUtils.getMonthListExt().map((month, i) => ({
+						text: month,
+						value: i + 1
 					}))}
 					defaultText="Selecione"
 					onChange={handleChange}
+				/>
+			</div>
+			<div className="max-w-[80%]">
+				<TextArea
+					name="observation"
+					label="Observação"
+					onChange={handleChange}
+					value={receiptData.observation}
+				/>
+			</div>
+			<div className="flex gap-2">
+				<Button variant="green" text="Processar" icon={IconCheck} onClick={handleSave} />
+				<Button
+					variant="gray-light"
+					text="Limpar"
+					icon={IconClose}
+					onClick={handleClear}
 				/>
 			</div>
 			<SalaryReceiptTemplate

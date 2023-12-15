@@ -3,6 +3,7 @@
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AccessoryController;
+use App\Http\Controllers\AdminDocsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
@@ -100,6 +101,10 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('stock', [GraphController::class, 'stock']);
 		Route::post('sale', [GraphController::class, 'sale']);
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
+	});
+
+	Route::prefix('admin-docs')->group(function () {
+		Route::match(['post'], 'salary-receipt/{employee}', [AdminDocsController::class, 'salaryReceipt']);
 	});
 });
 

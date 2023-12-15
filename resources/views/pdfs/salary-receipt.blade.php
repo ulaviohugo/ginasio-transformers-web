@@ -87,6 +87,7 @@ $netSalary = $totalSalary - $totalDiscount;
 				<tr>
 					<td><img src="{{$logo}}" style="width: 50px; margin: 4px 0" alt=""></td>
 					<td style="width: 100%"><b>RECIBO DE PAGAMENTO DE SALÁRIO</b></td>
+					<td style="width: 200px">{{App\Helpers\DateHelper::months[$month]}} - {{$year}}</td>
 					<td style="width: 100px">
 						<div>Original</div>
 						<div><b>Nº 00001</b></div>
@@ -159,8 +160,8 @@ $netSalary = $totalSalary - $totalDiscount;
 							</tr>
 							<tr>
 								<td>{{App\Helpers\NumberHelper::formatCurrency($totalSalary)}} Kz</td>
-								<td>{{App\Helpers\NumberHelper::formatCurrency($totalDiscount)}} Kz</td>
-								<td>{{App\Helpers\NumberHelper::formatCurrency($netSalary)}} Kz</td>
+								<td style="color:#C00000">{{App\Helpers\NumberHelper::formatCurrency($totalDiscount)}} Kz</td>
+								<td style="color: #00B050">{{App\Helpers\NumberHelper::formatCurrency($netSalary)}} Kz</td>
 							</tr>
 
 						</table>
@@ -188,7 +189,7 @@ $netSalary = $totalSalary - $totalDiscount;
 						{{App\Helpers\NumberHelper::formatCurrency(App\Helpers\SalaryHelper::getSalaryPerHour($employee->base_salary))}}
 						Kz
 					</td>
-					<td></td>
+					<td>{{$observation}}</td>
 				</tr>
 			</table>
 		</div>

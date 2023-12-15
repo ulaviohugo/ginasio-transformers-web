@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\SalaryHelper;
-use App\Helpers\SalaryReceiptHelper;
 use App\Models\User;
+use App\Services\SalaryReceiptService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -25,16 +24,9 @@ class AdminDocsController extends Controller
 		return	$pdf->stream("autorizacao-conducao-{$employee->id}-{$name}.pdf");
 	}
 
-	public function salaryReceipt(Request $request, User $employee)
+	public function salaryReceipt(Request $request, SalaryReceiptService $service, User $employee)
 	{
-		$query = request();
-		$workDays = $request->work_days ?? $query->query('work_days') ??  SalaryHelper::WORK_DAYS;
-
-		$salaryInfo = SalaryReceiptHelper::getData($employee, $workDays);
-
-		$pdf = Pdf::loadView('pdfs.salary-receipt', compact('employee', 'salaryInfo'));
-		$name = Str::slug($employee->name);
-		return	$pdf->stream("recibo-salario-{$employee->id}-{$name}.pdf");
+		return $service->execute($request, $employee);
 	}
 
 	public function employeeStatement(Request $request, User $employee)
