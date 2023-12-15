@@ -7,6 +7,8 @@ $logo = $fileHelper::convertToBase64($logoPath);
 $totalSalary = 0;
 $totalDiscount = 0;
 
+$employee = $salaryReceipt->employee;
+
 foreach($salaryInfo as $item){
 	if ($item['title'] == "Vencimentos"){
 		$totalSalary = array_reduce($item['contents'], function($acc, $current) {
@@ -87,10 +89,11 @@ $netSalary = $totalSalary - $totalDiscount;
 				<tr>
 					<td><img src="{{$logo}}" style="width: 50px; margin: 4px 0" alt=""></td>
 					<td style="width: 100%"><b>RECIBO DE PAGAMENTO DE SALÁRIO</b></td>
-					<td style="width: 200px">{{App\Helpers\DateHelper::months[$month]}} - {{$year}}</td>
+					<td style="width: 200px">{{App\Helpers\DateHelper::months[$salaryReceipt->month]}} - {{$salaryReceipt->year}}
+					</td>
 					<td style="width: 100px">
 						<div>Original</div>
-						<div><b>Nº 00001</b></div>
+						<div><b>Nº {{$salaryReceipt->id}}</b></div>
 					</td>
 				</tr>
 			</table>
@@ -189,7 +192,7 @@ $netSalary = $totalSalary - $totalDiscount;
 						{{App\Helpers\NumberHelper::formatCurrency(App\Helpers\SalaryHelper::getSalaryPerHour($employee->base_salary))}}
 						Kz
 					</td>
-					<td>{{$observation}}</td>
+					<td>{{$salaryReceipt->observation}}</td>
 				</tr>
 			</table>
 		</div>

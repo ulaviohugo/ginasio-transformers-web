@@ -21,6 +21,7 @@ use App\Http\Controllers\ProductionSaleController;
 use App\Http\Controllers\ProductionStockController;
 use App\Http\Controllers\ProductionSupplierController;
 use App\Http\Controllers\ProductSaleController;
+use App\Http\Controllers\SalaryReceiptController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
@@ -103,9 +104,8 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
 
-	Route::prefix('admin-docs')->group(function () {
-		Route::match(['post'], 'salary-receipt/{employee}', [AdminDocsController::class, 'salaryReceipt']);
-	});
+
+	Route::apiResource('salary-receipts', SalaryReceiptController::class);
 });
 
 Route::any('/{path}', function () {

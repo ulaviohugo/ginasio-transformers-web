@@ -2,13 +2,14 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
+use App\Models\SalaryReceipt;
 
 class SalaryReceiptHelper
 {
-	public static function getData(User $employee, int $workedDays = SalaryHelper::WORK_DAYS)
+	public static function getData(SalaryReceipt $salaryReceipt)
 	{
-		$currentBaseSalary = SalaryHelper::getSalaryPerDay($employee->base_salary) * $workedDays;
+		$workedDays = $salaryReceipt->work_days ??  SalaryHelper::WORK_DAYS;
+		$currentBaseSalary = SalaryHelper::getSalaryPerDay($salaryReceipt->base_salary_received, $workedDays) * $workedDays;
 		$_irtPercent = SalaryHelper::getIRTPercent($currentBaseSalary);
 		$irtPercent = $_irtPercent > 0 ? "{$_irtPercent}%" : 'Isento';
 
@@ -18,7 +19,7 @@ class SalaryReceiptHelper
 			[
 				'title' => 'Código',
 				'contents' => [
-					'10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
+					'10', '20', '30', '40', '50', '60', '70', '80', '90'
 				]
 			],
 			[
@@ -31,7 +32,6 @@ class SalaryReceiptHelper
 					'Abono de Família',
 					'INSS',
 					'IRT',
-					'Outros descontos',
 					'Subsídio de férias',
 					'13º Décimo terceiro'
 				]
@@ -47,20 +47,27 @@ class SalaryReceiptHelper
 					'3%',
 					$irtPercent,
 					'',
-					'',
 					''
 				]
 			],
 			[
 				'title' => 'Vencimentos',
 				'contents' => [
-					$currentBaseSalary, 5_000, 10_000, 1_000, 0, 0, 0, 0, 0, 0
+					$currentBaseSalary,
+					$salaryReceipt->meal_allowance ?? 0,
+					$salaryReceipt->productivity_allowance ?? 0,
+					$salaryReceipt->transportation_allowance ?? 0,
+					$salaryReceipt->family_allowance ?? 0,
+					0,
+					0,
+					$salaryReceipt->holiday_allowance ?? 0,
+					$salaryReceipt->christmas_allowance ?? 0,
 				]
 			],
 			[
 				'title' => 'Descontos',
 				'contents' => [
-					0, 0, 0, 0, 0, $inssValue, $irtValue, 0, 0, 0
+					0, 0, 0, 0, 0, $inssValue, $irtValue, 0, 0
 				]
 			]
 		];

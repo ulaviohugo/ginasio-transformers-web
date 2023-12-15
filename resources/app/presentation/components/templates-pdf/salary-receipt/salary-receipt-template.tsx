@@ -1,23 +1,17 @@
 import React from 'react'
-import { EmployeeModel } from '@/domain/models'
+import { EmployeeModel, SalaryReceiptModel } from '@/domain/models'
 import { DateUtils, NumberUtils, SalaryUtils } from '@/utils'
-
-export type ReceiptDataProps = {
-	year: number
-	month: number
-	workedDays: number
-	observation?: string
-}
 
 type SalaryReceiptProps = {
 	employee: EmployeeModel
-	receiptData: ReceiptDataProps
+	receiptData: SalaryReceiptModel
+	setReceiptDate: (receiptData: SalaryReceiptModel) => void
 	currentUser: EmployeeModel
 }
 
 type HeaderProps = {
 	employee: EmployeeModel
-	receiptData: ReceiptDataProps
+	receiptData: SalaryReceiptModel
 	currentUser: EmployeeModel
 }
 
@@ -28,10 +22,10 @@ type ItemProps = {
 
 export const getSalaryItems = (
 	employee: EmployeeModel,
-	receiptDate: ReceiptDataProps
+	receiptDate: SalaryReceiptModel
 ): ItemProps[] => {
 	const { base_salary = 0 } = employee
-	const workedDays = NumberUtils.convertToNumber(receiptDate.workedDays)
+	const workedDays = NumberUtils.convertToNumber(receiptDate.work_days)
 	const currentBaseSalary = SalaryUtils.getSalaryPerDay(base_salary) * workedDays
 
 	const percent = SalaryUtils.getIRtPercent(currentBaseSalary)
@@ -96,7 +90,8 @@ export const getSalaryItems = (
 export function SalaryReceiptTemplate({
 	employee,
 	receiptData,
-	currentUser
+	currentUser,
+	setReceiptDate
 }: SalaryReceiptProps) {
 	const items = getSalaryItems(employee, receiptData)
 	return (
@@ -107,6 +102,7 @@ export function SalaryReceiptTemplate({
 				employee={employee}
 				receiptData={receiptData}
 				currentUser={currentUser}
+				setReceiptDate={setReceiptDate}
 			/>
 		</div>
 	)
@@ -117,9 +113,9 @@ function Header({ employee, receiptData }: Omit<HeaderProps, 'currentUser'>) {
 		<div className="flex flex-col">
 			<div className="flex justify-between gap-2 mb-4">
 				<div className="font-bold uppercase">Recibo de Pagamento de Salário</div>
-				<div className="font-semibold">{`${DateUtils.getMonthExt(receiptData.month)} ${
-					receiptData.year
-				}`}</div>
+				<div className="font-semibold">{`${DateUtils.getMonthExt(
+					receiptData.month - 1
+				)} ${receiptData.year}`}</div>
 			</div>
 			<div className="flex w-full gap-2 justify-between">
 				<div>

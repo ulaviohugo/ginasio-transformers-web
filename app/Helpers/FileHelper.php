@@ -49,21 +49,26 @@ class FileHelper
 		}
 	}
 
-	public static function convertToBase64(string $filePath)
+	public static function convertToBase64(string $filePath, $fileExtension = null)
 	{
 		try {
-			if (!file_exists($filePath)) {
-				throw new Exception("Arquivo não encontrado: $filePath");
+			$fileContent = $filePath;
+
+			if (file_exists($filePath)) {
+				$fileContent = file_get_contents($filePath);
+
+				if ($fileContent === false) {
+					throw new Exception("Erro ao ler o conteúdo do arquivo: $filePath");
+				}
 			}
 
-			$fileContent = file_get_contents($filePath);
-
-			if ($fileContent === false) {
-				throw new Exception("Erro ao ler o conteúdo do arquivo: $filePath");
+			if (!$fileExtension) {
+				$fileInfo = pathinfo($filePath);
+				$fileExtension = $fileInfo['extension'];
 			}
-
-			$fileInfo = pathinfo($filePath);
-			$fileExtension = $fileInfo['extension'];
+			if ($fileExtension == 'pdf') {
+				$fileExtension = 'application/pdf';
+			}
 
 			$fileBase64 = base64_encode($fileContent);
 
@@ -73,7 +78,7 @@ class FileHelper
 
 			return "data:$fileExtension;base64,$fileBase64";
 		} catch (Exception $e) {
-			return "Erro ao converter o arquivo para base64: " . $e->getMessage();
+			throw $e;
 		}
 	}
 

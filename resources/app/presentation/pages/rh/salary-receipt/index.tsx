@@ -4,6 +4,7 @@ import {
 	IconCheck,
 	IconClose,
 	Input,
+	InputPrice,
 	Layout,
 	LayoutBody,
 	Select,
@@ -11,16 +12,13 @@ import {
 	TextArea,
 	Title
 } from '@/presentation/components'
-import {
-	ReceiptDataProps,
-	SalaryReceiptTemplate
-} from '@/presentation/components/templates-pdf'
+import { SalaryReceiptTemplate } from '@/presentation/components/templates-pdf'
 import { useAuth, useEmployees } from '@/presentation/hooks'
 import { loadEmployeeStore } from '@/presentation/redux'
-import { EmployeeModel } from '@/domain/models'
+import { EmployeeModel, SalaryReceiptModel } from '@/domain/models'
 import { makeRemoteLoadEmployees } from '@/main/factories/usecases'
 import { NotFound } from '@/presentation/pages'
-import { DateUtils, MenuUtils } from '@/utils'
+import { DateUtils, MenuUtils, NumberUtils } from '@/utils'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
@@ -64,7 +62,7 @@ export function EmployeeSalaryReceipt() {
 	return (
 		<Layout>
 			<LayoutBody>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-1">
 					<SubMenu submenus={MenuUtils.hrMenuItens({ role: user.role })} />
 					<Title title="Folha salarial" />
 					<div className="flex">
@@ -96,11 +94,14 @@ export function EmployeeSalaryReceipt() {
 }
 
 const date = new Date()
-const initialData = {
-	month: date.getUTCMonth(),
+const initialData: SalaryReceiptModel = {
+	month: date.getUTCMonth() + 1,
 	year: date.getFullYear(),
-	workedDays: 26
-}
+	work_days: 26,
+	meal_allowance: 5_000,
+	transportation_allowance: 10_000,
+	productivity_allowance: 10_000
+} as SalaryReceiptModel
 
 const FolhaSalarialCard = ({
 	employee,
@@ -116,11 +117,11 @@ const FolhaSalarialCard = ({
 		date.getUTCFullYear() - 1
 	]
 
-	const [receiptData, setReceiptDate] = useState<ReceiptDataProps>({} as any)
+	const [receiptData, setReceiptDate] = useState<SalaryReceiptModel>({} as any)
 
 	useEffect(() => {
-		setReceiptDate(initialData)
-	}, [])
+		setReceiptDate({ ...initialData, employee_id: employee.id })
+	}, [employee.id])
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -130,16 +131,28 @@ const FolhaSalarialCard = ({
 	}
 
 	const handleSave = async () => {
-		const { month, workedDays, year, observation } = receiptData
-		const httpResponse = makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl(`/admin-docs/salary-receipt/${employee.id}`),
+		const body: SalaryReceiptModel = {
+			...receiptData,
+			meal_allowance: NumberUtils.convertToNumber(receiptData.meal_allowance, true),
+			family_allowance: NumberUtils.convertToNumber(receiptData.family_allowance, true),
+			holiday_allowance: NumberUtils.convertToNumber(receiptData.holiday_allowance, true),
+			christmas_allowance: NumberUtils.convertToNumber(
+				receiptData.christmas_allowance,
+				true
+			),
+			transportation_allowance: NumberUtils.convertToNumber(
+				receiptData.transportation_allowance,
+				true
+			),
+			productivity_allowance: NumberUtils.convertToNumber(
+				receiptData.productivity_allowance,
+				true
+			)
+		}
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl(`salary-receipts`),
 			method: 'post',
-			body: {
-				work_days: workedDays,
-				month,
-				year,
-				observation
-			}
+			body
 		})
 
 		console.log({ httpResponse })
@@ -152,12 +165,12 @@ const FolhaSalarialCard = ({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+			<div className="grid grid-cols-5">
 				<Input
 					type="number"
-					name="workedDays"
-					label="Dias trabalhado"
-					value={receiptData.workedDays || ''}
+					name="work_days"
+					label="Dias trabalhados"
+					value={receiptData.work_days || ''}
 					onChange={handleChange}
 				/>
 				<Select
@@ -182,14 +195,53 @@ const FolhaSalarialCard = ({
 					onChange={handleChange}
 				/>
 			</div>
-			<div className="max-w-[80%]">
-				<TextArea
-					name="observation"
-					label="Observação"
+			<div className="grid grid-cols-5 gap-2 items-start">
+				<InputPrice
+					name="meal_allowance"
+					label="Subsídio de Alimentação"
+					value={receiptData.meal_allowance || ''}
 					onChange={handleChange}
-					value={receiptData.observation}
 				/>
+				<InputPrice
+					name="productivity_allowance"
+					label="Subsídio de Produtividade"
+					value={receiptData.productivity_allowance || ''}
+					onChange={handleChange}
+				/>
+				<InputPrice
+					name="transportation_allowance"
+					label="Subsídio de Transporte"
+					value={receiptData.transportation_allowance || ''}
+					onChange={handleChange}
+				/>
+				<InputPrice
+					name="family_allowance"
+					label="Abono Familiar"
+					value={receiptData.family_allowance || ''}
+					onChange={handleChange}
+				/>
+				<InputPrice
+					name="holiday_allowance"
+					label="Subsídio de férias"
+					value={receiptData.holiday_allowance || ''}
+					onChange={handleChange}
+				/>
+				<InputPrice
+					name="christmas_allowance"
+					label="13º - Décimo terceiro"
+					value={receiptData.christmas_allowance || ''}
+					onChange={handleChange}
+				/>
+				<div className="col-span-2">
+					<TextArea
+						name="observation"
+						label="Observação"
+						onChange={handleChange}
+						value={receiptData.observation}
+					/>
+				</div>
 			</div>
+
 			<div className="flex gap-2">
 				<Button variant="green" text="Processar" icon={IconCheck} onClick={handleSave} />
 				<Button
@@ -202,6 +254,7 @@ const FolhaSalarialCard = ({
 			<SalaryReceiptTemplate
 				employee={employee}
 				receiptData={receiptData}
+				setReceiptDate={setReceiptDate}
 				currentUser={user}
 			/>
 		</div>
