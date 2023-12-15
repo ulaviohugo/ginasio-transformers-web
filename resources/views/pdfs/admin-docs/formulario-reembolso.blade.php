@@ -75,14 +75,10 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 
 <body>
 	<div class="page">
-		<div style="font-size: 24px; text-align: right; background: #957372;  color: #fff">
-			<table cellspacing="0">
-				<tr>
-					<td><img src="{{$iconForm}}" style="width: 65px" alt=""></td>
-					<td class="w-full"><b>Formulário de reembolso</b></td>
-				</tr>
-			</table>
-		</div>
+		@include('pdfs.admin-docs.header')
+
+		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE REEMBOLSO</u></div>
+
 		<br />
 
 		<div>
@@ -97,36 +93,36 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 				<td class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Código do Produto:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Código do Produto:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Categoria do Produto:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Categoria do Produto:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Produto:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Produto:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Telefone:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Telefone:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">E-mail:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">E-mail:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Município/Bairro</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Município/Bairro</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Endereço:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Endereço:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 			<tr>
-				<td style="height: 28px;">Enviar em nome de:</td>
-				<td style="height: 28px;" class="border-b w-full"></td>
+				<td style="height: 24px;">Enviar em nome de:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 		</table>
 		<br>
@@ -158,7 +154,7 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 			<table style="border: 1px solid #ddd; padding: 0 0 16px 0">
 				<tr>
 					<td colspan="6">
-						<div style="background: rgba(92,25,22, 1); color: #fff; padding: 8px 0" class="center">
+						<div style="background: #404040; color: #fff; padding: 8px 0" class="center">
 							<b>Uso exclusivo do tesoureiro</b>
 						</div>
 					</td>
@@ -179,9 +175,7 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 
 		</div>
 
-		<div style="position: absolute; bottom: 48px; right: 48px;  opacity: .5; text-align: center; font-size:14px">
-			@include('pdfs.admin-docs.header')
-		</div>
+		@include('pdfs.admin-docs.footer')
 	</div>
 </body>
 

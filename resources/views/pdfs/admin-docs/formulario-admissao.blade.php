@@ -5,28 +5,24 @@ $radioChecked = '<div class="radio"><div class="radio-checked"></div></div>';
 $radioUnchecked = '<div class="radio"></div>';
 
 $workInstruments = [
-	'Máquina de costura',
+	'Máquina de Costura',
 	'Tesoura',
 	'Fita Métrica',
-	'Teclado',
-	'Computador',
-	'Mouse',
+	'Alfinete',
 	'Cracha/Passe',
-	'Impressora',
 	'Motorizada',
 	'Capacete',
-	'Viatura',
 	'Material Escritório',
 	'Diversos',
 ];
 
 $competences = [
+	'Modelagem',
+	'Corte',
+	'Costura',
 	'Word',
 	'Excel',
-	'Power Point',
-	'Outlook',
 	'Internet',
-	'E-mail de Serviço',
 ];
 ?>
 <!DOCTYPE html>
@@ -124,6 +120,7 @@ $competences = [
 <body>
 	<div class="page">
 		@include('pdfs.admin-docs.header')
+
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u></div>
 		<br />
 
@@ -191,7 +188,7 @@ $competences = [
 
 		<div>
 			<div class="title">
-				3) FORMAÇÃO E ACESSO INFORMÁTICO
+				3) FORMAÇÃO DE PRODUçÂO DE ROUPAS
 			</div>
 			<div>
 				@foreach ($competences as $compentence)

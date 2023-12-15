@@ -3,6 +3,7 @@
 use App\Exports\UsersExport;
 use App\Http\Controllers\AdminDocsController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,7 +21,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 
 Route::view('', 'app');
-Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
+Route::match(['get', 'post'], 'factura-venda/{sale}', [SaleController::class, 'invoice']);
+// Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
 Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
 Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'drivingPermission']);
 Route::match(['get', 'post'], 'declaracao-trabalho/{employee}', [AdminDocsController::class, 'employeeStatement']);

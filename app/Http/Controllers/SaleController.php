@@ -9,6 +9,7 @@ use App\Models\ProductSale;
 use App\Models\Sale;
 use App\Services\InvoiceGeneratorService;
 use App\Services\SaleCreateService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SaleController extends Controller
 {
@@ -76,6 +77,16 @@ class SaleController extends Controller
 		try {
 			$createdSale = $service->execute($request, $invoiceGenerator);
 			return HttpResponse::success(data: $createdSale);
+		} catch (\Throwable $th) {
+			return HttpResponse::error(message: 'Erro ao cadastrar venda. ' . $th->getMessage());
+		}
+	}
+
+	public function invoice(Sale $sale)
+	{
+		try {
+			$pdf = Pdf::loadView('pdfs.invoices.sale', compact('sale'));
+			return $pdf->stream();
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: 'Erro ao cadastrar venda. ' . $th->getMessage());
 		}
