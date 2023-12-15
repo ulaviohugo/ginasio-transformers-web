@@ -206,7 +206,7 @@ export function SaleList({ loadSales, onSelectProductSale }: SaleListProps) {
 						<th className="p-1">Cor</th>
 						<th className="p-1">Tamanho</th>
 						<th className="p-1">Quantidade</th>
-						<th className="p-1">Preço unitário</th>
+						<th className="p-1">Preço Unitário</th>
 						<th className="p-1">Desconto</th>
 						<th className="p-1">Pago</th>
 						<th className="p-1">Funcionário</th>

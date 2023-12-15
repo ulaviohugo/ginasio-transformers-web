@@ -75,7 +75,7 @@ export function ProductionCustomerEditor({
 					<div className="flex">
 						<Select
 							name="customer_id"
-							label="Nome do cliente"
+							label="Nome do Cliente"
 							value={formData.customer_id || ''}
 							defaultText="Selecione"
 							data={customers.map(({ id: value, name: text }) => ({
@@ -86,7 +86,7 @@ export function ProductionCustomerEditor({
 						/>
 						<Select
 							name="end_product"
-							label="Produto final"
+							label="Produto Final"
 							value={formData.end_product || ''}
 							defaultText="Selecione"
 							data={ProductionBudgetUtils.endProducts.map((endProduct) => ({
@@ -118,7 +118,7 @@ export function ProductionCustomerEditor({
 					<div>
 						<Button
 							variant="gray-light"
-							text="Adicionar medida do cliente"
+							text="Adicionar medida do Cliente"
 							onClick={handleOpenCustomerMeasurement}
 						/>
 					</div>

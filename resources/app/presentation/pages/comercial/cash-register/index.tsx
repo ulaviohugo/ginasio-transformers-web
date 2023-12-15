@@ -113,7 +113,7 @@ export function CashRegister() {
 								/>
 								<Select
 									name="operation_type"
-									label="Tipo de operação"
+									label="Tipo de Operação"
 									value={filter?.operation_type || ''}
 									data={['Entrada', 'Saída'].map((payment) => ({
 										text: payment
@@ -123,7 +123,7 @@ export function CashRegister() {
 								/>
 								<Select
 									name="payment_method"
-									label="Tipo de pagamento"
+									label="Tipo de Pagamento"
 									value={filter?.payment_method || ''}
 									data={PaymentUtils.getMethods().map((payment) => ({
 										text: payment

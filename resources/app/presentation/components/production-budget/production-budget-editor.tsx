@@ -305,7 +305,7 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 		if (isLoading) return
 
 		if (!formData.measurement?.lowerLimbs || !formData.measurement?.upperLimbs) {
-			return toast.error('Adicione medidas do cliente')
+			return toast.error('Adicione medidas do Cliente')
 		}
 		setIsLoading(true)
 
@@ -365,7 +365,7 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 							<table className="w-full">
 								<thead>
 									<tr>
-										<td className="px-2">Tipo de tecido</td>
+										<td className="px-2">Tipo de Tecido</td>
 										<td className="px-2">Cor</td>
 										<td className="px-2">Metros</td>
 										<td className="px-2">Custo</td>
@@ -400,7 +400,7 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 							<table className="w-full">
 								<thead>
 									<tr>
-										<td className="px-2">Tipo de acessórios</td>
+										<td className="px-2">Tipo de Acessórios</td>
 										<td className="px-2">Quantidade</td>
 										<td className="px-2">Preço</td>
 									</tr>

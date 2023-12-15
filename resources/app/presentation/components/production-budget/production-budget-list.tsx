@@ -138,17 +138,17 @@ export function ProductionBudgetList({
 						<tr className="border-b font-semibold">
 							<td className="px-1">Código</td>
 							<td className="px-1">Cliente</td>
-							<td className="px-1">Produto final</td>
+							<td className="px-1">Produto Final</td>
 							<td className="px-1">Data</td>
 							<td className="px-1">Avaliação</td>
 							<td className="px-1">Custo corte</td>
-							<td className="px-1">Custo costura</td>
-							<td className="px-1">Custo variável</td>
+							<td className="px-1">Custo Costura</td>
+							<td className="px-1">Custo Variável</td>
 							<td className="px-1">Acabamento</td>
 							<td className="px-1">Custo produção</td>
-							<td className="px-1">Custo venda</td>
+							<td className="px-1">Custo Venda</td>
 							<td className="px-1">Desconto</td>
-							<td className="px-1">Total pago</td>
+							<td className="px-1">Total Pago</td>
 						</tr>
 					</thead>
 					<tbody>

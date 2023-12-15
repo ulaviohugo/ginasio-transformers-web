@@ -124,7 +124,7 @@ export function CustomerEditor({
 
 	return (
 		<fieldset>
-			<legend>Cadastro de clientes</legend>
+			<legend>Cadastro de Clientes</legend>
 			<div className="flex gap-2">
 				<div className="flex-1 flex gap-1">
 					<div className="">
@@ -163,7 +163,7 @@ export function CustomerEditor({
 										? DateUtils.getMonthExt(formData?.date_of_birth)
 										: ''
 								}
-								label={'Mês aniversário'}
+								label={'Mês Aniversário'}
 								onChange={handleInputChange}
 							/>
 							<InputPhone
@@ -204,7 +204,7 @@ export function CustomerEditor({
 								id="address"
 								name="address"
 								value={formData?.address || ''}
-								label={'Endereço residencial'}
+								label={'Endereço Residencial'}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -213,7 +213,7 @@ export function CustomerEditor({
 								id="email"
 								name="email"
 								value={formData?.email || ''}
-								label={'Correio eletrónico'}
+								label={'Correio Eletrónico'}
 								onChange={handleInputChange}
 							/>
 							<Select

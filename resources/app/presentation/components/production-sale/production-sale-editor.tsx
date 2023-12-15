@@ -442,7 +442,7 @@ export function ProductionSaleEditor({
 								id="end_product"
 								name="end_product"
 								value={endProduct || ''}
-								label={'Peça final'}
+								label={'Peça Final'}
 								data={ProductionBudgetUtils.endProducts.map((endProduct) => ({
 									text: endProduct
 								}))}

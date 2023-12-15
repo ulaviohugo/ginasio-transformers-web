@@ -88,13 +88,13 @@ export function CustomerList({
 							<td className="px-1">Código</td>
 							<td className="px-1">Nome</td>
 							<td className="px-1">Data de nascimento</td>
-							<td className="px-1">Mês aniversário</td>
+							<td className="px-1">Mês Aniversário</td>
 							<td className="px-1">Telefone</td>
 							<td className="px-1">Província</td>
 							<td className="px-1">Município</td>
 							<td className="px-1">Endereço</td>
 							<td className="px-1">E-mail</td>
-							<td className="px-1">Tipo de cliente</td>
+							<td className="px-1">Tipo de Cliente</td>
 						</tr>
 					</thead>
 					{filteredCustomers.length > 0 && (
@@ -156,7 +156,7 @@ export function CustomerList({
 							<div className="flex gap-2">
 								<Select
 									name="start_month_of_birth"
-									label="Início aniversário"
+									label="Início Aniversário"
 									value={filter?.start_month_of_birth || ''}
 									data={DateUtils.getMonthListExt().map((month, i) => ({
 										text: month,
@@ -167,7 +167,7 @@ export function CustomerList({
 								/>
 								<Select
 									name="end_month_of_birth"
-									label="Fim aniversário"
+									label="Fim Aniversário"
 									value={filter?.end_month_of_birth || ''}
 									data={DateUtils.getMonthListExt().map((month, i) => ({
 										text: month,

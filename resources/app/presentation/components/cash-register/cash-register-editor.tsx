@@ -111,7 +111,7 @@ export function CashRegisterEditor() {
 									<div className="flex flex-col gap-2 text-sm">
 										<div>
 											<label htmlFor="" className="font-semibold">
-												Saldo inicial
+												Saldo Inicial
 											</label>
 											<div className="border rounded-md font-semibold px-2 py-1 bg-gray-100">
 												{NumberUtils.formatCurrency(cashRegister.initial_balance)}
@@ -119,7 +119,7 @@ export function CashRegisterEditor() {
 										</div>
 										<div>
 											<label htmlFor="" className="font-semibold">
-												Saldo actual
+												Saldo Actual
 											</label>
 											<div
 												className={`border rounded-md font-semibold px-2 py-1 text-2xl bg-gray-100 ${
@@ -164,7 +164,7 @@ export function CashRegisterEditor() {
 								</div>
 								<div className="w-36">
 									<Select
-										label="Tipo de operação"
+										label="Tipo de Operação"
 										name="operation_type"
 										id="operation_type"
 										value={formData?.operation_type || ''}
@@ -177,7 +177,7 @@ export function CashRegisterEditor() {
 									<TextArea
 										name="description"
 										id="description"
-										label="Descrição da operação"
+										label="Descrição da Operação"
 										value={formData?.description || ''}
 										onChange={handleInputChange}
 										rows={1}

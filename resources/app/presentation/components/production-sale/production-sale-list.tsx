@@ -168,7 +168,7 @@ export function ProductionSaleList({ loadSales, onSelectProductSale }: SaleListP
 						<th className="p-1">Código</th>
 						<th className="p-1">Data</th>
 						<th className="p-1">Funcionário</th>
-						<th className="p-1">Peça final</th>
+						<th className="p-1">Peça Final</th>
 						<th className="p-1">Quantidade</th>
 						<th className="p-1">Saldo</th>
 					</tr>
