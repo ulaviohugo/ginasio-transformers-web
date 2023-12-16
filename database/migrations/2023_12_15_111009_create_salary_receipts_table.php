@@ -15,7 +15,7 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_SALARY_RECEIPTS, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('employee_id')->references('id')->on(DBHelper::TB_USERS);
-			$table->string('file_path')->nullable();
+			$table->string('file_path')->unique()->nullable();
 			$table->integer('work_days');
 			$table->integer('year');
 			$table->integer('month');
