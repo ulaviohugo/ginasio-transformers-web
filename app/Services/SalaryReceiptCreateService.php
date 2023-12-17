@@ -80,6 +80,7 @@ class SalaryReceiptCreateService
 			'inss_discount_percent' => $inssPercent,
 			'irt_discount' => $irtValue,
 			'irt_discount_percent' => $irtPercent,
+			'user_id' => User::currentUserId(),
 		]);
 	}
 
