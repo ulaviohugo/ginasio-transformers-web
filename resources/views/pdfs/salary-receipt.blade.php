@@ -4,25 +4,7 @@ $fileHelper =App\Helpers\FileHelper::class;
 $logoPath = $fileHelper::logoPath();
 $logo = $fileHelper::convertToBase64($logoPath);
 
-$totalSalary = 0;
-$totalDiscount = 0;
-
 $employee = $salaryReceipt->employee;
-
-foreach($salaryInfo as $item){
-	if ($item['title'] == "Vencimentos"){
-		$totalSalary = array_reduce($item['contents'], function($acc, $current) {
-        return $acc + (float)$current;
-    }, 0);
-	}
-
-	if ($item['title'] == "Descontos"){
-		$totalDiscount = array_reduce($item['contents'], function($acc, $current) {
-        return $acc + (float)$current;
-    }, 0);
-	}
-}
-$netSalary = $totalSalary - $totalDiscount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,28 +98,13 @@ $netSalary = $totalSalary - $totalDiscount;
 				</tr>
 			</table>
 		</div>
+		{{-- Salary info (table) --}}
 		<div class="border">
 			<table>
-				{{-- Header --}}
-				<tr style="font-weight: bold; ">
-					@foreach ($salaryInfo as $item)
-					<td style="border-bottom: 1px solid #000">{{$item['title']}}</td>
-					@endforeach
-				</tr>
-				{{-- Body --}}
-				@foreach ($salaryInfo[0]['contents'] as $i => $item)
+				@foreach ($salaryInfo as $i => $rows)
 				<tr>
-					@foreach ($salaryInfo as $j=> $item2)
-					<?php 
-						$value = $salaryInfo[$j]['contents'][$i];
-						if(in_array($salaryInfo[$j]['title'], ['Vencimentos', 'Descontos']) && is_numeric($value)){
-							$value = App\Helpers\NumberHelper::formatCurrency($value);
-							if($value > 0) {
-								$value .=' Kz';
-							}
-						}
-					?>
-					<td>{{$value}}</td>
+					@foreach ($rows as $value)
+					<td style="{{$i == 0 ? 'border-bottom: 1px solid #000':''}}">{{$value}}</td>
 					@endforeach
 				</tr>
 				@endforeach
@@ -162,9 +129,11 @@ $netSalary = $totalSalary - $totalDiscount;
 								<td><b>Valor líquido</b></td>
 							</tr>
 							<tr>
-								<td>{{App\Helpers\NumberHelper::formatCurrency($totalSalary)}} Kz</td>
-								<td style="color:#C00000">{{App\Helpers\NumberHelper::formatCurrency($totalDiscount)}} Kz</td>
-								<td style="color: #00B050">{{App\Helpers\NumberHelper::formatCurrency($netSalary)}} Kz</td>
+								<td>{{App\Helpers\NumberHelper::formatCurrency($salaryReceipt->gross_salary)}}</td>
+								<td style="color:#C00000">
+									{{App\Helpers\NumberHelper::formatCurrency($salaryReceipt->total_salary_discounts)}}</td>
+								<td style="color: #00B050">{{App\Helpers\NumberHelper::formatCurrency($salaryReceipt->net_salary)}}
+								</td>
 							</tr>
 
 						</table>
@@ -182,15 +151,13 @@ $netSalary = $totalSalary - $totalDiscount;
 				</tr>
 				<tr>
 					<td>
-						{{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}} Kz
+						{{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}}
 					</td>
 					<td>
 						{{App\Helpers\NumberHelper::formatCurrency(App\Helpers\SalaryHelper::getSalaryPerDay($employee->base_salary))}}
-						Kz
 					</td>
 					<td>
 						{{App\Helpers\NumberHelper::formatCurrency(App\Helpers\SalaryHelper::getSalaryPerHour($employee->base_salary))}}
-						Kz
 					</td>
 					<td>{{$salaryReceipt->observation}}</td>
 				</tr>
@@ -198,7 +165,7 @@ $netSalary = $totalSalary - $totalDiscount;
 		</div>
 		<div class="border">
 			<br>
-			<center><b>DECLARO TER RECEBIDO A I MPOTÂNCIA LÍQUIDA DISCRIMINADA NESTE RECIBO</b></center>
+			<center><b>DECLARO TER RECEBIDO A IMPORTÂNCIA LÍQUIDA DISCRIMINADA NESTE RECIBO</b></center>
 			<table style="text-align: center">
 				<tr>
 					<td style="text-align: right">
