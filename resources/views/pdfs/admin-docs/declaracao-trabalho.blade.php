@@ -74,7 +74,7 @@
 			{{App\Helpers\DateHelper::months[date('m', strtotime($employee->hire_date))]}}
 			de {{date('Y', strtotime($employee->hire_date))}},
 			exercendo a função de Gestora Comercial, auferindo mensalmente
-			o salário base de {{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}} Akz e subsídio de
+			o salário base de {{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}} e subsídio de
 			transporte e alimentação no valor de 30.000,00 Akz
 			(Trinta Mil Kwanzas).
 		</div>

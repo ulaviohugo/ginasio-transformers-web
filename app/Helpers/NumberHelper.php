@@ -23,12 +23,12 @@ class NumberHelper
 		return floatval(str_replace(' ', '', strval($number)));
 	}
 
-	public static function formatCurrency($number)
+	public static function formatCurrency($number, $currency = 'Kz')
 	{
-		if (!$number) return '0';
+		if (!$number) return '0,00';
 
 		$numStr = number_format((float)$number, 2, '.', '');
 
-		return number_format((float)$numStr, 2, ',', '.');
+		return number_format((float)$numStr, 2, ',', '.') . ' ' . $currency;
 	}
 }

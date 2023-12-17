@@ -92,12 +92,11 @@
 			@foreach ($sale->productSales as $productSale)
 			<tr>
 				<td class="border">{{$productSale->product->name}}</td>
-				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->unit_price)}} Kz</td>
+				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->unit_price)}}</td>
 				<td class="border">{{$productSale->quantity}}</td>
-				<td class="border">{{$productSale->discount ? App\Helpers\NumberHelper::formatCurrency($productSale->discount).'
-					Kz' :
+				<td class="border">{{$productSale->discount ? App\Helpers\NumberHelper::formatCurrency($productSale->discount) :
 					'0,00'}}</td>
-				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->total_value)}} Kz</td>
+				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($productSale->total_value)}}</td>
 			</tr>
 			@endforeach
 			<tr style="font-weight: bold">
@@ -105,7 +104,7 @@
 				<td></td>
 				<td></td>
 				<td class="border">SUBTOTAL</td>
-				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->total_value)}} Kz</td>
+				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->total_value)}}</td>
 			</tr>
 			<tr style="font-weight: bold">
 				<td></td>
@@ -119,7 +118,7 @@
 				<td></td>
 				<td></td>
 				<td class="border">TOTAL A PAGAR</td>
-				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->amount_paid)}} Kz</td>
+				<td class="border">{{App\Helpers\NumberHelper::formatCurrency($sale->amount_paid)}}</td>
 			</tr>
 		</table>
 		<div style="font-weight: bold; padding: 8px; text-align: center">
