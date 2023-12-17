@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateSalaryReceiptRequest;
 use App\Http\Resources\SalaryReceiptResource;
 use App\Models\SalaryReceipt;
 use App\Models\User;
-use App\Services\SalaryReceiptService;
+use App\Services\SalaryReceiptCreateService;
 
 class SalaryReceiptController extends Controller
 {
@@ -23,7 +23,7 @@ class SalaryReceiptController extends Controller
 		}
 	}
 
-	public function store(StoreSalaryReceiptRequest $request, SalaryReceiptService $service)
+	public function store(StoreSalaryReceiptRequest $request, SalaryReceiptCreateService $service)
 	{
 		try {
 			$employee = User::find($request->employee_id);
