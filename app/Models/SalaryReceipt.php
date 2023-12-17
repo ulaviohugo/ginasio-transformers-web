@@ -34,10 +34,16 @@ class SalaryReceipt extends Model
 		'inss_discount_percent',
 		'irt_discount',
 		'irt_discount_percent',
+		'user_id',
 	];
 
 	public function employee()
 	{
 		return $this->belongsTo(User::class, 'employee_id');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'user_id');
 	}
 }

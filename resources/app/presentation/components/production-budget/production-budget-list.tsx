@@ -155,10 +155,9 @@ export function ProductionBudgetList({
 						{budgets.map((budget, i) => (
 							<tr
 								key={budget.id}
-								className={`cursor-pointer transition-all duration-150 ${
-									i % 2 !== 0 && 'bg-gray-100'
-								} 
-									${selectedRow == budget.id ? 'bg-primary text-white' : 'hover:bg-gray-200'} `}
+								className={`cursor-pointer transition-all duration-150 
+								${i % 2 !== 0 && 'bg-gray-100'} 
+								${selectedRow == budget.id ? 'bg-primary text-white' : 'hover:bg-gray-200'} `}
 								onClick={() => handleSelectBudget(budget)}
 							>
 								<td className="px-1">{budget.id}</td>

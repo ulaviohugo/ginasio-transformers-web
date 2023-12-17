@@ -38,6 +38,8 @@ class SalaryReceiptResource extends JsonResource
 			'inss_discount_percent' => $this->inss_discount_percent,
 			'irt_discount' => $this->irt_discount,
 			'irt_discount_percent' => $this->irt_discount_percent,
+			'created_at' => $this->created_at,
+			'updated_at' => $this->updated_at,
 			'employee' => new UserResource($this->whenLoaded('employee')),
 			'user' => new UserResource($this->whenLoaded('user')),
 		];

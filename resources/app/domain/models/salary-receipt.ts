@@ -1,4 +1,7 @@
+import { EmployeeModel } from './employee'
+
 export type SalaryReceiptModel = {
+	id: number
 	employee_id: number
 	file_path: string
 	work_days: number
@@ -20,4 +23,12 @@ export type SalaryReceiptModel = {
 	inss_discount_percent: number
 	irt_discount: number
 	irt_discount_percent: number
+
+	created_at: Date
+	user_id?: number
+	updated_at?: Date
+	user_id_update?: number
+
+	employee?: EmployeeModel
+	user?: EmployeeModel
 }

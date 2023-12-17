@@ -15,7 +15,7 @@ class SalaryReceiptController extends Controller
 	public function index()
 	{
 		try {
-			$salaryReceipts = SalaryReceipt::all();
+			$salaryReceipts = SalaryReceipt::orderBy('year', 'desc')->orderBy('month', 'desc')->get();
 			$salaryReceipts->load('employee', 'user');
 			return SalaryReceiptResource::collection($salaryReceipts);
 		} catch (\Throwable $th) {

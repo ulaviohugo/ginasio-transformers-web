@@ -25,6 +25,7 @@ import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { FaHouseUser, FaSignOutAlt, FaUserShield, FaCashRegister } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
+import { FaFilePdf } from 'react-icons/fa6'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
@@ -55,6 +56,9 @@ export const IconSupplier = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconInsured = (props: IconBaseProps): React.ReactElement => (
 	<FaUserShield {...props} />
+)
+export const IconPDF = (props: IconBaseProps): React.ReactElement => (
+	<FaFilePdf {...props} />
 )
 
 export const IconKey = (props: IconBaseProps): React.ReactElement => <HiKey {...props} />
