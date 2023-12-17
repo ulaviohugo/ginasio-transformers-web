@@ -15,7 +15,7 @@ import {
 	ImagePreview,
 	Input,
 	InputPrice,
-	SalePdfViewer,
+	PdfViewer,
 	Select
 } from '..'
 
@@ -332,7 +332,7 @@ export function SaleEditor({
 	return (
 		<fieldset>
 			<legend>Cadastro de venda</legend>
-			{pdfContent && <SalePdfViewer pdfUrl={pdfContent} />}
+			{pdfContent && <PdfViewer pdfUrl={pdfContent} onClose={() => setPdfContent('')} />}
 			<div className="flex gap-2">
 				<div className="flex flex-col gap-2">
 					<ImagePreview photoPreview={photPreview} disabled />

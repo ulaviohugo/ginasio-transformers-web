@@ -14,7 +14,6 @@ export class MenuUtils {
 		PRODUCTION_BUDGETS: '/comercial/orcamento-de-producao',
 		COMERCIAL: '/comercial',
 		HR: '/rh',
-		POLICY: '/comercial/apolice',
 		PRODUCTS: '/comercial/produtos',
 		PRODUCTION: '/comercial/producao',
 		PRODUCTION_STOCK: '/comercial/producao/estoque',
