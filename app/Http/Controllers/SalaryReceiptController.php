@@ -16,7 +16,7 @@ class SalaryReceiptController extends Controller
 	{
 		try {
 			$salaryReceipts = SalaryReceipt::all();
-			$salaryReceipts->load('employee');
+			$salaryReceipts->load('employee', 'user');
 			return SalaryReceiptResource::collection($salaryReceipts);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
@@ -28,7 +28,7 @@ class SalaryReceiptController extends Controller
 		try {
 			$employee = User::find($request->employee_id);
 			$createdSalaryReceipt = $service->execute($request, $employee);
-
+			$createdSalaryReceipt->load('employee', 'user');
 			return response()->json(new SalaryReceiptResource($createdSalaryReceipt));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
@@ -38,7 +38,7 @@ class SalaryReceiptController extends Controller
 	public function show(SalaryReceipt $salaryReceipt)
 	{
 		try {
-			$salaryReceipt->load('employee');
+			$salaryReceipt->load('employee', 'user');
 			return new SalaryReceiptResource($salaryReceipt);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());

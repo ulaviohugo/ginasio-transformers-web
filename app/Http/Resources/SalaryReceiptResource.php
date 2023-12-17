@@ -39,6 +39,7 @@ class SalaryReceiptResource extends JsonResource
 			'irt_discount' => $this->irt_discount,
 			'irt_discount_percent' => $this->irt_discount_percent,
 			'employee' => new UserResource($this->whenLoaded('employee')),
+			'user' => new UserResource($this->whenLoaded('user')),
 		];
 	}
 }
