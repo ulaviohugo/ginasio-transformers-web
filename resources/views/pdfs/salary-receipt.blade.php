@@ -5,6 +5,7 @@ $logoPath = $fileHelper::logoPath();
 $logo = $fileHelper::convertToBase64($logoPath);
 
 $employee = $salaryReceipt->employee;
+$paymentMonth = App\Helpers\DateHelper::months[$salaryReceipt->month];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@ $employee = $salaryReceipt->employee;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Recibo de salário - {{$employee->name}}</title>
+	<title>Recibo de salário - {{$employee->name}} | {{$paymentMonth}} de {{$salaryReceipt->year}}</title>
 	<style>
 		* {
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
@@ -71,7 +72,7 @@ $employee = $salaryReceipt->employee;
 				<tr>
 					<td><img src="{{$logo}}" style="width: 50px; margin: 4px 0" alt=""></td>
 					<td style="width: 100%"><b>RECIBO DE PAGAMENTO DE SALÁRIO</b></td>
-					<td style="width: 200px">{{App\Helpers\DateHelper::months[$salaryReceipt->month]}} - {{$salaryReceipt->year}}
+					<td style="width: 200px">{{$paymentMonth}} - {{$salaryReceipt->year}}
 					</td>
 					<td style="width: 100px">
 						<div>Original</div>
