@@ -2,10 +2,12 @@ import { NumberUtils } from '.'
 
 export class SalaryUtils {
 	static getIRTValue(salary: number): number {
+		if (!salary) return 0
 		return (salary * this.getIRtPercent(salary)) / 100
 	}
 
 	static getIRtPercent(salary_: number): number {
+		if (!salary_) return 0
 		const salary = NumberUtils.convertToNumber(salary_)
 		if (salary > 10000000) return 25
 		if (salary > 5000000) return 24.5
@@ -23,6 +25,7 @@ export class SalaryUtils {
 	}
 
 	static getINSS(salary_: number): number {
+		if (!salary_) return 0
 		const salary = NumberUtils.convertToNumber(salary_)
 
 		return (salary * 3) / 100

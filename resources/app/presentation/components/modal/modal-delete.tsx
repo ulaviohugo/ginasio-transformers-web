@@ -30,9 +30,12 @@ export function ModalDelete({
 				<IconTrash /> Excluir {entity}
 			</ModalTitle>
 			<ModalBody>
-				<div className="flex flex-col gap-2 max-w-xs">
-					{description ?? `Deseja realmente excluir o(a) ${entity}?`}
-				</div>
+				<div
+					className="flex flex-col gap-2"
+					dangerouslySetInnerHTML={{
+						__html: description || `Deseja realmente excluir o(a) ${entity}?`
+					}}
+				/>
 			</ModalBody>
 			<ModalFooter>
 				<Button

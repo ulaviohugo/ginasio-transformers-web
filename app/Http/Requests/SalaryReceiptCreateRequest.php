@@ -7,7 +7,7 @@ use App\Models\SalaryReceipt;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
-class StoreSalaryReceiptRequest extends GlobalFormRequest
+class SalaryReceiptCreateRequest extends GlobalFormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -38,9 +38,10 @@ class StoreSalaryReceiptRequest extends GlobalFormRequest
 
 	public function messages()
 	{
-		$employeeName = User::find(request('employee_id'))->name;
+		$employeeName = User::find(request('employee_id'))?->name;
+		$month = DateHelper::months[request('month')] ?? '';
 		return [
-			'month.unique' => 'Já tem um registo de salário de ' . $employeeName . ' em ' . DateHelper::months[request('month')] . ' de ' . request('year')
+			'month.unique' => 'Já tem um registo de salário de ' . $employeeName . ' em ' . $month . ' de ' . request('year')
 		];
 	}
 }

@@ -8,13 +8,19 @@ import { DateUtils, NumberUtils } from '@/utils'
 import { PdfViewer } from '../pdf-viewer'
 import { IconPDF } from '../icons'
 import { Button } from '../form-controls'
+import { useDispatch, useSelector } from 'react-redux'
+import { useSalaryReceipts } from '@/presentation/hooks'
+import { loadSalaryReceiptStore } from '@/presentation/redux'
+import { NoData } from '../no-data'
 
 type SalaryReceiptListProps = {
 	onSelect: (salaryReceipt: SalaryReceiptModel) => void
 }
 
 export function SalaryReceiptList({ onSelect }: SalaryReceiptListProps) {
-	const [salaryReceipts, setSalaryReceipts] = useState<SalaryReceiptModel[]>([])
+	const dispatch = useDispatch()
+
+	const salaryReceipts = useSelector(useSalaryReceipts())
 
 	const [selectedSalary, setSelectedSalary] = useState<SalaryReceiptModel>()
 	const [selectedRow, setSelectedRow] = useState(0)
@@ -32,7 +38,7 @@ export function SalaryReceiptList({ onSelect }: SalaryReceiptListProps) {
 			.then(({ statusCode, body }) => {
 				if (statusCode != 200) return toast.error(body)
 
-				setSalaryReceipts(body)
+				dispatch(loadSalaryReceiptStore(body))
 			})
 			.catch(({ message }) => toast.error(message))
 			.finally(() => {
@@ -73,6 +79,7 @@ export function SalaryReceiptList({ onSelect }: SalaryReceiptListProps) {
 						<td className="px-2 py-1">Mês/Ano Proc.</td>
 						<td className="px-2 py-1">Salário líquido</td>
 						<td className="px-2 py-1">Dias trabalhados</td>
+						<td className="px-2 py-1">Descontos</td>
 						<td className="px-2 py-1">Processado por</td>
 						<td className="px-2 py-1">Acção</td>
 					</tr>
@@ -98,6 +105,9 @@ export function SalaryReceiptList({ onSelect }: SalaryReceiptListProps) {
 									{NumberUtils.formatCurrency(salary.net_salary)}
 								</td>
 								<td className="px-2 py-1">{salary.work_days}</td>
+								<td className="px-2 py-1">
+									{NumberUtils.formatCurrency(salary.total_salary_discounts)}
+								</td>
 								<td className="px-2 py-1">{salary.user?.name}</td>
 								<td className="px-2 py-1">
 									<Button
@@ -112,6 +122,7 @@ export function SalaryReceiptList({ onSelect }: SalaryReceiptListProps) {
 					})}
 				</tbody>
 			</table>
+			{salaryReceipts.length < 1 && <NoData />}
 		</fieldset>
 	)
 }

@@ -35,6 +35,7 @@ class SalaryReceipt extends Model
 		'irt_discount',
 		'irt_discount_percent',
 		'user_id',
+		'user_id_update',
 	];
 
 	public function employee()

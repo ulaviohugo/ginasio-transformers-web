@@ -2,26 +2,27 @@
 
 namespace App\Services;
 
-use App\Http\Requests\SalaryReceiptCreateRequest;
+use App\Http\Requests\SalaryReceiptUpdateRequest;
 use App\Models\SalaryReceipt;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class SalaryReceiptCreateService
+class SalaryReceiptUpdateService
 {
 	public function __construct(private SalaryReceiptService $service)
 	{
 	}
 
-	public function  execute(SalaryReceiptCreateRequest $request, User $employee)
+	public function  execute(SalaryReceiptUpdateRequest $request, SalaryReceipt $salaryReceipt)
 	{
 		try {
 			DB::beginTransaction();
+			$employee = User::find($request->employee_id);
 
 			$request = $this->service->transformData(request: $request, base_salary: $employee->base_salary);
 
-			$salaryReceipt = SalaryReceipt::create([
+			$salaryReceipt->update([
 				'employee_id' => $request->employee_id,
 				'work_days' => $request->work_days,
 				'year' => $request->year,
@@ -42,8 +43,10 @@ class SalaryReceiptCreateService
 				'inss_discount_percent' => $request->inss_discount_percent,
 				'irt_discount' => $request->irt_discount,
 				'irt_discount_percent' => $request->irt_discount_percent,
-				'user_id' => User::currentUserId(),
+				'user_id_update' => User::currentUserId(),
 			]);
+
+			$salaryReceipt->fresh();
 
 			$salaryInfo = $this->service->buildTable($salaryReceipt);
 			$pdfUrl = $this->service->buildPDF($salaryInfo, $salaryReceipt);
@@ -53,7 +56,7 @@ class SalaryReceiptCreateService
 			return $salaryReceipt;
 		} catch (\Throwable $th) {
 			DB::rollBack();
-			throw new Exception(message: 'Erro ao processar salário.' . $th->getMessage());
+			throw new Exception(message: 'Erro ao alterar processamento de salário.' . $th->getMessage());
 		}
 	}
 }

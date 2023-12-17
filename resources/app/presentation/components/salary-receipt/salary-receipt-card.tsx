@@ -6,11 +6,12 @@ import { useAuth } from '@/presentation/hooks'
 import { DateUtils, NumberUtils } from '@/utils'
 import { ChangeEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { PdfViewer } from '../pdf-viewer'
 import { Button, Input, InputPrice, Select, TextArea } from '../form-controls'
-import { IconCheck, IconClose } from '../icons'
-import { SalaryReceiptTemplate } from '../templates-pdf'
+import { IconCheck, IconClose, IconEdit, IconTrash } from '../icons'
+import { SalaryReceiptPreview } from './salary-receipt-preview'
+import { addSalaryReceiptStore, updateSalaryReceiptStore } from '@/presentation/redux'
 
 const date = new Date()
 const initialData: SalaryReceiptModel = {
@@ -19,20 +20,25 @@ const initialData: SalaryReceiptModel = {
 	work_days: 26,
 	meal_allowance: 5_000,
 	transportation_allowance: 10_000,
-	productivity_allowance: 10_000
+	productivity_allowance: 10_000,
+	inss_discount_percent: 3
 } as SalaryReceiptModel
 
 type SalaryReceiptCardProps = {
 	employee: EmployeeModel
 	onClear: () => void
 	data?: SalaryReceiptModel
+	onDelete: () => void
 }
 
 export const SalaryReceiptCard = ({
 	employee,
 	onClear,
-	data
+	data,
+	onDelete
 }: SalaryReceiptCardProps) => {
+	const dispatch = useDispatch()
+
 	const user = useSelector(useAuth())
 	const years = [
 		date.getUTCFullYear() + 1,
@@ -44,8 +50,13 @@ export const SalaryReceiptCard = ({
 	const [pdfUrl, setPdfUrl] = useState('')
 
 	useEffect(() => {
-		setReceiptDate({ ...initialData, employee_id: employee.id, ...data })
-	}, [employee.id, data])
+		setReceiptDate({
+			...initialData,
+			employee_id: employee.id,
+			base_salary_received: employee.base_salary,
+			...data
+		})
+	}, [employee, data])
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -54,7 +65,11 @@ export const SalaryReceiptCard = ({
 		setReceiptDate((prev) => ({ ...prev, [name]: value }))
 	}
 
-	const handleSave = async () => {
+	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
+		const update = type == 'update'
+		if (update && !receiptData.id)
+			return toast.error('Selecione um registo na tabela abaixo para editar')
+
 		const data: SalaryReceiptModel = {
 			...receiptData,
 			meal_allowance: NumberUtils.convertToNumber(receiptData.meal_allowance, true),
@@ -73,18 +88,25 @@ export const SalaryReceiptCard = ({
 				true
 			)
 		}
-		const { statusCode, body } = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/salary-receipts'),
-			method: 'post',
-			body: data
-		})
+		const method = update ? 'put' : 'post'
+		const { statusCode, body: httpData } =
+			await makeAuthorizeHttpClientDecorator().request({
+				url: makeApiUrl(`/salary-receipts${update ? `/${receiptData.id}` : ''}`),
+				method,
+				body: data
+			})
 
 		if (statusCode != 200) {
-			toast.error(body)
+			toast.error(httpData)
 		} else {
-			const salaryReceipt: SalaryReceiptModel = body
+			const salaryReceipt: SalaryReceiptModel = httpData
 			setPdfUrl(salaryReceipt.file_path)
 			toast.success('Recibo processado com sucesso')
+			if (update) {
+				dispatch(updateSalaryReceiptStore(httpData))
+			} else {
+				dispatch(addSalaryReceiptStore(httpData))
+			}
 		}
 	}
 
@@ -93,107 +115,115 @@ export const SalaryReceiptCard = ({
 		onClear()
 	}
 
+	const handleDelete = () => {
+		if (!receiptData.id) return toast.error('Selecione um registo para excluir')
+		onDelete()
+	}
+
 	return (
 		<>
 			<PdfViewer pdfUrl={pdfUrl} onClose={() => setPdfUrl('')} />
-			<div className="flex flex-col gap-3">
-				<div className="grid grid-cols-5">
-					<Input
-						type="number"
-						name="work_days"
-						label="Dias trabalhados"
-						value={receiptData.work_days || ''}
-						onChange={handleChange}
-					/>
-					<Select
-						name="year"
-						label="Ano"
-						value={receiptData.year || ''}
-						data={years.map((year) => ({
-							text: year.toString()
-						}))}
-						defaultText="Selecione"
-						onChange={handleChange}
-					/>
-					<Select
-						name="month"
-						label="Mês"
-						value={receiptData.month || ''}
-						data={DateUtils.getMonthListExt().map((month, i) => ({
-							text: month,
-							value: i + 1
-						}))}
-						defaultText="Selecione"
-						onChange={handleChange}
-					/>
-				</div>
-				<div className="grid grid-cols-5 gap-2 items-start">
-					<InputPrice
-						name="meal_allowance"
-						label="Subsídio de Alimentação"
-						value={receiptData.meal_allowance || ''}
-						onChange={handleChange}
-					/>
-					<InputPrice
-						name="productivity_allowance"
-						label="Subsídio de Produtividade"
-						value={receiptData.productivity_allowance || ''}
-						onChange={handleChange}
-					/>
-					<InputPrice
-						name="transportation_allowance"
-						label="Subsídio de Transporte"
-						value={receiptData.transportation_allowance || ''}
-						onChange={handleChange}
-					/>
-					<InputPrice
-						name="family_allowance"
-						label="Abono Familiar"
-						value={receiptData.family_allowance || ''}
-						onChange={handleChange}
-					/>
-					<InputPrice
-						name="holiday_allowance"
-						label="Subsídio de férias"
-						value={receiptData.holiday_allowance || ''}
-						onChange={handleChange}
-					/>
-					<InputPrice
-						name="christmas_allowance"
-						label="13º - Décimo terceiro"
-						value={receiptData.christmas_allowance || ''}
-						onChange={handleChange}
-					/>
-					<div className="col-span-2">
-						<TextArea
-							name="observation"
-							label="Observação"
+			<div className="flex gap-2">
+				<div className="flex-1 flex flex-col gap-3">
+					<div className="grid grid-cols-5">
+						<Input
+							type="number"
+							name="work_days"
+							label="Dias trabalhados"
+							value={receiptData.work_days || ''}
 							onChange={handleChange}
-							value={receiptData.observation || ''}
+						/>
+						<Select
+							name="year"
+							label="Ano"
+							value={receiptData.year || ''}
+							data={years.map((year) => ({
+								text: year.toString()
+							}))}
+							defaultText="Selecione"
+							onChange={handleChange}
+						/>
+						<Select
+							name="month"
+							label="Mês"
+							value={receiptData.month || ''}
+							data={DateUtils.getMonthListExt().map((month, i) => ({
+								text: month,
+								value: i + 1
+							}))}
+							defaultText="Selecione"
+							onChange={handleChange}
 						/>
 					</div>
+					<div className="grid grid-cols-5 gap-2 items-start">
+						<InputPrice
+							name="meal_allowance"
+							label="Subsídio de Alimentação"
+							value={receiptData.meal_allowance || ''}
+							onChange={handleChange}
+						/>
+						<InputPrice
+							name="productivity_allowance"
+							label="Subsídio de Produtividade"
+							value={receiptData.productivity_allowance || ''}
+							onChange={handleChange}
+						/>
+						<InputPrice
+							name="transportation_allowance"
+							label="Subsídio de Transporte"
+							value={receiptData.transportation_allowance || ''}
+							onChange={handleChange}
+						/>
+						<InputPrice
+							name="family_allowance"
+							label="Abono Familiar"
+							value={receiptData.family_allowance || ''}
+							onChange={handleChange}
+						/>
+						<InputPrice
+							name="holiday_allowance"
+							label="Subsídio de férias"
+							value={receiptData.holiday_allowance || ''}
+							onChange={handleChange}
+						/>
+						<InputPrice
+							name="christmas_allowance"
+							label="13º - Décimo terceiro"
+							value={receiptData.christmas_allowance || ''}
+							onChange={handleChange}
+						/>
+						<div className="col-span-2">
+							<TextArea
+								name="observation"
+								label="Observação"
+								onChange={handleChange}
+								value={receiptData.observation || ''}
+							/>
+						</div>
+					</div>
+					<SalaryReceiptPreview
+						employee={employee}
+						receiptData={receiptData}
+						setReceiptDate={setReceiptDate}
+						currentUser={user}
+					/>
 				</div>
-
-				<div className="flex gap-2">
+				<div className="flex flex-col gap-2 border-l pl-2">
 					<Button
 						variant="green"
 						text="Processar"
 						icon={IconCheck}
-						onClick={handleSave}
+						onClick={() => handleSubmit('save')}
 					/>
 					<Button
 						variant="gray-light"
-						text="Limpar"
-						icon={IconClose}
-						onClick={handleClear}
+						text="Editar"
+						icon={IconEdit}
+						onClick={() => handleSubmit('update')}
 					/>
+					<Button text="Limpar" icon={IconClose} onClick={handleClear} />
+					<Button variant="red" text="Excluir" icon={IconTrash} onClick={handleDelete} />
 				</div>
-				<SalaryReceiptTemplate
-					employee={employee}
-					receiptData={receiptData}
-					setReceiptDate={setReceiptDate}
-					currentUser={user}
-				/>
 			</div>
 		</>
 	)
