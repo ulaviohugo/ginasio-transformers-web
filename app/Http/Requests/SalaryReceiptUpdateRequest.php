@@ -26,8 +26,6 @@ class SalaryReceiptUpdateRequest extends GlobalFormRequest
 	{
 		$salaryReceipt = request('salary_receipt');
 		$id = $salaryReceipt->id;
-
-		info("salaryReceipt: $salaryReceipt");
 		return [
 			'employee_id' => 'required|gt:0|exists:' . User::class . ',id',
 			'year' => 'required|gt:2000',
