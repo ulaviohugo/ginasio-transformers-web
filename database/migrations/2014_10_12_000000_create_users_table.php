@@ -35,6 +35,10 @@ return new class extends Migration
 			$table->string('address', 150);
 			$table->string('position', 50);
 			$table->double('base_salary', 16, 3)->nullable();
+			$table->double('meal_allowance', 16, 3)->nullable();
+			$table->double('productivity_allowance', 16, 3)->nullable();
+			$table->double('transportation_allowance', 16, 3)->nullable();
+			$table->double('family_allowance', 16, 3)->nullable();
 			$table->date('hire_date');
 			$table->date('contract_end_date')->nullable();
 			$table->string('bank_name', 30)->nullable();

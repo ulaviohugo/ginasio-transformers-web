@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -116,25 +116,21 @@ export function EmployeeEditor({
 		setPhotoPreview('')
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
+	const handleSubmit = async (type: 'save' | 'update') => {
+		const update = type == 'update'
 
 		setIsLoading(true)
 		try {
 			const httpResponse = (
-				formData.id
-					? await updateEmployee.update(formData)
-					: await addEmployee.add(formData)
+				update ? await updateEmployee.update(formData) : await addEmployee.add(formData)
 			) as EmployeeModel
 
-			if (formData.id) {
+			if (update) {
 				dispatch(updateEmployeeStore(httpResponse))
 			} else {
 				dispatch(addEmployeeStore(httpResponse))
 			}
-			toast.success(
-				`Funcionário ${formData.id ? 'actualizado' : 'cadastrado'} com sucesso`
-			)
+			toast.success(`Funcionário ${update ? 'actualizado' : 'cadastrado'} com sucesso`)
 			onClose()
 		} catch (error: any) {
 			toast.error(error.message)
@@ -149,7 +145,7 @@ export function EmployeeEditor({
 				{employee?.id ? `Funcionário - ${employee.name}` : 'Cadastrar funcionário'}
 			</ModalTitle>
 			<ModalBody>
-				<form onSubmit={handleSubmit} className="flex flex-col w-full">
+				<div className="flex flex-col w-full">
 					<div className="flex gap-1 ">
 						<div className="">
 							<ImagePreview
@@ -341,7 +337,7 @@ export function EmployeeEditor({
 									/>
 								</div>
 							</fieldset>
-							<fieldset className="grid grid-cols-2 gap-1">
+							<fieldset className="grid grid-cols-4 gap-1">
 								<legend>Dados profissionais</legend>
 								<Select
 									id="position"
@@ -397,6 +393,34 @@ export function EmployeeEditor({
 									title={`Selecione o ${LabelUtils.translateField(
 										'position'
 									)} para habilitar este campo`}
+								/>
+								<InputPrice
+									id="meal_allowance"
+									name="meal_allowance"
+									value={formData?.meal_allowance || ''}
+									label={'Subsídio de alimentação'}
+									onChange={handleInputChange}
+								/>
+								<InputPrice
+									id="productivity_allowance"
+									name="productivity_allowance"
+									value={formData?.productivity_allowance || ''}
+									label={'Subsídio de produtividade'}
+									onChange={handleInputChange}
+								/>
+								<InputPrice
+									id="transportation_allowance"
+									name="transportation_allowance"
+									value={formData?.transportation_allowance || ''}
+									label={'Subsídio de transporte'}
+									onChange={handleInputChange}
+								/>
+								<InputPrice
+									id="family_allowance"
+									name="family_allowance"
+									value={formData?.family_allowance || ''}
+									label={'Abono familiar'}
+									onChange={handleInputChange}
 								/>
 							</fieldset>
 							<fieldset className="grid gap-1">
@@ -496,12 +520,13 @@ export function EmployeeEditor({
 							disabled={isLoading}
 							isLoading={isLoading}
 							className="!bg-green-700"
+							onClick={() => handleSubmit('save')}
 						/>
 						<ButtonCancel
 							text="Editar"
 							icon={IconEdit}
-							onClick={onClose}
 							className="!bg-primary !bg-opacity-70 !text-white"
+							onClick={() => handleSubmit('update')}
 						/>
 						<ButtonCancel
 							text="Excluir"
@@ -511,7 +536,7 @@ export function EmployeeEditor({
 						/>
 						<ButtonCancel text="Limpar" onClick={onClose} />
 					</ModalFooter>
-				</form>
+				</div>
 			</ModalBody>
 		</Modal>
 	)

@@ -12,7 +12,16 @@ export class RemoteUpdateEmployee implements UpdateEmployee {
 
 	async update(param: EmployeeModel): Promise<EmployeeModel> {
 		const handledParam = ObjectUtils.removeProps<EmployeeModel>(
-			{ ...param, base_salary: NumberUtils.convertToPrice(param.base_salary) },
+			{
+				...param,
+				base_salary: NumberUtils.convertToPrice(param.base_salary),
+				meal_allowance: NumberUtils.convertToPrice(param.meal_allowance),
+				productivity_allowance: NumberUtils.convertToPrice(param.productivity_allowance),
+				transportation_allowance: NumberUtils.convertToPrice(
+					param.transportation_allowance
+				),
+				family_allowance: NumberUtils.convertToPrice(param.family_allowance)
+			},
 			['created_at', 'user_id', 'updated_at', 'user_id_update']
 		)
 

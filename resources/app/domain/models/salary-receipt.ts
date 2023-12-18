@@ -12,12 +12,12 @@ export type SalaryReceiptModel = {
 	base_salary_received: number
 	net_salary: number
 	gross_salary: number
-	meal_allowance: number
-	productivity_allowance: number
-	transportation_allowance: number
-	family_allowance: number
-	christmas_allowance: number
-	holiday_allowance: number
+	meal_allowance?: number
+	productivity_allowance?: number
+	transportation_allowance?: number
+	family_allowance?: number
+	christmas_allowance?: number
+	holiday_allowance?: number
 	total_salary_discounts: number
 	inss_discount: number
 	inss_discount_percent: number

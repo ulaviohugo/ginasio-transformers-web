@@ -3,7 +3,7 @@ import {
 	Layout,
 	LayoutBody,
 	ModalDelete,
-	SalaryReceiptCard,
+	SalaryReceiptEditor,
 	SalaryReceiptList,
 	Select,
 	SubMenu,
@@ -125,7 +125,7 @@ export function EmployeeSalaryReceipt() {
 							</div>
 						</div>
 						{selectedEmployee?.id ? (
-							<SalaryReceiptCard
+							<SalaryReceiptEditor
 								employee={selectedEmployee}
 								onClear={() => setSelectedEmployee({} as any)}
 								data={selectedSalaryReceipt}

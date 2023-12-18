@@ -17,11 +17,7 @@ const date = new Date()
 const initialData: SalaryReceiptModel = {
 	month: date.getUTCMonth() + 1,
 	year: date.getFullYear(),
-	work_days: 26,
-	meal_allowance: 5_000,
-	transportation_allowance: 10_000,
-	productivity_allowance: 10_000,
-	inss_discount_percent: 3
+	work_days: 26
 } as SalaryReceiptModel
 
 type SalaryReceiptCardProps = {
@@ -31,7 +27,7 @@ type SalaryReceiptCardProps = {
 	onDelete: () => void
 }
 
-export const SalaryReceiptCard = ({
+export const SalaryReceiptEditor = ({
 	employee,
 	onClear,
 	data,
@@ -53,6 +49,11 @@ export const SalaryReceiptCard = ({
 		setReceiptDate({
 			...initialData,
 			employee_id: employee.id,
+			meal_allowance: employee?.meal_allowance,
+			transportation_allowance: employee?.transportation_allowance,
+			productivity_allowance: employee?.productivity_allowance,
+			family_allowance: employee?.family_allowance,
+			inss_discount_percent: 3,
 			base_salary_received: employee.base_salary,
 			...data
 		})

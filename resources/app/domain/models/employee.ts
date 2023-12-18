@@ -27,6 +27,10 @@ export interface EmployeeModel {
 	address: string
 	position: string
 	base_salary: number
+	meal_allowance?: number
+	productivity_allowance?: number
+	transportation_allowance?: number
+	family_allowance?: number
 	hire_date: Date
 	contract_end_date?: Date
 	bank_name?: string

@@ -40,6 +40,12 @@ class UserUpdateService
 		$user->address = $request->address;
 		$user->position = $request->position;
 		$user->base_salary = $request->base_salary;
+
+		$user->meal_allowance = $request->meal_allowance;
+		$user->productivity_allowance = $request->productivity_allowance;
+		$user->transportation_allowance = $request->transportation_allowance;
+		$user->family_allowance = $request->family_allowance;
+
 		$user->hire_date = $request->hire_date;
 		$user->contract_end_date = $request->contract_end_date;
 		$user->bank_name = $request->bank_name;
