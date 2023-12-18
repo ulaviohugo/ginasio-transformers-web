@@ -13,7 +13,7 @@ export type FabricItemProps = {
 	fabric_id: number
 	color: string
 	meters: string
-	cost: string
+	cost: number
 }
 
 type ProductionFabricEditorProps = {

@@ -1,3 +1,10 @@
+<?php
+$fileHelper =App\Helpers\FileHelper::class; 
+
+$logoPath = $fileHelper::logoPath();
+$logo = $fileHelper::convertToBase64($logoPath);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +63,7 @@
 	<div class="page">
 		<table cellspacing="0">
 			<tr>
-				<td colspan="3" style="background: #404040; height:50px"></td>
+				<td colspan="3" style="background: #404040; height:50px"><img src="{{$logo}}" style="width: 100px" alt=""></td>
 			</tr>
 			<tr>
 				<td><b>Nº Factura:</b> <u>{{$sale->id}}</u></td>

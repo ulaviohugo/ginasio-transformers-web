@@ -1,3 +1,4 @@
+export * from './admin-docs'
 export * from './employees'
 export * from './hr'
 export * from './presence'

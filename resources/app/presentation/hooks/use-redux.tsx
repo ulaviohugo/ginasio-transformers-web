@@ -37,3 +37,5 @@ export const useSalaryReceipts = () => (state: RootState) =>
 export const useStocks = () => (state: RootState) => state.stocks.stocks
 export const useSuppliers = () => (state: RootState) => state.suppliers.suppliers
 export const useTransactions = () => (state: RootState) => state.transactions.transactions
+export const useWorkStatements = () => (state: RootState) =>
+	state.workStatements.workStatements

@@ -89,6 +89,10 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 
 		<table cellspacing="0">
 			<tr>
+				<td style="height: 24px;">Nome do Cliente:</td>
+				<td style="height: 24px;" class="border-b w-full"></td>
+			</tr>
+			<tr>
 				<td style="width: 180px">Data da Compra</td>
 				<td class="border-b w-full"></td>
 			</tr>
@@ -118,10 +122,6 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 			</tr>
 			<tr>
 				<td style="height: 24px;">Endereço:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Enviar em nome de:</td>
 				<td style="height: 24px;" class="border-b w-full"></td>
 			</tr>
 		</table>

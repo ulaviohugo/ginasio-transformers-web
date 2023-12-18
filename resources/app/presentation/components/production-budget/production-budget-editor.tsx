@@ -216,7 +216,8 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 			name.indexOf('_id') >= 0 ||
 			name.indexOf('meter') >= 0
 		) {
-			data = { ...data, [name]: NumberUtils.convertToNumber(value) }
+			data = { ...data, [name]: value }
+			// data = { ...data, [name]: NumberUtils.convertToNumber(value) }
 		}
 
 		setFabricItems({ ...fabricItems, [index]: data })
@@ -234,7 +235,8 @@ export function ProductionBudgetEditor({ selectedBudget }: ProductionBudgetEdito
 			name.indexOf('_id') >= 0 ||
 			name.indexOf('quantity') >= 0
 		) {
-			data = { ...data, [name]: NumberUtils.convertToNumber(value) }
+			// data = { ...data, [name]: NumberUtils.convertToNumber(value) }
+			data = { ...data, [name]: value }
 		}
 		setAccessoryItems({ ...accessoryItems, [index]: data })
 	}

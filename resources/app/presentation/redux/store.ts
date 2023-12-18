@@ -24,7 +24,8 @@ import {
 	supplierReducer,
 	transactionReducer,
 	productionSaleReducer,
-	salaryReceiptReducer
+	salaryReceiptReducer,
+	worksStatementReducer
 } from './reducers'
 
 export const store = configureStore({
@@ -53,7 +54,8 @@ export const store = configureStore({
 		sales: saleReducer,
 		stocks: stockReducer,
 		suppliers: supplierReducer,
-		transactions: transactionReducer
+		transactions: transactionReducer,
+		workStatements: worksStatementReducer
 	}
 })
 
