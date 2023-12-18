@@ -24,11 +24,6 @@ class AdminDocsController extends Controller
 		return	$pdf->stream("autorizacao-conducao-{$employee->id}-{$name}.pdf");
 	}
 
-	public function salaryReceipt(Request $request, SalaryReceiptService $service, User $employee)
-	{
-		return $service->execute($request, $employee);
-	}
-
 	public function employeeStatement(Request $request, User $employee)
 	{
 		$pdf = Pdf::loadView('pdfs.admin-docs.declaracao-trabalho', compact('employee'));
