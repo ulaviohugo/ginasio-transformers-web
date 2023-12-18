@@ -21,7 +21,9 @@ export function EmployeePresence() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 
-	const [_, setSelectedEmployee] = useState<EmployeeModel>({} as EmployeeModel)
+	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
+		{} as EmployeeModel
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const employees = useSelector(useEmployees())
 	const dispatch = useDispatch()
@@ -67,7 +69,7 @@ export function EmployeePresence() {
 										value: employee.id
 									}))}
 									onChange={handleSelectEmployee}
-									value={''}
+									value={selectedEmployee.id || ''}
 								/>
 							</div>
 						</div>
@@ -76,7 +78,10 @@ export function EmployeePresence() {
 						) : employees.length < 1 ? (
 							<div>Nenhum funcionário registado</div>
 						) : (
-							<CalendarPresence employees={employees} />
+							<CalendarPresence
+								employees={employees}
+								selectedEmployee={selectedEmployee}
+							/>
 						)}
 					</div>
 				</div>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { EmployeeModel, PresentStatus } from '@/domain/models'
 import { DateUtils, NumberUtils } from '@/utils'
@@ -6,6 +6,7 @@ import { CalendarEvent, IconChevronLeft, IconChevronRight, Input, Select } from 
 
 type CalendarPresenceProps = {
 	employees: EmployeeModel[]
+	selectedEmployee?: EmployeeModel
 }
 
 type FormProps = {
@@ -17,7 +18,12 @@ type ItemProps = {
 	date: Date
 	employee: EmployeeModel
 }
-export function CalendarPresence({ employees }: CalendarPresenceProps) {
+export function CalendarPresence({ employees, selectedEmployee }: CalendarPresenceProps) {
+	const filterEmployees = useMemo(() => {
+		return selectedEmployee?.id
+			? employees.filter(({ id }) => id == selectedEmployee.id)
+			: employees
+	}, [employees, selectedEmployee])
 	const date = new Date()
 	const months = DateUtils.getMonthList()
 	const [formData, setFormData] = useState<FormProps>({
@@ -149,16 +155,23 @@ export function CalendarPresence({ employees }: CalendarPresenceProps) {
 										const weekDay = DateUtils.getWeekDay(
 											new Date(formData.year, formData.month, i)
 										)
+											.toLocaleLowerCase()
+											.slice(0, 3)
 										return (
-											<th key={`wek-day-${i}`} className="bg-primary text-white p-4">
-												{weekDay.toLocaleLowerCase().slice(0, 3)}
+											<th
+												key={`wek-day-${i}`}
+												className={`${
+													['dom', 'sáb'].includes(weekDay) ? 'bg-red-300' : 'bg-primary'
+												} text-white p-4`}
+											>
+												{weekDay}
 											</th>
 										)
 									})}
 								</tr>
 							</thead>
 							<tbody>
-								{employees.map((employee) => (
+								{filterEmployees.map((employee) => (
 									<tr key={employee.id}>
 										<td className="">
 											<div className="whitespace-nowrap bg-green-50 p-4 font-semibold">
