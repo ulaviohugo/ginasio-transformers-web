@@ -3,7 +3,6 @@
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AccessoryController;
-use App\Http\Controllers\AdminDocsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
@@ -27,6 +26,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkStatementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -104,8 +104,9 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
 
-
+	// Admin documents
 	Route::apiResource('salary-receipts', SalaryReceiptController::class);
+	Route::apiResource('work-statements', WorkStatementController::class);
 });
 
 Route::any('/{path}', function () {

@@ -1,3 +1,6 @@
+<?php 
+$employee = $statement->employee;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,16 +76,17 @@
 			{{date('d', strtotime($employee->hire_date))}} de
 			{{App\Helpers\DateHelper::months[date('m', strtotime($employee->hire_date))]}}
 			de {{date('Y', strtotime($employee->hire_date))}},
-			exercendo a função de Gestora Comercial, auferindo mensalmente
-			o salário base de {{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}} e subsídio de
-			transporte e alimentação no valor de 30.000,00 Akz
-			(Trinta Mil Kwanzas).
+			exercendo a função de {{$employee->position}}, auferindo mensalmente
+			o salário base de
+			{{App\Helpers\NumberHelper::formatCurrency($employee->base_salary)}}{{$employee->transportation_allowance ?
+			' e subsídio de transporte no valor de
+			'.App\Helpers\NumberHelper::formatCurrency($employee->transportation_allowance):''}}.
 		</div>
 		<br>
 
 		<div>
 			Por ser verdade mandou-se passar a presente declaração, que vai devidamente assinada e autenticada com carimbo a
-			óleo, em uso nesta empresa, para efeito de VISTO.
+			óleo, em uso nesta empresa, para efeito de {{$statement->purpose}}.
 		</div>
 		<br><br><br>
 

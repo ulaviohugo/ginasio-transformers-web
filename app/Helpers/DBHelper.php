@@ -34,4 +34,5 @@ class DBHelper
 	const TB_SUPPLIER_PRODUCTS = 'tb_supplier_products';
 	const TB_TRANSACTIONS = 'tb_transactions';
 	const TB_USERS = 'tb_users';
+	const TB_WORK_STATEMENTS = 'tb_work_statements';
 }
