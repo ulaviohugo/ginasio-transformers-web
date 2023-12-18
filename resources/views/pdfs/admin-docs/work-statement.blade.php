@@ -72,7 +72,10 @@ $employee = $statement->employee;
 		<div>
 			Para todos efeitos legais, declara-se que <b><u>{{$employee->name}}</u></b>, de nacionalidade Angolana, portadora
 			do
-			B.I nº {{$employee->document_number}} é funcionária da empresa por tempo indeterminado, admitida no dia
+			B.I nº {{$employee->document_number}} é
+			{{$employee->gender == 'Masculino' ? 'funcionário': ($employee->gender ==
+			'Feminino' ? 'funcionária':'funcionário (a)')}}
+			da empresa por tempo indeterminado, admitida no dia
 			{{date('d', strtotime($employee->hire_date))}} de
 			{{App\Helpers\DateHelper::months[date('m', strtotime($employee->hire_date))]}}
 			de {{date('Y', strtotime($employee->hire_date))}},
