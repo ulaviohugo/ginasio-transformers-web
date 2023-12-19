@@ -1,5 +1,11 @@
 <?php 
 $employee = $statement->employee;
+$treatment = 'o(a)';
+if($employee->gender == 'Masculino'){
+	$treatment = 'o';
+}else if($employee->gender == 'Feminino'){
+	$treatment = 'a';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,12 +76,10 @@ $employee = $statement->employee;
 		<br> <br>
 
 		<div>
-			Para todos efeitos legais, declara-se que <b><u>{{$employee->name}}</u></b>, de nacionalidade Angolana, portadora
-			do
-			B.I nº {{$employee->document_number}} é
-			{{$employee->gender == 'Masculino' ? 'funcionário': ($employee->gender ==
-			'Feminino' ? 'funcionária':'funcionário (a)')}}
-			da empresa por tempo indeterminado, admitida no dia
+			Para todos efeitos legais, declara-se que <b><u>{{$employee->name}}</u></b>, de nacionalidade Angolana,
+			portador{{$treatment=='a' ? 'a':''}}
+			do B.I nº {{$employee->document_number}} é funcionári{{$treatment}}
+			da empresa por tempo indeterminado, admitid{{$treatment}} no dia
 			{{date('d', strtotime($employee->hire_date))}} de
 			{{App\Helpers\DateHelper::months[date('m', strtotime($employee->hire_date))]}}
 			de {{date('Y', strtotime($employee->hire_date))}},

@@ -41,6 +41,9 @@ class UserSeeder extends Seeder
 				'address' => 'Rua Principal, 123',
 				'position' => 'Assistente administrativo',
 				'base_salary' => 100_000,
+				'meal_allowance' => 25_000,
+				'productivity_allowance' => 20_000,
+				'transportation_allowance' => 20_000,
 				'hire_date' => $date,
 				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year,
 				'created_at' => now()
@@ -70,6 +73,9 @@ class UserSeeder extends Seeder
 				'address' => 'Rua Principal, 123',
 				'position' => 'Coordenador de operações',
 				'base_salary' => 60_000,
+				'meal_allowance' => 15_000,
+				'productivity_allowance' => 10_000,
+				'transportation_allowance' => 15_000,
 				'hire_date' => $date,
 				'contract_end_date' => (new DateTime())->add(new DateInterval('P5Y'))->format('Y-m-d H:i:s'), //1 year,
 				'created_at' => now()
