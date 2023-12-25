@@ -3,6 +3,7 @@
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AccessoryController;
+use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
@@ -105,6 +106,7 @@ Route::middleware('auth-jwt')->group(function () {
 	});
 
 	// Admin documents
+	Route::apiResource('admissions', AdmissionController::class);
 	Route::apiResource('salary-receipts', SalaryReceiptController::class);
 	Route::apiResource('work-statements', WorkStatementController::class);
 });

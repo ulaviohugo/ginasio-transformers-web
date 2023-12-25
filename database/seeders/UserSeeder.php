@@ -70,7 +70,7 @@ class UserSeeder extends Seeder
 				'country_id' => 1,
 				'province_id' => 11,
 				'municipality_id' => 97,
-				'address' => 'Rua Principal, 123',
+				'address' => 'Rua Principal, 321',
 				'position' => 'Coordenador de operações',
 				'base_salary' => 60_000,
 				'meal_allowance' => 15_000,

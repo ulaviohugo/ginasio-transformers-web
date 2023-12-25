@@ -5,6 +5,7 @@ namespace App\Helpers;
 class DBHelper
 {
 	const TB_ACCESSORIES = 'tb_accessories';
+	const TB_ADMISSIONS = 'tb_admissions';
 	const TB_CASH_REGISTERS = 'tb_cash_registers';
 	const TB_CATEGORIES = 'tb_categories';
 	const TB_COUNTRIES = 'tb_countries';

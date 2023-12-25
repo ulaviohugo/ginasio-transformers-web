@@ -6,7 +6,6 @@ use App\Helpers\HttpResponse;
 use App\Http\Requests\WorkStatementCreateRequest;
 use App\Http\Requests\WorkStatementUpdateRequest;
 use App\Http\Resources\WorkStatementResource;
-use App\Models\User;
 use App\Models\WorkStatement;
 use App\Services\WorkStatementCreateService;
 use App\Services\WorkStatementDeleteService;

@@ -29,10 +29,13 @@ class SalaryReceiptUpdateRequest extends GlobalFormRequest
 		return [
 			'employee_id' => 'required|gt:0|exists:' . User::class . ',id',
 			'year' => 'required|gt:2000',
-			'month' => ['required', 'gte:1', 'lte:12', Rule::unique(SalaryReceipt::class)->ignore($id)->where(function ($query) {
-				$query->where('employee_id', request('employee_id'))
-					->where('year', request('year'));
-			})],
+			'month' => [
+				'required', 'gte:1', 'lte:12',
+				Rule::unique(SalaryReceipt::class)->ignore($id)->where(function ($query) {
+					$query->where('employee_id', request('employee_id'))
+						->where('year', request('year'));
+				})
+			],
 			'work_days' => 'required|numeric',
 
 		];
