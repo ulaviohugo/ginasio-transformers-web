@@ -1,3 +1,4 @@
+export * from './absence-justification'
 export * from './accessory'
 export * from './account'
 export * from './admission'
