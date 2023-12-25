@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AdmissionDeleteService
 {
-	public function  execute(Admission $workStatement)
+	public function  execute(Admission $admission)
 	{
 		try {
 			DB::beginTransaction();
-			$pdfPath = $workStatement->file_path;
-			$workStatement->delete();
+			$pdfPath = $admission->file_path;
+			$admission->delete();
 			Storage::delete($pdfPath);
 			DB::commit();
 		} catch (\Throwable $th) {
