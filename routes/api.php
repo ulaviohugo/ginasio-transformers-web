@@ -22,6 +22,7 @@ use App\Http\Controllers\ProductionSaleController;
 use App\Http\Controllers\ProductionStockController;
 use App\Http\Controllers\ProductionSupplierController;
 use App\Http\Controllers\ProductSaleController;
+use App\Http\Controllers\RefundController;
 use App\Http\Controllers\SalaryReceiptController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
@@ -109,6 +110,7 @@ Route::middleware('auth-jwt')->group(function () {
 	// Admin documents
 	Route::apiResource('absence-justifications', AbsenceJustificationController::class);
 	Route::apiResource('admissions', AdmissionController::class);
+	Route::apiResource('refunds', RefundController::class);
 	Route::apiResource('salary-receipts', SalaryReceiptController::class);
 	Route::apiResource('work-statements', WorkStatementController::class);
 });
