@@ -61,7 +61,7 @@ class WorkStatementController extends Controller
 	{
 		try {
 			$service->execute($workStatement);
-			return HttpResponse::success();
+			return HttpResponse::success(message: 'Registo excluído com sucesso');
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
 		}
