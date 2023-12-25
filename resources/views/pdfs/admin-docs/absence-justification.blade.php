@@ -13,7 +13,8 @@
 		}
 
 		body {
-			padding: 8px
+			padding: 8px;
+			font-size: 12px;
 		}
 
 		@page {
@@ -29,15 +30,19 @@
 		}
 
 		.border {
-			border: 1px solid #ccc
+			border: 1px solid #ddd
 		}
 
 		.border-b {
-			border-bottom: 1px solid #ccc !important
+			border-bottom: 1px solid #ddd !important
 		}
 
 		table {
 			width: 100%
+		}
+
+		td {
+			padding: 0 8px
 		}
 
 		.bold {
@@ -49,7 +54,7 @@
 		}
 
 		td {
-			border: 1px solid #ccc
+			border: 1px solid #ddd
 		}
 
 		.no-border {
@@ -60,8 +65,16 @@
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.logo')
-		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>JUSTIFICATIVO DE FALTAS</u></div>
+		<table class="border" style="padding: 0 8px;">
+			<tr>
+				<td class="no-border">@include('pdfs.admin-docs.logo')</td>
+				<td class="no-border" style="width: 100%; font-size:14px"><b>JUSTIFICATIVO DE FALTAS</b></td>
+				</td>
+				<td class="no-border" style="width: 100px">
+					<div><b>Nº 1</b></div>
+				</td>
+			</tr>
+		</table>
 
 		<br />
 
