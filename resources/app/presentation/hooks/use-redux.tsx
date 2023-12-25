@@ -1,5 +1,6 @@
 import { RootState } from '@/presentation/redux'
 
+export const useAdmissions = () => (state: RootState) => state.admissions.admissions
 export const useAuth = () => (state: RootState) => state.auth.auth
 export const useCategories = () => (state: RootState) => state.categories.categories
 export const useCustomers = () => (state: RootState) => state.customers.customers

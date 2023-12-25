@@ -1,8 +1,10 @@
 export * from './http-client'
 
+export type HttpMethod = 'post' | 'get' | 'put' | 'delete'
+
 export type HttpRequestParams<T = any> = {
 	url: string
-	method: 'post' | 'get' | 'put' | 'delete'
+	method: HttpMethod
 	body?: T
 	headers?: any
 	params?: object

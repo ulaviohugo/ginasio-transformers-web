@@ -1,5 +1,6 @@
 export * from './accessory'
 export * from './account'
+export * from './admission'
 export * from './billing'
 export * from './cash-register'
 export * from './category'

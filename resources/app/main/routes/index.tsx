@@ -26,6 +26,7 @@ import {
 	WorkStatement
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
+import { MakeAdmission } from '../factories/pages'
 
 export function AppRoutes() {
 	const menu = MenuUtils.FRONT
@@ -46,7 +47,7 @@ export function AppRoutes() {
 				<Route path={menu.ADMIN_DOC_JUSTIFICATIVO} element={<WorkStatement />} />
 				<Route path={menu.ADMIN_DOC_REEMBOLSO} element={<WorkStatement />} />
 				<Route path={menu.ADMIN_DOC_REQUISICAO_FERIA} element={<WorkStatement />} />
-				<Route path={menu.ADMIN_DOC_ADMISSAO} element={<WorkStatement />} />
+				<Route path={menu.ADMIN_DOC_ADMISSAO} element={<MakeAdmission />} />
 				<Route path={menu.STORE} element={<Store />} />
 				<Route path={menu.STORE_STOCK} element={<Stock />} />
 				<Route path={menu.STORE_SALES} element={<Sales />} />

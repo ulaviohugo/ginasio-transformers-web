@@ -18,7 +18,7 @@ export function WorkStatementList({ onSelect }: WorkStatementListProps) {
 	const dispatch = useDispatch()
 	const workStatements = useSelector(useWorkStatements())
 
-	const [selectedWorkStatement, setSelectedWorkStatement] = useState<SalaryReceiptModel>()
+	const [selectedWorkStatement, setSelectedWorkStatement] = useState<WorkStatementModel>()
 
 	const [loading, setLoading] = useState(true)
 	const [pdfUrl, setPdfUrl] = useState('')

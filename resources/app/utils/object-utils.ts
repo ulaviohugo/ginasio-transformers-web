@@ -52,9 +52,9 @@ export class ObjectUtils {
 						[current[keyIndex]]: keyValue ? current[keyValue] : current
 					}
 				}
-				if (typeof current == 'string' || typeof current == 'number') {
-					return { ...prev, [current as any]: current }
-				}
+				// if (typeof current == 'string' || typeof current == 'number') {
+				// 	return { ...prev, [current as any]: current }
+				// }
 				return { ...prev, [index]: current }
 			}, {})
 		}

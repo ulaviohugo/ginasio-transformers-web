@@ -5,32 +5,32 @@ $employee = $admission->employee;
 $radioChecked = '<div class="radio"><div class="radio-checked"></div></div>';
 $radioUnchecked = '<div class="radio"></div>';
 
-$workToolsInDB = json_decode($admission->working_tools,true);
-$clothesProductionTrainingInDB = json_decode($admission->clothes_production_training,true);
+$workToolsInDB = json_decode($admission->working_tools);
+$clothesProductionTrainingInDB = json_decode($admission->clothes_production_training);
 
-$workTools = array_unique(array_merge(
-	[
-	'Máquina de Costura',
-	'Tesoura',
-	'Fita Métrica',
-	'Alfinete',
-	'Cracha/Passe',
-	'Motorizada',
-	'Capacete',
-	'Material Escritório',
-], ($workToolsInDB ?? [])
-));
+// $workTools = array_unique(array_merge(
+// 	[
+// 	'Máquina de Costura',
+// 	'Tesoura',
+// 	'Fita Métrica',
+// 	'Alfinete',
+// 	'Cracha/Passe',
+// 	'Motorizada',
+// 	'Capacete',
+// 	'Material Escritório',
+// ], ($workToolsInDB ?? [])
+// ));
 
-$clothesProductionTraining = array_unique(array_merge(
-	[
-	'Modelagem',
-	'Corte',
-	'Costura',
-	'Word',
-	'Excel',
-	'Internet',
-], ($clothesProductionTrainingInDB ?? [])
-));
+// $clothesProductionTraining = array_unique(array_merge(
+// 	[
+// 	'Modelagem',
+// 	'Corte',
+// 	'Costura',
+// 	'Word',
+// 	'Excel',
+// 	'Internet',
+// ], ($clothesProductionTrainingInDB ?? [])
+// ));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,8 +118,11 @@ $clothesProductionTraining = array_unique(array_merge(
 
 		.item {
 			display: inline-block;
-			margin-right: 16px;
-			margin-bottom: 4px;
+			margin-right: 4px;
+			margin-bottom: 8px;
+			border: 1px solid #ddd;
+			padding: 2px 8px;
+			border-radius: 20px
 		}
 	</style>
 </head>
@@ -128,7 +131,8 @@ $clothesProductionTraining = array_unique(array_merge(
 	<div class="page">
 		@include('pdfs.admin-docs.logo')
 
-		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u></div>
+		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u>
+		</div>
 		<br />
 
 		<div>
@@ -179,14 +183,14 @@ $clothesProductionTraining = array_unique(array_merge(
 				2) INSTRUMENTOS E CONDIÇÕES DE TRABALHO
 			</div>
 			<div>
-				@foreach ($workTools as $tool)
+				@foreach ($workToolsInDB as $tool)
 				<div class="item">
 					{{$tool}}
-					@if (in_array($tool, $workToolsInDB))
+					{{-- @if (in_array($tool, $workToolsInDB))
 					{!!$radioChecked!!}
 					@else
 					{!!$radioUnchecked!!}
-					@endif
+					@endif --}}
 				</div>
 				@endforeach
 			</div>
@@ -196,17 +200,17 @@ $clothesProductionTraining = array_unique(array_merge(
 
 		<div>
 			<div class="title">
-				3) FORMAÇÃO DE PRODUÇÂO DE ROUPAS
+				3) FORMAÇÃO DE PRODUÇÃO DE ROUPAS
 			</div>
 			<div>
-				@foreach ($clothesProductionTraining as $training)
+				@foreach ($clothesProductionTrainingInDB as $training)
 				<div class="item">
 					{{$training}}
-					@if (in_array($training, $clothesProductionTrainingInDB))
+					{{-- @if (in_array($training, $clothesProductionTrainingInDB))
 					{!!$radioChecked!!}
 					@else
 					{!!$radioUnchecked!!}
-					@endif
+					@endif --}}
 				</div>
 				@endforeach
 			</div>

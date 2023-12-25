@@ -1,3 +1,4 @@
+export * from './admission-slice'
 export * from './auth-slice'
 export * from './categories-slice'
 export * from './customers-slice'
