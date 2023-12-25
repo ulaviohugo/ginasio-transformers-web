@@ -139,6 +139,8 @@ export function AdmissionEditor({
 	}
 
 	const handleAddNewWorkTool = () => {
+		if (!newWorkTool?.trim()) return toast.error('Digite um item')
+
 		const data = { ...workToolItems }
 		const keys = Object.keys(data)
 
@@ -157,6 +159,8 @@ export function AdmissionEditor({
 	}
 
 	const handleAddNewTraining = () => {
+		if (!newTraining?.trim()) return toast.error('Digite um item')
+
 		const data = { ...trainingItems }
 		const keys = Object.keys(data)
 
