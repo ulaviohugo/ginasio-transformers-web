@@ -70,7 +70,7 @@ if($employee->gender == 'Masculino'){
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.header')
+		@include('pdfs.admin-docs.logo')
 		<br> <br> <br> <br>
 		<div style="font-size: 24px" class="center"><b>DECLARAÇÃO</b></div>
 		<br> <br>

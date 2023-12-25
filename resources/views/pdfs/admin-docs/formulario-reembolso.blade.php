@@ -18,7 +18,8 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 		}
 
 		body {
-			padding: 8px
+			padding: 8px;
+			font-size: 12px;
 		}
 
 		@page {
@@ -74,10 +75,16 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 </head>
 
 <body>
+	<?php
+	ob_start();
+	?>
 	<div class="page">
-		@include('pdfs.admin-docs.header')
-
-		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE REEMBOLSO</u></div>
+		<table>
+			<tr>
+				<td>@include('pdfs.admin-docs.logo')</td>
+				<td style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE REEMBOLSO</u></td>
+			</tr>
+		</table>
 
 		<br />
 
@@ -87,56 +94,54 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 		</div>
 		<br />
 
-		<table cellspacing="0">
-			<tr>
-				<td style="height: 24px;">Nome do Cliente:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="width: 180px">Data da Compra</td>
-				<td class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Código do Produto:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Categoria do Produto:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Produto:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Telefone:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">E-mail:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Município/Bairro</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-			<tr>
-				<td style="height: 24px;">Endereço:</td>
-				<td style="height: 24px;" class="border-b w-full"></td>
-			</tr>
-		</table>
+		<div>
+			<table>
+				<tr>
+					<td style="width:110px;">Nome do Cliente:</td>
+					<td class="border-b w-full"></td>
+					<td style="width: 105px">Data da Compra</td>
+					<td style="width: 80px" class="border-b">12/12/2023</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td style="width:121px;">Código do Produto:</td>
+					<td class="border-b">12</td>
+					<td style="width: 137px">Categoria do Produto:</td>
+					<td style="" class="border-b">2</td>
+					<td style="">Produto:</td>
+					<td class="w-full" class="border-b w-full">Calça Jeans Masculino</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td style="width:60px;">Telefone:</td>
+					<td style="width:110px;" class="border-b">244 930 690 710</td>
+					<td style="width: 44px">E-mail:</td>
+					<td style="" class="border-b">samuelfreitas.ao@gmail.com</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td style="">Município/Bairro</td>
+					<td style="width: 180px" class="border-b"></td>
+					<td style="">Endereço:</td>
+					<td style="" class="border-b w-full"></td>
+				</tr>
+			</table>
+		</div>
 		<br>
 
-		<table cellspacing="0">
+		{{-- <table cellspacing="0">
 			<tr>
 				<td class="w-full">Descrição da Compra</td>
 				<td style="width: 180px; padding-left: 20px" class="center">Valor</td>
 			</tr>
-			@for ($i = 0; $i < 6; $i++) <tr>
-				<td style="padding-top: 28px">
+			@for ($i = 0; $i < 4; $i++) <tr>
+				<td style="padding-top: 16px">
 					<div class="border-b"></div>
 				</td>
-				<td style="width:170px; padding: 28px 0 0 20px">
+				<td style="width:170px; padding: 16px 0 0 20px">
 					<div class="border-b center"></div>
 				</td>
 				</tr>
@@ -148,10 +153,10 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 					</td>
 				</tr>
 		</table>
-		<br>
+		<br> --}}
 
-		<div>
-			<table style="border: 1px solid #ddd; padding: 0 0 16px 0">
+		<div style="border: 1px solid #ddd; padding: 0 0 16px 0">
+			<table>
 				<tr>
 					<td colspan="6">
 						<div style="background: #404040; color: #fff; padding: 8px 0" class="center">
@@ -167,16 +172,35 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 					<td>Data</td>
 					<td class="border-b" style="width: 100px"></td>
 				</tr>
+			</table>
+			<table>
 				<tr>
-					<td style="width: 100px">Descrição da Devolução</td>
+					<td style="width: 150px">Descrição da Devolução</td>
 					<td colspan="5" class="border-b" style="width: 100px"></td>
 				</tr>
 			</table>
-
 		</div>
 
+		<?php ob_start() ?>
 		@include('pdfs.admin-docs.footer')
+		<?php 
+			$footer = str_replace('position: absolute;','',ob_get_clean());
+			$footer = str_replace('transform: translateX(-50%);','',$footer);
+			
+		?>
+		<br>
+		<div style="text-align: center">
+			{!!$footer!!}
+		</div>
 	</div>
+
+	<?php
+		$html = ob_get_clean();
+	?>
+
+	{!!$html!!}
+	@include('pdfs.components.cutter')
+	{!!$html!!}
 </body>
 
 </html>

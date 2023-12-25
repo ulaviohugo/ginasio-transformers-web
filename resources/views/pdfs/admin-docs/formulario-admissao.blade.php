@@ -119,7 +119,7 @@ $competences = [
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.header')
+		@include('pdfs.admin-docs.logo')
 
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u></div>
 		<br />
@@ -188,7 +188,7 @@ $competences = [
 
 		<div>
 			<div class="title">
-				3) FORMAÇÃO DE PRODUçÂO DE ROUPAS
+				3) FORMAÇÃO DE PRODUÇÂO DE ROUPAS
 			</div>
 			<div>
 				@foreach ($competences as $compentence)

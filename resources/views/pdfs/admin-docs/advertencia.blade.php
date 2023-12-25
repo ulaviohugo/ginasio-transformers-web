@@ -48,7 +48,7 @@
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.header')
+		@include('pdfs.admin-docs.logo')
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>ADVERTÊNCIA DE TRABALHO</u></div>
 		<br />
 		<div>Referência: <b><i>Advertência no Trabalho</i></b></div>

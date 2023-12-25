@@ -61,7 +61,7 @@
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.header')
+		@include('pdfs.admin-docs.logo')
 		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>REQUISIÇÃO DE FÉRIAS</u></div>
 		<br />
 
