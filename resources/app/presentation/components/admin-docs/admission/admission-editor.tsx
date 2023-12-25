@@ -83,9 +83,6 @@ export function AdmissionEditor({
 				...Object.values(trainingItems),
 				...data.clothes_production_training
 			])
-			console.log({
-				_trainingItems: ObjectUtils.convertToObject<any>(Array.from(_trainingItems))
-			})
 
 			setTrainingItems(ObjectUtils.convertToObject<any>(Array.from(_trainingItems)))
 		} else {
