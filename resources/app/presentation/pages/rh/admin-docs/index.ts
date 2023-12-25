@@ -1,3 +1,4 @@
+export * from './absence-justifications'
 export * from './admin-documents'
 export * from './admissions'
 export * from './vocation-request'

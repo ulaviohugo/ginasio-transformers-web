@@ -26,11 +26,13 @@ import {
 	productionSaleReducer,
 	salaryReceiptReducer,
 	worksStatementReducer,
-	admissionReducer
+	admissionReducer,
+	absenceJustificationReducer
 } from './reducers'
 
 export const store = configureStore({
 	reducer: {
+		absenceJustifications: absenceJustificationReducer,
 		admissions: admissionReducer,
 		auth: authReducer,
 		categories: categoryReducer,

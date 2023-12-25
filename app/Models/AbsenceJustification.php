@@ -15,10 +15,10 @@ class AbsenceJustification extends Model
 	protected $fillable = [
 		'employee_id',
 		'file_path',
+		'absence_reason',
 		'starts_at',
 		'ends_at',
 		'absent_days',
-		'absence_reason',
 		'absence_description',
 		'adicional_information',
 		'user_id',

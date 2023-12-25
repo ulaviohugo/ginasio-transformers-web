@@ -1,3 +1,4 @@
+export * from './absence-justification-slice'
 export * from './admission-slice'
 export * from './auth-slice'
 export * from './categories-slice'
