@@ -1,3 +1,17 @@
+<?php 
+$employee = $justification->employee;
+
+$absenceReasons = array_unique([
+	'Injustificada',
+	'Estudo',
+	'Acidente de Trabalho',
+	'Casamento',
+	'Doença',
+	'Falecimento Familiar',
+	'Maternidade',
+	$justification->absence_reason,
+]);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +85,7 @@
 				<td class="no-border" style="width: 100%; font-size:14px"><b>JUSTIFICATIVO DE FALTAS</b></td>
 				</td>
 				<td class="no-border" style="width: 100px">
-					<div><b>Nº 1</b></div>
+					<div><b>Nº {{$justification->id}}</b></div>
 				</td>
 			</tr>
 		</table>
@@ -87,109 +101,68 @@
 		</ul>
 
 		<div>
-			<table cellspacing="0">
+			<table>
 				<tr>
 					<td class="no-border">Nome</td>
 					<td class="no-border border-b" style="width: 100%">{{$employee->name}}</td>
+					<td style="width: 98px" class="no-border">Nº do Funcionário</td>
+					<td style="width: 30px;" class="no-border border-b">
+						{{$employee->id}}
+					</td>
 				</tr>
 			</table>
 
-			<table cellspacing="0">
+			<table>
 				<tr>
-					<td style="width: 130px" class="no-border">Nº do Funcionário</td>
-					<td style="width: 50px;" class="no-border">
-						<div class="border" style="margin: 8px 0; padding:0 4px; background: #f0f0f0">{{$employee->id}}</div>
-					</td>
 					<td class="no-border">Função</td>
-					<td style="width: 100%;" class="no-border">
-						<div class="border" style="margin: 8px 0; padding:0 4px; background: #f0f0f0">{{$employee->position}}</div>
+					<td style="width: 100%;" class="no-border border-b">
+						{{$employee->position}}
 					</td>
-				</tr>
-			</table>
-
-			<table cellspacing="0">
-				<tr>
-					<td style="width: 160px" class="no-border">Responsável da área</td>
-					<td class="border-b" style="width: 100%">Weza Inácio</td>
+					<td style="width: 120px" class="no-border">Responsável da área</td>
+					<td class="no-border border-b" style="width: 100%">Weza Inácio</td>
 				</tr>
 			</table>
 		</div>
 		<br />
+		<br />
 		<div class="bold center">MOTIVOS DA AUSÊNCIA</div>
-		<table cellspacing="0" style="font-size: 14px">
-			<tr>
-				<td style="width: 155px">Tipos de Ausência</td>
+		<br>
+		<table cellspacing="0" style="font-size: 13px">
+			<tr style="font-weight: bold">
+				<td style="width: 145px">Tipos de Ausência</td>
 				<td>Data de Início</td>
 				<td>Data de Fim</td>
-				<td style="width: 100px">Total de dias Ausentes</td>
+				<td style="width: 80px">Total de dias Ausentes</td>
 				<td style="width: 100%">Descrição</td>
 			</tr>
-			<tr>
-				<td>a) Injustificada</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
+			@foreach ($absenceReasons as $i=> $reason)
+			<?php $active = $justification->absence_reason == $reason ?>
+			<tr style="{{$active ?'background: #f0f0f0': ''}}">
+				@if ($active)
+				<td style="font-weight: bold">{{$i+1}}) {{$reason}}</td>
+				<td>{{date('d/m/Y', strtotime($justification->starts_at))}}</td>
+				<td>{{date('d/m/Y', strtotime($justification->ends_at))}}</td>
+				<td>{{$justification->absent_days}}</td>
+				<td>{{$justification->absence_description}}</td>
+				@else
+				<td>{{$i+1}}) {{$reason}}</td>
 				<td></td>
 				<td></td>
+				<td></td>
+				<td></td>
+				@endif
 			</tr>
-			<tr>
-				<td>b) Estudo</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>c) Acidente de Trabalho</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>d) Casamento</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>e) Doença</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>f) Facelimento Familiar</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>g) Maternidade</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>h) Outros</td>
-				<td>___/____/____</td>
-				<td>___/____/____</td>
-				<td></td>
-				<td></td>
-			</tr>
+			@endforeach
 		</table>
 
 		<br>
+		<br>
 		<div class="bold center">INFORMAÇÕES COMPLEMENTARES</div>
 		<br>
-		<div class="border-b"></div><br>
-		<div class="border-b"></div><br>
-		<div class="border-b"></div><br>
-		<div class="border-b"></div><br>
-		<div class="border-b"></div><br>
+		<div class="border-b">{{$justification->adicional_information}}</div><br>
+		<br>
+		<br>
+		<br>
 
 		<div class="bold">Funcionário</div>
 		<table cellspacing="0">

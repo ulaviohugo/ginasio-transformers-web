@@ -47,7 +47,8 @@ $clothesProductionTrainingInDB = json_decode($admission->clothes_production_trai
 		}
 
 		body {
-			padding: 8px
+			padding: 8px;
+			font-size: 14px;
 		}
 
 		@page {
@@ -63,15 +64,19 @@ $clothesProductionTrainingInDB = json_decode($admission->clothes_production_trai
 		}
 
 		.border {
-			border: 1px solid #ccc
+			border: 1px solid #ddd
 		}
 
 		.border-b {
-			border-bottom: 1px solid #ccc !important
+			border-bottom: 1px solid #ddd !important
 		}
 
 		table {
 			width: 100%
+		}
+
+		td {
+			padding: 0 8px
 		}
 
 		.bold {
@@ -83,7 +88,7 @@ $clothesProductionTrainingInDB = json_decode($admission->clothes_production_trai
 		}
 
 		td {
-			border: 1px solid #ccc;
+			border: 1px solid #ddd;
 			padding: 2px 4px;
 		}
 
@@ -129,10 +134,14 @@ $clothesProductionTrainingInDB = json_decode($admission->clothes_production_trai
 
 <body>
 	<div class="page">
-		@include('pdfs.admin-docs.logo')
 
-		<div style="font-size: 24px; text-align: right; font-weight: bold"><u>FORMULÁRIO DE ADMISSÃO</u>
-		</div>
+		<table class="border">
+			<tr>
+				<td class="no-border">@include('pdfs.admin-docs.logo')</td>
+				<td class="no-border" style="width: 100%; font-size:14px"><b><u>FORMULÁRIO DE ADMISSÃO</u></b></td>
+				<td class="no-border" style="width: 50px"><b>Nº {{$admission->id}}</b></td>
+			</tr>
+		</table>
 		<br />
 
 		<div>

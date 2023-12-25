@@ -216,6 +216,7 @@ return [
 
 	'attributes' => [
 		'account_number' => 'nº de conta bancária',
+		'absence_reason' => 'motivo de ausência',
 		'address' => 'endereço',
 		'amount' => 'valor',
 		'amount_paid' => 'valor pago',
@@ -251,6 +252,7 @@ return [
 		'email' => 'e-mail',
 		'employee_id' => 'funcionário',
 		'end_product' => 'produto final',
+		'ends_at' => 'data de fim',
 		'exit_time' => 'hora de saída',
 		'enrollment_date' => 'data de adesão',
 		'entry_time' => 'hora de entrada',
@@ -296,6 +298,7 @@ return [
 		'sewing_duration_per_minute' => 'tempo de costura',
 		'size' => 'tamanho',
 		'social_security' => 'segurança social',
+		'starts_at' => 'data de início',
 		'student' => 'estudante',
 		'supplier_id' => 'fornecedor',
 		'supplier_products' => 'lista de produtos',
