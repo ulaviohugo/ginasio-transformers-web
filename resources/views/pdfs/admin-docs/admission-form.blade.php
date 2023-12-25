@@ -1,10 +1,15 @@
 <?php
 $fileHelper =App\Helpers\FileHelper::class; 
+$employee = $admission->employee;
 
 $radioChecked = '<div class="radio"><div class="radio-checked"></div></div>';
 $radioUnchecked = '<div class="radio"></div>';
 
-$workInstruments = [
+$workToolsInDB = json_decode($admission->working_tools,true);
+$clothesProductionTrainingInDB = json_decode($admission->clothes_production_training,true);
+
+$workTools = array_unique(array_merge(
+	[
 	'Máquina de Costura',
 	'Tesoura',
 	'Fita Métrica',
@@ -13,17 +18,19 @@ $workInstruments = [
 	'Motorizada',
 	'Capacete',
 	'Material Escritório',
-	'Diversos',
-];
+], ($workToolsInDB ?? [])
+));
 
-$competences = [
+$clothesProductionTraining = array_unique(array_merge(
+	[
 	'Modelagem',
 	'Corte',
 	'Costura',
 	'Word',
 	'Excel',
 	'Internet',
-];
+], ($clothesProductionTrainingInDB ?? [])
+));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,15 +179,16 @@ $competences = [
 				2) INSTRUMENTOS E CONDIÇÕES DE TRABALHO
 			</div>
 			<div>
-				@foreach ($workInstruments as $instrument)
-				<div class="item">{{$instrument}} {!!$radioUnchecked!!}
+				@foreach ($workTools as $tool)
+				<div class="item">
+					{{$tool}}
+					@if (in_array($tool, $workToolsInDB))
+					{!!$radioChecked!!}
+					@else
+					{!!$radioUnchecked!!}
+					@endif
 				</div>
 				@endforeach
-				<br>
-				<br>
-				<div class="border-b"></div><br>
-				<div class="border-b"></div><br>
-				<div class="border-b"></div>
 			</div>
 		</div>
 		<br />
@@ -191,14 +199,16 @@ $competences = [
 				3) FORMAÇÃO DE PRODUÇÂO DE ROUPAS
 			</div>
 			<div>
-				@foreach ($competences as $compentence)
-				<div class="item">{{$compentence}} {!!$radioUnchecked!!}</div>
+				@foreach ($clothesProductionTraining as $training)
+				<div class="item">
+					{{$training}}
+					@if (in_array($training, $clothesProductionTrainingInDB))
+					{!!$radioChecked!!}
+					@else
+					{!!$radioUnchecked!!}
+					@endif
+				</div>
 				@endforeach
-				<br>
-				<br>
-				<div class="border-b"></div><br>
-				<div class="border-b"></div><br>
-				<div class="border-b"></div>
 			</div>
 		</div>
 		<br />
