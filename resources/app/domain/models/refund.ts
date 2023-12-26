@@ -1,6 +1,8 @@
 import { MunicipalityProps, ProvinceProps } from '@/utils'
 import { CustomerModel } from './customer'
 import { EmployeeModel } from './employee'
+import { ProductModel } from './product'
+import { CategoryModel } from './category'
 
 export type RefundModel = {
 	id: number
@@ -13,6 +15,7 @@ export type RefundModel = {
 	email: string
 	province_id: number
 	municipality_id: number
+	address: string
 	iban: string
 	amount: number
 	description: string
@@ -22,6 +25,8 @@ export type RefundModel = {
 	updated_at?: Date
 	user_id_update?: number
 
+	product?: ProductModel
+	category?: CategoryModel
 	customer?: CustomerModel
 	user?: EmployeeModel
 	province?: ProvinceProps

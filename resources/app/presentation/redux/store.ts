@@ -27,7 +27,8 @@ import {
 	salaryReceiptReducer,
 	worksStatementReducer,
 	admissionReducer,
-	absenceJustificationReducer
+	absenceJustificationReducer,
+	refundsReducer
 } from './reducers'
 
 export const store = configureStore({
@@ -54,6 +55,7 @@ export const store = configureStore({
 		productionStocks: productionStockReducer,
 		productionSuppliers: productionSupplierReducer,
 		productSales: productSaleReducer,
+		refunds: refundsReducer,
 		salaryReceipts: salaryReceiptReducer,
 		sales: saleReducer,
 		stocks: stockReducer,

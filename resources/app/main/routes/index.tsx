@@ -26,7 +26,7 @@ import {
 	WorkStatement
 } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
-import { MakeAbsenceJustification, MakeAdmission } from '../factories/pages'
+import { MakeAbsenceJustification, MakeAdmission, MakeRefund } from '../factories/pages'
 
 export function AppRoutes() {
 	const menu = MenuUtils.FRONT
@@ -48,7 +48,7 @@ export function AppRoutes() {
 					path={menu.ADMIN_DOC_JUSTIFICATIVO}
 					element={<MakeAbsenceJustification />}
 				/>
-				<Route path={menu.ADMIN_DOC_REEMBOLSO} element={<WorkStatement />} />
+				<Route path={menu.ADMIN_DOC_REEMBOLSO} element={<MakeRefund />} />
 				<Route path={menu.ADMIN_DOC_REQUISICAO_FERIA} element={<WorkStatement />} />
 				<Route path={menu.ADMIN_DOC_ADMISSAO} element={<MakeAdmission />} />
 				<Route path={menu.STORE} element={<Store />} />
