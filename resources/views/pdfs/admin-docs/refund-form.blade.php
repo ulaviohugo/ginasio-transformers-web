@@ -122,7 +122,7 @@ $customer = $refund->customer;
 			<table>
 				<tr>
 					<td style="">Município/Bairro</td>
-					<td style="width: 180px" class="border-b">{{$refund->municipality->name}}</td>
+					<td style="width: 180px" class="border-b">{{$refund->municipality?->name}}</td>
 					<td style="">Endereço:</td>
 					<td style="" class="border-b w-full">{{$refund->address}}</td>
 				</tr>
