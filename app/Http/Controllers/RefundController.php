@@ -18,7 +18,9 @@ class RefundController extends Controller
 		try {
 			$refunds = Refund::orderBy('id', 'desc')
 				->get();
-			$refunds->load('customer', 'user');
+			$refunds->load(['customer', 'category', 'product' => function ($query) {
+				$query->select('id', 'name');
+			}, 'user']);
 			return RefundResource::collection($refunds);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
@@ -29,7 +31,9 @@ class RefundController extends Controller
 	{
 		try {
 			$createdRefund = $service->execute($request);
-			$createdRefund->load('customer', 'user');
+			$createdRefund->load(['customer', 'category', 'product' => function ($query) {
+				$query->select('id', 'name');
+			}, 'user']);
 			return response()->json(new RefundResource($createdRefund));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
@@ -39,7 +43,9 @@ class RefundController extends Controller
 	public function show(Refund $refund)
 	{
 		try {
-			$refund->load('customer', 'user');
+			$refund->load(['customer', 'category', 'product' => function ($query) {
+				$query->select('id', 'name');
+			}, 'user']);
 			return new RefundResource($refund);
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
@@ -50,7 +56,9 @@ class RefundController extends Controller
 	{
 		try {
 			$updateRefund = $service->execute($request,  $refund);
-			$updateRefund->load('customer', 'user');
+			$updateRefund->load(['customer', 'category', 'product' => function ($query) {
+				$query->select('id', 'name');
+			}, 'user']);
 			return response()->json(new RefundResource($updateRefund));
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());

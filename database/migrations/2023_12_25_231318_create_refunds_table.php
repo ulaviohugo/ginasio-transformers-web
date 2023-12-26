@@ -15,17 +15,18 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_REFUNDS, function (Blueprint $table) {
 			$table->id();
 			$table->foreignId('customer_id')->nullable()->references('id')->on(DBHelper::TB_CUSTOMERS)->cascadeOnUpdate();
-			$table->string('file_path');
+			$table->string('file_path')->nullable();
 			$table->string('purchase_date');
 			$table->foreignId('category_id')->nullable()->references('id')->on(DBHelper::TB_CATEGORIES)->cascadeOnUpdate();
 			$table->foreignId('product_id')->nullable()->references('id')->on(DBHelper::TB_PRODUCTS)->cascadeOnUpdate();
-			$table->string('phone');
-			$table->string('email');
+			$table->string('phone')->nullable();
+			$table->string('email')->nullable();
 			$table->foreignId('province_id')->nullable()->references('id')->on(DBHelper::TB_PROVINCES)->cascadeOnUpdate();
 			$table->foreignId('municipality_id')->nullable()->references('id')->on(DBHelper::TB_MUNICIPALITIES)->cascadeOnUpdate();
+			$table->string('address')->nullable();
 			$table->string('iban');
 			$table->double('amount', 16, 3);
-			$table->string('description');
+			$table->string('description')->nullable();
 			$table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
 			$table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS);
 			$table->timestamps();

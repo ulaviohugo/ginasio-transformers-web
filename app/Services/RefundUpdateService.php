@@ -28,6 +28,7 @@ class RefundUpdateService
 				'email' => $request->email,
 				'province_id' => $request->province_id,
 				'municipality_id' => $request->municipality_id,
+				'address' => $request->address,
 				'iban' => $request->iban,
 				'amount' => $request->amount,
 				'description' => $request->description,

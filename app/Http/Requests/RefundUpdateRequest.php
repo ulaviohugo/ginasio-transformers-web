@@ -35,9 +35,10 @@ class RefundUpdateRequest extends GlobalFormRequest
 						->where('product_id', date('Y-m-d', strtotime(request('product_id'))));
 				})
 			],
+			'purchase_date' => 'required|date',
 			'category_id' => 'required|gt:0|exists:' . Category::class . ',id',
 			'product_id' => 'required|gt:0|exists:' . Product::class . ',id',
-			'iban' => 'required|min:21',
+			'iban' => 'required|min:25',
 			'amount' => 'required|gt:0'
 		];
 	}
@@ -46,6 +47,10 @@ class RefundUpdateRequest extends GlobalFormRequest
 	{
 		$customer = Customer::find(request('customer_id'));
 		$treatment = $customer?->gender == 'Masculino' ? 'O' : ($customer?->gender == 'Feminino' ? 'A' : 'O(a)');
-		return ['customer_id.unique' => "$treatment cliente $customer?->name já tem reembolso para esta data"];
+		return [
+			'customer_id.unique' => "$treatment cliente $customer?->name já tem reembolso para esta data",
+			'purchase_date.required' => 'Informe a data de compra',
+			'purchase_date.date' => 'A data tem um formato inválido',
+		];
 	}
 }

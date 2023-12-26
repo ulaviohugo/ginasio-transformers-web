@@ -1,7 +1,5 @@
 <?php
-$fileHelper =App\Helpers\FileHelper::class; 
-
-$iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
+$customer = $refund->customer;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,35 +96,35 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 			<table>
 				<tr>
 					<td style="width:110px;">Nome do Cliente:</td>
-					<td class="border-b w-full"></td>
+					<td class="border-b w-full">{{$customer->name}}</td>
 					<td style="width: 105px">Data da Compra</td>
-					<td style="width: 80px" class="border-b">12/12/2023</td>
+					<td style="width: 80px" class="border-b">{{date('d/m/Y', strtotime($refund->purchase_date))}}</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td style="width:121px;">Código do Produto:</td>
-					<td class="border-b">12</td>
-					<td style="width: 137px">Categoria do Produto:</td>
-					<td style="" class="border-b">2</td>
-					<td style="">Produto:</td>
-					<td class="w-full" class="border-b w-full">Calça Jeans Masculino</td>
+					<td style="width:110px;">Código do Produto:</td>
+					<td class="border-b">{{$refund->product_id}}</td>
+					<td style="width: 120px">Categoria do Produto:</td>
+					<td style="width: 165px" class="border-b">{{$refund->category->name}}</td>
+					<td>Produto:</td>
+					<td style="width: 165px" class="border-b">{{$refund->product->name}}</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
 					<td style="width:60px;">Telefone:</td>
-					<td style="width:110px;" class="border-b">244 930 690 710</td>
+					<td style="width:110px;" class="border-b">{{$refund->phone}}</td>
 					<td style="width: 44px">E-mail:</td>
-					<td style="" class="border-b">samuelfreitas.ao@gmail.com</td>
+					<td style="" class="border-b">{{$refund->email}}</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
 					<td style="">Município/Bairro</td>
-					<td style="width: 180px" class="border-b"></td>
+					<td style="width: 180px" class="border-b">{{$refund->municipality->name}}</td>
 					<td style="">Endereço:</td>
-					<td style="" class="border-b w-full"></td>
+					<td style="" class="border-b w-full">{{$refund->address}}</td>
 				</tr>
 			</table>
 		</div>
@@ -156,7 +154,7 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 		<br> --}}
 
 		<div style="border: 1px solid #ddd; padding: 0 0 16px 0">
-			<table>
+			<table cellsspacing="0">
 				<tr>
 					<td colspan="6">
 						<div style="background: #404040; color: #fff; padding: 8px 0" class="center">
@@ -165,18 +163,18 @@ $iconForm = $fileHelper::convertToBase64(public_path('/images/icons/form.png'));
 					</td>
 				</tr>
 				<tr>
-					<td style="padding-top: 16px">IBAN</td>
-					<td class="w-full border-b"></td>
+					<td>IBAN</td>
+					<td class="w-full border-b">{{$refund->iban}}</td>
 					<td>Valor</td>
-					<td class="border-b" style="width: 100px"></td>
+					<td class="border-b" style="width: 100px">{{App\Helpers\NumberHelper::formatCurrency($refund->amount)}}</td>
 					<td>Data</td>
-					<td class="border-b" style="width: 100px"></td>
+					<td class="border-b" style="width: 100px">{{date('d/m/Y')}}</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td style="width: 150px">Descrição da Devolução</td>
-					<td colspan="5" class="border-b" style="width: 100px"></td>
+					<td style="width: 135px">Descrição da Devolução</td>
+					<td colspan="5" class="border-b" style="width: 100px">{{$refund->description}}</td>
 				</tr>
 			</table>
 		</div>

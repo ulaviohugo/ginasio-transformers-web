@@ -10,7 +10,7 @@ class Refund extends Model
 {
 	use HasFactory;
 
-	protected $table = DBHelper::TB_ABSENCE_JUSTIFICATIONS;
+	protected $table = DBHelper::TB_REFUNDS;
 
 	protected $fillable = [
 		'customer_id',
@@ -22,6 +22,7 @@ class Refund extends Model
 		'email',
 		'province_id',
 		'municipality_id',
+		'address',
 		'iban',
 		'amount',
 		'description',
@@ -33,6 +34,27 @@ class Refund extends Model
 	{
 		return $this->belongsTo(Customer::class, 'customer_id');
 	}
+
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
+
+	public function category()
+	{
+		return $this->belongsTo(Category::class);
+	}
+
+	public function province()
+	{
+		return $this->belongsTo(Province::class);
+	}
+
+	public function municipality()
+	{
+		return $this->belongsTo(Municipality::class);
+	}
+
 
 	public function user()
 	{
