@@ -2,7 +2,6 @@
 
 use App\Exports\UsersExport;
 use App\Http\Controllers\AdminDocsController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,11 +24,6 @@ Route::match(['get', 'post'], 'factura-venda/{sale}', [SaleController::class, 'i
 // Route::match(['get', 'post'], 'factura-venda/{sale}', [InvoiceController::class, 'sale']);
 Route::match(['get', 'post'], 'advertencia/{employee}', [AdminDocsController::class, 'advertencia']);
 Route::match(['get', 'post'], 'autorizacao-conducao/{employee}', [AdminDocsController::class, 'drivingPermission']);
-Route::match(['get', 'post'], 'declaracao-trabalho/{employee}', [AdminDocsController::class, 'employeeStatement']);
-Route::match(['get', 'post'], 'formulario-admissao/{employee}', [AdminDocsController::class, 'employeeAdmission']);
-Route::match(['get', 'post'], 'formulario-reembolso', [AdminDocsController::class, 'refundForm']);
-Route::match(['get', 'post'], 'justificativo-falta/{employee}', [AdminDocsController::class, 'absenceJustification']);
-Route::match(['get', 'post'], 'requisicao-feria/{employee}', [AdminDocsController::class, 'vacationRequest']);
 
 Route::match(['get', 'post'], 'users', function () {
 	return Excel::download(new UsersExport(), 'user.xlsx');
