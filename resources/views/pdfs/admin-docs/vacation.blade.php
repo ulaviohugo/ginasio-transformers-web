@@ -1,3 +1,6 @@
+<?php 
+$employee = $vacation->employee;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +8,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Justificativo de falta - {{$employee->name}}</title>
+	<title>Requisição de férias - {{$employee->name}}</title>
 
 	<style>
 		* {
@@ -68,7 +71,7 @@
 		<div>
 			<table cellspacing="0">
 				<tr>
-					<td class="no-border" style="width: 150">Requisição nº <b>01</b></td>
+					<td class="no-border" style="width: 150">Requisição nº <b>{{$vacation->id}}</b></td>
 					<td class="no-border" style="width: 100%">Data ___/____/_____</td>
 				</tr>
 			</table>
@@ -88,7 +91,7 @@
 					</td>
 					<td class="no-border">Área/Departamento: </td>
 					<td style="width: 100%;" class="no-border border-b">
-						Administrativo
+						{{$employee->department}}
 					</td>
 				</tr>
 			</table>
@@ -117,15 +120,18 @@
 			<tr>
 				<td class="no-border">
 					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
+						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">
+						{{$vacation->spent_days}}</div>
 				</td>
 				<td class="no-border">
 					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
+						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">
+						{{$vacation->desired_days}}</div>
 				</td>
 				<td class="no-border">
 					<div class="border"
-						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">0</div>
+						style="margin: 8px 0; padding:0 4px; background: #f0f0f0; display: inline-block; width:50px">
+						{{$vacation->missing_days}}</div>
 				</td>
 			</tr>
 		</table>
@@ -142,8 +148,8 @@
 		<br>
 		<table cellspacing="0">
 			<tr>
-				<td class="no-border">Férias paga [x]</td>
-				<td class="no-border">Férias não paga [ ]</td>
+				<td class="no-border">Férias paga {{$vacation->paid_vacation ? '[X]': '[ ]'}}</td>
+				<td class="no-border">Férias não paga {{$vacation->paid_vacation ? '[ ]': '[X]'}}</td>
 			</tr>
 		</table>
 		<br>

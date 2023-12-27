@@ -35,6 +35,7 @@ class UserResource extends JsonResource
 			'province_id' => $this->province_id,
 			'municipality_id' => $this->municipality_id,
 			'address' => $this->address,
+			'department' => $this->department,
 			'position' => $this->position,
 			'base_salary' => $this->base_salary,
 			'meal_allowance' => $this->meal_allowance,
