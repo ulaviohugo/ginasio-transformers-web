@@ -35,6 +35,7 @@ class UserCreateService
 			'province_id' => $request->province_id,
 			'municipality_id' => $request->municipality_id,
 			'address' => $request->address,
+			'department' => $request->department,
 			'position' => $request->position,
 			'base_salary' => $request->base_salary,
 			'meal_allowance' => $request->meal_allowance,

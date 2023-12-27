@@ -33,6 +33,7 @@ return new class extends Migration
 			$table->unsignedBigInteger('province_id')->nullable();
 			$table->unsignedBigInteger('municipality_id')->nullable();
 			$table->string('address', 150);
+			$table->string('department', 50);
 			$table->string('position', 50);
 			$table->double('base_salary', 16, 3)->nullable();
 			$table->double('meal_allowance', 16, 3)->nullable();

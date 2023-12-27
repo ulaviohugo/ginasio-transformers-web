@@ -340,6 +340,15 @@ export function EmployeeEditor({
 							<fieldset className="grid grid-cols-4 gap-1">
 								<legend>Dados profissionais</legend>
 								<Select
+									id="department"
+									name="department"
+									value={formData?.department || ''}
+									label="Departamento"
+									data={[{ text: 'Administrativo' }, { text: 'Operações' }]}
+									defaultText="Selecione"
+									onChange={handleInputChange}
+								/>
+								<Select
 									id="position"
 									name="position"
 									value={formData?.position || ''}

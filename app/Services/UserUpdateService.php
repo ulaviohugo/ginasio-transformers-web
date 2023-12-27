@@ -38,6 +38,7 @@ class UserUpdateService
 		$user->province_id = $request->province_id;
 		$user->municipality_id = $request->municipality_id;
 		$user->address = $request->address;
+		$user->department = $request->department;
 		$user->position = $request->position;
 		$user->base_salary = $request->base_salary;
 

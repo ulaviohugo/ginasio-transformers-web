@@ -69,6 +69,7 @@ class UserUpdateRequest extends GlobalFormRequest
 				Rule::exists(Municipality::class, 'id'),
 			],
 			'address' => 'required',
+			'department' => 'required',
 			'position' => 'required',
 			'base_salary' => 'required|numeric|gt:0',
 			'hire_date' => 'required|date',

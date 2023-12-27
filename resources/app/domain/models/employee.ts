@@ -25,6 +25,7 @@ export interface EmployeeModel {
 	province_id?: number
 	municipality_id?: number
 	address: string
+	department: string
 	position: string
 	base_salary: number
 	meal_allowance?: number
