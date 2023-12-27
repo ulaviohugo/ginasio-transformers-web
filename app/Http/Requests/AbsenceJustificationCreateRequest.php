@@ -28,7 +28,8 @@ class AbsenceJustificationCreateRequest extends GlobalFormRequest
 				'required', 'gt:0', 'exists:' . User::class . ',id',
 				Rule::unique(AbsenceJustification::class)->where(function ($query) {
 					$query->whereDate('starts_at', date('Y-m-d', strtotime(request('starts_at'))))
-						->whereDate('ends_at', date('Y-m-d', strtotime(request('ends_at'))));
+						->whereDate('ends_at', date('Y-m-d', strtotime(request('ends_at'))))
+						->where('absence_reason', request('absence_reason'));
 				})
 			],
 			'absence_reason' => 'required|string',
@@ -42,6 +43,6 @@ class AbsenceJustificationCreateRequest extends GlobalFormRequest
 		$employee = User::find(request('employee_id'));
 		$treatment = $employee?->gender == 'Masculino' ? 'O' : ($employee?->gender == 'Feminino' ? 'A' : 'O(a)');
 		$treatmentLower = strtolower($treatment);
-		return ['employee_id.unique' => "$treatment funcionári{$treatmentLower} $employee?->name já tem férias marcada para esta data"];
+		return ['employee_id.unique' => "$treatment funcionári{$treatmentLower} $employee?->name já tem justificativo de falta para esta data"];
 	}
 }
