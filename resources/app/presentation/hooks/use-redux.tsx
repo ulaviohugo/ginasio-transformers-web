@@ -3,6 +3,7 @@ import { RootState } from '@/presentation/redux'
 export const useAbsenceJustifications = () => (state: RootState) =>
 	state.absenceJustifications.absenceJustifications
 export const useAdmissions = () => (state: RootState) => state.admissions.admissions
+export const useAthletes = () => (state: RootState) => state.athletes.athletes
 export const useAuth = () => (state: RootState) => state.auth.auth
 export const useCategories = () => (state: RootState) => state.categories.categories
 export const useCustomers = () => (state: RootState) => state.customers.customers

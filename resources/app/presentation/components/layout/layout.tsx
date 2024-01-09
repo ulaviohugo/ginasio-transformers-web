@@ -6,9 +6,11 @@ type LayoutProps = {
 	title?: string
 }
 
-export function Layout({ children, title = 'Sistema WO' }: LayoutProps) {
+export function Layout({ children, title = 'Ginásio Transformers' }: LayoutProps) {
 	useEffect(() => {
-		document.title = `${title !== 'Sistema WO' ? `${title} - ` : ''}Sistema WO`
+		document.title = `${
+			title !== 'Ginásio Transformers' ? `${title} - ` : ''
+		}Ginásio Transformers`
 	}, [title])
 	return (
 		<div className="flex">

@@ -1,4 +1,5 @@
 import React, { ImgHTMLAttributes } from 'react'
+import { GiMuscleFat } from 'react-icons/gi'
 
 type LogoProps = ImgHTMLAttributes<HTMLImageElement>
 
@@ -9,5 +10,5 @@ export function Logo({
 	height = 100,
 	...props
 }: LogoProps) {
-	return <img src={src} width={width} height={height} alt={alt} {...props} />
+	return <GiMuscleFat size={64} className="text-white" />
 }

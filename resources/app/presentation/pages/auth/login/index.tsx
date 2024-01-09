@@ -3,7 +3,7 @@ import { FormLogin, Logo } from '@/presentation/components'
 
 export function Login() {
 	useEffect(() => {
-		document.title = 'Login - Sistema WO'
+		document.title = 'Login - Ginásio Transformers'
 	}, [])
 
 	return (

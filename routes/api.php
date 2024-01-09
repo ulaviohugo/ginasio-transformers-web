@@ -5,6 +5,7 @@ use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AbsenceJustificationController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
@@ -50,6 +51,7 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::post('/refresh-token', [AuthController::class, 'refresh']);
 
 	Route::apiResource('accessories', AccessoryController::class);
+	Route::apiResource('athletes', AthleteController::class);
 
 	Route::get('categories/count', [CategoryController::class, 'count']);
 	Route::apiResource('categories', CategoryController::class);

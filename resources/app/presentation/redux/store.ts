@@ -28,13 +28,15 @@ import {
 	worksStatementReducer,
 	admissionReducer,
 	absenceJustificationReducer,
-	refundsReducer
+	refundsReducer,
+	athleteReducer
 } from './reducers'
 
 export const store = configureStore({
 	reducer: {
 		absenceJustifications: absenceJustificationReducer,
 		admissions: admissionReducer,
+		athletes: athleteReducer,
 		auth: authReducer,
 		categories: categoryReducer,
 		customers: customerReducer,

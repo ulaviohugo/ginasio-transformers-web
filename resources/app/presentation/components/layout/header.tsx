@@ -31,6 +31,12 @@ export function Header() {
 				<ul className="flex flex-col">
 					<Item active={path == '/'} link={'/'} text="Dashboard" icon={IconHome} />
 					<Item
+						active={path.indexOf('/atleta') >= 0}
+						link={MenuUtils.FRONT.ATHLETES}
+						text="Atletas"
+						icon={IconUser}
+					/>
+					<Item
 						active={path.indexOf('/comercial') >= 0}
 						link={MenuUtils.FRONT.STORE_SALES}
 						text="Comercial"

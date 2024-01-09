@@ -1,5 +1,6 @@
 export * from './absence-justification-slice'
 export * from './admission-slice'
+export * from './athlete-slice'
 export * from './auth-slice'
 export * from './categories-slice'
 export * from './customers-slice'

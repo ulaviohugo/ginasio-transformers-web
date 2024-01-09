@@ -1,3 +1,4 @@
+export * from './athletes'
 export * from './auth'
 export * from './comercial'
 export * from './home'

@@ -7,6 +7,7 @@ class DBHelper
 	const TB_ACCESSORIES = 'tb_accessories';
 	const TB_ADMISSIONS = 'tb_admissions';
 	const TB_ABSENCE_JUSTIFICATIONS = 'tb_absence_justifications';
+	const TB_ATHLETE = 'tb_athletes';
 	const TB_CASH_REGISTERS = 'tb_cash_registers';
 	const TB_CATEGORIES = 'tb_categories';
 	const TB_COUNTRIES = 'tb_countries';
@@ -36,6 +37,7 @@ class DBHelper
 	const TB_SUPPLIERS = 'tb_suppliers';
 	const TB_SUPPLIER_PRODUCTS = 'tb_supplier_products';
 	const TB_TRANSACTIONS = 'tb_transactions';
+	const TB_TUITION_FEES = 'tb_tuition_fees';
 	const TB_USERS = 'tb_users';
 	const TB_VACATIONS = 'tb_vacations';
 	const TB_WORK_STATEMENTS = 'tb_work_statements';

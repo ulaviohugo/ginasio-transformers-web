@@ -6,6 +6,7 @@ type RoleProps = {
 export class MenuUtils {
 	static readonly FRONT = {
 		HOME: '/',
+		ATHLETES: '/atletas',
 		LOGIN: '/login',
 		BILLING: '/comercial/factura',
 		CASH_REGISTER: '/comercial/caixa',

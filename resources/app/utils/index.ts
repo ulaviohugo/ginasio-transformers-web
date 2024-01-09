@@ -1,5 +1,6 @@
 export * from './array-utils'
 export * from './color-utils'
+export * from './data-utils'
 export * from './date-utils'
 export * from './document-utils'
 export * from './file-utils'

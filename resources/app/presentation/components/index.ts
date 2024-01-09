@@ -1,4 +1,5 @@
 export * from './admin-docs'
+export * from './athlete'
 export * from './auth'
 export * from './cards'
 export * from './cash-register'
