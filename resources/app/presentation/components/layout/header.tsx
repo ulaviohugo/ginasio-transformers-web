@@ -38,8 +38,8 @@ export function Header() {
 					/>
 					<Item
 						active={path.indexOf('/comercial') >= 0}
-						link={MenuUtils.FRONT.STORE_SALES}
-						text="Comercial"
+						link={MenuUtils.FRONT.CASH_REGISTER}
+						text="Caixa"
 						icon={IconProduct}
 					/>
 					{/* <Item

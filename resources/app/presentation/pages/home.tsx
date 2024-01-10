@@ -1,25 +1,7 @@
 import React from 'react'
-import {
-	IconCategory,
-	IconCurrency,
-	IconCustomer,
-	IconProduct,
-	IconSupplier,
-	IconUser,
-	Layout,
-	LayoutBody,
-	Spinner
-} from '@/presentation/components'
+import { IconUser, Layout, LayoutBody, Spinner } from '@/presentation/components'
 import { ElementType, useEffect, useState } from 'react'
-import {
-	makeRemoteCountCategories,
-	makeRemoteCountCustomers,
-	makeRemoteCountEmployees,
-	makeRemoteCountProduct,
-	makeRemoteCountStocks,
-	makeRemoteCountSales,
-	makeRemoteCountSuppliers
-} from '@/main/factories/usecases'
+import { makeRemoteCountEmployees } from '@/main/factories/usecases'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
@@ -41,24 +23,6 @@ export function Home() {
 
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
-
-	const [categories, setCategories] = useState(0)
-	const [isLoadingCategories, setIsLoadingCategories] = useState(true)
-
-	const [products, setProducts] = useState(0)
-	const [isLoadingProducts, setIsLoadingProducts] = useState(true)
-
-	const [suppliers, setSuppliers] = useState(0)
-	const [isLoadingSuppliers, setIsLoadingSuppliers] = useState(true)
-
-	const [customers, setCustomers] = useState(0)
-	const [isLoadingCustomers, setIsLoadingCustomers] = useState(true)
-
-	const [purchases, setStocks] = useState(0)
-	const [isLoadingStocks, setIsLoadingStocks] = useState(true)
-
-	const [sales, setSales] = useState(0)
-	const [isLoadingSales, setIsLoadingSales] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -83,45 +47,6 @@ export function Home() {
 					setIsLoadingEmployees(false)
 				})
 		}
-		{
-			isAdmin &&
-				fetchCount(makeRemoteCountCategories(), (response) => {
-					setCategories(response)
-					setIsLoadingCategories(false)
-				})
-		}
-		{
-			isAdmin &&
-				fetchCount(makeRemoteCountProduct(), (response) => {
-					setProducts(response)
-					setIsLoadingProducts(false)
-				})
-		}
-		{
-			isAdmin &&
-				fetchCount(makeRemoteCountSuppliers(), (response) => {
-					setSuppliers(response)
-					setIsLoadingSuppliers(false)
-				})
-		}
-		{
-			isAdmin &&
-				fetchCount(makeRemoteCountCustomers(), (response) => {
-					setCustomers(response)
-					setIsLoadingCustomers(false)
-				})
-		}
-		{
-			isAdmin &&
-				fetchCount(makeRemoteCountStocks(), (response) => {
-					setStocks(response)
-					setIsLoadingStocks(false)
-				})
-		}
-		fetchCount(makeRemoteCountSales(), (response) => {
-			setSales(response)
-			setIsLoadingSales(false)
-		})
 	}, [])
 
 	return (
@@ -137,64 +62,6 @@ export function Home() {
 							href={MenuUtils.FRONT.EMPLOYEES}
 						/>
 					)}
-					{isAdmin && (
-						<Item
-							number={categories}
-							title={'Categorias'}
-							icon={IconCategory}
-							isLoading={isLoadingCategories}
-							href={MenuUtils.FRONT.CATEGORIES}
-							className="bg-gray-400 bg-opacity-80 hover:bg-opacity-100"
-						/>
-					)}
-					{isAdmin && (
-						<Item
-							number={products}
-							title={'Produtos'}
-							icon={IconProduct}
-							isLoading={isLoadingProducts}
-							href={MenuUtils.FRONT.PRODUCTS}
-							className="bg-blue-400 bg-opacity-80 hover:bg-opacity-100"
-						/>
-					)}
-					{isAdmin && (
-						<Item
-							number={suppliers}
-							title={'Fornecedores'}
-							icon={IconSupplier}
-							isLoading={isLoadingSuppliers}
-							href={MenuUtils.FRONT.SUPPLIERS}
-							className="bg-red-400 bg-opacity-80 hover:bg-opacity-100"
-						/>
-					)}
-					{isAdmin && (
-						<Item
-							number={customers}
-							title={'Clientes'}
-							icon={IconCustomer}
-							isLoading={isLoadingCustomers}
-							href={MenuUtils.FRONT.CUSTOMERS}
-							className="bg-orange-400 bg-opacity-80 hover:bg-opacity-100"
-						/>
-					)}
-					{isAdmin && (
-						<Item
-							number={purchases}
-							title={'Estoque'}
-							icon={IconProduct}
-							isLoading={isLoadingStocks}
-							href={MenuUtils.FRONT.STORE_STOCK}
-							className="bg-yellow-400 bg-opacity-80 hover:bg-opacity-100"
-						/>
-					)}
-					<Item
-						number={sales}
-						title={'Vendas'}
-						icon={IconCurrency}
-						isLoading={isLoadingSales}
-						href={MenuUtils.FRONT.STORE_SALES}
-						className="bg-green-400 bg-opacity-80 hover:bg-opacity-100"
-					/>
 				</div>
 			</LayoutBody>
 		</Layout>

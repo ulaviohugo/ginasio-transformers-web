@@ -23,16 +23,7 @@ class DatabaseSeeder extends Seeder
 			CountrySeeder::class,
 			ProvinceSeeder::class,
 			MunicipalitySeeder::class,
-			CategorySeeder::class,
-			ProductSeeder::class,
-			CustomerSeeder::class,
 			UserSeeder::class,
-
-			//Production
-			AccessorySeeder::class,
-			FabricSeeder::class,
-			ProductionCategorySeeder::class,
-			ProductionProductSeeder::class,
 		]);
 	}
 }

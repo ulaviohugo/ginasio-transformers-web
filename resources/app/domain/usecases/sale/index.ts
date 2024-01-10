@@ -1,5 +1,0 @@
-export * from './add-sale'
-export * from './count-sale'
-export * from './delete-sale'
-export * from './load-sales'
-export * from './update-sale'

@@ -1,5 +1,0 @@
-export * from './remote-add-stock-factory'
-export * from './remote-count-stocks-factory'
-export * from './remote-delete-stock-factory'
-export * from './remote-load-stocks-factory'
-export * from './remote-update-stock-factory'

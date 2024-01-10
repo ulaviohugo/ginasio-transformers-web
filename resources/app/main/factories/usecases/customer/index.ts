@@ -1,5 +1,0 @@
-export * from './remote-add-customer-factory'
-export * from './remote-count-customer-factory'
-export * from './remote-delete-customer-factory'
-export * from './remote-load-customers-factory'
-export * from './remote-update-customer-factory'

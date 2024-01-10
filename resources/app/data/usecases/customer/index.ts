@@ -1,5 +1,0 @@
-export * from './remote-add-customer'
-export * from './remote-count-customer'
-export * from './remote-delete-customer'
-export * from './remote-load-customer'
-export * from './remote-update-customer'

@@ -1,5 +1,0 @@
-export * from './remote-add-sale'
-export * from './remote-count-sale'
-export * from './remote-delete-sale'
-export * from './remote-load-sale'
-export * from './remote-update-sale'

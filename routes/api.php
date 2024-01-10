@@ -2,35 +2,13 @@
 
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
-use App\Http\Controllers\AbsenceJustificationController;
-use App\Http\Controllers\AccessoryController;
-use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\EmployeePresenceController;
-use App\Http\Controllers\FabricController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductionBudgetController;
-use App\Http\Controllers\ProductionCategoryController;
-use App\Http\Controllers\ProductionProductController;
-use App\Http\Controllers\ProductionSaleController;
-use App\Http\Controllers\ProductionStockController;
-use App\Http\Controllers\ProductionSupplierController;
-use App\Http\Controllers\ProductSaleController;
-use App\Http\Controllers\RefundController;
-use App\Http\Controllers\SalaryReceiptController;
-use App\Http\Controllers\SaleController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WorkStatementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,53 +28,19 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::get('/me', [AuthController::class, 'me']);
 	Route::post('/refresh-token', [AuthController::class, 'refresh']);
 
-	Route::apiResource('accessories', AccessoryController::class);
 	Route::apiResource('athletes', AthleteController::class);
 
-	Route::get('categories/count', [CategoryController::class, 'count']);
-	Route::apiResource('categories', CategoryController::class);
 
 	Route::prefix('cash-register')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);
 	});
 
-	Route::get('customers/count', [CustomerController::class, 'count']);
-	Route::apiResource('customers', CustomerController::class);
 
 	Route::get('employees/count', [UserController::class, 'count']);
 	Route::apiResource('employees', UserController::class);
 
-	Route::apiResource('employee-presences', EmployeePresenceController::class);
-
-	Route::apiResource('fabrics', FabricController::class);
-
-	// Route::apiResource('insureds', InsuredController::class);
-
-	Route::apiResource('notifications', NotificationController::class);
-
-	Route::apiResource('production-budgets', ProductionBudgetController::class);
-	Route::apiResource('production-categories', ProductionCategoryController::class);
-	Route::apiResource('production-products', ProductionProductController::class);
-	Route::apiResource('production-sales', ProductionSaleController::class);
-	Route::apiResource('production-stocks', ProductionStockController::class);
-	Route::apiResource('production-suppliers', ProductionSupplierController::class);
-
-	Route::get('products/count', [ProductController::class, 'count']);
-	Route::apiResource('products', ProductController::class);
-
 	Route::get('locations', [LocationController::class, 'index']);
-
-	Route::apiResource('product-sales', ProductSaleController::class);
-
-	Route::get('sales/count', [SaleController::class, 'count']);
-	Route::apiResource('sales', SaleController::class);
-
-	Route::get('stocks/count', [StockController::class, 'count']);
-	Route::apiResource('stocks', StockController::class);
-
-	Route::get('suppliers/count', [SupplierController::class, 'count']);
-	Route::apiResource('suppliers', SupplierController::class);
 
 	Route::apiResource('transactions', TransactionController::class);
 
@@ -108,13 +52,6 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('sale', [GraphController::class, 'sale']);
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
-
-	// Admin documents
-	Route::apiResource('absence-justifications', AbsenceJustificationController::class);
-	Route::apiResource('admissions', AdmissionController::class);
-	Route::apiResource('refunds', RefundController::class);
-	Route::apiResource('salary-receipts', SalaryReceiptController::class);
-	Route::apiResource('work-statements', WorkStatementController::class);
 });
 
 Route::any('/{path}', function () {

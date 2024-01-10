@@ -1,5 +1,3 @@
-import { EmployeePresenceModel } from '.'
-
 export interface EmployeeModel {
 	id: number
 	photo?: string
@@ -41,6 +39,4 @@ export interface EmployeeModel {
 	user_id?: number
 	updated_at?: Date
 	user_id_update?: number
-
-	employee_presences: EmployeePresenceModel[]
 }

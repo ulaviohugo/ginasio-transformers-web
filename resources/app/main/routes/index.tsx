@@ -1,37 +1,8 @@
 import React from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
-import {
-	CashRegister,
-	Categories,
-	Comercial,
-	Customers,
-	Home,
-	Login,
-	NotFound,
-	Products,
-	Sales,
-	Stock,
-	Suppliers,
-	EmployeePresence,
-	HumanResource,
-	Employees,
-	EmployeeSalaryReceipt,
-	ProductionBudgets,
-	Notifications,
-	Store,
-	Production,
-	ProductionStock,
-	ProductionSales,
-	AdminDocuments,
-	WorkStatement
-} from '@/presentation/pages'
+import { CashRegister, Home, Login, NotFound, Employees } from '@/presentation/pages'
 import { MenuUtils } from '@/utils'
-import {
-	MakeAbsenceJustification,
-	MakeAdmission,
-	MakeAthlete,
-	MakeRefund
-} from '../factories/pages'
+import { MakeAthlete } from '../factories/pages'
 
 export function AppRoutes() {
 	const menu = MenuUtils.FRONT
@@ -42,33 +13,8 @@ export function AppRoutes() {
 
 				<Route path={menu.HOME} element={<Home />} />
 				<Route path={menu.ATHLETES} element={<MakeAthlete />} />
-				<Route path={menu.COMERCIAL} element={<Comercial />} />
-				<Route path={menu.HR} element={<HumanResource />} />
 				<Route path={menu.EMPLOYEES} element={<Employees />} />
-				<Route path={menu.EMPLOYEE_PRESENCES} element={<EmployeePresence />} />
-				<Route path={menu.EMPLOYEE_SALARY_RECEIPT} element={<EmployeeSalaryReceipt />} />
-				<Route path={menu.CUSTOMERS} element={<Customers />} />
-				<Route path={menu.ADMIN_DOCS} element={<AdminDocuments />} />
-				<Route path={menu.ADMIN_DOC_DECLARACAO} element={<WorkStatement />} />
-				<Route
-					path={menu.ADMIN_DOC_JUSTIFICATIVO}
-					element={<MakeAbsenceJustification />}
-				/>
-				<Route path={menu.ADMIN_DOC_REEMBOLSO} element={<MakeRefund />} />
-				<Route path={menu.ADMIN_DOC_REQUISICAO_FERIA} element={<WorkStatement />} />
-				<Route path={menu.ADMIN_DOC_ADMISSAO} element={<MakeAdmission />} />
-				<Route path={menu.STORE} element={<Store />} />
-				<Route path={menu.STORE_STOCK} element={<Stock />} />
-				<Route path={menu.STORE_SALES} element={<Sales />} />
-				<Route path={menu.CATEGORIES} element={<Categories />} />
 				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
-				<Route path={menu.SUPPLIERS} element={<Suppliers />} />
-				<Route path={menu.PRODUCTS} element={<Products />} />
-				<Route path={menu.PRODUCTION_BUDGETS} element={<ProductionBudgets />} />
-				<Route path={menu.PRODUCTION} element={<Production />} />
-				<Route path={menu.PRODUCTION_STOCK} element={<ProductionStock />} />
-				<Route path={menu.PRODUCTION_SALES} element={<ProductionSales />} />
-				<Route path={menu.NOTIFICATION} element={<Notifications />} />
 				<Route path={'/*'} element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

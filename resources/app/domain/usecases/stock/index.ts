@@ -1,5 +1,0 @@
-export * from './add-stock'
-export * from './count-stock'
-export * from './delete-stock'
-export * from './load-stocks'
-export * from './update-stock'
