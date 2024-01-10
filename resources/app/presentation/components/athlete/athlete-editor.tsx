@@ -231,7 +231,7 @@ export function AthleteEditor({
 							/>
 						</fieldset>
 					</div>
-					<fieldset className="grid grid-cols-4 items-start gap-4">
+					<fieldset className="grid grid-cols-5 items-start gap-4">
 						<legend>Endereço</legend>
 						<Select
 							name="country_id"
@@ -257,12 +257,14 @@ export function AthleteEditor({
 							value={formData?.municipality_id || ''}
 							onChange={handleChangeInput}
 						/>
-						<Input
-							name="address"
-							label="Endereço"
-							value={formData?.address || ''}
-							onChange={handleChangeInput}
-						/>
+						<div className="col-span-2">
+							<Input
+								name="address"
+								label="Endereço"
+								value={formData?.address || ''}
+								onChange={handleChangeInput}
+							/>
+						</div>
 					</fieldset>
 				</div>
 				<div className="flex flex-col gap-2">

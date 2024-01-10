@@ -9,14 +9,12 @@ import {
 import {
 	Layout,
 	LayoutBody,
-	SubMenu,
 	AthleteEditor,
 	AthleteList,
 	ModalDelete
 } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks'
 import { removeAthleteStore } from '@/presentation/redux'
-import { MenuUtils } from '@/utils'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -52,7 +50,7 @@ export function Athletes({
 		try {
 			await deleteAthlete.delete(selectedAthlete.id)
 
-			toast.success('Formulário de admissão excluído com sucesso')
+			toast.success('Atleta excluído com sucesso')
 			setShowFormDelete(false)
 			dispatch(removeAthleteStore(selectedAthlete?.id))
 			setSelectedAthlete({} as any)
@@ -66,8 +64,8 @@ export function Athletes({
 			{showFormDelete && (
 				<ModalDelete
 					entity="recibo"
-					description={`Deseja realmente excluir o formulário de admissão de
-					${selectedAthlete?.employee?.name}?`}
+					description={`Deseja realmente excluir o atleta
+					${selectedAthlete?.name}?`}
 					show={showFormDelete}
 					onClose={() => setShowFormDelete(false)}
 					onSubmit={handleDelete}
