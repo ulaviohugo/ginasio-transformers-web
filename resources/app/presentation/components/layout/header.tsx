@@ -50,9 +50,9 @@ export function Header() {
 					/> */}
 					{isAdmin && (
 						<Item
-							active={path.indexOf('/rh') >= 0}
-							link={'/rh'}
-							text="RH"
+							active={path.indexOf('/funcionarios') >= 0}
+							link={MenuUtils.FRONT.EMPLOYEES}
+							text="Funcionários"
 							icon={IconUser}
 						/>
 					)}

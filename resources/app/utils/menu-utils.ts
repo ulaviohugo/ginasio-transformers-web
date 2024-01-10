@@ -24,7 +24,7 @@ export class MenuUtils {
 		STORE_SALES: '/comercial/loja/vendas',
 		SUPPLIERS: '/comercial/fornecedores',
 
-		EMPLOYEES: '/rh/funcionarios',
+		EMPLOYEES: '/funcionarios',
 		EMPLOYEE_PRESENCES: '/rh/presenca',
 		EMPLOYEE_SALARY_RECEIPT: '/rh/folha-salarial',
 
