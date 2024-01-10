@@ -1,11 +1,11 @@
 import { AthleteModel } from '@/domain/models'
 import { AddAthlete, LoadEmployees, UpdateAthlete } from '@/domain/usecases'
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Select } from '../form-controls'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls'
 import { IconCheck, IconClose, IconEdit, IconTrash } from '../icons'
 import { PdfViewer } from '../pdf-viewer'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEmployees } from '@/presentation/hooks'
+import { useEmployees, useLocations } from '@/presentation/hooks'
 import toast from 'react-hot-toast'
 import {
 	addAthleteStore,
@@ -31,10 +31,26 @@ export function AthleteEditor({
 }: AthleteEditorProps) {
 	const dispatch = useDispatch()
 
-	const [formData, setFormData] = useState<AthleteModel>({} as any)
+	const [formData, setFormData] = useState<AthleteModel>({
+		status: 'active'
+	} as AthleteModel)
 	const [pdfUrl, setPdfUrl] = useState('')
 
 	const employees = useSelector(useEmployees())
+
+	const { countries, provinces, municipalities } = useSelector(useLocations())
+
+	const provinceList = useMemo(() => {
+		return formData.country_id
+			? provinces.filter((province) => province.country_id == formData.country_id)
+			: provinces
+	}, [formData.country_id, provinces])
+
+	const municipalityList = useMemo(() => {
+		return formData.province_id
+			? municipalities.filter((province) => province.province_id == formData.province_id)
+			: []
+	}, [formData.province_id, municipalities])
 
 	useEffect(() => {
 		if (data?.id) {
@@ -53,7 +69,15 @@ export function AthleteEditor({
 
 	const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
+		let data = { ...formData, [name]: value }
+
+		if (name == 'country_id') {
+			data = { ...data, province_id: undefined, municipality_id: undefined }
+		}
+		if (name == 'province_id') {
+			data = { ...data, municipality_id: undefined }
+		}
+		setFormData(data)
 	}
 
 	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
@@ -83,14 +107,20 @@ export function AthleteEditor({
 		setFormData({} as any)
 	}
 	return (
-		<fieldset>
-			<legend>Novo formulário de atleta</legend>
+		<fieldset className="p-4">
+			<legend>Novo atleta</legend>
 			<PdfViewer pdfUrl={pdfUrl} onClose={() => setPdfUrl('')} />
 
 			<div className="flex gap-2">
 				<div className="flex-1 flex flex-col gap-2">
-					<div className="grid grid-cols-4 items-start">
-						<Input name="name" label="Nome" value={formData?.name || ''} />
+					<fieldset className="grid grid-cols-4 items-start gap-4">
+						<legend>Dados Pessoais</legend>
+						<Input
+							name="name"
+							label="Nome"
+							value={formData?.name || ''}
+							onChange={handleChangeInput}
+						/>
 						<Select
 							name="gender"
 							label="Género"
@@ -106,6 +136,7 @@ export function AthleteEditor({
 							type="date"
 							label="Data Nascimento"
 							value={(formData?.date_of_birth as any) || ''}
+							onChange={handleChangeInput}
 						/>
 						<Select
 							name="marital_status"
@@ -115,7 +146,124 @@ export function AthleteEditor({
 							value={formData?.marital_status || ''}
 							onChange={handleChangeInput}
 						/>
+						<Select
+							name="document_type"
+							label="Documento"
+							data={DataUtils.docs.map((text) => ({ text }))}
+							defaultText="Selecione"
+							value={formData?.document_type || ''}
+							onChange={handleChangeInput}
+						/>
+						<Input
+							name="document_number"
+							label="Nº Documento"
+							value={formData?.document_number || ''}
+							disabled={!formData.document_type}
+							title={
+								!formData.document_type
+									? 'Selecione o tipo de documento para habilitar este campo'
+									: ''
+							}
+							onChange={handleChangeInput}
+						/>
+						<Select
+							name="education_degree"
+							label="Nível académico"
+							data={DataUtils.educationDegrees.map((text) => ({ text }))}
+							defaultText="Selecione"
+							value={formData?.education_degree || ''}
+							onChange={handleChangeInput}
+						/>
+						<Select
+							name="status"
+							label="Estado"
+							data={[
+								{ text: 'Activo', value: 'active' },
+								{ text: 'Inactivo', value: 'inactive' }
+							].map((text) => text)}
+							defaultText="Selecione"
+							value={formData?.status || ''}
+							onChange={handleChangeInput}
+						/>
+					</fieldset>
+					<div className="grid xl:grid-cols-2 gap-4">
+						<fieldset className="grid grid-cols-3 items-start gap-4">
+							<legend>Contactos</legend>
+
+							<InputPhone
+								name="phone"
+								label="Telefone"
+								value={formData?.phone || ''}
+								onChange={handleChangeInput}
+							/>
+							<InputPhone
+								name="phone2"
+								label="Telefone Alternativo"
+								value={formData?.phone2 || ''}
+								onChange={handleChangeInput}
+							/>
+							<Input
+								name="email"
+								label="E-mail"
+								value={formData?.email || ''}
+								onChange={handleChangeInput}
+							/>
+						</fieldset>
+						<fieldset className="grid grid-cols-3 items-start gap-4">
+							<legend>Peso (KG)</legend>
+							<InputNumber
+								name="starting_weight"
+								label="Peso Inicial"
+								value={formData?.starting_weight || ''}
+								onChange={handleChangeInput}
+							/>
+							<InputNumber
+								name="current_weight"
+								label="Peso Actual"
+								value={formData?.current_weight || ''}
+								onChange={handleChangeInput}
+							/>
+							<InputNumber
+								name="goal_weight"
+								label="Peso Meta"
+								value={formData?.goal_weight || ''}
+								onChange={handleChangeInput}
+							/>
+						</fieldset>
 					</div>
+					<fieldset className="grid grid-cols-4 items-start gap-4">
+						<legend>Endereço</legend>
+						<Select
+							name="country_id"
+							label="País"
+							data={countries.map(({ id, name }) => ({ text: name, value: id }))}
+							defaultText="Selecione"
+							value={formData?.country_id || ''}
+							onChange={handleChangeInput}
+						/>
+						<Select
+							name="province_id"
+							label="Província"
+							data={provinceList.map(({ id, name }) => ({ text: name, value: id }))}
+							defaultText="Selecione"
+							value={formData?.province_id || ''}
+							onChange={handleChangeInput}
+						/>
+						<Select
+							name="municipality_id"
+							label="Município"
+							data={municipalityList.map(({ id, name }) => ({ text: name, value: id }))}
+							defaultText="Selecione"
+							value={formData?.municipality_id || ''}
+							onChange={handleChangeInput}
+						/>
+						<Input
+							name="address"
+							label="Endereço"
+							value={formData?.address || ''}
+							onChange={handleChangeInput}
+						/>
+					</fieldset>
 				</div>
 				<div className="flex flex-col gap-2">
 					<Button

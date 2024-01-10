@@ -11,7 +11,7 @@ import {
 import {
 	ArrayUtils,
 	DateUtils,
-	DocumentUtils,
+	DataUtils,
 	LabelUtils,
 	MunicipalityProps,
 	NumberUtils,
@@ -219,7 +219,7 @@ export function PolicyholderEditor({
 								id="document_type"
 								value={formData?.document_type || ''}
 								label={LabelUtils.translateField('document_type')}
-								data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
+								data={DataUtils.docs.map((doc) => ({ text: doc }))}
 								defaultText="Selecione"
 								onChange={handleChange}
 							/>

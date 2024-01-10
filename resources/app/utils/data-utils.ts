@@ -5,4 +5,13 @@ export class DataUtils {
 		{ text: 'Divorciado(a)' },
 		{ text: 'Viúvo(a)' }
 	]
+
+	static docs = ['Bilhete de identidade', 'Passaporte', 'Cartão de residência']
+
+	static educationDegrees = [
+		'Ensino primário',
+		'Ensino secundário',
+		'Ensino médio',
+		'Ensino superior'
+	]
 }

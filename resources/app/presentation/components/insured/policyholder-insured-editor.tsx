@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 import { IconClose, Input, InputPhone, Select } from '..'
-import { DateUtils, DocumentUtils, LabelUtils } from '@/utils'
+import { DateUtils, DataUtils, LabelUtils } from '@/utils'
 import { InsuredModel } from '@/domain/models'
 
 export type InsuredCardChangeProps = {
@@ -70,7 +70,7 @@ export function PolicyholderInsuredEditor({
 					id={`document_type-${itemIndex}`}
 					value={insured?.document_type || ''}
 					label={LabelUtils.translateField('document_type')}
-					data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
+					data={DataUtils.docs.map((doc) => ({ text: doc }))}
 					defaultText="Selecione"
 					onChange={handleInputChange}
 				/>

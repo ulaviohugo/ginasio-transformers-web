@@ -24,7 +24,7 @@ import {
 
 import {
 	DateUtils,
-	DocumentUtils,
+	DataUtils,
 	FileUtils,
 	LabelUtils,
 	MunicipalityProps,
@@ -209,7 +209,7 @@ export function EmployeeEditor({
 										name="document_type"
 										value={formData?.document_type || ''}
 										label={LabelUtils.translateField('document_type')}
-										data={DocumentUtils.docs.map((doc) => ({ text: doc }))}
+										data={DataUtils.docs.map((doc) => ({ text: doc }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
@@ -254,12 +254,7 @@ export function EmployeeEditor({
 										name="education_degree"
 										value={formData?.education_degree || ''}
 										label={LabelUtils.translateField('education_degree')}
-										data={[
-											{ text: 'Ensino primário' },
-											{ text: 'Ensino secundário' },
-											{ text: 'Ensino médio' },
-											{ text: 'Ensino superior' }
-										]}
+										data={DataUtils.educationDegrees.map((text) => ({ text }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
