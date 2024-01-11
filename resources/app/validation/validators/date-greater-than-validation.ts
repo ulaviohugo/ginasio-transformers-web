@@ -1,5 +1,5 @@
 import { Validation } from '@/infra/http/protocols'
-import { DateUtils, LabelUtils } from '@/utils'
+import { DateUtils } from '@/utils'
 
 export class DateGreaterThanValidation implements Validation {
 	constructor(
@@ -15,8 +15,8 @@ export class DateGreaterThanValidation implements Validation {
 
 		if (date1 <= date2) {
 			return new Error(
-				`O parâmetro ${LabelUtils.translateField(this.fieldName1 as any)} 
-				tem de ser maior que ${LabelUtils.translateField(this.fieldName2 as any)} `
+				`O parâmetro ${this.fieldName1} 
+				tem de ser maior que ${this.fieldName2} `
 			)
 		}
 	}

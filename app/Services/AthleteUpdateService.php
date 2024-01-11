@@ -51,9 +51,8 @@ class AthleteUpdateService
 				'user_id_update' => User::currentUserId(),
 			];
 			if ($photo) {
-				array_push($data, ['photo' => $photo]);
+				$data['photo'] = $photo;
 			}
-
 			$athlete->update($data);
 			DB::commit();
 			return $athlete;

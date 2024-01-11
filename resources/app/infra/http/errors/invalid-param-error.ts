@@ -1,8 +1,6 @@
-import { LabelUtils } from '@/utils'
-
 export class InvalidParamError extends Error {
 	constructor(paramName: string) {
-		super(`Parâmetro inválido: ${LabelUtils.translateField(paramName as any)}`)
+		super(`Parâmetro inválido: ${paramName}`)
 		this.name = 'InvalidParamError'
 	}
 }

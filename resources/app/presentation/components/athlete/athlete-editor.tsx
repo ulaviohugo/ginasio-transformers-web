@@ -12,7 +12,8 @@ import {
 	loadEmployeeStore,
 	updateAthleteStore
 } from '@/presentation/redux'
-import { DataUtils } from '@/utils'
+import { DataUtils, FileUtils } from '@/utils'
+import { ImagePreview } from '../image-preview'
 
 type AthleteEditorProps = {
 	addAthlete: AddAthlete
@@ -37,7 +38,6 @@ export function AthleteEditor({
 	const [pdfUrl, setPdfUrl] = useState('')
 
 	const employees = useSelector(useEmployees())
-
 	const { countries, provinces, municipalities } = useSelector(useLocations())
 
 	const provinceList = useMemo(() => {
@@ -52,9 +52,12 @@ export function AthleteEditor({
 			: []
 	}, [formData.province_id, municipalities])
 
+	const [photoPreview, setPhotoPreview] = useState('')
+
 	useEffect(() => {
 		if (data?.id) {
 			setFormData(data as any)
+			if (data?.photo) setPhotoPreview(data.photo)
 		}
 	}, [data])
 
@@ -67,7 +70,9 @@ export function AthleteEditor({
 		}
 	}, [])
 
-	const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+	const handleChangeInput = async (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => {
 		const { name, value } = e.target
 		let data = { ...formData, [name]: value }
 
@@ -76,6 +81,10 @@ export function AthleteEditor({
 		}
 		if (name == 'province_id') {
 			data = { ...data, municipality_id: undefined }
+		}
+		if (name == 'photo') {
+			const file = await FileUtils.toBase64((e.target as any)?.files[0])
+			data = { ...data, [name]: file }
 		}
 		setFormData(data)
 	}
@@ -106,6 +115,12 @@ export function AthleteEditor({
 	const handleClear = () => {
 		setFormData({} as any)
 	}
+
+	const clearInputFile = () => {
+		setFormData((prev) => ({ ...prev, photo: '' }))
+		setPhotoPreview('')
+	}
+
 	return (
 		<fieldset className="p-4">
 			<legend>Novo atleta</legend>
@@ -113,78 +128,85 @@ export function AthleteEditor({
 
 			<div className="flex gap-2">
 				<div className="flex-1 flex flex-col gap-2">
-					<fieldset className="grid grid-cols-4 items-start gap-4">
+					<fieldset className="flex gap-4 items-start">
 						<legend>Dados Pessoais</legend>
-						<Input
-							name="name"
-							label="Nome"
-							value={formData?.name || ''}
-							onChange={handleChangeInput}
+						<ImagePreview
+							photoPreview={photoPreview}
+							onInputFileChange={handleChangeInput}
+							clearInputFile={clearInputFile}
 						/>
-						<Select
-							name="gender"
-							label="Género"
-							data={['Masculino', 'Feminino'].map((text) => ({
-								text
-							}))}
-							defaultText="Selecione"
-							value={formData?.gender || ''}
-							onChange={handleChangeInput}
-						/>
-						<Input
-							name="date_of_birth"
-							type="date"
-							label="Data Nascimento"
-							value={(formData?.date_of_birth as any) || ''}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="marital_status"
-							label="Estado Civil"
-							data={DataUtils.maritalStatus.map((status) => status)}
-							defaultText="Selecione"
-							value={formData?.marital_status || ''}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="document_type"
-							label="Documento"
-							data={DataUtils.docs.map((text) => ({ text }))}
-							defaultText="Selecione"
-							value={formData?.document_type || ''}
-							onChange={handleChangeInput}
-						/>
-						<Input
-							name="document_number"
-							label="Nº Documento"
-							value={formData?.document_number || ''}
-							disabled={!formData.document_type}
-							title={
-								!formData.document_type
-									? 'Selecione o tipo de documento para habilitar este campo'
-									: ''
-							}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="education_degree"
-							label="Nível académico"
-							data={DataUtils.educationDegrees.map((text) => ({ text }))}
-							defaultText="Selecione"
-							value={formData?.education_degree || ''}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="status"
-							label="Estado"
-							data={[
-								{ text: 'Activo', value: 'active' },
-								{ text: 'Inactivo', value: 'inactive' }
-							].map((text) => text)}
-							defaultText="Selecione"
-							value={formData?.status || ''}
-							onChange={handleChangeInput}
-						/>
+						<div className="flex-1 grid grid-cols-4 items-start gap-4">
+							<Input
+								name="name"
+								label="Nome"
+								value={formData?.name || ''}
+								onChange={handleChangeInput}
+							/>
+							<Select
+								name="gender"
+								label="Género"
+								data={['Masculino', 'Feminino'].map((text) => ({
+									text
+								}))}
+								defaultText="Selecione"
+								value={formData?.gender || ''}
+								onChange={handleChangeInput}
+							/>
+							<Input
+								name="date_of_birth"
+								type="date"
+								label="Data Nascimento"
+								value={(formData?.date_of_birth as any) || ''}
+								onChange={handleChangeInput}
+							/>
+							<Select
+								name="marital_status"
+								label="Estado Civil"
+								data={DataUtils.maritalStatus.map((status) => status)}
+								defaultText="Selecione"
+								value={formData?.marital_status || ''}
+								onChange={handleChangeInput}
+							/>
+							<Select
+								name="document_type"
+								label="Documento"
+								data={DataUtils.docs.map((text) => ({ text }))}
+								defaultText="Selecione"
+								value={formData?.document_type || ''}
+								onChange={handleChangeInput}
+							/>
+							<Input
+								name="document_number"
+								label="Nº Documento"
+								value={formData?.document_number || ''}
+								disabled={!formData.document_type}
+								title={
+									!formData.document_type
+										? 'Selecione o tipo de documento para habilitar este campo'
+										: ''
+								}
+								onChange={handleChangeInput}
+							/>
+							<Select
+								name="education_degree"
+								label="Nível académico"
+								data={DataUtils.educationDegrees.map((text) => ({ text }))}
+								defaultText="Selecione"
+								value={formData?.education_degree || ''}
+								onChange={handleChangeInput}
+							/>
+							<Select
+								name="status"
+								label="Estado"
+								data={[
+									{ text: 'Activo', value: 'active' },
+									{ text: 'Inactivo', value: 'inactive' }
+								].map((text) => text)}
+								defaultText="Selecione"
+								value={formData?.status || ''}
+								onChange={handleChangeInput}
+							/>
+						</div>
 					</fieldset>
 					<div className="grid xl:grid-cols-2 gap-4">
 						<fieldset className="grid grid-cols-3 items-start gap-4">

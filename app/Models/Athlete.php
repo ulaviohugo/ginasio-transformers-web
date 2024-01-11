@@ -17,6 +17,7 @@ class Athlete extends Model
 
 	protected $fillable = [
 		'name',
+		'photo',
 		'date_of_birth',
 		'gender',
 		'marital_status',

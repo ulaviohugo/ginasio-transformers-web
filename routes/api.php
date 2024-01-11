@@ -8,6 +8,7 @@ use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TuitionFeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,12 +46,9 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::apiResource('transactions', TransactionController::class);
 
-	Route::prefix('graphs')->group(function () {
-		Route::post('production-stock', [GraphController::class, 'productionStock']);
-		Route::post('production-sale', [GraphController::class, 'productionSale']);
+	Route::apiResource('tuition-fees', TuitionFeeController::class);
 
-		Route::post('stock', [GraphController::class, 'stock']);
-		Route::post('sale', [GraphController::class, 'sale']);
+	Route::prefix('graphs')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
 });

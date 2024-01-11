@@ -26,7 +26,6 @@ import {
 	DateUtils,
 	DataUtils,
 	FileUtils,
-	LabelUtils,
 	MunicipalityProps,
 	ProvinceProps
 } from '@/utils'
@@ -163,7 +162,7 @@ export function EmployeeEditor({
 										id="name"
 										name="name"
 										value={formData?.name || ''}
-										label={LabelUtils.translateField('name')}
+										label={'Nome'}
 										onChange={handleInputChange}
 										autoFocus
 									/>
@@ -173,7 +172,7 @@ export function EmployeeEditor({
 										id="gender"
 										name="gender"
 										value={formData?.gender || ''}
-										label={LabelUtils.translateField('gender')}
+										label={'Género'}
 										data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
 										defaultText="Selecione"
 										onChange={handleInputChange}
@@ -187,20 +186,15 @@ export function EmployeeEditor({
 												DateUtils.getDate(formData?.date_of_birth)) ||
 											''
 										}
-										label={LabelUtils.translateField('date_of_birth')}
+										label={'Data Nascimento'}
 										onChange={handleInputChange}
 									/>
 									<Select
 										id="marital_status"
 										name="marital_status"
 										value={formData?.marital_status || ''}
-										label={LabelUtils.translateField('marital_status')}
-										data={[
-											{ text: 'Solteiro(a)' },
-											{ text: 'Casado(a)' },
-											{ text: 'Divorciado(a)' },
-											{ text: 'Viúvo(a)' }
-										]}
+										label={'Estado Civil'}
+										data={DataUtils.maritalStatus}
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
@@ -208,7 +202,7 @@ export function EmployeeEditor({
 										id="document_type"
 										name="document_type"
 										value={formData?.document_type || ''}
-										label={LabelUtils.translateField('document_type')}
+										label={'Tipo Documento'}
 										data={DataUtils.docs.map((doc) => ({ text: doc }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
@@ -218,7 +212,7 @@ export function EmployeeEditor({
 										id="document_number"
 										name="document_number"
 										value={formData?.document_number || ''}
-										label={LabelUtils.translateField('document_number')}
+										label={'Nº Documento'}
 										onChange={handleInputChange}
 										disabled={!formData?.document_type}
 										title={
@@ -230,7 +224,7 @@ export function EmployeeEditor({
 										id="nif"
 										name="nif"
 										value={formData?.nif || ''}
-										label={LabelUtils.translateField('nif')}
+										label={'NIF'}
 										onChange={handleInputChange}
 									/>
 									<Input
@@ -238,7 +232,7 @@ export function EmployeeEditor({
 										id="social_security"
 										name="social_security"
 										value={formData?.social_security || ''}
-										label={LabelUtils.translateField('social_security')}
+										label={'INSS'}
 										onChange={handleInputChange}
 									/>
 									<Input
@@ -246,14 +240,14 @@ export function EmployeeEditor({
 										id="dependents"
 										name="dependents"
 										value={formData?.dependents || ''}
-										label={LabelUtils.translateField('dependents')}
+										label={'Dependentes'}
 										onChange={handleInputChange}
 									/>
 									<Select
 										id="education_degree"
 										name="education_degree"
 										value={formData?.education_degree || ''}
-										label={LabelUtils.translateField('education_degree')}
+										label={'Nível Académico'}
 										data={DataUtils.educationDegrees.map((text) => ({ text }))}
 										defaultText="Selecione"
 										onChange={handleInputChange}
@@ -264,14 +258,14 @@ export function EmployeeEditor({
 										id="phone"
 										name="phone"
 										value={formData?.phone || ''}
-										label={LabelUtils.translateField('phone')}
+										label={'Telefone'}
 										onChange={handleInputChange}
 									/>
 									<InputPhone
 										id="phone2"
 										name="phone2"
 										value={!formData?.phone ? '' : formData?.phone2 || ''}
-										label={LabelUtils.translateField('phone2')}
+										label={'Telefone 2'}
 										onChange={handleInputChange}
 										disabled={!formData?.phone}
 									/>
@@ -279,7 +273,7 @@ export function EmployeeEditor({
 										id="email"
 										name="email"
 										value={formData?.email || ''}
-										label={LabelUtils.translateField('email')}
+										label={'E-mail'}
 										onChange={handleInputChange}
 									/>
 								</div>
@@ -288,7 +282,7 @@ export function EmployeeEditor({
 										id="country_id"
 										name="country_id"
 										value={formData?.country_id || ''}
-										label={LabelUtils.translateField('country_id')}
+										label={'País'}
 										data={countries.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -300,7 +294,7 @@ export function EmployeeEditor({
 										id="province_id"
 										name="province_id"
 										value={formData?.province_id || ''}
-										label={LabelUtils.translateField('province_id')}
+										label={'Província'}
 										data={provinceList.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -312,7 +306,7 @@ export function EmployeeEditor({
 										id="municipality_id"
 										name="municipality_id"
 										value={formData?.municipality_id || ''}
-										label={LabelUtils.translateField('municipality_id')}
+										label={'Município'}
 										data={municipalityList.map(({ name, id }) => ({
 											text: name,
 											value: id
@@ -327,7 +321,7 @@ export function EmployeeEditor({
 										id="address"
 										name="address"
 										value={formData?.address || ''}
-										label={LabelUtils.translateField('address')}
+										label={'Endereço'}
 										onChange={handleInputChange}
 									/>
 								</div>
@@ -347,12 +341,13 @@ export function EmployeeEditor({
 									id="position"
 									name="position"
 									value={formData?.position || ''}
-									label={LabelUtils.translateField('position')}
+									label={'Cargo'}
 									data={[
+										{ text: 'Director Geral' },
 										{ text: 'Assistente administrativo' },
-										{ text: 'Costureiro' },
-										{ text: 'Coordenador de operações' },
-										{ text: 'Mestre de costura' }
+										{ text: 'Secretário' },
+										{ text: 'Personal Trainer' },
+										{ text: 'Recepcionista' }
 									]}
 									defaultText="Selecione"
 									onChange={handleInputChange}
@@ -361,12 +356,10 @@ export function EmployeeEditor({
 									id="base_salary"
 									name="base_salary"
 									value={formData?.base_salary || ''}
-									label={LabelUtils.translateField('base_salary')}
+									label={'Salário Base'}
 									onChange={handleInputChange}
 									disabled={!formData?.position}
-									title={`Selecione o ${LabelUtils.translateField(
-										'position'
-									)} para habilitar este campo`}
+									title={`Selecione o cargo para habilitar este campo`}
 								/>
 								<Input
 									type="date"
@@ -375,12 +368,10 @@ export function EmployeeEditor({
 									value={
 										(formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
 									}
-									label={LabelUtils.translateField('hire_date')}
+									label={'Data Contratação'}
 									onChange={handleInputChange}
 									disabled={!formData?.position}
-									title={`Selecione o ${LabelUtils.translateField(
-										'position'
-									)} para habilitar este campo`}
+									title={`Selecione o cargo para habilitar este campo`}
 								/>
 								<Input
 									type="date"
@@ -391,12 +382,10 @@ export function EmployeeEditor({
 											DateUtils.getDate(formData.contract_end_date)) ||
 										''
 									}
-									label={LabelUtils.translateField('contract_end_date')}
+									label={'Data Fim de Contracto'}
 									onChange={handleInputChange}
 									disabled={!formData?.position}
-									title={`Selecione o ${LabelUtils.translateField(
-										'position'
-									)} para habilitar este campo`}
+									title={`Selecione o cargo para habilitar este campo`}
 								/>
 								<InputPrice
 									id="meal_allowance"
@@ -434,7 +423,7 @@ export function EmployeeEditor({
 										id="bank_name"
 										name="bank_name"
 										value={formData?.bank_name || ''}
-										label={LabelUtils.translateField('bank_name')}
+										label={'Nome do Banco'}
 										data={[
 											{ text: 'BAI' },
 											{ text: 'BCI' },
@@ -454,7 +443,7 @@ export function EmployeeEditor({
 										id="account_number"
 										name="account_number"
 										value={formData?.account_number || ''}
-										label={LabelUtils.translateField('account_number')}
+										label={'Nº Conta Bancária'}
 										onChange={handleInputChange}
 										disabled={!formData?.bank_name}
 										title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}
@@ -465,7 +454,7 @@ export function EmployeeEditor({
 									id="iban"
 									name="iban"
 									value={formData?.iban || ''}
-									label={LabelUtils.translateField('iban')}
+									label="IBAN"
 									onChange={handleInputChange}
 									disabled={!formData?.bank_name}
 									title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Spinner } from '../spinner'
 import { CashRegisterModel, TransactionModel } from '@/domain/models'
-import { DateUtils, LabelUtils, NumberUtils, PaymentUtils } from '@/utils'
+import { DateUtils, NumberUtils, PaymentUtils } from '@/utils'
 import {
 	makeRemoteAddCashRegister,
 	makeRemoteAddTransaction,
@@ -102,7 +102,7 @@ export function CashRegisterEditor() {
 									<InputPrice
 										name="initial_balance"
 										id="initial_balance"
-										label={LabelUtils.translateField('initial_balance')}
+										label={'saldo incial'}
 										value={balanceData?.initial_balance || ''}
 										onChange={handleChangeBalance}
 										disabled={!!cashRegister?.id}
