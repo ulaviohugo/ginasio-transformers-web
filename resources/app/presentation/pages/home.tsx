@@ -1,7 +1,16 @@
 import React from 'react'
-import { IconUser, Layout, LayoutBody, Spinner } from '@/presentation/components'
+import {
+	IconAthlete,
+	IconUser,
+	Layout,
+	LayoutBody,
+	Spinner
+} from '@/presentation/components'
 import { ElementType, useEffect, useState } from 'react'
-import { makeRemoteCountEmployees } from '@/main/factories/usecases'
+import {
+	makeRemoteCountAthletes,
+	makeRemoteCountEmployees
+} from '@/main/factories/usecases'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
@@ -23,6 +32,8 @@ export function Home() {
 
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
+	const [athletes, setAthletes] = useState(0)
+	const [isLoadingAthletes, setIsLoadingAthletes] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -42,10 +53,16 @@ export function Home() {
 	useEffect(() => {
 		{
 			isAdmin &&
-				fetchCount(makeRemoteCountEmployees(), (response) => {
-					setEmployees(response)
-					setIsLoadingEmployees(false)
-				})
+				Promise.all([
+					fetchCount(makeRemoteCountEmployees(), (response) => {
+						setEmployees(response)
+						setIsLoadingEmployees(false)
+					}),
+					fetchCount(makeRemoteCountAthletes(), (response) => {
+						setAthletes(response)
+						setIsLoadingAthletes(false)
+					})
+				])
 		}
 	}, [])
 
@@ -54,13 +71,22 @@ export function Home() {
 			<LayoutBody>
 				<div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
 					{isAdmin && (
-						<Item
-							number={employees}
-							title={'Funcionários'}
-							icon={IconUser}
-							isLoading={isLoadingEmployees}
-							href={MenuUtils.FRONT.EMPLOYEES}
-						/>
+						<>
+							<Item
+								number={employees}
+								title={'Funcionários'}
+								icon={IconUser}
+								isLoading={isLoadingEmployees}
+								href={MenuUtils.FRONT.EMPLOYEES}
+							/>
+							<Item
+								number={athletes}
+								title={'Atletas'}
+								icon={IconAthlete}
+								isLoading={isLoadingAthletes}
+								href={MenuUtils.FRONT.ATHLETES}
+							/>
+						</>
 					)}
 				</div>
 			</LayoutBody>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ElementType, useState } from 'react'
 import {
+	IconAthlete,
 	IconHome,
 	IconProduct,
 	IconSignout,
@@ -34,20 +35,14 @@ export function Header() {
 						active={path.indexOf('/atleta') >= 0}
 						link={MenuUtils.FRONT.ATHLETES}
 						text="Atletas"
-						icon={IconUser}
+						icon={IconAthlete}
 					/>
 					<Item
-						active={path.indexOf('/comercial') >= 0}
-						link={MenuUtils.FRONT.CASH_REGISTER}
-						text="Caixa"
+						active={path.indexOf(MenuUtils.FRONT.FINANCES) >= 0}
+						link={MenuUtils.FRONT.FINANCES}
+						text="Finanças"
 						icon={IconProduct}
 					/>
-					{/* <Item
-						active={path.indexOf('/segurados') >= 0}
-						link={'/segurados'}
-						text="Segurados"
-						icon={IconUser}
-					/> */}
 					{isAdmin && (
 						<Item
 							active={path.indexOf('/funcionarios') >= 0}

@@ -78,7 +78,7 @@ export function CashRegister() {
 			{showGraph && <CashRegisterGraph onClose={() => setShowGraph(false)} />}
 			<LayoutBody>
 				<div className="flex flex-col gap-2">
-					<SubMenu submenus={MenuUtils.commercialMenuItens({ role: user.role })} />
+					<SubMenu submenus={MenuUtils.financeMenuItens({ role: user.role })} />
 					<Title title="Caixa" icon={IconCashRegister} />
 					<CashRegisterEditor />
 					<fieldset>

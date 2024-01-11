@@ -26,6 +26,7 @@ import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-ic
 import { FaHouseUser, FaSignOutAlt, FaUserShield, FaCashRegister } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
 import { FaFilePdf } from 'react-icons/fa6'
+import { GiMuscleUp } from 'react-icons/gi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
@@ -92,6 +93,9 @@ export const IconSignout = (props: IconBaseProps): React.ReactElement => (
 )
 export const IconUser = (props: IconBaseProps): React.ReactElement => (
 	<HiUser {...props} />
+)
+export const IconAthlete = (props: IconBaseProps): React.ReactElement => (
+	<GiMuscleUp {...props} />
 )
 export const IconSearch = (props: IconBaseProps): React.ReactElement => (
 	<BiSearch {...props} />

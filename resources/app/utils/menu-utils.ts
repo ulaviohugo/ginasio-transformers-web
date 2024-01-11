@@ -8,8 +8,9 @@ export class MenuUtils {
 		HOME: '/',
 		ATHLETES: '/atletas',
 		LOGIN: '/login',
-		CASH_REGISTER: '/caixa',
-		HR: '/rh',
+		CASH_REGISTER: '/financas/caixa',
+		TUITION_FEES: '/financas/mensalidades',
+		FINANCES: '/financas',
 
 		EMPLOYEES: '/funcionarios'
 	}
@@ -22,11 +23,14 @@ export class MenuUtils {
 		return data
 	}
 
-	static readonly commercialMenuItens = (param?: RoleProps): SubmenuProps[] => {
+	static readonly financeMenuItens = (param?: RoleProps): SubmenuProps[] => {
 		const { role = 'Normal' } = param || {}
 		const data = []
 		if (role == 'Admin') {
-			data.push({ link: this.FRONT.CASH_REGISTER, text: 'Caixa' })
+			data.push(
+				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
+				{ link: this.FRONT.TUITION_FEES, text: 'Mensalidades' }
+			)
 		}
 
 		return data

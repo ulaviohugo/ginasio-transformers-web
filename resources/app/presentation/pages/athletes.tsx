@@ -13,11 +13,10 @@ import {
 	AthleteList,
 	ModalDelete
 } from '@/presentation/components'
-import { useAuth } from '@/presentation/hooks'
 import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes
@@ -38,8 +37,6 @@ export function Athletes({
 	const [showFormDelete, setShowFormDelete] = useState(false)
 
 	const dispatch = useDispatch()
-
-	const user = useSelector(useAuth())
 
 	const onDelete = async () => {
 		if (!selectedAthlete?.id) return toast.error('selecione um registo para excluir')
@@ -72,7 +69,7 @@ export function Athletes({
 				/>
 			)}
 			<LayoutBody>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-4">
 					<AthleteEditor
 						data={selectedAthlete}
 						addAthlete={addAthlete}
@@ -80,6 +77,7 @@ export function Athletes({
 						loadEmployees={loadEmployees}
 						onDelete={onDelete}
 					/>
+					<hr />
 					<AthleteList onSelect={setSelectedAthlete} loadAthletes={loadAthletes} />
 				</div>
 			</LayoutBody>
