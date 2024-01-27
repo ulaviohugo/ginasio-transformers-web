@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-	@apply text-primary;
+	@apply text-gray-600;
 }
 
 :disabled {
@@ -55,5 +55,5 @@ button,
 }
 
 .btn-default {
-	@apply btn bg-gray-200 text-primary border border-gray-200;
+	@apply btn bg-gray-200 text-gray-600 border border-gray-200;
 }

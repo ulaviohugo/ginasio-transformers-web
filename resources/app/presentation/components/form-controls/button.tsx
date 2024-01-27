@@ -23,7 +23,7 @@ export function Button({
 	const variantClasses = {
 		green: 'bg-green-700 ',
 		red: 'bg-red-700 ',
-		default: 'bg-gray-200 !text-primary',
+		default: 'bg-gray-200 !text-gray-700',
 		'gray-light': 'bg-primary opacity-70'
 	}
 
