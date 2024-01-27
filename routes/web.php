@@ -3,7 +3,6 @@
 use App\Exports\UsersExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +19,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 Route::view('', 'app');
 
-Route::match(['get', 'post'], 'users', function () {
-	return Excel::download(new UsersExport(), 'user.xlsx');
-});
 Route::match(['get', 'post'], 'mensalidade', function () {
 	$pdf = Pdf::loadView('pdfs.tuition-fee');
 	return $pdf->stream();
