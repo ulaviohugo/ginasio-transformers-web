@@ -10,5 +10,5 @@ export function Logo({
 	height = 100,
 	...props
 }: LogoProps) {
-	return <GiMuscleFat size={64} className="text-white" />
+	return <img src={src} style={{ width, height }} />
 }
