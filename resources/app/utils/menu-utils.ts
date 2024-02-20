@@ -10,8 +10,10 @@ export class MenuUtils {
 		LOGIN: '/login',
 		CASH_REGISTER: '/financas/caixa',
 		TUITION_FEES: '/financas/mensalidades',
-		FINANCES: '/financas',
-
+		FINANCES: '/financas',	
+		EQUIPMENTS: '/equipamentos',
+		PAYMENT: '/mensalidade',
+		
 		EMPLOYEES: '/funcionarios'
 	}
 

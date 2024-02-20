@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
 {
 	/**
 	 * The list of the inputs that are never flashed to the session on validation exceptions.
-	 *
+	 * A lista das entradas que nunca são atualizadas para a sessão nas exceções de validação.
 	 * @var array<int, string>
 	 */
 	protected $dontFlash = [
@@ -24,6 +24,7 @@ class Handler extends ExceptionHandler
 
 	/**
 	 * Register the exception handling callbacks for the application.
+	 * Registre os retornos de chamada de tratamento de exceções para o aplicativo
 	 */
 	public function register(): void
 	{

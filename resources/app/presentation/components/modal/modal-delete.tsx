@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalFooter, ModalTitle } from '.'
 import { Button, IconClose, IconTrash } from '..'
 
 type ModalDeleteProps = {
-	entity: ReactNode
+	entity?: ReactNode
 	description?: ReactNode
 	show: boolean
 	onClose: () => void

@@ -22,7 +22,7 @@ Route::view('', 'app');
 Route::match(['get', 'post'], 'mensalidade', function () {
 	$pdf = Pdf::loadView('pdfs.tuition-fee');
 	return $pdf->stream();
-});
+}); 
 
 Route::view('/{path}', 'app')->where(
 	'path',

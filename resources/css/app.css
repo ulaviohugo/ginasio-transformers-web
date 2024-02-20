@@ -42,12 +42,12 @@ a.link {
 }
 
 .btn {
-	@apply inline-flex items-center gap-1 font-semibold text-sm py-1 px-3 rounded cursor-pointer;
+	@apply items-center gap-1 font-semibold text-sm py-1 px-3 rounded cursor-pointer;
 }
 
 button,
 .btn {
-	@apply hover:bg-opacity-80 transition-all duration-200 cursor-pointer;
+	@apply flex hover:bg-opacity-80 transition-all duration-200 cursor-pointer;
 }
 
 .btn-primary {

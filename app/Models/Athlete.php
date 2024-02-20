@@ -46,4 +46,8 @@ class Athlete extends Model
 	{
 		return $this->belongsTo(User::class, 'user_id');
 	}
+	public function mensalidades()
+    {
+        return $this->hasMany(Mensalidade::class, 'athlete_id');
+    }
 }

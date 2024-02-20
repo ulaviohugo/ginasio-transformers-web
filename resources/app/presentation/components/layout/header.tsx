@@ -43,6 +43,13 @@ export function Header() {
 						text="Finanças"
 						icon={IconProduct}
 					/>
+					<Item
+						active={path.indexOf(MenuUtils.FRONT.EQUIPMENTS) >= 0}
+						link={MenuUtils.FRONT.EQUIPMENTS}
+						text="Materiais"
+						icon={IconProduct}
+					/>
+					
 					{isAdmin && (
 						<Item
 							active={path.indexOf('/funcionarios') >= 0}

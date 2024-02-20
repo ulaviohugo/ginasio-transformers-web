@@ -5,8 +5,10 @@ use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MensalidadeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionFeeController;
 use App\Http\Controllers\UserController;
@@ -52,6 +54,18 @@ Route::middleware('auth-jwt')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
 });
+
+Route::get('materiais', [EquipmentController::class, 'index']);
+Route::post('materiais', [EquipmentController::class, 'store']);
+Route::get('materiais/{equipment}', [EquipmentController::class, 'show']);
+Route::put('materiais/{equipment}', [EquipmentController::class, 'update']);
+Route::delete('materiais/{equipment}', [EquipmentController::class, 'destroy']);
+
+Route::get('mensalidade', [MensalidadeController::class, 'index']);
+Route::post('mensalidade', [MensalidadeController::class, 'store']);
+Route::get('mensalidade/{mensalidade}', [MensalidadeController::class, 'show']);
+Route::put('mensalidade/{mensalidade}', [MensalidadeController::class, 'update']);
+Route::delete('mensalidade/{mensalidade}', [MensalidadeController::class, 'destroy']);
 
 Route::any('/{path}', function () {
 	$url = url()->full();

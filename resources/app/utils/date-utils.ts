@@ -1,4 +1,4 @@
-const months = [
+export const months = [
 	'Janeiro',
 	'Fevereiro',
 	'Março',
@@ -57,12 +57,16 @@ export class DateUtils {
 
 		const year = date.getFullYear(),
 			month = (date.getMonth() + 1).toString().padStart(2, '0'),
-			day = date.getDate().toString().padStart(2, '0')
+			day = date.getUTCDate().toString().padStart(2, '0')
 		return `${day}${separator}${month}${separator}${year}`
 	}
 
 	static getMonth(date: Date | string) {
 		return this.convertToDate(date)?.getMonth()
+	}
+
+	static getMonthUtils(){
+		return months
 	}
 
 	static getMonthExt(date: Date | string | number) {

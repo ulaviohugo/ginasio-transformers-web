@@ -11,7 +11,7 @@ export class RemoteAddEmployee implements AddEmployee {
 	) {}
 
 	async add(param: EmployeeModel): Promise<EmployeeModel> {
-		const body = FormDataUtils.createFormData({
+		const body = {
 			...param,
 			base_salary: NumberUtils.convertToPrice(param.base_salary),
 			meal_allowance: NumberUtils.convertToPrice(param.meal_allowance),
@@ -20,7 +20,7 @@ export class RemoteAddEmployee implements AddEmployee {
 				param.transportation_allowance
 			),
 			family_allowance: NumberUtils.convertToPrice(param.family_allowance)
-		})
+		}
 		const httpResponse = await this.httpClient.request({
 			method: 'post',
 			url: this.url,
