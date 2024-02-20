@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Input, Select } from './form-controls'
-import { IconSearch } from './icons'
+import { IconClose, IconSearch } from './icons'
 import { DateUtils } from '@/utils'
 
 export type FilterDataProps = {
@@ -15,18 +15,25 @@ type FilterPaymentProps = {
 	onFilter: (data: FilterDataProps) => void
 }
 
+const initialData: FilterDataProps = {
+	athlete_id: '' as any,
+	month: '' as any,
+	name: '' as any,
+	created_at: '' as any,
+	year: new Date().getFullYear()
+}
+
 export function FilterPayment({ onFilter }: FilterPaymentProps) {
-	const [formData, setFormData] = useState<FilterDataProps>({
-		athlete_id: '' as any,
-		month: '' as any,
-		name: '' as any,
-		created_at: '' as any,
-		year: new Date().getFullYear()
-	} as FilterDataProps)
+	const [formData, setFormData] = useState<FilterDataProps>(initialData)
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
+	}
+
+	const handleClear = () => {
+		setFormData(initialData)
+		onFilter(initialData)
 	}
 
 	return (
@@ -77,6 +84,7 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 				className="h-8"
 				onClick={() => onFilter(formData)}
 			/>
+			<Button variant="default" icon={IconClose} className="h-8" onClick={handleClear} />
 		</div>
 	)
 }
