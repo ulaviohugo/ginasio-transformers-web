@@ -56,6 +56,7 @@ Route::middleware('auth-jwt')->group(function () {
 });
 
 Route::get('materiais', [EquipmentController::class, 'index']);
+Route::get('materiais/count', [EquipmentController::class, 'count']);
 Route::post('materiais', [EquipmentController::class, 'store']);
 Route::get('materiais/{equipment}', [EquipmentController::class, 'show']);
 Route::put('materiais/{equipment}', [EquipmentController::class, 'update']);

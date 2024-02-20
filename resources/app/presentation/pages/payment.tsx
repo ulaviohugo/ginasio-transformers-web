@@ -1,10 +1,21 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Layout, LayoutBody, ModalDelete, Select } from '../components'
+import {
+	Button,
+	Input,
+	Layout,
+	LayoutBody,
+	ModalDelete,
+	Select,
+	SubMenu,
+	Title
+} from '../components'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
-import { DateUtils, months } from '@/utils'
+import { DataUtils, DateUtils, MenuUtils, months } from '@/utils'
 import { FilterDataProps, FilterPayment } from '../components/filter-Payment'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
 
 type FormDataProps = {
 	athlete_id: number
@@ -12,7 +23,8 @@ type FormDataProps = {
 	month: number
 	monthlyValue: number
 	monthlyFine: number
-}
+	paymentMethod: string
+}	
 
 type PaymentProps = {
 	id: number
@@ -24,9 +36,12 @@ type PaymentProps = {
 	created_at: Date
 	updated_at: Date
 	athlete_id: number
+	paymentMethod:string
 }
 
 export function Payment() {
+	const user = useSelector(useAuth())
+
 	const [mensalidades, setMensalidade] = useState<PaymentProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [selectedMensalidade, setSelectMensalidade] = useState<PaymentProps>()
@@ -35,7 +50,8 @@ export function Payment() {
 		month: new Date().getMonth() + 1,
 		year: new Date().getFullYear(),
 		monthlyValue: 0,
-		monthlyFine: 0
+		monthlyFine: 0,
+		paymentMethod:''
 	})
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -120,8 +136,7 @@ export function Payment() {
 			toast.success('Mensalidade Editada com sucesso')
 			fetchData()
 			handleClear()
-		}
-		 else {
+		} else {
 			toast.error(httpResponse.body)
 		}
 	}
@@ -143,10 +158,11 @@ export function Payment() {
 				/>
 			)}
 			<LayoutBody>
-				<div className="flex items-start gap-3">
+				<SubMenu submenus={MenuUtils.financeMenuItens({ role: user.role })} />
+				<Title title="Mensalidade" />
+				<div className="flex items-start gap-3 mt-3">
 					<div className="flex-1">
-						Mensalidade
-						<form className="flex flex-col gap-4">
+						<form className="grid grid-cols-4 gap-4">
 							<Input
 								name="athlete_id"
 								onChange={handleInput}
@@ -170,6 +186,7 @@ export function Payment() {
 									text: month,
 									value: i + 1
 								}))}
+								defaultText='Selecione'
 								value={formData.month || ''}
 							/>
 							<Input
@@ -187,6 +204,16 @@ export function Payment() {
 								type="number"
 								placeholder="Quanto atleta vai pagar"
 								value={formData.monthlyFine || ''}
+							/>
+							<Select
+								name="paymentMethod"
+								onChange={handleInput}
+								label="Método de pagamento"
+								data={['Dinheiro a vista', 'TPA', 'Transferência'].map((pagamento) => {
+									return {text:pagamento}
+								})}
+								value={formData.paymentMethod || ''}
+								defaultText="Selecione"
 							/>
 						</form>
 					</div>
@@ -237,6 +264,7 @@ export function Payment() {
 									<td>Multa</td>
 									<td>Código do atleta</td>
 									<td>Código</td>
+									<td>Método de pagamento</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -251,13 +279,14 @@ export function Payment() {
 											}}
 										>
 											<td>{mensal.name}</td>
-											<td>{mensal.month}</td>
+											<td>{DateUtils.getMonthExt(mensal.month-1)}</td>
 											<td>{mensal.year}</td>
 											<td>{mensal.monthlyValue}</td>
 											<td>{DateUtils.getDatePt(mensal.created_at).toString()}</td>
 											<td>{mensal.monthlyFine}</td>
 											<td>{mensal.athlete_id}</td>
 											<td>{mensal.id}</td>
+											<td>{mensal.paymentMethod}</td>
 										</tr>
 									)
 								})}

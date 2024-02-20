@@ -31,7 +31,8 @@ export class MenuUtils {
 		if (role == 'Admin') {
 			data.push(
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
-				{ link: this.FRONT.TUITION_FEES, text: 'Mensalidades' }
+				{ link: this.FRONT.TUITION_FEES, text: 'Mensalidades' },
+				{ link: '/stock', text: 'Estoque' }
 			)
 		}
 

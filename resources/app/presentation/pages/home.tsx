@@ -4,7 +4,8 @@ import {
 	IconUser,
 	Layout,
 	LayoutBody,
-	Spinner
+	Spinner,
+	IconDumbbell
 } from '@/presentation/components'
 import { ElementType, useEffect, useState } from 'react'
 import {
@@ -16,6 +17,8 @@ import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
 import { Link } from 'react-router-dom'
 import { MenuUtils } from '@/utils'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
 
 type ItemProps = {
 	number: number
@@ -33,7 +36,9 @@ export function Home() {
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
 	const [athletes, setAthletes] = useState(0)
+	const [equipments, setEquipments] = useState(0)
 	const [isLoadingAthletes, setIsLoadingAthletes] = useState(true)
+	const [isLoadingEquipments, setIsLoadingEquipments] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -61,6 +66,17 @@ export function Home() {
 					fetchCount(makeRemoteCountAthletes(), (response) => {
 						setAthletes(response)
 						setIsLoadingAthletes(false)
+					}),
+					makeAuthorizeHttpClientDecorator().request({
+						url: makeApiUrl('/materiais/count'),
+						method: 'get'
+					}).then((response)=>{
+						if (response.statusCode >=200 &&response.statusCode <=299) {
+							setEquipments(response.body);
+							setIsLoadingEquipments(false)
+						} else {
+							toast.error(response.body);
+						}
 					})
 				])
 		}
@@ -85,6 +101,13 @@ export function Home() {
 								icon={IconAthlete}
 								isLoading={isLoadingAthletes}
 								href={MenuUtils.FRONT.ATHLETES}
+							/>
+							<Item
+								number={equipments}
+								title={'Equipamentos'}
+								icon={IconDumbbell}
+								isLoading={isLoadingEquipments}
+								href={MenuUtils.FRONT.EQUIPMENTS}
 							/>
 						</>
 					)}

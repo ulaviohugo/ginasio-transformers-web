@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('year');
 			$table->integer('month');
             $table->integer('monthlyValue');
-            $table->integer('monthlyFine');
+            $table->integer('monthlyFine')->nullable();
+            $table->string('paymentMethod');
             $table->foreignId('athlete_id')->nullable()->references('id')->on(DBHelper::TB_ATHLETE);
             $table->timestamps();
         });

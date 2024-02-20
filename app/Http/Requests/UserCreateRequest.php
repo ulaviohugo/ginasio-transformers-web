@@ -73,9 +73,6 @@ class UserCreateRequest extends GlobalFormRequest
 			'base_salary' => 'required|numeric|gt:0',
 			'hire_date' => 'required|date',
 			'contract_end_date' => 'required|date',
-			'bank_name' => 'required',
-			'iban' => 'required',
-			'account_number' => 'required',
 			'can_login' => 'nullable|boolean',
 			'role' => [
 				'nullable',

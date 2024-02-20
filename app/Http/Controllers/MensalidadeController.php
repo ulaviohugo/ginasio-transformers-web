@@ -7,6 +7,8 @@ use App\Helpers\HttpResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentCreateRequest;
 use App\Models\Mensalidade;
+use App\Models\Transaction;
+use App\Services\TransactionCreateService;
 use Illuminate\Http\Request;
 
 class MensalidadeController extends Controller
@@ -23,21 +25,25 @@ class MensalidadeController extends Controller
             $athlete_id = $request->query('athlete_id');
             $created_at = $request->query('created_at');
 
-            
+
             $mensalidades = Mensalidade::from('mensalidades AS a')
                 ->select('a.*', 'b.name')
                 ->join(DBHelper::TB_ATHLETE . ' AS b', 'b.id', 'a.athlete_id');
-                if ($name) {
-                    $mensalidades = $mensalidades->where('b.name', $name);
-                }if ($year) {
-                    $mensalidades = $mensalidades->where('a.year', $year);
-                }if ($month) {
-                    $mensalidades = $mensalidades->where('a.month', $month);
-                }if ($athlete_id) {
-                    $mensalidades = $mensalidades->where('a.athlete_id', $athlete_id);
-                }if ($created_at) {
-                    $mensalidades = $mensalidades->whereDate('a.created_at',date('Y-m-d', strtotime($created_at)));
-                }
+            if ($name) {
+                $mensalidades = $mensalidades->where('b.name', $name);
+            }
+            if ($year) {
+                $mensalidades = $mensalidades->where('a.year', $year);
+            }
+            if ($month) {
+                $mensalidades = $mensalidades->where('a.month', $month);
+            }
+            if ($athlete_id) {
+                $mensalidades = $mensalidades->where('a.athlete_id', $athlete_id);
+            }
+            if ($created_at) {
+                $mensalidades = $mensalidades->whereDate('a.created_at', date('Y-m-d', strtotime($created_at)));
+            }
             // $mensalidades = Mensalidade::all();
             // $mensalidades->load('atleta');
             return response()->json($mensalidades->get());
@@ -45,24 +51,33 @@ class MensalidadeController extends Controller
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PaymentCreateRequest $request)
+    public function store(PaymentCreateRequest $request, TransactionCreateService $cashService)
     {
-        return Mensalidade::create([
+        $payment = Mensalidade::create([
             'year' => $request->year,
             'month' => $request->month,
             'monthlyValue' => $request->monthlyValue,
             'monthlyFine' => $request->monthlyFine,
+            'paymentMethod' => $request->paymentMethod,
             'name' => $request->name,
             'athlete_id' => $request->athlete_id,
         ]);
+        
+        //Adicionar campos no request (solicitação)
+        $cashRequest = $request->merge([
+            'description' => 'Mensalidade',
+            'operation_type' => Transaction::OPERATION_TYPE_IN,
+            'amount' => $request->monthlyValue,
+            'payment_method' => $request->paymentMethod,
+        ]);
+        //Actualizar o caixa
+        $cashService->execute($cashRequest);
+
+        return $payment;
     }
 
     /**

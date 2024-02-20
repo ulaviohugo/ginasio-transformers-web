@@ -8,7 +8,8 @@ import {
 	IconSignout,
 	IconUser,
 	Logo,
-	Spinner
+	Spinner,
+	IconDumbbell
 } from '@/presentation/components'
 import { setCurrentAccountAdapter } from '@/main/adapters'
 import { MenuUtils, StringUtils } from '@/utils'
@@ -47,7 +48,7 @@ export function Header() {
 						active={path.indexOf(MenuUtils.FRONT.EQUIPMENTS) >= 0}
 						link={MenuUtils.FRONT.EQUIPMENTS}
 						text="Materiais"
-						icon={IconProduct}
+						icon={IconDumbbell}
 					/>
 					
 					{isAdmin && (

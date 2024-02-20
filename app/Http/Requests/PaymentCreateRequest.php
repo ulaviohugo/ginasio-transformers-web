@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Athlete;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PaymentCreateRequest extends FormRequest
 {
@@ -25,8 +27,8 @@ class PaymentCreateRequest extends FormRequest
             'year' => 'required',
             'month' => 'required',
             'monthlyValue' => 'required',
-            'monthlyFine' => 'required',
-            'athlete_id' => 'required',
+            'paymentMethod' => 'required',
+            'athlete_id' => ['required',Rule::exists(Athlete::class,'id')],
         ];
     }
 }

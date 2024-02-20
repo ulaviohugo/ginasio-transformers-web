@@ -12,6 +12,7 @@ class EquipmentController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $request = request();
@@ -31,6 +32,9 @@ class EquipmentController extends Controller
             $equipments = $equipments->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
         }
         return $equipments->get();
+    }
+    public function count(){
+        return Equipment::count();
     }
 
     /**
