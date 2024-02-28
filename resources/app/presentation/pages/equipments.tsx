@@ -24,6 +24,11 @@ export function Equipments() {
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [selectedMaterial, setSelectMaterial] = useState<MaterialProps>()
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', description: '' })
+	const [filtered, setFiltered] = useState<FilterDataProps>({
+		name: '',
+		created_at: '',
+		id: '' as any
+	})
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -95,6 +100,10 @@ export function Equipments() {
 	}
 
 	async function handleUpdate() {
+		if (!selectedMaterial?.id) {
+			return toast.error('Selecione a lista do material que deseja editar')
+		}
+
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
 			url: makeApiUrl('/materiais/' + selectedMaterial?.id),
 			method: 'put',
@@ -104,18 +113,21 @@ export function Equipments() {
 			toast.success('Material Editado com sucesso')
 			fetchData()
 			handleClear()
-		}
-		if (!selectedMaterial?.id) {
-			toast.error('Selecione a lista do material que deseja editar')
 		} else {
 			toast.error(httpResponse.body)
 		}
 	}
 
 	async function handleFilter(filterData: FilterDataProps) {
+		setFiltered(filterData)
 		fetchData(
 			`?id=${filterData.id}&name=${filterData.name}&created_at=${filterData.created_at}`
 		)
+	}
+	
+	const handleOpenPdf = () => {
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}`
+		window.open(`/pdf/materiais${queryParams}`)
 	}
 
 	return (
@@ -181,6 +193,12 @@ export function Equipments() {
 							text="Limpar"
 							type="button"
 						/>
+						<Button
+							onClick={handleOpenPdf}
+							variant="default"
+							text="Gerar Pdf"
+							type="button"
+						/>
 					</div>
 				</div>
 				<div>
@@ -188,28 +206,33 @@ export function Equipments() {
 						<legend>Filtro</legend>
 						<FilterEquipment onFilter={handleFilter} />
 						<table className="w-full">
-							<tr className="gap-10">
-								<td>Código</td>
-								<td>Nome</td>
-								<td>Descrição</td>
-								<td>Data</td>
-							</tr>
-							{materiais.map((material) => {
-								return (
-									<tr
-										className="cursor-pointer hover:bg-gray-100"
-										onClick={() => {
-											setFormData(material)
-											setSelectMaterial(material)
-										}}
-									>
-										<td>{material.id}</td>
-										<td>{material.name}</td>
-										<td>{material.description}</td>
-										<td>{DateUtils.getDatePt(material.created_at).toString()}</td>
-									</tr>
-								)
-							})}
+							<thead>
+								<tr className="gap-10">
+									<td>Código</td>
+									<td>Nome</td>
+									<td>Descrição</td>
+									<td>Data</td>
+								</tr>
+							</thead>
+							<tbody>
+								{materiais.map((material) => {
+									return (
+										<tr
+											key={material.id}
+											className="cursor-pointer hover:bg-gray-100"
+											onClick={() => {
+												setFormData(material)
+												setSelectMaterial(material)
+											}}
+										>
+											<td>{material.id}</td>
+											<td>{material.name}</td>
+											<td>{material.description}</td>
+											<td>{DateUtils.getDatePt(material.created_at).toString()}</td>
+										</tr>
+									)
+								})}
+							</tbody>
 						</table>
 					</fieldset>
 				</div>

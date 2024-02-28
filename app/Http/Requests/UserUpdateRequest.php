@@ -34,7 +34,7 @@ class UserUpdateRequest extends GlobalFormRequest
 
 		return [
 			'name' => 'required',
-			'email' => ['required', 'email', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
+			'email' => ['nullable', 'email', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
 			'gender' => 'required',
 			'date_of_birth' => 'required|date',
 			'marital_status' => 'required',
@@ -48,6 +48,7 @@ class UserUpdateRequest extends GlobalFormRequest
 			],
 			'nif' => ['nullable', 'required', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
 			'social_security' => ['nullable', 'required', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
+			'iban' => ['nullable', 'required', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
 			'education_degree' => 'required',
 			'phone' => 'required',
 			'country_id' => [
@@ -74,9 +75,6 @@ class UserUpdateRequest extends GlobalFormRequest
 			'base_salary' => 'required|numeric|gt:0',
 			'hire_date' => 'required|date',
 			'contract_end_date' => 'required|date',
-			'bank_name' => 'required',
-			'iban' => 'required',
-			'account_number' => 'required',
 			'can_login' => 'nullable|boolean',
 			'role' => [
 				'nullable',
@@ -84,13 +82,7 @@ class UserUpdateRequest extends GlobalFormRequest
 					return $canLogin;
 				})
 			],
-			'user_name' => [
-				'nullable',
-				Rule::requiredIf(function () use ($canLogin) {
-					return $canLogin;
-				}),
-				Rule::unique(DBHelper::TB_USERS)->ignore($id),
-			],
+			'user_name' => ['nullable', 'required', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
 			'password' => [
 				'nullable',
 				Rule::requiredIf(function () use ($canLogin, $id) {

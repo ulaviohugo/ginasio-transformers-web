@@ -1,0 +1,28 @@
+Controle de inadimplência.
+
+Registro de Pagamentos e Mensalidades:
+
+Crie uma tabela no banco de dados para registrar os pagamentos dos membros, associando cada pagamento ao membro correspondente e à mensalidade paga.
+Registre cada pagamento feito pelos membros, incluindo a data do pagamento, o valor pago e outras informações relevantes.
+Geração Automática de Faturas e Recibos:
+
+Implemente um sistema que gere faturas automaticamente para os membros a cada período de cobrança (mensal, trimestral, etc.).
+Inclua as informações necessárias na fatura, como o nome do membro, o valor a ser pago, a data de vencimento, etc.
+Após o pagamento, gere automaticamente um recibo para o membro como comprovante de pagamento.
+Envio de Notificações de Cobrança:
+
+Implemente um sistema de notificação para lembrar os membros sobre pagamentos em atraso.
+Envie e-mails automáticos ou mensagens de texto para os membros inadimplentes, lembrando-os de pagar as mensalidades pendentes.
+Monitoramento de Inadimplência:
+
+Crie consultas no banco de dados para monitorar os membros inadimplentes, ou seja, aqueles que não efetuaram o pagamento das mensalidades dentro do prazo.
+Exiba uma lista de membros inadimplentes no sistema de gestão para que os funcionários possam acompanhar e tomar medidas apropriadas.
+Políticas de Cobrança:
+
+Estabeleça políticas claras de cobrança para lidar com a inadimplência, incluindo penalidades por pagamentos atrasados, processos de cobrança, etc.
+Defina procedimentos para suspender ou cancelar o acesso dos membros inadimplentes às instalações da academia após um período determinado de inadimplência.
+Relatórios de Inadimplência:
+
+Crie relatórios no sistema de gestão que mostrem a situação atual da inadimplência, como o número de membros inadimplentes, o valor total em atraso, etc.
+Utilize esses relatórios para analisar a tendência de inadimplência ao longo do tempo e tomar medidas proativas para reduzi-la.
+Ao implementar essas etapas, você poderá estabelecer um controle eficaz de inadimplência em seu sistema de gestão para uma rede de ginásios, garantindo uma administração financeira eficiente e oportuna.

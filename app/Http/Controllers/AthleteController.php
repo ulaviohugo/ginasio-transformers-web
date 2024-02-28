@@ -13,6 +13,7 @@ use App\Services\AthleteCreateService;
 use App\Services\AthleteDeleteService;
 use App\Services\AthleteLoadAllService;
 use App\Services\AthleteUpdateService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AthleteController extends Controller
 {
@@ -20,8 +21,20 @@ class AthleteController extends Controller
 	{
 		try {
 			$athletes = $service->execute();
-			$athletes->load('user');
+			$athletes->load('mensalidades');
 			return AthleteResource::collection($athletes);
+		} catch (\Throwable $th) {
+			return HttpResponse::error(message: $th->getMessage());
+		}
+	}
+
+	public function gerarPDF(AthleteLoadAllService $service){
+		try {
+			$athletes = $service->execute();
+			$athletes->load('mensalidades');
+
+			$pdf = Pdf::loadView('pdfs.atletas', ['athletes' => $athletes]);
+			return $pdf->stream();
 		} catch (\Throwable $th) {
 			return HttpResponse::error(message: $th->getMessage());
 		}

@@ -10,12 +10,16 @@ class Mensalidade extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['year', 'month', 'monthlyValue', 'monthlyFine', 'athlete_id','paymentMethod'];
+    protected $fillable = ['year', 'month', 'monthlyValue', 'monthlyFine', 'athlete_id','paymentMethod','user_id'];
     
     // Relacionamento com a tabela de atletas
     public function atleta()
     {
         return $this->belongsTo(Athlete::class, 'athlete_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Escopo para filtrar por ID

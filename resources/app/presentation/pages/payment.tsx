@@ -24,7 +24,7 @@ type FormDataProps = {
 	monthlyValue: number
 	monthlyFine: number
 	paymentMethod: string
-}	
+}
 
 type PaymentProps = {
 	id: number
@@ -36,7 +36,7 @@ type PaymentProps = {
 	created_at: Date
 	updated_at: Date
 	athlete_id: number
-	paymentMethod:string
+	paymentMethod: string
 }
 
 export function Payment() {
@@ -51,7 +51,14 @@ export function Payment() {
 		year: new Date().getFullYear(),
 		monthlyValue: 0,
 		monthlyFine: 0,
-		paymentMethod:''
+		paymentMethod: ''
+	})
+	const [filtered, setFiltered] = useState<FilterDataProps>({
+		athlete_id: '' as any,
+		month: '' as any,
+		name: '' as any,
+		created_at: '' as any,
+		year: new Date().getFullYear()
 	})
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -142,9 +149,15 @@ export function Payment() {
 	}
 
 	async function handleFilter(filterData: FilterDataProps) {
+		setFiltered(filterData)
 		fetchData(
 			`?name=${filterData.name}&created_at=${filterData.created_at}&athlete_id=${filterData.athlete_id}&month=${filterData.month}&year=${filterData.year}`
 		)
+	}
+
+	const handleOpenPdf = () => {
+		const queryParams = `?athlete_id=${filtered.athlete_id}&name=${filtered.name}&created_at=${filtered.created_at}&month=${filtered.month}&year=${filtered.year}`
+		window.open(`/pdf/mensalidades${queryParams}`)
 	}
 
 	return (
@@ -186,7 +199,7 @@ export function Payment() {
 									text: month,
 									value: i + 1
 								}))}
-								defaultText='Selecione'
+								defaultText="Selecione"
 								value={formData.month || ''}
 							/>
 							<Input
@@ -210,7 +223,7 @@ export function Payment() {
 								onChange={handleInput}
 								label="Método de pagamento"
 								data={['Dinheiro a vista', 'TPA', 'Transferência'].map((pagamento) => {
-									return {text:pagamento}
+									return { text: pagamento }
 								})}
 								value={formData.paymentMethod || ''}
 								defaultText="Selecione"
@@ -247,6 +260,14 @@ export function Payment() {
 							text="Limpar"
 							type="button"
 						/>
+						<Button
+							onClick={() => {
+								handleOpenPdf()
+							}}
+							variant="default"
+							text="Gerar PDP"
+							type="button"
+						/>
 					</div>
 				</div>
 				<div>
@@ -279,7 +300,7 @@ export function Payment() {
 											}}
 										>
 											<td>{mensal.name}</td>
-											<td>{DateUtils.getMonthExt(mensal.month-1)}</td>
+											<td>{DateUtils.getMonthExt(mensal.month - 1)}</td>
 											<td>{mensal.year}</td>
 											<td>{mensal.monthlyValue}</td>
 											<td>{DateUtils.getDatePt(mensal.created_at).toString()}</td>

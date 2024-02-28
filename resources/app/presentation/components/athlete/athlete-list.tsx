@@ -17,7 +17,8 @@ import { loadAthleteStore } from '@/presentation/redux'
 import { LoadAthletes } from '@/domain/usecases'
 import { QueryParams } from '@/data/protocols'
 
-type FilterDataProps = {
+
+export type FilterDataProps = {
 	id: number
 	name: string
 	email: string

@@ -14,6 +14,7 @@ import {
 } from '@/presentation/redux'
 import { DataUtils, FileUtils } from '@/utils'
 import { ImagePreview } from '../image-preview'
+import { FilterDataProps } from './athlete-list'
 
 type AthleteEditorProps = {
 	addAthlete: AddAthlete
@@ -36,6 +37,13 @@ export function AthleteEditor({
 		status: 'active'
 	} as AthleteModel)
 	const [pdfUrl, setPdfUrl] = useState('')
+	const [filtered, setFiltered] = useState<FilterDataProps>({
+		name: '',
+		email: '',
+		phone: '' as any,
+		date: '' as any,
+		id: '' as any
+	})
 
 	const employees = useSelector(useEmployees())
 	const { countries, provinces, municipalities } = useSelector(useLocations())
@@ -119,6 +127,11 @@ export function AthleteEditor({
 	const clearInputFile = () => {
 		setFormData((prev) => ({ ...prev, photo: '' }))
 		setPhotoPreview('')
+	}
+
+	const handleOpenPdf = () => {
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}&phone=${filtered.phone}`
+		window.open(`/pdf/atletas${queryParams}`)
 	}
 
 	return (
@@ -304,6 +317,7 @@ export function AthleteEditor({
 					/>
 					<Button text="Limpar" icon={IconClose} onClick={handleClear} />
 					<Button variant="red" text="Excluir" icon={IconTrash} onClick={onDelete} />
+					<Button text="Gerar PDF" onClick={handleOpenPdf} />
 				</div>
 			</div>
 		</fieldset>

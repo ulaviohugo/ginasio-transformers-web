@@ -9,6 +9,9 @@ use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MensalidadeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionFeeController;
 use App\Http\Controllers\UserController;
@@ -53,20 +56,36 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::prefix('graphs')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
 	});
+
+
+	Route::get('materiais', [EquipmentController::class, 'index']);
+	Route::get('materiais/count', [EquipmentController::class, 'count']);
+	Route::post('materiais', [EquipmentController::class, 'store']);
+	Route::get('materiais/{equipment}', [EquipmentController::class, 'show']);
+	Route::put('materiais/{equipment}', [EquipmentController::class, 'update']);
+	Route::delete('materiais/{equipment}', [EquipmentController::class, 'destroy']);
+
+	Route::get('produtos', [ProductController::class, 'index']);
+	Route::get('produtos/count', [ProductController::class, 'count']);
+	Route::post('produtos', [ProductController::class, 'store']);
+	Route::get('produtos/{product}', [ProductController::class, 'show']);
+	Route::put('produtos/{product}', [ProductController::class, 'update']);
+	Route::delete('produtos/{product}', [ProductController::class, 'destroy']);
+
+	Route::get('vendas/count', [SaleController::class, 'count']);
+	Route::apiResource('vendas', SaleController::class);
+
+	Route::get('suppliers/count', [SupplierController::class, 'count']);
+	Route::apiResource('suppliers', SupplierController::class);
+
+
+
+	Route::get('mensalidade', [MensalidadeController::class, 'index']);
+	Route::post('mensalidade', [MensalidadeController::class, 'store']);
+	Route::get('mensalidade/{mensalidade}', [MensalidadeController::class, 'show']);
+	Route::put('mensalidade/{mensalidade}', [MensalidadeController::class, 'update']);
+	Route::delete('mensalidade/{mensalidade}', [MensalidadeController::class, 'destroy']);
 });
-
-Route::get('materiais', [EquipmentController::class, 'index']);
-Route::get('materiais/count', [EquipmentController::class, 'count']);
-Route::post('materiais', [EquipmentController::class, 'store']);
-Route::get('materiais/{equipment}', [EquipmentController::class, 'show']);
-Route::put('materiais/{equipment}', [EquipmentController::class, 'update']);
-Route::delete('materiais/{equipment}', [EquipmentController::class, 'destroy']);
-
-Route::get('mensalidade', [MensalidadeController::class, 'index']);
-Route::post('mensalidade', [MensalidadeController::class, 'store']);
-Route::get('mensalidade/{mensalidade}', [MensalidadeController::class, 'show']);
-Route::put('mensalidade/{mensalidade}', [MensalidadeController::class, 'update']);
-Route::delete('mensalidade/{mensalidade}', [MensalidadeController::class, 'destroy']);
 
 Route::any('/{path}', function () {
 	$url = url()->full();

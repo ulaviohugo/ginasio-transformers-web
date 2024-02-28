@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
 				'social_security' => '123456',
 				'dependents' => 1,
 				'education_degree' => 'Bacharel',
-				'phone' => '930690710',
+				'phone' => '936699913',
 				'phone2' => '951855037',
 				'email' => 'ulaviohugo@gmail.com',
 				'user_name' => 'ulaviohugo',

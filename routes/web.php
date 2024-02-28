@@ -1,6 +1,10 @@
 <?php
 
 use App\Exports\UsersExport;
+use App\Http\Controllers\AthleteController;
+use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\MensalidadeController;
+use App\Models\Athlete;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +28,10 @@ Route::match(['get', 'post'], 'mensalidade', function () {
 	return $pdf->stream();
 }); 
 
+Route::get('pdf/materiais', [EquipmentController::class, 'gerarPDF'])->name('gerar-pdf');
+Route::get('pdf/atletas', [AthleteController::class, 'gerarPDF'])->name('gerar-pdf');
+Route::get('pdf/mensalidades', [MensalidadeController::class, 'gerarPDF'])->name('gerar-pdf');
+
 Route::view('/{path}', 'app')->where(
 	'path',
 	'([A-z\d\-\/_.]+)?'
@@ -34,3 +42,4 @@ Route::view('redefinir-senha', 'admin')->name('password.reset');
 Route::fallback(function () {
 	return response()->json(['message' => 'Não encontrado']);
 });
+

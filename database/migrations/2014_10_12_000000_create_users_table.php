@@ -16,7 +16,7 @@ return new class extends Migration
 		Schema::create(DBHelper::TB_USERS, function (Blueprint $table) {
 			$table->id();
 			$table->string('name', 50);
-			$table->string('email', 50)->unique();
+			$table->string('email', 50)->nullable()->unique();
 			$table->string('photo', 100)->nullable();
 			$table->enum('gender', ['Masculino', 'Feminino']);
 			$table->date('date_of_birth');
@@ -25,16 +25,16 @@ return new class extends Migration
 			$table->string('document_number', 30);
 			$table->string('nif', 20)->nullable()->unique();
 			$table->string('social_security', 20)->nullable()->unique();
-			$table->integer('dependents')->default(0);
+			$table->integer('dependents')->nullable()->default(0);
 			$table->string('education_degree', 50);
 			$table->string('phone', 15);
 			$table->string('phone2', 15)->nullable();
 			$table->unsignedBigInteger('country_id')->nullable();
 			$table->unsignedBigInteger('province_id')->nullable();
 			$table->unsignedBigInteger('municipality_id')->nullable();
-			$table->string('address', 150);
-			$table->string('department', 50);
-			$table->string('position', 50);
+			$table->string('address', 150)->nullable();
+			$table->string('department', 50)->nullable();
+			$table->string('position', 50)->nullable();
 			$table->double('base_salary', 16, 3)->nullable();
 			$table->double('meal_allowance', 16, 3)->nullable();
 			$table->double('productivity_allowance', 16, 3)->nullable();

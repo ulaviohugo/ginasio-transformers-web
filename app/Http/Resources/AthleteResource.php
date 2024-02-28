@@ -39,6 +39,8 @@ class AthleteResource extends JsonResource
 			'municipality_id' => $this->municipality_id,
 			'address' => $this->address,
 			'user_id' => $this->user_id,
+			'mensalidades' => $this->whenLoaded('mensalidades'),
+			'user' => $this->whenLoaded('user'),
 			'user_id_update' => $this->user_id_update,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,

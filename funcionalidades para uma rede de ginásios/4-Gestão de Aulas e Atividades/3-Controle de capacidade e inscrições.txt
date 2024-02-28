@@ -1,0 +1,36 @@
+Controle de capacidade e inscrições
+
+Para implementar um controle de capacidade e inscrições em um sistema de gestão para uma rede de ginásios, você pode seguir estas diretrizes:
+
+**Backend (Laravel):**
+
+1. **Atualize a Tabela de Aulas:**
+   - Adicione um campo à tabela de aulas para armazenar a capacidade máxima de participantes.
+
+2. **Registre Inscrições:**
+   - Crie uma tabela para armazenar as inscrições dos membros em aulas específicas, incluindo o ID da aula, o ID do membro e quaisquer outras informações relevantes.
+
+3. **Implemente Lógica de Verificação de Capacidade:**
+   - Antes de permitir que um membro se inscreva em uma aula, verifique se a capacidade máxima de participantes não foi atingida.
+   - Se a capacidade máxima foi atingida, impeça a inscrição e exiba uma mensagem informando ao membro que a aula está lotada.
+
+4. **Gerencie Inscrições:**
+   - Implemente métodos para adicionar, atualizar e excluir inscrições de membros em aulas específicas.
+
+**Frontend (React com TypeScript e Tailwind CSS):**
+
+1. **Exiba Capacidade e Disponibilidade:**
+   - Exiba a capacidade máxima de participantes e o número atual de inscritos em cada aula na interface do usuário.
+   - Utilize cores ou ícones para indicar se uma aula está lotada ou tem vagas disponíveis.
+
+2. **Formulário de Inscrição:**
+   - Desenvolva um componente de interface de usuário que permita aos membros se inscreverem em aulas disponíveis.
+   - Antes de enviar a inscrição para o backend, verifique se há vagas disponíveis na aula selecionada.
+
+3. **Trate as Respostas do Backend:**
+   - Lide com as respostas do backend, exibindo mensagens de sucesso ou erro aos membros conforme apropriado.
+
+4. **Atualize a Lista de Aulas:**
+   - Após a inscrição bem-sucedida em uma aula, atualize a lista de aulas exibida na interface do usuário para refletir a atualização na contagem de inscritos.
+
+Certifique-se de que os membros tenham permissões adequadas para se inscreverem em aulas e que todas as funcionalidades sejam intuitivas e fáceis de usar. Além disso, teste cuidadosamente todas as funcionalidades para garantir que o sistema funcione corretamente e atenda às necessidades da rede de ginásios.

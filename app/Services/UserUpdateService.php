@@ -22,7 +22,7 @@ class UserUpdateService
 
 		$canLogin = $request->can_login == true || $request->can_login == "true";
 		$user->name = trim($request->name);
-		$user->email = trim(strtolower($request->email));
+		$user->email = trim($request->email) ? trim(strtolower($request->email)) : null;
 		$user->gender = $request->gender;
 		$user->date_of_birth = $request->date_of_birth;
 		$user->marital_status = $request->marital_status;

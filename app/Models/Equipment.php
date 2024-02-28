@@ -9,5 +9,10 @@ class Equipment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name","description"];
+    protected $fillable = ["name","description",'user_id','user_id_update'];
+
+    public function user()
+	{
+		return $this->belongsTo(User::class, 'user_id');
+	}
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('monthlyFine')->nullable();
             $table->string('paymentMethod');
             $table->foreignId('athlete_id')->nullable()->references('id')->on(DBHelper::TB_ATHLETE);
+            $table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
             $table->timestamps();
         });
     }

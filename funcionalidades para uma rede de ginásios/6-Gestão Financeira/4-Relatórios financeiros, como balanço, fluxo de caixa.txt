@@ -1,0 +1,11 @@
+Relatórios financeiros
+
+Para gerar relatórios financeiros em um sistema de gestão para uma rede de ginásios, você pode criar funcionalidades para:
+
+Balanço Patrimonial: Gerar um balanço patrimonial que mostre os ativos, passivos e patrimônio líquido da academia em um determinado período.
+
+Demonstrativo de Resultados: Criar um demonstrativo de resultados que mostre as receitas, despesas e lucros ou prejuízos da academia em um determinado período.
+
+Fluxo de Caixa: Gerar um relatório de fluxo de caixa que mostre as entradas e saídas de dinheiro da academia em um determinado período.
+
+Análise de Desempenho: Fornecer análises financeiras detalhadas, como índices de rentabilidade, margem de lucro, entre outros, para avaliar o desempenho financeiro da academia.

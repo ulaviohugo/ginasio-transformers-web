@@ -33,7 +33,7 @@ class UserCreateRequest extends GlobalFormRequest
 
 		return [
 			'name' => 'required',
-			'email' => 'required|email|unique:' . DBHelper::TB_USERS,
+			'email' => 'nullable|email|unique:' . DBHelper::TB_USERS.',email',
 			'gender' => 'required',
 			'date_of_birth' => 'required|date',
 			'marital_status' => 'required',
@@ -45,8 +45,8 @@ class UserCreateRequest extends GlobalFormRequest
 						->where('document_number', $document_number);
 				})
 			],
-			'nif' => 'required|unique:' . DBHelper::TB_USERS,
-			'social_security' => 'required|unique:' . DBHelper::TB_USERS,
+			'nif' => 'nullable|unique:' . DBHelper::TB_USERS.',nif',
+			'social_security' => 'nullable|unique:' . DBHelper::TB_USERS.',social_security',
 			'education_degree' => 'required',
 			'phone' => 'required',
 			'country_id' => [
@@ -68,11 +68,12 @@ class UserCreateRequest extends GlobalFormRequest
 				Rule::exists(Municipality::class, 'id'),
 			],
 			'address' => 'required',
-			'department' => 'required',
+			'department' => 'required',	
 			'position' => 'required',
 			'base_salary' => 'required|numeric|gt:0',
 			'hire_date' => 'required|date',
 			'contract_end_date' => 'required|date',
+			'iban' => 'nullable|unique:' . DBHelper::TB_USERS.',iban',
 			'can_login' => 'nullable|boolean',
 			'role' => [
 				'nullable',
@@ -80,13 +81,7 @@ class UserCreateRequest extends GlobalFormRequest
 					return $canLogin;
 				})
 			],
-			'user_name' => [
-				'nullable',
-				Rule::requiredIf(function () use ($canLogin) {
-					return $canLogin;
-				}),
-				'unique:' . DBHelper::TB_USERS,
-			],
+			'user_name' => 'nullable|unique:' . DBHelper::TB_USERS.',user_name',
 			'password' => [
 				'nullable',
 				Rule::requiredIf(function () use ($canLogin) {

@@ -13,6 +13,7 @@ import {
 	HiOutlineCurrencyDollar,
 	HiMinus
 } from 'react-icons/hi'
+import { IoMdPeople } from "react-icons/io";
 import {
 	AiOutlineClockCircle,
 	AiOutlineShoppingCart,
@@ -30,6 +31,9 @@ import { GiMuscleUp } from 'react-icons/gi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
+)
+export const IconSupliers = (props: IconBaseProps): React.ReactElement => (
+	<IoMdPeople {...props} />
 )
 export const IconDumbbell = (props: IconBaseProps): React.ReactElement => (
 	<FaDumbbell {...props} />

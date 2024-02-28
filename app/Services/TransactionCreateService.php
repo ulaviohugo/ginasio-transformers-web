@@ -16,6 +16,7 @@ class TransactionCreateService
 		$dbBalance = $cashRegister->balance;
 		$amount = $request->amount;
 		$balance = $request->operation_type == Transaction::OPERATION_TYPE_IN ? $dbBalance + $amount : $dbBalance - $amount;
+		$balance = $request->operation_type == Transaction::OPERATION_TYPE_OUT ? $dbBalance - $amount : $dbBalance + $amount;
 
 		$userId = User::currentUserId();
 		$transaction = Transaction::create([

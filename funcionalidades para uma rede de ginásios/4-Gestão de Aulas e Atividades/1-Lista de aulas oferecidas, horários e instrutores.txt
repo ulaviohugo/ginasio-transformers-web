@@ -1,0 +1,35 @@
+Lista de aulas oferecidas, horários e instrutores
+
+Para implementar uma lista de aulas oferecidas, horários e instrutores em um sistema de gestão para uma rede de ginásios, você pode seguir estas diretrizes:
+
+**Backend (Laravel):**
+
+1. **Crie uma Tabela para Armazenar Aulas:**
+   - Crie uma tabela no banco de dados para armazenar informações sobre as aulas oferecidas, como nome da aula, descrição, duração, capacidade máxima de participantes, etc.
+   - Implemente métodos para adicionar, atualizar, listar e excluir aulas no backend.
+
+2. **Associe Instrutores às Aulas:**
+   - Relacione a tabela de aulas com a tabela de instrutores para associar instrutores às aulas que eles ministram.
+   - Implemente métodos para atribuir instrutores a aulas específicas e recuperar as informações do instrutor associado a uma determinada aula.
+
+3. **Defina Horários para as Aulas:**
+   - Adicione um campo à tabela de aulas para armazenar os horários em que as aulas são oferecidas.
+   - Implemente métodos para adicionar e atualizar horários para as aulas existentes.
+
+**Frontend (React com TypeScript e Tailwind CSS):**
+
+1. **Interface para Listagem de Aulas:**
+   - Desenvolva interfaces de usuário para exibir uma lista de aulas oferecidas, incluindo detalhes como nome da aula, descrição, horário, instrutor, etc.
+   - Forneça recursos de filtragem e ordenação para facilitar a navegação pelos diferentes tipos de aulas.
+
+2. **Detalhes da Aula:**
+   - Crie páginas ou componentes para exibir os detalhes de uma aula específica, incluindo informações sobre o instrutor, horário, capacidade, etc.
+
+3. **Calendário de Horários das Aulas:**
+   - Integre um calendário de horários das aulas para que os membros possam visualizar facilmente quando suas aulas favoritas estão disponíveis.
+   - Permita que os membros filtrem o calendário por tipo de aula, horário, instrutor, etc.
+
+4. **Informações do Instrutor:**
+   - Desenvolva interfaces para exibir informações sobre os instrutores associados às aulas, incluindo nome, foto, biografia, etc.
+
+Certifique-se de que todas as funcionalidades sejam intuitivas e fáceis de usar, proporcionando uma boa experiência para os membros ao explorar e se inscrever em aulas oferecidas. Além disso, teste cuidadosamente todas as funcionalidades para garantir que o sistema funcione corretamente e atenda às necessidades da rede de ginásios.
