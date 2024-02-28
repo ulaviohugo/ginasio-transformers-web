@@ -65,21 +65,6 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::put('materiais/{equipment}', [EquipmentController::class, 'update']);
 	Route::delete('materiais/{equipment}', [EquipmentController::class, 'destroy']);
 
-	Route::get('produtos', [ProductController::class, 'index']);
-	Route::get('produtos/count', [ProductController::class, 'count']);
-	Route::post('produtos', [ProductController::class, 'store']);
-	Route::get('produtos/{product}', [ProductController::class, 'show']);
-	Route::put('produtos/{product}', [ProductController::class, 'update']);
-	Route::delete('produtos/{product}', [ProductController::class, 'destroy']);
-
-	Route::get('vendas/count', [SaleController::class, 'count']);
-	Route::apiResource('vendas', SaleController::class);
-
-	Route::get('suppliers/count', [SupplierController::class, 'count']);
-	Route::apiResource('suppliers', SupplierController::class);
-
-
-
 	Route::get('mensalidade', [MensalidadeController::class, 'index']);
 	Route::post('mensalidade', [MensalidadeController::class, 'store']);
 	Route::get('mensalidade/{mensalidade}', [MensalidadeController::class, 'show']);
