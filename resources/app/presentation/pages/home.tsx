@@ -38,13 +38,9 @@ export function Home() {
 	const [employees, setEmployees] = useState(0)
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
 	const [athletes, setAthletes] = useState(0)
-	const [suppliers, setSuppliers] = useState(0)
 	const [equipments, setEquipments] = useState(0)
-	const [produtos, setProdutos] = useState(0)
 	const [isLoadingAthletes, setIsLoadingAthletes] = useState(true)
 	const [isLoadingEquipments, setIsLoadingEquipments] = useState(true)
-	const [isLoadingStock, setIsLoadingStock] = useState(true)
-	const [isLoadingSuppliers, setIsLoadingSuppliers] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -84,28 +80,6 @@ export function Home() {
 							toast.error(response.body);
 						}
 					}),
-					makeAuthorizeHttpClientDecorator().request({
-						url: makeApiUrl('/produtos/count'),
-						method: 'get'
-					}).then((response)=>{
-						if (response.statusCode >=200 &&response.statusCode <=299) {
-							setProdutos(response.body);
-							setIsLoadingStock(false)
-						} else {
-							toast.error(response.body);
-						}
-					}),
-					makeAuthorizeHttpClientDecorator().request({
-						url: makeApiUrl('/suppliers/count'),
-						method: 'get'
-					}).then((response)=>{
-						if (response.statusCode >=200 &&response.statusCode <=299) {
-							setSuppliers(response.body);
-							setIsLoadingSuppliers(false)
-						} else {
-							toast.error(response.body);
-						}
-					})
 				])
 		}
 	}, [])
@@ -136,20 +110,6 @@ export function Home() {
 								icon={IconDumbbell}
 								isLoading={isLoadingEquipments}
 								href={MenuUtils.FRONT.EQUIPMENTS}
-							/>
-							<Item
-								number={produtos}
-								title={'Produtos'}
-								icon={IconProduct}
-								isLoading={isLoadingStock}
-								href={MenuUtils.FRONT.STOCK}
-							/>
-							<Item
-								number={suppliers}
-								title={'Fornecedores'}
-								icon={IconSupliers}
-								isLoading={isLoadingSuppliers}
-								href={MenuUtils.FRONT.SUPPLIERS}
 							/>
 						</>
 					)}

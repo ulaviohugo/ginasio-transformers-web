@@ -9,14 +9,14 @@ import {
 	IconSearch,
 	Input,
 	NoData,
-	Spinner
+	Spinner,
+	Button
 } from '@/presentation/components'
 import { DateUtils, ObjectUtils } from '@/utils'
 import { useAthletes } from '@/presentation/hooks'
 import { loadAthleteStore } from '@/presentation/redux'
 import { LoadAthletes } from '@/domain/usecases'
 import { QueryParams } from '@/data/protocols'
-
 
 export type FilterDataProps = {
 	id: number
@@ -49,8 +49,11 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	}
 
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
+	const [filtered, setFiltered] = useState<FilterDataProps>({} as any)
+
 
 	const hasFilter = useMemo(() => {
+		setFiltered(filterData)
 		return !ObjectUtils.isEmpty(filterData)
 	}, [filterData])
 
@@ -78,7 +81,9 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		if (ObjectUtils.isEmpty(filterData)) {
 			return toast.error('Selecione alguns campos para filtrar resultados')
 		}
+		setFiltered(filterData)
 		fetchData({ filter: filterData })
+		// onFilter(filterData)
 	}
 
 	useEffect(() => {
@@ -89,10 +94,19 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		setFilterData({} as any)
 		fetchData()
 	}
+	
+
+	const handleOpenPdf = () => {
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}&phone=${filtered.phone}&email=${filtered.email}&date=${filtered.date}`
+		window.open(`/pdf/atletas${queryParams}`)
+	}
 
 	return (
 		<fieldset>
-			<legend>Filtro {loading && <Spinner />}</legend>
+			<legend>
+				Filtro {loading && <Spinner />}
+				<Button text="Gerar PDF" onClick={handleOpenPdf} />
+			</legend>
 			<div className="flex mb-3 gap-2">
 				<div className="max-w-20">
 					<Input

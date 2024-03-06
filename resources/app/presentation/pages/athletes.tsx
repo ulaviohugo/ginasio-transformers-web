@@ -11,7 +11,8 @@ import {
 	LayoutBody,
 	AthleteEditor,
 	AthleteList,
-	ModalDelete
+	ModalDelete,
+	FilterDataProps
 } from '@/presentation/components'
 import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
@@ -35,6 +36,8 @@ export function Athletes({
 }: AthleteProps) {
 	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>(undefined as any)
 	const [showFormDelete, setShowFormDelete] = useState(false)
+	const [filtered, setFiltered] = useState<FilterDataProps>({} as FilterDataProps)
+	 
 
 	const dispatch = useDispatch()
 
@@ -54,6 +57,10 @@ export function Athletes({
 		} catch ({ message }) {
 			toast.error(message)
 		}
+	}
+
+	const handleFilter = (filterData: FilterDataProps) => {
+		setFiltered(filterData)
 	}
 
 	return (
@@ -78,7 +85,7 @@ export function Athletes({
 						onDelete={onDelete}
 					/>
 					<hr />
-					<AthleteList onSelect={setSelectedAthlete} loadAthletes={loadAthletes} />
+					<AthleteList onSelect={setSelectedAthlete}  loadAthletes={loadAthletes} />
 				</div>
 			</LayoutBody>
 		</Layout>
