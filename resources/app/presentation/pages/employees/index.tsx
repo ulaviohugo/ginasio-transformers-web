@@ -27,7 +27,7 @@ import {
 import { loadEmployeeStore, removeEmployeeStore } from '@/presentation/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useAuth, useEmployees } from '@/presentation/hooks'
+import {  useAuth, useEmployees } from '@/presentation/hooks'
 import { NotFound } from '@/presentation/pages'
 
 export function Employees() {
@@ -163,7 +163,7 @@ export function Employees() {
 									</div>
 									<div className="flex items-center gap-1 text-sm">
 										<IconClock /> Início de contrato:{' '}
-										{DateUtils.getDatePt(employee.hire_date, '/')}
+									{DateUtils.getDatePt(employee.hire_date, '/')}
 									</div>
 									{employee.contract_end_date && (
 										<div className="flex items-center gap-1 text-sm">

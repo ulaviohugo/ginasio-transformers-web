@@ -11,7 +11,8 @@ import {
 	HiTrash,
 	HiPencilAlt,
 	HiOutlineCurrencyDollar,
-	HiMinus
+	HiMinus,
+	HiOutlineIdentification
 } from 'react-icons/hi'
 import { IoMdPeople } from "react-icons/io";
 import {
@@ -114,6 +115,7 @@ export const IconBudget = (props: IconBaseProps): React.ReactElement => (
 export const IconEdit = (props: IconBaseProps) => <HiPencilAlt {...props} />
 export const IconTrash = (props: IconBaseProps) => <HiTrash {...props} />
 export const IconClose = (props: IconBaseProps) => <IoMdClose {...props} />
+export const Iconcard = (props: IconBaseProps) => <HiOutlineIdentification {...props} />
 
 export const IconStock = (props: IconBaseProps) => <GrStorage {...props} />
 export const IconNotification = (props: IconBaseProps) => (

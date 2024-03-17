@@ -1,3 +1,8 @@
+<?php
+  $fileHelper =App\Helpers\FileHelper::class; 
+    $logoPath = $fileHelper::logoPath();
+    $logo = $fileHelper::convertToBase64($logoPath);  
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,20 +13,28 @@
     <title>Gerar PDF</title>
     <style>
         table {
-            width: 100%
+            width: 100%;
         }
 
         thead tr {
-            background: #d7d7d7; font-weight: bold
+            background: #d7d7d7;
+            font-weight: bold;
         }
 
         tbody tr:nth-child(2n) {
-            background: #f5f5f5
+            background: #f5f5f5;
+        }
+
+        .center-logo {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
+    <div class="center-logo">
+        <img src="{{$logo}}" style="width: 50px" alt="">
+    </div>
     <h2>Materiais ({{ count($equipments) }})</h2>
     <table>
         <thead>
@@ -33,12 +46,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($equipments as $equipement)
+            @foreach ($equipments as $equipment)
                 <tr>
-                    <td>{{ $equipement->id }}</td>
-                    <td>{{ $equipement->name }}</td>
-                    <td>{{ $equipement->created_at }}</td>
-                    <td>{{ $equipement->user->name }}</td>
+                    <td>{{ $equipment->id }}</td>
+                    <td>{{ $equipment->name }}</td>
+                    <td>{{ $equipment->created_at }}</td>
+                    <td>{{ $equipment->user->name }}</td>
                 </tr>
             @endforeach
         </tbody>

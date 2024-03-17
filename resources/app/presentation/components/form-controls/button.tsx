@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, ElementType } from 'react'
 import { Spinner } from '../spinner'
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-	variant?: 'green' | 'red' | 'default' | 'gray-light'
+	variant?: 'green' | 'red' | 'default' | 'gray-light' |'rose'
 	text?: string
 	leftIcon?: ElementType
 	rightIcon?: ElementType
@@ -24,7 +24,8 @@ export function Button({
 		green: 'bg-green-700 ',
 		red: 'bg-red-700 ',
 		default: 'bg-gray-200 !text-gray-700',
-		'gray-light': 'bg-primary opacity-70'
+		'gray-light': 'bg-primary opacity-70',
+		rose: 'bg-rose-950'
 	}
 
 	return (

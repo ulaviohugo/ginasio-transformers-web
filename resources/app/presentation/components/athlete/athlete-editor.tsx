@@ -2,7 +2,7 @@ import { AthleteModel } from '@/domain/models'
 import { AddAthlete, LoadEmployees, UpdateAthlete } from '@/domain/usecases'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls'
-import { IconCheck, IconClose, IconEdit, IconTrash } from '../icons'
+import { IconCheck, IconClose, IconEdit, IconTrash, Iconcard } from '../icons'
 import { PdfViewer } from '../pdf-viewer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEmployees, useLocations } from '@/presentation/hooks'
@@ -22,6 +22,7 @@ type AthleteEditorProps = {
 	loadEmployees: LoadEmployees
 	data?: AthleteModel
 	onDelete: () => void
+	handleOpenDetalhe: () => void
 }
 
 export function AthleteEditor({
@@ -29,7 +30,8 @@ export function AthleteEditor({
 	updateAthlete,
 	loadEmployees,
 	data,
-	onDelete
+	onDelete,
+	handleOpenDetalhe
 }: AthleteEditorProps) {
 	const dispatch = useDispatch()
 
@@ -37,6 +39,12 @@ export function AthleteEditor({
 		status: 'active'
 	} as AthleteModel)
 	const [pdfUrl, setPdfUrl] = useState('')
+
+	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>(
+		{} as AthleteModel
+	)
+
+	const [showEditor, setShowEditor] = useState(false)
 
 	const employees = useSelector(useEmployees())
 	const { countries, provinces, municipalities } = useSelector(useLocations())
@@ -306,6 +314,7 @@ export function AthleteEditor({
 					/>
 					<Button text="Limpar" icon={IconClose} onClick={handleClear} />
 					<Button variant="red" text="Excluir" icon={IconTrash} onClick={onDelete} />
+					<Button variant="rose" text="Cartão" icon={Iconcard} onClick={handleOpenDetalhe} />
 				</div>
 			</div>
 		</fieldset>

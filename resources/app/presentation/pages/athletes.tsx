@@ -18,6 +18,7 @@ import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
+import { HandleOpenCard } from '../components/athlete/handleOpenCard'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes
@@ -37,13 +38,21 @@ export function Athletes({
 	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>(undefined as any)
 	const [showFormDelete, setShowFormDelete] = useState(false)
 	const [filtered, setFiltered] = useState<FilterDataProps>({} as FilterDataProps)
-	 
+	const [showCard, setShowCard] = useState(false)
 
 	const dispatch = useDispatch()
 
 	const onDelete = async () => {
-		if (!selectedAthlete?.id) return toast.error('selecione um registo para excluir')
+		if (!selectedAthlete?.id) return toast.error('Selecione um registro para excluir')
 		setShowFormDelete(true)
+	}
+
+	const handleOpenCard = async () => {
+		setShowCard(true)
+	}
+
+	const handleCloseCard = () => {
+		setShowCard(false)
 	}
 
 	const handleDelete = async () => {
@@ -53,7 +62,7 @@ export function Athletes({
 			toast.success('Atleta excluído com sucesso')
 			setShowFormDelete(false)
 			dispatch(removeAthleteStore(selectedAthlete?.id))
-			setSelectedAthlete({} as any)
+			setSelectedAthlete(undefined as any) // Limpa o atleta selecionado
 		} catch ({ message }) {
 			toast.error(message)
 		}
@@ -75,6 +84,12 @@ export function Athletes({
 					onSubmit={handleDelete}
 				/>
 			)}
+			{showCard && (
+				<HandleOpenCard
+					show={showCard}
+					onClose={handleCloseCard} // Adiciona uma função para fechar a modal
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-4">
 					<AthleteEditor
@@ -83,6 +98,7 @@ export function Athletes({
 						updateAthlete={updateAthlete}
 						loadEmployees={loadEmployees}
 						onDelete={onDelete}
+						handleOpenDetalhe={handleOpenCard}
 					/>
 					<hr />
 					<AthleteList onSelect={setSelectedAthlete}  loadAthletes={loadAthletes} />
