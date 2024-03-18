@@ -35,6 +35,7 @@ class UserCreateRequest extends GlobalFormRequest
 			'name' => 'required',
 			'email' => 'nullable|email|unique:' . DBHelper::TB_USERS.',email',
 			'gender' => 'required',
+			'gym_id' => 'required',
 			'date_of_birth' => 'required|date',
 			'marital_status' => 'required',
 			'document_type' => 'required|string',

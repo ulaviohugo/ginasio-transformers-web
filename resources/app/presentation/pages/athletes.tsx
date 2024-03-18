@@ -18,7 +18,7 @@ import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { HandleOpenCard } from '../components/athlete/handleOpenCard'
+import { HandleOpenCard } from '../components/athlete/HandleOpenCard'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes

@@ -45,6 +45,7 @@ class UserCreateService
 			'hire_date' => $request->hire_date,
 			'contract_end_date' => $request->contract_end_date,
 			'bank_name' => $request->bank_name,
+			'gym_id' => $request->gym_id,
 			'iban' => $request->iban ?? null,
 			'account_number' => $request->account_number ?? null,
 			'can_login' => $canLogin,

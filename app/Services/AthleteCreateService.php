@@ -47,6 +47,7 @@ class AthleteCreateService
 				'province_id' => $request->province_id,
 				'municipality_id' => $request->municipality_id,
 				'address' => $request->address,
+				'gym_id' => $request->gym_id,
 				'user_id' => User::currentUserId(),
 			]);
 			// $pdfUrl = $this->service->buildPDF($athlete);

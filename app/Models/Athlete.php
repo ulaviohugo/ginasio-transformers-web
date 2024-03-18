@@ -40,6 +40,7 @@ class Athlete extends Model
 		'address',
 		'user_id',
 		'user_id_update',
+		'gym_id'
 	];
 
 	public function user()
@@ -50,4 +51,9 @@ class Athlete extends Model
     {
         return $this->hasMany(Mensalidade::class, 'athlete_id');
     }
+
+	public function gym()
+	{
+		return $this->belongsTo(Gym::class, 'gym_id');
+	}
 }

@@ -7,7 +7,8 @@ import {
 	Spinner,
 	IconDumbbell,
 	IconProduct,
-	IconSupliers
+	IconSupliers,
+	IconDepartment
 } from '@/presentation/components'
 import { ElementType, useEffect, useState } from 'react'
 import {
@@ -39,8 +40,10 @@ export function Home() {
 	const [isLoadingEmployees, setIsLoadingEmployees] = useState(true)
 	const [athletes, setAthletes] = useState(0)
 	const [equipments, setEquipments] = useState(0)
+	const [gyms, setGyms] = useState(0)
 	const [isLoadingAthletes, setIsLoadingAthletes] = useState(true)
 	const [isLoadingEquipments, setIsLoadingEquipments] = useState(true)
+	const [isLoadingGyms, setIsLoadingGyms] = useState(true)
 
 	const fetchCount = (
 		remoteResource: { count: () => Promise<number> },
@@ -80,6 +83,17 @@ export function Home() {
 							toast.error(response.body);
 						}
 					}),
+					makeAuthorizeHttpClientDecorator().request({
+						url: makeApiUrl('/gyms/count'),
+						method: 'get'
+					}).then((response)=>{
+						if (response.statusCode >=200 &&response.statusCode <=299) {
+							setGyms(response.body);
+							setIsLoadingGyms(false)
+						} else {
+							toast.error(response.body);
+						}
+					})
 				])
 		}
 	}, [])
@@ -110,6 +124,13 @@ export function Home() {
 								icon={IconDumbbell}
 								isLoading={isLoadingEquipments}
 								href={MenuUtils.FRONT.EQUIPMENTS}
+							/>
+							<Item
+								number={gyms}
+								title={'Departamentos'}
+								icon={IconDepartment}
+								isLoading={isLoadingGyms}
+								href={MenuUtils.FRONT.GYM}
 							/>
 						</>
 					)}

@@ -13,6 +13,7 @@ export class MenuUtils {
 		FINANCES: '/financas',	
 		EQUIPMENTS: '/equipamentos',
 		PAYMENT: '/mensalidade',
+		GYM: '/ginasio',
 		
 		EMPLOYEES: '/funcionarios'
 	}

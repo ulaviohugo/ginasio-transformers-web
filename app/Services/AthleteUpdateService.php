@@ -47,6 +47,8 @@ class AthleteUpdateService
 				'country_id' => $request->country_id,
 				'province_id' => $request->province_id,
 				'municipality_id' => $request->municipality_id,
+				'municipality_id' => $request->municipality_id,
+				'gym_id' => $request->gym_id,
 				'address' => $request->address,
 				'user_id_update' => User::currentUserId(),
 			];

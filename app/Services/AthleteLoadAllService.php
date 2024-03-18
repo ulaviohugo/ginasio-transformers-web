@@ -14,6 +14,7 @@ class AthleteLoadAllService
 		$email = null;
 		$phone = null;
 		$date = null;
+		$gym_id = null;
 
 		if (request()->query('filter')) {
 			$queryParam = json_decode(request()->query('filter'));
@@ -21,6 +22,7 @@ class AthleteLoadAllService
 			$name = isset($queryParam->name) ? $queryParam->name : null;
 			$email = isset($queryParam->email) ? $queryParam->email : null;
 			$phone = isset($queryParam->phone) ? $queryParam->phone : null;
+			$gym_id = isset($queryParam->gym_id) ? $queryParam->gym_id : null;
 			$date = isset($queryParam->date) ? date('Y-m-d', strtotime($queryParam->date)) : null;
 		}
 
@@ -34,6 +36,9 @@ class AthleteLoadAllService
 		}
 		if ($email) {
 			$athletes = $athletes->where('email', $email);
+		}
+		if ($gym_id) {
+			$athletes = $athletes->where('gym_id', $gym_id);
 		}
 		if ($phone) {
 			$athletes = $athletes->where('phone', NumberHelper::convertToNumber($phone));

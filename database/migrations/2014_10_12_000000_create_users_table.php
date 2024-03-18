@@ -53,6 +53,8 @@ return new class extends Migration
 			$table->rememberToken();
 			$table->unsignedBigInteger('user_id')->nullable();
 			$table->unsignedBigInteger('user_id_update')->nullable();
+			$table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->cascadeOnUpdate()->nullOnDelete();
+
 			$table->timestamps();
 
 			$table->unique(['document_type', 'document_number']);

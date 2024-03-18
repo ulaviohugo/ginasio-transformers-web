@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class EquipmentCreateRequest extends FormRequest
+class GymCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,11 @@ class EquipmentCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'gym_id' => 'required',
+            'name' => [
+                'required',
+                Rule::unique('gyms', 'name')
+            ],
+            'location' => 'required',
         ];
     }
 }

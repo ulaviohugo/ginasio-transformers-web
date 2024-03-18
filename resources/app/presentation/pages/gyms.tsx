@@ -1,32 +1,29 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Layout, LayoutBody, ModalDelete, Select } from '../components'
+import { Button, Input, Layout, LayoutBody, ModalDelete } from '../components'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
 import { DateUtils } from '@/utils'
-import { FilterDataProps, FilterEquipment } from '../components/filter-Equipment'
+import { FilterDataProps, FilterGym } from '../components/fiter-Gym'
 
 type FormDataProps = {
 	name: string
-	description: string
-	gym_id: string
+	location: string
 }
 
-type MaterialProps = {
+type GymProps = {
 	id: number
 	name: string
-	description: string
-	gym_id: string
+	location: string
 	created_at: Date
 	updated_at: Date
 }
 
-export function Equipments() {
-	const [materiais, setMateriais] = useState<MaterialProps[]>([])
+export function Gyms() {
+	const [gyms, setGym] = useState<GymProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
-	const [gyms, setGyms] = useState([]);
-	const [selectedMaterial, setSelectMaterial] = useState<MaterialProps>()
-	const [formData, setFormData] = useState<FormDataProps>({ name: '', description: '', gym_id: ''})
+	const [selectedGym, setSelectGym] = useState<GymProps>()
+	const [formData, setFormData] = useState<FormDataProps>({ name: '', location: '' })
 	const [filtered, setFiltered] = useState<FilterDataProps>({
 		name: '',
 		created_at: '',
@@ -40,11 +37,11 @@ export function Equipments() {
 
 	const fetchData = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais' + (queryParams || '')),
+			url: makeApiUrl('/gym' + (queryParams || '')),
 			method: 'get'
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setMateriais(httpResponse.body)
+			setGym(httpResponse.body)
 		} else {
 			toast.error(httpResponse.body)
 		}
@@ -54,47 +51,31 @@ export function Equipments() {
 		fetchData()
 	}, [])
 
-	const fetchDataGym = async (queryParams?: string) => {
-		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/gym' + (queryParams || '')),
-			method: 'get'
-		})
-		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setGyms(httpResponse.body)
-		} else {
-			toast.error(httpResponse.body)
-		}
-	}
-
-	useEffect(() => {
-		fetchDataGym()
-	}, [])
-
 	const handleCloseDeleteModal = () => {
 		setShowDeleteModal(false)
 	}
 
 	const handleOpenDeleteModal = () => {
-		if (!selectedMaterial?.id) {
-			toast.error('Selecione a lista do material que deseja excluir')
+		if (!selectedGym?.id) {
+			toast.error('Selecione o ginásio que deseja excluir')
 		} else {
 			setShowDeleteModal(true)
 		}
 	}
 
 	const handleClear = () => {
-		setSelectMaterial({} as any)
+		setSelectGym({} as any)
 		setFormData({} as any)
 	}
 
 	async function handleSubmit() {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais'),
+			url: makeApiUrl('/gym'),
 			method: 'post',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material cadastrado com sucesso')
+			toast.success('Ginásio cadastrado com sucesso')
 			fetchData()
 			handleClear()
 		} else {
@@ -104,12 +85,12 @@ export function Equipments() {
 
 	async function handleDelete() {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais/' + selectedMaterial?.id),
+			url: makeApiUrl('/gym/' + selectedGym?.id),
 			method: 'delete',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material Excluido com sucesso')
+			toast.success('Ginásio Excluido com sucesso')
 			handleCloseDeleteModal()
 			fetchData()
 			handleClear()
@@ -119,17 +100,17 @@ export function Equipments() {
 	}
 
 	async function handleUpdate() {
-		if (!selectedMaterial?.id) {
-			return toast.error('Selecione a lista do material que deseja editar')
+		if (!selectedGym?.id) {
+			return toast.error('Selecione o ginásio que deseja editar')
 		}
 
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais/' + selectedMaterial?.id),
+			url: makeApiUrl('/gym/' + selectedGym?.id),
 			method: 'put',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material Editado com sucesso')
+			toast.success('Ginásio Editado com sucesso')
 			fetchData()
 			handleClear()
 		} else {
@@ -146,14 +127,14 @@ export function Equipments() {
 	
 	const handleOpenPdf = () => {
 		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}`
-		window.open(`/pdf/materiais${queryParams}`)
+		window.open(`/pdf/gym${queryParams}`)
 	}
 
 	return (
-		<Layout title="Equipamentos">
+		<Layout title="Ginásios">
 			{showDeleteModal && (
 				<ModalDelete
-					description="Deseja realmente Excluir o equipamento"
+					description="Deseja realmente Excluir o ginásio"
 					onClose={handleCloseDeleteModal}
 					onSubmit={handleDelete}
 					show
@@ -162,31 +143,23 @@ export function Equipments() {
 			<LayoutBody>
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
-						Equipamentos
+						Ginásios
 						<form className="flex flex-col gap-4">
 							<Input
 								name="name"
 								onChange={handleInput}
 								label="Nome"
 								type="text"
-								placeholder="Informe o nome do Equipamento"
+								placeholder="Informe o nome do departamento do ginásio"
 								value={formData.name || ''}
 							/>
 							<Input
-								name="description"
+								name="location"
 								onChange={handleInput}
-								label="Descrição"
+								label="Localização"
 								type="text"
-								placeholder="Qual é a descrição do equipamento"
-								value={formData.description || ''}
-							/>
-							<Select
-								name="gym_id"
-								onChange={handleInput}
-								label="Selecione Ginásio"
-								data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-								value={formData.gym_id || ''}
-								defaultText="Selecione"
+								placeholder="Qual é a localização do ginásio"
+								value={formData.location || ''}
 							/>
 						</form>
 					</div>
@@ -205,7 +178,7 @@ export function Equipments() {
 						/>
 						<Button
 							onClick={() => {
-								setSelectMaterial(selectedMaterial)
+								setSelectGym(selectedGym)
 								handleOpenDeleteModal()
 							}}
 							variant="red"
@@ -231,31 +204,31 @@ export function Equipments() {
 				<div>
 					<fieldset>
 						<legend>Filtro</legend>
-						<FilterEquipment onFilter={handleFilter} />
+						<FilterGym onFilter={handleFilter} />
 						<table className="w-full">
 							<thead>
 								<tr className="gap-10">
 									<td>Código</td>
 									<td>Nome</td>
-									<td>Descrição</td>
+									<td>Localização</td>
 									<td>Data</td>
 								</tr>
 							</thead>
 							<tbody>
-								{materiais.map((material) => {
+								{gyms.map((gym) => {
 									return (
 										<tr
-											key={material.id}
+											key={gym.id}
 											className="cursor-pointer hover:bg-gray-100"
 											onClick={() => {
-												setFormData(material)
-												setSelectMaterial(material)
+												setFormData(gym)
+												setSelectGym(gym)
 											}}
 										>
-											<td>{material.id}</td>
-											<td>{material.name}</td>
-											<td>{material.description}</td>
-											<td>{DateUtils.getDatePt(material.created_at).toString()}</td>
+											<td>{gym.id}</td>
+											<td>{gym.name}</td>
+											<td>{gym.location}</td>
+											<td>{DateUtils.getDatePt(gym.created_at).toString()}</td>
 										</tr>
 									)
 								})}

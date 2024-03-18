@@ -55,6 +55,7 @@ class UserResource extends JsonResource
 			'user_id_update' => $this->user_id_update,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
+			'gym_id' => $this->gym_id,
 		];
 	}
 }

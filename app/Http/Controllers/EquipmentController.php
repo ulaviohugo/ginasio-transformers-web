@@ -21,6 +21,7 @@ class EquipmentController extends Controller
 
         $id = $request->query('id');
         $name = $request->query('name');
+        $gym_id = $request->query('gym_id');
         $created_at = $request->query('created_at');
 
         $equipments = Equipment::orderBy('created_at');
@@ -29,6 +30,9 @@ class EquipmentController extends Controller
         }
         if ($name) {
             $equipments = $equipments->where('name', 'Like', "{$name}%");
+        }
+        if ($gym_id) {
+            $equipments = $equipments->where('gym_id', 'Like', "{$gym_id}%");
         }
         if ($created_at) {
             $equipments = $equipments->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
@@ -48,6 +52,7 @@ class EquipmentController extends Controller
 
         $id = $request->query('id');
         $name = $request->query('name');
+        $gym_id = $request->query('gym_id');
         $created_at = $request->query('created_at');
 
         $equipments = Equipment::orderBy('created_at');
@@ -56,6 +61,9 @@ class EquipmentController extends Controller
         }
         if ($name) {
             $equipments = $equipments->where('name', 'Like', "{$name}%");
+        }
+        if ($gym_id) {
+            $equipments = $equipments->where('gym_id', 'Like', "{$gym_id}%");
         }
         if ($created_at) {
             $equipments = $equipments->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
@@ -77,7 +85,8 @@ class EquipmentController extends Controller
         $equipment = Equipment::create([
             'name' => $request->name,
             'description' => $request->description,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'gym_id' => $request->gym_id
         ]);
         $equipment->load('user');
         return $equipment;
@@ -99,6 +108,7 @@ class EquipmentController extends Controller
 
         $equipment->name = $request->name;
         $equipment->description = $request->description;
+        $equipment->gym_id = $request->gym_id;
         $equipment->user_id_update = User::currentUserId();
         $equipment->save();
         return $equipment;

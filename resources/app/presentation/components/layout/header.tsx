@@ -9,7 +9,8 @@ import {
 	IconUser,
 	Logo,
 	Spinner,
-	IconDumbbell
+	IconDumbbell,
+	IconDepartment
 } from '@/presentation/components'
 import { setCurrentAccountAdapter } from '@/main/adapters'
 import { MenuUtils, StringUtils } from '@/utils'
@@ -49,6 +50,12 @@ export function Header() {
 						link={MenuUtils.FRONT.EQUIPMENTS}
 						text="Materiais"
 						icon={IconDumbbell}
+					/>
+					<Item
+						active={path.indexOf(MenuUtils.FRONT.GYM) >= 0}
+						link={MenuUtils.FRONT.GYM}
+						text="Ginásios"
+						icon={IconDepartment}
 					/>
 					
 					{isAdmin && (

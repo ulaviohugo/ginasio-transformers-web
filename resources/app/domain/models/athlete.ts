@@ -25,6 +25,7 @@ export type AthleteModel = {
 	address: string
 	user_id: number
 	user_id_update: number
+	gym_id: number
 	created_at: Date
 
 	user?: EmployeeModel

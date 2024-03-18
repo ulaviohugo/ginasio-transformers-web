@@ -50,6 +50,7 @@ class UserUpdateService
 		$user->hire_date = $request->hire_date;
 		$user->contract_end_date = $request->contract_end_date;
 		$user->bank_name = $request->bank_name;
+		$user->gym_id = $request->gym_id;
 		$user->iban = $request->iban;
 		$user->account_number = $request->account_number;
 		$user->can_login = $canLogin;

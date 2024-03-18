@@ -32,6 +32,8 @@ import {
 import { addEmployeeStore, updateEmployeeStore } from '@/presentation/redux'
 import { AddEmployee, UpdateEmployee } from '@/domain/usecases'
 import { useLocations } from '@/presentation/hooks'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
 
 type EmployeeEditorProps = {
 	employee?: EmployeeModel
@@ -57,8 +59,25 @@ export function EmployeeEditor({
 	const [formData, setFormData] = useState<EmployeeModel>(
 		employee || ({} as EmployeeModel)
 	)
+	const [gyms, setGyms] = useState([]);
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
+
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
+	}, [])
 
 	useEffect(() => {
 		if (employee) {
@@ -414,6 +433,14 @@ export function EmployeeEditor({
 									value={formData?.family_allowance || ''}
 									label={'Abono familiar'}
 									onChange={handleInputChange}
+								/>
+								<Select
+									name="gym_id"
+									onChange={handleInputChange}
+									label="Selecione Ginásio"
+									data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
+									value={formData?.gym_id || ''}
+									defaultText="Selecione"
 								/>
 							</fieldset>
 							<fieldset className="grid gap-1">

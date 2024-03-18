@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\GymController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MensalidadeController;
 use App\Http\Controllers\ProductController;
@@ -37,7 +38,8 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::get('athletes/count', [AthleteController::class, 'count']);
 	Route::apiResource('athletes', AthleteController::class);
 
-
+	Route::get('gyms/count', [GymController::class, 'count']);
+	Route::apiResource('gym', GymController::class);
 	Route::prefix('cash-register')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);

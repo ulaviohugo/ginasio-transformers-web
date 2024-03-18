@@ -64,6 +64,7 @@ class User extends Authenticatable implements JWTSubject
 		'email_verified_at',
 		'user_id',
 		'user_id_update',
+		'gym_id'
 	];
 
 	/**
@@ -125,6 +126,10 @@ class User extends Authenticatable implements JWTSubject
 	public function getJWTIdentifier()
 	{
 		return $this->getKey();
+	}
+	public function gym()
+	{
+		return $this->belongsTo(Gym::class, 'gym_id');
 	}
 
 	/**
