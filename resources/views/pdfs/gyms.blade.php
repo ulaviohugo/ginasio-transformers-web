@@ -35,25 +35,25 @@
     <div class="center-logo">
         <img src="{{$logo}}" style="width: 130px" alt="">
     </div>
-    <h2>Materiais ({{ count($equipments) }})</h2>
+    <h2>Materiais ({{ count($gyms) }})</h2>
     <table>
         <thead>
             <tr>
                 <td>ID</td>
                 <td>Nome</td>
-                <td>Departamento</td>
+                <td>Localização</td>
                 <td>Data</td>
                 <td>Usuario</td>
             </tr>
         </thead>
         <tbody>
-            @foreach ($equipments as $equipment)
+            @foreach ($gyms as $gym)
                 <tr>
-                    <td>{{ $equipment->id }}</td>
-                    <td>{{ $equipment->name }}</td>
-                    <td>{{ $equipment->gym->name }}</td>
-                    <td>{{ $equipment->created_at }}</td>
-                    <td>{{ $equipment->user->name }}</td>
+                    <td>{{ $gym->id }}</td>
+                    <td>{{ $gym->name }}</td>
+                    <td>{{ $gym->location }}</td>
+                    <td>{{ $gym->created_at }}</td>
+                    <td>{{ $gym->user->name }}</td>
                 </tr>
             @endforeach
         </tbody>

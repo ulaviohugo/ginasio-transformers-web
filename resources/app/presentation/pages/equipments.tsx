@@ -5,6 +5,9 @@ import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
 import { DateUtils } from '@/utils'
 import { FilterDataProps, FilterEquipment } from '../components/filter-Equipment'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
+import { NotFound } from './notfound'
 
 type FormDataProps = {
 	name: string
@@ -25,6 +28,8 @@ export function Equipments() {
 	const [materiais, setMateriais] = useState<MaterialProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [gyms, setGyms] = useState([]);
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 	const [selectedMaterial, setSelectMaterial] = useState<MaterialProps>()
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', description: '', gym_id: ''})
 	const [filtered, setFiltered] = useState<FilterDataProps>({
@@ -149,6 +154,7 @@ export function Equipments() {
 		window.open(`/pdf/materiais${queryParams}`)
 	}
 
+	if (!isAdmin) return <NotFound />
 	return (
 		<Layout title="Equipamentos">
 			{showDeleteModal && (

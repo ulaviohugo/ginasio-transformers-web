@@ -6,6 +6,7 @@ use App\Models\Gym;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GymCreateRequest;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class GymController extends Controller
@@ -43,6 +44,37 @@ class GymController extends Controller
     public function count()
     {
         return Gym::count();
+    }
+
+    public function gerarPDF()
+    {
+        $request = request();
+
+        $id = $request->query('id');
+        $name = $request->query('name');
+        $location = $request->query('location');
+        $created_at = $request->query('created_at');
+
+        $gyms = Gym::orderBy('created_at');
+        if ($id) {
+            $gyms = $gyms->where('id', $id);
+        }
+        if ($name) {
+            $gyms = $gyms->where('name', 'Like', "{$name}%");
+        }
+        if ($location) {
+            $gyms = $gyms->where('location', 'Like', "{$location}%");
+        }
+
+        if ($created_at) {
+            $gyms = $gyms->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
+        }
+        $gyms = $gyms->get();
+        $gyms->load('user');
+
+        $pdf = Pdf::loadView('pdfs.gyms', ['gyms' => $gyms]);
+        //return $pdf->download();
+        return $pdf->stream();
     }
 
     /**

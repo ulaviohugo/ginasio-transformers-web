@@ -5,6 +5,9 @@ import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
 import { DateUtils } from '@/utils'
 import { FilterDataProps, FilterGym } from '../components/fiter-Gym'
+import { NotFound } from './notfound'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
 
 type FormDataProps = {
 	name: string
@@ -23,6 +26,8 @@ export function Gyms() {
 	const [gyms, setGym] = useState<GymProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [selectedGym, setSelectGym] = useState<GymProps>()
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', location: '' })
 	const [filtered, setFiltered] = useState<FilterDataProps>({
 		name: '',
@@ -127,9 +132,10 @@ export function Gyms() {
 	
 	const handleOpenPdf = () => {
 		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}`
-		window.open(`/pdf/gym${queryParams}`)
+		window.open(`/pdf/gyms${queryParams}`)
 	}
 
+	if (!isAdmin) return <NotFound />
 	return (
 		<Layout title="Ginásios">
 			{showDeleteModal && (

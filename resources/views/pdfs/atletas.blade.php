@@ -44,6 +44,7 @@
                 <td>Telefone</td>
                 <td>E-mail</td>
                 <td>Estado</td>
+                <td>Departamento</td>
                 <td>Inscrição</td>
                 <td>Usuario</td>
             </tr>
@@ -56,6 +57,7 @@
                     <td>{{ $athlete->phone }}</td>
                     <td>{{ $athlete->email }}</td>
                     <td>{{ $athlete->status }}</td>
+                    <td>{{ $athlete->gym->name }}</td>
                     <td>{{ $athlete->created_at }}</td>
                     <td>{{ $athlete->user->name }}</td>
                 </tr>
