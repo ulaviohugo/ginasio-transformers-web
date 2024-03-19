@@ -31,6 +31,7 @@ class AthleteCreateRequest extends GlobalFormRequest
 		return [
 			'name' => 'required',
 			'gender' => 'required',
+			'height' => 'required',
 			'gym_id' => 'required',
 			'date_of_birth' => 'required|date',
 			'marital_status' => 'required',

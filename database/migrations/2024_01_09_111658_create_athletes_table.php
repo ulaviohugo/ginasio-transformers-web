@@ -29,6 +29,7 @@ return new class extends Migration
 			$table->string('health_history')->nullable();
 			$table->string('education_degree', 50)->nullable();
 			$table->double('starting_weight', 5, 2)->nullable();
+			$table->double('height', 5, 2)->nullable();
 			$table->double('current_weight', 5, 2)->nullable();
 			$table->double('goal_weight', 5, 2)->nullable();
 			$table->enum('status', [Athlete::STATUS_ACTIVE, Athlete::STATUS_INACTIVE])->default(Athlete::STATUS_ACTIVE);

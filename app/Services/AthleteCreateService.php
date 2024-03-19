@@ -29,6 +29,7 @@ class AthleteCreateService
 				'name' => $request->name,
 				'date_of_birth' => $request->date_of_birth,
 				'gender' => $request->gender,
+				'height' => $request->height,
 				'marital_status' => $request->marital_status,
 				'document_type' => $request->document_type,
 				'document_number' => $request->document_number,

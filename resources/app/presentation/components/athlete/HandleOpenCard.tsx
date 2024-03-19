@@ -2,7 +2,7 @@ import { useAthletes } from "@/presentation/hooks";
 import { NumberUtils } from "@/utils";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { IconClose, IconEmail, IconHome, IconPhone, IconUser } from "../icons";
+import { IconClose, IconEmail, IconHeight, IconHome, IconPhone, IconUser } from "../icons";
 import { Logo } from "../layout";
 
 type HandleOpenCardProps = {
@@ -95,6 +95,10 @@ export function HandleOpenCard ({ show, onClose, size = 'xl' }: HandleOpenCardPr
                     <div className="flex items-center gap-1 text-sm">
                       <IconHome /> Endereço{' '}
                       {athlete.address}
+                    </div>
+                    <div className="flex items-center gap-1 text-sm">
+                      <IconHeight /> Altura{' '}
+                      {athlete.height}
                     </div>
                   </div>
                   <Logo /> {/* Aqui inserimos o Logo à direita */}

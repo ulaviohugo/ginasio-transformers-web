@@ -18,6 +18,7 @@ class AthleteResource extends JsonResource
 		return [
 			'id' => $this->id,
 			'name' => $this->name,
+			'height' => $this->height,
 			'date_of_birth' => $this->date_of_birth,
 			'gender' => $this->gender,
 			'marital_status' => $this->marital_status,

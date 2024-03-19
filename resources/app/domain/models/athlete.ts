@@ -3,6 +3,7 @@ import { EmployeeModel } from './employee'
 export type AthleteModel = {
 	id: number
 	name: string
+	height: string
 	date_of_birth: Date
 	gender: string
 	marital_status: string

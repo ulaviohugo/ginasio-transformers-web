@@ -243,6 +243,13 @@ export function AthleteEditor({
 								value={formData?.gym_id || ''}
 								defaultText="Selecione"
 							/>
+							<Input
+								name="height"
+								type="number"
+								label="Altura"
+								value={(formData?.height as any) || ''}
+								onChange={handleChangeInput}
+							/>
 						</div>
 					</fieldset>
 					<div className="grid xl:grid-cols-2 gap-4">
