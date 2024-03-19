@@ -2,7 +2,7 @@ import { useAthletes } from "@/presentation/hooks";
 import { NumberUtils } from "@/utils";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { IconClose, IconHome, IconPhone, IconUser } from "../icons";
+import { IconClose, IconEmail, IconHome, IconPhone, IconUser } from "../icons";
 import { Logo } from "../layout";
 
 type HandleOpenCardProps = {
@@ -43,7 +43,7 @@ export function HandleOpenCard ({ show, onClose, size = 'xl' }: HandleOpenCardPr
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-50">
       <div className="w-1/2">
-        <div className={`relative flex flex-col bg-indigo-950 p-5 mx-5 rounded-lg w-full ${w[size]}`} style={{maxHeight: "90vh"}}>
+        <div className={`relative flex flex-col bg-primary p-5 mx-5 rounded-lg w-full ${w[size]}`} style={{maxHeight: "90vh"}}>
           <button
             className="absolute right-2 top-2 group"
             onClick={handleClose}
@@ -65,7 +65,7 @@ export function HandleOpenCard ({ show, onClose, size = 'xl' }: HandleOpenCardPr
           {filteredAthletes.length === 0 ? (
             <div className="text-rose-900 text-center">Nenhum cartão disponível</div>
           ) : (
-            <ul className="grid lg:grid-cols-1 md:grid-cols-2 rounded-lg gap-4 overflow-y-auto">
+            <ul className="grid lg:grid-cols-2 md:grid-cols-2 rounded-lg gap-4 overflow-y-auto">
               {filteredAthletes.map((athlete) => (
                 <li key={athlete.id} className="p-4 shadow bg-white flex justify-between items-center">
                   <div className="flex flex-col">
@@ -89,7 +89,7 @@ export function HandleOpenCard ({ show, onClose, size = 'xl' }: HandleOpenCardPr
                       </div>
                     </div>
                     <div className="flex items-center gap-1 text-sm">
-                      <IconHome /> E-mail:{' '}
+                      <IconEmail /> E-mail:{' '}
                       {athlete.email}
                     </div>
                     <div className="flex items-center gap-1 text-sm">

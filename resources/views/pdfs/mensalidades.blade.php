@@ -1,3 +1,8 @@
+<?php
+  $fileHelper =App\Helpers\FileHelper::class; 
+    $logoPath = $fileHelper::logoPath();
+    $logo = $fileHelper::convertToBase64($logoPath);  
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,10 +23,16 @@
         tbody tr:nth-child(2n) {
             background: #f5f5f5
         }
+        .center-logo {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <div class="center-logo">
+        <img src="{{$logo}}" style="width: 130px" alt="">
+    </div>
     <h2>Atletas que pagaram a mensalidade ({{ count($mensalidades) }})</h2>
     <table>
         <thead>

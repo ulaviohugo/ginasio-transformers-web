@@ -33,7 +33,7 @@
 
 <body>
     <div class="center-logo">
-        <img src="{{$logo}}" style="width: 50px" alt="">
+        <img src="{{$logo}}" style="width: 130px" alt="">
     </div>
     <h2>Materiais ({{ count($equipments) }})</h2>
     <table>
