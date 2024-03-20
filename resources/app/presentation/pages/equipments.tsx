@@ -206,7 +206,7 @@ export function Equipments() {
 						<Button
 							onClick={handleUpdate}
 							variant="gray-light"
-							text="Editar"
+							text="Salvar"
 							type="button"
 						/>
 						<Button

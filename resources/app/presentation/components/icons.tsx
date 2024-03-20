@@ -12,7 +12,8 @@ import {
 	HiPencilAlt,
 	HiOutlineCurrencyDollar,
 	HiMinus,
-	HiOutlineIdentification
+	HiOutlineIdentification,
+	HiInformationCircle  
 } from 'react-icons/hi'
 import { IoMdPeople } from "react-icons/io";
 import {
@@ -28,13 +29,19 @@ import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-ic
 import { FaHouseUser, FaSignOutAlt,FaDumbbell  ,FaUserShield, FaCashRegister } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
 import { FaFilePdf,FaHotel } from 'react-icons/fa6'
-import { GiMuscleUp,GiBodyHeight } from 'react-icons/gi'
+import { GiMuscleUp,GiBodyHeight,GiWeight } from 'react-icons/gi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
 )
+export const IconInfo = (props: IconBaseProps): React.ReactElement => (
+	<HiInformationCircle {...props} />
+)
 export const IconHeight = (props: IconBaseProps): React.ReactElement => (
 	<GiBodyHeight {...props} />
+)
+export const IconWeight = (props: IconBaseProps): React.ReactElement => (
+	<GiWeight {...props} />
 )
 export const IconDepartment = (props: IconBaseProps): React.ReactElement => (
 	<FaHotel {...props} />

@@ -19,6 +19,12 @@
         thead tr {
             background: #d7d7d7;
             font-weight: bold;
+            text-align: center;
+        }
+
+        tbody tr {
+            background: #f5f5f5;
+            text-align: center;
         }
 
         tbody tr:nth-child(2n) {
@@ -34,19 +40,18 @@
 <body>
     <div class="center-logo">
         <img src="{{$logo}}" style="width: 130px" alt="">
+        <h4>GINÁSIO TRANSFORMERS</h4>
+        <h3>LISTA DE ATLETAS REGISTADOS</h3>
     </div>
-    <h2>Atletas ({{ count($athletes) }})</h2>
     <table>
         <thead>
             <tr>
-                <td>ID</td>
-                <td>Nome</td>
-                <td>Telefone</td>
-                <td>E-mail</td>
-                <td>Estado</td>
-                <td>Departamento</td>
-                <td>Inscrição</td>
-                <td>Usuario</td>
+                <td>Nº</td>
+                <td>NOME</td>
+                <td>TELEFONE</td>
+                <td>FILIAL</td>
+                <td>INSCRIÇÃO</td>
+                <td>UTILIZADOR</td>
             </tr>
         </thead>
         <tbody>
@@ -55,8 +60,6 @@
                     <td>{{ $athlete->id }}</td>
                     <td>{{ $athlete->name }}</td>
                     <td>{{ $athlete->phone }}</td>
-                    <td>{{ $athlete->email }}</td>
-                    <td>{{ $athlete->status }}</td>
                     <td>{{ $athlete->gym->name }}</td>
                     <td>{{ $athlete->created_at }}</td>
                     <td>{{ $athlete->user->name }}</td>

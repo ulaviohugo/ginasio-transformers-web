@@ -115,7 +115,7 @@ export function Gyms() {
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Ginásio Editado com sucesso')
+			toast.success('Os dados do ginásio foram salvos com sucesso')
 			fetchData()
 			handleClear()
 		} else {
@@ -179,7 +179,7 @@ export function Gyms() {
 						<Button
 							onClick={handleUpdate}
 							variant="gray-light"
-							text="Editar"
+							text="Salvar"
 							type="button"
 						/>
 						<Button

@@ -2,7 +2,7 @@ import { AthleteModel } from '@/domain/models'
 import { AddAthlete, LoadEmployees, UpdateAthlete } from '@/domain/usecases'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls'
-import { IconCheck, IconClose, IconEdit, IconTrash, Iconcard } from '../icons'
+import { IconCheck, IconClose, IconEdit, IconTrash, IconWeight, Iconcard } from '../icons'
 import { PdfViewer } from '../pdf-viewer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEmployees, useLocations } from '@/presentation/hooks'
@@ -25,6 +25,7 @@ type AthleteEditorProps = {
 	data?: AthleteModel
 	onDelete: () => void
 	handleOpenDetalhe: () => void
+	handleOpenDetalheIMC: () => void
 }
 
 export function AthleteEditor({
@@ -33,7 +34,8 @@ export function AthleteEditor({
 	loadEmployees,
 	data,
 	onDelete,
-	handleOpenDetalhe
+	handleOpenDetalhe,
+	handleOpenDetalheIMC
 }: AthleteEditorProps) {
 	const dispatch = useDispatch()
 
@@ -167,7 +169,7 @@ export function AthleteEditor({
 						<div className="flex-1 grid grid-cols-4 items-start gap-4">
 							<Input
 								name="name"
-								label="Nome"
+								label="*Nome"
 								value={formData?.name || ''}
 								onChange={handleChangeInput}
 							/>
@@ -336,19 +338,20 @@ export function AthleteEditor({
 				<div className="flex flex-col gap-2">
 					<Button
 						variant="green"
-						text="Salvar"
+						text="Cadastrar"
 						icon={IconCheck}
 						onClick={() => handleSubmit('save')}
 					/>
 					<Button
 						variant="gray-light"
-						text="Editar"
+						text="Salvar"
 						icon={IconEdit}
 						onClick={() => handleSubmit('update')}
 					/>
 					<Button text="Limpar" icon={IconClose} onClick={handleClear} />
 					<Button variant="red" text="Excluir" icon={IconTrash} onClick={onDelete} />
 					<Button variant="rose" text="Cartão" icon={Iconcard} onClick={handleOpenDetalhe} />
+					<Button variant="orange" text="IMC" icon={IconWeight} onClick={handleOpenDetalheIMC} />
 				</div>
 			</div>
 		</fieldset>

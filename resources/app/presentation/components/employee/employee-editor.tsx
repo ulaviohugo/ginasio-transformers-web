@@ -181,7 +181,7 @@ export function EmployeeEditor({
 										id="name"
 										name="name"
 										value={formData?.name || ''}
-										label={'Nome'}
+										label={'*Nome'}
 										onChange={handleInputChange}
 										autoFocus
 									/>

@@ -19,6 +19,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { HandleOpenCard } from '../components/athlete/HandleOpenCard'
+import { HandleOpenCardIMC } from '../components/athlete/HandleOpenCardIMC'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes
@@ -39,6 +40,7 @@ export function Athletes({
 	const [showFormDelete, setShowFormDelete] = useState(false)
 	const [filtered, setFiltered] = useState<FilterDataProps>({} as FilterDataProps)
 	const [showCard, setShowCard] = useState(false)
+	const [showCardIMC, setShowCardIMC] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -53,6 +55,14 @@ export function Athletes({
 
 	const handleCloseCard = () => {
 		setShowCard(false)
+	}
+
+	const handleOpenCardIMC = async () => {
+		setShowCardIMC(true)
+	}
+
+	const handleCloseCardIMC = () => {
+		setShowCardIMC(false)
 	}
 
 	const handleDelete = async () => {
@@ -90,6 +100,12 @@ export function Athletes({
 					onClose={handleCloseCard} // Adiciona uma função para fechar a modal
 				/>
 			)}
+			{showCardIMC && (
+				<HandleOpenCardIMC
+					show={showCardIMC}
+					onClose={handleCloseCardIMC} // Adiciona uma função para fechar a modal
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex flex-col gap-4">
 					<AthleteEditor
@@ -99,6 +115,7 @@ export function Athletes({
 						loadEmployees={loadEmployees}
 						onDelete={onDelete}
 						handleOpenDetalhe={handleOpenCard}
+						handleOpenDetalheIMC={handleOpenCardIMC}
 					/>
 					<hr />
 					<AthleteList onSelect={setSelectedAthlete}  loadAthletes={loadAthletes} />

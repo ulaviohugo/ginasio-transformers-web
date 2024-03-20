@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Requests\AuthRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -25,7 +26,7 @@ class AuthController extends Controller
 				return HttpResponse::success(
 					data: [
 						...$this->respondWithToken($token),
-						'user' => $user
+						'user' => new UserResource($user)
 					]
 				);
 			}
