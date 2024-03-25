@@ -40,6 +40,12 @@ export function Header() {
 						icon={IconAthlete}
 					/>
 					<Item
+						active={path.indexOf('/aula') >= 0}
+						link={MenuUtils.FRONT.LESSONS}
+						text="Aulas"
+						icon={IconAthlete}
+					/>
+					<Item
 						active={path.indexOf(MenuUtils.FRONT.FINANCES) >= 0}
 						link={MenuUtils.FRONT.FINANCES}
 						text="Finanças"
@@ -52,8 +58,8 @@ export function Header() {
 						icon={IconDumbbell}
 					/>
 					<Item
-						active={path.indexOf(MenuUtils.FRONT.GYM) >= 0}
-						link={MenuUtils.FRONT.GYM}
+						active={path.indexOf(MenuUtils.FRONT.GYMS) >= 0}
+						link={MenuUtils.FRONT.GYMS}
 						text="Ginásios"
 						icon={IconDepartment}
 					/>
@@ -71,7 +77,9 @@ export function Header() {
 					<div className="flex items-center gap-1">
 						<div className="border rounded-full p-1">
 							{user.photo ? (
-								<img src={user.photo} width={25} height={25} alt="Foto" />
+								<img src={user.photo} width={30}
+								height={40}
+								className="rounded-full object-cover aspect-square" alt="Foto" />
 							) : (
 								<IconUser size={25} />
 							)}

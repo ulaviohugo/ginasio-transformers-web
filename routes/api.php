@@ -3,6 +3,7 @@
 use App\Helpers\HttpResponse;
 use App\Helpers\HttpStatusCode;
 use App\Http\Controllers\AthleteController;
+use App\Http\Controllers\AulaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\EquipmentController;
@@ -40,6 +41,9 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::get('gyms/count', [GymController::class, 'count']);
 	Route::apiResource('gym', GymController::class);
+
+	Route::apiResource('aulas', AulaController::class);
+	
 	Route::prefix('cash-register')->group(function () {
 		Route::get('', [CashRegisterController::class, 'show']);
 		Route::post('', [CashRegisterController::class, 'store']);
@@ -57,6 +61,7 @@ Route::middleware('auth-jwt')->group(function () {
 
 	Route::prefix('graphs')->group(function () {
 		Route::post('cash-register', [GraphController::class, 'cashRegister']);
+		Route::post('monthly-fees', [GraphController::class, 'mensalidades']);
 	});
 
 

@@ -141,4 +141,8 @@ class User extends Authenticatable implements JWTSubject
 	{
 		return [];
 	}
+
+	public function aulas() {
+        return $this->hasMany(Aula::class);
+    }
 }

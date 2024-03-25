@@ -2,7 +2,7 @@ import React, { ElementType, ReactNode, SelectHTMLAttributes, useState } from 'r
 import { StringUtils } from '@/utils'
 import { FormControlWrapper } from '.'
 
-type InputProps = SelectHTMLAttributes<HTMLSelectElement> & {
+type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
 	label?: ReactNode
 	icon?: ElementType
 	data: Array<{ text: string; value?: string | number }>
@@ -15,13 +15,14 @@ export function Select({
 	data,
 	defaultText,
 	className,
+	required,
 	...props
-}: InputProps) {
+}: SelectProps) {
 	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
 
 	return (
-		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
+		<FormControlWrapper label={label} icon={Icon} required={required} id={id} focused={focused}>
 			<select
 				className={`focus:outline-none text-sm ${className || ''} w-full`}
 				id={id}

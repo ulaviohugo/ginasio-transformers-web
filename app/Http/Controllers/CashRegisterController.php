@@ -35,4 +35,18 @@ class CashRegisterController extends Controller
 			HttpResponse::error(message: 'Erro ao consultar caixa');
 		}
 	}
+
+	public function update(CashRegisterCreateRequest $request, CashRegister $cashRegister)
+	{
+		$cashRegister->balance = $request->balance;
+		$cashRegister->user_id_update = User::currentUserId();
+        $cashRegister->save();
+        return $cashRegister;
+	}
+
+	public function destroy(CashRegister $cashRegister)
+	{
+		$cashRegister->delete();
+        return response()->json(["mensager" => 'O registo do caixa foi excluido com sucesso']);
+	}
 }

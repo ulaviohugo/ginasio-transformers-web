@@ -35,9 +35,14 @@ class UserCreateRequest extends GlobalFormRequest
 			'name' => 'required',
 			'email' => 'nullable|email|unique:' . DBHelper::TB_USERS.',email',
 			'gender' => 'required',
-			'gym_id' => 'required',
-			'date_of_birth' => 'required|date',
-			'marital_status' => 'required',
+			'gym_id' => [
+				'nullable',
+				Rule::requiredIf(function ()  {
+					return request('role') != User::ROLE_ADMIN;
+				})
+			],
+			'date_of_birth' => 'nullable|date',
+			'marital_status' => 'nullable',
 			'document_type' => 'required|string',
 			'document_number' => [
 				'required',
@@ -46,7 +51,7 @@ class UserCreateRequest extends GlobalFormRequest
 						->where('document_number', $document_number);
 				})
 			],
-			'nif' => 'nullable|unique:' . DBHelper::TB_USERS.',nif',
+			'nif' => 'required|unique:' . DBHelper::TB_USERS.',nif',
 			'social_security' => 'nullable|unique:' . DBHelper::TB_USERS.',social_security',
 			'education_degree' => 'required',
 			'phone' => 'required',
@@ -71,7 +76,7 @@ class UserCreateRequest extends GlobalFormRequest
 			'address' => 'required',
 			'department' => 'required',	
 			'position' => 'required',
-			'base_salary' => 'required|numeric|gt:0',
+			'base_salary' => 'nullable|numeric',
 			'hire_date' => 'required|date',
 			'contract_end_date' => 'required|date',
 			'iban' => 'nullable|unique:' . DBHelper::TB_USERS.',iban',

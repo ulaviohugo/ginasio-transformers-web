@@ -26,13 +26,16 @@ import { MdOutlineMonetizationOn } from 'react-icons/md'
 import { GrStorage } from 'react-icons/gr'
 import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import { FaHouseUser, FaSignOutAlt,FaDumbbell  ,FaUserShield, FaCashRegister } from 'react-icons/fa'
+import { FaHouseUser, FaSignOutAlt,FaDumbbell  ,FaUserShield, FaCashRegister, FaUserTie } from 'react-icons/fa'
 import { PiUserListThin } from 'react-icons/pi'
 import { FaFilePdf,FaHotel } from 'react-icons/fa6'
 import { GiMuscleUp,GiBodyHeight,GiWeight } from 'react-icons/gi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
+)
+export const IconAdmin = (props: IconBaseProps): React.ReactElement => (
+	<FaUserTie {...props} />
 )
 export const IconInfo = (props: IconBaseProps): React.ReactElement => (
 	<HiInformationCircle {...props} />

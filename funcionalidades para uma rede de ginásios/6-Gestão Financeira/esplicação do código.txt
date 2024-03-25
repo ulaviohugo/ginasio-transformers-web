@@ -1,0 +1,18 @@
+callback function->função de retorno de chamada
+handler->Manipulador/Manipuladora
+closure->fecho
+reportable->reportavél
+frameworks->Estruturas
+path->caminho
+full->completa
+
+
+The list of the inputs that are never flashed to the session on validation exceptions.
+A lista das entradas que nunca são atualizadas para a sessão nas exceções de validação.
+
+Register the exception handling callbacks for the application.
+Registre os retornos de chamada de tratamento de exceções para o aplicativo
+
+require is identical to include except upon failure it will also produce a fatal E_COMPILE_ERROR level error. In other words, it will halt the script whereas include only emits a warning (E_WARNING) which allows the script to continue.
+
+require é idêntico a include, exceto que em caso de falha também produzirá um erro fatal de nível E_COMPILE_ERROR. Em outras palavras, irá interromper o script, enquanto include apenas emite um aviso (E_WARNING) que permite que o script continue.

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, ButtonProps, IconCheck } from '..'
 export function ButtonSubmit({
-	text = 'Salvar',
+	text = 'Cadastrar',
 	icon: Icon = IconCheck,
 	variant = 'green',
 	...props

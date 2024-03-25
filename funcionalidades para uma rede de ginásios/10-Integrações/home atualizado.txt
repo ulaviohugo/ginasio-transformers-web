@@ -1,0 +1,201 @@
+home atualizado
+
+import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAuth } from '../hooks';
+import { makeRemoteCountAthletes, makeRemoteCountEmployees } from '@/main/factories/usecases';
+import { toast } from 'react-hot-toast';
+import { Layout, LayoutBody, Spinner } from '@/presentation/components';
+import { MenuUtils } from '@/utils';
+import { makeApiUrl } from '@/main/factories/http';
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators';
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+type ItemProps = {
+  number: number;
+  title: string;
+  icon?: React.ElementType;
+  isLoading?: boolean;
+  href: string;
+  className?: string;
+  backgroundColor: string; // Adicionando a cor de fundo como uma propriedade
+};
+
+export function Home() {
+  const user = useSelector(useAuth());
+  const isAdmin = user?.role === 'Admin';
+  const chartRef = useRef<Chart | null>(null);
+
+  const [employees, setEmployees] = useState(0);
+  const [isLoadingEmployees, setIsLoadingEmployees] = useState(true);
+  const [athletes, setAthletes] = useState(0);
+  const [equipments, setEquipments] = useState(0);
+  const [gyms, setGyms] = useState(0);
+  const [isLoadingAthletes, setIsLoadingAthletes] = useState(true);
+  const [isLoadingEquipments, setIsLoadingEquipments] = useState(true);
+  const [isLoadingGyms, setIsLoadingGyms] = useState(true);
+
+  const fetchCount = (
+    remoteResource: { count: () => Promise<number> },
+    callback: (response: any) => void
+  ) => {
+    remoteResource
+      .count()
+      .then((response) => {
+        callback(response);
+      })
+      .catch(({ message }) => {
+        callback(0);
+        toast.error(message);
+      });
+  };
+
+  useEffect(() => {
+    {
+      isAdmin &&
+        Promise.all([
+          fetchCount(makeRemoteCountEmployees(), (response) => {
+            setEmployees(response);
+            setIsLoadingEmployees(false);
+          }),
+          fetchCount(makeRemoteCountAthletes(), (response) => {
+            setAthletes(response);
+            setIsLoadingAthletes(false);
+          }),
+          makeAuthorizeHttpClientDecorator()
+            .request({
+              url: makeApiUrl('/materiais/count'),
+              method: 'get',
+            })
+            .then((response) => {
+              if (response.statusCode >= 200 && response.statusCode <= 299) {
+                setEquipments(response.body);
+                setIsLoadingEquipments(false);
+              } else {
+                toast.error(response.body);
+              }
+            }),
+          makeAuthorizeHttpClientDecorator()
+            .request({
+              url: makeApiUrl('/gyms/count'),
+              method: 'get',
+            })
+            .then((response) => {
+              if (response.statusCode >= 200 && response.statusCode <= 299) {
+                setGyms(response.body);
+                setIsLoadingGyms(false);
+              } else {
+                toast.error(response.body);
+              }
+            }),
+        ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Render charts
+    const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
+  
+    const updateChart = () => {
+      const chartWidth = ctx.parentElement?.clientWidth || 400; // Define um valor padrão para a largura do gráfico
+      ctx.width = chartWidth;
+  
+      chartRef.current = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Funcionários', 'Atletas', 'Equipamentos', 'Filiais'],
+          datasets: [
+            {
+              label: 'Quantidade',
+              data: [employees, athletes, equipments, gyms],
+              backgroundColor: [
+                'rgba(255, 255, 255, 1)', // Branco
+                'rgb(1, 74, 127)',   // bg-primary
+                'rgba(255, 255, 255, 1)', // Branco
+                'rgb(1, 74, 127)',   // bg-primary
+              ],
+              borderColor: [
+                'rgba(0, 0, 0, 1)', // Branco
+                'rgba(0, 0, 0, 1)',   // bg-primary
+                'rgba(0, 0, 0, 1)', // Branco
+                'rgba(0, 0, 0, 1)',   // bg-primary
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            datalabels: {
+              formatter: (value: any, context: any) => {
+                return context.chart.data.labels[context.dataIndex] + ': ' + value;
+              },
+              color: (context: any) => {
+                // Definindo a cor do texto do gráfico para branco apenas para 'Atletas' e 'Departamentos'
+                if (context.dataset.backgroundColor === 'rgb(1, 74, 127)' && (context.dataIndex === 1 || context.dataIndex === 3)) {
+                  return 'white';
+                }
+                return 'black';
+              },
+            },
+          },
+        },
+      });
+    };
+  
+    window.addEventListener('resize', updateChart); // Atualiza o gráfico quando a tela é redimensionada
+    updateChart(); // Chama a função para inicializar o gráfico
+  
+    return () => {
+      window.removeEventListener('resize', updateChart); // Remove o ouvinte de evento ao desmontar o componente
+    };
+  }, [employees, athletes, equipments, gyms]);
+  
+  
+  return (
+    <Layout>
+      <LayoutBody>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {isAdmin &&
+            [
+              { number: employees, title: 'Funcionários', isLoading: isLoadingEmployees, href: MenuUtils.FRONT.EMPLOYEES },
+              { number: athletes, title: 'Atletas', isLoading: isLoadingAthletes, href: MenuUtils.FRONT.ATHLETES },
+              { number: equipments, title: 'Equipamentos', isLoading: isLoadingEquipments, href: MenuUtils.FRONT.EQUIPMENTS },
+              { number: gyms, title: 'Filiais', isLoading: isLoadingGyms, href: MenuUtils.FRONT.GYM },
+            ].map((item, index) => (
+              <Item
+                key={item.title}
+                {...item}
+                backgroundColor={index % 2 === 0 ? 'bg-white' : 'bg-primary'} // Definindo a cor de fundo com base na paridade do índice
+              />
+            ))}
+        </div>
+        <div className="mt-8">
+          <canvas id="myChart"></canvas>
+        </div>
+      </LayoutBody>
+    </Layout>
+  );
+}
+
+const Item = ({ icon: Icon, number, title, isLoading, href, className, backgroundColor }: ItemProps) => {
+  const textColorClass = backgroundColor === 'bg-primary' ? 'text-white' : ''; // Adicionando classe de texto branco se o fundo for 'bg-primary'
+
+  return (
+    <Link
+      to={href}
+      className={`p-4 rounded-md shadow-md hover:shadow-lg flex items-center justify-between ${className || ''} ${backgroundColor} ${textColorClass}`} // Adicionando classe de texto branco
+    >
+      {Icon && <Icon className="text-3xl" />}
+      <div className="text-lg">
+        <h2>{title}</h2>
+        <div className="text-2xl font-bold">{isLoading ? <Spinner className="text-base" /> : number}</div>
+      </div>
+    </Link>
+  );
+}

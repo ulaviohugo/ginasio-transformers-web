@@ -169,13 +169,15 @@ export function AthleteEditor({
 						<div className="flex-1 grid grid-cols-4 items-start gap-4">
 							<Input
 								name="name"
-								label="*Nome"
+								label="Nome"
+								required
 								value={formData?.name || ''}
 								onChange={handleChangeInput}
 							/>
 							<Select
 								name="gender"
 								label="Género"
+								required
 								data={['Masculino', 'Feminino'].map((text) => ({
 									text
 								}))}
@@ -186,6 +188,7 @@ export function AthleteEditor({
 							<Input
 								name="date_of_birth"
 								type="date"
+								required
 								label="Data Nascimento"
 								value={(formData?.date_of_birth as any) || ''}
 								onChange={handleChangeInput}
@@ -193,6 +196,7 @@ export function AthleteEditor({
 							<Select
 								name="marital_status"
 								label="Estado Civil"
+								required
 								data={DataUtils.maritalStatus.map((status) => status)}
 								defaultText="Selecione"
 								value={formData?.marital_status || ''}
@@ -201,6 +205,7 @@ export function AthleteEditor({
 							<Select
 								name="document_type"
 								label="Documento"
+								required
 								data={DataUtils.docs.map((text) => ({ text }))}
 								defaultText="Selecione"
 								value={formData?.document_type || ''}
@@ -209,6 +214,7 @@ export function AthleteEditor({
 							<Input
 								name="document_number"
 								label="Nº Documento"
+								required
 								value={formData?.document_number || ''}
 								disabled={!formData.document_type}
 								title={
@@ -221,6 +227,7 @@ export function AthleteEditor({
 							<Select
 								name="education_degree"
 								label="Nível académico"
+								required
 								data={DataUtils.educationDegrees.map((text) => ({ text }))}
 								defaultText="Selecione"
 								value={formData?.education_degree || ''}
@@ -229,6 +236,7 @@ export function AthleteEditor({
 							<Select
 								name="status"
 								label="Estado"
+								required
 								data={[
 									{ text: 'Activo', value: 'active' },
 									{ text: 'Inactivo', value: 'inactive' }
@@ -241,6 +249,7 @@ export function AthleteEditor({
 								name="gym_id"
 								onChange={handleChangeInput}
 								label="Selecione Ginásio"
+								required
 								data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
 								value={formData?.gym_id || ''}
 								defaultText="Selecione"
@@ -249,6 +258,7 @@ export function AthleteEditor({
 								name="height"
 								type="number"
 								label="Altura"
+								required
 								value={(formData?.height as any) || ''}
 								onChange={handleChangeInput}
 							/>
@@ -261,6 +271,7 @@ export function AthleteEditor({
 							<InputPhone
 								name="phone"
 								label="Telefone"
+								required
 								value={formData?.phone || ''}
 								onChange={handleChangeInput}
 							/>
@@ -282,12 +293,14 @@ export function AthleteEditor({
 							<InputNumber
 								name="starting_weight"
 								label="Peso Inicial"
+								required
 								value={formData?.starting_weight || ''}
 								onChange={handleChangeInput}
 							/>
 							<InputNumber
 								name="current_weight"
 								label="Peso Actual"
+								required
 								value={formData?.current_weight || ''}
 								onChange={handleChangeInput}
 							/>
@@ -329,6 +342,7 @@ export function AthleteEditor({
 							<Input
 								name="address"
 								label="Endereço"
+								required
 								value={formData?.address || ''}
 								onChange={handleChangeInput}
 							/>

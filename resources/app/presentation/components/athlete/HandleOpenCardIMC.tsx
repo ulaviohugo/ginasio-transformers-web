@@ -6,6 +6,7 @@ import { IconClose, IconEmail, IconHeight, IconHome, IconInfo, IconPhone, IconUs
 import { Logo } from "../layout";
 import { AthleteModel } from "@/domain/models";
 import { IconIMC } from "../layout/iconIMC";
+import { ResultadoIMC } from "../layout/resultadoIMC";
 import { Normal } from "../layout/normal";
 import { ObesidadeGrau1 } from "../layout/obesidadeGrau1";
 import { ObesidadeGrau2 } from "../layout/obesidadeGrau2";
@@ -79,10 +80,10 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
 
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="w-1/2">
-        <div className={`relative flex flex-col bg-primary p-5 mx-5 rounded-lg w-full ${w[size]}`} style={{maxHeight: "90vh"}}>
+      <div className="w-1/2 lg:w-5/12"> {/* Aqui ajustamos a largura para 5/12 do layout */}
+        <div className={`relative flex flex-col bg-primary p-5 mx-5 rounded-lg w-full ${w[size]}`} style={{ maxHeight: "90vh" }}>
           <button
-            className="absolute right-2 top-2 group"
+            className="absolute top-2 right-2 group"
             onClick={handleClose}
             title="Fechar janela"
           >
@@ -95,7 +96,6 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
             <span>Calculo de IMC</span>
             <IconWeight />
             <IconIMC />
-            <IconInfo />
           </div>
           {showNormal && <Normal />}
           {showAbaixoDoNormal && <AbaixoDoNormal />}
@@ -103,19 +103,21 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
           {showObesidadeGrau1 && <ObesidadeGrau1 />}
           {showObesidadeGrau2 && <ObesidadeGrau2 />}
           {showObesidadeGrau3 && <ObesidadeGrau3 />}
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center flex-wrap">
             <input
               type="number"
               step="0.01"
+              placeholder="Peso(kg)"
               pattern="\d+(\.\d{2})?"
-              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white"
+              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white w-20"
               value={input1}
               onChange={(e) => setInput1(e.target.value)}
             />
             <input
               type="text"
-              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white"
+              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white w-20"
               value={input2}
+              placeholder="Altura(m)"
               onChange={(e) => {
                 const value = e.target.value;
                 // Verifica se o valor começa com um dígito de 1 a 9 e se não contém um ponto
@@ -129,7 +131,7 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
             <input
               type="text"
               readOnly
-              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white"
+              className="text-sm pl-0 pr-0 border-b border-white bg-transparent text-white w-20"
               value={input3}
               onChange={(e) => setInput3(e.target.value)}
             />
@@ -142,7 +144,7 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
               <IconWeight />
             </button>
             <button
-              className="bg-gray-200 !text-gray-700 rounded-md px-4 py-2 flex items-center"
+              className="bg-gray-200 text-gray-700 rounded-md px-4 py-2 flex items-center"
               onClick={handleClearInputs}
             >
               <IconClose />
@@ -153,9 +155,3 @@ export function HandleOpenCardIMC ({ show, onClose, size = 'xl', icon }: HandleO
     </div>
   );
 }
-
-
-
-
-
-

@@ -112,7 +112,7 @@ class MensalidadeController extends Controller
         $cashRequest = $request->merge([
             'description' => 'Mensalidade',
             'operation_type' => Transaction::OPERATION_TYPE_IN,
-            'amount' => $request->monthlyValue,
+            'amount' => floatval($request->monthlyValue) + floatval($request->monthlyFine),
             'payment_method' => $request->paymentMethod,
         ]);
         //Actualizar o caixa

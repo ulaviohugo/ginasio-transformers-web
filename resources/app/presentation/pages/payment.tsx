@@ -16,6 +16,7 @@ import { DataUtils, DateUtils, MenuUtils, months } from '@/utils'
 import { FilterDataProps, FilterPayment } from '../components/filter-Payment'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
+import { ModalEdit } from '../components/modal/modal-edit'
 
 type FormDataProps = {
 	athlete_id: number
@@ -44,6 +45,7 @@ export function Payment() {
 
 	const [mensalidades, setMensalidade] = useState<PaymentProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
+	const [showEditModal, setShowEditModal] = useState(false)
 	const [selectedMensalidade, setSelectMensalidade] = useState<PaymentProps>()
 	const [formData, setFormData] = useState<FormDataProps>({
 		athlete_id: 0,
@@ -86,11 +88,23 @@ export function Payment() {
 		setShowDeleteModal(false)
 	}
 
+	const handleCloseEditModal = () => {
+		setShowEditModal(false)
+	}
+
 	const handleOpenDeleteModal = () => {
 		if (!selectedMensalidade?.id) {
 			toast.error('Selecione a linha da mensalidade que deseja excluir')
 		} else {
 			setShowDeleteModal(true)
+		}
+	}
+
+	const handleOpenUpdateModal = () => {
+		if (!selectedMensalidade?.id) {
+			toast.error('Selecione a mensalidade que deseja Editar')
+		} else {
+			setShowEditModal(true)
 		}
 	}
 
@@ -141,6 +155,7 @@ export function Payment() {
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
 			toast.success('Mensalidade Editada com sucesso')
+			handleCloseEditModal()
 			fetchData()
 			handleClear()
 		} else {
@@ -170,6 +185,14 @@ export function Payment() {
 					show
 				/>
 			)}
+			{showEditModal && (
+				<ModalEdit
+				description="Deseja salvar as alterações feitas no(a) mensalidade"
+				onClose={handleCloseEditModal}
+				onSubmit={handleUpdate}
+				show
+			/>
+			)}
 			<LayoutBody>
 				<SubMenu submenus={MenuUtils.financeMenuItens({ role: user.role })} />
 				<Title title="Mensalidade" />
@@ -180,6 +203,7 @@ export function Payment() {
 								name="athlete_id"
 								onChange={handleInput}
 								label="Nº do Atlheta"
+								required
 								type="number"
 								placeholder="Informe o número do atleta"
 								value={formData.athlete_id || ''}
@@ -188,6 +212,7 @@ export function Payment() {
 								name="year"
 								onChange={handleInput}
 								label="Escolhe o ano do mês que deseja pagar"
+								required
 								type="number"
 								value={formData.year || ''}
 							/>
@@ -195,6 +220,7 @@ export function Payment() {
 								name="month"
 								onChange={handleInput}
 								label="Escolhe o mês que deseja pagar"
+								required
 								data={DateUtils.getMonthUtils().map((month, i) => ({
 									text: month,
 									value: i + 1
@@ -206,6 +232,7 @@ export function Payment() {
 								name="monthlyValue"
 								onChange={handleInput}
 								label="Pagamento"
+								required
 								type="number"
 								placeholder="Quanto atleta vai pagar"
 								value={formData.monthlyValue || ''}
@@ -222,6 +249,7 @@ export function Payment() {
 								name="paymentMethod"
 								onChange={handleInput}
 								label="Método de pagamento"
+								required
 								data={['Dinheiro a vista', 'TPA', 'Transferência'].map((pagamento) => {
 									return { text: pagamento }
 								})}
@@ -238,9 +266,12 @@ export function Payment() {
 							type="button"
 						/>
 						<Button
-							onClick={handleUpdate}
+							onClick={() => {
+								setSelectMensalidade(selectedMensalidade)
+								handleOpenUpdateModal()
+							}}
 							variant="gray-light"
-							text="Editar"
+							text="Salvar"
 							type="button"
 						/>
 						<Button

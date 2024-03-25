@@ -103,7 +103,7 @@ class EquipmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Equipment $equipment)
+    public function update(EquipmentCreateRequest $request, Equipment $equipment)
     {
 
         $equipment->name = $request->name;

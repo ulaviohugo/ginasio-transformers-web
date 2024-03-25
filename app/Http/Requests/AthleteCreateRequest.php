@@ -43,7 +43,7 @@ class AthleteCreateRequest extends GlobalFormRequest
 						->where('document_number', request('document_number'));
 				})
 			],
-			'email' => 'required|email|unique:' . DBHelper::TB_ATHLETE,
+			'email' => 'nullable|email|unique:' . DBHelper::TB_ATHLETE,
 			'education_degree' => 'required',
 			'starting_weight' => 'required|numeric|gt:0',
 			'current_weight' => 'nullable|numeric|gt:0',

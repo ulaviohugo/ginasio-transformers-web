@@ -180,6 +180,7 @@ export function EmployeeEditor({
 										type="text"
 										id="name"
 										name="name"
+										required
 										value={formData?.name || ''}
 										label={'*Nome'}
 										onChange={handleInputChange}
@@ -190,6 +191,7 @@ export function EmployeeEditor({
 									<Select
 										id="gender"
 										name="gender"
+										required
 										value={formData?.gender || ''}
 										label={'Género'}
 										data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
@@ -199,6 +201,7 @@ export function EmployeeEditor({
 									<Input
 										type="date"
 										id="date_of_birth"
+										required
 										name="date_of_birth"
 										value={
 											(formData?.date_of_birth &&
@@ -220,6 +223,7 @@ export function EmployeeEditor({
 									<Select
 										id="document_type"
 										name="document_type"
+										required
 										value={formData?.document_type || ''}
 										label={'Tipo Documento'}
 										data={DataUtils.docs.map((doc) => ({ text: doc }))}
@@ -230,6 +234,7 @@ export function EmployeeEditor({
 										type="text"
 										id="document_number"
 										name="document_number"
+										required
 										value={formData?.document_number || ''}
 										label={'Nº Documento'}
 										onChange={handleInputChange}
@@ -242,6 +247,7 @@ export function EmployeeEditor({
 										type="text"
 										id="nif"
 										name="nif"
+										required
 										value={formData?.nif || ''}
 										label={'NIF'}
 										onChange={handleInputChange}
@@ -265,6 +271,7 @@ export function EmployeeEditor({
 									<Select
 										id="education_degree"
 										name="education_degree"
+										required
 										value={formData?.education_degree || ''}
 										label={'Nível Académico'}
 										data={DataUtils.educationDegrees.map((text) => ({ text }))}
@@ -276,6 +283,7 @@ export function EmployeeEditor({
 									<InputPhone
 										id="phone"
 										name="phone"
+										required
 										value={formData?.phone || ''}
 										label={'Telefone'}
 										onChange={handleInputChange}
@@ -338,6 +346,7 @@ export function EmployeeEditor({
 									<Input
 										type="text"
 										id="address"
+										required
 										name="address"
 										value={formData?.address || ''}
 										label={'Endereço'}
@@ -350,6 +359,7 @@ export function EmployeeEditor({
 								<Select
 									id="department"
 									name="department"
+									required
 									value={formData?.department || ''}
 									label="Departamento"
 									data={[{ text: 'Administrativo' }, { text: 'Operações' }]}
@@ -359,6 +369,7 @@ export function EmployeeEditor({
 								<Select
 									id="position"
 									name="position"
+									required
 									value={formData?.position || ''}
 									label={'Cargo'}
 									data={[
@@ -384,6 +395,7 @@ export function EmployeeEditor({
 									type="date"
 									id="hire_date"
 									name="hire_date"
+									required
 									value={
 										(formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
 									}
@@ -395,6 +407,7 @@ export function EmployeeEditor({
 								<Input
 									type="date"
 									id="contract_end_date"
+									required
 									name="contract_end_date"
 									value={
 										(formData?.contract_end_date &&
@@ -437,6 +450,7 @@ export function EmployeeEditor({
 								<Select
 									name="gym_id"
 									onChange={handleInputChange}
+									required
 									label="Selecione Ginásio"
 									data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
 									value={formData?.gym_id || ''}
@@ -505,6 +519,7 @@ export function EmployeeEditor({
 										<Select
 											name="role"
 											label="Perfil"
+											required
 											value={formData?.role || ''}
 											defaultText="Selecione"
 											data={[
@@ -517,6 +532,7 @@ export function EmployeeEditor({
 											<Input
 												type="password"
 												name="password"
+												required
 												label="Senha"
 												value={formData.password || ''}
 												onChange={handleInputChange}
@@ -543,7 +559,7 @@ export function EmployeeEditor({
 							onClick={() => handleSubmit('save')}
 						/>
 						<ButtonCancel
-							text="Editar"
+							text="Salvar"
 							icon={IconEdit}
 							className="!bg-primary !bg-opacity-70 !text-white"
 							onClick={() => handleSubmit('update')}

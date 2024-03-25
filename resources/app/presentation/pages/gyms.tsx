@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Layout, LayoutBody, ModalDelete } from '../components'
+import { Button, IconDepartment, Input, Layout, LayoutBody, ModalDelete, Title } from '../components'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
@@ -8,6 +8,7 @@ import { FilterDataProps, FilterGym } from '../components/fiter-Gym'
 import { NotFound } from './notfound'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
+import { ModalEdit } from '../components/modal/modal-edit'
 
 type FormDataProps = {
 	name: string
@@ -26,6 +27,7 @@ export function Gyms() {
 	const [gyms, setGym] = useState<GymProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [selectedGym, setSelectGym] = useState<GymProps>()
+	const [showEditModal, setShowEditModal] = useState(false)
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', location: '' })
@@ -60,11 +62,22 @@ export function Gyms() {
 		setShowDeleteModal(false)
 	}
 
+	const handleCloseEditModal = () => {
+		setShowEditModal(false)
+	}
+
 	const handleOpenDeleteModal = () => {
 		if (!selectedGym?.id) {
 			toast.error('Selecione o ginásio que deseja excluir')
 		} else {
 			setShowDeleteModal(true)
+		}
+	}
+	const handleOpenUpdateModal = () => {
+		if (!selectedGym?.id) {
+			toast.error('Selecione o ginásio que deseja Editar')
+		} else {
+			setShowEditModal(true)
 		}
 	}
 
@@ -115,7 +128,8 @@ export function Gyms() {
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Os dados do ginásio foram salvos com sucesso')
+			toast.success('As alterações foram salvas com sucesso')
+			handleCloseEditModal()
 			fetchData()
 			handleClear()
 		} else {
@@ -146,15 +160,24 @@ export function Gyms() {
 					show
 				/>
 			)}
+			{showEditModal && (
+				<ModalEdit
+					description="Deseja salvar as alterações feitas no(a) equipamento"
+					onClose={handleCloseEditModal}
+					onSubmit={handleUpdate}
+					show
+				/>
+			)}
 			<LayoutBody>
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
-						Ginásios
+					<Title title="Filial" icon={IconDepartment} />
 						<form className="flex flex-col gap-4">
 							<Input
 								name="name"
 								onChange={handleInput}
 								label="Nome"
+								required
 								type="text"
 								placeholder="Informe o nome do departamento do ginásio"
 								value={formData.name || ''}
@@ -163,6 +186,7 @@ export function Gyms() {
 								name="location"
 								onChange={handleInput}
 								label="Localização"
+								required
 								type="text"
 								placeholder="Qual é a localização do ginásio"
 								value={formData.location || ''}
@@ -177,7 +201,10 @@ export function Gyms() {
 							type="button"
 						/>
 						<Button
-							onClick={handleUpdate}
+							onClick={() => {
+								setSelectGym(selectedGym)
+								handleOpenUpdateModal()
+							}}
 							variant="gray-light"
 							text="Salvar"
 							type="button"

@@ -6,7 +6,7 @@ export function NotFound() {
 		<Layout>
 			<LayoutBody>
 				<div className="flex flex-col h-full justify-center items-center text-2xl">
-					Página não encontrada
+					Não tem permissão para acessar essa página
 				</div>
 			</LayoutBody>
 		</Layout>

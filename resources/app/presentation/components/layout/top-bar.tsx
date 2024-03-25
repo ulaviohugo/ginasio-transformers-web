@@ -1,6 +1,6 @@
 import React from 'react'
 import { StringUtils } from '@/utils'
-import { IconNotification, IconUser } from '..'
+import { IconNotification, IconUser ,IconAdmin } from '..'
 import { useAuth } from '@/presentation/hooks'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -12,7 +12,7 @@ export function TopBar() {
 			<ul className="ml-auto flex items-center gap-2 py-2">
 				<li className="flex items-center gap-1">
 					<span className="flex items-center border-2 rounded-full p-1">
-						<IconUser />
+						{user.role == "Admin"? <IconAdmin />:<IconUser />}
 					</span>
 					{StringUtils.getFirstAndLastWord(user.name)}
 				</li>

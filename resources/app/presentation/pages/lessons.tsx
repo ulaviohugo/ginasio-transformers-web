@@ -4,41 +4,42 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
 import { DateUtils } from '@/utils'
-import { FilterDataProps, FilterEquipment } from '../components/filter-Equipment'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
 import { NotFound } from './notfound'
-import { ModalEdit } from '../components/modal/modal-edit'
+import { FilterDataProps, FilterLesson } from '../components/filter-Lesson'
 
 type FormDataProps = {
 	name: string
-	description: string
+	tipo: string
+	data: string
+	horario: string
 	gym_id: string
 }
 
-type MaterialProps = {
+type LessonProps = {
 	id: number
 	name: string
-	description: string
+	data: string
+	tipo: string
+	horario: string
 	gym_id: string
 	created_at: Date
 	updated_at: Date
 }
 
-export function Equipments() {
-	const [materiais, setMateriais] = useState<MaterialProps[]>([])
+export function Lessons() {
+	const [aulas, setAulas] = useState<LessonProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
-	const [showEditModal, setShowEditModal] = useState(false)
 	const [gyms, setGyms] = useState([]);
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
-	const [selectedMaterial, setSelectMaterial] = useState<MaterialProps>()
-	const [formData, setFormData] = useState<FormDataProps>({ name: '', description: '', gym_id: ''})
+	const [selectedAulas, setSelectAulas] = useState<LessonProps>()
+	const [formData, setFormData] = useState<FormDataProps>({ name: '', tipo: '', gym_id: '', data:'',horario:''})
 	const [filtered, setFiltered] = useState<FilterDataProps>({
-		created_at: '',
-		id: '' as any,
 		name: '',
-		gym_id: ''
+		created_at: '',
+		id: '' as any
 	})
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +49,11 @@ export function Equipments() {
 
 	const fetchData = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais' + (queryParams || '')),
+			url: makeApiUrl('/aulas' + (queryParams || '')),
 			method: 'get'
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setMateriais(httpResponse.body)
+			setAulas(httpResponse.body)
 		} else {
 			toast.error(httpResponse.body)
 		}
@@ -82,38 +83,27 @@ export function Equipments() {
 		setShowDeleteModal(false)
 	}
 
-	const handleCloseEditModal = () => {
-		setShowEditModal(false)
-	}
-
 	const handleOpenDeleteModal = () => {
-		if (!selectedMaterial?.id) {
-			toast.error('Selecione a lista do material que deseja excluir')
+		if (!selectedAulas?.id) {
+			toast.error('Selecione a aula que deseja excluir')
 		} else {
 			setShowDeleteModal(true)
 		}
 	}
-	const handleOpenUpdateModal = () => {
-		if (!selectedMaterial?.id) {
-			toast.error('Selecione a lista do material que deseja Editar')
-		} else {
-			setShowEditModal(true)
-		}
-	}
 
 	const handleClear = () => {
-		setSelectMaterial({} as any)
+		setSelectAulas({} as any)
 		setFormData({} as any)
 	}
 
 	async function handleSubmit() {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais'),
+			url: makeApiUrl('/aulas'),
 			method: 'post',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material cadastrado com sucesso')
+			toast.success('Aula cadastrada com sucesso')
 			fetchData()
 			handleClear()
 		} else {
@@ -123,12 +113,12 @@ export function Equipments() {
 
 	async function handleDelete() {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais/' + selectedMaterial?.id),
+			url: makeApiUrl('/aulas/' + selectedAulas?.id),
 			method: 'delete',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material Excluido com sucesso')
+			toast.success('Aula Excluida com sucesso')
 			handleCloseDeleteModal()
 			fetchData()
 			handleClear()
@@ -138,18 +128,17 @@ export function Equipments() {
 	}
 
 	async function handleUpdate() {
-		if (!selectedMaterial?.id) {
-			return toast.error('Selecione a lista do material que deseja editar')
+		if (!selectedAulas?.id) {
+			return toast.error('Selecione a aula que deseja editar')
 		}
 
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais/' + selectedMaterial?.id),
+			url: makeApiUrl('/aulas/' + selectedAulas?.id),
 			method: 'put',
 			body: formData
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Material Editado com sucesso')
-			handleCloseEditModal()
+			toast.success('As alterações da aula foram salvas com sucesso')
 			fetchData()
 			handleClear()
 		} else {
@@ -160,38 +149,30 @@ export function Equipments() {
 	async function handleFilter(filterData: FilterDataProps) {
 		setFiltered(filterData)
 		fetchData(
-			`?id=${filterData.id}&name=${filterData.name}&created_at=${filterData.created_at}&gym_id=${filtered.gym_id}`
+			`?id=${filterData.id}&name=${filterData.name}&created_at=${filterData.created_at}`
 		)
 	}
 	
 	const handleOpenPdf = () => {
-		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}&gym_id=${filtered.gym_id}`
-		window.open(`/pdf/materiais${queryParams}`)
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}`
+		window.open(`/pdf/aulas${queryParams}`)
 	}
 
 	if (!isAdmin) return <NotFound />
 	return (
-		<Layout title="Equipamentos">
+		<Layout title="Aulas">
 			{showDeleteModal && (
 				<ModalDelete
-					description="Deseja realmente Excluir o equipamento"
+					description="Deseja realmente Excluir a Aula"
 					onClose={handleCloseDeleteModal}
 					onSubmit={handleDelete}
 					show
 				/>
 			)}
-			{showEditModal && (
-				<ModalEdit
-				description="Deseja salvar as alterações feitas no(a) equipamento"
-				onClose={handleCloseEditModal}
-				onSubmit={handleUpdate}
-				show
-			/>
-			)}
 			<LayoutBody>
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
-						Equipamentos
+						Aulas
 						<form className="flex flex-col gap-4">
 							<Input
 								name="name"
@@ -199,17 +180,35 @@ export function Equipments() {
 								label="Nome"
 								required
 								type="text"
-								placeholder="Informe o nome do Equipamento"
+								placeholder="Informe o nome da Aula"
 								value={formData.name || ''}
 							/>
 							<Input
-								name="description"
+								name="tipo"
 								onChange={handleInput}
-								label="Descrição"
+								label="Tipo de Aula"
 								required
 								type="text"
-								placeholder="Qual é a descrição do equipamento"
-								value={formData.description || ''}
+								placeholder="Informe o tipo de aula"
+								value={formData.tipo || ''}
+							/>
+							<Input
+								name="data"
+								onChange={handleInput}
+								label="Data"
+								required
+								type="date"
+								placeholder="Informe o data da Aula"
+								value={formData.data || ''}
+							/>
+							<Input
+								name="horario"
+								onChange={handleInput}
+								label="Horário"
+								required
+								type="text"
+								placeholder="Informe o horario de aula"
+								value={formData.horario || ''}
 							/>
 							<Select
 								name="gym_id"
@@ -230,17 +229,14 @@ export function Equipments() {
 							type="button"
 						/>
 						<Button
-							onClick={() => {
-								setSelectMaterial(selectedMaterial)
-								handleOpenUpdateModal()
-							}}
+							onClick={handleUpdate}
 							variant="gray-light"
 							text="Salvar"
 							type="button"
 						/>
 						<Button
 							onClick={() => {
-								setSelectMaterial(selectedMaterial)
+								setSelectAulas(selectedAulas)
 								handleOpenDeleteModal()
 							}}
 							variant="red"
@@ -266,31 +262,35 @@ export function Equipments() {
 				<div>
 					<fieldset>
 						<legend>Filtro</legend>
-						<FilterEquipment onFilter={handleFilter} />
+						<FilterLesson onFilter={handleFilter} />
 						<table className="w-full">
 							<thead>
 								<tr className="gap-10">
 									<td>Código</td>
 									<td>Nome</td>
-									<td>Descrição</td>
+									<td>Tipo</td>
+									<td>Horário</td>
+									<td>Data do Treino</td>
 									<td>Data</td>
 								</tr>
 							</thead>
 							<tbody>
-								{materiais.map((material) => {
+								{aulas.map((aula) => {
 									return (
 										<tr
-											key={material.id}
+											key={aula.id}
 											className="cursor-pointer hover:bg-gray-100"
 											onClick={() => {
-												setFormData(material)
-												setSelectMaterial(material)
+												setFormData(aula)
+												setSelectAulas(aula)
 											}}
 										>
-											<td>{material.id}</td>
-											<td>{material.name}</td>
-											<td>{material.description}</td>
-											<td>{DateUtils.getDatePt(material.created_at).toString()}</td>
+											<td>{aula.id}</td>
+											<td>{aula.name}</td>
+											<td>{aula.tipo}</td>
+											<td>{aula.horario}</td>
+											<td>{aula.data}</td>
+											<td>{DateUtils.getDatePt(aula.created_at).toString()}</td>
 										</tr>
 									)
 								})}

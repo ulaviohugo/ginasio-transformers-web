@@ -64,12 +64,12 @@ const handleKeyDown = (
 	}
 }
 
-export function Input({ label, icon: Icon, className, ...props }: InputProps) {
+export function Input({ label, icon: Icon, className,required, ...props }: InputProps) {
 	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
 
 	return (
-		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
+		<FormControlWrapper label={label} required={required} icon={Icon} id={id} focused={focused}>
 			<input
 				className={`focus:outline-none text-sm w-full ${className || ''}`}
 				id={id}
@@ -140,13 +140,14 @@ export function InputMask({
 	icon: Icon,
 	mask,
 	className,
+	required,
 	...props
 }: InputMaskProps) {
 	const [focused, setFocused] = useState(false)
 	const id = props.id || StringUtils.generate({ length: 3 })
 
 	return (
-		<FormControlWrapper label={label} icon={Icon} id={id} focused={focused}>
+		<FormControlWrapper label={label} required={required} icon={Icon} id={id} focused={focused}>
 			<MaskedInput
 				mask={mask}
 				guide={false}
