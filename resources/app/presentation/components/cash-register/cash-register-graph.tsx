@@ -13,6 +13,7 @@ import { HttpStatusCode } from '@/data/protocols/http'
 type FilterDataProps = {
 	year: number
 	month: number
+	gym_id: number
 }
 
 type GraphDataProps = {
@@ -26,6 +27,7 @@ type CashRegisterGraphProps = {
 
 export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 	const [loading, setLoading] = useState(true)
+	const [gyms, setGyms] = useState([]);
 	const [graphData, setGraphData] = useState<GraphDataProps>({
 		operations_amount: [],
 		payment_methods_amount: []
@@ -34,8 +36,9 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 	const currentDate = new Date()
 	const [filterData, setFilterData] = useState<FilterDataProps>({
 		year: currentDate.getFullYear(),
-		month: currentDate.getMonth() + 1
-	})
+		month: currentDate.getMonth() + 1,
+		gym_id: '' as any
+	})	
 
 	const handleFilterInputChange = (
 		event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,17 +47,33 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		setFilterData({ ...filterData, [name]: value })
 	}
 
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
+	}, [])
+
 	const operationChartRef = useRef<GraphHtmlRefProps>(null)
 	const paymentMethodChartRef = useRef<GraphHtmlRefProps>(null)
 
 	const fetchData = () => {
-		const { month, year } = filterData
+		const { month, year ,gym_id } = filterData
 		setLoading(true)
 		makeAuthorizeHttpClientDecorator()
 			.request({
 				method: 'post',
 				url: makeApiUrl('/graphs/cash-register'),
-				body: { month, year }
+				body: { month, year ,gym_id }
 			})
 			.then(({ body, statusCode }) => {
 				if (statusCode != HttpStatusCode.ok) return toast.error(body)
@@ -105,6 +124,15 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 						}))}
 						value={filterData.month}
 						onChange={handleFilterInputChange}
+					/>
+					<Select
+						name="gym_id"
+						onChange={handleFilterInputChange}
+						label="Selecione A filial"
+						required
+						data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
+						value={filterData.gym_id || ''}
+						defaultText="Selecione"
 					/>
 					<div className="flex items-end">
 						<Button

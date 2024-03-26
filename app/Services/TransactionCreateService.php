@@ -27,6 +27,7 @@ class TransactionCreateService
 			'date' => $request->date ?? now(),
 			'cash_register_id' => $cashRegister->id,
 			'post_movement_balance' => $balance,
+			'gym_id' => $request->gym_id,
 			'employee_id' => $request->employee_id ?? $userId,
 			'user_id' => $userId
 		]);

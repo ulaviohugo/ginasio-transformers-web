@@ -25,10 +25,16 @@ class Transaction extends Model
 		'employee_id',
 		'user_id',
 		'update_by_id',
+		'gym_id'
 	];
 
 	public function cashRegister()
 	{
 		return $this->hasOne(CashRegister::class, 'id', 'cash_register_id')->latestOfMany();
+	}
+
+	public function gym()
+	{
+		return $this->belongsTo(Gym::class, 'gym_id');
 	}
 }

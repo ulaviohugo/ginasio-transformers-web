@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Layout, LayoutBody, ModalDelete, Select } from '../components'
+import { Button, IconLesson, Input, Layout, LayoutBody, ModalDelete, Select, Title } from '../components'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
@@ -172,8 +172,8 @@ export function Lessons() {
 			<LayoutBody>
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
-						Aulas
-						<form className="flex flex-col gap-4">
+					<Title title="Aulas" icon={IconLesson} />
+						<form className="grid grid-cols-3 gap-4">
 							<Input
 								name="name"
 								onChange={handleInput}

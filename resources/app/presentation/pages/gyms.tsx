@@ -172,7 +172,7 @@ export function Gyms() {
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
 					<Title title="Filial" icon={IconDepartment} />
-						<form className="flex flex-col gap-4">
+						<form className="flex flex-col-2 gap-4">
 							<Input
 								name="name"
 								onChange={handleInput}

@@ -22,7 +22,7 @@ import {
 	AiOutlineCheckCircle
 } from 'react-icons/ai'
 import { ImSpinner2 } from 'react-icons/im'
-import { MdOutlineMonetizationOn } from 'react-icons/md'
+import { MdPlayLesson ,MdOutlineMonetizationOn } from 'react-icons/md'
 import { GrStorage } from 'react-icons/gr'
 import { IoMdClose, IoMdNotificationsOutline } from 'react-icons/io'
 import { BiSearch, BiCategoryAlt, BiChevronLeft, BiChevronRight } from 'react-icons/bi'
@@ -33,6 +33,9 @@ import { GiMuscleUp,GiBodyHeight,GiWeight } from 'react-icons/gi'
 
 export const IconService = (props: IconBaseProps): React.ReactElement => (
 	<HiBriefcase {...props} />
+)
+export const IconLesson = (props: IconBaseProps): React.ReactElement => (
+	<MdPlayLesson {...props} />
 )
 export const IconAdmin = (props: IconBaseProps): React.ReactElement => (
 	<FaUserTie {...props} />

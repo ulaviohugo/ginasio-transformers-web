@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->decimal('amount', 65, 3);
 			$table->string('payment_method', 50);
 			$table->dateTime('date');
+			$table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->cascadeOnUpdate()->nullOnDelete();
 			$table->foreignId('cash_register_id')->nullable()->references('id')->on(DBHelper::TB_CASH_REGISTERS)->cascadeOnUpdate()->nullOnDelete();
 			$table->decimal('post_movement_balance', 65, 3)->default(0);
 			$table->foreignId('employee_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId('athlete_id')->nullable()->references('id')->on(DBHelper::TB_ATHLETE);
             $table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
             $table->timestamps();
+
+            $table->unique(['athlete_id', 'year', 'month']);
         });
     }
 

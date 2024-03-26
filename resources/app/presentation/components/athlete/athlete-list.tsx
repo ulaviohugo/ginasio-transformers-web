@@ -10,13 +10,16 @@ import {
 	Input,
 	NoData,
 	Spinner,
-	Button
+	Button,
+	Select
 } from '@/presentation/components'
 import { DateUtils, ObjectUtils } from '@/utils'
 import { useAthletes } from '@/presentation/hooks'
 import { loadAthleteStore } from '@/presentation/redux'
 import { LoadAthletes } from '@/domain/usecases'
 import { QueryParams } from '@/data/protocols'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
 
 export type FilterDataProps = {
 	id: number
@@ -24,6 +27,7 @@ export type FilterDataProps = {
 	email: string
 	phone: string
 	date: Date
+	gym_id: string
 }
 
 type AthleteListProps = {
@@ -34,6 +38,8 @@ type AthleteListProps = {
 export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	const dispatch = useDispatch()
 	const athletes = useSelector(useAthletes())
+
+	const [gyms, setGyms] = useState([]);
 
 	const [loading, setLoading] = useState(true)
 
@@ -49,7 +55,14 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	}
 
 	const [filterData, setFilterData] = useState<FilterDataProps>({} as FilterDataProps)
-	const [filtered, setFiltered] = useState<FilterDataProps>({} as any)
+	const [filtered, setFiltered] = useState<FilterDataProps>({
+		id: '' as any,
+		name: '',
+		email: '',
+		phone: ''as any,
+		date: '' as any,
+		gym_id: ''
+	})
 
 
 	const hasFilter = useMemo(() => {
@@ -90,6 +103,22 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		fetchData()
 	}, [])
 
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
+	}, [])
+
 	const clearFilter = () => {
 		setFilterData({} as any)
 		fetchData()
@@ -97,7 +126,7 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	
 
 	const handleOpenPdf = () => {
-		const queryParams = `?id=${filtered.id}&name=${filtered.name}&phone=${filtered.phone}&email=${filtered.email}&date=${filtered.date}`
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}&phone=${filtered.phone}&email=${filtered.email}&date=${filtered.date}&gym_id=${filtered.gym_id}`
 		window.open(`/pdf/atletas${queryParams}`)
 	}
 
@@ -140,6 +169,17 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 						value={filterData?.phone || ''}
 						onChange={handleChangeFilterInput}
 					/>
+				</div>
+				<div>
+				<Select
+					name="gym_id"
+					onChange={handleChangeFilterInput}
+					label="Selecione Ginásio"
+					required
+					data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
+					value={filterData.gym_id || ''}
+					defaultText="Selecione"
+				/>
 				</div>
 				<div className="">
 					<Input

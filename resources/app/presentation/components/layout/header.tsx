@@ -10,7 +10,8 @@ import {
 	Logo,
 	Spinner,
 	IconDumbbell,
-	IconDepartment
+	IconDepartment,
+	IconLesson
 } from '@/presentation/components'
 import { setCurrentAccountAdapter } from '@/main/adapters'
 import { MenuUtils, StringUtils } from '@/utils'
@@ -43,7 +44,7 @@ export function Header() {
 						active={path.indexOf('/aula') >= 0}
 						link={MenuUtils.FRONT.LESSONS}
 						text="Aulas"
-						icon={IconAthlete}
+						icon={IconLesson}
 					/>
 					<Item
 						active={path.indexOf(MenuUtils.FRONT.FINANCES) >= 0}

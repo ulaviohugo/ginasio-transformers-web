@@ -5,16 +5,16 @@ namespace App\Services;
 use App\Helpers\NumberHelper;
 use App\Models\Athlete;
 
-class AthleteLoadAllService
+class 	AthleteLoadAllService
 {
 	public function  execute()
 	{
-		$id = null;
-		$name = null;
-		$email = null;
-		$phone = null;
-		$date = null;
-		$gym_id = null;
+		$id = request()->query('id');
+		$name = request()->query('name');
+		$email = request()->query('email');
+		$phone = request()->query('phone');
+		$date = request()->query('date');
+		$gym_id = request()->query('gym_id');
 
 		if (request()->query('filter')) {
 			$queryParam = json_decode(request()->query('filter'));

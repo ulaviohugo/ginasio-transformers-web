@@ -59,6 +59,7 @@ export function Payment() {
 		athlete_id: '' as any,
 		month: '' as any,
 		name: '' as any,
+		gym_id: '' as any,
 		created_at: '' as any,
 		year: new Date().getFullYear()
 	})
@@ -114,17 +115,30 @@ export function Payment() {
 	}
 
 	async function handleSubmit() {
-		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/mensalidade'),
-			method: 'post',
-			body: formData
-		})
-		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			toast.success('Mensalidade cadastrada com sucesso')
-			fetchData()
-			handleClear()
-		} else {
-			toast.error(httpResponse.body)
+		try {
+			const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+				url: makeApiUrl('/mensalidade'),
+				method: 'post',
+				body: formData
+			});
+	
+			if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+				toast.success('Mensalidade cadastrada com sucesso');
+				fetchData();
+				handleClear();
+			} else {
+				// Tratamento específico para o erro de violação de chave única
+				if (httpResponse.body && httpResponse.body.error === 'O atleta já pagou este mês.') {
+					toast.error('O atleta já pagou este mês.');
+				} else {
+					// Tratamento genérico para outros erros
+					toast.error('Erro ao cadastrar a mensalidade. Por favor, tente novamente mais tarde.');
+				}
+			}
+		} catch (error) {
+			// Tratamento para erros não esperados
+			console.error('Ocorreu um erro ao processar a requisição:', error);
+			toast.error('Erro ao processar a requisição. Por favor, tente novamente mais tarde.');
 		}
 	}
 

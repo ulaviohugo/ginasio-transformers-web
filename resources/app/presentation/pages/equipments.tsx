@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Input, Layout, LayoutBody, ModalDelete, Select } from '../components'
+import { Button, IconDumbbell, Input, Layout, LayoutBody, ListContainer, ModalDelete, NoData, Select, Title } from '../components'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
@@ -40,6 +40,7 @@ export function Equipments() {
 		name: '',
 		gym_id: ''
 	})
+	const [loading, setLoading] = useState(true)
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -47,16 +48,26 @@ export function Equipments() {
 	}
 
 	const fetchData = async (queryParams?: string) => {
-		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/materiais' + (queryParams || '')),
-			method: 'get'
-		})
-		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setMateriais(httpResponse.body)
-		} else {
-			toast.error(httpResponse.body)
+		setLoading(true); // Define o estado de carregamento como verdadeiro antes de fazer a requisição
+	
+		try {
+			const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+				url: makeApiUrl('/materiais' + (queryParams || '')),
+				method: 'get'
+			});
+	
+			if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+				setMateriais(httpResponse.body);
+			} else {
+				toast.error(httpResponse.body);
+			}
+		} catch (error) {
+			toast.error("Ocorreu um erro ao carregar os dados.");
+		} finally {
+			setLoading(false); // Define o estado de carregamento como falso após a conclusão da requisição (seja sucesso ou falha)
 		}
 	}
+	
 
 	useEffect(() => {
 		fetchData()
@@ -191,8 +202,8 @@ export function Equipments() {
 			<LayoutBody>
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
-						Equipamentos
-						<form className="flex flex-col gap-4">
+					<Title title="Equipamentos" icon={IconDumbbell} />
+						<form className="flex flex-col-2 gap-4">
 							<Input
 								name="name"
 								onChange={handleInput}
@@ -267,6 +278,7 @@ export function Equipments() {
 					<fieldset>
 						<legend>Filtro</legend>
 						<FilterEquipment onFilter={handleFilter} />
+					<ListContainer>
 						<table className="w-full">
 							<thead>
 								<tr className="gap-10">
@@ -296,6 +308,8 @@ export function Equipments() {
 								})}
 							</tbody>
 						</table>
+					</ListContainer>
+						{!loading && materiais.length < 1 && <NoData />}
 					</fieldset>
 				</div>
 			</LayoutBody>
