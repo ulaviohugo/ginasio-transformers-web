@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Helpers\NumberHelper;
-use App\Models\Athlete;
+use App\Models\User;
 
-class AthleteLoadAllService
+class UserLoadAllService
 {
 	public function  execute()
 	{
@@ -26,26 +26,26 @@ class AthleteLoadAllService
 			$date = isset($queryParam->date) ? date('Y-m-d', strtotime($queryParam->date)) : null;
 		}
 
-		$athletes = Athlete::orderBy('id', 'desc');
+		$users = User::orderBy('id', 'desc');
 
 		if ($id) {
-			$athletes = $athletes->where('id', $id);
+			$users = $users->where('id', $id);
 		}
 		if ($name) {
-			$athletes = $athletes->where('name', 'LIKE', "{$name}%");
+			$users = $users->where('name', 'LIKE', "{$name}%");
 		}
 		if ($email) {
-			$athletes = $athletes->where('email', $email);
+			$users = $users->where('email', $email);
 		}
 		if ($gym_id) {
-			$athletes = $athletes->where('gym_id', $gym_id);
+			$users = $users->where('gym_id', $gym_id);
 		}
 		if ($phone) {
-			$athletes = $athletes->where('phone', NumberHelper::convertToNumber($phone));
+			$users = $users->where('phone', NumberHelper::convertToNumber($phone));
 		}
 		if ($date) {
-			$athletes = $athletes->whereDate('created_at', $date);
+			$users = $users->whereDate('created_at', $date);
 		}
-		return $athletes->get();
+		return $users->get();
 	}
 }

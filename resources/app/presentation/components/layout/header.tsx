@@ -61,7 +61,7 @@ export function Header() {
 					<Item
 						active={path.indexOf(MenuUtils.FRONT.GYMS) >= 0}
 						link={MenuUtils.FRONT.GYMS}
-						text="Ginásios"
+						text="Filiais"
 						icon={IconDepartment}
 					/>
 					

@@ -19,6 +19,12 @@
         thead tr {
             background: #d7d7d7;
             font-weight: bold;
+            text-align: center;
+        }
+
+        tbody tr {
+            background: #f5f5f5;
+            text-align: center;
         }
 
         tbody tr:nth-child(2n) {
@@ -34,8 +40,8 @@
 <body>
     <div class="center-logo">
         <img src="{{$logo}}" style="width: 130px" alt="">
-    </div>
-    <h2>Materiais ({{ count($gyms) }})</h2>
+        <h4>GINÁSIO TRANSFORMERS</h4>
+        <h3>LISTA DE FILIAIS REGISTADOS</h3>
     <table>
         <thead>
             <tr>

@@ -180,12 +180,12 @@ export function Payment() {
 	async function handleFilter(filterData: FilterDataProps) {
 		setFiltered(filterData)
 		fetchData(
-			`?name=${filterData.name}&created_at=${filterData.created_at}&athlete_id=${filterData.athlete_id}&month=${filterData.month}&year=${filterData.year}`
+			`?name=${filterData.name}&created_at=${filterData.created_at}&athlete_id=${filterData.athlete_id}&month=${filterData.month}&year=${filterData.year}&gym_id=${filterData.gym_id}`
 		)
 	}
 
 	const handleOpenPdf = () => {
-		const queryParams = `?athlete_id=${filtered.athlete_id}&name=${filtered.name}&created_at=${filtered.created_at}&month=${filtered.month}&year=${filtered.year}`
+		const queryParams = `?athlete_id=${filtered.athlete_id}&name=${filtered.name}&created_at=${filtered.created_at}&month=${filtered.month}&year=${filtered.year}&gym_id=${filtered.gym_id}`
 		window.open(`/pdf/mensalidades${queryParams}`)
 	}
 

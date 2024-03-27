@@ -19,40 +19,45 @@ class MensalidadeController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        try {
-            $name = $request->query('name');
-            $year = $request->query('year');
-            $month = $request->query('month');
-            $athlete_id = $request->query('athlete_id');
-            $created_at = $request->query('created_at');
+{
+    try {
+        $name = $request->query('name');
+        $year = $request->query('year');
+        $month = $request->query('month');
+        $athlete_id = $request->query('athlete_id');
+        $gym_id = $request->query('gym_id');
+        $created_at = $request->query('created_at');
 
+        $mensalidades = Mensalidade::from('mensalidades AS a')
+            ->select('a.*', 'b.name AS athlete_name', 'c.name AS gym_name')
+            ->join(DBHelper::TB_ATHLETE . ' AS b', 'b.id', 'a.athlete_id')
+            ->join('gyms AS c', 'c.id', '=', 'b.gym_id'); // Junta a tabela de academias
 
-            $mensalidades = Mensalidade::from('mensalidades AS a')
-                ->select('a.*', 'b.name')
-                ->join(DBHelper::TB_ATHLETE . ' AS b', 'b.id', 'a.athlete_id');
-            if ($name) {
-                $mensalidades = $mensalidades->where('b.name', $name);
-            }
-            if ($year) {
-                $mensalidades = $mensalidades->where('a.year', $year);
-            }
-            if ($month) {
-                $mensalidades = $mensalidades->where('a.month', $month);
-            }
-            if ($athlete_id) {
-                $mensalidades = $mensalidades->where('a.athlete_id', $athlete_id);
-            }
-            if ($created_at) {
-                $mensalidades = $mensalidades->whereDate('a.created_at', date('Y-m-d', strtotime($created_at)));
-            }
-            // $mensalidades = Mensalidade::all();
-            // $mensalidades->load('atleta');
-            return response()->json($mensalidades->get());
-        } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()], 500);
+        if ($name) {
+            $mensalidades = $mensalidades->where('b.name', $name);
         }
+        if ($year) {
+            $mensalidades = $mensalidades->where('a.year', $year);
+        }
+        if ($month) {
+            $mensalidades = $mensalidades->where('a.month', $month);
+        }
+        if ($athlete_id) {
+            $mensalidades = $mensalidades->where('a.athlete_id', $athlete_id);
+        }
+        if ($gym_id) {
+            $mensalidades = $mensalidades->where('c.id', $gym_id);
+        }
+        if ($created_at) {
+            $mensalidades = $mensalidades->whereDate('a.created_at', date('Y-m-d', strtotime($created_at)));
+        }
+
+        return response()->json($mensalidades->get());
+    } catch (\Throwable $th) {
+        return response()->json(['error' => $th->getMessage()], 500);
     }
+}
+
 
     public function gerarPDF(Request $request){
         try {
@@ -60,12 +65,14 @@ class MensalidadeController extends Controller
             $year = $request->query('year');
             $month = $request->query('month');
             $athlete_id = $request->query('athlete_id');
+            $gym_id = $request->query('gym_id');
             $created_at = $request->query('created_at');
-
-
+    
             $mensalidades = Mensalidade::from('mensalidades AS a')
-                ->select('a.*', 'b.name')
-                ->join(DBHelper::TB_ATHLETE . ' AS b', 'b.id', 'a.athlete_id');
+                ->select('a.*', 'b.name AS athlete_name', 'c.name AS gym_name')
+                ->join(DBHelper::TB_ATHLETE . ' AS b', 'b.id', 'a.athlete_id')
+                ->join('gyms AS c', 'c.id', '=', 'b.gym_id'); // Junta a tabela de academias
+    
             if ($name) {
                 $mensalidades = $mensalidades->where('b.name', $name);
             }
@@ -77,6 +84,9 @@ class MensalidadeController extends Controller
             }
             if ($athlete_id) {
                 $mensalidades = $mensalidades->where('a.athlete_id', $athlete_id);
+            }
+            if ($gym_id) {
+                $mensalidades = $mensalidades->where('c.id', $gym_id);
             }
             if ($created_at) {
                 $mensalidades = $mensalidades->whereDate('a.created_at', date('Y-m-d', strtotime($created_at)));

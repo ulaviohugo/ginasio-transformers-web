@@ -5,6 +5,7 @@ use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\MensalidadeController;
+use App\Http\Controllers\UserController;
 use App\Models\Athlete;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::match(['get', 'post'], 'mensalidade', function () {
 
 Route::get('pdf/materiais', [EquipmentController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/atletas', [AthleteController::class, 'gerarPDF'])->name('gerar-pdf');
+Route::get('pdf/employees', [UserController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/mensalidades', [MensalidadeController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/gyms', [GymController::class, 'gerarPDF'])->name('gerar-pdf');
 

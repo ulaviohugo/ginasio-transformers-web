@@ -9,7 +9,9 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserCreateService;
+use App\Services\UserLoadAllService;
 use App\Services\UserUpdateService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -17,6 +19,16 @@ class UserController extends Controller
 	{
 		try {
 			return UserResource::collection(User::all());
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionarios');
+		}
+	}
+
+	public function gerarPDF(UserLoadAllService $service){
+		try {
+			$users = $service->execute();
+			$pdf = Pdf::loadView('pdfs.employees', ['users' => $users]);
+			return $pdf->stream();
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionarios');
 		}

@@ -248,7 +248,7 @@ export function AthleteEditor({
 							<Select
 								name="gym_id"
 								onChange={handleChangeInput}
-								label="Selecione Ginásio"
+								label="Selecione a Filial"
 								required
 								data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
 								value={formData?.gym_id || ''}

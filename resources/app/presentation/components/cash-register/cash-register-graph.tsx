@@ -128,7 +128,7 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 					<Select
 						name="gym_id"
 						onChange={handleFilterInputChange}
-						label="Selecione A filial"
+						label="Selecione A Filial"
 						required
 						data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
 						value={filterData.gym_id || ''}

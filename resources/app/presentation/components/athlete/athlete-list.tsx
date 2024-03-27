@@ -27,7 +27,7 @@ export type FilterDataProps = {
 	email: string
 	phone: string
 	date: Date
-	gym_id: string
+	gym_id: number
 }
 
 type AthleteListProps = {
@@ -61,7 +61,7 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		email: '',
 		phone: ''as any,
 		date: '' as any,
-		gym_id: ''
+		gym_id: ''as any
 	})
 
 
@@ -126,9 +126,11 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	
 
 	const handleOpenPdf = () => {
-		const queryParams = `?id=${filtered.id}&name=${filtered.name}&phone=${filtered.phone}&email=${filtered.email}&date=${filtered.date}&gym_id=${filtered.gym_id}`
-		window.open(`/pdf/atletas${queryParams}`)
+		const { id, name, phone, email, date, gym_id } = filtered;
+		const queryParams = `?id=${id || ''}&name=${encodeURIComponent(name || '')}&phone=${phone || ''}&email=${encodeURIComponent(email || '')}&date=${date || ''}&gym_id=${gym_id || ''}`;
+		window.open(`/pdf/atletas${queryParams}`);
 	}
+	
 
 	return (
 		<fieldset>
