@@ -17,6 +17,7 @@ import { FilterDataProps, FilterPayment } from '../components/filter-Payment'
 import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
 import { ModalEdit } from '../components/modal/modal-edit'
+import { NotFound } from './notfound'
 
 type FormDataProps = {
 	athlete_id: number
@@ -47,6 +48,11 @@ export function Payment() {
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 	const [showEditModal, setShowEditModal] = useState(false)
 	const [selectedMensalidade, setSelectMensalidade] = useState<PaymentProps>()
+
+	const isAdmin = user.role == 'Admin'
+	const isNormal = user.role == 'Normal'
+	const isRecepcionista = user?.position == 'Recepcionista';
+
 	const [formData, setFormData] = useState<FormDataProps>({
 		athlete_id: 0,
 		month: new Date().getMonth() + 1,
@@ -189,6 +195,7 @@ export function Payment() {
 		window.open(`/pdf/mensalidades${queryParams}`)
 	}
 
+	if (!(isAdmin || (isNormal && isRecepcionista))) return <NotFound />;
 	return (
 		<Layout title="Mensalidade">
 			{showDeleteModal && (

@@ -30,6 +30,7 @@ export function Gyms() {
 	const [showEditModal, setShowEditModal] = useState(false)
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const isAdminGlobal = user.gym_id === 0
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', location: '' })
 	const [filtered, setFiltered] = useState<FilterDataProps>({
 		name: '',
@@ -149,7 +150,7 @@ export function Gyms() {
 		window.open(`/pdf/gyms${queryParams}`)
 	}
 
-	if (!isAdmin) return <NotFound />
+	if (!(isAdmin && isAdminGlobal)) return <NotFound />
 	return (
 		<Layout title="Ginásios">
 			{showDeleteModal && (

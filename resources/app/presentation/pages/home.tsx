@@ -10,6 +10,7 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators';
 import { makeApiUrl } from '@/main/factories/http';
 import { IconAthlete, IconUser, IconDumbbell, IconDepartment } from '@/presentation/components/icons';
 import { HomeGraph, HomeGraphDataProps } from '../components/home-graph';
+import { NotFound } from './notfound';
 
 type ItemProps = {
   number: number;
@@ -92,7 +93,10 @@ export function Home() {
   }, []);
 
   useEffect (() => {
-    makeAuthorizeHttpClientDecorator()
+    {
+      isAdmin &&
+        Promise.all([
+            makeAuthorizeHttpClientDecorator()
             .request({
               url: makeApiUrl('/graphs/monthly-fees'),
               method: 'post',
@@ -105,8 +109,11 @@ export function Home() {
                 toast.error(response.body);
               }
             })
+        ])
+      }
   },[]);
 
+  if (!isAdmin) return <NotFound />
   return (
     <Layout>
       <LayoutBody>

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { useAuth } from '../hooks'
 import { NotFound } from './notfound'
 import { FilterDataProps, FilterLesson } from '../components/filter-Lesson'
+import { GymModel } from '@/domain/models/gym'
 
 type FormDataProps = {
 	name: string
@@ -31,9 +32,13 @@ type LessonProps = {
 export function Lessons() {
 	const [aulas, setAulas] = useState<LessonProps[]>([])
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
+
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const isAdminBool = user.gym_id != null
+	const isNormal = user.role == 'Normal'
+	const isPersonalTrainer = user?.position == 'Personal Trainer';
 	const [selectedAulas, setSelectAulas] = useState<LessonProps>()
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', tipo: '', gym_id: '', data:'',horario:''})
 	const [filtered, setFiltered] = useState<FilterDataProps>({
@@ -158,7 +163,7 @@ export function Lessons() {
 		window.open(`/pdf/aulas${queryParams}`)
 	}
 
-	if (!isAdmin) return <NotFound />
+	if (!(isAdmin || (isNormal && isPersonalTrainer))) return <NotFound />;
 	return (
 		<Layout title="Aulas">
 			{showDeleteModal && (
@@ -213,11 +218,12 @@ export function Lessons() {
 							<Select
 								name="gym_id"
 								onChange={handleInput}
-								label="Selecione Ginásio"
+								label="Selecione a Filial"
 								required
-								data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-								value={formData.gym_id || ''}
+								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+								value={isAdminBool  ? user.gym_id : ''}
 								defaultText="Selecione"
+								disabled={isAdminBool}
 							/>
 						</form>
 					</div>

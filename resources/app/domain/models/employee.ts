@@ -25,7 +25,7 @@ export interface EmployeeModel {
 	address: string
 	department: string
 	position: string
-	gym_id: string
+	gym_id: number
 	base_salary: number
 	meal_allowance?: number
 	productivity_allowance?: number

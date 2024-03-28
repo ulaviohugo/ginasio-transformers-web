@@ -17,9 +17,11 @@ import {
 import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HandleOpenCard } from '../components/athlete/HandleOpenCard'
 import { HandleOpenCardIMC } from '../components/athlete/HandleOpenCardIMC'
+import { useAuth } from '../hooks'
+import { NotFound } from './notfound'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes
@@ -41,6 +43,11 @@ export function Athletes({
 	const [filtered, setFiltered] = useState<FilterDataProps>({} as FilterDataProps)
 	const [showCard, setShowCard] = useState(false)
 	const [showCardIMC, setShowCardIMC] = useState(false)
+
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+	const isNormal = user.role == 'Normal'
+	const isRecepcionista = user?.position == 'Recepcionista';
 
 	const dispatch = useDispatch()
 
@@ -82,6 +89,7 @@ export function Athletes({
 		setFiltered(filterData)
 	}
 
+	if (!(isAdmin || (isNormal && isRecepcionista))) return <NotFound />;
 	return (
 		<Layout title="Atletas">
 			{showFormDelete && (

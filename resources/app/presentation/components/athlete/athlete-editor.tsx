@@ -5,7 +5,7 @@ import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls
 import { IconCheck, IconClose, IconEdit, IconTrash, IconWeight, Iconcard } from '../icons'
 import { PdfViewer } from '../pdf-viewer'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEmployees, useLocations } from '@/presentation/hooks'
+import { useAuth, useEmployees, useLocations } from '@/presentation/hooks'
 import toast from 'react-hot-toast'
 import {
 	addAthleteStore,
@@ -17,6 +17,8 @@ import { ImagePreview } from '../image-preview'
 import { FilterDataProps } from './athlete-list'
 import { makeApiUrl } from '@/main/factories/http'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { NotFound } from '@/presentation/pages'
+import { GymModel } from '@/domain/models/gym'
 
 type AthleteEditorProps = {
 	addAthlete: AddAthlete
@@ -44,12 +46,13 @@ export function AthleteEditor({
 	} as AthleteModel)
 	const [pdfUrl, setPdfUrl] = useState('')
 
-	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>(
-		{} as AthleteModel
-	)
+	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>({} as AthleteModel)
+
+		const user = useSelector(useAuth())
+		const isAdmin = user.gym_id != null
 
 	const [showEditor, setShowEditor] = useState(false)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
 
 	const employees = useSelector(useEmployees())
 	const { countries, provinces, municipalities } = useSelector(useLocations())
@@ -151,7 +154,6 @@ export function AthleteEditor({
 		setPhotoPreview('')
 	}
 
-
 	return (
 		<fieldset className="p-4">
 			<legend>Novo atleta</legend>
@@ -250,9 +252,10 @@ export function AthleteEditor({
 								onChange={handleChangeInput}
 								label="Selecione a Filial"
 								required
-								data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-								value={formData?.gym_id || ''}
+								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+								value={isAdmin  ? user.gym_id : ''}
 								defaultText="Selecione"
+								disabled={isAdmin}
 							/>
 							<Input
 								name="height"
@@ -364,8 +367,18 @@ export function AthleteEditor({
 					/>
 					<Button text="Limpar" icon={IconClose} onClick={handleClear} />
 					<Button variant="red" text="Excluir" icon={IconTrash} onClick={onDelete} />
-					<Button variant="rose" text="Cartão" icon={Iconcard} onClick={handleOpenDetalhe} />
-					<Button variant="orange" text="IMC" icon={IconWeight} onClick={handleOpenDetalheIMC} />
+					<Button
+						variant="rose"
+						text="Cartão"
+						icon={Iconcard}
+						onClick={handleOpenDetalhe}
+					/>
+					<Button
+						variant="orange"
+						text="IMC"
+						icon={IconWeight}
+						onClick={handleOpenDetalheIMC}
+					/>
 				</div>
 			</div>
 		</fieldset>

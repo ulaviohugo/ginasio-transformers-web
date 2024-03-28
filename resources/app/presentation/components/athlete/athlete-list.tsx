@@ -14,12 +14,13 @@ import {
 	Select
 } from '@/presentation/components'
 import { DateUtils, ObjectUtils } from '@/utils'
-import { useAthletes } from '@/presentation/hooks'
+import { useAthletes, useAuth } from '@/presentation/hooks'
 import { loadAthleteStore } from '@/presentation/redux'
 import { LoadAthletes } from '@/domain/usecases'
 import { QueryParams } from '@/data/protocols'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
+import { GymModel } from '@/domain/models/gym'
 
 export type FilterDataProps = {
 	id: number
@@ -39,9 +40,12 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 	const dispatch = useDispatch()
 	const athletes = useSelector(useAthletes())
 
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
 
 	const [loading, setLoading] = useState(true)
+
+	const user = useSelector(useAuth())
+	const isAdmin = user.gym_id != null
 
 	const [selectedRow, setSelectedRow] = useState(0)
 
@@ -59,11 +63,10 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		id: '' as any,
 		name: '',
 		email: '',
-		phone: ''as any,
+		phone: '' as any,
 		date: '' as any,
-		gym_id: ''as any
+		gym_id: '' as any
 	})
-
 
 	const hasFilter = useMemo(() => {
 		setFiltered(filterData)
@@ -123,14 +126,12 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		setFilterData({} as any)
 		fetchData()
 	}
-	
 
 	const handleOpenPdf = () => {
-		const { id, name, phone, email, date, gym_id } = filtered;
-		const queryParams = `?id=${id || ''}&name=${encodeURIComponent(name || '')}&phone=${phone || ''}&email=${encodeURIComponent(email || '')}&date=${date || ''}&gym_id=${gym_id || ''}`;
-		window.open(`/pdf/atletas${queryParams}`);
+		const { id, name, phone, email, date, gym_id } = filtered
+		const queryParams = `?id=${id || ''}&name=${encodeURIComponent(name || '')}&phone=${phone || ''}&email=${encodeURIComponent(email || '')}&date=${date || ''}&gym_id=${gym_id || ''}`
+		window.open(`/pdf/atletas${queryParams}`)
 	}
-	
 
 	return (
 		<fieldset>
@@ -173,15 +174,16 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 					/>
 				</div>
 				<div>
-				<Select
-					name="gym_id"
-					onChange={handleChangeFilterInput}
-					label="Selecione Ginásio"
-					required
-					data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-					value={filterData.gym_id || ''}
-					defaultText="Selecione"
-				/>
+					<Select
+						name="gym_id"
+						onChange={handleChangeFilterInput}
+						label="Selecione a Filial"
+						required
+						data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+						value={isAdmin ? user.gym_id : ''}
+						defaultText="Selecione"
+						disabled={isAdmin}
+					/>
 				</div>
 				<div className="">
 					<Input
