@@ -9,7 +9,7 @@ class Aula extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'tipo', 'user_id', 'data', 'horario','gym_id'];
+    protected $fillable = ['name', 'tipo', 'user_id', 'data', 'horario','gym_id','user_id_update'];
 
     public function user()
 	{

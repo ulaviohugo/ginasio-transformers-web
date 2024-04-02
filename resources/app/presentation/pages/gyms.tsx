@@ -30,7 +30,7 @@ export function Gyms() {
 	const [showEditModal, setShowEditModal] = useState(false)
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
-	const isAdminGlobal = user.gym_id === 0
+	const isAdminGlobal = user.gym_id === null
 	const [formData, setFormData] = useState<FormDataProps>({ name: '', location: '' })
 	const [filtered, setFiltered] = useState<FilterDataProps>({
 		name: '',

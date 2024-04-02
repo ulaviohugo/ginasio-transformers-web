@@ -5,6 +5,9 @@ import { DateUtils } from '@/utils'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
+import { GymModel } from '@/domain/models/gym'
 
 export type FilterDataProps = {
 	athlete_id: number
@@ -12,7 +15,7 @@ export type FilterDataProps = {
 	created_at: string
 	year: number
 	month: number
-	gym_id: string
+	gym_id: number
 }
 
 type FilterPaymentProps = {
@@ -30,7 +33,9 @@ const initialData: FilterDataProps = {
 
 export function FilterPayment({ onFilter }: FilterPaymentProps) {
 	const [formData, setFormData] = useState<FilterDataProps>(initialData)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
+	const user = useSelector(useAuth())
+	const isAdmin = user.role != 'Admin'
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
@@ -51,6 +56,12 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 
 	useEffect(() => {
 		fetchDataGym()
+	}, [])
+
+	useEffect(() => {
+		if (user.gym_id) {
+			setFormData({...formData,gym_id:user.gym_id})
+		}
 	}, [])
 
 	const handleClear = () => {
@@ -95,10 +106,12 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 			<Select
 				name="gym_id"
 				onChange={handleInput}
-				label="Selecione Ginásio"
-				data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-				value={formData.gym_id || ''}
+				label="Selecione a Filial"
+				required
+				data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+				value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
 				defaultText="Selecione"
+				disabled={isAdmin}
 			/>
 			<Input
 				onChange={handleInput}

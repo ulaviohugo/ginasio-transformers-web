@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\DBHelper;
 use App\Helpers\FileHelper;
 use App\Http\Requests\AthleteCreateRequest;
 use App\Models\Athlete;
@@ -25,6 +26,13 @@ class AthleteCreateService
 			if (FileHelper::isUploadable($request->photo)) {
 				$photo = FileHelper::uploadBase64($request->photo, 'uploads/athletes');
 			}
+
+			$athlete = DB::table(DBHelper::TB_USERS . ' AS u')
+            ->select('u.name')
+            ->where('u.position', 'Personal Trainer')
+            ->join(DBHelper::TB_ATHLETE . ' AS a', 'u.gym_id', '=', 'a.gym_id')
+            ->get();
+
 			$athlete = Athlete::create([
 				'name' => $request->name,
 				'date_of_birth' => $request->date_of_birth,

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('tipo');
             $table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
+            $table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->cascadeOnUpdate()->nullOnDelete();
             $table->date('data');
             $table->time('horario');

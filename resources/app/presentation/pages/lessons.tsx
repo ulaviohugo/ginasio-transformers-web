@@ -15,7 +15,7 @@ type FormDataProps = {
 	tipo: string
 	data: string
 	horario: string
-	gym_id: string
+	gym_id: number
 }
 
 type LessonProps = {
@@ -40,11 +40,12 @@ export function Lessons() {
 	const isNormal = user.role == 'Normal'
 	const isPersonalTrainer = user?.position == 'Personal Trainer';
 	const [selectedAulas, setSelectAulas] = useState<LessonProps>()
-	const [formData, setFormData] = useState<FormDataProps>({ name: '', tipo: '', gym_id: '', data:'',horario:''})
+	const [formData, setFormData] = useState<FormDataProps>({ name: '', tipo: '', gym_id: '' as any, data:'',horario:''})
 	const [filtered, setFiltered] = useState<FilterDataProps>({
 		name: '',
 		created_at: '',
-		id: '' as any
+		id: '' as any,
+		gym_id: '' as any,
 	})
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +66,7 @@ export function Lessons() {
 	}
 
 	useEffect(() => {
-		fetchData()
+		fetchData("?gym_id=" + (user.gym_id || ''))
 	}, [])
 
 	const fetchDataGym = async (queryParams?: string) => {
@@ -82,6 +83,12 @@ export function Lessons() {
 
 	useEffect(() => {
 		fetchDataGym()
+	}, [])
+
+	useEffect(() => {
+		if (user.gym_id) {
+			setFormData({...formData,gym_id:user.gym_id})
+		}
 	}, [])
 
 	const handleCloseDeleteModal = () => {
@@ -154,12 +161,12 @@ export function Lessons() {
 	async function handleFilter(filterData: FilterDataProps) {
 		setFiltered(filterData)
 		fetchData(
-			`?id=${filterData.id}&name=${filterData.name}&created_at=${filterData.created_at}`
+			`?id=${filterData.id}&name=${filterData.name}&gym_id=${filterData.gym_id}&created_at=${filterData.created_at}`
 		)
 	}
 	
 	const handleOpenPdf = () => {
-		const queryParams = `?id=${filtered.id}&name=${filtered.name}&created_at=${filtered.created_at}`
+		const queryParams = `?id=${filtered.id}&name=${filtered.name}}&gym_id=${filtered.gym_id}&created_at=${filtered.created_at}`
 		window.open(`/pdf/aulas${queryParams}`)
 	}
 
@@ -221,7 +228,7 @@ export function Lessons() {
 								label="Selecione a Filial"
 								required
 								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={isAdminBool  ? user.gym_id : ''}
+								value={isAdminBool  ? user.gym_id : formData?.gym_id || ''}
 								defaultText="Selecione"
 								disabled={isAdminBool}
 							/>

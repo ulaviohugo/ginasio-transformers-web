@@ -18,7 +18,7 @@ class AthleteCreateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de criar fornecedor';
-		return User::currentUser()->role == User::ROLE_ADMIN;
+		return true;
 	}
 
 	/**

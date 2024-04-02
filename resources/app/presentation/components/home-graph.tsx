@@ -8,6 +8,9 @@ import { HttpStatusCode } from '@/data/protocols/http'
 import { Spinner } from './spinner'
 import { Button, Input, Select } from './form-controls'
 import { IconSearch } from './icons'
+import { GymModel } from '@/domain/models/gym'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks'
 
 type FilterDataProps = {
 	year: number
@@ -19,13 +22,16 @@ export type HomeGraphDataProps = {
 }
 
 type HomeGraphProps = {
-	data:HomeGraphDataProps
+	data: HomeGraphDataProps
 }
 
 export function HomeGraph({ data }: HomeGraphProps) {
 	const [loading, setLoading] = useState(true)
-	const [graphData, setGraphData] = useState<HomeGraphDataProps>({monthly_fees:[]})
-	const [gyms, setGyms] = useState([]);
+	const [graphData, setGraphData] = useState<HomeGraphDataProps>({ monthly_fees: [] })
+	const [gyms, setGyms] = useState<GymModel[]>([])
+
+	const user = useSelector(useAuth())
+	const isAdmin = user.gym_id != null
 
 	const currentDate = new Date()
 	const [filterData, setFilterData] = useState<FilterDataProps>({
@@ -82,6 +88,12 @@ export function HomeGraph({ data }: HomeGraphProps) {
 		fetchDataGym()
 	}, [])
 
+	useEffect(() => {
+		if (user.gym_id) {
+			setFilterData({...filterData,gym_id:user.gym_id})
+		}
+	}, [])
+
 	const operationChartRef = useRef<GraphHtmlRefProps>(null)
 
 	useEffect(() => {
@@ -107,11 +119,12 @@ export function HomeGraph({ data }: HomeGraphProps) {
 				<Select
 					name="gym_id"
 					onChange={handleFilterInputChange}
-					label="Selecione Ginásio"
+					label="Selecione a Filial"
 					required
-					data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-					value={filterData.gym_id || ''}
+					data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+					value={isAdmin ? user.gym_id : filterData?.gym_id || ''} // Modificado para usar a condição isAdmin
 					defaultText="Selecione"
+					disabled={isAdmin}
 				/>
 				<div className="flex items-end">
 					<Button
@@ -122,7 +135,7 @@ export function HomeGraph({ data }: HomeGraphProps) {
 						className="h-7"
 						onClick={fetchData}
 					/>
-					</div>
+				</div>
 			</fieldset>
 			<div className="grid grid-cols-1 gap-4">
 				<div className="p-4 border">

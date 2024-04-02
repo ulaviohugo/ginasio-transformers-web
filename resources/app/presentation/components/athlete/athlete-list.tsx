@@ -102,9 +102,23 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 		// onFilter(filterData)
 	}
 
-	useEffect(() => {
-		fetchData()
-	}, [])
+	if (isAdmin == null) {
+		useEffect(() => {
+			fetchData()
+		}, [])
+	} else {
+		const handleRequestFilter = () => {
+			setFiltered(filterData)
+			fetchData({ filter: filterData })
+			// onFilter(filterData)
+		}
+
+		useEffect(() => {
+			handleRequestFilter()
+		}, [filterData])
+	}
+
+	
 
 	const fetchDataGym = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
@@ -120,6 +134,12 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 
 	useEffect(() => {
 		fetchDataGym()
+	}, [])
+
+	useEffect(() => {
+		if (user.gym_id) {
+			setFilterData({...filterData,gym_id:user.gym_id})
+		}
 	}, [])
 
 	const clearFilter = () => {
@@ -180,7 +200,7 @@ export function AthleteList({ onSelect, loadAthletes }: AthleteListProps) {
 						label="Selecione a Filial"
 						required
 						data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-						value={isAdmin ? user.gym_id : ''}
+						value={isAdmin ? user.gym_id : filterData?.gym_id || ''} // Modificado para usar a condição isAdmin
 						defaultText="Selecione"
 						disabled={isAdmin}
 					/>

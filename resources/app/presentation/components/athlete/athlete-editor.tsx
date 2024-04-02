@@ -1,4 +1,4 @@
-import { AthleteModel } from '@/domain/models'
+import { AthleteModel, EmployeeModel } from '@/domain/models'
 import { AddAthlete, LoadEmployees, UpdateAthlete } from '@/domain/usecases'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls'
@@ -46,13 +46,11 @@ export function AthleteEditor({
 	} as AthleteModel)
 	const [pdfUrl, setPdfUrl] = useState('')
 
-	const [selectedAthlete, setSelectedAthlete] = useState<AthleteModel>({} as AthleteModel)
+	const user = useSelector(useAuth())
+	const isAdmin = user.gym_id != null
 
-		const user = useSelector(useAuth())
-		const isAdmin = user.gym_id != null
-
-	const [showEditor, setShowEditor] = useState(false)
 	const [gyms, setGyms] = useState<GymModel[]>([])
+	const [users, setUsers] = useState<EmployeeModel[]>([])
 
 	const employees = useSelector(useEmployees())
 	const { countries, provinces, municipalities } = useSelector(useLocations())
@@ -86,6 +84,21 @@ export function AthleteEditor({
 	useEffect(() => {
 		fetchDataGym()
 	}, [])
+	const fetchDataEmployees = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/employees' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setUsers(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataEmployees()
+	}, [])
 
 	useEffect(() => {
 		if (data?.id) {
@@ -100,6 +113,12 @@ export function AthleteEditor({
 				.load()
 				.then((response) => dispatch(loadEmployeeStore(response)))
 				.catch(({ message }) => toast.error(message))
+		}
+	}, [])
+
+	useEffect(() => {
+		if (user.gym_id) {
+			setFormData({ ...formData, gym_id: user.gym_id })
 		}
 	}, [])
 
@@ -253,9 +272,22 @@ export function AthleteEditor({
 								label="Selecione a Filial"
 								required
 								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={isAdmin  ? user.gym_id : ''}
+								value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
 								defaultText="Selecione"
 								disabled={isAdmin}
+							/>
+							<Select
+								name="user_id"
+								onChange={handleChangeInput}
+								label="Selecione o Personal Trainer"
+								data={users
+									.filter(
+										(user) =>
+											user.gym_id === 1 && user.position === 'Personal Trainer'
+									) // Filtra Personal Trainers com o mesmo gym_id do usuário logado
+									.map((user) => ({ text: user.name, value: user.id }))}
+								value={formData?.user_id || ''}
+								defaultText="Selecione"
 							/>
 							<Input
 								name="height"

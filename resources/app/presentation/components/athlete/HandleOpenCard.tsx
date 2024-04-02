@@ -63,7 +63,7 @@ export function HandleOpenCard ({ show, onClose, size = 'xl' }: HandleOpenCardPr
             className="w-full max-w-xs p-2 mb-4 border border-gray-300 rounded-md"
           />
           {filteredAthletes.length === 0 ? (
-            <div className="text-rose-900 text-center">Nenhum cartão disponível</div>
+            <div className="text-white text-center">Nenhum cartão disponível</div>
           ) : (
             <ul className="grid lg:grid-cols-2 md:grid-cols-2 rounded-lg gap-4 overflow-y-auto">
               {filteredAthletes.map((athlete) => (

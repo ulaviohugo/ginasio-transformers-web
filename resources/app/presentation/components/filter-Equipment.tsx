@@ -4,10 +4,13 @@ import { IconClose, IconSearch } from './icons'
 import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { makeApiUrl } from '@/main/factories/http'
 import toast from 'react-hot-toast'
+import { GymModel } from '@/domain/models/gym'
+import { useAuth } from '../hooks'
+import { useSelector } from 'react-redux'
 
 export type FilterDataProps = {
 	name: string
-	gym_id: string
+	gym_id: number
 	created_at: string
 	id: number
 }
@@ -20,21 +23,24 @@ const initialData: FilterDataProps = {
 	created_at: '',
 	id: '' as any,
 	name: '',
-	gym_id: ''
+	gym_id: '' as any
 }
 
 export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 	const [formData, setFormData] = useState<FilterDataProps>(initialData)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
+	const user = useSelector(useAuth())
+	const isAdmin = user.gym_id != null
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
 
-	const fetchDataGym = async (queryParams?: string) => {
+	const fetchDataGym = async () => {
+		const queryParams = isAdmin ? '' : `?gym_id=${user.gym_id}`
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/gym' + (queryParams || '')),
+			url: makeApiUrl(`/gym${queryParams}`),
 			method: 'get'
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
@@ -46,7 +52,7 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 
 	useEffect(() => {
 		fetchDataGym()
-	}, [])
+	}, [formData])
 
 	const handleClear = () => {
 		setFormData(initialData)
@@ -79,11 +85,12 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 			<Select
 				name="gym_id"
 				onChange={handleInput}
-				label="Selecione Ginásio"
+				label="Selecione a Filial"
 				required
-				data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-				value={formData.gym_id || ''}
+				data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+				value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
 				defaultText="Selecione"
+				disabled={isAdmin}
 			/>
 			<Button
 				variant="gray-light"

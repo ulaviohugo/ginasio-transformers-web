@@ -9,6 +9,9 @@ import { DateUtils, GraphHtmlRefProps, GraphUtils, GraphValueProps } from '@/uti
 import { Button, Input, Select } from '../form-controls'
 import { IconSearch } from '../icons'
 import { HttpStatusCode } from '@/data/protocols/http'
+import { GymModel } from '@/domain/models/gym'
+import { useAuth } from '@/presentation/hooks'
+import { useSelector } from 'react-redux'
 
 type FilterDataProps = {
 	year: number
@@ -27,7 +30,9 @@ type CashRegisterGraphProps = {
 
 export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 	const [loading, setLoading] = useState(true)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState<GymModel[]>([])
+	const user = useSelector(useAuth())
+	const isAdmin = user.gym_id != null
 	const [graphData, setGraphData] = useState<GraphDataProps>({
 		operations_amount: [],
 		payment_methods_amount: []
@@ -38,7 +43,7 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		year: currentDate.getFullYear(),
 		month: currentDate.getMonth() + 1,
 		gym_id: '' as any
-	})	
+	})
 
 	const handleFilterInputChange = (
 		event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -47,6 +52,28 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		setFilterData({ ...filterData, [name]: value })
 	}
 
+	const fetchData = () => {
+		const { month, year, gym_id } = filterData
+		setLoading(true)
+		makeAuthorizeHttpClientDecorator()
+			.request({
+				method: 'post',
+				url: makeApiUrl('/graphs/cash-register'),
+				body: { month, year, gym_id }
+			})
+			.then(({ body, statusCode }) => {
+				if (statusCode != HttpStatusCode.ok) return toast.error(body)
+				setGraphData(body)
+			})
+			.catch(({ message }) => toast.error(message))
+			.finally(() => setLoading(false))
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, [])
+
+	
 	const fetchDataGym = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
 			url: makeApiUrl('/gym' + (queryParams || '')),
@@ -63,29 +90,15 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		fetchDataGym()
 	}, [])
 
+	useEffect(() => {
+		if (user.gym_id) {
+			setFilterData({...filterData,gym_id:user.gym_id})
+		}
+	}, [])
+
 	const operationChartRef = useRef<GraphHtmlRefProps>(null)
 	const paymentMethodChartRef = useRef<GraphHtmlRefProps>(null)
 
-	const fetchData = () => {
-		const { month, year ,gym_id } = filterData
-		setLoading(true)
-		makeAuthorizeHttpClientDecorator()
-			.request({
-				method: 'post',
-				url: makeApiUrl('/graphs/cash-register'),
-				body: { month, year ,gym_id }
-			})
-			.then(({ body, statusCode }) => {
-				if (statusCode != HttpStatusCode.ok) return toast.error(body)
-				setGraphData(body)
-			})
-			.catch(({ message }) => toast.error(message))
-			.finally(() => setLoading(false))
-	}
-
-	useEffect(() => {
-		fetchData()
-	}, [])
 
 	useEffect(() => {
 		GraphUtils.buildGraph({
@@ -128,11 +141,12 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 					<Select
 						name="gym_id"
 						onChange={handleFilterInputChange}
-						label="Selecione A Filial"
+						label="Selecione a Filial"
 						required
-						data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
-						value={filterData.gym_id || ''}
+						data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+						value={isAdmin ? user.gym_id : filterData?.gym_id || ''} // Modificado para usar a condição isAdmin
 						defaultText="Selecione"
+						disabled={isAdmin}
 					/>
 					<div className="flex items-end">
 						<Button
