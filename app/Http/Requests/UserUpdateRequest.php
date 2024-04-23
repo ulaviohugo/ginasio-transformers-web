@@ -34,7 +34,7 @@ class UserUpdateRequest extends GlobalFormRequest
 
 		return [
 			'name' => 'required',
-			'email' => 'nullable|email',
+			'email' => ['nullable', 'email', Rule::unique(DBHelper::TB_USERS)->ignore($id)],
 			'gender' => 'required',
 			'gym_id' => [
 				'nullable',
