@@ -10,7 +10,7 @@ class Mensalidade extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['year', 'month', 'monthlyValue', 'monthlyFine', 'athlete_id','paymentMethod','user_id'];
+    protected $fillable = ['year', 'month', 'monthlyValue', 'monthlyFine','amount', 'athlete_id','paymentMethod','user_id'];
     
     // Relacionamento com a tabela de atletas
     public function atleta()

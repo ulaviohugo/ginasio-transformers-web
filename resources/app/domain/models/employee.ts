@@ -31,8 +31,8 @@ export interface EmployeeModel {
 	productivity_allowance?: number
 	transportation_allowance?: number
 	family_allowance?: number
-	hire_date: Date
-	contract_end_date?: Date
+	hire_date: Date | null
+	contract_end_date?: Date | null
 	bank_name?: string
 	iban?: string
 	account_number?: string

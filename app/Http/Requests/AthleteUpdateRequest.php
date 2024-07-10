@@ -18,7 +18,8 @@ class AthleteUpdateRequest extends GlobalFormRequest
 	public function authorize(): bool
 	{
 		$this->failedAuthMessage = 'Não tem permissão de criar fornecedor';
-		return User::currentUser()->role == User::ROLE_ADMIN;
+		return in_array(User::currentUser()->role, [User::ROLE_ADMIN, User::ROLE_USER]);
+
 	}
 
 	/**
@@ -34,6 +35,7 @@ class AthleteUpdateRequest extends GlobalFormRequest
 			'gender' => 'required',
 			'height' => 'required',
 			'gym_id' => 'required',
+			'personal_trainer_id' => 'nullable',
 			'date_of_birth' => 'required|date',
 			'marital_status' => 'required',
 			'document_type' => 'required|string',

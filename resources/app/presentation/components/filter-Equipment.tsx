@@ -30,17 +30,16 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 	const [formData, setFormData] = useState<FilterDataProps>(initialData)
 	const [gyms, setGyms] = useState<GymModel[]>([])
 	const user = useSelector(useAuth())
-	const isAdmin = user.gym_id != null
+	const isAdminBool = user.gym_id != null
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
 
-	const fetchDataGym = async () => {
-		const queryParams = isAdmin ? '' : `?gym_id=${user.gym_id}`
+	const fetchDataGym = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl(`/gym${queryParams}`),
+			url: makeApiUrl('/gym' + (queryParams || '')),
 			method: 'get'
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
@@ -52,7 +51,13 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 
 	useEffect(() => {
 		fetchDataGym()
-	}, [formData])
+	}, [])
+
+	useEffect(() => {
+		if (user.gym_id) {
+			setFormData({...formData,gym_id:user.gym_id})
+		}
+	}, [])
 
 	const handleClear = () => {
 		setFormData(initialData)
@@ -88,9 +93,9 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 				label="Selecione a Filial"
 				required
 				data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-				value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
+				value={isAdminBool  ? user.gym_id : formData?.gym_id || ''}
 				defaultText="Selecione"
-				disabled={isAdmin}
+				disabled={isAdminBool}
 			/>
 			<Button
 				variant="gray-light"

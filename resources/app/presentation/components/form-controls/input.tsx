@@ -81,8 +81,40 @@ export function Input({ label, icon: Icon, className,required, ...props }: Input
 	)
 }
 
+export function InputName({ label, icon: Icon, className, required, ...props }: InputProps) {
+    const [focused, setFocused] = useState(false);
+    const [value, setValue] = useState('');
+    const id = props.id || StringUtils.generate({ length: 3 });
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        const regex = /^[a-zA-Z\s]+$/;
+        if (!regex.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab' && e.key !== 'Enter') {
+            e.preventDefault();
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+    };
+
+    return (
+        <FormControlWrapper label={label} required={required} icon={Icon} id={id} focused={focused}>
+            <input
+                className={`focus:outline-none text-sm w-full ${className || ''}`}
+                id={id}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                value={value}
+                onKeyDown={handleKeyDown}
+                onChange={handleChange}
+                {...props}
+            />
+        </FormControlWrapper>
+    );
+}
+
 export function InputPhone(props: InputProps) {
-	const mask = [/[0-9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/]
+	const mask = [/[9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/];
 	return <InputMask mask={mask} {...props} />
 }
 

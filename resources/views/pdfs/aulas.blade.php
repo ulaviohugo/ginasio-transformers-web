@@ -41,26 +41,28 @@
     <div class="center-logo">
         <img src="{{$logo}}" style="width: 130px" alt="">
         <h4>GINÁSIO TRANSFORMERS</h4>
-        <h3>LISTA DE MATERIAIS REGISTADOS</h3>
+        <h3>LISTA DE ATLETAS REGISTADOS</h3>
     </div>
     <table>
         <thead>
             <tr>
                 <td>Nº</td>
                 <td>NOME</td>
-                <td>FILIAL</td>
-                <td>DATA</td>
+                <td>TIPO DA AULA</td>
+                <td>PERSONAL TRAINER</td>
+                <td>HORÁRIO DA AULA</td>
                 <td>UTILIZADOR</td>
             </tr>
         </thead>
         <tbody>
-            @foreach ($equipments as $index => $equipment) <!-- Define $index here -->
+            @foreach ($aulas as $index => $aula) <!-- Define $index here -->
                 <tr>
                     <td>{{ $index + 1 }}</td> <!-- Use $index to number rows -->
-                    <td>{{ $equipment->name }}</td>
-                    <td>{{ $equipment->gym->name }}</td>
-                    <td>{{ $equipment->created_at }}</td>
-                    <td>{{ $equipment->user->name }}</td>
+                    <td>{{ $aula->name }}</td>
+                    <td>{{ $aula->tipo}}</td>
+                    <td>{{ $aula->personal_trainer_id }}</td>
+                    <td>{{ $aula->horario }}</td>
+                    <td>{{ $aula->user->name }}</td>
                 </tr>
             @endforeach
         </tbody>

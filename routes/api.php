@@ -37,8 +37,8 @@ Route::middleware('auth-jwt')->group(function () {
 	Route::post('/refresh-token', [AuthController::class, 'refresh']);
 
 	Route::get('athletes/count', [AthleteController::class, 'count']);
+	Route::get('athletes-by-personal-trainer/{id}', [AthleteController::class, 'getAthletesByPersonalTrainer']);
 	Route::apiResource('athletes', AthleteController::class);
-
 	Route::get('gyms/count', [GymController::class, 'count']);
 	Route::apiResource('gym', GymController::class);
 

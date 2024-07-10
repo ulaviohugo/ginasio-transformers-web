@@ -13,6 +13,7 @@ import {
 	Input,
 	InputEmail,
 	InputIBAN,
+	InputName,
 	InputPhone,
 	InputPrice,
 	Modal,
@@ -59,7 +60,7 @@ export function EmployeeEditor({
 	const [formData, setFormData] = useState<EmployeeModel>(
 		employee || ({} as EmployeeModel)
 	)
-	const [gyms, setGyms] = useState([]);
+	const [gyms, setGyms] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [photoPreview, setPhotoPreview] = useState('')
 
@@ -129,9 +130,79 @@ export function EmployeeEditor({
 		setFormData(data)
 	}
 
+	const handleChangeInputBirth = async (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => {
+		const { name, value } = e.target
+		let data = { ...formData, [name]: value }
+
+		const selectedDate = new Date(value)
+		const currentDate = new Date()
+		const minDate = new Date(currentDate)
+		minDate.setFullYear(currentDate.getFullYear() - 60) // Data mínima para 60 anos atrás
+		const maxDate = new Date(currentDate)
+		maxDate.setFullYear(currentDate.getFullYear() - 18) // Data máxima para 18 anos atrás
+
+		if (selectedDate > currentDate || selectedDate < minDate || selectedDate > maxDate) {
+			// Se a data selecionada for inválida, não atualize o estado
+			// Pode emitir um alerta, exibir uma mensagem de erro, etc.
+			toast.error('Data Invalida')
+			return
+		}
+
+		// Atualizar o estado se a data for válida
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value
+		}))
+
+		setFormData(data)
+	}
+
+	const handleInputChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target
+		const today = new Date()
+		today.setHours(0, 0, 0, 0) // Zera as horas para comparar apenas as datas
+
+		if (name === 'hire_date') {
+			const hireDate = new Date(value)
+			if (hireDate < today) {
+				toast.error('A Data de Contratação deve ser igual ou posterior à data corrente.')
+				setFormData((prevState) => ({
+					...prevState,
+					hire_date: null
+				}))
+				return
+			}
+		}
+
+		if (name === 'contract_end_date' && formData.hire_date) {
+			const hireDate = new Date(formData.hire_date)
+			const contractEndDate = new Date(value)
+			if (contractEndDate <= hireDate) {
+				toast.error('A Data Fim de Contrato deve ser posterior à Data de Contratação.')
+				setFormData((prevState) => ({
+					...prevState,
+					contract_end_date: null // Usando null para valores inválidos
+				}))
+				return
+			}
+		}
+
+		setFormData((prevState) => ({
+			...prevState,
+			[name]: value
+		}))
+	}
+
 	const clearInputFile = () => {
 		setFormData((prev) => ({ ...prev, photo: '' }))
 		setPhotoPreview('')
+	}
+
+	const handleEmailValidation = (email: string) => {
+		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+		return emailRegex.test(email)
 	}
 
 	const handleSubmit = async (type: 'save' | 'update') => {
@@ -142,6 +213,10 @@ export function EmployeeEditor({
 			const httpResponse = (
 				update ? await updateEmployee.update(formData) : await addEmployee.add(formData)
 			) as EmployeeModel
+
+			if (!handleEmailValidation(formData.email || '')) {
+				return toast.error('Por favor, insira um email válido')
+			}
 
 			if (update) {
 				dispatch(updateEmployeeStore(httpResponse))
@@ -176,7 +251,7 @@ export function EmployeeEditor({
 							<fieldset className="w-full">
 								<legend>Dados pessoais</legend>
 								<div className="flex gap-1">
-									<Input
+									<InputName
 										type="text"
 										id="name"
 										name="name"
@@ -209,7 +284,7 @@ export function EmployeeEditor({
 											''
 										}
 										label={'Data Nascimento'}
-										onChange={handleInputChange}
+										onChange={handleChangeInputBirth}
 									/>
 									<Select
 										id="marital_status"
@@ -297,11 +372,11 @@ export function EmployeeEditor({
 										disabled={!formData?.phone}
 									/>
 									<InputEmail
-										id="email"
 										name="email"
+										label="E-mail"
 										value={formData?.email || ''}
-										label={'E-mail'}
 										onChange={handleInputChange}
+										isValid={handleEmailValidation(formData?.email || '')}
 									/>
 								</div>
 								<div className="grid grid-cols-3 gap-1">
@@ -400,7 +475,7 @@ export function EmployeeEditor({
 										(formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
 									}
 									label={'Data Contratação'}
-									onChange={handleInputChange}
+									onChange={handleInputChangeDate}
 									disabled={!formData?.position}
 									title={`Selecione o cargo para habilitar este campo`}
 								/>
@@ -415,8 +490,8 @@ export function EmployeeEditor({
 										''
 									}
 									label={'Data Fim de Contracto'}
-									onChange={handleInputChange}
-									disabled={!formData?.position}
+									onChange={handleInputChangeDate}
+									disabled={!formData?.position || !formData?.hire_date}
 									title={`Selecione o cargo para habilitar este campo`}
 								/>
 								<InputPrice
@@ -451,7 +526,7 @@ export function EmployeeEditor({
 									name="gym_id"
 									onChange={handleInputChange}
 									label="Selecione Ginásio"
-									data={gyms.map(gym => ({ text: gym.name, value: gym.id }))}
+									data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
 									value={formData?.gym_id || ''}
 									defaultText="Selecione"
 								/>

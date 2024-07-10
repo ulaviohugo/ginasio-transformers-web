@@ -64,6 +64,22 @@ export function Equipments() {
 		setFormData({ ...formData, [name]: value })
 	}
 
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
+	}, [])
+
 	const fetchData = async (queryParams?: string) => {
 		setLoading(true) // Define o estado de carregamento como verdadeiro antes de fazer a requisição
 
@@ -86,24 +102,9 @@ export function Equipments() {
 	}
 
 	useEffect(() => {
-		fetchData("?gym_id=" + (user.gym_id || ''))
+			("?gym_id=" + (user.gym_id || ''))
 	}, [])
 
-	const fetchDataGym = async (queryParams?: string) => {
-		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
-			url: makeApiUrl('/gym' + (queryParams || '')),
-			method: 'get'
-		})
-		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setGyms(httpResponse.body)
-		} else {
-			toast.error(httpResponse.body)
-		}
-	}
-
-	useEffect(() => {
-		fetchDataGym()
-	}, [])
 
 	useEffect(() => {
 		if (user.gym_id) {

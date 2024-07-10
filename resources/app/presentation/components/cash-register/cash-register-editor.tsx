@@ -9,9 +9,14 @@ import {
 } from '@/main/factories'
 import toast from 'react-hot-toast'
 import { Button, Input, InputPrice, Select, TextArea } from '../form-controls'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addTransactionStore } from '@/presentation/redux'
 import { IconCheck } from '../icons'
+import { useAuth } from '@/presentation/hooks'
+import { NotFound } from '@/presentation/pages'
+import { makeApiUrl } from '@/main/factories/http'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { GymModel } from '@/domain/models/gym'
 
 export function CashRegisterEditor() {
 	const dispatch = useDispatch()
@@ -24,6 +29,10 @@ export function CashRegisterEditor() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isLoadingSubmitBalance, setIsLoadingSubmitBalance] = useState(false)
 	const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
+	const [gyms, setGyms] = useState<GymModel[]>([])
+	const user = useSelector(useAuth())
+	const isAdmin = user.role == 'Admin'
+	const hasGymId = user.gym_id != null
 
 	useEffect(() => {
 		makeRemoteLoadCashRegister()
@@ -34,6 +43,22 @@ export function CashRegisterEditor() {
 			})
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoading(false))
+	}, [])
+
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
 	}, [])
 
 	const handleChangeBalance = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -72,8 +97,14 @@ export function CashRegisterEditor() {
 
 		setIsLoadingSubmit(true)
 
+		// Garantir que o gym_id esteja sempre presente em formData
+		const dataToSend = {
+			...formData,
+			gym_id: hasGymId ? user.gym_id : formData.gym_id
+		}
+
 		makeRemoteAddTransaction()
-			.add(formData)
+			.add(dataToSend)
 			.then((response) => {
 				toast.success('Movimento realizado com sucesso')
 				const { cash_register: cashRegister } = response
@@ -87,7 +118,7 @@ export function CashRegisterEditor() {
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoadingSubmit(false))
 	}
-
+	if (!isAdmin) return <NotFound />
 	return (
 		<div className="flex">
 			{isLoading ? (
@@ -202,6 +233,18 @@ export function CashRegisterEditor() {
 										defaultText="Selecione"
 										onChange={handleInputChange}
 									/>
+								</div>
+								<div className="w-56">
+								<Select
+									name="gym_id"
+									onChange={handleInputChange}
+									label="Selecione a Filial"
+									required
+									data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+									value={hasGymId ? user.gym_id : formData?.gym_id || ''}
+									defaultText="Selecione"
+									disabled={hasGymId}
+								/>
 								</div>
 							</div>
 							<div className="col-span-2 mt-2">

@@ -2,6 +2,7 @@
 
 use App\Exports\UsersExport;
 use App\Http\Controllers\AthleteController;
+use App\Http\Controllers\AulaController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\MensalidadeController;
@@ -31,9 +32,11 @@ Route::match(['get', 'post'], 'mensalidade', function () {
 }); 
 
 Route::get('pdf/materiais', [EquipmentController::class, 'gerarPDF'])->name('gerar-pdf');
+Route::get('pdf/aulas', [AulaController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/atletas', [AthleteController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/employees', [UserController::class, 'gerarPDF'])->name('gerar-pdf');
 Route::get('pdf/mensalidades', [MensalidadeController::class, 'gerarPDF'])->name('gerar-pdf');
+Route::get('pdf/recibo', [MensalidadeController::class, 'recibo'])->name('recibo');
 Route::get('pdf/gyms', [GymController::class, 'gerarPDF'])->name('gerar-pdf');
 
 Route::view('/{path}', 'app')->where(

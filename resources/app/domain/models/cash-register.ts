@@ -8,6 +8,7 @@ export type CashRegisterModel = {
 	created_at: Date
 	user_id_update: number
 	updated_at: Date
+	gym_id: number
 
 	transactions?: TransactionModel[]
 }

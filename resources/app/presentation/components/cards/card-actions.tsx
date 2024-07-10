@@ -1,15 +1,17 @@
 import React, { HtmlHTMLAttributes } from 'react'
-import { IconEdit, IconTrash } from '..'
+import { IconEdit, IconInfo, IconTrash } from '..'
 
 type CardFooterProps = HtmlHTMLAttributes<HTMLDivElement> & {
 	onClickEdit?: () => void
 	onClickDelete?: () => void
+	onClickInfo?: () => void
 	border?: boolean
 }
 
 export function CardActions({
 	onClickDelete,
 	onClickEdit,
+	onClickInfo,
 	border = false,
 	className,
 	...props
@@ -36,6 +38,14 @@ export function CardActions({
 				title="Excluir"
 			>
 				<IconTrash />
+			</button>
+			<button
+				type="button"
+				onClick={onClickInfo}
+				className="hover:scale-110"
+				title="Informação"
+			>
+				<IconInfo />
 			</button>
 		</div>
 	)

@@ -7,14 +7,14 @@ export class MenuUtils {
 	static readonly FRONT = {
 		HOME: '/',
 		ATHLETES: '/areaDoAtleta/atletas',
+		ATHLETESAREA: '/areaDoAtleta',
 		LOGIN: '/login',
 		CASH_REGISTER: '/financas/caixa',
-		TUITION_FEES: '/financas/mensalidades',
+		TUITION_FEES: '/areaDoAtleta/mensalidades',
 		FINANCES: '/financas',	
 		EQUIPMENTS: '/equipamentos',
-		PAYMENTS: '/mensalidades',
 		GYMS: '/ginasios',
-		LESSONS: '/areaDoAtleta/aulas',
+		LESSONS: '/aulas',
 		
 		EMPLOYEES: '/funcionarios'
 	}
@@ -33,6 +33,17 @@ export class MenuUtils {
 		if (role == 'Admin') {
 			data.push(
 				{ link: this.FRONT.CASH_REGISTER, text: 'Caixa' },
+			)
+		}
+
+		return data
+	}
+	static readonly athletesareaMenuItens = (param?: RoleProps): SubmenuProps[] => {
+		const { role = 'Normal' } = param || {}
+		const data = []
+		if ((role == 'Admin') || (role == 'Normal')) {
+			data.push(
+				{ link: this.FRONT.ATHLETES, text: 'Atletas' },
 				{ link: this.FRONT.TUITION_FEES, text: 'Mensalidades' },
 			)
 		}

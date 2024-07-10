@@ -41,12 +41,17 @@ class Athlete extends Model
 		'address',
 		'user_id',
 		'user_id_update',
+		'personal_trainer_id',
 		'gym_id'
 	];
 
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'user_id');
+	}
+	public function personal_trainer()
+	{
+		return $this->belongsTo(User::class, 'personal_trainer_id');
 	}
 	public function mensalidades()
     {

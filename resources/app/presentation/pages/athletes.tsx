@@ -12,7 +12,8 @@ import {
 	AthleteEditor,
 	AthleteList,
 	ModalDelete,
-	FilterDataProps
+	FilterDataProps,
+	SubMenu
 } from '@/presentation/components'
 import { removeAthleteStore } from '@/presentation/redux'
 import React, { useState } from 'react'
@@ -22,6 +23,7 @@ import { HandleOpenCard } from '../components/athlete/HandleOpenCard'
 import { HandleOpenCardIMC } from '../components/athlete/HandleOpenCardIMC'
 import { useAuth } from '../hooks'
 import { NotFound } from './notfound'
+import { MenuUtils } from '@/utils'
 
 type AthleteProps = {
 	loadAthletes: LoadAthletes
@@ -115,6 +117,7 @@ export function Athletes({
 				/>
 			)}
 			<LayoutBody>
+			<SubMenu submenus={MenuUtils.athletesareaMenuItens({ role: user.role })} />
 				<div className="flex flex-col gap-4">
 					<AthleteEditor
 						data={selectedAthlete}

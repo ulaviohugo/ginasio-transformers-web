@@ -9,6 +9,7 @@ use App\Http\Requests\AthleteCreateRequest;
 use App\Http\Requests\AthleteUpdateRequest;
 use App\Http\Resources\AthleteResource;
 use App\Models\Athlete;
+use App\Models\User;
 use App\Services\AthleteCreateService;
 use App\Services\AthleteDeleteService;
 use App\Services\AthleteLoadAllService;
@@ -75,10 +76,27 @@ class AthleteController extends Controller
 	public function count()
 	{
 		try {
-			return HttpResponse::success(data: Athlete::count());
+			$user = User::currentUser();
+			$isAdmin = $user->gym_id == null;
+		
+			if (!$isAdmin) {
+				return HttpResponse::success(data: Athlete::where('gym_id', $user->gym_id)->count());
+			} else {
+				return HttpResponse::success(data: Athlete::count());
+			}
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar atletas');
 		}
+		
+	}
+	public function getAthletesByPersonalTrainer($id)
+	{
+		try {
+			return Athlete::where('personal_trainer_id',$id)->get();
+		} catch (\Throwable $th) {
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar atletas');
+		}
+		
 	}
 
 	public function destroy(AthleteDeleteService $service, Athlete $athlete)

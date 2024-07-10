@@ -13,6 +13,7 @@ export type TransactionModel = {
 	updated_at: Date
 	cash_register_id: number
 	post_movement_balance: number
+	gym_id:number
 
 	cash_register?: CashRegisterModel
 	user?: EmployeeModel

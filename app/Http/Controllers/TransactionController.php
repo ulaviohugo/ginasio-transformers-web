@@ -21,6 +21,7 @@ class TransactionController extends Controller
 			$month = null;
 			$paymentMethod = null;
 			$operationType = null;
+			$gym_id = null;
 
 			if (request()->query('filter')) {
 				$queryParam = json_decode(request()->query('filter'));
@@ -28,6 +29,7 @@ class TransactionController extends Controller
 				$month = isset($queryParam->month) ? $queryParam->month : null;
 				$paymentMethod = isset($queryParam->payment_method) ? $queryParam->payment_method : null;
 				$operationType = isset($queryParam->operation_type) ? $queryParam->operation_type : null;
+				$gym_id = isset($queryParam->gym_id) ? $queryParam->gym_id : null;
 			}
 
 			$transactions = Transaction::orderBy('id', 'desc');
@@ -42,6 +44,9 @@ class TransactionController extends Controller
 			}
 			if ($operationType) {
 				$transactions = $transactions->where('operation_type', $operationType);
+			}
+			if ($gym_id) {
+				$transactions = $transactions->where('gym_id', $gym_id);
 			}
 			$transactions = $transactions->get();
 

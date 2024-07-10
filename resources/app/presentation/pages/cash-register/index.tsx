@@ -20,19 +20,25 @@ import { DateUtils, MenuUtils, NumberUtils, PaymentUtils } from '@/utils'
 import { makeRemoteLoadTransactions } from '@/main/factories'
 import toast from 'react-hot-toast'
 import { loadTransactionStore } from '@/presentation/redux'
+import { GymModel } from '@/domain/models/gym'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
 
 type FilterProps = {
 	year: number
 	month: number
 	payment_method: number
 	operation_type: string
+	gym_id: number | null
 }
 
 export function CashRegister() {
 	const dispatch = useDispatch()
 
+	const [gyms, setGyms] = useState<GymModel[]>([])
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const hasGymId = user.gym_id != null
 
 	const transactions = useSelector(useTransactions())
 
@@ -40,11 +46,28 @@ export function CashRegister() {
 
 	const [filter, setFilter] = useState<FilterProps>({
 		year: currentDate.getFullYear(),
-		month: currentDate.getMonth()
+		month: currentDate.getMonth(),
+		gym_id: hasGymId ? user.gym_id : null,
 	} as any)
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [showGraph, setShowGraph] = useState(false)
+
+	const fetchDataGym = async (queryParams?: string) => {
+		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
+			url: makeApiUrl('/gym' + (queryParams || '')),
+			method: 'get'
+		})
+		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+			setGyms(httpResponse.body)
+		} else {
+			toast.error(httpResponse.body)
+		}
+	}
+
+	useEffect(() => {
+		fetchDataGym()
+	}, [])
 
 	const fetchData = () => {
 		setIsLoading(true)
@@ -53,7 +76,8 @@ export function CashRegister() {
 				filter: JSON.stringify({
 					...filter,
 					year: filter?.year ? NumberUtils.convertToNumber(filter.year) : undefined,
-					month: filter?.month ? NumberUtils.convertToNumber(filter.month) + 1 : undefined
+					month: filter?.month ? NumberUtils.convertToNumber(filter.month) + 1 : undefined,
+					gym_id: hasGymId ? user.gym_id : filter.gym_id // Ensuring gym_id is included for admins
 				}) as any
 			})
 			.then((response) => {
@@ -62,6 +86,7 @@ export function CashRegister() {
 			.catch(({ message }) => toast.error(message))
 			.finally(() => setIsLoading(false))
 	}
+
 	useEffect(() => fetchData(), [])
 
 	const handleChangeFilter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -90,9 +115,18 @@ export function CashRegister() {
 								onClick={() => setShowGraph(true)}
 							/>
 						</legend>
-						<Button variant="gray-light" text="Exportar Excel" className="mb-2" />
 						<div className="flex p-2 border">
 							<div className="flex gap-1 ml-auto items-end">
+								<Select
+									name="gym_id"
+									onChange={handleChangeFilter}
+									label="Selecione a Filial"
+									required
+									data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+									value={hasGymId ? user.gym_id : filter?.gym_id || ''}
+									defaultText="Selecione"
+									disabled={hasGymId}
+								/>
 								<Input
 									type="number"
 									name="year"

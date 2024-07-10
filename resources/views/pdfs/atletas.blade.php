@@ -1,7 +1,7 @@
 <?php
-  $fileHelper =App\Helpers\FileHelper::class; 
-    $logoPath = $fileHelper::logoPath();
-    $logo = $fileHelper::convertToBase64($logoPath);  
+  $fileHelper = App\Helpers\FileHelper::class; 
+  $logoPath = $fileHelper::logoPath();
+  $logo = $fileHelper::convertToBase64($logoPath);  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,9 +55,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($athletes as $athlete)
+            @foreach ($athletes as $index => $athlete) <!-- Define $index here -->
                 <tr>
-                    <td>{{ $athlete->id }}</td>
+                    <td>{{ $index + 1 }}</td> <!-- Use $index to number rows -->
                     <td>{{ $athlete->name }}</td>
                     <td>{{ $athlete->phone }}</td>
                     <td>{{ $athlete->gym->name }}</td>

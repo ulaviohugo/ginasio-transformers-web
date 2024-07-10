@@ -23,9 +23,10 @@ type ItemProps = {
 
 export function Home() {
   const user = useSelector(useAuth());
-  const isAdmin = user?.role == 'Admin';
+  const isAdmin = user?.role === 'Admin';
+  const isAdminGlobal = null; // Set dynamically as per your requirement
 
-  const[graphData, setGraphData] = useState<HomeGraphDataProps>({monthly_fees:[]});
+  const [graphData, setGraphData] = useState<HomeGraphDataProps>({ monthly_fees: [] });
   const [employees, setEmployees] = useState(0);
   const [isLoadingEmployees, setIsLoadingEmployees] = useState(true);
   const [athletes, setAthletes] = useState(0);
@@ -51,81 +52,87 @@ export function Home() {
   };
 
   useEffect(() => {
-    {
-      isAdmin &&
-        Promise.all([
-          fetchCount(makeRemoteCountEmployees(), (response) => {
-            setEmployees(response);
-            setIsLoadingEmployees(false);
+    if (isAdmin) {
+      Promise.all([
+        fetchCount(makeRemoteCountEmployees(), (response) => {
+          setEmployees(response);
+          setIsLoadingEmployees(false);
+        }),
+        fetchCount(makeRemoteCountAthletes(), (response) => {
+          setAthletes(response);
+          setIsLoadingAthletes(false);
+        }),
+        makeAuthorizeHttpClientDecorator()
+          .request({
+            url: makeApiUrl('/materiais/count'),
+            method: 'get',
+          })
+          .then((response) => {
+            if (response.statusCode >= 200 && response.statusCode <= 299) {
+              setEquipments(response.body);
+              setIsLoadingEquipments(false);
+            } else {
+              toast.error(response.body);
+            }
           }),
-          fetchCount(makeRemoteCountAthletes(), (response) => {
-            setAthletes(response);
-            setIsLoadingAthletes(false);
+        makeAuthorizeHttpClientDecorator()
+          .request({
+            url: makeApiUrl('/gyms/count'),
+            method: 'get',
+          })
+          .then((response) => {
+            if (response.statusCode >= 200 && response.statusCode <= 299) {
+              setGyms(response.body);
+              setIsLoadingGyms(false);
+            } else {
+              toast.error(response.body);
+            }
           }),
-          makeAuthorizeHttpClientDecorator()
-            .request({
-              url: makeApiUrl('/materiais/count'),
-              method: 'get',
-            })
-            .then((response) => {
-              if (response.statusCode >= 200 && response.statusCode <= 299) {
-                setEquipments(response.body);
-                setIsLoadingEquipments(false);
-              } else {
-                toast.error(response.body);
-              }
-            }),
-          makeAuthorizeHttpClientDecorator()
-            .request({
-              url: makeApiUrl('/gyms/count'),
-              method: 'get',
-            })
-            .then((response) => {
-              if (response.statusCode >= 200 && response.statusCode <= 299) {
-                setGyms(response.body);
-                setIsLoadingGyms(false);
-              } else {
-                toast.error(response.body);
-              }
-            }),
-        ]);
+      ]);
     }
-  }, []);
+  }, [isAdmin]);
 
-  useEffect (() => {
-    {
-      isAdmin &&
-        Promise.all([
-            makeAuthorizeHttpClientDecorator()
-            .request({
-              url: makeApiUrl('/graphs/monthly-fees'),
-              method: 'post',
-              body:{year:2024}
-            })
-            .then((response) => {
-              if (response.statusCode >= 200 && response.statusCode <= 299) {
-                setGraphData(response.body);
-              } else {
-                toast.error(response.body);
-              }
-            })
-        ])
-      }
-  },[]);
+  useEffect(() => {
+    if (isAdmin) {
+      Promise.all([
+        makeAuthorizeHttpClientDecorator()
+          .request({
+            url: makeApiUrl('/graphs/monthly-fees'),
+            method: 'post',
+            body: { year: 2024 },
+          })
+          .then((response) => {
+            if (response.statusCode >= 200 && response.statusCode <= 299) {
+              setGraphData(response.body);
+            } else {
+              toast.error(response.body);
+            }
+          }),
+      ]);
+    }
+  }, [isAdmin]);
 
-  if (!isAdmin) return <NotFound />
+  if (!isAdmin) return <NotFound />;
+
+  const items = [
+    { number: employees, title: 'Funcionário(s)', icon: IconUser, isLoading: isLoadingEmployees, href: MenuUtils.FRONT.EMPLOYEES },
+    { number: athletes, title: 'Atletas(s)', icon: IconAthlete, isLoading: isLoadingAthletes, href: MenuUtils.FRONT.ATHLETES },
+    { number: equipments, title: 'Equipamento(s)', icon: IconDumbbell, isLoading: isLoadingEquipments, href: MenuUtils.FRONT.EQUIPMENTS },
+    { number: gyms, title: 'Filial(s)', icon: IconDepartment, isLoading: isLoadingGyms, href: MenuUtils.FRONT.GYMS },
+  ].filter(({ href }) => {
+    if (href === MenuUtils.FRONT.GYMS) {
+      return isAdminGlobal == user.gym_id;
+    }
+    return true;
+  });
+
   return (
     <Layout>
       <LayoutBody>
         <div className="grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-5 p-2">
           {isAdmin && (
             <>
-              {[
-                { number: employees, title: 'Funcionário(s)', icon: IconUser, isLoading: isLoadingEmployees, href: MenuUtils.FRONT.EMPLOYEES },
-                { number: athletes, title: 'Atletas(s)', icon: IconAthlete, isLoading: isLoadingAthletes, href: MenuUtils.FRONT.ATHLETES },
-                { number: equipments, title: 'Equipamento(s)', icon: IconDumbbell, isLoading: isLoadingEquipments, href: MenuUtils.FRONT.EQUIPMENTS },
-                { number: gyms, title: 'Filial(s)', icon: IconDepartment, isLoading: isLoadingGyms, href: MenuUtils.FRONT.GYMS },
-              ].map((item, index) => (
+              {items.map((item, index) => (
                 <Item
                   key={index}
                   index={index}
@@ -135,7 +142,7 @@ export function Home() {
             </>
           )}
         </div>
-        <HomeGraph data={graphData}/>
+        <HomeGraph data={graphData} />
       </LayoutBody>
     </Layout>
   );

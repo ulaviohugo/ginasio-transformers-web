@@ -18,7 +18,13 @@ class UserController extends Controller
 	public function index()
 	{
 		try {
-			return UserResource::collection(User::all());
+			$user = User::currentUser();
+			$isAdmin = $user->gym_id == null;
+			if (!$isAdmin) {
+				return UserResource::collection(User::where('gym_id', $user->gym_id)->get());
+			} else {
+				return UserResource::collection(User::all());
+			}
 		} catch (\Throwable $th) {
 			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionarios');
 		}
@@ -57,10 +63,18 @@ class UserController extends Controller
 	public function count()
 	{
 		try {
-			return HttpResponse::success(data: User::count());
+			$user = User::currentUser();
+			$isAdmin = $user->gym_id == null;
+		
+			if (!$isAdmin) {
+				return HttpResponse::success(data: User::where('gym_id', $user->gym_id)->count());
+			} else {
+				return HttpResponse::success(data: User::count());
+			}
 		} catch (\Throwable $th) {
-			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionário');
+			return ErrorHandler::handle(exception: $th, message: 'Erro ao consultar funcionários');
 		}
+		
 	}
 
 	public function destroy($id)

@@ -43,7 +43,20 @@ class EquipmentController extends Controller
     }
     public function count()
     {
-        return Equipment::count();
+        try {
+            $user = User::currentUser();
+            $isAdmin = $user->gym_id == null;
+        
+            if (!$isAdmin) {
+                return Equipment::where('gym_id', $user->gym_id)->count();
+            } else {
+                return Equipment::count();
+            }
+        } catch (Exception $e) {
+            // Lidar com a exceção, como por exemplo, logar o erro e retornar uma mensagem de erro
+            error_log($e->getMessage());
+            return response()->json(['error' => 'Ocorreu um erro ao contar os equipamentos.'], 500);
+        }
     }
 
     public function gerarPDF()
@@ -55,7 +68,7 @@ class EquipmentController extends Controller
         $gym_id = $request->query('gym_id');
         $created_at = $request->query('created_at');
 
-        $equipments = Equipment::orderBy('created_at');
+         $equipments = Equipment::orderBy('created_at');
         if ($id) {
             $equipments = $equipments->where('id', $id);
         }

@@ -35,7 +35,7 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 	const [formData, setFormData] = useState<FilterDataProps>(initialData)
 	const [gyms, setGyms] = useState<GymModel[]>([])
 	const user = useSelector(useAuth())
-	const isAdmin = user.role != 'Admin'
+	const isAdmin = user.gym_id != null
 
 	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
@@ -100,7 +100,7 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 				onChange={handleInput}
 				name="athlete_id"
 				value={formData.athlete_id}
-				label="Id do atleta"
+				label="Nº do Processo"
 				type="text"
 			/>
 			<Select

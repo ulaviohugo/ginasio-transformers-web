@@ -50,6 +50,7 @@ class AthleteUpdateService
 				'municipality_id' => $request->municipality_id,
 				'municipality_id' => $request->municipality_id,
 				'gym_id' => $request->gym_id,
+				'personal_trainer_id' => $request->personal_trainer_id,
 				'address' => $request->address,
 				'user_id_update' => User::currentUserId(),
 			];

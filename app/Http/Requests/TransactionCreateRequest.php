@@ -31,6 +31,7 @@ class TransactionCreateRequest extends GlobalFormRequest
 			'description' => 'required',
 			'amount' => 'required|numeric|gt:0',
 			'payment_method' => 'required',
+			'gym_id' => 'required',
 		];
 	}
 }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->references('id')->on(DBHelper::TB_USERS);
             $table->foreignId('user_id_update')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('gym_id')->nullable()->references('id')->on('gyms')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('personal_trainer_id')->nullable()->references('id')->on(DBHelper::TB_USERS)->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('athlete_id')->nullable()->references('id')->on(DBHelper::TB_ATHLETE);
             $table->date('data');
             $table->time('horario');
             $table->timestamps();

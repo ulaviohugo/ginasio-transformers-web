@@ -19,7 +19,7 @@ type FilterDataProps = {
 	gym_id: number
 }
 
-type GraphDataProps = {
+export type GraphDataProps = {
 	operations_amount: GraphValueProps[]
 	payment_methods_amount: GraphValueProps[]
 }
@@ -69,10 +69,6 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 			.finally(() => setLoading(false))
 	}
 
-	useEffect(() => {
-		fetchData()
-	}, [])
-
 	
 	const fetchDataGym = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
@@ -94,7 +90,13 @@ export function CashRegisterGraph({ onClose }: CashRegisterGraphProps) {
 		if (user.gym_id) {
 			setFilterData({...filterData,gym_id:user.gym_id})
 		}
-	}, [])
+	}, [user.gym_id])
+
+	useEffect(() => {
+		if (gyms.length > 0) {
+		  fetchData()
+		}
+	  }, [gyms,filterData.month, filterData.year, filterData.gym_id]) 
 
 	const operationChartRef = useRef<GraphHtmlRefProps>(null)
 	const paymentMethodChartRef = useRef<GraphHtmlRefProps>(null)

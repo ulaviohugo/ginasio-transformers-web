@@ -1,7 +1,15 @@
 import { AthleteModel, EmployeeModel } from '@/domain/models'
 import { AddAthlete, LoadEmployees, UpdateAthlete } from '@/domain/usecases'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { Button, Input, InputNumber, InputPhone, Select } from '../form-controls'
+import {
+	Button,
+	Input,
+	InputEmail,
+	InputName,
+	InputNumber,
+	InputPhone,
+	Select
+} from '../form-controls'
 import { IconCheck, IconClose, IconEdit, IconTrash, IconWeight, Iconcard } from '../icons'
 import { PdfViewer } from '../pdf-viewer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -47,10 +55,10 @@ export function AthleteEditor({
 	const [pdfUrl, setPdfUrl] = useState('')
 
 	const user = useSelector(useAuth())
-	const isAdmin = user.gym_id != null
+	const isAdmin = user.gym_id == null
 
 	const [gyms, setGyms] = useState<GymModel[]>([])
-	const [users, setUsers] = useState<EmployeeModel[]>([])
+	const [personalTrainers, setPersonalTrainers] = useState<EmployeeModel[]>([])
 
 	const employees = useSelector(useEmployees())
 	const { countries, provinces, municipalities } = useSelector(useLocations())
@@ -84,13 +92,14 @@ export function AthleteEditor({
 	useEffect(() => {
 		fetchDataGym()
 	}, [])
+
 	const fetchDataEmployees = async (queryParams?: string) => {
 		const httpResponse = await makeAuthorizeHttpClientDecorator().request({
 			url: makeApiUrl('/employees' + (queryParams || '')),
 			method: 'get'
 		})
 		if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-			setUsers(httpResponse.body)
+			setPersonalTrainers(httpResponse.body)
 		} else {
 			toast.error(httpResponse.body)
 		}
@@ -122,7 +131,7 @@ export function AthleteEditor({
 		}
 	}, [])
 
-	const handleChangeInput = async (
+  const handleChangeInput = async (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target
@@ -141,11 +150,50 @@ export function AthleteEditor({
 		setFormData(data)
 	}
 
+
+	const handleChangeInputBirth = async (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => {
+		const { name, value } = e.target
+		let data = { ...formData, [name]: value }
+
+		const selectedDate = new Date(value)
+		const currentDate = new Date()
+		const minDate = new Date(currentDate)
+		minDate.setFullYear(currentDate.getFullYear() - 60) // Data mínima para 60 anos atrás
+		const maxDate = new Date(currentDate)
+		maxDate.setFullYear(currentDate.getFullYear() - 18) // Data máxima para 18 anos atrás
+
+		if (selectedDate > currentDate || selectedDate < minDate || selectedDate > maxDate) {
+			// Se a data selecionada for inválida, não atualize o estado
+			// Pode emitir um alerta, exibir uma mensagem de erro, etc.
+			toast.error('Data Invalida')
+			return
+		}
+
+		// Atualizar o estado se a data for válida
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value
+		}))
+
+		setFormData(data)
+	}
+
+	const handleEmailValidation = (email: string) => {
+		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+		return emailRegex.test(email)
+	}
+
 	const handleSubmit = async (type: 'save' | 'update' = 'save') => {
 		try {
 			const update = type == 'update'
 			if (update && !formData.id) {
-				return toast.error('Selecione um registo na tabela abaixo para editar')
+				return toast.error('Selecione um registro na tabela abaixo para editar')
+			}
+
+			if (!handleEmailValidation(formData.email || '')) {
+				return toast.error('Por favor, insira um email válido')
 			}
 
 			const httpResponse = await (update
@@ -153,7 +201,7 @@ export function AthleteEditor({
 				: addAthlete.add(formData))
 
 			if (update) {
-				toast.success('Atleta actualizado com sucesso')
+				toast.success('Atleta atualizado com sucesso')
 				dispatch(updateAthleteStore(httpResponse))
 			} else {
 				toast.success('Atleta criado com sucesso')
@@ -173,6 +221,15 @@ export function AthleteEditor({
 		setPhotoPreview('')
 	}
 
+	const selectedGymId = formData?.gym_id
+	const personalTrainersOptions = personalTrainers
+		.filter(
+			(pt) =>
+				(selectedGymId ? pt.gym_id == selectedGymId : false) &&
+				pt.position === 'Personal Trainer'
+		)
+		.map((pt) => ({ text: pt.name, value: pt.id }))
+
 	return (
 		<fieldset className="p-4">
 			<legend>Novo atleta</legend>
@@ -188,7 +245,7 @@ export function AthleteEditor({
 							clearInputFile={clearInputFile}
 						/>
 						<div className="flex-1 grid grid-cols-4 items-start gap-4">
-							<Input
+							<InputName
 								name="name"
 								label="Nome"
 								required
@@ -212,7 +269,7 @@ export function AthleteEditor({
 								required
 								label="Data Nascimento"
 								value={(formData?.date_of_birth as any) || ''}
-								onChange={handleChangeInput}
+								onChange={handleChangeInputBirth}
 							/>
 							<Select
 								name="marital_status"
@@ -272,21 +329,16 @@ export function AthleteEditor({
 								label="Selecione a Filial"
 								required
 								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
+								value={selectedGymId}
 								defaultText="Selecione"
-								disabled={isAdmin}
+								disabled={!isAdmin}
 							/>
 							<Select
-								name="user_id"
+								name="personal_trainer_id"
 								onChange={handleChangeInput}
 								label="Selecione o Personal Trainer"
-								data={users
-									.filter(
-										(user) =>
-											user.gym_id === 1 && user.position === 'Personal Trainer'
-									) // Filtra Personal Trainers com o mesmo gym_id do usuário logado
-									.map((user) => ({ text: user.name, value: user.id }))}
-								value={formData?.user_id || ''}
+								data={personalTrainersOptions}
+								value={formData?.personal_trainer_id}
 								defaultText="Selecione"
 							/>
 							<Input
@@ -307,20 +359,21 @@ export function AthleteEditor({
 								name="phone"
 								label="Telefone"
 								required
-								value={formData?.phone || ''}
+								value={formData.phone}
 								onChange={handleChangeInput}
 							/>
 							<InputPhone
 								name="phone2"
 								label="Telefone Alternativo"
-								value={formData?.phone2 || ''}
+								value={formData.phone2}
 								onChange={handleChangeInput}
 							/>
-							<Input
+							<InputEmail
 								name="email"
 								label="E-mail"
 								value={formData?.email || ''}
 								onChange={handleChangeInput}
+								isValid={handleEmailValidation(formData?.email || '')}
 							/>
 						</fieldset>
 						<fieldset className="grid grid-cols-3 items-start gap-4">

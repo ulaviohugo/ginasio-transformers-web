@@ -6,6 +6,7 @@ use App\Models\Aula;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AulaCreateRequest;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class AulaController extends Controller
@@ -20,6 +21,8 @@ class AulaController extends Controller
         $id = $request->query('id');
         $name = $request->query('name');
         $gym_id = $request->query('gym_id');
+        $personal_trainer_id = $request->query('personal_trainer_id');
+        $athlete_id = $request->query('athlete_id');
         $data = $request->query('data');
         $horario = $request->query('horario');
         $tipo = $request->query('tipo');
@@ -44,12 +47,68 @@ class AulaController extends Controller
         if ($gym_id) {
             $aula = $aula->where('gym_id', 'Like', "{$gym_id}%");
         }
+        if ($personal_trainer_id) {
+            $aula = $aula->where('personal_trainer_id', 'Like', "{$personal_trainer_id}%");
+        }
+        if ($athlete_id) {
+            $aula = $aula->where('athlete_id', 'Like', "{$athlete_id}%");
+        }
         if ($created_at) {
             $aula = $aula->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
         }
         $aula = $aula->get();
         $aula->load('user');
         return $aula;
+    }
+
+    public function gerarPDF()
+    {
+        $request = request();
+
+        $id = $request->query('id');
+        $name = $request->query('name');
+        $gym_id = $request->query('gym_id');
+        $personal_trainer_id = $request->query('personal_trainer_id');
+        $athlete_id = $request->query('athlete_id');
+        $data = $request->query('data');
+        $horario = $request->query('horario');
+        $tipo = $request->query('tipo');
+        $created_at = $request->query('created_at');
+
+        $aulas = Aula::orderBy('created_at');
+        if ($id) {
+            $aulas = $aulas->where('id', $id);
+        }
+        if ($name) {
+            $aulas = $aulas->where('name', 'Like', "{$name}%");
+        }
+        if ($tipo) {
+            $aulas = $aulas->where('tipo', 'Like', "{$tipo}%");
+        }
+        if ($horario) {
+            $aulas = $aulas->where('horario', 'Like', "{$horario}%");
+        }
+        if ($data) {
+            $aulas = $aulas->where('data', 'Like', "{$data}%");
+        }
+        if ($gym_id) {
+            $aulas = $aulas->where('gym_id', 'Like', "{$gym_id}%");
+        }
+        if ($personal_trainer_id) {
+            $aulas = $aulas->where('personal_trainer_id', 'Like', "{$personal_trainer_id}%");
+        }
+        if ($athlete_id) {
+            $aulas = $aulas->where('athlete_id', 'Like', "{$athlete_id}%");
+        }
+        if ($created_at) {
+            $aulas = $aulas->whereDate('created_at', date('Y-m-d', strtotime($created_at)));
+        }
+        $aulas = $aulas->get();
+        $aulas->load('user');
+
+        $pdf = Pdf::loadView('pdfs.aulas', ['aulas' => $aulas]);
+        //return $pdf->download();
+        return $pdf->stream();
     }
 
     /**
@@ -62,7 +121,10 @@ class AulaController extends Controller
             'name' => $request->name,
             'tipo' => $request->tipo,
             'horario' => $request->horario,
+            'user_id' => $user_id,
             'data' => $request->data,
+            'personal_trainer_id' => $request->personal_trainer_id,
+            'athlete_id' => $request->athlete_id,
             'gym_id' => $request->gym_id
         ]);
         $aula->load('user');

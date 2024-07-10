@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux'
 export function Header() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const isAdminGlobal = null
 
 	const [isLoading, setIsLoading] = useState(false)
 	const handleSignout = async () => {
@@ -33,10 +34,10 @@ export function Header() {
 			<nav className="flex flex-col gap-4 py-4 items-center h-full">
 				<Logo />
 				<ul className="flex flex-col">
-					<Item active={path == '/'} link={'/'} text="Dashboard" icon={IconHome} />
+				{isAdmin && (<Item active={path == '/'} link={'/'} text="Dashboard" icon={IconHome} />)}
 					<Item
-						active={path.indexOf('/atleta') >= 0}
-						link={MenuUtils.FRONT.ATHLETES}
+						active={path.indexOf(MenuUtils.FRONT.ATHLETESAREA) >= 0}
+						link={MenuUtils.FRONT.ATHLETESAREA}
 						text="Atletas"
 						icon={IconAthlete}
 					/>
@@ -46,24 +47,28 @@ export function Header() {
 						text="Aulas"
 						icon={IconLesson}
 					/>
+					{isAdmin &&(
 					<Item
 						active={path.indexOf(MenuUtils.FRONT.FINANCES) >= 0}
 						link={MenuUtils.FRONT.FINANCES}
 						text="Finanças"
 						icon={IconProduct}
 					/>
+					)}
+					{isAdmin && (
 					<Item
 						active={path.indexOf(MenuUtils.FRONT.EQUIPMENTS) >= 0}
 						link={MenuUtils.FRONT.EQUIPMENTS}
 						text="Materiais"
 						icon={IconDumbbell}
-					/>
+					/>)}
+					{(isAdmin && (isAdminGlobal==user.gym_id))&&(
 					<Item
 						active={path.indexOf(MenuUtils.FRONT.GYMS) >= 0}
 						link={MenuUtils.FRONT.GYMS}
 						text="Filiais"
 						icon={IconDepartment}
-					/>
+					/>)}
 					
 					{isAdmin && (
 						<Item

@@ -11,6 +11,7 @@ import {
 	Input,
 	Layout,
 	LayoutBody,
+	Logo,
 	ModalDelete,
 	Spinner,
 	SubMenu,
@@ -33,6 +34,7 @@ import { NotFound } from '@/presentation/pages'
 export function Employees() {
 	const user = useSelector(useAuth())
 	const isAdmin = user.role == 'Admin'
+	const isAdminGlobal = null
 
 	const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel>(
 		{} as EmployeeModel
@@ -141,41 +143,44 @@ export function Employees() {
 					) : (
 						<ul className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
 							{employees.map((employee) => (
-								<li key={employee.id} className="p-4 shadow">
-									<div className="flex items-center gap-1 mb-3">
-										{employee.photo ? (
-											<img
-												src={employee.photo}
-												alt={`Foto de perfil`}
-												width={50}
-												height={50}
-												className="rounded-full object-cover aspect-square"
-											/>
-										) : (
-											<IconUser size={50} />
-										)}
-										<div>
-											<div className="font-semibold">{employee.name}</div>
-											<div className="flex items-center gap-1 text-sm font-normal">
-												<IconPhone /> {NumberUtils.format(employee.phone)}
-											</div>
-										</div>
-									</div>
-									<div className="flex items-center gap-1 text-sm">
-										<IconClock /> Início de contrato:{' '}
-									{DateUtils.getDatePt(employee.hire_date, '/')}
-									</div>
-									{employee.contract_end_date && (
-										<div className="flex items-center gap-1 text-sm">
-											<IconClock /> Fim de contrato:{' '}
-											{DateUtils.getDatePt(employee.contract_end_date, '/')}
-										</div>
+								<li key={employee.id} className="relative p-4 shadow text-white" style={{ background: 'linear-gradient(to right, #014a7f 50%, white 50%)' }}>
+								<div className="flex items-center gap-1 mb-3">
+									{employee.photo ? (
+										<img
+											src={employee.photo}
+											alt={`Foto de perfil`}
+											width={50}
+											height={50}
+											className="rounded-full object-cover aspect-square"
+										/>
+									) : (
+										<IconUser size={50} className="text-white" />
 									)}
-									<CardActions
-										onClickDelete={() => handleOpenFormDelete(employee)}
-										onClickEdit={() => handleOpenDetalhe(employee)}
-									/>
-								</li>
+									<div>
+										<div className="font-semibold">{employee.name}</div>
+										<div className="flex items-center gap-1 text-sm font-normal">
+											<IconPhone className="text-white" /> {NumberUtils.format(employee.phone)}
+										</div>
+									</div>
+								</div>
+								<div className="flex items-center gap-1 text-sm">
+									<IconClock className="text-white" /> Início de contrato:{' '}
+									{DateUtils.getDatePt(employee.hire_date, '/')}
+								</div>
+								{employee.contract_end_date && (
+									<div className="flex items-center gap-1 text-sm">
+										<IconClock className="text-white" /> Fim de contrato:{' '}
+										{DateUtils.getDatePt(employee.contract_end_date, '/')}
+									</div>
+								)}
+								<CardActions
+									onClickDelete={() => handleOpenFormDelete(employee)}
+									onClickEdit={() => handleOpenDetalhe(employee)}
+								/>
+								<div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+									<Logo />
+								</div>
+							</li>														
 							))}
 						</ul>
 					)}

@@ -23,6 +23,14 @@ export function AppRoutes() {
 					path={menu.FINANCES}
 					element={<Navigate to={MenuUtils.FRONT.TUITION_FEES} replace={true} />}
 				/>
+				<Route	
+					path={menu.ATHLETESAREA}
+					element={<Navigate to={MenuUtils.FRONT.ATHLETES} replace={true} />}
+				/>
+				<Route
+					path={menu.ATHLETESAREA}
+					element={<Navigate to={MenuUtils.FRONT.TUITION_FEES} replace={true} />}
+				/>
 				<Route path={menu.CASH_REGISTER} element={<CashRegister />} />
 				<Route path={menu.LESSONS} element={<Lessons />} />
 				<Route path={menu.TUITION_FEES} element={<Payment />} />
