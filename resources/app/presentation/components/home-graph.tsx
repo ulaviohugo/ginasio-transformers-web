@@ -89,47 +89,68 @@ export function HomeGraph({ data }: HomeGraphProps) {
     if (gyms.length > 0) {
       fetchData()
     }
-  }, [gyms, filterData.year, filterData.gym_id])  // Chama fetchData quando gyms, year, ou gym_id mudar
+  }, [gyms, filterData.year, filterData.gym_id])
 
   const operationChartRef = useRef<GraphHtmlRefProps>(null)
 
-  useEffect(() => {
+  const buildGraph = () => {
     GraphUtils.buildGraph({
       title: 'Mensalidades',
       data: graphData.monthly_fees,
       htmlRef: operationChartRef,
       graphType: 'bar'
     })
+  }
+
+  useEffect(() => {
+    buildGraph()
+  }, [graphData])
+
+  useEffect(() => {
+    const handleResize = () => {
+      buildGraph()
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [graphData])
 
   return (
-    <div>
-      <fieldset className="inline-flex gap-2 mb-3">
+    <div className="p-4">
+      <fieldset className="flex flex-wrap gap-4 mb-4">
         <legend>Filtro</legend>
-        <Input
-          type="number"
-          name="year"
-          label="Ano"
-          value={filterData.year}
-          onChange={handleFilterInputChange}
-        />
-        <Select
-          name="gym_id"
-          onChange={handleFilterInputChange}
-          label="Selecione a Filial"
-          required
-          data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-          value={isAdmin ? user.gym_id : filterData?.gym_id || ''}
-          defaultText="Selecione"
-          disabled={isAdmin}
-        />
-        <div className="flex items-end">
+        <div className="w-full sm:w-auto">
+          <Input
+            type="number"
+            name="year"
+            label="Ano"
+            value={filterData.year}
+            onChange={handleFilterInputChange}
+            className="w-full"
+          />
+        </div>
+        <div className="w-full sm:w-auto">
+          <Select
+            name="gym_id"
+            onChange={handleFilterInputChange}
+            label="Selecione a Filial"
+            required
+            data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+            value={isAdmin ? user.gym_id : filterData?.gym_id || ''}
+            defaultText="Selecione"
+            disabled={isAdmin}
+            className="w-full"
+          />
+        </div>
+        <div className="w-full sm:w-auto flex items-end">
           <Button
             variant="gray-light"
             text="Filtrar"
             rightIcon={IconSearch}
             isLoading={loading}
-            className="h-7"
+            className="w-full sm:w-auto h-10"
             onClick={fetchData}
           />
         </div>

@@ -8,12 +8,12 @@ export function Login() {
 	}, [])
 
 	return (
-		<div className="flex flex-col justify-center items-center h-screen relative">
-  <div className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 bg-white flex justify-center items-center">
-    <Logo className="-mb-4 z-20" />
+<div className="flex flex-col sm:flex-row h-screen">
+  <div className="flex justify-center items-center sm:h-full h-1/2 w-full sm:w-1/2 bg-white">
+    <Logo />
   </div>
-  <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 bg-primary flex justify-center items-center">
-    <FormLogin className="z-10" />
+  <div className="flex justify-center items-center sm:h-full h-1/2 w-full sm:w-1/2 bg-primary">
+    <FormLogin />
   </div>
 </div>
 	)

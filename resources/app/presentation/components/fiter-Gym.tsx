@@ -32,13 +32,14 @@ export function FilterGym({ onFilter }: FilterGymProps) {
 	}
 
 	return (
-		<div className="flex items-end">
+		<div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
 			<Input
 				onChange={handleInput}
 				name="id"
 				value={formData.id || ''}
 				label="Id"
 				type="text"
+				className="flex-1"
 			/>
 			<Input
 				onChange={handleInput}
@@ -46,6 +47,7 @@ export function FilterGym({ onFilter }: FilterGymProps) {
 				value={formData.name || ''}
 				label="Nome"
 				type="text"
+				className="flex-1"
 			/>
 			<Input
 				onChange={handleInput}
@@ -53,15 +55,23 @@ export function FilterGym({ onFilter }: FilterGymProps) {
 				value={formData.created_at || ''}
 				label="Data"
 				type="date"
+				className="flex-1"
 			/>
-			<Button
-				variant="gray-light"
-				type="button"
-				icon={IconSearch}
-				className="h-8"
-				onClick={() => onFilter(formData)}
-			/>
-			<Button variant="default" icon={IconClose} className="h-8" onClick={handleClear} />
+			<div className="flex gap-2">
+				<Button
+					variant="gray-light"
+					type="button"
+					icon={IconSearch}
+					className="h-8 flex-shrink-0"
+					onClick={() => onFilter(formData)}
+				/>
+				<Button
+					variant="default"
+					icon={IconClose}
+					className="h-8 flex-shrink-0"
+					onClick={handleClear}
+				/>
+			</div>
 		</div>
 	)
 }

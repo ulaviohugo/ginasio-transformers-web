@@ -181,82 +181,83 @@ export function CashRegisterEditor() {
 
 					<fieldset className="w-full">
 						<legend>Outros movimentos de caixa</legend>
-						<form onSubmit={handleSubmit} className="w-full ">
-							<div className="flex items-start gap-1">
-								<div className="w-32">
-									<Input
-										type="date"
-										name="date"
-										id="date"
-										label="Data"
-										value={(formData?.date as any) || ''}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className="w-36">
-									<Select
-										label="Tipo de Operação"
-										name="operation_type"
-										id="operation_type"
-										value={formData?.operation_type || ''}
-										data={[{ text: 'Entrada' }, { text: 'Saída' }]}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className="col-span-2 flex-1">
-									<TextArea
-										name="description"
-										id="description"
-										label="Descrição da Operação"
-										value={formData?.description || ''}
-										onChange={handleInputChange}
-										rows={1}
-									/>
-								</div>
-								<div className="w-32">
-									<InputPrice
-										name="amount"
-										id="amount"
-										label="Valor KZ"
-										value={formData?.amount || ''}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className="w-56">
-									<Select
-										name="payment_method"
-										id="payment_method"
-										label="Movimento Bancário"
-										value={formData?.payment_method || ''}
-										data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className="w-56">
-								<Select
-									name="gym_id"
-									onChange={handleInputChange}
-									label="Selecione a Filial"
-									required
-									data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-									value={hasGymId ? user.gym_id : formData?.gym_id || ''}
-									defaultText="Selecione"
-									disabled={hasGymId}
-								/>
-								</div>
-							</div>
-							<div className="col-span-2 mt-2">
-								<Button
-									variant="green"
-									text="Salvar"
-									rightIcon={IconCheck}
-									disabled={isLoading}
-									isLoading={isLoadingSubmit}
-								/>
-							</div>
-						</form>
+						<form onSubmit={handleSubmit} className="w-full">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="w-full">
+            <Input
+                type="date"
+                name="date"
+                id="date"
+                label="Data"
+                value={(formData?.date as any) || ''}
+                onChange={handleInputChange}
+            />
+        </div>
+        <div className="w-full">
+            <Select
+                label="Tipo de Operação"
+                name="operation_type"
+                id="operation_type"
+                value={formData?.operation_type || ''}
+                data={[{ text: 'Entrada' }, { text: 'Saída' }]}
+                defaultText="Selecione"
+                onChange={handleInputChange}
+            />
+        </div>
+        <div className="w-full lg:col-span-2">
+            <TextArea
+                name="description"
+                id="description"
+                label="Descrição da Operação"
+                value={formData?.description || ''}
+                onChange={handleInputChange}
+                rows={1}
+            />
+        </div>
+        <div className="w-full">
+            <InputPrice
+                name="amount"
+                id="amount"
+                label="Valor KZ"
+                value={formData?.amount || ''}
+                onChange={handleInputChange}
+            />
+        </div>
+        <div className="w-full">
+            <Select
+                name="payment_method"
+                id="payment_method"
+                label="Movimento Bancário"
+                value={formData?.payment_method || ''}
+                data={PaymentUtils.getMethods().map((type) => ({ text: type }))}
+                defaultText="Selecione"
+                onChange={handleInputChange}
+            />
+        </div>
+        <div className="w-full">
+            <Select
+                name="gym_id"
+                onChange={handleInputChange}
+                label="Selecione a Filial"
+                required
+                data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+                value={hasGymId ? user.gym_id : formData?.gym_id || ''}
+                defaultText="Selecione"
+                disabled={hasGymId}
+            />
+        </div>
+    </div>
+    <div className="mt-4">
+        <Button
+            variant="green"
+            text="Salvar"
+            rightIcon={IconCheck}
+            disabled={isLoading}
+            isLoading={isLoadingSubmit}
+        />
+    </div>
+</form>
+
 					</fieldset>
 				</div>
 			)}

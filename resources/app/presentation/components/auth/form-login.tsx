@@ -42,41 +42,42 @@ export function FormLogin({ className, ...props }: FormLoginProps) {
 
 	return (
 		<form
-			onSubmit={handleSubmit}
-			className={`flex flex-col gap-4 shadow-lg p-4 bg-white rounded-lg max-w-xs ${
-				className ?? ''
-			}`}
-			{...props}
-		>
-			<div className="flex flex-col gap-2">
-				<Input
-					type="email"
-					name="email"
-					id="email"
-					placeholder="Digite o seu e-email"
-					icon={IconEmail}
-					label="E-mail"
-					onChange={handleInputChange}
-					value={formData.email}
-					autoFocus
-				/>
-				<Input
-					type="password"
-					name="password"
-					id="password"
-					placeholder="*******"
-					icon={IconKey}
-					label="Senha"
-					onChange={handleInputChange}
-					value={formData.password}
-				/>
-			</div>
-			<button
-				className="flex items-center gap-1 justify-center bg-primary text-white px-2 py-1 text-sm rounded-md"
-				disabled={isLoading}
-			>
-				Iniciar sessão {isLoading && <Spinner />}
-			</button>
-		</form>
+	onSubmit={handleSubmit}
+	className={`flex flex-col gap-4 shadow-lg p-4 bg-white rounded-lg max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg min-h-[200px] ${
+		className ?? ''
+	}`}
+	{...props}
+>
+	<div className="flex flex-col gap-2">
+		<Input
+			type="email"
+			name="email"
+			id="email"
+			placeholder="Digite o seu e-email"
+			icon={IconEmail}
+			label="E-mail"
+			onChange={handleInputChange}
+			value={formData.email}
+			autoFocus
+		/>
+		<Input
+			type="password"
+			name="password"
+			id="password"
+			placeholder="*******"
+			icon={IconKey}
+			label="Senha"
+			onChange={handleInputChange}
+			value={formData.password}
+		/>
+	</div>
+	<button
+		className="flex items-center gap-1 justify-center bg-primary text-white px-4 py-2 text-sm rounded-md"
+		disabled={isLoading}
+	>
+		Iniciar sessão {isLoading && <Spinner />}
+	</button>
+</form>
+
 	)
 }

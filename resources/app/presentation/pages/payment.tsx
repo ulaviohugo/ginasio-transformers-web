@@ -268,90 +268,91 @@ export function Payment() {
 				<Title title="Mensalidade" />
 				<div className="flex items-start gap-3 mt-3">
 					<div className="flex-1">
-						<form className="grid grid-cols-4 gap-4">
-							<Input
-								name="athlete_id"
-								onChange={(e) => {
-									const value = Number(e.target.value);
-									if (value > 0) {
-										handleInput(e);
-									}
-								}}
-								label="Nº do Processo"
-								required
-								type="number"
-								placeholder="Informe o número do atleta"
-								value={formData.athlete_id || ''}
-							/>
-							<Input
-								name="amount"
-								onChange={(e) => {
-									const value = Number(e.target.value);
-									if (value > 0) {
-										handleInput(e);
-									}
-								}}
-								label="Quantidade"
-								required
-								type="number"
-								placeholder="Digite a quantidade de meses"
-								value={formData.amount || ''}
-							/>
-							<Input
-								name="year"
-								onChange={handleInput}
-								label="Escolhe o ano do mês que deseja pagar"
-								required
-								type="number"
-								value={formData.year || ''}
-							/>
-							<Select
-								name="month"
-								onChange={handleInput}
-								label="Escolhe o mês que deseja pagar"
-								required
-								data={DateUtils.getMonthUtils().map((month, i) => ({
-									text: month,
-									value: i + 1
-								}))}
-								defaultText="Selecione"
-								value={formData.month || ''}
-							/>
-							<Input
-								name="monthlyValue"
-								onChange={handleInput}
-								label="Pagamento"
-								required
-								type="number"
-								placeholder="Quanto atleta vai pagar"
-								value={formData.monthlyValue.toString()}
-								disabled={true}
-							/>
-							<Input
-								name="monthlyFine"
-								onChange={(e) => {
-									const value = Number(e.target.value);
-									if (value >= 0) {
-										handleInput(e);
-									}
-								}}
-								label="Multa"
-								type="number"
-								placeholder="Quanto atleta vai pagar de multa"
-								value={formData.monthlyFine || ''}
-							/>
-							<Select
-								name="paymentMethod"
-								onChange={handleInput}
-								label="Método de pagamento"
-								required
-								data={['Dinheiro a vista', 'TPA', 'Transferência'].map((pagamento) => {
-									return { text: pagamento }
-								})}
-								value={formData.paymentMethod || ''}
-								defaultText="Selecione"
-							/>
-						</form>
+					<form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <Input
+        name="athlete_id"
+        onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value > 0) {
+                handleInput(e);
+            }
+        }}
+        label="Nº do Processo"
+        required
+        type="number"
+        placeholder="Informe o número do atleta"
+        value={formData.athlete_id || ''}
+    />
+    <Input
+        name="amount"
+        onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value > 0) {
+                handleInput(e);
+            }
+        }}
+        label="Quantidade"
+        required
+        type="number"
+        placeholder="Quantidade de meses"
+        value={formData.amount || ''}
+    />
+    <Input
+        name="year"
+        onChange={handleInput}
+        label="Ano"
+        required
+        type="number"
+        value={formData.year || ''}
+    />
+    <Select
+        name="month"
+        onChange={handleInput}
+        label="Mês"
+        required
+        data={DateUtils.getMonthUtils().map((month, i) => ({
+            text: month,
+            value: i + 1
+        }))}
+        defaultText="Selecione"
+        value={formData.month || ''}
+    />
+    <Input
+        name="monthlyValue"
+        onChange={handleInput}
+        label="Pagamento"
+        required
+        type="number"
+        placeholder="Quanto atleta vai pagar"
+        value={formData.monthlyValue.toString()}
+        disabled={true}
+    />
+    <Input
+        name="monthlyFine"
+        onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value >= 0) {
+                handleInput(e);
+            }
+        }}
+        label="Multa"
+        type="number"
+        placeholder="Quanto atleta vai pagar de multa"
+        value={formData.monthlyFine || ''}
+    />
+    <Select
+        name="paymentMethod"
+        onChange={handleInput}
+        label="Método de pagamento"
+        required
+        data={['Dinheiro a vista', 'TPA', 'Transferência'].map((pagamento) => ({
+            text: pagamento
+        }))}
+        value={formData.paymentMethod || ''}
+        defaultText="Selecione"
+    />
+</form>
+
 					</div>
 					<div className="flex flex-col gap-2">
 						<Button

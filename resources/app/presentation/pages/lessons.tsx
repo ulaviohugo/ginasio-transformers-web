@@ -288,71 +288,86 @@ export function Lessons() {
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
 						<Title title="Aulas" icon={IconLesson} />
-						<form className="grid grid-cols-3 gap-4">
-							<Input
-								name="name"
-								onChange={handleInput}
-								label="Nome"
-								required
-								type="text"
-								placeholder="Informe o nome da Aula"
-								value={formData.name || ''}
-							/>
-							<Input
-								name="tipo"
-								onChange={handleInput}
-								label="Tipo de Aula"
-								required
-								type="text"
-								placeholder="Informe o tipo de aula"
-								value={formData.tipo || ''}
-							/>
-							<Input
-								name="data"
-								onChange={handleInput}
-								label="Data"
-								required
-								type="date"
-								placeholder="Informe o data da Aula"
-								value={formData.data || ''}
-							/>
-							<Input
-								name="horario"
-								onChange={handleInput}
-								label="Horário"
-								required
-								type="text"
-								placeholder="HH:MM:SS"
-								value={formData.horario || ''}
-							/>
-							<Select
-								name="gym_id"
-								onChange={handleInput}
-								label="Selecione a Filial"
-								required
-								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={selectedGymId}
-								defaultText="Selecione"
-								disabled={!isAdmin}
-							/>
-							<Select
-								name="personal_trainer_id"
-								onChange={handleInput}
-								label="Selecione o Personal Trainer"
-								data={personalTrainersOptions}
-								value={formData?.personal_trainer_id}
-								defaultText="Selecione"
-							/>
-							<SelectCheckBox
-								name="athlete_id"
-								onChange={handleInput}
-								label="Selecione os Atletas"
-								data={ahletes.map((athlete) => ({ text: athlete.name, value: athlete.id }))}
-								value={formData?.athlete_id}
-								defaultText="Selecione"
-								multiple
-							/>
-						</form>
+						<form className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <div className="w-full">
+        <Input
+            name="name"
+            onChange={handleInput}
+            label="Nome"
+            required
+            type="text"
+            placeholder="Informe o nome da Aula"
+            value={formData.name || ''}
+        />
+    </div>
+    <div className="w-full">
+        <Input
+            name="tipo"
+            onChange={handleInput}
+            label="Tipo de Aula"
+            required
+            type="text"
+            placeholder="Informe o tipo de aula"
+            value={formData.tipo || ''}
+        />
+    </div>
+    <div className="w-full">
+        <Input
+            name="data"
+            onChange={handleInput}
+            label="Data"
+            required
+            type="date"
+            placeholder="Informe a data da Aula"
+            value={formData.data || ''}
+        />
+    </div>
+    <div className="w-full">
+        <Input
+            name="horario"
+            onChange={handleInput}
+            label="Horário"
+            required
+            type="text"
+            placeholder="HH:MM:SS"
+            value={formData.horario || ''}
+        />
+    </div>
+    <div className="w-full">
+        <Select
+            name="gym_id"
+            onChange={handleInput}
+            label="Filial"
+            required
+            data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+            value={selectedGymId}
+            defaultText="Selecione"
+            disabled={!isAdmin}
+        />
+    </div>
+    <div className="w-full">
+        <Select
+            name="personal_trainer_id"
+            onChange={handleInput}
+            label="Personal Trainer"
+            data={personalTrainersOptions}
+            value={formData?.personal_trainer_id}
+            defaultText="Selecione"
+        />
+    </div>
+    <div className="w-full col-span-1 md:col-span-3">
+        <SelectCheckBox
+            name="athlete_id"
+            onChange={handleInput}
+            label="Selecione os Atletas"
+            data={ahletes.map((athlete) => ({ text: athlete.name, value: athlete.id }))}
+            value={formData?.athlete_id}
+            defaultText="Selecione"
+            multiple
+        />
+    </div>
+</form>
+
 					</div>
 					<div className="flex flex-col gap-2">
 						<Button

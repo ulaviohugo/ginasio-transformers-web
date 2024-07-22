@@ -173,26 +173,30 @@ export function Gyms() {
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
 					<Title title="Filial" icon={IconDepartment} />
-						<form className="flex flex-col-2 gap-4">
-							<Input
-								name="name"
-								onChange={handleInput}
-								label="Nome"
-								required
-								type="text"
-								placeholder="Informe o nome do departamento do ginásio"
-								value={formData.name || ''}
-							/>
-							<Input
-								name="location"
-								onChange={handleInput}
-								label="Localização"
-								required
-								type="text"
-								placeholder="Qual é a localização do ginásio"
-								value={formData.location || ''}
-							/>
-						</form>
+					<form className="flex flex-col md:grid md:grid-cols-2 md:gap-4 gap-4">
+	<div className="flex flex-col">
+		<Input
+			name="name"
+			onChange={handleInput}
+			label="Nome"
+			required
+			type="text"
+			placeholder="Informe o nome do departamento do ginásio"
+			value={formData.name || ''}
+		/>
+	</div>
+	<div className="flex flex-col">
+		<Input
+			name="location"
+			onChange={handleInput}
+			label="Localização"
+			required
+			type="text"
+			placeholder="Qual é a localização do ginásio"
+			value={formData.location || ''}
+		/>
+	</div>
+</form>
 					</div>
 					<div className="flex flex-col gap-2">
 						<Button

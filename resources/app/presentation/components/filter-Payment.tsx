@@ -60,9 +60,9 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 
 	useEffect(() => {
 		if (user.gym_id) {
-			setFormData({...formData,gym_id:user.gym_id})
+			setFormData({...formData, gym_id: user.gym_id})
 		}
-	}, [])
+	}, [user.gym_id])
 
 	const handleClear = () => {
 		setFormData(initialData)
@@ -70,64 +70,78 @@ export function FilterPayment({ onFilter }: FilterPaymentProps) {
 	}
 
 	return (
-		<div className="flex items-end">
-			<Input
-				onChange={handleInput}
-				name="name"
-				label="Nome"
-				type="text"
-				value={formData.name || ''}
-			/>
-			<Select
-				onChange={handleInput}
-				name="month"
-				value={formData.month || ''}
-				label="Mês"
-				data={DateUtils.getMonthUtils().map((month, i) => ({
-					text: month,
-					value: i + 1
-				}))}
-				defaultText="Selecione"
-			/>
-			<Input
-				onChange={handleInput}
-				name="year"
-				value={formData.year}
-				label="Ano"
-				type="number"
-			/>
-			<Input
-				onChange={handleInput}
-				name="athlete_id"
-				value={formData.athlete_id}
-				label="Nº do Processo"
-				type="text"
-			/>
-			<Select
-				name="gym_id"
-				onChange={handleInput}
-				label="Selecione a Filial"
-				required
-				data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-				value={isAdmin ? user.gym_id : formData?.gym_id || ''} // Modificado para usar a condição isAdmin
-				defaultText="Selecione"
-				disabled={isAdmin}
-			/>
-			<Input
-				onChange={handleInput}
-				name="created_at"
-				value={formData.created_at}
-				label="Data"
-				type="date"
-			/>
-			<Button
-				variant="gray-light"
-				type="button"
-				icon={IconSearch}
-				className="h-8"
-				onClick={() => onFilter(formData)}
-			/>
-			<Button variant="default" icon={IconClose} className="h-8" onClick={handleClear} />
+		<div className="flex flex-col md:flex-row md:flex-wrap md:gap-4">
+			<div className="flex-1">
+				<Input
+					onChange={handleInput}
+					name="name"
+					label="Nome"
+					type="text"
+					value={formData.name || ''}
+				/>
+			</div>
+			<div className="flex-1">
+				<Select
+					onChange={handleInput}
+					name="month"
+					value={formData.month || ''}
+					label="Mês"
+					data={DateUtils.getMonthUtils().map((month, i) => ({
+						text: month,
+						value: i + 1
+					}))}
+					defaultText="Selecione"
+				/>
+			</div>
+			<div className="flex-1">
+				<Input
+					onChange={handleInput}
+					name="year"
+					value={formData.year}
+					label="Ano"
+					type="number"
+				/>
+			</div>
+			<div className="flex-1">
+				<Input
+					onChange={handleInput}
+					name="athlete_id"
+					value={formData.athlete_id}
+					label="Nº do Processo"
+					type="text"
+				/>
+			</div>
+			<div className="flex-1">
+				<Select
+					name="gym_id"
+					onChange={handleInput}
+					label="Selecione a Filial"
+					required
+					data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+					value={isAdmin ? user.gym_id : formData?.gym_id || ''}
+					defaultText="Selecione"
+					disabled={isAdmin}
+				/>
+			</div>
+			<div className="flex-1">
+				<Input
+					onChange={handleInput}
+					name="created_at"
+					value={formData.created_at}
+					label="Data"
+					type="date"
+				/>
+			</div>
+			<div className="flex gap-2 mt-4 md:mt-0">
+				<Button
+					variant="gray-light"
+					type="button"
+					icon={IconSearch}
+					className="h-8"
+					onClick={() => onFilter(formData)}
+				/>
+				<Button variant="default" icon={IconClose} className="h-8" onClick={handleClear} />
+			</div>
 		</div>
 	)
 }

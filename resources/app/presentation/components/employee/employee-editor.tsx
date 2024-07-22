@@ -262,161 +262,164 @@ export function EmployeeEditor({
 										autoFocus
 									/>
 								</div>
-								<div className="grid grid-cols-3 gap-1">
-									<Select
-										id="gender"
-										name="gender"
-										required
-										value={formData?.gender || ''}
-										label={'Género'}
-										data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="date"
-										id="date_of_birth"
-										required
-										name="date_of_birth"
-										value={
-											(formData?.date_of_birth &&
-												DateUtils.getDate(formData?.date_of_birth)) ||
-											''
-										}
-										label={'Data Nascimento'}
-										onChange={handleChangeInputBirth}
-									/>
-									<Select
-										id="marital_status"
-										name="marital_status"
-										value={formData?.marital_status || ''}
-										label={'Estado Civil'}
-										data={DataUtils.maritalStatus}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Select
-										id="document_type"
-										name="document_type"
-										required
-										value={formData?.document_type || ''}
-										label={'Tipo Documento'}
-										data={DataUtils.docs.map((doc) => ({ text: doc }))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="text"
-										id="document_number"
-										name="document_number"
-										required
-										value={formData?.document_number || ''}
-										label={'Nº Documento'}
-										onChange={handleInputChange}
-										disabled={!formData?.document_type}
-										title={
-											!formData?.document_type ? 'Selecione 1º o tipo de documento' : ''
-										}
-									/>
-									<Input
-										type="text"
-										id="nif"
-										name="nif"
-										required
-										value={formData?.nif || ''}
-										label={'NIF'}
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="text"
-										id="social_security"
-										name="social_security"
-										value={formData?.social_security || ''}
-										label={'INSS'}
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="number"
-										id="dependents"
-										name="dependents"
-										value={formData?.dependents || ''}
-										label={'Dependentes'}
-										onChange={handleInputChange}
-									/>
-									<Select
-										id="education_degree"
-										name="education_degree"
-										required
-										value={formData?.education_degree || ''}
-										label={'Nível Académico'}
-										data={DataUtils.educationDegrees.map((text) => ({ text }))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className="grid grid-cols-3 gap-1">
-									<InputPhone
-										id="phone"
-										name="phone"
-										required
-										value={formData?.phone || ''}
-										label={'Telefone'}
-										onChange={handleInputChange}
-									/>
-									<InputPhone
-										id="phone2"
-										name="phone2"
-										value={!formData?.phone ? '' : formData?.phone2 || ''}
-										label={'Telefone 2'}
-										onChange={handleInputChange}
-										disabled={!formData?.phone}
-									/>
-									<InputEmail
-										name="email"
-										label="E-mail"
-										value={formData?.email || ''}
-										onChange={handleInputChange}
-										isValid={handleEmailValidation(formData?.email || '')}
-									/>
-								</div>
-								<div className="grid grid-cols-3 gap-1">
-									<Select
-										id="country_id"
-										name="country_id"
-										value={formData?.country_id || ''}
-										label={'País'}
-										data={countries.map(({ name, id }) => ({
-											text: name,
-											value: id
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Select
-										id="province_id"
-										name="province_id"
-										value={formData?.province_id || ''}
-										label={'Província'}
-										data={provinceList.map(({ name, id }) => ({
-											text: name,
-											value: id
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Select
-										id="municipality_id"
-										name="municipality_id"
-										value={formData?.municipality_id || ''}
-										label={'Município'}
-										data={municipalityList.map(({ name, id }) => ({
-											text: name,
-											value: id
-										}))}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <Select
+        id="gender"
+        name="gender"
+        required
+        value={formData?.gender || ''}
+        label={'Género'}
+        data={[{ text: 'Masculino' }, { text: 'Feminino' }]}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Input
+        type="date"
+        id="date_of_birth"
+        required
+        name="date_of_birth"
+        value={
+            (formData?.date_of_birth &&
+                DateUtils.getDate(formData?.date_of_birth)) ||
+            ''
+        }
+        label={'Data Nascimento'}
+        onChange={handleChangeInputBirth}
+    />
+    <Select
+        id="marital_status"
+        name="marital_status"
+        value={formData?.marital_status || ''}
+        label={'Estado Civil'}
+        data={DataUtils.maritalStatus}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Select
+        id="document_type"
+        name="document_type"
+        required
+        value={formData?.document_type || ''}
+        label={'Tipo Documento'}
+        data={DataUtils.docs.map((doc) => ({ text: doc }))}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Input
+        type="text"
+        id="document_number"
+        name="document_number"
+        required
+        value={formData?.document_number || ''}
+        label={'Nº Documento'}
+        onChange={handleInputChange}
+        disabled={!formData?.document_type}
+        title={
+            !formData?.document_type ? 'Selecione 1º o tipo de documento' : ''
+        }
+    />
+    <Input
+        type="text"
+        id="nif"
+        name="nif"
+        required
+        value={formData?.nif || ''}
+        label={'NIF'}
+        onChange={handleInputChange}
+    />
+    <Input
+        type="text"
+        id="social_security"
+        name="social_security"
+        value={formData?.social_security || ''}
+        label={'INSS'}
+        onChange={handleInputChange}
+    />
+    <Input
+        type="number"
+        id="dependents"
+        name="dependents"
+        value={formData?.dependents || ''}
+        label={'Dependentes'}
+        onChange={handleInputChange}
+    />
+    <Select
+        id="education_degree"
+        name="education_degree"
+        required
+        value={formData?.education_degree || ''}
+        label={'Nível Académico'}
+        data={DataUtils.educationDegrees.map((text) => ({ text }))}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <InputPhone
+        id="phone"
+        name="phone"
+        required
+        value={formData?.phone || ''}
+        label={'Telefone'}
+        onChange={handleInputChange}
+    />
+    <InputPhone
+        id="phone2"
+        name="phone2"
+        value={!formData?.phone ? '' : formData?.phone2 || ''}
+        label={'Telefone 2'}
+        onChange={handleInputChange}
+        disabled={!formData?.phone}
+    />
+    <InputEmail
+        name="email"
+        label="E-mail"
+        value={formData?.email || ''}
+        onChange={handleInputChange}
+        isValid={handleEmailValidation(formData?.email || '')}
+    />
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <Select
+        id="country_id"
+        name="country_id"
+        value={formData?.country_id || ''}
+        label={'País'}
+        data={countries.map(({ name, id }) => ({
+            text: name,
+            value: id
+        }))}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Select
+        id="province_id"
+        name="province_id"
+        value={formData?.province_id || ''}
+        label={'Província'}
+        data={provinceList.map(({ name, id }) => ({
+            text: name,
+            value: id
+        }))}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Select
+        id="municipality_id"
+        name="municipality_id"
+        value={formData?.municipality_id || ''}
+        label={'Município'}
+        data={municipalityList.map(({ name, id }) => ({
+            text: name,
+            value: id
+        }))}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+</div>
+
 								<div>
 									<Input
 										type="text"
@@ -429,152 +432,155 @@ export function EmployeeEditor({
 									/>
 								</div>
 							</fieldset>
-							<fieldset className="grid grid-cols-4 gap-1">
-								<legend>Dados profissionais</legend>
-								<Select
-									id="department"
-									name="department"
-									required
-									value={formData?.department || ''}
-									label="Departamento"
-									data={[{ text: 'Administrativo' }, { text: 'Operações' }]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<Select
-									id="position"
-									name="position"
-									required
-									value={formData?.position || ''}
-									label={'Cargo'}
-									data={[
-										{ text: 'Director Geral' },
-										{ text: 'Assistente administrativo' },
-										{ text: 'Secretário' },
-										{ text: 'Personal Trainer' },
-										{ text: 'Recepcionista' }
-									]}
-									defaultText="Selecione"
-									onChange={handleInputChange}
-								/>
-								<InputPrice
-									id="base_salary"
-									name="base_salary"
-									value={formData?.base_salary || ''}
-									label={'Salário Base'}
-									onChange={handleInputChange}
-									disabled={!formData?.position}
-									title={`Selecione o cargo para habilitar este campo`}
-								/>
-								<Input
-									type="date"
-									id="hire_date"
-									name="hire_date"
-									required
-									value={
-										(formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
-									}
-									label={'Data Contratação'}
-									onChange={handleInputChangeDate}
-									disabled={!formData?.position}
-									title={`Selecione o cargo para habilitar este campo`}
-								/>
-								<Input
-									type="date"
-									id="contract_end_date"
-									required
-									name="contract_end_date"
-									value={
-										(formData?.contract_end_date &&
-											DateUtils.getDate(formData.contract_end_date)) ||
-										''
-									}
-									label={'Data Fim de Contracto'}
-									onChange={handleInputChangeDate}
-									disabled={!formData?.position || !formData?.hire_date}
-									title={`Selecione o cargo para habilitar este campo`}
-								/>
-								<InputPrice
-									id="meal_allowance"
-									name="meal_allowance"
-									value={formData?.meal_allowance || ''}
-									label={'Subsídio de alimentação'}
-									onChange={handleInputChange}
-								/>
-								<InputPrice
-									id="productivity_allowance"
-									name="productivity_allowance"
-									value={formData?.productivity_allowance || ''}
-									label={'Subsídio de produtividade'}
-									onChange={handleInputChange}
-								/>
-								<InputPrice
-									id="transportation_allowance"
-									name="transportation_allowance"
-									value={formData?.transportation_allowance || ''}
-									label={'Subsídio de transporte'}
-									onChange={handleInputChange}
-								/>
-								<InputPrice
-									id="family_allowance"
-									name="family_allowance"
-									value={formData?.family_allowance || ''}
-									label={'Abono familiar'}
-									onChange={handleInputChange}
-								/>
-								<Select
-									name="gym_id"
-									onChange={handleInputChange}
-									label="Selecione Ginásio"
-									data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-									value={formData?.gym_id || ''}
-									defaultText="Selecione"
-								/>
-							</fieldset>
-							<fieldset className="grid gap-1">
-								<legend>Dados bancário</legend>
-								<div className="grid grid-cols-2 gap-1">
-									<Select
-										id="bank_name"
-										name="bank_name"
-										value={formData?.bank_name || ''}
-										label={'Nome do Banco'}
-										data={[
-											{ text: 'BAI' },
-											{ text: 'BCI' },
-											{ text: 'BIC' },
-											{ text: 'BFA' },
-											{ text: 'BNI' },
-											{ text: 'BPC' },
-											{ text: 'Millennium Atlantico' },
-											{ text: 'SOL' },
-											{ text: 'Standard Bank' }
-										]}
-										defaultText="Selecione"
-										onChange={handleInputChange}
-									/>
-									<Input
-										type="text"
-										id="account_number"
-										name="account_number"
-										value={formData?.account_number || ''}
-										label={'Nº Conta Bancária'}
-										onChange={handleInputChange}
-										disabled={!formData?.bank_name}
-										title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}
-									/>
-								</div>
+							<fieldset className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <legend>Dados profissionais</legend>
 
-								<InputIBAN
-									id="iban"
-									name="iban"
-									value={formData?.iban || ''}
-									label="IBAN"
-									onChange={handleInputChange}
-									disabled={!formData?.bank_name}
-									title={!formData?.document_type ? 'Selecione 1º o nome do banco' : ''}
-								/>
-							</fieldset>
+    <Select
+        id="department"
+        name="department"
+        required
+        value={formData?.department || ''}
+        label="Departamento"
+        data={[{ text: 'Administrativo' }, { text: 'Operações' }]}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <Select
+        id="position"
+        name="position"
+        required
+        value={formData?.position || ''}
+        label={'Cargo'}
+        data={[
+            { text: 'Director Geral' },
+            { text: 'Assistente administrativo' },
+            { text: 'Secretário' },
+            { text: 'Personal Trainer' },
+            { text: 'Recepcionista' }
+        ]}
+        defaultText="Selecione"
+        onChange={handleInputChange}
+    />
+    <InputPrice
+        id="base_salary"
+        name="base_salary"
+        value={formData?.base_salary || ''}
+        label={'Salário Base'}
+        onChange={handleInputChange}
+        disabled={!formData?.position}
+        title={`Selecione o cargo para habilitar este campo`}
+    />
+    <Input
+        type="date"
+        id="hire_date"
+        name="hire_date"
+        required
+        value={
+            (formData?.hire_date && DateUtils.getDate(formData?.hire_date)) || ''
+        }
+        label={'Data Contratação'}
+        onChange={handleInputChangeDate}
+        disabled={!formData?.position}
+        title={`Selecione o cargo para habilitar este campo`}
+    />
+    <Input
+        type="date"
+        id="contract_end_date"
+        required
+        name="contract_end_date"
+        value={
+            (formData?.contract_end_date &&
+                DateUtils.getDate(formData.contract_end_date)) ||
+            ''
+        }
+        label={'Data Fim de Contracto'}
+        onChange={handleInputChangeDate}
+        disabled={!formData?.position || !formData?.hire_date}
+        title={`Selecione o cargo para habilitar este campo`}
+    />
+    <InputPrice
+        id="meal_allowance"
+        name="meal_allowance"
+        value={formData?.meal_allowance || ''}
+        label={'Subsídio de alimentação'}
+        onChange={handleInputChange}
+    />
+    <InputPrice
+        id="productivity_allowance"
+        name="productivity_allowance"
+        value={formData?.productivity_allowance || ''}
+        label={'Subsídio de produtividade'}
+        onChange={handleInputChange}
+    />
+    <InputPrice
+        id="transportation_allowance"
+        name="transportation_allowance"
+        value={formData?.transportation_allowance || ''}
+        label={'Subsídio de transporte'}
+        onChange={handleInputChange}
+    />
+    <InputPrice
+        id="family_allowance"
+        name="family_allowance"
+        value={formData?.family_allowance || ''}
+        label={'Abono familiar'}
+        onChange={handleInputChange}
+    />
+    <Select
+        name="gym_id"
+        onChange={handleInputChange}
+        label="Selecione Ginásio"
+        data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+        value={formData?.gym_id || ''}
+        defaultText="Selecione"
+    />
+</fieldset>
+
+<fieldset className="grid gap-4">
+    <legend>Dados bancário</legend>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Select
+            id="bank_name"
+            name="bank_name"
+            value={formData?.bank_name || ''}
+            label={'Nome do Banco'}
+            data={[
+                { text: 'BAI' },
+                { text: 'BCI' },
+                { text: 'BIC' },
+                { text: 'BFA' },
+                { text: 'BNI' },
+                { text: 'BPC' },
+                { text: 'Millennium Atlantico' },
+                { text: 'SOL' },
+                { text: 'Standard Bank' }
+            ]}
+            defaultText="Selecione"
+            onChange={handleInputChange}
+        />
+        <Input
+            type="text"
+            id="account_number"
+            name="account_number"
+            value={formData?.account_number || ''}
+            label={'Nº Conta Bancária'}
+            onChange={handleInputChange}
+            disabled={!formData?.bank_name}
+            title={!formData?.bank_name ? 'Selecione 1º o nome do banco' : ''}
+        />
+    </div>
+
+    <InputIBAN
+        id="iban"
+        name="iban"
+        value={formData?.iban || ''}
+        label="IBAN"
+        onChange={handleInputChange}
+        disabled={!formData?.bank_name}
+        title={!formData?.bank_name ? 'Selecione 1º o nome do banco' : ''}
+    />
+</fieldset>
+
 							<fieldset className="flex flex-col gap-1">
 								<legend>Acesso ao sistema</legend>
 								<div>
@@ -589,37 +595,38 @@ export function EmployeeEditor({
 									</div>
 								</div>
 								{formData.can_login && (
-									<div className="flex flex-col gap-1">
-										<Select
-											name="role"
-											label="Perfil"
+									<div className="flex flex-col gap-4">
+									<Select
+										name="role"
+										label="Perfil"
+										required
+										value={formData?.role || ''}
+										defaultText="Selecione"
+										data={[
+											{ text: 'Admin (acesso total)', value: 'Admin' },
+											{ text: 'Normal (Venda)', value: 'Normal' }
+										]}
+										onChange={handleInputChange}
+									/>
+									<div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
+										<Input
+											type="password"
+											name="password"
 											required
-											value={formData?.role || ''}
-											defaultText="Selecione"
-											data={[
-												{ text: 'Admin (acesso total)', value: 'Admin' },
-												{ text: 'Normal (Venda)', value: 'Normal' }
-											]}
+											label="Senha"
+											value={formData.password || ''}
 											onChange={handleInputChange}
 										/>
-										<div className="flex gap-1">
-											<Input
-												type="password"
-												name="password"
-												required
-												label="Senha"
-												value={formData.password || ''}
-												onChange={handleInputChange}
-											/>
-											<Input
-												type="password"
-												name="password_confirmation"
-												label="Confirme a senha"
-												value={formData.password_confirmation || ''}
-												onChange={handleInputChange}
-											/>
-										</div>
+										<Input
+											type="password"
+											name="password_confirmation"
+											label="Confirme a senha"
+											value={formData.password_confirmation || ''}
+											onChange={handleInputChange}
+										/>
 									</div>
+								</div>
+								
 								)}
 							</fieldset>
 						</div>

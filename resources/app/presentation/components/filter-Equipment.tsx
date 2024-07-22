@@ -32,7 +32,7 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 	const user = useSelector(useAuth())
 	const isAdminBool = user.gym_id != null
 
-	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
@@ -55,7 +55,7 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 
 	useEffect(() => {
 		if (user.gym_id) {
-			setFormData({...formData,gym_id:user.gym_id})
+			setFormData({ ...formData, gym_id: user.gym_id })
 		}
 	}, [])
 
@@ -65,13 +65,14 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 	}
 
 	return (
-		<div className="flex items-end">
+		<div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
 			<Input
 				onChange={handleInput}
 				name="id"
 				value={formData.id || ''}
 				label="Id"
 				type="text"
+				className="flex-1"
 			/>
 			<Input
 				onChange={handleInput}
@@ -79,6 +80,7 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 				value={formData.name || ''}
 				label="Nome"
 				type="text"
+				className="flex-1"
 			/>
 			<Input
 				onChange={handleInput}
@@ -86,6 +88,7 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 				value={formData.created_at || ''}
 				label="Data"
 				type="date"
+				className="flex-1"
 			/>
 			<Select
 				name="gym_id"
@@ -93,18 +96,24 @@ export function FilterEquipment({ onFilter }: FilterEquipmentProps) {
 				label="Selecione a Filial"
 				required
 				data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-				value={isAdminBool  ? user.gym_id : formData?.gym_id || ''}
+				value={isAdminBool ? user.gym_id : formData?.gym_id || ''}
 				defaultText="Selecione"
 				disabled={isAdminBool}
+				className="flex-1"
 			/>
 			<Button
 				variant="gray-light"
 				type="button"
 				icon={IconSearch}
-				className="h-8"
+				className="h-8 flex-shrink-0"
 				onClick={() => onFilter(formData)}
 			/>
-			<Button variant="default" icon={IconClose} className="h-8" onClick={handleClear} />
+			<Button
+				variant="default"
+				icon={IconClose}
+				className="h-8 flex-shrink-0"
+				onClick={handleClear}
+			/>
 		</div>
 	)
 }

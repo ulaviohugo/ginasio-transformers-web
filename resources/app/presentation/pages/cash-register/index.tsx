@@ -102,21 +102,22 @@ export function CashRegister() {
 		<Layout>
 			{showGraph && <CashRegisterGraph onClose={() => setShowGraph(false)} />}
 			<LayoutBody>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-4 md:gap-6">
 					<SubMenu submenus={MenuUtils.financeMenuItens({ role: user.role })} />
 					<Title title="Caixa" icon={IconCashRegister} />
 					<CashRegisterEditor />
-					<fieldset>
-						<legend className="flex gap-1">
-							Filtro {isLoading && <Spinner />}
+					<fieldset className="border p-4 rounded-lg">
+						<legend className="flex items-center gap-2 mb-4">
+							<span>Filtro</span>
+							{isLoading && <Spinner />}
 							<Button
 								variant="gray-light"
 								text="Ver gráfico"
 								onClick={() => setShowGraph(true)}
 							/>
 						</legend>
-						<div className="flex p-2 border">
-							<div className="flex gap-1 ml-auto items-end">
+						<div className="flex flex-col gap-4 md:flex-row md:items-end">
+							<div className="flex flex-col gap-4 md:flex-row md:gap-4">
 								<Select
 									name="gym_id"
 									onChange={handleChangeFilter}
@@ -165,52 +166,52 @@ export function CashRegister() {
 									defaultText="Todos"
 									onChange={handleChangeFilter}
 								/>
-								<div className="flex">
-									<Button
-										variant="gray-light"
-										icon={IconSearch}
-										isLoading={isLoading}
-										onClick={handleFilter}
-										className="h-7"
-									/>
-								</div>
 							</div>
+							<Button
+								variant="gray-light"
+								icon={IconSearch}
+								isLoading={isLoading}
+								onClick={handleFilter}
+								className="w-full md:w-auto"
+							/>
 						</div>
-						<table className="w-full text-sm">
-							<thead className="font-semibold uppercase border-b">
-								<tr>
-									<td>Data</td>
-									<td>Descrição de operação</td>
-									<td>Tipo operação</td>
-									<td>Valor</td>
-									<td>Saldo após movimento</td>
-									<td>Movimento bancário</td>
-								</tr>
-							</thead>
-							<tbody>
-								{transactions.map((transaction, i) => {
-									const bg = i % 2 == 0 ? 'bg-gray-50' : 'bg-none'
-									const sinal = transaction.operation_type == 'Entrada' ? '+' : '-'
-									return (
-										<tr key={transaction.id} className={`${bg} hover:bg-gray-100`}>
-											<td>{DateUtils.getDatePt(transaction.date)}</td>
-											<td>{transaction.description}</td>
-											<td>{transaction.operation_type}</td>
-											<td
-												className={`${sinal == '+' ? 'text-green-600' : 'text-red-500'}`}
-											>
-												{sinal}
-												{NumberUtils.formatCurrency(transaction.amount)}
-											</td>
-											<td>
-												{NumberUtils.formatCurrency(transaction.post_movement_balance)}
-											</td>
-											<td>{transaction.payment_method}</td>
-										</tr>
-									)
-								})}
-							</tbody>
-						</table>
+						<div className="overflow-x-auto mt-4">
+							<table className="w-full text-sm border-collapse">
+								<thead className="font-semibold uppercase border-b">
+									<tr>
+										<td>Data</td>
+										<td>Descrição de operação</td>
+										<td>Tipo operação</td>
+										<td>Valor</td>
+										<td>Saldo após movimento</td>
+										<td>Movimento bancário</td>
+									</tr>
+								</thead>
+								<tbody>
+									{transactions.map((transaction, i) => {
+										const bg = i % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+										const sinal = transaction.operation_type === 'Entrada' ? '+' : '-'
+										return (
+											<tr key={transaction.id} className={`${bg} hover:bg-gray-100`}>
+												<td>{DateUtils.getDatePt(transaction.date)}</td>
+												<td>{transaction.description}</td>
+												<td>{transaction.operation_type}</td>
+												<td
+													className={`${sinal === '+' ? 'text-green-600' : 'text-red-500'}`}
+												>
+													{sinal}
+													{NumberUtils.formatCurrency(transaction.amount)}
+												</td>
+												<td>
+													{NumberUtils.formatCurrency(transaction.post_movement_balance)}
+												</td>
+												<td>{transaction.payment_method}</td>
+											</tr>
+										)
+									})}
+								</tbody>
+							</table>
+						</div>
 					</fieldset>
 				</div>
 			</LayoutBody>

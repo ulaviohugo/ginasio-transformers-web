@@ -237,205 +237,224 @@ export function AthleteEditor({
 
 			<div className="flex gap-2">
 				<div className="flex-1 flex flex-col gap-2">
-					<fieldset className="flex gap-4 items-start">
-						<legend>Dados Pessoais</legend>
-						<ImagePreview
-							photoPreview={photoPreview}
-							onInputFileChange={handleChangeInput}
-							clearInputFile={clearInputFile}
-						/>
-						<div className="flex-1 grid grid-cols-4 items-start gap-4">
-							<InputName
-								name="name"
-								label="Nome"
-								required
-								value={formData?.name || ''}
-								onChange={handleChangeInput}
-							/>
-							<Select
-								name="gender"
-								label="Género"
-								required
-								data={['Masculino', 'Feminino'].map((text) => ({
-									text
-								}))}
-								defaultText="Selecione"
-								value={formData?.gender || ''}
-								onChange={handleChangeInput}
-							/>
-							<Input
-								name="date_of_birth"
-								type="date"
-								required
-								label="Data Nascimento"
-								value={(formData?.date_of_birth as any) || ''}
-								onChange={handleChangeInputBirth}
-							/>
-							<Select
-								name="marital_status"
-								label="Estado Civil"
-								required
-								data={DataUtils.maritalStatus.map((status) => status)}
-								defaultText="Selecione"
-								value={formData?.marital_status || ''}
-								onChange={handleChangeInput}
-							/>
-							<Select
-								name="document_type"
-								label="Documento"
-								required
-								data={DataUtils.docs.map((text) => ({ text }))}
-								defaultText="Selecione"
-								value={formData?.document_type || ''}
-								onChange={handleChangeInput}
-							/>
-							<Input
-								name="document_number"
-								label="Nº Documento"
-								required
-								value={formData?.document_number || ''}
-								disabled={!formData.document_type}
-								title={
-									!formData.document_type
-										? 'Selecione o tipo de documento para habilitar este campo'
-										: ''
-								}
-								onChange={handleChangeInput}
-							/>
-							<Select
-								name="education_degree"
-								label="Nível académico"
-								required
-								data={DataUtils.educationDegrees.map((text) => ({ text }))}
-								defaultText="Selecione"
-								value={formData?.education_degree || ''}
-								onChange={handleChangeInput}
-							/>
-							<Select
-								name="status"
-								label="Estado"
-								required
-								data={[
-									{ text: 'Activo', value: 'active' },
-									{ text: 'Inactivo', value: 'inactive' }
-								].map((text) => text)}
-								defaultText="Selecione"
-								value={formData?.status || ''}
-								onChange={handleChangeInput}
-							/>
-							<Select
-								name="gym_id"
-								onChange={handleChangeInput}
-								label="Selecione a Filial"
-								required
-								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={selectedGymId}
-								defaultText="Selecione"
-								disabled={!isAdmin}
-							/>
-							<Select
-								name="personal_trainer_id"
-								onChange={handleChangeInput}
-								label="Selecione o Personal Trainer"
-								data={personalTrainersOptions}
-								value={formData?.personal_trainer_id}
-								defaultText="Selecione"
-							/>
-							<Input
-								name="height"
-								type="number"
-								label="Altura"
-								required
-								value={(formData?.height as any) || ''}
-								onChange={handleChangeInput}
-							/>
-						</div>
-					</fieldset>
-					<div className="grid xl:grid-cols-2 gap-4">
-						<fieldset className="grid grid-cols-3 items-start gap-4">
-							<legend>Contactos</legend>
+				<fieldset className="flex flex-col gap-4">
+    <legend className="text-lg font-semibold">Dados Pessoais</legend>
+    <div className="flex flex-col md:flex-row gap-4 items-start">
+        <div className="flex-shrink-0 w-full md:w-1/3">
+            <ImagePreview
+                photoPreview={photoPreview}
+                onInputFileChange={handleChangeInput}
+                clearInputFile={clearInputFile}
+            />
+        </div>
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <InputName
+                name="name"
+                label="Nome"
+                required
+                value={formData?.name || ''}
+                onChange={handleChangeInput}
+            />
+            <Select
+                name="gender"
+                label="Género"
+                required
+                data={['Masculino', 'Feminino'].map((text) => ({
+                    text
+                }))}
+                defaultText="Selecione"
+                value={formData?.gender || ''}
+                onChange={handleChangeInput}
+            />
+            <Input
+                name="date_of_birth"
+                type="date"
+                required
+                label="Data Nascimento"
+                value={(formData?.date_of_birth as any) || ''}
+                onChange={handleChangeInputBirth}
+            />
+            <Select
+                name="marital_status"
+                label="Estado Civil"
+                required
+                data={DataUtils.maritalStatus.map((status) => status)}
+                defaultText="Selecione"
+                value={formData?.marital_status || ''}
+                onChange={handleChangeInput}
+            />
+            <Select
+                name="document_type"
+                label="Documento"
+                required
+                data={DataUtils.docs.map((text) => ({ text }))}
+                defaultText="Selecione"
+                value={formData?.document_type || ''}
+                onChange={handleChangeInput}
+            />
+            <Input
+                name="document_number"
+                label="Nº Documento"
+                required
+                value={formData?.document_number || ''}
+                disabled={!formData.document_type}
+                title={
+                    !formData.document_type
+                        ? 'Selecione o tipo de documento para habilitar este campo'
+                        : ''
+                }
+                onChange={handleChangeInput}
+            />
+            <Select
+                name="education_degree"
+                label="Nível académico"
+                required
+                data={DataUtils.educationDegrees.map((text) => ({ text }))}
+                defaultText="Selecione"
+                value={formData?.education_degree || ''}
+                onChange={handleChangeInput}
+            />
+            <Select
+                name="status"
+                label="Estado"
+                required
+                data={[
+                    { text: 'Activo', value: 'active' },
+                    { text: 'Inactivo', value: 'inactive' }
+                ].map((text) => text)}
+                defaultText="Selecione"
+                value={formData?.status || ''}
+                onChange={handleChangeInput}
+            />
+            <Select
+                name="gym_id"
+                onChange={handleChangeInput}
+                label="Selecione a Filial"
+                required
+                data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+                value={selectedGymId}
+                defaultText="Selecione"
+                disabled={!isAdmin}
+            />
+            <Select
+                name="personal_trainer_id"
+                onChange={handleChangeInput}
+                label="Selecione o Personal Trainer"
+                data={personalTrainersOptions}
+                value={formData?.personal_trainer_id}
+                defaultText="Selecione"
+            />
+            <Input
+                name="height"
+                type="number"
+                label="Altura"
+                required
+                value={(formData?.height as any) || ''}
+                onChange={handleChangeInput}
+            />
+        </div>
+    </div>
+</fieldset>
 
-							<InputPhone
-								name="phone"
-								label="Telefone"
-								required
-								value={formData.phone}
-								onChange={handleChangeInput}
-							/>
-							<InputPhone
-								name="phone2"
-								label="Telefone Alternativo"
-								value={formData.phone2}
-								onChange={handleChangeInput}
-							/>
-							<InputEmail
-								name="email"
-								label="E-mail"
-								value={formData?.email || ''}
-								onChange={handleChangeInput}
-								isValid={handleEmailValidation(formData?.email || '')}
-							/>
-						</fieldset>
-						<fieldset className="grid grid-cols-3 items-start gap-4">
-							<legend>Peso (KG)</legend>
-							<InputNumber
-								name="starting_weight"
-								label="Peso Inicial"
-								required
-								value={formData?.starting_weight || ''}
-								onChange={handleChangeInput}
-							/>
-							<InputNumber
-								name="current_weight"
-								label="Peso Actual"
-								required
-								value={formData?.current_weight || ''}
-								onChange={handleChangeInput}
-							/>
-							<InputNumber
-								name="goal_weight"
-								label="Peso Meta"
-								value={formData?.goal_weight || ''}
-								onChange={handleChangeInput}
-							/>
-						</fieldset>
+					<div className="grid xl:grid-cols-2 gap-4">
+					<fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <legend className="col-span-full text-lg font-semibold">Contactos</legend>
+    <div>
+        <InputPhone
+            name="phone"
+            label="Telefone"
+            required
+            value={formData.phone}
+            onChange={handleChangeInput}
+        />
+    </div>
+    <div>
+        <InputPhone
+            name="phone2"
+            label="Telefone Alternativo"
+            value={formData.phone2}
+            onChange={handleChangeInput}
+        />
+    </div>
+    <div className="col-span-full md:col-span-3">
+        <InputEmail
+            name="email"
+            label="E-mail"
+            value={formData?.email || ''}
+            onChange={handleChangeInput}
+            isValid={handleEmailValidation(formData?.email || '')}
+        />
+    </div>
+</fieldset>
+
+						<fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <legend className="col-span-full text-lg font-semibold">Peso (KG)</legend>
+    <div>
+        <InputNumber
+            name="starting_weight"
+            label="Peso Inicial"
+            required
+            value={formData?.starting_weight || ''}
+            onChange={handleChangeInput}
+        />
+    </div>
+    <div>
+        <InputNumber
+            name="current_weight"
+            label="Peso Actual"
+            required
+            value={formData?.current_weight || ''}
+            onChange={handleChangeInput}
+        />
+    </div>
+    <div>
+        <InputNumber
+            name="goal_weight"
+            label="Peso Meta"
+            value={formData?.goal_weight || ''}
+            onChange={handleChangeInput}
+        />
+    </div>
+</fieldset>
+
 					</div>
-					<fieldset className="grid grid-cols-5 items-start gap-4">
-						<legend>Endereço</legend>
-						<Select
-							name="country_id"
-							label="País"
-							data={countries.map(({ id, name }) => ({ text: name, value: id }))}
-							defaultText="Selecione"
-							value={formData?.country_id || ''}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="province_id"
-							label="Província"
-							data={provinceList.map(({ id, name }) => ({ text: name, value: id }))}
-							defaultText="Selecione"
-							value={formData?.province_id || ''}
-							onChange={handleChangeInput}
-						/>
-						<Select
-							name="municipality_id"
-							label="Município"
-							data={municipalityList.map(({ id, name }) => ({ text: name, value: id }))}
-							defaultText="Selecione"
-							value={formData?.municipality_id || ''}
-							onChange={handleChangeInput}
-						/>
-						<div className="col-span-2">
-							<Input
-								name="address"
-								label="Endereço"
-								required
-								value={formData?.address || ''}
-								onChange={handleChangeInput}
-							/>
-						</div>
-					</fieldset>
+					<fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-start">
+    <legend className="col-span-full">Endereço</legend>
+    <Select
+        name="country_id"
+        label="País"
+        data={countries.map(({ id, name }) => ({ text: name, value: id }))}
+        defaultText="Selecione"
+        value={formData?.country_id || ''}
+        onChange={handleChangeInput}
+    />
+    <Select
+        name="province_id"
+        label="Província"
+        data={provinceList.map(({ id, name }) => ({ text: name, value: id }))}
+        defaultText="Selecione"
+        value={formData?.province_id || ''}
+        onChange={handleChangeInput}
+    />
+    <Select
+        name="municipality_id"
+        label="Município"
+        data={municipalityList.map(({ id, name }) => ({ text: name, value: id }))}
+        defaultText="Selecione"
+        value={formData?.municipality_id || ''}
+        onChange={handleChangeInput}
+    />
+    <div className="col-span-full sm:col-span-2">
+        <Input
+            name="address"
+            label="Endereço"
+            required
+            value={formData?.address || ''}
+            onChange={handleChangeInput}
+        />
+    </div>
+</fieldset>
+
 				</div>
 				<div className="flex flex-col gap-2">
 					<Button

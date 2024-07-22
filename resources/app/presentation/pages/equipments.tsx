@@ -226,36 +226,43 @@ export function Equipments() {
 				<div className="flex items-start gap-3">
 					<div className="flex-1">
 						<Title title="Equipamentos" icon={IconDumbbell} />
-						<form className="flex flex-col-2 gap-4">
-							<Input
-								name="name"
-								onChange={handleInput}
-								label="Nome"
-								required
-								type="text"
-								placeholder="Informe o nome do Equipamento"
-								value={formData.name || ''}
-							/>
-							<Input
-								name="description"
-								onChange={handleInput}
-								label="Descrição"
-								required
-								type="text"
-								placeholder="Qual é a descrição do equipamento"
-								value={formData.description || ''}
-							/>
-							<Select
-								name="gym_id"
-								onChange={handleInput}
-								label="Selecione a Filial"
-								required
-								data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
-								value={isAdminBool  ? user.gym_id : formData?.gym_id || ''}
-								defaultText="Selecione"
-								disabled={isAdminBool}
-							/>
-						</form>
+						<form className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
+	<div className="flex flex-col">
+		<Input
+			name="name"
+			onChange={handleInput}
+			label="Nome"
+			required
+			type="text"
+			placeholder="Informe o nome do Equipamento"
+			value={formData.name || ''}
+		/>
+	</div>
+	<div className="flex flex-col">
+		<Input
+			name="description"
+			onChange={handleInput}
+			label="Descrição"
+			required
+			type="text"
+			placeholder="Qual é a descrição do equipamento"
+			value={formData.description || ''}
+		/>
+	</div>
+	<div className="flex flex-col md:col-span-2">
+		<Select
+			name="gym_id"
+			onChange={handleInput}
+			label="Selecione a Filial"
+			required
+			data={gyms.map((gym) => ({ text: gym.name, value: gym.id }))}
+			value={isAdminBool ? user.gym_id : formData?.gym_id || ''}
+			defaultText="Selecione"
+			disabled={isAdminBool}
+		/>
+	</div>
+</form>
+
 					</div>
 					<div className="flex flex-col gap-2">
 						<Button

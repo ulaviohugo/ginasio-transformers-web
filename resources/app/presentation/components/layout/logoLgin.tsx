@@ -1,14 +1,18 @@
 import React, { ImgHTMLAttributes } from 'react'
-import { GiMuscleFat } from 'react-icons/gi'
 
-type LogoProps = ImgHTMLAttributes<HTMLImageElement>
+type LogoProps = ImgHTMLAttributes<HTMLImageElement> & {
+  src?: string;
+  alt?: string;
+  maxWidth?: number | string;
+  maxHeight?: number | string;
+};
 
 export function Logo({
-	src = '/images/logo.png',
-	alt = 'Logo',
-	width = 500,
-	height = 500,
-	...props
+  src = '/images/logo.png',
+  alt = 'Logo',
+  maxWidth = '50%',
+  maxHeight = 'auto',
+  ...props
 }: LogoProps) {
-	return <img src={src} style={{ width, height }} />
+  return <img src={src} alt={alt} style={{ width: '100%', maxWidth, height: 'auto', maxHeight }} {...props} />
 }
